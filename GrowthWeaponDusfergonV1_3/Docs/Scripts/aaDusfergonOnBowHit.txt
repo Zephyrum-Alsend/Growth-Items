@@ -1,0 +1,45 @@
+scn aaDusfergonOnBowHit
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;aaDusfergonManager
+;aaDusfergonObjectB
+;aaDusfergonOnArrowHit
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;aaDusfergonArrowsUp
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;When any arrow is shot from DLScalar3B, set a listener for when that arrow
+;lands and increment ArrowsUp so the listener knows when to stop.
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+ref Ammo
+ref Actor ;Unused
+;-----------------------------------------------------------------------------
+
+
+
+;-----------------------------------------------------------------------------
+begin Function { Actor }
+;-----------------------------------------------------------------------------
+
+	;Setting more than one event handler multiplies the XP gained
+	if ( aaDusfergonArrowsUp == 0 )
+		
+		Set Ammo to Player.GetEquippedObject 17
+		SetEventHandler "OnHitWith" aaDusfergonOnArrowHit "object"::Ammo
+
+	endif
+
+	Set aaDusfergonArrowsUp to ( aaDusfergonArrowsUp + 1 )
+
+;-----------------------------------------------------------------------------
+end ;Function { Target }
+;-----------------------------------------------------------------------------
