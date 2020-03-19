@@ -1,0 +1,2904 @@
+scn aaDusfergonManager
+float fQuestDelayTime
+float ScriptLag
+float MenuLag
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;aaDusfergonManager
+;aaDusfergonObject
+;aaDusfergonObjectB
+;aaDusfergonOnHit
+;aaDusfergonOnBowHit
+;aaDusfergonOnArrowHit
+;aaDusfergonStatAdj
+;aaDusfergonStatSet
+;aaDusfergonStatSet2
+;aaDusfergonStatLvl
+;aaDusfergonEnchInit
+;aaDusfergonEnchSlct
+;aaDusfergonEnchLvl
+;aaDusfergonEnchDisplay
+;aaDusfergonSetModel
+;aaDusfergonSetModel2
+;aaDusfergonRandomModel
+;aaDusfergonShowModelName
+;aaDusfergonCalcXPReq
+;aaDusfergonIncrVal
+;aaDusfergonLevelMessage
+;aaDusfergonOnEnchant
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;aaDusfergonArrowsUp
+;aaDusfergonCombatXPLog
+;aaDusfergonCombatXPStart
+;aaDusfergonEnch
+;aaDusfergonEnch1
+;aaDusfergonEnch2
+;aaDusfergonEnch3
+;aaDusfergonEnch4
+;aaDusfergonEnch5
+;aaDusfergonEnch6
+;aaDusfergonEnch7
+;aaDusfergonEnch8
+;aaDusfergonEquip
+;aaDusfergonLevel
+;aaDusfergonModel
+;aaDusfergonXP
+;aaDusfergonXPReq
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;Main script of Dusfergon.  Handles all stats and core functionality.
+;
+;When a save is loaded, looks at all globals and the .ini to set weapon's 
+;model, type, stats, enchantment, event handler and XPReq.  Both a console
+;message and weapon equip sound will happen when everything is initialized.
+;
+;Upon combat end, log XP gained from said combat to console.
+;
+;When halfway to the next level, display a flavor message in the upper left
+;of the screen.  If level is capped, display a message box stating so.
+;
+;When XP >= XPReq, execute level up.  Level up increments all stats by the 
+;values contained in %Mult variables.  If the level is past the EnchStart 
+;level, prompt the player to choose an enchant option and apply it. Every 
+;EnchLevel after EnchStart, ask the player to choose an option again. The 
+;player can choose to keep growing their current enchantment, start growing a 
+;new one, or continue growing an old one.  Set new XPReq.  A message will 
+;appear in the upper left of the screen whenever a level up happens.
+;
+;While the player is in their inventory, right-clicking the weapon will prompt
+;the player to change it's model and type.  If the player Ctrl+RMBs the weapon
+;it will display all enchantment effects and the active enchantment.  If the
+;player Shift+RMBs the weapon it will display the current form's name and
+;sub-type menu.
+;These menus and changes all occur within the inventory menu, no need to to
+;exit to GameMode.
+;
+;Form change sub-type menus are capped at 5 pages due to navigation time; a
+;II category can be made to hold additional pages, allowing for up to 10 pages
+;total of each sub-type.
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+;Weapon variables
+;-----------------------------------------------------------------------------
+string_var str_Name
+
+short sDamageBase
+float fSpeedBase
+float fReachBase
+float fWeightBase
+short sHealthBase
+long lValueBase
+
+float fDamageMult
+float fSpeedMult
+float fReachMult
+float fWeightMult
+float fHealthMult
+float fValueMult
+
+;-----------------------------------------------------------------------------
+;Sub-type adjustment variables
+;-----------------------------------------------------------------------------
+short sClaymoreDamageBase
+float fClaymoreSpeedBase
+float fClaymoreReachBase
+
+float fClaymoreDamageMult
+float fClaymoreSpeedMult
+float fClaymoreReachMult
+
+short sBastard2HDamageBase
+float fBastard2HSpeedBase
+float fBastard2HReachBase
+
+float fBastard2HDamageMult
+float fBastard2HSpeedMult
+float fBastard2HReachMult
+
+short sBastard1HDamageBase
+float fBastard1HSpeedBase
+float fBastard1HReachBase
+
+float fBastard1HDamageMult
+float fBastard1HSpeedMult
+float fBastard1HReachMult
+
+short sLongswordDamageBase
+float fLongswordSpeedBase
+float fLongswordReachBase
+
+float fLongswordDamageMult
+float fLongswordSpeedMult
+float fLongswordReachMult
+
+short sShortswordDamageBase
+float fShortswordSpeedBase
+float fShortswordReachBase
+
+float fShortswordDamageMult
+float fShortswordSpeedMult
+float fShortswordReachMult
+
+short sDaggerDamageBase
+float fDaggerSpeedBase
+float fDaggerReachBase
+
+float fDaggerDamageMult
+float fDaggerSpeedMult
+float fDaggerReachMult
+
+short sWarhammerDamageBase
+float fWarhammerSpeedBase
+float fWarhammerReachBase
+
+float fWarhammerDamageMult
+float fWarhammerSpeedMult
+float fWarhammerReachMult
+
+short sBattleaxeDamageBase
+float fBattleaxeSpeedBase
+float fBattleaxeReachBase
+
+float fBattleaxeDamageMult
+float fBattleaxeSpeedMult
+float fBattleaxeReachMult
+
+short sMaceDamageBase
+float fMaceSpeedBase
+float fMaceReachBase
+
+float fMaceDamageMult
+float fMaceSpeedMult
+float fMaceReachMult
+
+short sWaraxeDamageBase
+float fWaraxeSpeedBase
+float fWaraxeReachBase
+
+float fWaraxeDamageMult
+float fWaraxeSpeedMult
+float fWaraxeReachMult
+
+short sBowDamageBase
+float fBowSpeedBase
+
+float fBowDamageMult
+float fBowSpeedMult
+
+short AdjDamageBase
+float AdjSpeedBase
+float AdjReachBase
+
+float AdjDamageMult
+float AdjSpeedMult
+float AdjReachMult
+
+;-----------------------------------------------------------------------------
+;Enchantment variables
+;-----------------------------------------------------------------------------		
+short sEnchStart
+short sEnchLevel
+
+short sELDGMagnBase
+short sELDGAreaBase
+short sELDGDuraBase
+float fELDGCostBase
+
+float fELDGMagnMult
+float fELDGAreaMult
+float fELDGDuraMult
+float fELDGCostMult
+
+short sWKELMagnBase
+short sWKELAreaBase
+short sWKELDuraBase
+float fWKELCostBase
+
+float fWKELMagnMult
+float fWKELAreaMult
+float fWKELDuraMult
+float fWKELCostMult
+
+short sWKMAMagnBase
+short sWKMAAreaBase
+short sWKMADuraBase
+float fWKMACostBase
+
+float fWKMAMagnMult
+float fWKMAAreaMult
+float fWKMADuraMult
+float fWKMACostMult
+
+short sDGFAMagnBase
+short sDGFAAreaBase
+short sDGFADuraBase
+float fDGFACostBase
+
+float fDGFAMagnMult
+float fDGFAAreaMult
+float fDGFADuraMult
+float fDGFACostMult
+
+short sDIWEMagnBase
+short sDIWEAreaBase
+short sDIWEDuraBase
+float fDIWECostBase
+
+float fDIWEMagnMult
+float fDIWEAreaMult
+float fDIWEDuraMult
+float fDIWECostMult
+
+short sDIARMagnBase
+short sDIARAreaBase
+short sDIARDuraBase
+float fDIARCostBase
+
+float fDIARMagnMult
+float fDIARAreaMult
+float fDIARDuraMult
+float fDIARCostMult
+
+short sDGSPMagnBase
+short sDGSPAreaBase
+short sDGSPDuraBase
+float fDGSPCostBase
+
+float fDGSPMagnMult
+float fDGSPAreaMult
+float fDGSPDuraMult
+float fDGSPCostMult
+
+short sDSPLMagnBase
+short sDSPLAreaBase
+float fDSPLCostBase
+
+float fDSPLMagnMult
+float fDSPLAreaMult
+float fDSPLCostMult
+
+short sSLNCAreaBase
+short sSLNCDuraBase
+float fSLNCCostBase
+
+float fSLNCAreaMult
+float fSLNCDuraMult
+float fSLNCCostMult
+
+short sBRDNMagnBase
+short sBRDNAreaBase
+short sBRDNDuraBase
+float fBRDNCostBase
+
+float fBRDNMagnMult
+float fBRDNAreaMult
+float fBRDNDuraMult
+float fBRDNCostMult
+
+short sDRATMagnBase
+short sDRATAreaBase
+short sDRATDuraBase
+float fDRATCostBase
+
+float fDRATMagnMult
+float fDRATAreaMult
+float fDRATDuraMult
+float fDRATCostMult
+
+short sCOMMMagnBase
+short sCOMMAreaBase
+short sCOMMDuraBase
+float fCOMMCostBase
+
+float fCOMMMagnMult
+float fCOMMAreaMult
+float fCOMMDuraMult
+float fCOMMCostMult
+
+short sRALYMagnBase
+short sRALYAreaBase
+short sRALYDuraBase
+float fRALYCostBase
+
+float fRALYMagnMult
+float fRALYAreaMult
+float fRALYDuraMult
+float fRALYCostMult
+
+short sFRNZMagnBase
+short sFRNZAreaBase
+short sFRNZDuraBase
+float fFRNZCostBase
+
+float fFRNZMagnMult
+float fFRNZAreaMult
+float fFRNZDuraMult
+float fFRNZCostMult
+
+short sLGHTMagnBase
+short sLGHTAreaBase
+short sLGHTDuraBase
+float fLGHTCostBase
+
+float fLGHTMagnMult
+float fLGHTAreaMult
+float fLGHTDuraMult
+float fLGHTCostMult
+
+short sSTRPAreaBase
+short sSTRPDuraBase
+float fSTRPCostBase
+
+float fSTRPAreaMult
+float fSTRPDuraMult
+float fSTRPCostMult
+
+
+long lChargeBase
+float fChargeMult
+
+long Magnitude
+long Area
+long Duration
+float Cost
+long Charge
+
+short EnchSelect
+short EnchIter
+string_var EffName
+string_var EffActv
+
+short WarnOnce
+ref SoulGem
+
+;-----------------------------------------------------------------------------
+;Level Up variables
+;-----------------------------------------------------------------------------
+short sXPReqBase
+short sXPReqMult
+short sXPNormal
+short sXPPower
+short sXPBow
+short sLevelCap
+
+short CombatXP
+short XPReqHalf
+short HalfOnce
+
+;-----------------------------------------------------------------------------
+;Form Change variables
+;-----------------------------------------------------------------------------
+short ModelChange
+short Button
+short IndexOffset
+
+short ClaymoreIdx
+short Bastard2hIdx
+short Bastard1hIdx
+short LongswordIdx
+short ShortswordIdx
+short DaggerIdx
+short WarhammerIdx
+short BattleaxeIdx
+short MaceIdx
+short WaraxeIdx
+short BowIdx
+
+short SetModel2Idx
+
+;-----------------------------------------------------------------------------
+;RefID of ObjectID and EnchantID
+;-----------------------------------------------------------------------------
+ref self
+ref ench
+
+
+
+
+
+
+
+;-----------------------------------------------------------------------------
+begin GameMode
+;-----------------------------------------------------------------------------
+
+	;-----------------------------------------------------------------------------
+	;Initializer sub-block
+	;-----------------------------------------------------------------------------
+	if GetGameLoaded
+	;-----------------------------------------------------------------------------
+
+		;-----------------------------------------------------------------------------
+		;Minimize the delay time to increase responsiveness
+		;-----------------------------------------------------------------------------
+		Set ScriptLag to 0.5
+		Set MenuLag to 0.001
+
+		;-----------------------------------------------------------------------------
+		;Initialize variables
+		;-----------------------------------------------------------------------------
+		Set ClaymoreIdx to 0
+		Set Bastard2hIdx to 1000
+		Set Bastard1hIdx to 2000
+		Set LongswordIdx to 3000
+		Set ShortswordIdx to 4000
+		Set DaggerIdx to 5000
+		Set WarhammerIdx to 6000
+		Set BattleaxeIdx to 7000
+		Set MaceIdx to 8000
+		Set WaraxeIdx to 9000
+		Set BowIdx to 10000
+
+		Set SetModel2Idx to DaggerIdx
+
+		if ( aaDusfergonModel < BowIdx )
+
+			Set self to DLScalar3
+
+		else
+
+			Set self to DLScalar3B
+			
+		endif
+
+		Set ench to DLScalar3Ench
+
+		
+		Set EnchSelect to 0
+		Set ModelChange to 0
+		Set WarnOnce to 0
+
+		RunBatchScript "Data\ini\Dusfergon.ini"
+		SetNameEx "%z" str_Name self
+
+		
+		;-----------------------------------------------------------------------------
+		;Add to Player on first start up
+		;-----------------------------------------------------------------------------
+		if ( aaDusfergonLevel == 0 )
+
+			Player.AddItemNS self 1
+			Set aaDusfergonLevel to 1
+			MessageEX "An artifact of unknown affiliation appears in your belongings..." 10
+
+		endif
+
+		
+		;-----------------------------------------------------------------------------
+		;Set weapon stats
+		;-----------------------------------------------------------------------------
+		;Set sub-type adjustments
+		Call aaDusfergonStatAdj
+
+		;Set Damage, Speed, Reach
+		Call aaDusfergonStatSet self ( sDamageBase + AdjDamageBase ) ( fDamageMult + AdjDamageMult ) ( fSpeedBase + AdjSpeedBase ) ( fSpeedMult + AdjSpeedMult ) ( fReachBase + AdjReachBase ) ( fReachMult + AdjReachMult )
+
+		;Set Weight, Health, Value
+		Call aaDusfergonStatSet2 self fWeightBase fWeightMult sHealthBase fHealthMult lValueBase fValueMult
+
+		
+		;-----------------------------------------------------------------------------
+		;Set enchantment
+		;-----------------------------------------------------------------------------
+		;Purge effects from previous load game
+		RemoveAllEffectItems ench
+		RemoveEnchantment self
+
+		;Set enchantment stats, return total Cost
+		Set Cost to Call aaDusfergonEnchInit ench
+
+		;If there is an enchantment, apply it after calcing Charge
+		if ( GetMagicItemEffectCount ench > 0 )
+
+			Set Charge to lChargeBase + ( fChargeMult * ( aaDusfergonLevel - 1 ) )
+			SetObjectCharge Charge self
+
+			SetEnchantment ench self
+
+		endif
+
+		
+		;-----------------------------------------------------------------------------
+		;Set XPReq
+		;-----------------------------------------------------------------------------
+		;Set XPReq, return halfway point
+		Set XPReqHalf to Call aaDusfergonCalcXPReq sXPReqBase sXPReqMult XPReqHalf
+
+		;Set halfway/levelcap message flag
+		if ( aaDusfergonLevel < sLevelCap )
+
+			Set HalfOnce to 0
+
+		else
+
+			Set HalfOnce to 1
+
+		endif
+
+
+		;-----------------------------------------------------------------------------
+		;Set model and weapon type
+		;-----------------------------------------------------------------------------
+		;Resets handler if equipped, since has to be re-equipped to refresh model
+		if ( aaDusfergonModel < SetModel2Idx )
+			
+			Call aaDusfergonSetModel self
+
+		else
+
+			Call aaDusfergonSetModel2 self
+
+		endif
+		
+		;Removes handler from previous load game
+		if ( aaDusfergonEquip == 0 )
+
+			RemoveEventHandler "OnHitWith" aaDusfergonOnHit
+			RemoveEventHandler "OnRelease" aaDusfergonOnBowHit
+			
+		endif
+
+		
+		;-----------------------------------------------------------------------------
+		printc "%n initialized!" self
+		;-----------------------------------------------------------------------------
+
+	;-----------------------------------------------------------------------------
+	endif ;GetGameLoaded
+	;-----------------------------------------------------------------------------
+
+	if ( fQuestDelayTime != ScriptLag )
+	
+			Set fQuestDelayTime to ScriptLag
+	
+	endif
+
+
+
+
+
+	
+	;-----------------------------------------------------------------------------
+	;Log XP gained from most recent combat encounter to console
+	;-----------------------------------------------------------------------------
+	if ( Player.IsInCombat == 0 && aaDusfergonCombatXPLog == 1 )
+
+		Set CombatXP to aaDusfergonXP - aaDusfergonCombatXPStart
+		printc "%4.0f/%4.0f  +%2.0fXP" aaDusfergonXP aaDusfergonXPReq CombatXP
+		Set aaDusfergonCombatXPLog to 0
+
+	endif
+
+
+
+
+
+	
+	;-----------------------------------------------------------------------------
+	;Level up sub-blocks
+	;-----------------------------------------------------------------------------
+
+	if ( EnchSelect == 2 )
+
+		Set Button to GetButtonPressed
+
+	endif
+
+	
+	;-----------------------------------------------------------------------------
+	;Open enchant option menu when not in combat
+	;-----------------------------------------------------------------------------	
+	if ( Player.IsInCombat == 0 && EnchSelect == 1 )
+
+		MessageBoxEx "%n seeks an enchantment:|Fire|Ice|Volt|Knight-Slayer|Mage-Slayer|Weaken|Subjugate|Corruption" self
+		Set Button to -1
+		Set EnchSelect to 2
+
+	endif
+
+	
+	;-----------------------------------------------------------------------------
+	;Set enchant option
+	;-----------------------------------------------------------------------------	
+	if ( EnchSelect == 2 && Button > -1 )
+
+		Set aaDusfergonEnch to ( Button + 1 )
+
+		;Initialize enchant option if necessary
+		Set Cost to Call aaDusfergonEnchSlct ench Cost
+
+		SetEnchantment ench self
+		Set EnchSelect to 0
+
+	endif
+	
+
+	
+	;-----------------------------------------------------------------------------
+	;Half way and level cap messages
+	;-----------------------------------------------------------------------------
+	if ( HalfOnce == 0 && EnchSelect < 2 )
+
+		if ( aaDusfergonLevel >= sLevelCap )
+
+			MessageBoxEx "%n has reached its apex." self
+
+			Set HalfOnce to 1
+
+		elseif ( aaDusfergonXP >= XPReqHalf && Player.GetEquipped self )
+
+			Call aaDusfergonLevelMessage HalfOnce self
+			Set HalfOnce to 1
+
+		endif		
+
+	endif
+
+
+	
+	;-----------------------------------------------------------------------------
+	;Level up weapon and enchantment
+	;-----------------------------------------------------------------------------
+	while ( aaDusfergonLevel < sLevelCap && aaDusfergonXP >= aaDusfergonXPReq && EnchSelect == 0 )
+	;-----------------------------------------------------------------------------
+		Set aaDusfergonLevel to aaDusfergonLevel + 1
+
+		;Update weapon stats
+		Call aaDusfergonStatLvl self ( fDamageMult + AdjDamageMult ) ( fSpeedMult + AdjSpeedMult ) ( fReachMult + AdjReachMult ) fWeightMult fHealthMult lValueBase fValueMult
+
+		;Update enchantment stats
+		if ( aaDusfergonLevel >= sEnchStart )
+
+			;Set flag for enchantment option menu
+			if ( ( ( aaDusfergonLevel - sEnchStart ) %  sEnchLevel ) == 0 )
+
+				Set EnchSelect to 1
+
+			endif
+
+			;Increment enchantment stats
+			Set Cost to Call aaDusfergonEnchLvl Ench Cost
+
+			;Set Charge
+			Set Charge to lChargeBase + ( fChargeMult * ( aaDusfergonLevel - 1 ) )
+			SetObjectCharge Charge self
+
+		endif
+		
+		;Set XPReq
+		Set XPReqHalf to Call aaDusfergonCalcXPReq sXPReqBase sXPReqMult XPReqHalf
+		
+		
+		;-----------------------------------------------------------------------------
+		;Level up message
+		;-----------------------------------------------------------------------------
+		printc "%n leveled up to %g!" self aaDusfergonLevel
+
+		Call aaDusfergonLevelMessage HalfOnce self
+		Set HalfOnce to 0
+
+	;-----------------------------------------------------------------------------
+	loop ;( aaDusfergonLevel < sLevelCap && aaDusfergonXP >= aaDusfergonXPReq && EnchSelect == 0 )
+	;-----------------------------------------------------------------------------
+
+
+	;-----------------------------------------------------------------------------
+	;Reset model swapper menus if force exited
+	;-----------------------------------------------------------------------------
+	if ( ModelChange > 0 )
+
+		Set ModelChange to 0
+
+	endif
+
+	
+	;-----------------------------------------------------------------------------
+	;Remove all event handlers if weapon was enchanted by player
+	;-----------------------------------------------------------------------------
+	if ( WarnOnce == 1 )
+
+		RemoveEventHandler "OnEnchant" aaDusfergonOnEnchant
+
+		Set WarnOnce to 0
+
+	elseif ( WarnOnce == 2 )
+
+		if ( GetLastSigilStoneEnchantedItem == self )
+
+			RemoveEventHandler "OnHitWith" aaDusfergonOnHit
+			RemoveEventHandler "OnRelease" aaDusfergonOnBowHit
+			RemoveEventHandler "OnHitWith" aaDusfergonOnArrowHit
+			Set aaDusfergonEquip to 0
+
+			Call aaDusfergonOnSigilStone self
+			
+		endif
+
+		Set WarnOnce to 0
+		
+	endif
+
+	
+;-----------------------------------------------------------------------------
+end ;GameMode
+;-----------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+;-----------------------------------------------------------------------------
+begin MenuMode 1002 ;Inventory
+;-----------------------------------------------------------------------------
+
+	if ( fQuestDelayTime != MenuLag )
+
+		Set fQuestDelayTime to MenuLag
+
+	endif
+
+	;-----------------------------------------------------------------------------
+	;Remove all event handlers if weapon was enchanted by player
+	;-----------------------------------------------------------------------------
+	if ( WarnOnce == 1 )
+
+		RemoveEventHandler "OnEnchant" aaDusfergonOnEnchant
+
+		Set WarnOnce to 0
+
+	elseif ( WarnOnce == 2 )
+
+		if ( GetLastSigilStoneEnchantedItem == self )
+
+			RemoveEventHandler "OnHitWith" aaDusfergonOnHit
+			RemoveEventHandler "OnRelease" aaDusfergonOnBowHit
+			RemoveEventHandler "OnHitWith" aaDusfergonOnArrowHit
+			Set aaDusfergonEquip to 0
+
+			Call aaDusfergonOnSigilStone self
+			
+		endif
+
+		Set WarnOnce to 0
+		
+	endif
+
+	;-----------------------------------------------------------------------------
+	;Shows enchantment effects if Player Ctrl + right-clicks weapon
+	;-----------------------------------------------------------------------------
+	if ( GetActiveMenuSelection == self && ( ( IsKeyPressed2 29 ) || ( IsKeyPressed2 157 ) ) && ( IsKeyPressed2 257 ) )
+	;-----------------------------------------------------------------------------
+
+		Call aaDusfergonEnchDisplay ench
+		
+	;-----------------------------------------------------------------------------
+	;Shows current model's name if Player Shift + right-clicks weapon
+	;-----------------------------------------------------------------------------
+	elseif ( GetActiveMenuSelection == self && ( ( IsKeyPressed2 42 ) || ( IsKeyPressed2 54 ) ) && ( IsKeyPressed2 257 ) )
+	;-----------------------------------------------------------------------------
+
+		Call aaDusfergonShowModelName self
+	
+	;-----------------------------------------------------------------------------
+	;Start ModelChange menus if Player right-clicks weapon
+	;-----------------------------------------------------------------------------
+	elseif ( GetActiveMenuSelection == self && ModelChange == 0 && ( IsKeyPressed2 257 ) )
+
+		Set Button to -1
+		Set ModelChange to 1
+		
+	endif
+
+	
+	;-----------------------------------------------------------------------------
+	;Get the last option chosen
+	;-----------------------------------------------------------------------------
+	if ( ModelChange > 1 && Button < 0 )
+
+		Set Button to GetButtonPressed
+
+	endif
+
+	
+	;-----------------------------------------------------------------------------
+	;Cancel
+	;-----------------------------------------------------------------------------
+	;Cancel is always the first button
+	if ( Button == 0 )
+
+		Set ModelChange to 0
+
+	endif
+
+
+
+
+
+	
+	;-----------------------------------------------------------------------------
+	;Choose primary weapon type
+	;-----------------------------------------------------------------------------
+	if ( ModelChange == 1 && Button == -1 )
+
+		MessageBox "Choose a type:" "Cancel" "2H - Blade" "1H - Blade" "2H - Blunt" "1H - Blunt" "Marksman" "Random"
+		Set ModelChange to 2
+
+
+
+
+
+		
+	;-----------------------------------------------------------------------------
+	;Choose secondary weapon type
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 2 && Button > -1 )
+
+		;-----------------------------------------------------------------------------
+		;2H Blades
+		;-----------------------------------------------------------------------------
+		if ( Button == 1 )
+
+			MessageBox "Choose a sub-type:" "Cancel" "Back" "Claymore" "Bastard"
+			Set ModelChange to 3000
+			Set Button to -1
+
+		;-----------------------------------------------------------------------------
+		;1H Blades
+		;-----------------------------------------------------------------------------
+		elseif ( Button == 2 )
+
+			MessageBox "Choose a sub-type:" "Cancel" "Back" "Bastard" "Longsword" "Longsword II" "Shortsword" "Shortsword II" "Dagger" "Dagger II"
+			Set ModelChange to 4000
+			Set Button to -1
+
+		;-----------------------------------------------------------------------------
+		;2H Blunts
+		;-----------------------------------------------------------------------------
+		elseif ( Button == 3 )
+
+			MessageBox "Choose a sub-type:" "Cancel" "Back" "Warhammer" "Battleaxe"
+			Set ModelChange to 5000
+			Set Button to -1
+
+		;-----------------------------------------------------------------------------
+		;1H Blunts
+		;-----------------------------------------------------------------------------
+		elseif ( Button == 4 )
+
+			MessageBox "Choose a sub-type:" "Cancel" "Back" "Mace" "Waraxe"
+			Set ModelChange to 6000
+			Set Button to -1
+
+		;-----------------------------------------------------------------------------
+		;Marksman
+		;-----------------------------------------------------------------------------
+		elseif ( Button == 5 )
+
+			MessageBox "Choose a sub-type:" "Cancel" "Back" "Bow" "Bow II"
+			Set ModelChange to 7000
+			Set Button to -1
+
+		;-----------------------------------------------------------------------------
+		;Random
+		;-----------------------------------------------------------------------------
+		elseif ( Button == 6 )
+
+			Set Button to Call aaDusfergonRandomModel
+			Set IndexOffset to 2
+			Set ModelChange to 100
+
+		endif
+
+
+
+
+
+		
+	;-----------------------------------------------------------------------------
+	;Choose specific weapon model
+	;-----------------------------------------------------------------------------
+	;2H Blades
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 3000 && Button > -1 )
+
+		;Go back to type select
+		if ( Button == 1 )
+
+			Set ModelChange to 1
+			Set Button to -1
+
+		;Claymore pages
+		elseif ( Button == 2 )
+
+			Set ModelChange to 3100
+
+		;Bastard2h pages
+		elseif ( Button == 3 )
+
+			Set ModelChange to 3200
+
+		endif
+
+
+
+		
+	;-----------------------------------------------------------------------------
+	;Claymore pg1
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 3100 )
+
+		MessageBox "Choose a form:" "Cancel" "Back" "Bastard" "Merciless" "Wolf" "Wolf Ricasso" "Akatosh" "Serenity" "Zweihander" "Next"
+		Set Button to -1
+		Set ModelChange to 3101
+
+	elseif ( ModelChange == 3101 && Button > -1 )
+
+		;Back to 2H - Blade sub-type select
+		if ( Button == 1 )
+
+			Set ModelChange to 2
+			Set Button to 1
+
+		;Next Claymore page
+		elseif ( Button == 9 )
+
+			Set ModelChange to 3102
+
+		;Selected a model
+		else
+
+			Set IndexOffset to ClaymoreIdx
+			Set ModelChange to 100
+
+		endif
+
+	;-----------------------------------------------------------------------------
+	;Claymore pg2
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 3102 )
+
+		MessageBox "Choose a form:" "Cancel" "Prev" "Sunfire" "Ivellon Claymore" "Ivellon Zweihander" "Sathix" "Sathix Crimson" "Gotland" "Gotland Steel" "Next"
+		Set Button to -1
+		Set ModelChange to 3103
+
+	elseif ( ModelChange == 3103 && Button > -1 )
+
+		;Previous Claymore page
+		if ( Button == 1 )
+
+			Set ModelChange to 3100
+
+		;Next Claymore page
+		elseif ( Button == 9 )
+
+			Set ModelChange to 3104
+
+		;Selected a model
+		else
+
+			Set IndexOffset to ClaymoreIdx + 7
+			Set ModelChange to 100
+
+		endif
+
+	;-----------------------------------------------------------------------------
+	;Claymore pg3
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 3104 )
+
+		MessageBox "Choose a form:" "Cancel" "Prev" "Gotland Old" "Vanilla Iron" "Vanilla Steel" "Vanilla Fine Steel" "Vanilla Silver" "Vanilla Dwarven" "Vanilla Elven" "Next"
+		Set Button to -1
+		Set ModelChange to 3105
+
+	elseif ( ModelChange == 3105 && Button > -1 )
+
+		;Previous Claymore page
+		if ( Button == 1 )
+
+			Set ModelChange to 3102
+
+		;Next Claymore page
+		elseif ( Button == 9 )
+
+			Set ModelChange to 3106
+
+		;Selected a model
+		else
+
+			Set IndexOffset to ClaymoreIdx + 14
+			Set ModelChange to 100
+
+		endif
+
+	;-----------------------------------------------------------------------------
+	;Claymore pg4
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 3106 )
+
+		MessageBox "Choose a form:" "Cancel" "Prev" "Vanilla Glass" "Vanilla Ebony" "Vanilla Daedric"; "" "" "" "" "Next"
+		Set Button to -1
+		Set ModelChange to 3107
+
+	elseif ( ModelChange == 3107 && Button > -1 )
+
+		;Previous Claymore page
+		if ( Button == 1 )
+
+			Set ModelChange to 3104
+
+		;Next Claymore page
+		;elseif ( Button == 9 )
+
+			;Set ModelChange to 3108
+
+		;Selected a model
+		else
+
+			Set IndexOffset to ClaymoreIdx + 21
+			Set ModelChange to 100
+
+		endif
+
+
+
+		
+	;-----------------------------------------------------------------------------
+	;Bastard2h pg1
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 3200 )
+
+		MessageBox "Choose a form:" "Cancel" "Back" "Mercy" "Trust" "Kinslayer" "Hope" "Despair" "Sorrow" "Truth" "Next"
+		Set Button to -1
+		Set ModelChange to 3201
+
+	elseif ( ModelChange == 3201 && Button > -1 )
+
+		;Back to 2H - Blade sub-type select
+		if ( Button == 1 )
+
+			Set ModelChange to 2
+			Set Button to 1
+
+		;Next Bastard2h page
+		elseif ( Button == 9 )
+
+			Set ModelChange to 3202
+
+		;Selected a model
+		else
+
+			Set IndexOffset to Bastard2hIdx
+			Set ModelChange to 100
+
+		endif
+
+	;-----------------------------------------------------------------------------
+	;Bastard2h pg2
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 3202 )
+
+		MessageBox "Choose a form:" "Cancel" "Prev" "Type-A" "Type-B" "Type-C" "Type-D" "Type-E" "Hiero" "Surazal" "Next"
+		Set Button to -1
+		Set ModelChange to 3203
+
+	elseif ( ModelChange == 3203 && Button > -1 )
+
+		;Previous Bastard2h page
+		if ( Button == 1 )
+
+			Set ModelChange to 3200
+
+		;Next Bastard2h page
+		elseif ( Button == 9 )
+
+			Set ModelChange to 3204
+
+		;Selected a model
+		else
+
+			Set IndexOffset to Bastard2hIdx + 7
+			Set ModelChange to 100
+
+		endif
+
+	;-----------------------------------------------------------------------------
+	;Bastard2h pg3
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 3204 )
+
+		MessageBox "Choose a form:" "Cancel" "Prev" "Ivellon" "Clint XVI" "Angular Leaf" "Tapper" "Seaward" "Clint XVI Steel" "Angular Leaf Steel" "Next"
+		Set Button to -1
+		Set ModelChange to 3205
+
+	elseif ( ModelChange == 3205 && Button > -1 )
+
+		;Previous Bastard2h page
+		if ( Button == 1 )
+
+			Set ModelChange to 3202
+
+		;Next Bastard2h page
+		elseif ( Button == 9 )
+
+			Set ModelChange to 3206
+
+		;Selected a model
+		else
+
+			Set IndexOffset to Bastard2hIdx + 14
+			Set ModelChange to 100
+
+		endif
+
+	;-----------------------------------------------------------------------------
+	;Bastard2h pg4
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 3206 )
+
+		MessageBox "Choose a form:" "Cancel" "Prev" "Tapper Steel" "Tapper Black" "Tapper Old"; "" "" "" "" "Next"
+		Set Button to -1
+		Set ModelChange to 3207
+
+	elseif ( ModelChange == 3207 && Button > -1 )
+
+		;Previous Bastard2h page
+		if ( Button == 1 )
+
+			Set ModelChange to 3204
+
+		;Next Bastard2h page
+		;elseif ( Button == 9 )
+
+			;Set ModelChange to 3208
+
+		;Selected a model
+		else
+
+			Set IndexOffset to Bastard2hIdx + 21
+			Set ModelChange to 100
+
+		endif
+
+
+
+
+
+		
+	;-----------------------------------------------------------------------------
+	;1H Blades
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 4000 && Button > -1 )
+
+		;Go back to type select
+		if ( Button == 1 )
+
+			Set ModelChange to 1
+			Set Button to -1
+
+		;Bastard1h pages
+		elseif ( Button == 2 )
+
+			Set ModelChange to 4100
+
+		;Longsword pages
+		elseif ( Button == 3 )
+
+			Set ModelChange to 4200
+
+		;Longsword II pages
+		elseif ( Button == 4 )
+
+			Set ModelChange to 4210
+
+		;Shortsword pages
+		elseif ( Button == 5 )
+
+			Set ModelChange to 4300
+
+		;Shortsword II pages
+		elseif ( Button == 6 )
+
+			Set ModelChange to 4310
+
+		;Dagger pages
+		elseif ( Button == 7 )
+
+			Set ModelChange to 4400
+
+		;Dagger II pages
+		elseif ( Button == 8 )
+
+			Set ModelChange to 4410
+
+		endif
+
+
+
+		
+	;-----------------------------------------------------------------------------
+	;Bastard1h pg1
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 4100 )
+
+		MessageBox "Choose a form:" "Cancel" "Back" "Mercy" "Trust" "Kinslayer" "Hope" "Despair" "Sorrow" "Truth" "Next"
+		Set Button to -1
+		Set ModelChange to 4101
+
+	elseif ( ModelChange == 4101 && Button > -1 )
+
+		;Back to 1H - Blade sub-type select
+		if ( Button == 1 )
+
+			Set ModelChange to 2
+			Set Button to 2
+
+		;Next Bastard1h page
+		elseif ( Button == 9 )
+
+			Set ModelChange to 4102
+
+		;Selected a model
+		else
+
+			Set IndexOffset to Bastard1hIdx
+			Set ModelChange to 100
+
+		endif
+
+	;-----------------------------------------------------------------------------
+	;Bastard1h pg2
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 4102 )
+
+		MessageBox "Choose a form:" "Cancel" "Prev" "Type-A" "Type-B" "Type-C" "Type-D" "Type-E" "Hiero" "Surazal" "Next"
+		Set Button to -1
+		Set ModelChange to 4103
+
+	elseif ( ModelChange == 4103 && Button > -1 )
+
+		;Previous Bastard1h page
+		if ( Button == 1 )
+
+			Set ModelChange to 4100
+
+		;Next Bastard1h page
+		elseif ( Button == 9 )
+
+			Set ModelChange to 4104
+
+		;Selected a model
+		else
+
+			Set IndexOffset to Bastard1hIdx + 7
+			Set ModelChange to 100
+
+		endif
+
+	;-----------------------------------------------------------------------------
+	;Bastard1h pg3
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 4104 )
+
+		MessageBox "Choose a form:" "Cancel" "Prev" "Ivellon" "Clint XVI" "Angular Leaf" "Tapper" "Seaward" "Clint XVI Steel" "Angular Leaf Steel" "Next"
+		Set Button to -1
+		Set ModelChange to 4105
+
+	elseif ( ModelChange == 4105 && Button > -1 )
+
+		;Previous Bastard1h page
+		if ( Button == 1 )
+
+			Set ModelChange to 4102
+
+		;Next Bastard1h page
+		elseif ( Button == 9 )
+
+			Set ModelChange to 4106
+
+		;Selected a model
+		else
+
+			Set IndexOffset to Bastard1hIdx + 14
+			Set ModelChange to 100
+
+		endif
+
+	;-----------------------------------------------------------------------------
+	;Bastard2h pg4
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 4106 )
+
+		MessageBox "Choose a form:" "Cancel" "Prev" "Tapper Steel" "Tapper Black" "Tapper Old"; "" "" "" "" "Next"
+		Set Button to -1
+		Set ModelChange to 4107
+
+	elseif ( ModelChange == 4107 && Button > -1 )
+
+		;Previous Bastard2h page
+		if ( Button == 1 )
+
+			Set ModelChange to 4104
+
+		;Next Bastard2h page
+		;elseif ( Button == 9 )
+
+			;Set ModelChange to 4108
+
+		;Selected a model
+		else
+
+			Set IndexOffset to Bastard1hIdx + 21
+			Set ModelChange to 100
+
+		endif
+
+
+
+		
+	;-----------------------------------------------------------------------------
+	;Longsword pg1
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 4200 )
+
+		MessageBox "Choose a form:" "Cancel" "Back" "Iron" "Fine Iron" "Steel" "Fine Steel" "Silver" "Ebony" "Daedric" "Next"
+		Set Button to -1
+		Set ModelChange to 4201
+
+	elseif ( ModelChange == 4201 && Button > -1 )
+
+		;Back to 1H - Blade sub-type select
+		if ( Button == 1 )
+
+			Set ModelChange to 2
+			Set Button to 2
+
+		;Next Longsword page
+		elseif ( Button == 9 )
+
+			Set ModelChange to 4202
+
+		;Selected a model
+		else
+
+			Set IndexOffset to LongswordIdx
+			Set ModelChange to 100
+
+		endif
+
+	;-----------------------------------------------------------------------------
+	;Longsword pg2
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 4202 )
+
+		MessageBox "Choose a form:" "Cancel" "Prev" "Arming" "Ivellon" "Corralor" "Gull" "Moonbrand" "Archer" "Solingen" "Next"
+		Set Button to -1
+		Set ModelChange to 4203
+
+	elseif ( ModelChange == 4203 && Button > -1 )
+
+		;Previous Longsword page
+		if ( Button == 1 )
+
+			Set ModelChange to 4200
+
+		;Next Longsword page
+		elseif ( Button == 9 )
+
+			Set ModelChange to 4204
+
+		;Selected a model
+		else
+
+			Set IndexOffset to LongswordIdx + 7
+			Set ModelChange to 100
+
+		endif
+
+	;-----------------------------------------------------------------------------
+	;Longsword pg3
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 4204 )
+
+		MessageBox "Choose a form:" "Cancel" "Prev" "Tritonia" "Necro" "Slavatio" "Goblin" "Leaf" "Shokuto" "Baskethilt" "Next"
+		Set Button to -1
+		Set ModelChange to 4205
+
+	elseif ( ModelChange == 4205 && Button > -1 )
+
+		;Previous Longsword page
+		if ( Button == 1 )
+
+			Set ModelChange to 4202
+
+		;Next Longsword page
+		elseif ( Button == 9 )
+
+			Set ModelChange to 4206
+
+		;Selected a model
+		else
+
+			Set IndexOffset to LongswordIdx + 14
+			Set ModelChange to 100
+
+		endif
+
+	;-----------------------------------------------------------------------------
+	;Longsword pg4
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 4206 )
+
+		MessageBox "Choose a form:" "Cancel" "Prev" "Single Edge" "Dragoon" "Kriss" "Elvin" "Broke Back" "Bone Daito" "Dragonfly" "Next"
+		Set Button to -1
+		Set ModelChange to 4207
+
+	elseif ( ModelChange == 4207 && Button > -1 )
+
+		;Previous Longsword page
+		if ( Button == 1 )
+
+			Set ModelChange to 4204
+
+		;Next Longsword page
+		elseif ( Button == 9 )
+
+			Set ModelChange to 4208
+
+		;Selected a model
+		else
+
+			Set IndexOffset to LongswordIdx + 21
+			Set ModelChange to 100
+
+		endif
+
+	;-----------------------------------------------------------------------------
+	;Longsword pg5
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 4208 )
+
+		MessageBox "Choose a form:" "Cancel" "Prev" "Chimer" "Commander" "Hook" "Scimitar" "Volsung" "Atmorian" "Beserker"; "Next"
+		Set Button to -1
+		Set ModelChange to 4209
+
+	elseif ( ModelChange == 4209 && Button > -1 )
+
+		;Previous Longsword page
+		if ( Button == 1 )
+
+			Set ModelChange to 4206
+
+		;Next Longsword page
+;		elseif ( Button == 9 )
+
+;			Set ModelChange to 4210
+
+		;Selected a model
+		else
+
+			Set IndexOffset to LongswordIdx + 28
+			Set ModelChange to 100
+
+		endif
+
+	;-----------------------------------------------------------------------------
+	;Longsword II pg1
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 4210 )
+
+		MessageBox "Choose a form:" "Cancel" "Back" "Cawood" "Cawood II" "Gramr" "Norland" "Warp" "Archer Steel" "Solingen Steel" "Next"
+		Set Button to -1
+		Set ModelChange to 4211
+
+	elseif ( ModelChange == 4211 && Button > -1 )
+
+		;Back to 1H - Blade sub-type select
+		if ( Button == 1 )
+
+			Set ModelChange to 2
+			Set Button to 2
+
+		;Next Longsword page
+		elseif ( Button == 9 )
+
+			Set ModelChange to 4212
+
+		;Selected a model
+		else
+
+			Set IndexOffset to LongswordIdx + 35
+			Set ModelChange to 100
+
+		endif
+
+	;-----------------------------------------------------------------------------
+	;Longsword II pg2
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 4212 )
+
+		MessageBox "Choose a form:" "Cancel" "Prev" "Tritonia Steel" "Necro Steel" "Salvatio Steel" "Baskethilt Steel" "Beserker Steel" "Warp Steel" "Leaf Old" "Next"
+		Set Button to -1
+		Set ModelChange to 4213
+
+	elseif ( ModelChange == 4213 && Button > -1 )
+
+		;Previous Longsword page
+		if ( Button == 1 )
+
+			Set ModelChange to 4210
+
+		;Next Longsword page
+		elseif ( Button == 9 )
+
+			Set ModelChange to 4214
+
+		;Selected a model
+		else
+
+			Set IndexOffset to LongswordIdx + 42
+			Set ModelChange to 100
+
+		endif
+
+	;-----------------------------------------------------------------------------
+	;Longsword II pg3
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 4214 )
+
+		MessageBox "Choose a form:" "Cancel" "Prev" "Shokuto Old" "Chimer Old" "Commander Old" "Hook Old" "Scimitar Old" "Atmorian Old" "Beserker Old" "Next"
+		Set Button to -1
+		Set ModelChange to 4215
+
+	elseif ( ModelChange == 4215 && Button > -1 )
+
+		;Previous Longsword page
+		if ( Button == 1 )
+
+			Set ModelChange to 4212
+
+		;Next Longsword page
+		elseif ( Button == 9 )
+
+			Set ModelChange to 4216
+
+		;Selected a model
+		else
+
+			Set IndexOffset to LongswordIdx + 49
+			Set ModelChange to 100
+
+		endif
+
+	;-----------------------------------------------------------------------------
+	;Longsword II pg4
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 4216 )
+
+		MessageBox "Choose a form:" "Cancel" "Prev" "Cawood Old" "Cawood II Old" "Gramr Old" "Norland Old" "Warp Old" "Vanilla Iron" "Vanilla Steel" "Next"
+		Set Button to -1
+		Set ModelChange to 4217
+
+	elseif ( ModelChange == 4217 && Button > -1 )
+
+		;Previous Longsword page
+		if ( Button == 1 )
+
+			Set ModelChange to 4214
+
+		;Next Longsword page
+		elseif ( Button == 9 )
+
+			Set ModelChange to 4218
+
+		;Selected a model
+		else
+
+			Set IndexOffset to LongswordIdx + 56
+			Set ModelChange to 100
+
+		endif
+
+	;-----------------------------------------------------------------------------
+	;Longsword II pg5
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 4218 )
+
+		MessageBox "Choose a form:" "Cancel" "Prev" "Vanilla Fine Steel" "Vanilla Silver" "Vanilla Dwarven" "Vanilla Elven" "Vanilla Glass" "Vanilla Ebony" "Vanilla Daedric"; "Next"
+		Set Button to -1
+		Set ModelChange to 4219
+
+	elseif ( ModelChange == 4219 && Button > -1 )
+
+		;Previous Longsword page
+		if ( Button == 1 )
+
+			Set ModelChange to 4216
+
+		;Next Longsword page
+;		elseif ( Button == 9 )
+
+;			Set ModelChange to 4218
+
+		;Selected a model
+		else
+
+			Set IndexOffset to LongswordIdx + 63
+			Set ModelChange to 100
+
+		endif
+
+
+
+		
+	;-----------------------------------------------------------------------------
+	;Shortsword pg1
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 4300 )
+
+		MessageBox "Choose a form:" "Cancel" "Back" "Iron" "Fine Iron" "Steel" "Fine Steel" "Silver" "Ebony" "Ivellon" "Next"
+		Set Button to -1
+		Set ModelChange to 4301
+
+	elseif ( ModelChange == 4301 && Button > -1 )
+
+		;Back to 1H - Blade sub-type select
+		if ( Button == 1 )
+
+			Set ModelChange to 2
+			Set Button to 2
+
+		;Next Shortsword page
+		elseif ( Button == 9 )
+
+			Set ModelChange to 4302
+
+		;Selected a model
+		else
+
+			Set IndexOffset to ShortswordIdx
+			Set ModelChange to 100
+
+		endif
+
+	;-----------------------------------------------------------------------------
+	;Shortsword pg2
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 4302 )
+
+		MessageBox "Choose a form:" "Cancel" "Prev" "Barrow" "Archer" "Archer Kriss" "Kriss" "Broad Kriss" "Barbed Leaf" "Panther Leaf" "Next"
+		Set Button to -1
+		Set ModelChange to 4303
+
+	elseif ( ModelChange == 4303 && Button > -1 )
+
+		;Previous Shortsword page
+		if ( Button == 1 )
+
+			Set ModelChange to 4300
+
+		;Next Shortsword page
+		elseif ( Button == 9 )
+
+			Set ModelChange to 4304
+
+		;Selected a model
+		else
+
+			Set IndexOffset to ShortswordIdx + 7
+			Set ModelChange to 100
+
+		endif
+
+	;-----------------------------------------------------------------------------
+	;Shortsword pg3
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 4304 )
+
+		MessageBox "Choose a form:" "Cancel" "Prev" "Corralnium" "Lemurian" "Broad Sword" "Broad Blade" "Elhazan" "Seaward" "Knuckle Bow" "Next"
+		Set Button to -1
+		Set ModelChange to 4305
+
+	elseif ( ModelChange == 4305 && Button > -1 )
+
+		;Previous Shortsword page
+		if ( Button == 1 )
+
+			Set ModelChange to 4302
+
+		;Next Shortsword page
+		elseif ( Button == 9 )
+
+			Set ModelChange to 4306
+
+		;Selected a model
+		else
+
+			Set IndexOffset to ShortswordIdx + 14
+			Set ModelChange to 100
+
+		endif
+
+	;-----------------------------------------------------------------------------
+	;Shortsword pg4
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 4306 )
+
+		MessageBox "Choose a form:" "Cancel" "Prev" "Lion Claw" "Elvin" "Commander" "Kukri" "Falshion" "Falshion Ranger" "Quandao" "Next"
+		Set Button to -1
+		Set ModelChange to 4307
+
+	elseif ( ModelChange == 4307 && Button > -1 )
+
+		;Previous Shortsword page
+		if ( Button == 1 )
+
+			Set ModelChange to 4304
+
+		;Next Shortsword page
+		elseif ( Button == 9 )
+
+			Set ModelChange to 4308
+
+		;Selected a model
+		else
+
+			Set IndexOffset to ShortswordIdx + 21
+			Set ModelChange to 100
+
+		endif
+
+	;-----------------------------------------------------------------------------
+	;Shortsword pg5
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 4308 )
+
+		MessageBox "Choose a form:" "Cancel" "Prev" "Eagle" "Crescent" "Orcish" "Moriche" "Curved" "Goblin Curved" "Cleaver"; "Next"
+		Set Button to -1
+		Set ModelChange to 4309
+
+	elseif ( ModelChange == 4309 && Button > -1 )
+
+		;Previous Shortsword page
+		if ( Button == 1 )
+
+			Set ModelChange to 4306
+
+		;Next Shortsword page
+;		elseif ( Button == 9 )
+
+;			Set ModelChange to 4310
+
+		;Selected a model
+		else
+
+			Set IndexOffset to ShortswordIdx + 28
+			Set ModelChange to 100
+
+		endif
+
+	;-----------------------------------------------------------------------------
+	;Shortsword II pg1
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 4310 )
+
+		MessageBox "Choose a form:" "Cancel" "Back" "Bone Shokuto" "Bone Talon" "Bone Wakizaki" "Bone Dah" "Meyer" "Moria" "Poignard" "Next"
+		Set Button to -1
+		Set ModelChange to 4311
+
+	elseif ( ModelChange == 4311 && Button > -1 )
+
+		;Back to 1H - Blade sub-type select
+		if ( Button == 1 )
+
+			Set ModelChange to 2
+			Set Button to 2
+
+		;Next Shortsword page
+		elseif ( Button == 9 )
+
+			Set ModelChange to 4312
+
+		;Selected a model
+		else
+
+			Set IndexOffset to ShortswordIdx + 35
+			Set ModelChange to 100
+
+		endif
+
+	;-----------------------------------------------------------------------------
+	;Shortsword II pg2
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 4312 )
+
+		MessageBox "Choose a form:" "Cancel" "Prev" "Falshion Steel" "Falshion Ranger Steel" "Poignard Steel" "Commander Old" "Eagle Old" "Crescent Old" "Moriche Old" "Next"
+		Set Button to -1
+		Set ModelChange to 4313
+
+	elseif ( ModelChange == 4313 && Button > -1 )
+
+		;Previous Shortsword page
+		if ( Button == 1 )
+
+			Set ModelChange to 4310
+
+		;Next Shortsword page
+		elseif ( Button == 9 )
+
+			Set ModelChange to 4314
+
+		;Selected a model
+		else
+
+			Set IndexOffset to ShortswordIdx + 42
+			Set ModelChange to 100
+
+		endif
+
+	;-----------------------------------------------------------------------------
+	;Shortsword II pg3
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 4314 )
+
+		MessageBox "Choose a form:" "Cancel" "Prev" "Meyer Old" "Poignard Old" "Broken" "Vanilla Iron" "Vanilla Steel" "Vanilla Fine Steel" "Vanilla Silver" "Next"
+		Set Button to -1
+		Set ModelChange to 4315
+
+	elseif ( ModelChange == 4315 && Button > -1 )
+
+		;Previous Shortsword page
+		if ( Button == 1 )
+
+			Set ModelChange to 4312
+
+		;Next Shortsword page
+		elseif ( Button == 9 )
+
+			Set ModelChange to 4316
+
+		;Selected a model
+		else
+
+			Set IndexOffset to ShortswordIdx + 49
+			Set ModelChange to 100
+
+		endif
+
+	;-----------------------------------------------------------------------------
+	;Shortsword II pg4
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 4316 )
+
+		MessageBox "Choose a form:" "Cancel" "Prev" "Vanilla Dwarven" "Vanilla Elven" "Vanilla Glass" "Vanilla Ebony" "Vanilla Daedric"; "" "" "Next"
+		Set Button to -1
+		Set ModelChange to 4317
+
+	elseif ( ModelChange == 4317 && Button > -1 )
+
+		;Previous Shortsword page
+		if ( Button == 1 )
+
+			Set ModelChange to 4314
+
+		;Next Shortsword page
+;		elseif ( Button == 9 )
+
+;			Set ModelChange to 4318
+
+		;Selected a model
+		else
+
+			Set IndexOffset to ShortswordIdx + 56
+			Set ModelChange to 100
+
+		endif
+
+
+
+		
+	;-----------------------------------------------------------------------------
+	;Dagger pg1
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 4400 )
+
+		MessageBox "Choose a form:" "Cancel" "Back" "Iron" "Fine Iron" "Steel" "Fine Steel" "Silver" "Ebony" "Corralnium" "Next"
+		Set Button to -1
+		Set ModelChange to 4401
+
+	elseif ( ModelChange == 4401 && Button > -1 )
+
+		;Back to 1H - Blade sub-type select
+		if ( Button == 1 )
+
+			Set ModelChange to 2
+			Set Button to 2
+
+		;Next Dagger page
+		elseif ( Button == 9 )
+
+			Set ModelChange to 4402
+
+		;Selected a model
+		else
+
+			Set IndexOffset to DaggerIdx
+			Set ModelChange to 100
+
+		endif
+
+	;-----------------------------------------------------------------------------
+	;Dagger pg2
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 4402 )
+
+		MessageBox "Choose a form:" "Cancel" "Prev" "Kriss" "Tetela" "Spike" "Stiletto" "Bowie" "Hunting" "Miscitar" "Next"
+		Set Button to -1
+		Set ModelChange to 4403
+
+	elseif ( ModelChange == 4403 && Button > -1 )
+
+		;Previous Dagger page
+		if ( Button == 1 )
+
+			Set ModelChange to 4400
+
+		;Next Dagger page
+		elseif ( Button == 9 )
+
+			Set ModelChange to 4404
+
+		;Selected a model
+		else
+
+			Set IndexOffset to DaggerIdx + 7
+			Set ModelChange to 100
+
+		endif
+
+	;-----------------------------------------------------------------------------
+	;Dagger pg3
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 4404 )
+
+		MessageBox "Choose a form:" "Cancel" "Prev" "Jambaya" "Silver Knife" "Mori" "Elvin" "Jody" "Claw" "Crescent" "Next"
+		Set Button to -1
+		Set ModelChange to 4405
+
+	elseif ( ModelChange == 4405 && Button > -1 )
+
+		;Previous Dagger page
+		if ( Button == 1 )
+
+			Set ModelChange to 4402
+
+		;Next Dagger page
+		elseif ( Button == 9 )
+
+			Set ModelChange to 4406
+
+		;Selected a model
+		else
+
+			Set IndexOffset to DaggerIdx + 14
+			Set ModelChange to 100
+
+		endif
+
+	;-----------------------------------------------------------------------------
+	;Dagger pg4
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 4406 )
+
+		MessageBox "Choose a form:" "Cancel" "Prev" "Bone Tanto" "Ivory" "Poignard" "Poignard II" "Broadedge" "Spike Steel" "Stiletto Silver" "Next"
+		Set Button to -1
+		Set ModelChange to 4407
+
+	elseif ( ModelChange == 4407 && Button > -1 )
+
+		;Previous Dagger page
+		if ( Button == 1 )
+
+			Set ModelChange to 4404
+
+		;Next Dagger page
+		elseif ( Button == 9 )
+
+			Set ModelChange to 4408
+
+		;Selected a model
+		else
+
+			Set IndexOffset to DaggerIdx + 21
+			Set ModelChange to 100
+
+		endif
+
+	;-----------------------------------------------------------------------------
+	;Dagger pg5
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 4408 )
+
+		MessageBox "Choose a form:" "Cancel" "Prev" "Poignard Steel" "Poignard II Steel" "Broadedge Steel" "Jody Old" "Claw Old" "Crescent Old" "Poignard Old"; "Next"
+		Set Button to -1
+		Set ModelChange to 4409
+
+	elseif ( ModelChange == 4409 && Button > -1 )
+
+		;Previous Dagger page
+		if ( Button == 1 )
+
+			Set ModelChange to 4406
+
+		;Next Dagger page
+;		elseif ( Button == 9 )
+
+;			Set ModelChange to 4410
+
+		;Selected a model
+		else
+
+			Set IndexOffset to DaggerIdx + 28
+			Set ModelChange to 100
+
+		endif
+
+	;-----------------------------------------------------------------------------
+	;Dagger II pg1
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 4410 )
+
+		MessageBox "Choose a form:" "Cancel" "Back" "Poignard II Old" "Broadedge Old" "Vanilla Iron" "Vanilla Steel" "Vanilla Fine Steel" "Vanilla Silver" "Vanilla Dwarven" "Next"
+		Set Button to -1
+		Set ModelChange to 4411
+
+	elseif ( ModelChange == 4411 && Button > -1 )
+
+		;Back to 1H - Blade sub-type select
+		if ( Button == 1 )
+
+			Set ModelChange to 2
+			Set Button to 2
+
+		;Next Dagger II page
+		elseif ( Button == 9 )
+
+			Set ModelChange to 4412
+
+		;Selected a model
+		else
+
+			Set IndexOffset to DaggerIdx + 35
+			Set ModelChange to 100
+
+		endif
+
+	;-----------------------------------------------------------------------------
+	;Dagger II pg2
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 4412 )
+
+		MessageBox "Choose a form:" "Cancel" "Prev" "Vanilla Elven" "Vanilla Glass" "Vanilla Ebony" "Vanilla Daedric"; "" "" "" "Next"
+		Set Button to -1
+		Set ModelChange to 4413
+
+	elseif ( ModelChange == 4413 && Button > -1 )
+
+		;Previous Dagger page
+		if ( Button == 1 )
+
+			Set ModelChange to 4410
+
+		;Next Dagger II page
+;		elseif ( Button == 9 )
+
+;			Set ModelChange to 4414
+
+		;Selected a model
+		else
+
+			Set IndexOffset to DaggerIdx + 42
+			Set ModelChange to 100
+
+		endif
+
+
+
+
+
+		
+	;-----------------------------------------------------------------------------
+	;2H Blunts
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 5000 && Button > -1 )
+
+		;Go back to type select
+		if ( Button == 1 )
+
+			Set ModelChange to 1
+			Set Button to -1
+
+		;Warhammer pages
+		elseif ( Button == 2 )
+
+			Set ModelChange to 5100
+
+		;Battleaxe pages
+		elseif ( Button == 3 )
+
+			Set ModelChange to 5200
+
+		endif
+
+
+
+		
+	;-----------------------------------------------------------------------------
+	;Warhammer pg1
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 5100 )
+
+		MessageBox "Choose a form:" "Cancel" "Back" "Flanged" "Morningstar" "Mormacil" "Maul" "Stendarr" "Goblinstar" "Mirondil" "Next"
+		Set Button to -1
+		Set ModelChange to 5101
+
+	elseif ( ModelChange == 5101 && Button > -1 )
+
+		;Back to 2H - Blunt sub-type select
+		if ( Button == 1 )
+
+			Set ModelChange to 2
+			Set Button to 3
+
+		;Next Warhammer page
+		elseif ( Button == 9 )
+
+			Set ModelChange to 5102
+
+		;Selected a model
+		else
+
+			Set IndexOffset to WarhammerIdx
+			Set ModelChange to 100
+
+		endif
+
+	;-----------------------------------------------------------------------------
+	;Warhammer pg2
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 5102 )
+
+		MessageBox "Choose a form:" "Cancel" "Prev" "Mirondil Gilded" "Flanged Steel" "Morningstar Steel" "Vanilla Iron" "Vanilla Steel" "Vanilla Fine Steel" "Vanilla Silver" "Next"
+		Set Button to -1
+		Set ModelChange to 5103
+
+	elseif ( ModelChange == 5103 && Button > -1 )
+
+		;Previous Warhammer page
+		if ( Button == 1 )
+
+			Set ModelChange to 5100
+
+		;Next Warhammer page
+		elseif ( Button == 9 )
+
+			Set ModelChange to 5104
+
+		;Selected a model
+		else
+
+			Set IndexOffset to WarhammerIdx + 7
+			Set ModelChange to 100
+
+		endif
+
+	;-----------------------------------------------------------------------------
+	;Warhammer pg3
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 5104 )
+
+		MessageBox "Choose a form:" "Cancel" "Prev" "Vanilla Dwarven" "Vanilla Elven" "Vanilla Glass" "Vanilla Ebony" "Vanilla Daedric"; "" "" "Next"
+		Set Button to -1
+		Set ModelChange to 5105
+
+	elseif ( ModelChange == 5105 && Button > -1 )
+
+		;Previous Warhammer page
+		if ( Button == 1 )
+
+			Set ModelChange to 5102
+
+		;Next Warhammer page
+		;elseif ( Button == 9 )
+
+			;Set ModelChange to 5106
+
+		;Selected a model
+		else
+
+			Set IndexOffset to WarhammerIdx + 14
+			Set ModelChange to 100
+
+		endif
+
+
+
+		
+	;-----------------------------------------------------------------------------
+	;Battleaxe pg1
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 5200 )
+
+		MessageBox "Choose a form:" "Cancel" "Back" "Bearded" "Fine Bearded" "War" "Cleaver" "Ivellon" "Rhino" "Sotonhorian" "Next"
+		Set Button to -1
+		Set ModelChange to 5201
+
+	elseif ( ModelChange == 5201 && Button > -1 )
+
+		;Back to 2H - Blunt sub-type select
+		if ( Button == 1 )
+
+			Set ModelChange to 2
+			Set Button to 3
+
+		;Next Battleaxe page
+		elseif ( Button == 9 )
+
+			Set ModelChange to 5202
+
+		;Selected a model
+		else
+
+			Set IndexOffset to BattleaxeIdx
+			Set ModelChange to 100
+
+		endif
+
+	;-----------------------------------------------------------------------------
+	;Battleaxe pg2
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 5202 )
+
+		MessageBox "Choose a form:" "Cancel" "Prev" "Thorgeir" "Ziragon" "Bearded Old" "War Old" "Vanilla Iron" "Vanilla Steel" "Vanilla Fine Steel" "Next"
+		Set Button to -1
+		Set ModelChange to 5203
+
+	elseif ( ModelChange == 5203 && Button > -1 )
+
+		;Previous Battleaxe page
+		if ( Button == 1 )
+
+			Set ModelChange to 5200
+			
+		;Next Battleaxe page
+		elseif ( Button == 9 )
+
+			Set ModelChange to 5204
+
+		;Selected a model
+		else
+
+			Set IndexOffset to BattleaxeIdx + 7
+			Set ModelChange to 100
+
+		endif
+
+	;-----------------------------------------------------------------------------
+	;Battleaxe pg3
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 5204 )
+
+		MessageBox "Choose a form:" "Cancel" "Prev" "Vanilla Silver" "Vanilla Dwarven" "Vanilla Elven" "Vanilla Glass" "Vanilla Ebony" "Vanilla Daedric"; "" "Next"
+		Set Button to -1
+		Set ModelChange to 5205
+
+	elseif ( ModelChange == 5205 && Button > -1 )
+
+		;Previous Battleaxe page
+		if ( Button == 1 )
+
+			Set ModelChange to 5202
+			
+		;Next Battleaxe page
+		elseif ( Button == 9 )
+
+			Set ModelChange to 5206
+
+		;Selected a model
+		else
+
+			Set IndexOffset to BattleaxeIdx + 14
+			Set ModelChange to 100
+
+		endif
+
+
+
+
+
+		
+	;-----------------------------------------------------------------------------
+	;1H Blunts
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 6000 && Button > -1 )
+
+		;Go back to type select
+		if ( Button == 1 )
+
+			Set ModelChange to 1
+			Set Button to -1
+
+		;Mace pages
+		elseif ( Button == 2 )
+
+			Set ModelChange to 6100
+
+		;Waraxe pages
+		elseif ( Button == 3 )
+
+			Set ModelChange to 6200
+
+		endif
+
+
+
+		
+	;-----------------------------------------------------------------------------
+	;Mace pg1
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 6100 )
+
+		MessageBox "Choose a form:" "Cancel" "Back" "Warhammer" "Ivellon Warhammer" "Ivellon Mace" "Thame" "Morningstar" "Macil" "Warpick" "Next"
+		Set Button to -1
+		Set ModelChange to 6101
+
+	elseif ( ModelChange == 6101 && Button > -1 )
+
+		;Back to 1H - Blunt sub-type select
+		if ( Button == 1 )
+
+			Set ModelChange to 2
+			Set Button to 4
+
+		;Next Mace page
+		elseif ( Button == 9 )
+
+			Set ModelChange to 6102
+
+		;Selected a model
+		else
+
+			Set IndexOffset to MaceIdx
+			Set ModelChange to 100
+
+		endif
+
+	;-----------------------------------------------------------------------------
+	;Mace pg2
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 6102 )
+
+		MessageBox "Choose a form:" "Cancel" "Prev" "Sotonhorian" "Ziragon Warhammer" "Ziragon Warpick" "Morningstar Steel" "Vanilla Iron" "Vanilla Steel" "Vanilla Fine Steel" "Next"
+		Set Button to -1
+		Set ModelChange to 6103
+
+	elseif ( ModelChange == 6103 && Button > -1 )
+
+		;Previous Mace page
+		if ( Button == 1 )
+
+			Set ModelChange to 6100
+
+		;Next Mace page
+		elseif ( Button == 9 )
+
+			Set ModelChange to 6104
+
+		;Selected a model
+		else
+
+			Set IndexOffset to MaceIdx + 7
+			Set ModelChange to 100
+
+		endif
+
+	;-----------------------------------------------------------------------------
+	;Mace pg3
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 6104 )
+
+		MessageBox "Choose a form:" "Cancel" "Prev" "Vanilla Silver" "Vanilla Dwarven" "Vanilla Elven" "Vanilla Glass" "Vanilla Ebony" "Vanilla Daedric"; "" "Next"
+		Set Button to -1
+		Set ModelChange to 6105
+
+	elseif ( ModelChange == 6105 && Button > -1 )
+
+		;Previous Mace page
+		if ( Button == 1 )
+
+			Set ModelChange to 6102
+
+		;Next Mace page
+		;elseif ( Button == 9 )
+
+			;Set ModelChange to 6106
+
+		;Selected a model
+		else
+
+			Set IndexOffset to MaceIdx + 14
+			Set ModelChange to 100
+
+		endif
+
+
+
+		
+	;-----------------------------------------------------------------------------
+	;Waraxe pg1
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 6200 )
+
+		MessageBox "Choose a form:" "Cancel" "Back" "Bearded" "Fine Bearded" "War" "Sotonhorian" "Thorgeir" "Ziragon" "Mirondil" "Next"
+		Set Button to -1
+		Set ModelChange to 6201
+
+	elseif ( ModelChange == 6201 && Button > -1 )
+
+		;Back to 1H - Blunt sub-type select
+		if ( Button == 1 )
+
+			Set ModelChange to 2
+			Set Button to 4
+
+		;Next Waraxe page
+		elseif ( Button == 9 )
+
+			Set ModelChange to 6202
+
+		;Selected a model
+		else
+
+			Set IndexOffset to WaraxeIdx
+			Set ModelChange to 100
+
+		endif
+
+	;-----------------------------------------------------------------------------
+	;Waraxe pg2
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 6202 )
+
+		MessageBox "Choose a form:" "Cancel" "Prev" "Mirondil Gilded" "Bearded Old" "War Old" "Vanilla Iron" "Vanilla Steel" "Vanilla Fine Steel" "Vanilla Silver" "Next"
+		Set Button to -1
+		Set ModelChange to 6203
+
+	elseif ( ModelChange == 6203 && Button > -1 )
+
+		;Previous Waraxe page
+		If ( Button == 1 )
+
+			Set ModelChange to 6200
+
+		;Next Waraxe page
+		elseif ( Button == 9 )
+
+			Set ModelChange to 6204
+
+		;Selected a model
+		else
+
+			Set IndexOffset to WaraxeIdx + 7
+			Set ModelChange to 100
+
+		endif
+
+	;-----------------------------------------------------------------------------
+	;Waraxe pg3
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 6204 )
+
+		MessageBox "Choose a form:" "Cancel" "Prev" "Vanilla Dwarven" "Vanilla Elven" "Vanilla Glass" "Vanilla Ebony" "Vanilla Daedric"; "" "" "Next"
+		Set Button to -1
+		Set ModelChange to 6205
+
+	elseif ( ModelChange == 6205 && Button > -1 )
+
+		;Previous Waraxe page
+		If ( Button == 1 )
+
+			Set ModelChange to 6202
+
+		;Next Waraxe page
+		;elseif ( Button == 9 )
+
+			;Set ModelChange to 6206
+
+		;Selected a model
+		else
+
+			Set IndexOffset to WaraxeIdx + 14
+			Set ModelChange to 100
+
+		endif
+
+
+
+
+
+		
+	;-----------------------------------------------------------------------------
+	;Marksman
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 7000 && Button > -1 )
+
+		;Go back to type select
+		if ( Button == 1 )
+
+			Set ModelChange to 1
+			Set Button to -1
+
+		;Bow pages
+		elseif ( Button == 2 )
+
+			Set ModelChange to 7100
+
+		;Bow II pages
+		elseif ( Button == 3 )
+
+			Set ModelChange to 7110
+
+		endif
+
+
+
+		
+	;-----------------------------------------------------------------------------
+	;Bow pg1
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 7100 )
+
+		MessageBox "Choose a form:" "Cancel" "Back" "Ranger" "Ranger Ivory" "Ivellon" "Stendarr" "Breton" "Breton Black" "Recurve" "Next"
+		Set Button to -1
+		Set ModelChange to 7101
+
+	elseif ( ModelChange == 7101 && Button > -1 )
+
+		;Back to Marksman sub-type select
+		if ( Button == 1 )
+
+			Set ModelChange to 2
+			Set Button to 5
+
+		;Next Bow page
+		elseif ( Button == 9 )
+
+			Set ModelChange to 7102
+
+		;Selected a model
+		else
+
+			Set IndexOffset to BowIdx
+			Set ModelChange to 100
+
+		endif
+
+	;-----------------------------------------------------------------------------
+	;Bow pg2
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 7102 )
+
+		MessageBox "Choose a form:" "Cancel" "Prev" "Recurve Leather" "Recurve Steel" "Nil Rosewood" "Nil Ebony" "Goblin" "Goblin Black" "Ashlander" "Next"
+		Set Button to -1
+		Set ModelChange to 7103
+
+	elseif ( ModelChange == 7103 && Button > -1 )
+
+		;Previous Bow page
+		if ( Button == 1 )
+
+			Set ModelChange to 7100
+
+		;Next Bow page
+		elseif ( Button == 9 )
+
+			Set ModelChange to 7104
+
+		;Selected a model
+		else
+
+			Set IndexOffset to BowIdx + 7
+			Set ModelChange to 100
+
+		endif
+
+	;-----------------------------------------------------------------------------
+	;Bow pg3
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 7104 )
+
+		MessageBox "Choose a form:" "Cancel" "Prev" "Ashlander II" "Ivory" "Ivory Wood" "Redwood" "Bone" "Classic" "Horn" "Next"
+		Set Button to -1
+		Set ModelChange to 7105
+
+	elseif ( ModelChange == 7105 && Button > -1 )
+
+		;Previous Bow page
+		if ( Button == 1 )
+
+			Set ModelChange to 7102
+
+		;Next Bow page
+		elseif ( Button == 9 )
+
+			Set ModelChange to 7106
+
+		;Selected a model
+		else
+
+			Set IndexOffset to BowIdx + 14
+			Set ModelChange to 100
+
+		endif
+
+	;-----------------------------------------------------------------------------
+	;Bow pg4
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 7106 )
+
+		MessageBox "Choose a form:" "Cancel" "Prev" "Horn II" "Sacred Horn" "Springsteel" "Springsteel Bell" "Springsteel Leather" "Nord" "Fine Nord" "Next"
+		Set Button to -1
+		Set ModelChange to 7107
+
+	elseif ( ModelChange == 7107 && Button > -1 )
+
+		;Previous Bow page
+		if ( Button == 1 )
+
+			Set ModelChange to 7104
+
+		;Next Bow page
+		elseif ( Button == 9 )
+
+			Set ModelChange to 7108
+
+		;Selected a model
+		else
+
+			Set IndexOffset to BowIdx + 21
+			Set ModelChange to 100
+
+		endif
+
+	;-----------------------------------------------------------------------------
+	;Bow pg5
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 7108 )
+
+		MessageBox "Choose a form:" "Cancel" "Prev" "Nord Magic" "Nord Magic II" "Nord Old"; "" "" "" "" "Next"
+		Set Button to -1
+		Set ModelChange to 7109
+
+	elseif ( ModelChange == 7109 && Button > -1 )
+
+		;Previous Bow page
+		if ( Button == 1 )
+
+			Set ModelChange to 7106
+
+		;Next Bow page
+		;elseif ( Button == 9 )
+
+			;Set ModelChange to 7110
+
+		;Selected a model
+		else
+
+			Set IndexOffset to BowIdx + 28
+			Set ModelChange to 100
+
+		endif
+
+	;-----------------------------------------------------------------------------
+	;Bow II pg1
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 7110 )
+
+		MessageBox "Choose a form:" "Cancel" "Back" "Vanilla Iron" "Vanilla Steel" "Vanilla Silver" "Vanilla Dwarven" "Vanilla Elven" "Vanilla Glass" "Vanilla Ebony" "Next"
+		Set Button to -1
+		Set ModelChange to 7111
+
+	elseif ( ModelChange == 7111 && Button > -1 )
+
+		;Back to Marksman sub-type select
+		if ( Button == 1 )
+
+			Set ModelChange to 2
+			Set Button to 5
+
+		;Next Bow page
+		elseif ( Button == 9 )
+
+			Set ModelChange to 7112
+
+		;Selected a model
+		else
+
+			Set IndexOffset to BowIdx + 35
+			Set ModelChange to 100
+
+		endif
+
+	;-----------------------------------------------------------------------------
+	;Bow II pg2
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 7112 )
+
+		MessageBox "Choose a form:" "Cancel" "Prev" "Vanilla Daedric"; "" "" "" "" "" "" "Next"
+		Set Button to -1
+		Set ModelChange to 7113
+
+	elseif ( ModelChange == 7113 && Button > -1 )
+
+		;Back to Marksman sub-type select
+		if ( Button == 1 )
+
+			Set ModelChange to 7110
+
+		;Next Bow page
+		;elseif ( Button == 9 )
+
+			;Set ModelChange to 7114
+
+		;Selected a model
+		else
+
+			Set IndexOffset to BowIdx + 42
+			Set ModelChange to 100
+
+		endif
+
+
+
+
+
+		
+	;-----------------------------------------------------------------------------
+	;Set new model and stats
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 100 && Button > -1 )
+
+		;Set Model
+		Set aaDusfergonModel to IndexOffset + Button - 2
+
+		;Swap to/from Bow if necessary
+		if ( aaDusfergonModel < BowIdx )
+
+			Call aaDusfergonSwap DLScalar3B DLScalar3 ench
+				
+		else
+
+			Call aaDusfergonSwap DLScalar3 DLScalar3B ench
+				
+		endif
+
+
+		;Set stats
+		Call aaDusfergonStatAdj
+		Call aaDusfergonStatSet self ( sDamageBase + AdjDamageBase ) ( fDamageMult + AdjDamageMult ) ( fSpeedBase + AdjSpeedBase ) ( fSpeedMult + AdjSpeedMult ) ( fReachBase + AdjReachBase ) ( fReachMult + AdjReachMult )
+		
+
+		;Change model
+		if ( aaDusfergonModel < SetModel2Idx )
+
+			Call aaDusfergonSetModel self
+
+		else
+
+			Call aaDusfergonSetModel2 self
+
+		endif
+
+		
+		MessageEX "%n has changed form." self 5
+		Set ModelChange to 0
+
+	;-----------------------------------------------------------------------------
+	endif ;ModelChange != 0
+	;-----------------------------------------------------------------------------
+	
+;-----------------------------------------------------------------------------
+end ;MenuMode Inventory
+;-----------------------------------------------------------------------------
+
+
+
+
+
+
+;-----------------------------------------------------------------------------
+begin MenuMode 1042 ;MenuMode Enchanting
+;-----------------------------------------------------------------------------
+
+	if ( fQuestDelayTime != MenuLag )
+
+		Set fQuestDelayTime to MenuLag
+
+	endif
+	
+	;-----------------------------------------------------------------------------
+	;Warn the player against enchanting	
+	;-----------------------------------------------------------------------------
+	if ( GetEnchMenuBaseItem == self && WarnOnce == 0)
+		
+		MessageBoxEx "%n rattles as if to resist enchantment." self
+		Set WarnOnce to 1
+		SetEventHandler "OnEnchant" aaDusfergonOnEnchant
+		Set SoulGem to GetEnchMenuSoulgem
+
+	elseif ( GetEnchMenuBaseItem != self )
+
+		Set WarnOnce to 0
+		RemoveEventHandler "OnEnchant" aaDusfergonOnEnchant
+		
+	endif
+	
+;-----------------------------------------------------------------------------
+end ;MenuMode Enchanting
+;-----------------------------------------------------------------------------
+
+;-----------------------------------------------------------------------------
+begin MenuMode 1048 ;MenuMode SigilStone
+;-----------------------------------------------------------------------------
+
+	if ( fQuestDelayTime != MenuLag )
+
+		Set fQuestDelayTime to MenuLag
+
+	endif
+	
+	;-----------------------------------------------------------------------------
+	;Warn the player against enchanting	
+	;-----------------------------------------------------------------------------
+	if ( aaDusfergonLevel < sEnchStart && WarnOnce == 0)
+		
+		MessageBoxEx "%n rattles in response to chaotic creatia." self
+		Set WarnOnce to 2
+
+	endif
+	
+;-----------------------------------------------------------------------------
+end ;MenuMode SigilStone
+;-----------------------------------------------------------------------------

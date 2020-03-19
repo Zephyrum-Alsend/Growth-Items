@@ -1,0 +1,1291 @@
+scn aaDusfergonSetModel
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;aaDusfergonManager
+;aaDusfergonObject
+;aaDusfergonOnHit
+;aaDusfergonOnEnchant
+;aaDusfergonSetModel2
+;aaDusfergonRandomModel
+;aaDusfergonCalcXPReq
+;aaDusfergonIncrVal
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;aaDusfergonEquip
+;aaDusfergonModel
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;Changes the model and type of weapon according to the value in
+;aaDusfergonModel, then re-equips the weapon if the Equip flag is set to force
+;refresh the model.
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+ref weapon
+;-----------------------------------------------------------------------------
+
+;Changes model and weapon type according to Global Model
+;-----------------------------------------------------------------------------
+begin Function { weapon }
+;-----------------------------------------------------------------------------
+
+	;-----------------------------------------------------------------------------
+	;Claymores
+	;-----------------------------------------------------------------------------
+	if ( aaDusfergonModel == 0 )
+
+		SetModelPath "Weapons\Dusfergon\2h\Claymore\Bastard.nif" weapon
+		SetIconPath "Dusfergon\2h\Claymore\iconWbastard.dds" weapon
+		SetWeaponType 1 weapon
+
+	elseif ( aaDusfergonModel == 1 )
+
+		SetModelPath "Weapons\Dusfergon\2h\Claymore\Merciless.nif" weapon
+		SetIconPath "Dusfergon\2h\Claymore\iconWbastard.dds" weapon
+		SetWeaponType 1 weapon
+
+	elseif ( aaDusfergonModel == 2 )
+
+		SetModelPath "Weapons\Dusfergon\2h\Claymore\Wolf2.nif" weapon
+		SetIconPath "Dusfergon\2h\Claymore\iconWbastard.dds" weapon
+		SetWeaponType 1 weapon
+
+	elseif ( aaDusfergonModel == 3 )
+
+		SetModelPath "Weapons\Dusfergon\2h\Claymore\Wolf.nif" weapon
+		SetIconPath "Dusfergon\2h\Claymore\iconWbastard.dds" weapon
+		SetWeaponType 1 weapon
+
+	elseif ( aaDusfergonModel == 4 )
+
+		SetModelPath "Weapons\Dusfergon\2h\Claymore\tdaHKlongsword.nif" weapon
+		SetIconPath "Dusfergon\2h\Claymore\iconWbastard.dds" weapon
+		SetWeaponType 1 weapon
+
+	elseif ( aaDusfergonModel == 5 )
+
+		SetModelPath "Weapons\Dusfergon\2h\Claymore\Serenity.nif" weapon
+		SetIconPath "Dusfergon\2h\Claymore\iconWbastard.dds" weapon
+		SetWeaponType 1 weapon
+
+	elseif ( aaDusfergonModel == 6 )
+
+		SetModelPath "Weapons\Dusfergon\2h\Claymore\Zweihander.nif" weapon
+		SetIconPath "Dusfergon\2h\Claymore\iconZwei.dds" weapon
+		SetWeaponType 1 weapon
+
+	elseif ( aaDusfergonModel == 7 )
+
+		SetModelPath "Weapons\Dusfergon\2h\Claymore\Sathix.nif" weapon
+		SetIconPath "Dusfergon\2h\Claymore\sathixb.dds" weapon
+		SetWeaponType 1 weapon
+
+	elseif ( aaDusfergonModel == 8 )
+
+		SetModelPath "Weapons\Dusfergon\2h\Claymore\RedSathix.nif" weapon
+		SetIconPath "Dusfergon\2h\Claymore\sathixr.dds" weapon
+		SetWeaponType 1 weapon
+
+	elseif ( aaDusfergonModel == 9 )
+
+		SetModelPath "Weapons\Dusfergon\2h\Claymore\Gotland2H.nif" weapon
+		SetIconPath "Dusfergon\2h\Claymore\iconGotland2H.dds" weapon
+		SetWeaponType 1 weapon
+
+	elseif ( aaDusfergonModel == 10 )
+
+		SetModelPath "Weapons\Dusfergon\2h\Claymore\Gotland2HSteel.nif" weapon
+		SetIconPath "Dusfergon\2h\Claymore\iconGotland2HSteel.dds" weapon
+		SetWeaponType 1 weapon
+
+	elseif ( aaDusfergonModel == 11 )
+
+		SetModelPath "Weapons\Dusfergon\2h\Claymore\Gotland2HOld.nif" weapon
+		SetIconPath "Dusfergon\2h\Claymore\iconGotland2HOld.dds" weapon
+		SetWeaponType 1 weapon
+
+	;-----------------------------------------------------------------------------
+	;Bastards 2H
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 1000 )
+
+		SetModelPath "Weapons\Dusfergon\2h\Bastard\bsword01_2H.nif" weapon
+		SetIconPath "Dusfergon\Bastard\BastardSword1.dds" weapon
+		SetWeaponType 1 weapon
+
+	elseif ( aaDusfergonModel == 1001 )
+
+		SetModelPath "Weapons\Dusfergon\2h\Bastard\bsword02_2H.nif" weapon
+		SetIconPath "Dusfergon\Bastard\BastardSword2.dds" weapon
+		SetWeaponType 1 weapon
+
+	elseif ( aaDusfergonModel == 1002 )
+
+		SetModelPath "Weapons\Dusfergon\2h\Bastard\bsword03_2H.nif" weapon
+		SetIconPath "Dusfergon\Bastard\BastardSword3.dds" weapon
+		SetWeaponType 1 weapon
+
+	elseif ( aaDusfergonModel == 1003 )
+
+		SetModelPath "Weapons\Dusfergon\2h\Bastard\bsword04_2H.nif" weapon
+		SetIconPath "Dusfergon\Bastard\BastardSword4.dds" weapon
+		SetWeaponType 1 weapon
+
+	elseif ( aaDusfergonModel == 1004 )
+
+		SetModelPath "Weapons\Dusfergon\2h\Bastard\bsword05_2H.nif" weapon
+		SetIconPath "Dusfergon\Bastard\BastardSword5.dds" weapon
+		SetWeaponType 1 weapon
+
+	elseif ( aaDusfergonModel == 1005 )
+
+		SetModelPath "Weapons\Dusfergon\2h\Bastard\bsword06_2H.nif" weapon
+		SetIconPath "Dusfergon\Bastard\BastardSword6.dds" weapon
+		SetWeaponType 1 weapon
+
+	elseif ( aaDusfergonModel == 1006 )
+
+		SetModelPath "Weapons\Dusfergon\2h\Bastard\bsword07_2H.nif" weapon
+		SetIconPath "Dusfergon\Bastard\BastardSword7.dds" weapon
+		SetWeaponType 1 weapon
+
+	elseif ( aaDusfergonModel == 1007 )
+
+		SetModelPath "Weapons\Dusfergon\2h\Bastard\TypeA2H.nif" weapon
+		SetIconPath "Dusfergon\Bastard\iconTypeA.dds" weapon
+		SetWeaponType 1 weapon
+
+	elseif ( aaDusfergonModel == 1008 )
+
+		SetModelPath "Weapons\Dusfergon\2h\Bastard\TypeB2H.nif" weapon
+		SetIconPath "Dusfergon\Bastard\iconTypeB.dds" weapon
+		SetWeaponType 1 weapon
+
+	elseif ( aaDusfergonModel == 1009 )
+
+		SetModelPath "Weapons\Dusfergon\2h\Bastard\TypeC2H.nif" weapon
+		SetIconPath "Dusfergon\Bastard\iconTypeC.dds" weapon
+		SetWeaponType 1 weapon
+
+	elseif ( aaDusfergonModel == 1010 )
+
+		SetModelPath "Weapons\Dusfergon\2h\Bastard\TypeD2H.nif" weapon
+		SetIconPath "Dusfergon\Bastard\iconTypeD.dds" weapon
+		SetWeaponType 1 weapon
+
+	elseif ( aaDusfergonModel == 1011 )
+
+		SetModelPath "Weapons\Dusfergon\2h\Bastard\TypeE2H.nif" weapon
+		SetIconPath "Dusfergon\Bastard\iconTypeE.dds" weapon
+		SetWeaponType 1 weapon
+
+	elseif ( aaDusfergonModel == 1012 )
+
+		SetModelPath "Weapons\Dusfergon\2h\Bastard\ClintXVIbronze2H.nif" weapon
+		SetIconPath "Dusfergon\Bastard\iconClintBronze.dds" weapon
+		SetWeaponType 1 weapon
+
+	elseif ( aaDusfergonModel == 1013 )
+
+		SetModelPath "Weapons\Dusfergon\2h\Bastard\AngularLeafBronze2H.nif" weapon
+		SetIconPath "Dusfergon\Bastard\iconAngularLeafBronze.dds" weapon
+		SetWeaponType 1 weapon
+
+	elseif ( aaDusfergonModel == 1014 )
+
+		SetModelPath "Weapons\Dusfergon\2h\Bastard\TapperBroad2H.nif" weapon
+		SetIconPath "Dusfergon\Bastard\iconTapperBroadsword.dds" weapon
+		SetWeaponType 1 weapon
+
+	elseif ( aaDusfergonModel == 1015 )
+
+		SetModelPath "Weapons\Dusfergon\2h\Bastard\Seaward2H.nif" weapon
+		SetIconPath "Dusfergon\Bastard\iconSeaward.dds" weapon
+		SetWeaponType 1 weapon
+
+	elseif ( aaDusfergonModel == 1016 )
+
+		SetModelPath "Weapons\Dusfergon\2h\Bastard\ClintXVIsteel2H.nif" weapon
+		SetIconPath "Dusfergon\Bastard\iconClintSteel.dds" weapon
+		SetWeaponType 1 weapon
+
+	elseif ( aaDusfergonModel == 1017 )
+
+		SetModelPath "Weapons\Dusfergon\2h\Bastard\AngularLeafSteel2H.nif" weapon
+		SetIconPath "Dusfergon\Bastard\iconAngularLeafSteel.dds" weapon
+		SetWeaponType 1 weapon
+
+	elseif ( aaDusfergonModel == 1018 )
+
+		SetModelPath "Weapons\Dusfergon\2h\Bastard\TapperBroadSteel2H.nif" weapon
+		SetIconPath "Dusfergon\Bastard\iconTapperBroaSwordSteel.dds" weapon
+		SetWeaponType 1 weapon
+
+	elseif ( aaDusfergonModel == 1019 )
+
+		SetModelPath "Weapons\Dusfergon\2h\Bastard\TapperBroadBlack2H.nif" weapon
+		SetIconPath "Dusfergon\Bastard\iconTapperBroadSwordBlack.dds" weapon
+		SetWeaponType 1 weapon
+
+	elseif ( aaDusfergonModel == 1020 )
+
+		SetModelPath "Weapons\Dusfergon\2h\Bastard\TapperBroadOld2H.nif" weapon
+		SetIconPath "Dusfergon\Bastard\iconTapperBroadSwordBlack.dds" weapon
+		SetWeaponType 1 weapon
+
+	;-----------------------------------------------------------------------------
+	;Bastards 1H
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 2000 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Bastard\bsword01_1H.nif" weapon
+		SetIconPath "Dusfergon\Bastard\BastardSword1.dds" weapon
+		SetWeaponType 0 weapon
+
+	elseif ( aaDusfergonModel == 2001 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Bastard\bsword02_1H.nif" weapon
+		SetIconPath "Dusfergon\Bastard\BastardSword2.dds" weapon
+		SetWeaponType 0 weapon
+
+	elseif ( aaDusfergonModel == 2002 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Bastard\bsword03_1H.nif" weapon
+		SetIconPath "Dusfergon\Bastard\BastardSword3.dds" weapon
+		SetWeaponType 0 weapon
+
+	elseif ( aaDusfergonModel == 2003 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Bastard\bsword04_1H.nif" weapon
+		SetIconPath "Dusfergon\Bastard\BastardSword4.dds" weapon
+		SetWeaponType 0 weapon
+
+	elseif ( aaDusfergonModel == 2004 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Bastard\bsword05_1H.nif" weapon
+		SetIconPath "Dusfergon\Bastard\BastardSword5.dds" weapon
+		SetWeaponType 0 weapon
+
+	elseif ( aaDusfergonModel == 2005 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Bastard\bsword06_1H.nif" weapon
+		SetIconPath "Dusfergon\Bastard\BastardSword6.dds" weapon
+		SetWeaponType 0 weapon
+
+	elseif ( aaDusfergonModel == 2006 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Bastard\bsword07_1H.nif" weapon
+		SetIconPath "Dusfergon\Bastard\BastardSword7.dds" weapon
+		SetWeaponType 0 weapon
+
+	elseif ( aaDusfergonModel == 2007 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Bastard\TypeA1H.nif" weapon
+		SetIconPath "Dusfergon\Bastard\iconTypeA.dds" weapon
+		SetWeaponType 0 weapon
+
+	elseif ( aaDusfergonModel == 2008 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Bastard\TypeB1H.nif" weapon
+		SetIconPath "Dusfergon\Bastard\iconTypeB.dds" weapon
+		SetWeaponType 0 weapon
+
+	elseif ( aaDusfergonModel == 2009 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Bastard\TypeC1H.nif" weapon
+		SetIconPath "Dusfergon\Bastard\iconTypeC.dds" weapon
+		SetWeaponType 0 weapon
+
+	elseif ( aaDusfergonModel == 2010 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Bastard\TypeD1H.nif" weapon
+		SetIconPath "Dusfergon\Bastard\iconTypeD.dds" weapon
+		SetWeaponType 0 weapon
+
+	elseif ( aaDusfergonModel == 2011 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Bastard\TypeE1H.nif" weapon
+		SetIconPath "Dusfergon\Bastard\iconTypeE.dds" weapon
+		SetWeaponType 0 weapon
+
+	elseif ( aaDusfergonModel == 2012 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Bastard\ClintXVIbronze1H.nif" weapon
+		SetIconPath "Dusfergon\Bastard\iconClintBronze.dds" weapon
+		SetWeaponType 0 weapon
+
+	elseif ( aaDusfergonModel == 2013 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Bastard\AngularLeafBronze1H.nif" weapon
+		SetIconPath "Dusfergon\Bastard\iconAngularLeafBronze.dds" weapon
+		SetWeaponType 0 weapon
+
+	elseif ( aaDusfergonModel == 2014 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Bastard\TapperBroad1H.nif" weapon
+		SetIconPath "Dusfergon\Bastard\iconTapperBroadSword.dds" weapon
+		SetWeaponType 0 weapon
+
+	elseif ( aaDusfergonModel == 2015 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Bastard\Seaward1H.nif" weapon
+		SetIconPath "Dusfergon\Bastard\iconSeaward.dds" weapon
+		SetWeaponType 0 weapon
+
+	elseif ( aaDusfergonModel == 2016 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Bastard\ClintXVIsteel1H.nif" weapon
+		SetIconPath "Dusfergon\Bastard\iconClintSteel.dds" weapon
+		SetWeaponType 0 weapon
+
+	elseif ( aaDusfergonModel == 2017 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Bastard\AngularLeafSteel1H.nif" weapon
+		SetIconPath "Dusfergon\Bastard\iconAngularLeafSteel.dds" weapon
+		SetWeaponType 0 weapon
+
+	elseif ( aaDusfergonModel == 2018 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Bastard\TapperBroadSteel1H.nif" weapon
+		SetIconPath "Dusfergon\Bastard\iconTapperBroaSwordSteel.dds" weapon
+		SetWeaponType 0 weapon
+
+	elseif ( aaDusfergonModel == 2019 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Bastard\TapperBroadBlack1H.nif" weapon
+		SetIconPath "Dusfergon\Bastard\iconTapperBroadSwordBlack.dds" weapon
+		SetWeaponType 0 weapon
+
+	elseif ( aaDusfergonModel == 2020 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Bastard\TapperBroadOld1H.nif" weapon
+		SetIconPath "Dusfergon\Bastard\iconTapperBroadSwordBlack.dds" weapon
+		SetWeaponType 0 weapon
+
+	;-----------------------------------------------------------------------------
+	;Longswords
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 3000 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Longsword\IronLongsword.nif" weapon
+		SetIconPath "Dusfergon\1h\ironlongsword.dds" weapon
+		SetWeaponType 0 weapon
+
+	elseif ( aaDusfergonModel == 3001 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Longsword\IronLongswordFine.nif" weapon
+		SetIconPath "Dusfergon\1h\fineiron.dds" weapon
+		SetWeaponType 0 weapon
+
+	elseif ( aaDusfergonModel == 3002 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Longsword\SteelLongsword.nif" weapon
+		SetIconPath "Dusfergon\1h\steellongsword.dds" weapon
+		SetWeaponType 0 weapon
+
+	elseif ( aaDusfergonModel == 3003 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Longsword\SteelLongswordFine.nif" weapon
+		SetIconPath "Dusfergon\1h\steellongsword.dds" weapon
+		SetWeaponType 0 weapon
+
+	elseif ( aaDusfergonModel == 3004 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Longsword\SilverLongsword.nif" weapon
+		SetIconPath "Dusfergon\1h\silverlongsword.dds" weapon
+		SetWeaponType 0 weapon
+
+	elseif ( aaDusfergonModel == 3005 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Longsword\EbonyLongsword.nif" weapon
+		SetIconPath "Dusfergon\1h\ebonylongsword.dds" weapon
+		SetWeaponType 0 weapon
+
+	elseif ( aaDusfergonModel == 3006 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Longsword\daekatana.nif" weapon
+		SetIconPath "Dusfergon\1h\Longsword\daekatana.dds" weapon
+		SetWeaponType 0 weapon
+
+	elseif ( aaDusfergonModel == 3007 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Longsword\ArmingSword.nif" weapon
+		SetIconPath "Dusfergon\1h\Longsword\iconArming.dds" weapon
+		SetWeaponType 0 weapon
+
+	elseif ( aaDusfergonModel == 3008 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Longsword\Corralor.nif" weapon
+		SetIconPath "Dusfergon\1h\Longsword\iconCorralor.dds" weapon
+		SetWeaponType 0 weapon
+
+	elseif ( aaDusfergonModel == 3009 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Longsword\Gull.nif" weapon
+		SetIconPath "Dusfergon\1h\Longsword\iconGull.dds" weapon
+		SetWeaponType 0 weapon
+
+	elseif ( aaDusfergonModel == 3010 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Longsword\MoonBrand.NIF" weapon
+		SetIconPath "Dusfergon\1h\Longsword\iconMoonBrand.dds" weapon
+		SetWeaponType 0 weapon
+
+	elseif ( aaDusfergonModel == 3011 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Longsword\ArcherBretonBronze.nif" weapon
+		SetIconPath "Dusfergon\1h\Longsword\iconArcherBretonBronze.dds" weapon
+		SetWeaponType 0 weapon
+
+	elseif ( aaDusfergonModel == 3012 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Longsword\SolingenBronze.nif" weapon
+		SetIconPath "Dusfergon\1h\Longsword\iconSolingenBronze.dds" weapon
+		SetWeaponType 0 weapon
+
+	elseif ( aaDusfergonModel == 3013 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Longsword\TritoniaBronze.nif" weapon
+		SetIconPath "Dusfergon\1h\Longsword\iconTritoniaBronze.dds" weapon
+		SetWeaponType 0 weapon
+
+	elseif ( aaDusfergonModel == 3014 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Longsword\TempleNecroBronze.nif" weapon
+		SetIconPath "Dusfergon\1h\Longsword\iconTempleNecroBronze.dds" weapon
+		SetWeaponType 0 weapon
+
+	elseif ( aaDusfergonModel == 3015 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Longsword\TempleSalvatioBronze.nif" weapon
+		SetIconPath "Dusfergon\1h\Longsword\iconTempleSalvatioBronze.dds" weapon
+		SetWeaponType 0 weapon
+
+	elseif ( aaDusfergonModel == 3016 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Longsword\GoblinSword.nif" weapon
+		SetIconPath "Dusfergon\1h\Longsword\iconGoblinSword.dds" weapon
+		SetWeaponType 0 weapon
+
+	elseif ( aaDusfergonModel == 3017 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Longsword\DunmerLeaf.nif" weapon
+		SetIconPath "Dusfergon\1h\Longsword\iconLeaf.dds" weapon
+		SetWeaponType 0 weapon
+
+	elseif ( aaDusfergonModel == 3018 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Longsword\Shokuto.nif" weapon
+		SetIconPath "Dusfergon\1h\Longsword\iconShokuto.dds" weapon
+		SetWeaponType 0 weapon
+
+	elseif ( aaDusfergonModel == 3019 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Longsword\BaskethiltBronze.NIF" weapon
+		SetIconPath "Dusfergon\1h\Longsword\iconBasketHiltBronze.dds" weapon
+		SetWeaponType 0 weapon
+		
+	elseif ( aaDusfergonModel == 3020 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Longsword\SingleEdgeCurved.nif" weapon
+		SetIconPath "Dusfergon\1h\Longsword\iconSingleEdgeCurve.dds" weapon
+		SetWeaponType 0 weapon
+
+	elseif ( aaDusfergonModel == 3021 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Longsword\Dragoon.nif" weapon
+		SetIconPath "Dusfergon\1h\Longsword\iconDragoon.dds" weapon
+		SetWeaponType 0 weapon
+
+	elseif ( aaDusfergonModel == 3022 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Longsword\KrissBasket.nif" weapon
+		SetIconPath "Dusfergon\1h\Longsword\iconKrissBasket.dds" weapon
+		SetWeaponType 0 weapon
+
+	elseif ( aaDusfergonModel == 3023 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Longsword\ElvinSaber.nif" weapon
+		SetIconPath "Dusfergon\1h\Longsword\iconElvinSaber.dds" weapon
+		SetWeaponType 0 weapon
+
+	elseif ( aaDusfergonModel == 3024 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Longsword\BrokeBackSaber.nif" weapon
+		SetIconPath "Dusfergon\1h\Longsword\iconBrokeBack.dds" weapon
+		SetWeaponType 0 weapon
+
+	elseif ( aaDusfergonModel == 3025 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Longsword\BoneDaito.nif" weapon
+		SetIconPath "Dusfergon\1h\iconBoneShokuto.dds" weapon
+		SetWeaponType 0 weapon
+
+	elseif ( aaDusfergonModel == 3026 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Longsword\Dragonfly.nif" weapon
+		SetIconPath "Dusfergon\1h\Longsword\iconDragonfly.dds" weapon
+		SetWeaponType 0 weapon
+
+	elseif ( aaDusfergonModel == 3027 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Longsword\ChimerSaber.nif" weapon
+		SetIconPath "Dusfergon\1h\Longsword\iconChimerSaber.dds" weapon
+		SetWeaponType 0 weapon
+
+	elseif ( aaDusfergonModel == 3028 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Longsword\CommanderSaber.nif" weapon
+		SetIconPath "Dusfergon\1h\Longsword\iconCommander.dds" weapon
+		SetWeaponType 0 weapon
+
+	elseif ( aaDusfergonModel == 3029 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Longsword\HookSaber.nif" weapon
+		SetIconPath "Dusfergon\1h\Longsword\iconHookSaber.dds" weapon
+		SetWeaponType 0 weapon
+
+	elseif ( aaDusfergonModel == 3030 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Longsword\Scimitar.nif" weapon
+		SetIconPath "Dusfergon\1h\Longsword\iconScimitar.dds" weapon
+		SetWeaponType 0 weapon
+
+	elseif ( aaDusfergonModel == 3031 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Longsword\Volsung.nif" weapon
+		SetIconPath "Dusfergon\1h\Longsword\iconVolsung.dds" weapon
+		SetWeaponType 0 weapon
+
+	elseif ( aaDusfergonModel == 3032 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Longsword\Atmorian.nif" weapon
+		SetIconPath "Dusfergon\1h\Longsword\iconAtmorian.dds" weapon
+		SetWeaponType 0 weapon
+
+	elseif ( aaDusfergonModel == 3033 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Longsword\Beserker.nif" weapon
+		SetIconPath "Dusfergon\1h\Longsword\iconBeserker.dds" weapon
+		SetWeaponType 0 weapon
+
+	elseif ( aaDusfergonModel == 3034 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Longsword\Cawood.nif" weapon
+		SetIconPath "Dusfergon\1h\Longsword\iconCawood.dds" weapon
+		SetWeaponType 0 weapon
+
+	elseif ( aaDusfergonModel == 3035 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Longsword\Cawood2.nif" weapon
+		SetIconPath "Dusfergon\1h\Longsword\iconCawoodII.dds" weapon
+		SetWeaponType 0 weapon
+
+	elseif ( aaDusfergonModel == 3036 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Longsword\Gramr.nif" weapon
+		SetIconPath "Dusfergon\1h\Longsword\iconGramr.dds" weapon
+		SetWeaponType 0 weapon
+
+	elseif ( aaDusfergonModel == 3037 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Longsword\Naegling.nif" weapon
+		SetIconPath "Dusfergon\1h\Longsword\iconNaegling.dds" weapon
+		SetWeaponType 0 weapon
+
+	elseif ( aaDusfergonModel == 3038 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Longsword\Norland.nif" weapon
+		SetIconPath "Dusfergon\1h\Longsword\iconNorland.dds" weapon
+		SetWeaponType 0 weapon
+
+	elseif ( aaDusfergonModel == 3039 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Longsword\Warp.nif" weapon
+		SetIconPath "Dusfergon\1h\Longsword\iconWarp.dds" weapon
+		SetWeaponType 0 weapon
+
+	elseif ( aaDusfergonModel == 3040 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Longsword\ArcherBretonSteel.nif" weapon
+		SetIconPath "Dusfergon\1h\Longsword\iconArcherBretonSteel.dds" weapon
+		SetWeaponType 0 weapon
+
+	elseif ( aaDusfergonModel == 3041 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Longsword\SolingenSteel.nif" weapon
+		SetIconPath "Dusfergon\1h\Longsword\iconSolingenSteel.dds" weapon
+		SetWeaponType 0 weapon
+
+	elseif ( aaDusfergonModel == 3042 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Longsword\TritoniaSteel.nif" weapon
+		SetIconPath "Dusfergon\1h\Longsword\iconTritoniaSteel.dds" weapon
+		SetWeaponType 0 weapon
+
+	elseif ( aaDusfergonModel == 3043 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Longsword\TempleNecroSteel.nif" weapon
+		SetIconPath "Dusfergon\1h\Longsword\iconTempleNecroSteel.dds" weapon
+		SetWeaponType 0 weapon
+
+	elseif ( aaDusfergonModel == 3044 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Longsword\TempleSalvatioSteel.nif" weapon
+		SetIconPath "Dusfergon\1h\Longsword\iconTempleSalvatioSteel.dds" weapon
+		SetWeaponType 0 weapon
+
+	elseif ( aaDusfergonModel == 3045 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Longsword\BaskethiltSteel.nif" weapon
+		SetIconPath "Dusfergon\1h\Longsword\iconBasketHiltSteel.dds" weapon
+		SetWeaponType 0 weapon
+
+	elseif ( aaDusfergonModel == 3046 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Longsword\BeserkerSteel.nif" weapon
+		SetIconPath "Dusfergon\1h\Longsword\iconBeserkerSteel.dds" weapon
+		SetWeaponType 0 weapon
+
+	elseif ( aaDusfergonModel == 3047 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Longsword\WarpSteel.nif" weapon
+		SetIconPath "Dusfergon\1h\Longsword\iconWarpSteel.dds" weapon
+		SetWeaponType 0 weapon
+
+	elseif ( aaDusfergonModel == 3048 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Longsword\DunmerLeafOld.nif" weapon
+		SetIconPath "Dusfergon\1h\Longsword\iconLeaf.dds" weapon
+		SetWeaponType 0 weapon
+
+	elseif ( aaDusfergonModel == 3049 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Longsword\ShokutoOld.nif" weapon
+		SetIconPath "Dusfergon\1h\Longsword\iconShokuto.dds" weapon
+		SetWeaponType 0 weapon
+
+	elseif ( aaDusfergonModel == 3050 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Longsword\ChimerSaberOld.nif" weapon
+		SetIconPath "Dusfergon\1h\Longsword\iconChimerSaber.dds" weapon
+		SetWeaponType 0 weapon
+
+	elseif ( aaDusfergonModel == 3051 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Longsword\CommanderSaberOld.nif" weapon
+		SetIconPath "Dusfergon\1h\Longsword\iconCommander.dds" weapon
+		SetWeaponType 0 weapon
+
+	elseif ( aaDusfergonModel == 3052 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Longsword\HookSaberOld.nif" weapon
+		SetIconPath "Dusfergon\1h\Longsword\iconHookSaber.dds" weapon
+		SetWeaponType 0 weapon
+
+	elseif ( aaDusfergonModel == 3053 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Longsword\ScimitarOld.nif" weapon
+		SetIconPath "Dusfergon\1h\Longsword\iconScimitar.dds" weapon
+		SetWeaponType 0 weapon
+
+	elseif ( aaDusfergonModel == 3054 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Longsword\AtmorianOld.nif" weapon
+		SetIconPath "Dusfergon\1h\AtmorianOld.dds" weapon
+		SetWeaponType 0 weapon
+
+	elseif ( aaDusfergonModel == 3055 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Longsword\BeserkerOld.nif" weapon
+		SetIconPath "Dusfergon\1h\Longsword\iconBeserkerOld.dds" weapon
+		SetWeaponType 0 weapon
+
+	elseif ( aaDusfergonModel == 3056 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Longsword\CawoodOld.nif" weapon
+		SetIconPath "Dusfergon\1h\Longsword\iconCawoodOld.dds" weapon
+		SetWeaponType 0 weapon
+
+	elseif ( aaDusfergonModel == 3057 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Longsword\CawoodIIOld.nif" weapon
+		SetIconPath "Dusfergon\1h\Longsword\iconCawoodIIOld.dds" weapon
+		SetWeaponType 0 weapon
+
+	elseif ( aaDusfergonModel == 3058 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Longsword\GramrOld.nif" weapon
+		SetIconPath "Dusfergon\1h\Longsword\iconGramrOld.dds" weapon
+		SetWeaponType 0 weapon
+
+	elseif ( aaDusfergonModel == 3059 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Longsword\NaeglingOld.nif" weapon
+		SetIconPath "Dusfergon\1h\Longsword\iconNaeglingOld.dds" weapon
+		SetWeaponType 0 weapon
+
+	elseif ( aaDusfergonModel == 3060 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Longsword\NorlandOld.nif" weapon
+		SetIconPath "Dusfergon\1h\Longsword\iconNorlandOld.dds" weapon
+		SetWeaponType 0 weapon
+
+	elseif ( aaDusfergonModel == 3061 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Longsword\WarpOld.nif" weapon
+		SetIconPath "Dusfergon\1h\Longsword\iconWarpOld.dds" weapon
+		SetWeaponType 0 weapon
+
+	;-----------------------------------------------------------------------------
+	;Shortswords
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 4000 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Shortsword\IronShortsword.nif" weapon
+		SetIconPath "Dusfergon\1h\ironlongsword.dds" weapon
+		SetWeaponType 0 weapon
+		
+	elseif ( aaDusfergonModel == 4001 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Shortsword\IronShortswordFine.nif" weapon
+		SetIconPath "Dusfergon\1h\fineiron.dds" weapon
+		SetWeaponType 0 weapon
+		
+	elseif ( aaDusfergonModel == 4002 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Shortsword\SteelShortsword.nif" weapon
+		SetIconPath "Dusfergon\1h\steellongsword.dds" weapon
+		SetWeaponType 0 weapon
+		
+	elseif ( aaDusfergonModel == 4003 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Shortsword\SteelShortswordFine.nif" weapon
+		SetIconPath "Dusfergon\1h\steellongsword.dds" weapon
+		SetWeaponType 0 weapon
+		
+	elseif ( aaDusfergonModel == 4004 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Shortsword\SilverShortsword.nif" weapon
+		SetIconPath "Dusfergon\1h\silverlongsword.dds" weapon
+		SetWeaponType 0 weapon
+		
+	elseif ( aaDusfergonModel == 4005 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Shortsword\EbonyShortsword.nif" weapon
+		SetIconPath "Dusfergon\1h\ebonylongsword.dds" weapon
+		SetWeaponType 0 weapon
+		
+	elseif ( aaDusfergonModel == 4006 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Shortsword\Barrow.nif" weapon
+		SetIconPath "Dusfergon\1h\Shortsword\iconBarrow.dds" weapon
+		SetWeaponType 0 weapon
+		
+	elseif ( aaDusfergonModel == 4007 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Shortsword\Archer.nif" weapon
+		SetIconPath "Dusfergon\1h\Shortsword\iconArcher.dds" weapon
+		SetWeaponType 0 weapon
+		
+	elseif ( aaDusfergonModel == 4008 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Shortsword\ArcherCurvyKriss.nif" weapon
+		SetIconPath "Dusfergon\1h\Shortsword\iconArcherCurvyKriss.dds" weapon
+		SetWeaponType 0 weapon
+		
+	elseif ( aaDusfergonModel == 4009 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Shortsword\AngularKriss.nif" weapon
+		SetIconPath "Dusfergon\1h\Shortsword\iconAngularKriss.dds" weapon
+		SetWeaponType 0 weapon
+		
+	elseif ( aaDusfergonModel == 4010 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Shortsword\AngularBroadKriss.nif" weapon
+		SetIconPath "Dusfergon\1h\Shortsword\iconAngularBroadKriss.dds" weapon
+		SetWeaponType 0 weapon
+		
+	elseif ( aaDusfergonModel == 4011 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Shortsword\BarbedLeaf.nif" weapon
+		SetIconPath "Dusfergon\1h\Shortsword\iconBarbedLeaf.dds" weapon
+		SetWeaponType 0 weapon
+		
+	elseif ( aaDusfergonModel == 4012 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Shortsword\PantherLeafBlade.nif" weapon
+		SetIconPath "Dusfergon\1h\Shortsword\iconPantherLeafBlade.dds" weapon
+		SetWeaponType 0 weapon
+		
+	elseif ( aaDusfergonModel == 4013 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Shortsword\CorralniumFang.nif" weapon
+		SetIconPath "Dusfergon\1h\Shortsword\iconCorralniumFang.dds" weapon
+		SetWeaponType 0 weapon
+		
+	elseif ( aaDusfergonModel == 4014 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Shortsword\Lemurian.nif" weapon
+		SetIconPath "Dusfergon\1h\Shortsword\iconLemurian.dds" weapon
+		SetWeaponType 0 weapon
+		
+	elseif ( aaDusfergonModel == 4015 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Shortsword\BroadSword.nif" weapon
+		SetIconPath "Dusfergon\1h\Shortsword\iconBroadsword.dds" weapon
+		SetWeaponType 0 weapon
+		
+	elseif ( aaDusfergonModel == 4016 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Shortsword\BroadBlade.nif" weapon
+		SetIconPath "Dusfergon\1h\Shortsword\iconBroadBlade.dds" weapon
+		SetWeaponType 0 weapon
+		
+	elseif ( aaDusfergonModel == 4017 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Shortsword\ElhazanSaber1h.nif" weapon
+		SetIconPath "Dusfergon\1h\Shortsword\iconElhazan1H.dds" weapon
+		SetWeaponType 0 weapon
+		
+	elseif ( aaDusfergonModel == 4018 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Shortsword\SeawardCutlass.nif" weapon
+		SetIconPath "Dusfergon\1h\Shortsword\iconSeaward.dds" weapon
+		SetWeaponType 0 weapon
+		
+	elseif ( aaDusfergonModel == 4019 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Shortsword\KnuckleBowSaber.nif" weapon
+		SetIconPath "Dusfergon\1h\Shortsword\iconKnuckleBowSaber.dds" weapon
+		SetWeaponType 0 weapon
+		
+	elseif ( aaDusfergonModel == 4020 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Shortsword\LionClawSaber.nif" weapon
+		SetIconPath "Dusfergon\1h\Shortsword\iconLionClawSaber.dds" weapon
+		SetWeaponType 0 weapon
+		
+	elseif ( aaDusfergonModel == 4021 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Shortsword\ElvinCutlass.nif" weapon
+		SetIconPath "Dusfergon\1h\Shortsword\iconElvinCutlass.dds" weapon
+		SetWeaponType 0 weapon
+		
+	elseif ( aaDusfergonModel == 4022 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Shortsword\CommanderCutlass.nif" weapon
+		SetIconPath "Dusfergon\1h\Shortsword\iconCommanderCutlass.dds" weapon
+		SetWeaponType 0 weapon
+		
+	elseif ( aaDusfergonModel == 4023 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Shortsword\Kukri.nif" weapon
+		SetIconPath "Dusfergon\1h\Shortsword\iconKukri.dds" weapon
+		SetWeaponType 0 weapon
+		
+	elseif ( aaDusfergonModel == 4024 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Shortsword\FalshionCrownBronze.nif" weapon
+		SetIconPath "Dusfergon\1h\Shortsword\iconCrownBronze.dds" weapon
+		SetWeaponType 0 weapon
+		
+	elseif ( aaDusfergonModel == 4025 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Shortsword\FalshionRangerBronze.nif" weapon
+		SetIconPath "Dusfergon\1h\Shortsword\iconRangerBronze.dds" weapon
+		SetWeaponType 0 weapon
+		
+	elseif ( aaDusfergonModel == 4026 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Shortsword\Quandao.nif" weapon
+		SetIconPath "Dusfergon\1h\Shortsword\iconQuandao.dds" weapon
+		SetWeaponType 0 weapon
+		
+	elseif ( aaDusfergonModel == 4027 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Shortsword\EagleScimitar.nif" weapon
+		SetIconPath "Dusfergon\1h\Shortsword\iconEagleScimitar.dds" weapon
+		SetWeaponType 0 weapon
+		
+	elseif ( aaDusfergonModel == 4028 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Shortsword\CrescentScimitar.nif" weapon
+		SetIconPath "Dusfergon\1h\Shortsword\iconCrescentScimitar.dds" weapon
+		SetWeaponType 0 weapon
+		
+	elseif ( aaDusfergonModel == 4029 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Shortsword\OrcScimitar.nif" weapon
+		SetIconPath "Dusfergon\1h\Shortsword\iconOrcScimitar.dds" weapon
+		SetWeaponType 0 weapon
+		
+	elseif ( aaDusfergonModel == 4030 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Shortsword\MoricheJambiya.nif" weapon
+		SetIconPath "Dusfergon\1h\Shortsword\iconMoricheJambiya.dds" weapon
+		SetWeaponType 0 weapon
+		
+	elseif ( aaDusfergonModel == 4031 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Shortsword\CurvedDagger.nif" weapon
+		SetIconPath "Dusfergon\1h\Shortsword\iconCurvedDagger.dds" weapon
+		SetWeaponType 0 weapon
+		
+	elseif ( aaDusfergonModel == 4032 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Shortsword\GoblinCurvedDagger.nif" weapon
+		SetIconPath "Dusfergon\1h\Shortsword\iconGoblinCurvedDagger.dds" weapon
+		SetWeaponType 0 weapon
+		
+	elseif ( aaDusfergonModel == 4033 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Shortsword\GoblinCleaver.nif" weapon
+		SetIconPath "Dusfergon\1h\Shortsword\iconGoblinCleaver.dds" weapon
+		SetWeaponType 0 weapon
+		
+	elseif ( aaDusfergonModel == 4034 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Shortsword\BoneShokuto.nif" weapon
+		SetIconPath "Dusfergon\1h\iconBoneShokuto.dds" weapon
+		SetWeaponType 0 weapon
+		
+	elseif ( aaDusfergonModel == 4035 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Shortsword\BoneTalon.nif" weapon
+		SetIconPath "Dusfergon\1h\Shortsword\iconBoneTalon.dds" weapon
+		SetWeaponType 0 weapon
+		
+	elseif ( aaDusfergonModel == 4036 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Shortsword\BoneWakizaki.nif" weapon
+		SetIconPath "Dusfergon\1h\Shortsword\iconBoneWakisaki.dds" weapon
+		SetWeaponType 0 weapon
+		
+	elseif ( aaDusfergonModel == 4037 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Shortsword\BoneDah.nif" weapon
+		SetIconPath "Dusfergon\1h\Shortsword\iconBoneDah.dds" weapon
+		SetWeaponType 0 weapon
+		
+	elseif ( aaDusfergonModel == 4038 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Shortsword\MeyerNew.nif" weapon
+		SetIconPath "Dusfergon\1h\Shortsword\iconMeyerNew.dds" weapon
+		SetWeaponType 0 weapon
+		
+	elseif ( aaDusfergonModel == 4039 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Shortsword\GoblinMoria.nif" weapon
+		SetIconPath "Dusfergon\1h\Shortsword\iconGoblinMoria.dds" weapon
+		SetWeaponType 0 weapon
+		
+	elseif ( aaDusfergonModel == 4040 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Shortsword\BroadPoignard.nif" weapon
+		SetIconPath "Dusfergon\1h\Shortsword\iconBroadPoignard.dds" weapon
+		SetWeaponType 0 weapon
+		
+	elseif ( aaDusfergonModel == 4041 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Shortsword\FalshionCrownSteel.nif" weapon
+		SetIconPath "Dusfergon\1h\Shortsword\iconCrownSteel.dds" weapon
+		SetWeaponType 0 weapon
+		
+	elseif ( aaDusfergonModel == 4042 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Shortsword\FalshionRangerSteel.nif" weapon
+		SetIconPath "Dusfergon\1h\Shortsword\iconRangerSteel.dds" weapon
+		SetWeaponType 0 weapon
+		
+	elseif ( aaDusfergonModel == 4043 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Shortsword\BroadPoignardSteel.nif" weapon
+		SetIconPath "Dusfergon\1h\Shortsword\iconBroadPoignardSteel.dds" weapon
+		SetWeaponType 0 weapon
+		
+	elseif ( aaDusfergonModel == 4044 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Shortsword\CommanderCutlassOld.nif" weapon
+		SetIconPath "Dusfergon\1h\Shortsword\iconCommanderCutlass.dds" weapon
+		SetWeaponType 0 weapon
+		
+	elseif ( aaDusfergonModel == 4045 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Shortsword\EagleScimitarOld.nif" weapon
+		SetIconPath "Dusfergon\1h\Shortsword\iconEagleScimitar.dds" weapon
+		SetWeaponType 0 weapon
+		
+	elseif ( aaDusfergonModel == 4046 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Shortsword\CrescentScimitarOld.nif" weapon
+		SetIconPath "Dusfergon\1h\Shortsword\iconCrescentScimitar.dds" weapon
+		SetWeaponType 0 weapon
+		
+	elseif ( aaDusfergonModel == 4047 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Shortsword\MoricheJambiyaOld.nif" weapon
+		SetIconPath "Dusfergon\1h\Shortsword\iconMoricheJambiya.dds" weapon
+		SetWeaponType 0 weapon
+		
+	elseif ( aaDusfergonModel == 4048 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Shortsword\MeyerOld.nif" weapon
+		SetIconPath "Dusfergon\1h\Shortsword\iconMeyerOld.dds" weapon
+		SetWeaponType 0 weapon
+		
+	elseif ( aaDusfergonModel == 4049 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Shortsword\BroadPoignardOld.nif" weapon
+		SetIconPath "Dusfergon\1h\Shortsword\iconBroadPoignardSteel.dds" weapon
+		SetWeaponType 0 weapon
+		
+	elseif ( aaDusfergonModel == 4050 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Shortsword\BrokenHead.nif" weapon
+		SetIconPath "Dusfergon\1h\Shortsword\iconBrokenHead.dds" weapon
+		SetWeaponType 0 weapon
+		
+	;-----------------------------------------------------------------------------
+	;Daggers
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 5000 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Dagger\IronDagger.nif" weapon
+		SetIconPath "Dusfergon\1h\ironlongsword.dds" weapon
+		SetWeaponType 0 weapon
+		
+	elseif ( aaDusfergonModel == 5001 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Dagger\IronDaggerFine.nif" weapon
+		SetIconPath "Dusfergon\1h\fineiron.dds" weapon
+		SetWeaponType 0 weapon
+		
+	elseif ( aaDusfergonModel == 5002 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Dagger\SteelDagger.nif" weapon
+		SetIconPath "Dusfergon\1h\steellongsword.dds" weapon
+		SetWeaponType 0 weapon
+		
+	elseif ( aaDusfergonModel == 5003 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Dagger\SteelDaggerFine.nif" weapon
+		SetIconPath "Dusfergon\1h\steellongsword.dds" weapon
+		SetWeaponType 0 weapon
+		
+	elseif ( aaDusfergonModel == 5004 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Dagger\SilverDagger.nif" weapon
+		SetIconPath "Dusfergon\1h\silverlongsword.dds" weapon
+		SetWeaponType 0 weapon
+		
+	elseif ( aaDusfergonModel == 5005 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Dagger\EbonyDagger.nif" weapon
+		SetIconPath "Dusfergon\1h\ebonylongsword.dds" weapon
+		SetWeaponType 0 weapon
+		
+	elseif ( aaDusfergonModel == 5006 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Dagger\CorralniumNail.nif" weapon
+		SetIconPath "Dusfergon\1h\Dagger\iconCorralniumNail.dds" weapon
+		SetWeaponType 0 weapon
+		
+	elseif ( aaDusfergonModel == 5007 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Dagger\CurvyKrissDagger.nif" weapon
+		SetIconPath "Dusfergon\1h\Dagger\iconCurvyKrissDagger.dds" weapon
+		SetWeaponType 0 weapon
+		
+	elseif ( aaDusfergonModel == 5008 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Dagger\TetelaDagger.nif" weapon
+		SetIconPath "Dusfergon\1h\Dagger\iconTetelaDagger.dds" weapon
+		SetWeaponType 0 weapon
+		
+	elseif ( aaDusfergonModel == 5009 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Dagger\SpikeDaggerBronze.nif" weapon
+		SetIconPath "Dusfergon\1h\Dagger\iconSpikeDaggerBronze.dds" weapon
+		SetWeaponType 0 weapon
+		
+	elseif ( aaDusfergonModel == 5010 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Dagger\StilettoGold.nif" weapon
+		SetIconPath "Dusfergon\1h\Dagger\iconStilettoGold.dds" weapon
+		SetWeaponType 0 weapon
+		
+	elseif ( aaDusfergonModel == 5011 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Dagger\Bowie.nif" weapon
+		SetIconPath "Dusfergon\1h\Dagger\iconBowie.dds" weapon
+		SetWeaponType 0 weapon
+		
+	elseif ( aaDusfergonModel == 5012 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Dagger\HuntingDagger.nif" weapon
+		SetIconPath "Dusfergon\1h\Dagger\iconHuntingDagger.dds" weapon
+		SetWeaponType 0 weapon
+		
+	elseif ( aaDusfergonModel == 5013 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Dagger\Miscitar.nif" weapon
+		SetIconPath "Dusfergon\1h\Dagger\iconMiscitar.dds" weapon
+		SetWeaponType 0 weapon
+		
+	elseif ( aaDusfergonModel == 5014 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Dagger\Jambaya.nif" weapon
+		SetIconPath "Dusfergon\1h\Dagger\iconJambaya.dds" weapon
+		SetWeaponType 0 weapon
+		
+	elseif ( aaDusfergonModel == 5015 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Dagger\SilverKnife.nif" weapon
+		SetIconPath "Dusfergon\1h\Dagger\iconSilveKnife.dds" weapon
+		SetWeaponType 0 weapon
+		
+	elseif ( aaDusfergonModel == 5016 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Dagger\GoblinMori.nif" weapon
+		SetIconPath "Dusfergon\1h\Dagger\iconGoblinMori.dds" weapon
+		SetWeaponType 0 weapon
+			
+	elseif ( aaDusfergonModel == 5017 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Dagger\ElvinKnife.nif" weapon
+		SetIconPath "Dusfergon\1h\Dagger\iconElvinKnife.dds" weapon
+		SetWeaponType 0 weapon
+		
+	elseif ( aaDusfergonModel == 5018 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Dagger\JodyDagger.nif" weapon
+		SetIconPath "Dusfergon\1h\Dagger\iconJodyDagger.dds" weapon
+		SetWeaponType 0 weapon
+		
+	elseif ( aaDusfergonModel == 5019 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Dagger\EbonyClaw.nif" weapon
+		SetIconPath "Dusfergon\1h\Dagger\iconEbonyClaw.dds" weapon
+		SetWeaponType 0 weapon
+		
+	elseif ( aaDusfergonModel == 5020 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Dagger\CrescentDagger.nif" weapon
+		SetIconPath "Dusfergon\1h\Dagger\iconCrescentDagger.dds" weapon
+		SetWeaponType 0 weapon
+		
+	elseif ( aaDusfergonModel == 5021 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Dagger\BoneTanto.nif" weapon
+		SetIconPath "Dusfergon\1h\Dagger\iconBoneTanto.dds" weapon
+		SetWeaponType 0 weapon
+		
+	elseif ( aaDusfergonModel == 5022 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Dagger\IvoryDagger.nif" weapon
+		SetIconPath "Dusfergon\1h\Dagger\iconIvoryDagger.dds" weapon
+		SetWeaponType 0 weapon
+		
+	elseif ( aaDusfergonModel == 5023 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Dagger\Poignard.nif" weapon
+		SetIconPath "Dusfergon\1h\Dagger\iconPoignard.dds" weapon
+		SetWeaponType 0 weapon
+		
+	elseif ( aaDusfergonModel == 5024 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Dagger\PoignardII.nif" weapon
+		SetIconPath "Dusfergon\1h\Dagger\iconPoignardII.dds" weapon
+		SetWeaponType 0 weapon
+		
+	elseif ( aaDusfergonModel == 5025 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Dagger\Broadedge.nif" weapon
+		SetIconPath "Dusfergon\1h\Dagger\iconBroadedge.dds" weapon
+		SetWeaponType 0 weapon
+		
+	elseif ( aaDusfergonModel == 5026 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Dagger\SpikeDaggerSteel.nif" weapon
+		SetIconPath "Dusfergon\1h\Dagger\iconSpikeDaggerSteel.dds" weapon
+		SetWeaponType 0 weapon
+		
+	elseif ( aaDusfergonModel == 5027 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Dagger\StilettoSilver.nif" weapon
+		SetIconPath "Dusfergon\1h\Dagger\iconStilettoSilver.dds" weapon
+		SetWeaponType 0 weapon
+		
+	elseif ( aaDusfergonModel == 5028 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Dagger\PoignardSteel.nif" weapon
+		SetIconPath "Dusfergon\1h\Dagger\iconPoignardSteel.dds" weapon
+		SetWeaponType 0 weapon
+		
+	elseif ( aaDusfergonModel == 5029 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Dagger\PoignardIISteel.nif" weapon
+		SetIconPath "Dusfergon\1h\Dagger\iconPoignardIISteel.dds" weapon
+		SetWeaponType 0 weapon
+		
+	elseif ( aaDusfergonModel == 5030 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Dagger\BroadedgeSteel.nif" weapon
+		SetIconPath "Dusfergon\1h\Dagger\iconBroadedgeSteel.dds" weapon
+		SetWeaponType 0 weapon
+		
+	elseif ( aaDusfergonModel == 5031 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Dagger\JodyDaggerOld.nif" weapon
+		SetIconPath "Dusfergon\1h\Dagger\iconJodyDagger.dds" weapon
+		SetWeaponType 0 weapon
+		
+	elseif ( aaDusfergonModel == 5032 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Dagger\EbonyClawOld.nif" weapon
+		SetIconPath "Dusfergon\1h\Dagger\iconEbonyClaw.dds" weapon
+		SetWeaponType 0 weapon
+		
+	elseif ( aaDusfergonModel == 5033 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Dagger\CrescentDaggerOld.nif" weapon
+		SetIconPath "Dusfergon\1h\Dagger\iconCrescentDagger.dds" weapon
+		SetWeaponType 0 weapon
+		
+	elseif ( aaDusfergonModel == 5034 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Dagger\PoignardOld.nif" weapon
+		SetIconPath "Dusfergon\1h\Dagger\iconPoignardOld.dds" weapon
+		SetWeaponType 0 weapon
+		
+	elseif ( aaDusfergonModel == 5035 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Dagger\PoignardIIOld.nif" weapon
+		SetIconPath "Dusfergon\1h\Dagger\iconPoignardIIOld.dds" weapon
+		SetWeaponType 0 weapon
+		
+	elseif ( aaDusfergonModel == 5036 )
+
+		SetModelPath "Weapons\Dusfergon\1h\Dagger\BroadedgeOld.nif" weapon
+		SetIconPath "Dusfergon\1h\Dagger\iconBroadedgeOld.dds" weapon
+		SetWeaponType 0 weapon
+		
+	endif
+
+	if ( aaDusfergonEquip == 1 )
+
+		;Re-equip required to refresh model
+		Player.UnEquipItemSilent weapon
+		Player.EquipItem2NS weapon ;Runs OnEquip block
+			
+	endif
+;-----------------------------------------------------------------------------
+end ;Function { weapon }
+;-----------------------------------------------------------------------------
