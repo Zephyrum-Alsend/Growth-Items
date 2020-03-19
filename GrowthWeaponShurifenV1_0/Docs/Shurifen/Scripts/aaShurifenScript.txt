@@ -1,0 +1,16 @@
+scn aaShurifenScript
+
+;aaShurifenManager related
+;aaShurifenOnHit related
+
+begin OnEquip Player
+	
+	set aaShurifenEquip to 1
+
+end
+
+begin OnUnEquip Player
+
+	set aaShurifenEquip to 0
+
+end

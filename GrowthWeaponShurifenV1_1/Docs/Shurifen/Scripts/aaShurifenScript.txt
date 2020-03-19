@@ -1,0 +1,18 @@
+scn aaShurifenScript
+
+;aaShurifenManager related
+;aaShurifenOnHit related
+
+begin OnEquip Player
+
+	set aaShurifenEquip to 1
+	SetEventHandler "OnHitWith" aaShurifenOnHit "object"::Getself
+
+end
+
+begin OnUnEquip Player
+
+	set aaShurifenEquip to 0
+	RemoveEventHandler "OnHitWith" aaShurifenOnHit "object"::GetSelf
+
+end

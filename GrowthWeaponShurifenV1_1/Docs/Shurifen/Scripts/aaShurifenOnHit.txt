@@ -1,0 +1,54 @@
+scn aaShurifenOnHit
+
+;aaShurifenManager related
+;aaShurifenScript related
+
+ref Target 
+ref Weapon
+
+;DoOnce flags for progress messages
+short Progress1
+short Progress2
+short Progress3
+
+begin Function { Target, Weapon }
+
+	if ( Player.IsPowerAttacking )
+		;Power attacks accrue more xp
+		set aaShurifenHits to ( aaShurifenHits + 3 )
+		printc "XP +3!  %3.0f/%3.0f" aaShurifenHits aaShurifenLevelRequirement
+
+	else 
+		set aaShurifenHits to ( aaShurifenHits + 1 )
+		printc "XP +1!  %3.0f/%3.0f" aaShurifenHits aaShurifenLevelRequirement
+
+	endif
+
+	;Check level up condition
+	if ( aaShurifenLevelUp == 0 )
+		if ( aaShurifenHits >= aaShurifenLevelRequirement )
+			printc "Setting Level Up flag!"
+			Message "Shurifen prepares to reforge itself..."
+			set aaShurifenLevelUp to 1 ;Global level up flag
+	
+		elseif ( Progress3 == 0 && aaShurifenHits >= ( aaShurifenLevelRequirement * 0.75 ) )
+			set Progress3 to 1
+			Message "Shurifen quenches itself in your foe."
+	
+		elseif ( Progress2 == 0 && aaShurifenHits >= ( aaShurifenLevelRequirement * 0.5 ) )
+			set Progress2 to 1
+			Message "Shurifen sharpens itself on your foe."
+	
+		elseif ( Progress1 == 0 && aaShurifenHits >= ( aaShurifenLevelRequirement * 0.25 ) )
+			set Progress3 to 1
+			Message "Shurifen cuts a bit finer."
+	
+		endif
+	else
+		;Reset DoOnce flags
+		set Progress1 to 0
+		set Progress2 to 0
+		set Progress3 to 0
+		
+	endif	
+end

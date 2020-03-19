@@ -1,0 +1,365 @@
+scn aaShurifenManager
+
+;aaShurifenScript related
+;aaShurifenOnHit related
+
+short LevelMult
+short BaseRequirement
+float fQuestDelayTime
+
+begin gamemode
+
+	if GetGameLoaded
+
+		set BaseRequirement to 200
+		set LevelMult to 200
+
+		;Adds Shurifen to the player if first start up
+		if ( aaShurifenLevel == 0 )
+			Message "A shard of power finds it's way into your belongings..."
+			Player.AddItem DLScalar01 1
+			set aaShurifenLevel to 1
+			set aaShurifenLevelRequirement to BaseRequirement + ( aaShurifenLevel * LevelMult )
+			setEventHandler "OnHitWith" aaShurifenOnHit "object"::DLScalar01
+
+		;Sets OnHitWith event handler
+		elseif ( aaShurifenLevel == 1 )
+			setEventHandler "OnHitWith" aaShurifenOnHit "object"::DLScalar01
+		elseif ( aaShurifenLevel == 2 )
+			setEventHandler "OnHitWith" aaShurifenOnHit "object"::DLScalar05
+		elseif ( aaShurifenLevel == 3 )
+			setEventHandler "OnHitWith" aaShurifenOnHit "object"::DLScalar10
+		elseif ( aaShurifenLevel == 4 )
+			setEventHandler "OnHitWith" aaShurifenOnHit "object"::DLScalar15
+		elseif ( aaShurifenLevel == 5 )
+			setEventHandler "OnHitWith" aaShurifenOnHit "object"::DLScalar20
+		elseif ( aaShurifenLevel == 6 )
+			setEventHandler "OnHitWith" aaShurifenOnHit "object"::DLScalar25
+		elseif ( aaShurifenLevel == 7 )
+			setEventHandler "OnHitWith" aaShurifenOnHit "object"::DLScalar30
+		elseif ( aaShurifenLevel == 8 )
+			setEventHandler "OnHitWith" aaShurifenOnHit "object"::DLScalar35
+		elseif ( aaShurifenLevel == 9 )
+			setEventHandler "OnHitWith" aaShurifenOnHit "object"::DLScalar40
+		elseif ( aaShurifenLevel == 10 )
+			setEventHandler "OnHitWith" aaShurifenOnHit "object"::DLScalar45
+		elseif ( aaShurifenLevel == 11 )
+			setEventHandler "OnHitWith" aaShurifenOnHit "object"::DLScalar50
+		elseif ( aaShurifenLevel == 12 )
+			setEventHandler "OnHitWith" aaShurifenOnHit "object"::DLScalar55
+		elseif ( aaShurifenLevel == 13 )
+			setEventHandler "OnHitWith" aaShurifenOnHit "object"::DLScalar60
+		elseif ( aaShurifenLevel == 14 )
+			setEventHandler "OnHitWith" aaShurifenOnHit "object"::DLScalar65
+		elseif ( aaShurifenLevel == 15 )
+			setEventHandler "OnHitWith" aaShurifenOnHit "object"::DLScalar70
+		elseif ( aaShurifenLevel == 16 )
+			setEventHandler "OnHitWith" aaShurifenOnHit "object"::DLScalar75
+		elseif ( aaShurifenLevel == 17 )
+			setEventHandler "OnHitWith" aaShurifenOnHit "object"::DLScalar80
+		elseif ( aaShurifenLevel == 18 )
+			setEventHandler "OnHitWith" aaShurifenOnHit "object"::DLScalar85
+		elseif ( aaShurifenLevel == 19 )
+			setEventHandler "OnHitWith" aaShurifenOnHit "object"::DLScalar90
+		elseif ( aaShurifenLevel == 20 )
+			setEventHandler "OnHitWith" aaShurifenOnHit "object"::DLScalar95
+		endif
+
+		printc "Shurifen initialized!"
+	endif
+
+	;Ignores level up flag if maxed
+	if ( Player.GetItemCount DLScalar99 < 1 && aaShurifenLevelUp == 1) ;Global level up flag
+		if ( Player.IsInCombat == 0 ) && Player.isRidingHorse == 0
+
+			;Check for each level and replace accordingly
+			if ( Player.GetItemCount DLScalar01 == 1 )
+				printc "Shurifen leveling up!"
+				Message "Shurifen reforges itself."
+				Player.AddItem DLScalar05 1
+				if ( aaShurifenEquip == 1 ) ;Equip new version if old was equipped
+					Player.EquipItem DLScalar05
+				endif
+				Player.RemoveItem DLScalar01 1
+				set aaShurifenLevelUp to 0 ;Incase Player is disarmed, keep level up flag checked
+				set aaShurifenLevel to ( aaShurifenLevel + 1 )
+				set aaShurifenLevelRequirement to BaseRequirement + ( aaShurifenLevel * LevelMult )
+				removeEventHandler "OnHitWith" aaShurifenOnHit "object"::DLScalar01
+				setEventHandler "OnHitWith" aaShurifenOnHit "object"::DLScalar05
+				
+			elseif ( Player.GetItemCount DLScalar05 == 1 )
+				printc "Shurifen leveling up!"
+				Message "Shurifen reforges itself."
+				Player.AddItem DLScalar10 1
+				if ( aaShurifenEquip == 1 )
+					Player.EquipItem DLScalar10
+				endif
+				Player.RemoveItem DLScalar05 1
+				set aaShurifenLevelUp to 0
+				set aaShurifenLevel to ( aaShurifenLevel + 1 )
+				set aaShurifenLevelRequirement to BaseRequirement + ( aaShurifenLevel * LevelMult )
+				removeEventHandler "OnHitWith" aaShurifenOnHit "object"::DLScalar05
+				setEventHandler "OnHitWith" aaShurifenOnHit "object"::DLScalar10
+				
+			elseif ( Player.GetItemCount DLScalar10 == 1 )
+				printc "Shurifen leveling up!"
+				Message "Shurifen reforges itself."
+				Player.AddItem DLScalar15 1
+				if ( aaShurifenEquip == 1 )
+					Player.EquipItem DLScalar15
+				endif
+				Player.RemoveItem DLScalar10 1
+				set aaShurifenLevelUp to 0
+				set aaShurifenLevel to ( aaShurifenLevel + 1 )
+				set aaShurifenLevelRequirement to BaseRequirement + ( aaShurifenLevel * LevelMult )
+				removeEventHandler "OnHitWith" aaShurifenOnHit "object"::DLScalar10
+				setEventHandler "OnHitWith" aaShurifenOnHit "object"::DLScalar15
+				
+			elseif ( Player.GetItemCount DLScalar15 == 1 )
+				printc "Shurifen leveling up!"
+				Message "Shurifen reforges itself."
+				Player.AddItem DLScalar20 1
+				if ( aaShurifenEquip == 1 )
+					Player.EquipItem DLScalar20
+				endif
+				Player.RemoveItem DLScalar15 1
+				set aaShurifenLevelUp to 0
+				set aaShurifenLevel to ( aaShurifenLevel + 1 )
+				set aaShurifenLevelRequirement to BaseRequirement + ( aaShurifenLevel * LevelMult )
+				removeEventHandler "OnHitWith" aaShurifenOnHit "object"::DLScalar15
+				setEventHandler "OnHitWith" aaShurifenOnHit "object"::DLScalar20
+				
+			elseif ( Player.GetItemCount DLScalar20 == 1 )
+				printc "Shurifen leveling up!"
+				Message "Shurifen reforges itself."
+				Player.AddItem DLScalar25 1
+				if ( aaShurifenEquip == 1 )
+					Player.EquipItem DLScalar25
+				endif
+				Player.RemoveItem DLScalar20 1
+				set aaShurifenLevelUp to 0
+				set aaShurifenLevel to ( aaShurifenLevel + 1 )
+				set aaShurifenLevelRequirement to BaseRequirement + ( aaShurifenLevel * LevelMult )
+				removeEventHandler "OnHitWith" aaShurifenOnHit "object"::DLScalar20
+				setEventHandler "OnHitWith" aaShurifenOnHit "object"::DLScalar25
+				
+			elseif ( Player.GetItemCount DLScalar25 == 1 )
+				printc "Shurifen leveling up!"
+				Message "Shurifen reforges itself."
+				Player.AddItem DLScalar30 1
+				if ( aaShurifenEquip == 1 )
+					Player.EquipItem DLScalar30
+				endif
+				Player.RemoveItem DLScalar25 1
+				set aaShurifenLevelUp to 0
+				set aaShurifenLevel to ( aaShurifenLevel + 1 )
+				set aaShurifenLevelRequirement to BaseRequirement + ( aaShurifenLevel * LevelMult )
+				removeEventHandler "OnHitWith" aaShurifenOnHit "object"::DLScalar25
+				setEventHandler "OnHitWith" aaShurifenOnHit "object"::DLScalar30
+				
+			elseif ( Player.GetItemCount DLScalar30 == 1 )
+				printc "Shurifen leveling up!"
+				Message "Shurifen reforges itself."
+				Player.AddItem DLScalar35 1
+				if ( aaShurifenEquip == 1 )
+					Player.EquipItem DLScalar35
+				endif
+				Player.RemoveItem DLScalar30 1
+				set aaShurifenLevelUp to 0
+				set aaShurifenLevel to ( aaShurifenLevel + 1 )
+				set aaShurifenLevelRequirement to BaseRequirement + ( aaShurifenLevel * LevelMult )
+				removeEventHandler "OnHitWith" aaShurifenOnHit "object"::DLScalar30
+				setEventHandler "OnHitWith" aaShurifenOnHit "object"::DLScalar35
+				
+			elseif ( Player.GetItemCount DLScalar35 == 1 )
+				printc "Shurifen leveling up!"
+				Message "Shurifen reforges itself."
+				Player.AddItem DLScalar40 1
+				if ( aaShurifenEquip == 1 )
+					Player.EquipItem DLScalar40
+				endif
+				Player.RemoveItem DLScalar35 1
+				set aaShurifenLevelUp to 0
+				set aaShurifenLevel to ( aaShurifenLevel + 1 )
+				set aaShurifenLevelRequirement to BaseRequirement + ( aaShurifenLevel * LevelMult )
+				removeEventHandler "OnHitWith" aaShurifenOnHit "object"::DLScalar35
+				setEventHandler "OnHitWith" aaShurifenOnHit "object"::DLScalar40
+				
+			elseif ( Player.GetItemCount DLScalar40 == 1 )
+				printc "Shurifen leveling up!"
+				Message "Shurifen reforges itself."
+				Player.AddItem DLScalar45 1
+				if ( aaShurifenEquip == 1 )
+					Player.EquipItem DLScalar45
+				endif
+				Player.RemoveItem DLScalar40 1
+				set aaShurifenLevelUp to 0
+				set aaShurifenLevel to ( aaShurifenLevel + 1 )
+				set aaShurifenLevelRequirement to BaseRequirement + ( aaShurifenLevel * LevelMult )
+				removeEventHandler "OnHitWith" aaShurifenOnHit "object"::DLScalar40
+				setEventHandler "OnHitWith" aaShurifenOnHit "object"::DLScalar45
+				
+			elseif ( Player.GetItemCount DLScalar45 == 1 )
+				printc "Shurifen leveling up!"
+				Message "Shurifen reforges itself."
+				Player.AddItem DLScalar50 1
+				if ( aaShurifenEquip == 1 )
+					Player.EquipItem DLScalar50
+				endif
+				Player.RemoveItem DLScalar45 1
+				set aaShurifenLevelUp to 0
+				set aaShurifenLevel to ( aaShurifenLevel + 1 )
+				set aaShurifenLevelRequirement to BaseRequirement + ( aaShurifenLevel * LevelMult )
+				removeEventHandler "OnHitWith" aaShurifenOnHit "object"::DLScalar45
+				setEventHandler "OnHitWith" aaShurifenOnHit "object"::DLScalar50
+				
+			elseif ( Player.GetItemCount DLScalar50 == 1 )
+				printc "Shurifen leveling up!"
+				Message "Shurifen reforges itself."
+				Player.AddItem DLScalar55 1
+				if ( aaShurifenEquip == 1 )
+					Player.EquipItem DLScalar55
+				endif
+				Player.RemoveItem DLScalar50 1
+				set aaShurifenLevelUp to 0
+				set aaShurifenLevel to ( aaShurifenLevel + 1 )
+				set aaShurifenLevelRequirement to BaseRequirement + ( aaShurifenLevel * LevelMult )
+				removeEventHandler "OnHitWith" aaShurifenOnHit "object"::DLScalar50
+				setEventHandler "OnHitWith" aaShurifenOnHit "object"::DLScalar55
+				
+			elseif ( Player.GetItemCount DLScalar55 == 1 )
+				printc "Shurifen leveling up!"
+				Message "Shurifen reforges itself."
+				Player.AddItem DLScalar60 1
+				if ( aaShurifenEquip == 1 )
+					Player.EquipItem DLScalar60
+				endif
+				Player.RemoveItem DLScalar55 1
+				set aaShurifenLevelUp to 0
+				set aaShurifenLevel to ( aaShurifenLevel + 1 )
+				set aaShurifenLevelRequirement to BaseRequirement + ( aaShurifenLevel * LevelMult )
+				removeEventHandler "OnHitWith" aaShurifenOnHit "object"::DLScalar55
+				setEventHandler "OnHitWith" aaShurifenOnHit "object"::DLScalar60
+				
+			elseif ( Player.GetItemCount DLScalar60 == 1 )
+				printc "Shurifen leveling up!"
+				Message "Shurifen reforges itself."
+				Player.AddItem DLScalar65 1
+				if ( aaShurifenEquip == 1 )
+					Player.EquipItem DLScalar65
+				endif
+				Player.RemoveItem DLScalar60 1
+				set aaShurifenLevelUp to 0
+				set aaShurifenLevel to ( aaShurifenLevel + 1 )
+				set aaShurifenLevelRequirement to BaseRequirement + ( aaShurifenLevel * LevelMult )
+				removeEventHandler "OnHitWith" aaShurifenOnHit "object"::DLScalar60
+				setEventHandler "OnHitWith" aaShurifenOnHit "object"::DLScalar65
+				
+			elseif ( Player.GetItemCount DLScalar65 == 1 )
+				printc "Shurifen leveling up!"
+				Message "Shurifen reforges itself."
+				Player.AddItem DLScalar70 1
+				if ( aaShurifenEquip == 1 )
+					Player.EquipItem DLScalar70
+				endif
+				Player.RemoveItem DLScalar65 1
+				set aaShurifenLevelUp to 0
+				set aaShurifenLevel to ( aaShurifenLevel + 1 )
+				set aaShurifenLevelRequirement to BaseRequirement + ( aaShurifenLevel * LevelMult )
+				removeEventHandler "OnHitWith" aaShurifenOnHit "object"::DLScalar65
+				setEventHandler "OnHitWith" aaShurifenOnHit "object"::DLScalar70
+				
+			elseif ( Player.GetItemCount DLScalar70 == 1 )
+				printc "Shurifen leveling up!"
+				Message "Shurifen reforges itself."
+				Player.AddItem DLScalar75 1
+				if ( aaShurifenEquip == 1 )
+					Player.EquipItem DLScalar75
+				endif
+				Player.RemoveItem DLScalar70 1
+				set aaShurifenLevelUp to 0
+				set aaShurifenLevel to ( aaShurifenLevel + 1 )
+				set aaShurifenLevelRequirement to BaseRequirement + ( aaShurifenLevel * LevelMult )
+				removeEventHandler "OnHitWith" aaShurifenOnHit "object"::DLScalar70
+				setEventHandler "OnHitWith" aaShurifenOnHit "object"::DLScalar75
+				
+			elseif ( Player.GetItemCount DLScalar75 == 1 )
+				printc "Shurifen leveling up!"
+				Message "Shurifen reforges itself."
+				Player.AddItem DLScalar80 1
+				if ( aaShurifenEquip == 1 )
+					Player.EquipItem DLScalar80
+				endif
+				Player.RemoveItem DLScalar75 1
+				set aaShurifenLevelUp to 0
+				set aaShurifenLevel to ( aaShurifenLevel + 1 )
+				set aaShurifenLevelRequirement to BaseRequirement + ( aaShurifenLevel * LevelMult )
+				removeEventHandler "OnHitWith" aaShurifenOnHit "object"::DLScalar75
+				setEventHandler "OnHitWith" aaShurifenOnHit "object"::DLScalar80
+				
+			elseif ( Player.GetItemCount DLScalar80 == 1 )
+				printc "Shurifen leveling up!"
+				Message "Shurifen reforges itself."
+				Player.AddItem DLScalar85 1
+				if ( aaShurifenEquip == 1 )
+					Player.EquipItem DLScalar85
+				endif
+				Player.RemoveItem DLScalar80 1
+				set aaShurifenLevelUp to 0
+				set aaShurifenLevel to ( aaShurifenLevel + 1 )
+				set aaShurifenLevelRequirement to BaseRequirement + ( aaShurifenLevel * LevelMult )
+				removeEventHandler "OnHitWith" aaShurifenOnHit "object"::DLScalar80
+				setEventHandler "OnHitWith" aaShurifenOnHit "object"::DLScalar85
+				
+			elseif ( Player.GetItemCount DLScalar85 == 1 )
+				printc "Shurifen leveling up!"
+				Message "Shurifen reforges itself."
+				Player.AddItem DLScalar90 1
+				if ( aaShurifenEquip == 1 )
+					Player.EquipItem DLScalar90
+				endif
+				Player.RemoveItem DLScalar85 1
+				set aaShurifenLevelUp to 0
+				set aaShurifenLevel to ( aaShurifenLevel + 1 )
+				set aaShurifenLevelRequirement to BaseRequirement + ( aaShurifenLevel * LevelMult )
+				removeEventHandler "OnHitWith" aaShurifenOnHit "object"::DLScalar85
+				setEventHandler "OnHitWith" aaShurifenOnHit "object"::DLScalar90
+				
+			elseif ( Player.GetItemCount DLScalar90 == 1 )
+				printc "Shurifen leveling up!"
+				Message "Shurifen reforges itself."
+				Player.AddItem DLScalar95 1
+				if ( aaShurifenEquip == 1 )
+					Player.EquipItem DLScalar95
+				endif
+				Player.RemoveItem DLScalar90 1
+				set aaShurifenLevelUp to 0
+				set aaShurifenLevel to ( aaShurifenLevel + 1 )
+				set aaShurifenLevelRequirement to BaseRequirement + ( aaShurifenLevel * LevelMult )
+				removeEventHandler "OnHitWith" aaShurifenOnHit "object"::DLScalar90
+				setEventHandler "OnHitWith" aaShurifenOnHit "object"::DLScalar95
+				
+			elseif ( Player.GetItemCount DLScalar95 == 1 )
+				printc "Shurifen leveling up!"
+				Message "Shurifen reforges itself."
+				Player.AddItem DLScalar99 1
+				if ( aaShurifenEquip == 1 )
+					Player.EquipItem DLScalar99
+				endif
+				Player.RemoveItem DLScalar95 1
+				set aaShurifenLevelUp to 0
+				set aaShurifenLevel to ( aaShurifenLevel + 1 )
+				set aaShurifenLevelRequirement to BaseRequirement + ( aaShurifenLevel * LevelMult )
+				removeEventHandler "OnHitWith" aaShurifenOnHit "object"::DLScalar95
+				;Level is capped, no need for new OnHitWith handler
+				MessageBox "Shurifen has reforged a final time."
+				
+			endif
+
+			;Reset internal XP
+			set aaShurifenHits to 0
+			
+		endif
+	endif
+	
+end

@@ -1,0 +1,272 @@
+scn aaShurifenManager
+
+;aaShurifenScript related
+;aaShurifenOnHit related
+
+short LevelMult
+short BaseRequirement
+float fQuestDelayTime
+
+begin gamemode
+
+	if GetGameLoaded
+
+		set BaseRequirement to 200
+		set LevelMult to 200
+
+		;Adds Shurifen to the player if first start up
+		if ( aaShurifenLevel == 0 )
+			Message "A shard of power finds it's way into your belongings..."
+			Player.AddItem DLScalar01 1
+			set aaShurifenLevel to 1
+			set aaShurifenLevelRequirement to BaseRequirement + ( aaShurifenLevel * LevelMult )
+
+		;Sets OnHitWith handler if Shurifen is already equipped
+		elseif ( aaShurifenEquip == 1 )
+			SetEventHandler "OnHitWith" aaShurifenOnHit "object"::(Player.GetEquipmentSlot 16)
+
+		endif
+
+		printc "Shurifen initialized!"
+	endif
+
+	;Checks 
+	;1) Shurifen is not max level 
+	;2) global level up flag is set 
+	;3) player not in combat 
+	;4) player not riding
+	;before leveling Shurifen
+	if ( Player.GetItemCount DLScalar99 < 1 && aaShurifenLevelUp == 1 && Player.IsInCombat == 0 && Player.isRidingHorse == 0 )
+
+		;Check for each level and replace accordingly
+		if ( Player.GetItemCount DLScalar01 > 0 )
+			printc "Shurifen leveling up!"
+			Message "Shurifen reforges itself."
+			Player.AddItem DLScalar05 1
+			if ( aaShurifenEquip == 1 ) ;Equip new version if old was equipped
+				Player.EquipItem DLScalar05
+			endif
+			Player.RemoveItem DLScalar01 1
+			set aaShurifenLevelUp to 0 ;Incase Player is disarmed, keep level up flag checked
+			set aaShurifenLevel to 2
+			
+		elseif ( Player.GetItemCount DLScalar05 > 0 )
+			printc "Shurifen leveling up!"
+			Message "Shurifen reforges itself."
+			Player.AddItem DLScalar10 1
+			if ( aaShurifenEquip == 1 )
+				Player.EquipItem DLScalar10
+			endif
+			Player.RemoveItem DLScalar05 1
+			set aaShurifenLevelUp to 0
+			set aaShurifenLevel to 3
+			
+		elseif ( Player.GetItemCount DLScalar10 > 0 )
+			printc "Shurifen leveling up!"
+			Message "Shurifen reforges itself."
+			Player.AddItem DLScalar15 1
+			if ( aaShurifenEquip == 1 )
+				Player.EquipItem DLScalar15
+			endif
+			Player.RemoveItem DLScalar10 1
+			set aaShurifenLevelUp to 0
+			set aaShurifenLevel to 4
+			
+		elseif ( Player.GetItemCount DLScalar15 > 0 )
+			printc "Shurifen leveling up!"
+			Message "Shurifen reforges itself."
+			Player.AddItem DLScalar20 1
+			if ( aaShurifenEquip == 1 )
+				Player.EquipItem DLScalar20
+			endif
+			Player.RemoveItem DLScalar15 1
+			set aaShurifenLevelUp to 0
+			set aaShurifenLevel to 5
+			
+		elseif ( Player.GetItemCount DLScalar20 > 0 )
+			printc "Shurifen leveling up!"
+			Message "Shurifen reforges itself."
+			Player.AddItem DLScalar25 1
+			if ( aaShurifenEquip == 1 )
+				Player.EquipItem DLScalar25
+			endif
+			Player.RemoveItem DLScalar20 1
+			set aaShurifenLevelUp to 0
+			set aaShurifenLevel to 6
+			
+		elseif ( Player.GetItemCount DLScalar25 > 0 )
+			printc "Shurifen leveling up!"
+			Message "Shurifen reforges itself."
+			Player.AddItem DLScalar30 1
+			if ( aaShurifenEquip == 1 )
+				Player.EquipItem DLScalar30
+			endif
+			Player.RemoveItem DLScalar25 1
+			set aaShurifenLevelUp to 0
+			set aaShurifenLevel to 7
+			
+		elseif ( Player.GetItemCount DLScalar30 > 0 )
+			printc "Shurifen leveling up!"
+			Message "Shurifen reforges itself."
+			Player.AddItem DLScalar35 1
+			if ( aaShurifenEquip == 1 )
+				Player.EquipItem DLScalar35
+			endif
+			Player.RemoveItem DLScalar30 1
+			set aaShurifenLevelUp to 0
+			set aaShurifenLevel to 8
+			
+		elseif ( Player.GetItemCount DLScalar35 > 0 )
+			printc "Shurifen leveling up!"
+			Message "Shurifen reforges itself."
+			Player.AddItem DLScalar40 1
+			if ( aaShurifenEquip == 1 )
+				Player.EquipItem DLScalar40
+			endif
+			Player.RemoveItem DLScalar35 1
+			set aaShurifenLevelUp to 0
+			set aaShurifenLevel to 9
+			
+		elseif ( Player.GetItemCount DLScalar40 > 0 )
+			printc "Shurifen leveling up!"
+			Message "Shurifen reforges itself."
+			Player.AddItem DLScalar45 1
+			if ( aaShurifenEquip == 1 )
+				Player.EquipItem DLScalar45
+			endif
+			Player.RemoveItem DLScalar40 1
+			set aaShurifenLevelUp to 0
+			set aaShurifenLevel to 10
+			
+		elseif ( Player.GetItemCount DLScalar45 > 0 )
+			printc "Shurifen leveling up!"
+			Message "Shurifen reforges itself."
+			Player.AddItem DLScalar50 1
+			if ( aaShurifenEquip == 1 )
+				Player.EquipItem DLScalar50
+			endif
+			Player.RemoveItem DLScalar45 1
+			set aaShurifenLevelUp to 0
+			set aaShurifenLevel to 11
+			
+		elseif ( Player.GetItemCount DLScalar50 > 0 )
+			printc "Shurifen leveling up!"
+			Message "Shurifen reforges itself."
+			Player.AddItem DLScalar55 1
+			if ( aaShurifenEquip == 1 )
+				Player.EquipItem DLScalar55
+			endif
+			Player.RemoveItem DLScalar50 1
+			set aaShurifenLevelUp to 0
+			set aaShurifenLevel to 12
+			
+		elseif ( Player.GetItemCount DLScalar55 > 0 )
+			printc "Shurifen leveling up!"
+			Message "Shurifen reforges itself."
+			Player.AddItem DLScalar60 1
+			if ( aaShurifenEquip == 1 )
+				Player.EquipItem DLScalar60
+			endif
+			Player.RemoveItem DLScalar55 1
+			set aaShurifenLevelUp to 0
+			set aaShurifenLevel to 13
+			
+		elseif ( Player.GetItemCount DLScalar60 > 0 )
+			printc "Shurifen leveling up!"
+			Message "Shurifen reforges itself."
+			Player.AddItem DLScalar65 1
+			if ( aaShurifenEquip == 1 )
+				Player.EquipItem DLScalar65
+			endif
+			Player.RemoveItem DLScalar60 1
+			set aaShurifenLevelUp to 0
+			set aaShurifenLevel to 14
+			
+		elseif ( Player.GetItemCount DLScalar65 > 0 )
+			printc "Shurifen leveling up!"
+			Message "Shurifen reforges itself."
+			Player.AddItem DLScalar70 1
+			if ( aaShurifenEquip == 1 )
+				Player.EquipItem DLScalar70
+			endif
+			Player.RemoveItem DLScalar65 1
+			set aaShurifenLevelUp to 0
+			set aaShurifenLevel to 15
+			
+		elseif ( Player.GetItemCount DLScalar70 > 0 )
+			printc "Shurifen leveling up!"
+			Message "Shurifen reforges itself."
+			Player.AddItem DLScalar75 1
+			if ( aaShurifenEquip == 1 )
+				Player.EquipItem DLScalar75
+			endif
+			Player.RemoveItem DLScalar70 1
+			set aaShurifenLevelUp to 0
+			set aaShurifenLevel to 16
+			
+		elseif ( Player.GetItemCount DLScalar75 > 0 )
+			printc "Shurifen leveling up!"
+			Message "Shurifen reforges itself."
+			Player.AddItem DLScalar80 1
+			if ( aaShurifenEquip == 1 )
+				Player.EquipItem DLScalar80
+			endif
+			Player.RemoveItem DLScalar75 1
+			set aaShurifenLevelUp to 0
+			set aaShurifenLevel to 17
+			
+		elseif ( Player.GetItemCount DLScalar80 > 0 )
+			printc "Shurifen leveling up!"
+			Message "Shurifen reforges itself."
+			Player.AddItem DLScalar85 1
+			if ( aaShurifenEquip == 1 )
+				Player.EquipItem DLScalar85
+			endif
+			Player.RemoveItem DLScalar80 1
+			set aaShurifenLevelUp to 0
+			set aaShurifenLevel to 18
+			
+		elseif ( Player.GetItemCount DLScalar85 > 0 )
+			printc "Shurifen leveling up!"
+			Message "Shurifen reforges itself."
+			Player.AddItem DLScalar90 1
+			if ( aaShurifenEquip == 1 )
+				Player.EquipItem DLScalar90
+			endif
+			Player.RemoveItem DLScalar85 1
+			set aaShurifenLevelUp to 0
+			set aaShurifenLevel to 19
+			
+		elseif ( Player.GetItemCount DLScalar90 > 0 )
+			printc "Shurifen leveling up!"
+			Message "Shurifen reforges itself."
+			Player.AddItem DLScalar95 1
+			if ( aaShurifenEquip == 1 )
+				Player.EquipItem DLScalar95
+			endif
+			Player.RemoveItem DLScalar90 1
+			set aaShurifenLevelUp to 0
+			set aaShurifenLevel to 20
+			
+		elseif ( Player.GetItemCount DLScalar95 > 0 )
+			printc "Shurifen leveling up!"
+			Message "Shurifen reforges itself."
+			Player.AddItem DLScalar99 1
+			if ( aaShurifenEquip == 1 )
+				Player.EquipItem DLScalar99
+			endif
+			Player.RemoveItem DLScalar95 1
+			set aaShurifenLevelUp to 0
+			set aaShurifenLevel to 21
+			
+			MessageBox "Shurifen has reforged a final time."
+			
+		endif
+
+		;Reset internal XP
+		set aaShurifenHits to 0
+		set aaShurifenLevelRequirement to BaseRequirement + ( aaShurifenLevel * LevelMult )
+
+	endif
+	
+end

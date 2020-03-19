@@ -1,0 +1,414 @@
+scn aaAgremonManager
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;aaAgremonScript
+;aaAgremonOnHit
+;aaAgremonOnEnchant
+;-----------------------------------------------------------------------------
+
+;Starting value of each stat
+;-----------------------------------------------------------------------------
+;Weapon
+;-----------------------------------------------------------------------------
+short BaseDamage
+float BaseWeight
+float BaseSpeed
+float BaseReach
+short BaseHealth
+long BaseValue
+;-----------------------------------------------------------------------------
+;Enchantment
+;-----------------------------------------------------------------------------
+short BaseElemDG
+short BaseElemWK
+short BaseMagiWK
+long BaseCharge
+short BaseCost
+
+;Each stat increases by this increment per level
+;-----------------------------------------------------------------------------
+;Weapon
+;-----------------------------------------------------------------------------
+float DamageMult
+float WeightMult
+float SpeedMult
+float ReachMult
+float HealthMult
+float ValueMult
+;-----------------------------------------------------------------------------
+;Enchantment
+;-----------------------------------------------------------------------------
+float ElemDGMult
+float ElemWKMult
+float MagiWKMult
+float ChargeMult
+float CostMult
+
+;Temp variables for calculating each stat
+;-----------------------------------------------------------------------------
+;Weapon
+;-----------------------------------------------------------------------------
+short Damage
+float Weight
+float Speed
+float Reach
+short Health
+long Value
+;-----------------------------------------------------------------------------
+;Enchantment
+;-----------------------------------------------------------------------------
+short ElemDG
+short ElemWK
+short MagiWk
+long Charge
+short Cost
+
+;-----------------------------------------------------------------------------
+;Level up statistics
+;-----------------------------------------------------------------------------
+short XPReqMult
+short XPReqBase
+short StartEnchLevel
+short XPReqHalf
+float Rando ;For variety in leveling messages
+short HalfOnce ;DoOnce for half-way message
+short EnchOnce ;DoOnce for level up block
+short WarnOnce ;DoOnce for self-enchanting warning
+short LevelCap
+
+;-----------------------------------------------------------------------------
+;Blade or Blunt
+;-----------------------------------------------------------------------------
+short WeapType
+
+;-----------------------------------------------------------------------------
+;RefID of ObjectID and EnchantID
+;-----------------------------------------------------------------------------
+ref self
+ref ench
+
+
+
+
+
+;-----------------------------------------------------------------------------
+begin GameMode
+;-----------------------------------------------------------------------------
+	
+	;-----------------------------------------------------------------------------
+	if GetGameLoaded
+	;-----------------------------------------------------------------------------
+
+		;-----------------------------------------------------------------------------
+		;Initialize const variables
+		;-----------------------------------------------------------------------------
+		;The name and model come from the object, all stats come from this script
+		Set self to DLScalar2
+		Set ench to DLScalar2Ench
+
+		;Set values from .ini
+		RunBatchScript "Data\ini\Agremon.ini"
+
+		;Set weapon type
+		if ( WeapType == 1 )
+
+			;Blunt2H
+			SetWeaponType 3 self
+
+		else
+
+			;Blade2H
+			SetWeaponType 1 self
+
+		endif
+
+		;Should initialize to 0, but just to be sure
+		Set HalfOnce to 0
+		Set EnchOnce to 0
+		Set WarnOnce to 0
+
+		;-----------------------------------------------------------------------------
+		;Add to player if first start up
+		;-----------------------------------------------------------------------------
+		if aaAgremonLevel == 0
+		
+			Message "A depleted artifact selects a new owner..."
+			Set aaAgremonLevel to 1
+			Player.AddItem self 1
+			printc "%n added to player." self
+
+		endif
+
+		;-----------------------------------------------------------------------------
+		;Set weapon stats
+		;-----------------------------------------------------------------------------
+		Set Damage to ( DamageMult * ( aaAgremonLevel - 1 ) )
+		Set Weight to ( WeightMult * ( aaAgremonLevel - 1 ) )
+		Set Speed to ( SpeedMult * ( aaAgremonLevel - 1 ) )
+		Set Reach to ( ReachMult * ( aaAgremonLevel - 1 ) )
+		Set Health to ( HealthMult * ( aaAgremonLevel - 1 ) )
+		Set Value to ( ValueMult * ( aaAgremonLevel - 1 ) )
+
+		Set Damage to ( Damage + BaseDamage )
+		Set Weight to ( Weight + BaseWeight )
+		Set Speed to ( Speed + BaseSpeed )
+		Set Reach to ( Reach + BaseReach )
+		Set Health to ( Health + BaseHealth )
+		Set Value to ( Value + BaseValue )
+		
+		SetAttackDamage Damage self
+		SetWeight Weight self
+		SetWeaponSpeed Speed self
+		SetWeaponReach Reach self
+		SetObjectHealth Health self
+		SetGoldValue_T Value self
+
+		;-----------------------------------------------------------------------------
+		;Set enchantment stats
+		;-----------------------------------------------------------------------------
+		RemoveEnchantment self ;Enchantment is not removed by load game
+		
+		if aaAgremonLevel >= StartEnchLevel
+
+			Set ElemDG to ( ElemDGMult * ( aaAgremonLevel - StartEnchLevel ) )
+			Set ElemWK to ( ElemWKMult * ( aaAgremonLevel - StartEnchLevel ) )
+			Set MagiWK to ( MagiWkMult * ( aaAgremonLevel - StartEnchLevel ) )
+			
+			Set Charge to ( ChargeMult * ( aaAgremonLevel - StartEnchLevel ) )
+			Set Cost to ( CostMult * ( aaAgremonLevel - StartEnchLevel ) )
+
+			Set ElemDG to ( ElemDG + BaseElemDG )
+			Set ElemWK to ( ElemWK + BaseElemWK )
+			Set MagiWK to ( MagiWK + BaseMagiWK )
+			
+			Set Charge to ( Charge + BaseCharge )
+			Set Cost to ( Cost + BaseCost )
+
+			SetNthEffectItemMagnitude ElemDG ench 0
+			SetNthEffectItemMagnitude ElemWK ench 1
+			SetNthEffectItemMagnitude MagiWK ench 2
+			
+			SetObjectCharge Charge self
+			SetEnchantmentCost Cost ench
+			
+			SetEnchantment ench self
+			Set EnchOnce to 1
+			
+		endif
+
+		;-----------------------------------------------------------------------------
+		;Set XPReq
+		;-----------------------------------------------------------------------------
+		Set aaAgremonXPReq to ( ( XPReqBase * aaAgremonLevel ) + ( XPReqMult * ( aaAgremonLevel * aaAgremonLevel ) ) )
+
+		Set XPReqHalf to aaAgremonXPReq - ( ( XPReqBase + XPReqMult ) / 2 + ( XPReqMult * ( aaAgremonLevel - 1 ) ) )
+		
+		;-----------------------------------------------------------------------------
+		;Set event handlers
+		;-----------------------------------------------------------------------------
+		
+		;Remove handler from previous save, otherwise might get two handlers, doubling XP
+		RemoveEventHandler "OnHitWith" aaAgremonOnHit "object"::self
+		
+		;Set handler if weapon is equipped
+		if aaAgremonEquip == 1
+			
+			SetEventHandler "OnHitWith" aaAgremonOnHit "object"::self
+
+		endif
+
+		;-----------------------------------------------------------------------------		
+		printc "%n initialized!" self
+		;-----------------------------------------------------------------------------
+
+	
+	;-----------------------------------------------------------------------------
+	endif ;GetGameLoaded
+	;-----------------------------------------------------------------------------
+
+
+
+
+	;Half-way message
+	;-----------------------------------------------------------------------------
+	if ( HalfOnce == 0 && aaAgremonXP >= XPReqHalf )
+	;-----------------------------------------------------------------------------
+
+		Set Rando to rand 0 1
+
+		if ( Rando < 0.25 )
+			
+			MessageEX "%n groans..." self
+
+		elseif ( Rando < 0.50 )
+
+			MessageEX "%n warms a little..." self
+
+		elseif ( Rando < 0.75 )
+
+			MessageEX "%n itches..." self
+
+		else
+
+			MessageEx "%n stirs..." self
+
+		endif
+
+		Set HalfOnce to 1
+
+	endif
+	
+	;Level up sub-block
+	;-----------------------------------------------------------------------------
+	while ( aaAgremonLevel < Levelcap ) && ( aaAgremonXP >= aaAgremonXPReq )
+	;-----------------------------------------------------------------------------
+
+		Set aaAgremonLevel to ( aaAgremonLevel + 1 )
+
+		;-----------------------------------------------------------------------------
+		;Update weapon stats
+		;-----------------------------------------------------------------------------
+		if ( DamageMult >= 1 )			
+			Set Damage to DamageMult
+		else
+			Set Damage to ( ( DamageMult * ( aaAgremonLevel - 1 ) ) - ( GetAttackDamage self - BaseDamage ) )
+		endif		
+
+		Set Value to ( ValueMult * ( aaAgremonLevel - 1 ) )
+		Set Value to ( Value + BaseValue )
+
+		;Mod should be more friendly than Set, if another mod changes weapon stats with scripts
+		ModAttackDamage Damage self
+		ModWeight WeightMult self
+		ModWeaponSpeed SpeedMult self
+		ModWeaponReach ReachMult self
+		ModObjectHealth HealthMult self
+		SetGoldValue_T Value self
+
+		;-----------------------------------------------------------------------------
+		;Update enchantment stats
+		;-----------------------------------------------------------------------------
+		if aaAgremonLevel >= StartEnchLevel
+
+			;Some effects return their magnitude negative, so we won't risk ModNthEffectItem
+			Set ElemDG to ( ElemDGMult * ( aaAgremonLevel - StartEnchLevel ) )
+			Set ElemWK to ( ElemWKMult * ( aaAgremonLevel - StartEnchLevel ) )
+			Set MagiWK to ( MagiWkMult * ( aaAgremonLevel - StartEnchLevel ) )
+			
+			Set Charge to ( ChargeMult * ( aaAgremonLevel - StartEnchLevel ) )
+			Set Cost to ( CostMult * ( aaAgremonLevel - StartEnchLevel ) )
+
+			Set ElemDG to ( ElemDG + BaseElemDG )
+			Set ElemWK to ( ElemWK + BaseElemWK )
+			Set MagiWK to ( MagiWK + BaseMagiWK )
+			
+			Set Charge to ( Charge + BaseCharge )
+			Set Cost to ( Cost + BaseCost )
+
+			SetNthEffectItemMagnitude ElemDG ench 0
+			SetNthEffectItemMagnitude ElemWK ench 1
+			SetNthEffectItemMagnitude MagiWK ench 2
+			
+			SetObjectCharge Charge self
+			SetEnchantmentCost Cost ench
+
+			if ( EnchOnce == 0 )
+				
+				SetEnchantment ench self
+				Set EnchOnce to 1
+				
+			endif
+				
+		endif
+
+		;-----------------------------------------------------------------------------
+		;Set new XPReq
+		;-----------------------------------------------------------------------------
+		Set aaAgremonXPReq to ( ( XPReqBase * aaAgremonLevel ) + ( XPReqMult * ( aaAgremonLevel * aaAgremonLevel ) ) )
+
+		Set XPReqHalf to aaAgremonXPReq - ( ( XPReqBase + XPReqMult ) / 2 + ( XPReqMult * ( aaAgremonLevel - 1 ) ) )
+		Set HalfOnce to 0
+		
+		;-----------------------------------------------------------------------------
+		;Level up message
+		;-----------------------------------------------------------------------------
+		printc "%n leveled up!" self
+
+		Set Rando to rand 0 1
+
+		if ( Rando < 0.25 )
+			
+			MessageEx "%n reclaims a fragment of lost power." self
+
+		elseif ( Rando < 0.50 )
+
+			MessageEX "%n restructures." self
+
+		elseif ( Rando < 0.75 )
+
+			MessageEX "%n adjusts to your hand slightly." self
+
+		else
+
+			MessageEX "%n grasps latent strength." self
+
+		endif
+
+		if ( aaAgremonLevel == LevelCap )
+
+			MessageBoxEx "%n has achieved full glory!" self
+			Set HalfOnce to 1
+
+		endif
+		
+	;-----------------------------------------------------------------------------
+	loop ;( aaAgremonLevel < Levelcap ) && ( aaAgremonXP >= aaAgremonXPReq )
+	;-----------------------------------------------------------------------------
+
+
+	;-----------------------------------------------------------------------------
+	;Remove all event handlers if weapon was enchanted
+	;-----------------------------------------------------------------------------
+	if ( WarnOnce == 1 )
+
+		Set aaAgremonEquip to 0
+		RemoveEventHandler "OnHitWith" aaAgremonOnHit
+		RemoveEventHandler "OnEnchant" aaAgremonOnEnchant
+		Set WarnOnce to 0
+
+	endif
+
+	
+;-----------------------------------------------------------------------------
+end ;GameMode
+;-----------------------------------------------------------------------------
+
+
+
+
+
+
+;-----------------------------------------------------------------------------
+begin MenuMode 1042 ;MenuMode Enchanting
+;-----------------------------------------------------------------------------
+	
+	;-----------------------------------------------------------------------------
+	;Warn the player against enchanting	
+	;-----------------------------------------------------------------------------
+	if ( GetEnchMenuBaseItem == self && WarnOnce == 0)
+		
+		MessageBoxEx "%n quivers as if to resist enchantment." self
+		Set WarnOnce to 1
+		SetEventHandler "OnEnchant" aaAgremonOnEnchant
+
+	elseif ( GetEnchMenuBaseItem != self )
+
+		Set WarnOnce to 0
+		RemoveEventHandler "OnEnchant" aaAgremonOnEnchant
+		
+	endif
+	
+;-----------------------------------------------------------------------------
+end ;MenuMode Enchanting
+;-----------------------------------------------------------------------------
