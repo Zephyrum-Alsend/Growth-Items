@@ -1,0 +1,58 @@
+scn aaDusfergonOnHit
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;aaDusfergonManager
+;aaDusfergonObject
+;aaDusfergonOnEnchant
+;aaDusfergonSetModel
+;aaDusfergonCalcXPReq
+;aaDusfergonIncrVal
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;aaDusfergonCombatXPLog
+;aaDusfergonCombatXPStart
+;aaDusfergonXP
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;When any valid target is hit with DLScalar3:
+;Start recording the XP gained in this combat encounter for post combat report
+;Award XP appropriate to the attack performed (normal +1, power +3)
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+ref Target ;Unused
+ref Weapon ;Unused
+;-----------------------------------------------------------------------------
+
+
+
+;-----------------------------------------------------------------------------
+begin Function { Target, Weapon }
+;-----------------------------------------------------------------------------
+	;Start combat logger
+	if ( aaDusfergonCombatXPLog == 0 )
+
+		Set aaDusfergonCombatXPStart to aaDusfergonXP
+		Set aaDusfergonCombatXPLog to 1
+
+	endif
+
+	;Add XP
+	if ( Player.IsPowerAttacking )
+
+		Set aaDusfergonXP to ( aaDusfergonXP + 3 )
+
+	else
+
+		Set aaDusfergonXP to ( aaDusfergonXP + 1 )
+
+	endif
+;-----------------------------------------------------------------------------
+end ;Function { Target, Weapon }
+;-----------------------------------------------------------------------------
