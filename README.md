@@ -8,3 +8,17 @@ Unfortunately, this means they lack all of the highlighting code files would oth
 
 The Construction Set itself also lacks highlighting, however the Construction Set Extender adds it.
 The Extender is also required to compile the .esp, as it uses many functions added by OBSE.
+
+
+
+Construction Set: https://cs.elderscrolls.com/index.php?title=The_Elder_Scrolls_Construction_Set
+
+Extender: https://www.nexusmods.com/oblivion/mods/36370
+
+OBSE: https://www.nexusmods.com/oblivion/mods/37952
+
+Shurifen: https://www.nexusmods.com/oblivion/mods/49883
+
+Agremon: https://www.nexusmods.com/oblivion/mods/49899
+
+Dusfergon: https://www.nexusmods.com/oblivion/mods/49915
