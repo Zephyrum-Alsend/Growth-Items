@@ -1,0 +1,108 @@
+scn aaDusfergonRandomModel
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;aaDusfergonManager
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;Function for selecting a random Model to swap to.  First chooses weapon
+;sub-type, then specific model.
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+short randy ;Return value
+;-----------------------------------------------------------------------------
+
+
+
+;-----------------------------------------------------------------------------
+begin Function { }
+;-----------------------------------------------------------------------------
+
+	;-----------------------------------------------------------------------------
+	;Choose weapon sub-type
+	;-----------------------------------------------------------------------------
+	Set randy to ( rand 0 10.9 )
+	Set randy to randy * 1000
+	
+
+	;-----------------------------------------------------------------------------
+	;Choose specific model
+	;-----------------------------------------------------------------------------
+	;Claymore
+	if randy < aaDusfergonInit.Bastard2hIdx
+
+		Set randy to randy + ( rand 0 23.9 )
+
+	;Bastard 2H
+	elseif randy < aaDusfergonInit.Bastard1hIdx
+
+		Set randy to randy + ( rand 0 23.9 )
+
+	;Bastard 1H
+	elseif randy < aaDusfergonInit.LongswordIdx
+
+		Set randy to randy + ( rand 0 23.9 )
+
+	;Longsword
+	elseif randy < aaDusfergonInit.ShortswordIdx
+
+		Set randy to randy + ( rand 0 69.9 )
+
+	;Shortsword
+	elseif randy < aaDusfergonInit.DaggerIdx
+
+		Set randy to randy + ( rand 0 60.9 )
+
+	;Dagger
+	elseif randy < aaDusfergonInit.WarhammerIdx
+
+		Set randy to randy + ( rand 0 45.9 )
+
+	;Warhammer
+	elseif randy < aaDusfergonInit.BattleaxeIdx
+
+		Set randy to randy + ( rand 0 18.9 )
+
+	;Battleaxe
+	elseif randy < aaDusfergonInit.MaceIdx
+
+		Set randy to randy + ( rand 0 19.9 )
+
+	;Mace
+	elseif randy < aaDusfergonInit.WaraxeIdx
+	
+		Set randy to randy + ( rand 0 19.9 )
+
+	;Waraxe
+	elseif randy < aaDusfergonInit.BowIdx
+
+		Set randy to randy + ( rand 0 18.9 )
+
+	;Bow
+	else
+
+		Set randy to randy + ( rand 0 38.9 )
+
+		if ( randy > 30 )
+
+			Set randy to ( randy + 4 )
+
+		endif
+
+	endif
+	
+	
+	SetFunctionValue randy
+	Return
+
+;-----------------------------------------------------------------------------
+end ;Function { }
+;-----------------------------------------------------------------------------

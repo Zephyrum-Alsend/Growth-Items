@@ -1,0 +1,116 @@
+scn aaDusfergonSwap
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;aaDusfergonManager
+;aaDusfergonOnHit
+;aaDusfergonOnBowHit
+;aaDusfergonOnArrowHit
+;aaDusfergonStatSet2
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;aaDusfergonEquip
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;Used by ModelChange block in Manager to swap to and from Bow form.
+;Takes two weapons and an enchantment; if the weapon to be replaced is in the
+;Player's inventory, exchange it for the new weapon and copy item values from
+;old to new.
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+float Health
+float Charge
+
+ref Item
+ref OldWeap
+ref NewWeap
+ref Ench
+;-----------------------------------------------------------------------------
+
+
+
+;-----------------------------------------------------------------------------
+begin Function { OldWeap, NewWeap, Ench }
+;-----------------------------------------------------------------------------
+	;Swap Old for New if necessary
+	;-----------------------------------------------------------------------------
+	if ( Player.GetItemCount OldWeap > 0 )
+	;-----------------------------------------------------------------------------
+
+		;-----------------------------------------------------------------------------
+		;Add NewWeap
+		;-----------------------------------------------------------------------------
+		Player.AddItemNS NewWeap 1
+
+		;-----------------------------------------------------------------------------
+		;Set stats not updated in ModelChange
+		;-----------------------------------------------------------------------------
+		;Set new self
+		Set aaDusfergonInit.self to NewWeap
+		
+		;Set name and aux stats
+		CopyName OldWeap NewWeap
+		Call aaDusfergonStatSet2 NewWeap aaDusfergonInit.fWeightBase aaDusfergonInit.fWeightMult aaDusfergonInit.sHealthBase aaDusfergonInit.fHealthMult aaDusfergonInit.lValueBase aaDusfergonInit.fValueMult
+
+		;Set enchantment if necessary
+		if ( aaDusfergonlevel >= aaDusfergonInit.sEnchStart )
+
+			SetEnchantment Ench NewWeap
+			SetObjectCharge aaDusfergonInit.Charge NewWeap
+
+		else
+
+			RemoveEnchantment NewWeap
+
+		endif
+
+		;-----------------------------------------------------------------------------
+		;Transfer Health and Charge from OldWeap to NewWeap
+		;-----------------------------------------------------------------------------
+		ForEach ( Item <- PlayerRef )
+
+			if ( Item.GetBaseObject == OldWeap )
+
+				Let Health := Item.GetCurrentHealth
+				Let Charge := Item.GetCurrentCharge
+
+			endif
+
+			if ( Item.GetBaseObject == NewWeap )
+
+				Item.SetCurrentHealth Health
+				Item.SetCurrentCharge Charge
+
+			endif
+
+		loop
+		
+		;-----------------------------------------------------------------------------
+		;Equip if necessary
+		;-----------------------------------------------------------------------------
+		if ( aaDusfergonEquip == 1 )
+
+			Player.UnEquipItemSilent OldWeap
+			Player.EquipItem2NS NewWeap
+
+		endif
+
+		;-----------------------------------------------------------------------------
+		;Remove OldWeap
+		;-----------------------------------------------------------------------------
+		Player.RemoveItemNS OldWeap 1
+				
+	;-----------------------------------------------------------------------------
+	endif ;( Player.GetItemCount OldWeap > 0 )
+	;-----------------------------------------------------------------------------
+
+	Return
+;-----------------------------------------------------------------------------
+end ;Function { OldWeap, NewWeap, Ench }
+;-----------------------------------------------------------------------------
