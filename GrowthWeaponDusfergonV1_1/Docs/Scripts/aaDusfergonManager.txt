@@ -1,0 +1,3309 @@
+scn aaDusfergonManager
+float fQuestDelayTime
+float ScriptLag
+float MenuLag
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;aaDusfergonObject
+;aaDusfergonOnHit
+;aaDusfergonOnEnchant
+;aaDusfergonSetModel
+;aaDusfergonSetModel2
+;aaDusfergonRandomModel
+;aaDusfergonCalcXPReq
+;aaDusfergonIncrVal
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;aaDusfergonCombatXPLog
+;aaDusfergonCombatXPStart
+;aaDusfergonEnch
+;aaDusfergonEnch1
+;aaDusfergonEnch2
+;aaDusfergonEnch3
+;aaDusfergonEnch4
+;aaDusfergonEnch5
+;aaDusfergonEnch6
+;aaDusfergonEquip
+;aaDusfergonLevel
+;aaDusfergonModel
+;aaDusfergonXP
+;aaDusfergonXPReq
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;Main script of Dusfergon.  Handles all stats and core functionality.
+;
+;When a save is loaded, looks at all globals and the .ini to set weapon's 
+;model, type, stats, enchantment, event handler and XPReq.  Both a console
+;message and weapon equip sound will happen when everything is initialized.
+;
+;Upon combat end, log XP gained from said combat to console.
+;
+;When halfway to the next level, display a flavor message in the upper left
+;of the screen.  If level is capped, display a message box stating so.
+;
+;When XP >= XPReq, execute level up.  Level up increments all stats by the 
+;values contained in %Mult variables.  If the level is past the EnchStart 
+;level, prompt the player to choose an enchant option and apply it. Every 
+;EnchLevel after EnchStart, ask the player to choose an option again. The 
+;player can choose to keep growing their current enchantment, start growing a 
+;new one, or continue growing an old one.  Set new XPReq.  A message will 
+;appear in the upper left of the screen whenever a level up happens.
+;
+;While the player is in their inventory, right-clicking the weapon will prompt
+;the player to change it's model and type.  If the player Ctrl+RMBs the weapon
+;it will display all enchantment effects and the active enchantment.
+;These menus and changes all occur within the inventory menu, no need to to
+;exit to GameMode.
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+;Weapon variables
+;-----------------------------------------------------------------------------
+string_var str_Name
+
+short sDamageBase
+float fSpeedBase
+float fReachBase
+float fWeightBase
+short sHealthBase
+long lValueBase
+
+float fDamageMult
+float fSpeedMult
+float fReachMult
+float fWeightMult
+float fHealthMult
+float fValueMult
+
+short Damage
+float Speed
+float Reach
+float Weight
+short Health
+long Value
+
+;-----------------------------------------------------------------------------
+;Sub-type adjustment variables
+;-----------------------------------------------------------------------------
+short sClaymoreDamageBase
+float fClaymoreSpeedBase
+float fClaymoreReachBase
+
+float fClaymoreDamageMult
+float fClaymoreSpeedMult
+float fClaymoreReachMult
+
+short sBastard2HDamageBase
+float fBastard2HSpeedBase
+float fBastard2HReachBase
+
+float fBastard2HDamageMult
+float fBastard2HSpeedMult
+float fBastard2HReachMult
+
+short sBastard1HDamageBase
+float fBastard1HSpeedBase
+float fBastard1HReachBase
+
+float fBastard1HDamageMult
+float fBastard1HSpeedMult
+float fBastard1HReachMult
+
+short sLongswordDamageBase
+float fLongswordSpeedBase
+float fLongswordReachBase
+
+float fLongswordDamageMult
+float fLongswordSpeedMult
+float fLongswordReachMult
+
+short sShortswordDamageBase
+float fShortswordSpeedBase
+float fShortswordReachBase
+
+float fShortswordDamageMult
+float fShortswordSpeedMult
+float fShortswordReachMult
+
+short sDaggerDamageBase
+float fDaggerSpeedBase
+float fDaggerReachBase
+
+float fDaggerDamageMult
+float fDaggerSpeedMult
+float fDaggerReachMult
+
+short sWarhammerDamageBase
+float fWarhammerSpeedBase
+float fWarhammerReachBase
+
+float fWarhammerDamageMult
+float fWarhammerSpeedMult
+float fWarhammerReachMult
+
+short sBattleaxeDamageBase
+float fBattleaxeSpeedBase
+float fBattleaxeReachBase
+
+float fBattleaxeDamageMult
+float fBattleaxeSpeedMult
+float fBattleaxeReachMult
+
+short sMaceDamageBase
+float fMaceSpeedBase
+float fMaceReachBase
+
+float fMaceDamageMult
+float fMaceSpeedMult
+float fMaceReachMult
+
+short sWaraxeDamageBase
+float fWaraxeSpeedBase
+float fWaraxeReachBase
+
+float fWaraxeDamageMult
+float fWaraxeSpeedMult
+float fWaraxeReachMult
+
+short AdjDamageBase
+float AdjSpeedBase
+float AdjReachBase
+
+float AdjDamageMult
+float AdjSpeedMult
+float AdjReachMult
+
+;-----------------------------------------------------------------------------
+;Enchantment variables
+;-----------------------------------------------------------------------------		
+short sEnchStart
+short sEnchLevel
+
+short sELDGMagnBase
+short sELDGAreaBase
+short sELDGDuraBase
+float fELDGCostBase
+
+float fELDGMagnMult
+float fELDGAreaMult
+float fELDGDuraMult
+float fELDGCostMult
+
+short sWKELMagnBase
+short sWKELAreaBase
+short sWKELDuraBase
+float fWKELCostBase
+
+float fWKELMagnMult
+float fWKELAreaMult
+float fWKELDuraMult
+float fWKELCostMult
+
+short sWKMAMagnBase
+short sWKMAAreaBase
+short sWKMADuraBase
+float fWKMACostBase
+
+float fWKMAMagnMult
+float fWKMAAreaMult
+float fWKMADuraMult
+float fWKMACostMult
+
+short sDGFAMagnBase
+short sDGFAAreaBase
+short sDGFADuraBase
+float fDGFACostBase
+
+float fDGFAMagnMult
+float fDGFAAreaMult
+float fDGFADuraMult
+float fDGFACostMult
+
+short sDIWEMagnBase
+short sDIWEAreaBase
+short sDIWEDuraBase
+float fDIWECostBase
+
+float fDIWEMagnMult
+float fDIWEAreaMult
+float fDIWEDuraMult
+float fDIWECostMult
+
+short sDIARMagnBase
+short sDIARAreaBase
+short sDIARDuraBase
+float fDIARCostBase
+
+float fDIARMagnMult
+float fDIARAreaMult
+float fDIARDuraMult
+float fDIARCostMult
+
+short sDGSPMagnBase
+short sDGSPAreaBase
+short sDGSPDuraBase
+float fDGSPCostBase
+
+float fDGSPMagnMult
+float fDGSPAreaMult
+float fDGSPDuraMult
+float fDGSPCostMult
+
+short sDSPLMagnBase
+short sDSPLAreaBase
+float fDSPLCostBase
+
+float fDSPLMagnMult
+float fDSPLAreaMult
+float fDSPLCostMult
+
+short sSLNCAreaBase
+short sSLNCDuraBase
+float fSLNCCostBase
+
+float fSLNCAreaMult
+float fSLNCDuraMult
+float fSLNCCostMult
+
+short sBRDNMagnBase
+short sBRDNAreaBase
+short sBRDNDuraBase
+float fBRDNCostBase
+
+float fBRDNMagnMult
+float fBRDNAreaMult
+float fBRDNDuraMult
+float fBRDNCostMult
+
+short sDRATMagnBase
+short sDRATAreaBase
+short sDRATDuraBase
+float fDRATCostBase
+
+float fDRATMagnMult
+float fDRATAreaMult
+float fDRATDuraMult
+float fDRATCostMult
+
+long lChargeBase
+float fChargeMult
+
+long Magnitude
+long Area
+long Duration
+float Cost
+long Charge
+
+short WKMALv
+
+short EnchSelect
+short EnchIndex
+short EnchIter
+string_var EffName
+string_var EffActv
+
+short WarnOnce
+
+;-----------------------------------------------------------------------------
+;Level Up variables
+;-----------------------------------------------------------------------------
+short sXPReqBase
+short sXPReqMult
+short sLevelCap
+
+short CombatXP
+short XPReqHalf
+float Rando
+short HalfOnce
+
+;-----------------------------------------------------------------------------
+;Form Change variables
+;-----------------------------------------------------------------------------
+short ModelChange
+short Button
+short IndexOffset
+
+short ClaymoreIdx
+short Bastard2hIdx
+short Bastard1hIdx
+short LongswordIdx
+short ShortswordIdx
+short DaggerIdx
+short WarhammerIdx
+short BattleaxeIdx
+short MaceIdx
+short WaraxeIdx
+
+;-----------------------------------------------------------------------------
+;RefID of ObjectID and EnchantID
+;-----------------------------------------------------------------------------
+ref self
+ref ench
+
+
+
+
+
+
+
+;-----------------------------------------------------------------------------
+begin GameMode
+;-----------------------------------------------------------------------------
+
+	;-----------------------------------------------------------------------------
+	;Initializer sub-block
+	;-----------------------------------------------------------------------------
+	if GetGameLoaded
+	;-----------------------------------------------------------------------------
+
+		;-----------------------------------------------------------------------------
+		;Minimize the delay time to increase responsiveness
+		;-----------------------------------------------------------------------------
+		Set ScriptLag to 0.1
+		Set MenuLag to 0.001
+
+		;-----------------------------------------------------------------------------
+		;Initialize variables
+		;-----------------------------------------------------------------------------
+		Set self to DLScalar3
+		Set ench to DLScalar3Ench
+		
+		Set ClaymoreIdx to 0
+		Set Bastard2hIdx to 1000
+		Set Bastard1hIdx to 2000
+		Set LongswordIdx to 3000
+		Set ShortswordIdx to 4000
+		Set DaggerIdx to 5000
+		Set WarhammerIdx to 6000
+		Set BattleaxeIdx to 7000
+		Set MaceIdx to 8000
+		Set WaraxeIdx to 9000
+
+		Set WarnOnce to 0
+
+		RunBatchScript "Data\ini\Dusfergon.ini"
+		SetNameEx "%z" str_Name self
+		
+		;-----------------------------------------------------------------------------
+		;Add to Player on first start up
+		;-----------------------------------------------------------------------------
+		if ( aaDusfergonLevel == 0 )
+
+			Player.AddItemNS self 1
+			Set aaDusfergonLevel to 1
+			Message "An artifact of unknown affiliation appears in your belongings..."
+
+		endif
+
+		;-----------------------------------------------------------------------------
+		;Set stat adjustments
+		;-----------------------------------------------------------------------------
+		if ( aaDusfergonModel >= WaraxeIdx )
+
+			Set AdjDamageBase to sWaraxeDamageBase
+			Set AdjSpeedBase to fWaraxeSpeedBase
+			Set AdjReachBase to fWaraxeReachBase
+
+			Set AdjDamageMult to fWaraxeDamageMult
+			Set AdjSpeedMult to fWaraxeSpeedMult
+			Set AdjReachMult to fWaraxeReachMult
+
+		elseif ( aaDusfergonModel >= MaceIdx )
+
+			Set AdjDamageBase to sMaceDamageBase
+			Set AdjSpeedBase to fMaceSpeedBase
+			Set AdjReachBase to fMaceReachBase
+
+			Set AdjDamageMult to fMaceDamageMult
+			Set AdjSpeedMult to fMaceSpeedMult
+			Set AdjReachMult to fMaceReachMult
+
+		elseif ( aaDusfergonModel >= BattleaxeIdx )
+
+			Set AdjDamageBase to sBattleaxeDamageBase
+			Set AdjSpeedBase to fBattleaxeSpeedBase
+			Set AdjReachBase to fBattleaxeReachBase
+
+			Set AdjDamageMult to fBattleaxeDamageMult
+			Set AdjSpeedMult to fBattleaxeSpeedMult
+			Set AdjReachMult to fBattleaxeReachMult
+
+		elseif ( aaDusfergonModel >= WarhammerIdx )
+
+			Set AdjDamageBase to sWarhammerDamageBase
+			Set AdjSpeedBase to fWarhammerSpeedBase
+			Set AdjReachBase to fWarhammerReachBase
+
+			Set AdjDamageMult to fWarhammerDamageMult
+			Set AdjSpeedMult to fWarhammerSpeedMult
+			Set AdjReachMult to fWarhammerReachMult
+
+		elseif ( aaDusfergonModel >= DaggerIdx )
+
+			Set AdjDamageBase to sDaggerDamageBase
+			Set AdjSpeedBase to fDaggerSpeedBase
+			Set AdjReachBase to fDaggerReachBase
+
+			Set AdjDamageMult to fDaggerDamageMult
+			Set AdjSpeedMult to fDaggerSpeedMult
+			Set AdjReachMult to fDaggerReachMult
+
+		elseif ( aaDusfergonModel >= ShortswordIdx )
+
+			Set AdjDamageBase to sShortswordDamageBase
+			Set AdjSpeedBase to fShortswordSpeedBase
+			Set AdjReachBase to fShortswordReachBase
+
+			Set AdjDamageMult to fShortswordDamageMult
+			Set AdjSpeedMult to fShortswordSpeedMult
+			Set AdjReachMult to fShortswordReachMult
+
+		elseif ( aaDusfergonModel >= LongswordIdx )
+			
+			Set AdjDamageBase to sLongswordDamageBase
+			Set AdjSpeedBase to fLongswordSpeedBase
+			Set AdjReachBase to fLongswordReachBase
+
+			Set AdjDamageMult to fLongswordDamageMult
+			Set AdjSpeedMult to fLongswordSpeedMult
+			Set AdjReachMult to fLongswordReachMult
+
+		elseif ( aaDusfergonModel >= Bastard1hIdx )
+
+			Set AdjDamageBase to sBastard1HDamageBase
+			Set AdjSpeedBase to fBastard1HSpeedBase
+			Set AdjReachBase to fBastard1HReachBase
+
+			Set AdjDamageMult to fBastard1HDamageMult
+			Set AdjSpeedMult to fBastard1HSpeedMult
+			Set AdjReachMult to fBastard1HReachMult
+
+		elseif ( aaDusfergonModel >= Bastard2hIdx )
+
+			Set AdjDamageBase to sBastard2HDamageBase
+			Set AdjSpeedBase to fBastard2HSpeedBase
+			Set AdjReachBase to fBastard2HReachBase
+
+			Set AdjDamageMult to fBastard2HDamageMult
+			Set AdjSpeedMult to fBastard2HSpeedMult
+			Set AdjReachMult to fBastard2HReachMult
+
+		elseif ( aaDusfergonModel >= ClaymoreIdx )
+
+			Set AdjDamageBase to sClaymoreDamageBase
+			Set AdjSpeedBase to fClaymoreSpeedBase
+			Set AdjReachBase to fClaymoreReachBase
+
+			Set AdjDamageMult to fClaymoreDamageMult
+			Set AdjSpeedMult to fClaymoreSpeedMult
+			Set AdjReachMult to fClaymoreReachMult
+
+		;Safeguard incase junk data gets into aaDusfergonModel
+		else
+
+			Set AdjDamageBase to 0
+			Set AdjSpeedBase to 0
+			Set AdjReachBase to 0
+
+			Set AdjDamageMult to 0
+			Set AdjSpeedMult to 0
+			Set AdjReachMult to 0
+
+		endif
+
+		;-----------------------------------------------------------------------------
+		;Set weapon stats
+		;-----------------------------------------------------------------------------
+		Set Damage to ( sDamageBase + AdjDamageBase ) + ( ( fDamageMult + AdjDamageMult ) * ( aaDusfergonLevel - 1 ) )
+		Set Speed to ( fSpeedBase + AdjSpeedBase ) + ( ( fSpeedMult + AdjSpeedMult ) * ( aaDusfergonLevel - 1 ) )
+		Set Reach to ( fReachBase + AdjReachBase ) + ( ( fReachMult + AdjReachMult ) * ( aaDusfergonLevel - 1 ) )
+		Set Weight to fWeightBase + ( fWeightMult * ( aaDusfergonLevel - 1 ) )
+		Set Health to sHealthBase + ( fHealthMult * ( aaDusfergonLevel - 1 ) )
+		Set Value to lValueBase + ( fValueMult * ( aaDusfergonLevel - 1 ) )
+
+		SetAttackDamage Damage self
+		SetWeaponSpeed Speed self
+		SetWeaponReach Reach self
+		SetWeight Weight self
+		SetObjectHealth Health self
+		SetGoldValue_T Value self
+		;GoldValue is stored in the save game, _T makes it not, like everything else
+
+		;-----------------------------------------------------------------------------
+		;Set enchantment stats
+		;-----------------------------------------------------------------------------
+		;Purge effects from previous load game
+		RemoveAllEffectItems ench
+		RemoveEnchantment self
+
+		Set Charge to lChargeBase + ( fChargeMult * ( aaDusfergonLevel - 1 ) )
+		Set Cost to 0
+		Set WKMALv to 0
+		Set EnchIndex to 0
+		
+		;-----------------------------------------------------------------------------
+		;Fire option
+		;-----------------------------------------------------------------------------
+		if ( aaDusfergonEnch1 > 0 || aaDusfergonEnch == 1 )
+
+			Set Magnitude to sELDGMagnBase + ( fELDGMagnMult * aaDusfergonEnch1 )
+			Set Area to sELDGAreaBase + ( fELDGAreaMult * aaDusfergonEnch1 )
+			Set Duration to sELDGDuraBase + ( fELDGDuraMult * aaDusfergonEnch1 )
+			Set Cost to Cost + fELDGCostBase + ( fELDGCostMult * aaDusfergonEnch1 )
+			
+			AddFullEffectItem FIDG Magnitude Area Duration 1 ench
+
+			Set Magnitude to sWKELMagnBase + ( fWKELMagnMult * aaDusfergonEnch1 )
+			Set Area to sWKELAreaBase + ( fWKELAreaMult * aaDusfergonEnch1 )
+			Set Duration to sWKELDuraBase + ( fWKELDuraMult * aaDusfergonEnch1 )
+			Set Cost to Cost + fWKELCostBase + ( fWKELCostMult * aaDusfergonEnch1 )
+
+			AddFullEffectItem WKFI Magnitude Area Duration 1 ench
+
+			Set WKMALv to 1
+			Set EnchIndex to ( EnchIndex + 2 )
+			
+		endif
+		
+		;-----------------------------------------------------------------------------
+		;Ice option
+		;-----------------------------------------------------------------------------
+		if ( aaDusfergonEnch2 > 0 || aaDusfergonEnch == 2 )
+
+			Set Magnitude to sELDGMagnBase + ( fELDGMagnMult * aaDusfergonEnch2 )
+			Set Area to sELDGAreaBase + ( fELDGAreaMult * aaDusfergonEnch2 )
+			Set Duration to sELDGDuraBase + ( fELDGDuraMult * aaDusfergonEnch2 )
+			Set Cost to Cost + fELDGCostBase + ( fELDGCostMult * aaDusfergonEnch2 )
+
+			AddFullEffectItem FRDG Magnitude Area Duration 1 ench
+
+			Set Magnitude to sWKELMagnBase + ( fWKELMagnMult * aaDusfergonEnch2 )
+			Set Area to sWKELAreaBase + ( fWKELAreaMult * aaDusfergonEnch2 )
+			Set Duration to sWKELDuraBase + ( fWKELDuraMult * aaDusfergonEnch2 )
+			Set Cost to Cost + fWKELCostBase + ( fWKELCostMult * aaDusfergonEnch2 )
+
+			AddFullEffectItem WKFR Magnitude Area Duration 1 ench
+
+			Set WKMALv to 1
+			Set EnchIndex to ( EnchIndex + 2 )
+			
+		endif
+
+		;-----------------------------------------------------------------------------
+		;Volt option
+		;-----------------------------------------------------------------------------
+		if ( aaDusfergonEnch3 > 0 || aaDusfergonEnch == 3 )
+
+			Set Magnitude to sELDGMagnBase + ( fELDGMagnMult * aaDusfergonEnch3 )
+			Set Area to sELDGAreaBase + ( fELDGAreaMult * aaDusfergonEnch3 )
+			Set Duration to sELDGDuraBase + ( fELDGDuraMult * aaDusfergonEnch3 )
+			Set Cost to Cost + fELDGCostBase + ( fELDGCostMult * aaDusfergonEnch3 )
+
+			AddFullEffectItem SHDG Magnitude Area Duration 1 ench
+
+			Set Magnitude to sWKELMagnBase + ( fWKELMagnMult * aaDusfergonEnch3 )
+			Set Area to sWKELAreaBase + ( fWKELAreaMult * aaDusfergonEnch3 )
+			Set Duration to sWKELDuraBase + ( fWKELDuraMult * aaDusfergonEnch3 )
+			Set Cost to Cost + fWKELCostBase + ( fWKELCostMult * aaDusfergonEnch3 )
+
+			AddFullEffectItem WKSH Magnitude Area Duration 1 ench
+
+			Set WKMALv to 1
+			Set EnchIndex to ( EnchIndex + 2 )
+
+		endif
+
+		;-----------------------------------------------------------------------------
+		;Knight-Slayer option
+		;-----------------------------------------------------------------------------
+		if ( aaDusfergonEnch4 > 0 || aaDusfergonEnch == 4 )
+
+			Set Magnitude to sDGFAMagnBase + ( fDGFAMagnMult * aaDusfergonEnch4 )
+			Set Area to sDGFAAreaBase + ( fDGFAAreaMult * aaDusfergonEnch4 )
+			Set Duration to sDGFADuraBase + ( fDGFADuraMult * aaDusfergonEnch4 )
+			Set Cost to Cost + fDGFACostBase + ( fDGFACostMult * aaDusfergonEnch4 )
+
+			AddFullEffectItem DGFA Magnitude Area Duration 1 ench
+
+			Set Magnitude to sDIWEMagnBase + ( fDIWEMagnMult * aaDusfergonEnch4 )
+			Set Area to sDIWEAreaBase + ( fDIWEAreaMult * aaDusfergonEnch4 )
+			Set Duration to sDIWEDuraBase + ( fDIWEDuraMult * aaDusfergonEnch4 )
+			Set Cost to Cost + fDIWECostBase + ( fDIWECostMult * aaDusfergonEnch4 )
+
+			AddFullEffectItem DIWE Magnitude Area Duration 1 ench
+
+			Set Magnitude to sDIARMagnBase + ( fDIARMagnMult * aaDusfergonEnch4 )
+			Set Area to sDIARAreaBase + ( fDIARAreaMult * aaDusfergonEnch4 )
+			Set Duration to sDIARDuraBase + ( fDIARDuraMult * aaDusfergonEnch4 )
+			Set Cost to Cost + fDIARCostBase + ( fDIARCostMult * aaDusfergonEnch4 )
+
+			AddFullEffectItem DIAR Magnitude Area Duration 1 ench
+
+			Set EnchIndex to ( EnchIndex + 3 )
+			
+		endif	
+		
+		;-----------------------------------------------------------------------------
+		;Mage-Slayer option
+		;-----------------------------------------------------------------------------
+		if ( aaDusfergonEnch5 > 0 || aaDusfergonEnch == 5 )
+
+			Set Magnitude to sDGSPMagnBase + ( fDGSPMagnMult * aaDusfergonEnch5 )
+			Set Area to sDGSPAreaBase + ( fDGSPAreaMult * aaDusfergonEnch5 )
+			Set Duration to sDGSPDuraBase + ( fDGSPDuraMult * aaDusfergonEnch5 )
+			Set Cost to Cost + fDGSPCostBase + ( fDGSPCostMult * aaDusfergonEnch5 )
+
+			AddFullEffectItem DGSP Magnitude Area Duration 1 ench
+
+			Set Magnitude to sDSPLMagnBase + ( fDSPLMagnMult * aaDusfergonEnch5 )
+			Set Area to sDSPLAreaBase + ( fDSPLAreaMult * aaDusfergonEnch5 )
+			Set Duration to 0
+			Set Cost to Cost + fDSPLCostBase + ( fDSPLCostMult * aaDusfergonEnch5 )
+
+			AddFullEffectItem DSPL Magnitude Area Duration 1 ench
+
+			Set Magnitude to 0
+			Set Area to sSLNCAreaBase + ( fSLNCAreaMult * aaDusfergonEnch5 )
+			Set Duration to sSLNCDuraBase + ( fSLNCDuraMult * aaDusfergonEnch5 )
+			Set Cost to Cost + fSLNCCostBase + ( fSLNCCostMult * aaDusfergonEnch5 )
+
+			AddFullEffectItem SLNC Magnitude Area Duration 1 ench
+
+			Set EnchIndex to ( EnchIndex + 3 )
+			
+		endif
+
+		;-----------------------------------------------------------------------------
+		;Weaken option
+		;-----------------------------------------------------------------------------
+		if ( aaDusfergonEnch6 > 0 || aaDusfergonEnch == 6 )
+
+			Set Magnitude to sBRDNMagnBase + ( fBRDNMagnMult * aaDusfergonEnch6 )
+			Set Area to sBRDNAreaBase + ( fBRDNAreaMult * aaDusfergonEnch6 )
+			Set Duration to sBRDNDuraBase + ( fBRDNDuraMult * aaDusfergonEnch6 )
+			Set Cost to Cost + fBRDNCostBase + ( fBRDNCostMult * aaDusfergonEnch6 )
+
+			AddFullEffectItem BRDN Magnitude Area Duration 1 ench
+
+			Set Magnitude to sDRATMagnBase + ( fDRATMagnMult * aaDusfergonEnch6 )
+			Set Area to sDRATAreaBase + ( fDRATAreaMult * aaDusfergonEnch6 )
+			Set Duration to sDRATDuraBase + ( fDRATDuraMult * aaDusfergonEnch6 )
+			Set Cost to Cost + fDRATCostBase + ( fDRATCostMult * aaDusfergonEnch6 )
+
+			Set EnchIter to AddFullEffectItem DRAT Magnitude Area Duration 1 ench
+			SetNthEffectItemActorValue "Strength" ench EnchIter
+
+			Set WKMALv to 1
+			Set EnchIndex to ( EnchIndex + 2 )
+
+		endif
+
+		;-----------------------------------------------------------------------------
+		;Append Weakness to Magic
+		;-----------------------------------------------------------------------------
+		if ( WKMALv > 0 )
+
+			Set WKMALv to 0
+			
+			if ( aaDusfergonEnch1 > 0 || aaDusfergonEnch == 1 )
+
+				Set WKMALv to WKMALv + aaDusfergonEnch1
+				
+			endif
+
+			if ( aaDusfergonEnch2 > 0 || aaDusfergonEnch == 2 )
+
+				Set WKMALv to WKMALv + aaDusfergonEnch2
+
+			endif
+
+			if ( aaDusfergonEnch3 > 0 || aaDusfergonEnch == 3 )
+
+				Set WKMALv to WKMALv + aaDusfergonEnch3
+
+			endif
+
+			if ( aaDusfergonEnch6 > 0 || aaDusfergonEnch == 6 )
+
+				Set WKMALv to WKMALv + aaDusfergonEnch6
+				
+			endif
+
+			Set Magnitude to sWKMAMagnBase + ( fWKMAMagnMult * WKMALv )
+			Set Area to sWKMAAreaBase + ( fWKMAAreaMult * WKMALv )
+			Set Duration to sWKMADuraBase + ( fWKMADuraMult * WKMALv )
+			Set Cost to Cost + fWKMACostBase + ( fWKMACostMult * WKMALv )
+
+			AddFullEffectItem WKMA Magnitude Area Duration 1 ench
+			
+			Set EnchIndex to ( EnchIndex + 1 )
+
+		endif
+
+		;-----------------------------------------------------------------------------
+		;Set enchantment
+		;-----------------------------------------------------------------------------
+		if ( GetMagicItemEffectCount ench > 0 )
+
+			SetObjectCharge Charge self
+			SetEnchantmentCost Cost ench
+			SetEnchantment ench self
+
+		endif
+
+		Set EnchSelect to 0
+		
+		;-----------------------------------------------------------------------------
+		;Set XPReq
+		;-----------------------------------------------------------------------------
+		;XPReq is changed within the function
+		Set XPReqHalf to Call aaDusfergonCalcXPReq sXPReqBase sXPReqMult XPReqHalf
+
+		if ( aaDusfergonLevel < sLevelCap )
+
+			Set HalfOnce to 0
+
+		else
+
+			Set HalfOnce to 1
+
+		endif
+
+		;-----------------------------------------------------------------------------
+		;Set model and weapon type
+		;-----------------------------------------------------------------------------
+		;Resets handler if equipped, since has to be re-equipped to refresh model
+		if ( aaDusfergonModel < 6000 )
+			
+			Call aaDusfergonSetModel self
+
+		else
+
+			Call aaDusfergonSetModel2 self
+
+		endif
+		
+		Set ModelChange to 0
+
+		;Removes handler from previous load game
+		if ( aaDusfergonEquip == 0 )
+
+			RemoveEventHandler "OnHitWith" aaDusfergonOnHit
+			
+		endif
+
+		;-----------------------------------------------------------------------------
+		printc "%n initialized!" self
+		;-----------------------------------------------------------------------------
+
+	;-----------------------------------------------------------------------------
+	endif ;GetGameLoaded
+	;-----------------------------------------------------------------------------
+
+	if ( fQuestDelayTime != ScriptLag )
+	
+			Set fQuestDelayTime to ScriptLag
+	
+	endif
+
+
+
+
+
+	
+	;-----------------------------------------------------------------------------
+	;Log XP gained from most recent combat encounter to console
+	;-----------------------------------------------------------------------------
+	if ( Player.IsInCombat == 0 && aaDusfergonCombatXPLog == 1 )
+
+		Set CombatXP to aaDusfergonXP - aaDusfergonCombatXPStart
+		printc "%4.0f/%4.0f  +%2.0fXP" aaDusfergonXP aaDusfergonXPReq CombatXP
+		Set aaDusfergonCombatXPLog to 0
+
+	endif
+
+
+
+
+
+	
+	;-----------------------------------------------------------------------------
+	;Level up sub-blocks
+	;-----------------------------------------------------------------------------
+
+	if ( EnchSelect == 2 )
+
+		Set Button to GetButtonPressed
+
+	endif
+
+	;-----------------------------------------------------------------------------
+	;Open enchant option menu when not in combat
+	;-----------------------------------------------------------------------------	
+	if ( Player.IsInCombat == 0 && EnchSelect == 1 )
+
+		MessageBoxEx "%n seeks an enchantment:|Fire|Ice|Volt|Knight-Slayer|Mage-Slayer|Weaken" self
+		Set Button to -1
+		Set EnchSelect to 2
+
+	endif
+
+	;-----------------------------------------------------------------------------
+	;Set enchant option
+	;-----------------------------------------------------------------------------	
+	if ( EnchSelect == 2 && Button > -1 )
+
+		Set aaDusfergonEnch to ( Button + 1 )
+
+		;-----------------------------------------------------------------------------
+		;Initialize enchant option if necessary
+		;-----------------------------------------------------------------------------
+
+		;-----------------------------------------------------------------------------
+		;Ensure Weakness to Magic is always last
+		;-----------------------------------------------------------------------------
+		if ( MagicItemHasEffect WKMA ench )
+
+			Set EnchIter to ( EnchIndex - 1 )
+					
+			Set Magnitude to GetNthEffectItemMagnitude ench EnchIter
+			Set Area to GetNthEffectItemArea ench EnchIter
+			Set Duration to GetNthEffectItemDuration ench EnchIter
+
+			RemoveNthEffectItem ench EnchIter
+
+			Set WKMALv to 1
+
+		else
+
+			Set WKMALv to 0
+
+		endif
+
+		;-----------------------------------------------------------------------------
+		;Fire option
+		;-----------------------------------------------------------------------------
+		if ( aaDusfergonEnch == 1 )
+		;-----------------------------------------------------------------------------
+			if ( aaDusfergonEnch1 == 0 )
+
+				if ( WKMALv == 0 )
+
+					Set Magnitude to sWKMAMagnBase
+					Set Area to sWKMAAreaBase
+					Set Duration to sWKMADuraBase
+					
+					Set Cost to Cost + fWKMACostBase
+					Set EnchIndex to ( EnchIndex + 1 )
+
+					Set WKMALv to 1
+
+				endif
+
+				AddFullEffectItem FIDG sELDGMagnBase sELDGAreaBase sELDGDuraBase 1 ench
+				AddFullEffectItem WKFI sWKELMagnBase sWKELAreaBase sWKELDuraBase 1 ench
+				Set Cost to Cost + ( fELDGCostBase + fWKELCostBase )
+				Set EnchIndex to ( EnchIndex + 2 )
+				
+			endif
+
+		;-----------------------------------------------------------------------------
+		;Ice option
+		;-----------------------------------------------------------------------------
+		elseif ( aaDusfergonEnch == 2 )
+		;-----------------------------------------------------------------------------
+			if ( aaDusfergonEnch2 == 0 )
+
+				if ( WKMALv == 0 )
+
+					Set Magnitude to sWKMAMagnBase
+					Set Area to sWKMAAreaBase
+					Set Duration to sWKMADuraBase
+					
+					Set Cost to Cost + fWKMACostBase
+					Set EnchIndex to ( EnchIndex + 1 )
+
+					Set WKMALv to 1
+
+				endif
+
+				AddFullEffectItem FRDG sELDGMagnBase sELDGAreaBase sELDGDuraBase 1 ench
+				AddFullEffectItem WKFR sWKELMagnBase sWKELAreaBase sWKELDuraBase 1 ench
+				Set Cost to Cost + ( fELDGCostBase + fWKELCostBase )
+				Set EnchIndex to ( EnchIndex + 2 )
+				
+			endif
+			
+		;-----------------------------------------------------------------------------
+		;Volt option
+		;-----------------------------------------------------------------------------
+		elseif ( aaDusfergonEnch == 3 )
+		;-----------------------------------------------------------------------------
+			if ( aaDusfergonEnch3 == 0 )
+
+				if ( WKMALv == 0 )
+
+					Set Magnitude to sWKMAMagnBase
+					Set Area to sWKMAAreaBase
+					Set Duration to sWKMADuraBase
+					
+					Set Cost to Cost + fWKMACostBase
+					Set EnchIndex to ( EnchIndex + 1 )
+
+					Set WKMALv to 1
+
+				endif
+
+				AddFullEffectItem SHDG sELDGMagnBase sELDGAreaBase sELDGDuraBase 1 ench
+				AddFullEffectItem WKSH sWKELMagnBase sWKELAreaBase sWKELDuraBase 1 ench
+				Set Cost to Cost + ( fELDGCostBase + fWKELCostBase )
+				Set EnchIndex to ( EnchIndex + 2 )
+				
+			endif
+
+		;-----------------------------------------------------------------------------
+		;Knight-Slayer option
+		;-----------------------------------------------------------------------------
+		elseif ( aaDusfergonEnch == 4 )
+		;-----------------------------------------------------------------------------
+			if ( aaDusfergonEnch4 == 0 )
+
+				AddFullEffectItem DGFA sDGFAMagnBase sDGFAAreaBase sDGFADuraBase 1 ench
+				AddFullEffectItem DIWE sDIWEMagnBase sDIWEAreaBase sDIWEDuraBase 1 ench
+				AddFullEffectItem DIAR sDIARMagnBase sDIARAreaBase sDIARDuraBase 1 ench
+				Set Cost to Cost + ( fDGFACostBase + fDIWECostBase + fDIARCostBase )
+				Set EnchIndex to ( EnchIndex + 3 )
+
+			endif
+
+		;-----------------------------------------------------------------------------
+		;Mage-Slayer option
+		;-----------------------------------------------------------------------------
+		elseif ( aaDusfergonEnch == 5 )
+		;-----------------------------------------------------------------------------
+			if ( aaDusfergonEnch5 == 0 )
+
+				AddFullEffectItem DGSP sDGSPMagnBase sDGFAAreaBase sDGFADuraBase 1 ench
+				AddFullEffectItem DSPL sDSPLMagnBase sDSPLAreaBase 0 1 ench
+				AddFullEffectItem SLNC 0 sSLNCAreaBase sSLNCDuraBase 1 ench
+				Set Cost to Cost + ( fDGSPCostBase + fDSPLCostBase + fSLNCCostBase )
+				Set EnchIndex to ( EnchIndex + 3 )
+
+			endif
+			
+		;-----------------------------------------------------------------------------
+		;Weaken option
+		;-----------------------------------------------------------------------------
+		elseif ( aaDusfergonEnch == 6 )
+		;-----------------------------------------------------------------------------
+			if ( aaDusfergonEnch6 == 0 )
+
+				if ( WKMALv == 0 )
+
+					Set Magnitude to sWKMAMagnBase
+					Set Area to sWKMAAreaBase
+					Set Duration to sWKMADuraBase
+					
+					Set Cost to Cost + fWKMACostBase
+					Set EnchIndex to ( EnchIndex + 1 )
+
+					Set WKMALv to 1
+
+				endif
+
+				AddFullEffectItem BRDN sBRDNMagnBase sBRDNAreaBase sBRDNDuraBase 1 ench
+				Set EnchIter to AddFullEffectItem DRAT sDRATMagnBase sDRATAreaBase sDRATDuraBase 1 ench
+				SetNthEffectItemActorValue "Strength" ench EnchIter
+				Set Cost to Cost + ( fBRDNCostBase + fDRATCostBase )
+				Set EnchIndex to ( EnchIndex + 2 )
+				
+			endif
+
+		;-----------------------------------------------------------------------------
+		endif ;( aaDusfergonEnch != 0 )
+		;-----------------------------------------------------------------------------
+
+		;-----------------------------------------------------------------------------
+		;Append Weakness to Magic
+		;-----------------------------------------------------------------------------
+		if ( WKMALv > 0 )
+
+			AddFullEffectItem WKMA Magnitude Area Duration 1 ench
+
+		endif
+		
+		SetEnchantmentCost Cost ench
+		SetEnchantment ench self
+		Set EnchSelect to 0
+
+	;-----------------------------------------------------------------------------
+	endif ;( EnchSelect == 2 && Button > -1 )
+	;-----------------------------------------------------------------------------
+
+
+	
+	;-----------------------------------------------------------------------------
+	;Half way and level cap messages
+	;-----------------------------------------------------------------------------
+	if ( HalfOnce == 0 && EnchSelect < 2 )
+
+		if ( aaDusfergonLevel >= sLevelCap )
+
+			MessageBoxEx "%n has reached its apex." self
+
+			Set HalfOnce to 1
+
+		elseif ( aaDusfergonXP >= XPReqHalf && Player.GetEquipped self )
+
+			Set Rando to rand 0 1
+
+			if ( Rando < 0.15 )
+
+				MessageEX "%n sharpens on your foe..." self
+	
+			elseif ( Rando < 0.35 )
+	
+				MessageEX "%n stirs..." self
+	
+			elseif ( Rando < 0.60 )
+	
+				MessageEX "%n rattles faintly..." self
+	
+			elseif ( Rando < 0.75 )
+	
+				MessageEX "%n quenches in your foe..." self
+	
+			else
+	
+				MessageEX "%n gathers magicka..." self
+	
+			endif
+
+			Set HalfOnce to 1
+
+		endif		
+
+	endif
+
+
+	
+	;-----------------------------------------------------------------------------
+	;Level up weapon and enchantment
+	;-----------------------------------------------------------------------------
+	while ( aaDusfergonLevel < sLevelCap && aaDusfergonXP >= aaDusfergonXPReq && EnchSelect == 0 )
+	;-----------------------------------------------------------------------------
+
+		Set aaDusfergonLevel to aaDusfergonLevel + 1
+
+		;-----------------------------------------------------------------------------
+		;Update weapon stats
+		;-----------------------------------------------------------------------------
+		;Use Mod functions instead of Set, incase another script modifies these values
+		
+		Set Damage to Call aaDusfergonIncrVal ( fDamageMult + AdjDamageMult ) ( aaDusfergonLevel - 1 )
+		Set Speed to fSpeedMult + AdjSpeedMult
+		Set Reach to fReachMult + AdjReachMult
+
+		Set Value to lValueBase + ( fValueMult * ( aaDusfergonLevel - 1 ) )
+
+		ModAttackDamage Damage self
+		ModWeaponSpeed Speed self
+		ModWeaponReach Reach self
+		ModWeight fWeightMult self
+		ModObjectHealth fHealthMult self
+		SetGoldValue_T Value self
+		;There is no ModGoldValue_T as of OBSE v21
+
+		;-----------------------------------------------------------------------------
+		;Update enchantment stats
+		;-----------------------------------------------------------------------------
+
+		if ( aaDusfergonLevel >= sEnchStart )
+
+			;-----------------------------------------------------------------------------
+			;Set flag for enchantment option menu
+			;-----------------------------------------------------------------------------
+			if ( ( ( aaDusfergonLevel - sEnchStart ) %  sEnchLevel ) == 0 )
+
+				Set EnchSelect to 1
+
+			endif
+
+			;-----------------------------------------------------------------------------
+			;Increment Fire option
+			;-----------------------------------------------------------------------------
+			if ( aaDusfergonEnch == 1 )
+			;-----------------------------------------------------------------------------
+				Set aaDusfergonEnch1 to ( aaDusfergonEnch1 + 1 )
+
+				;-----------------------------------------------------------------------------
+				;Find the index of the effects
+				;-----------------------------------------------------------------------------
+				Set EnchIter to 0
+				While ( EnchIter < EnchIndex )
+
+					Let EffName := GetNthEffectItemName ench EnchIter
+					
+					if ( sv_Compare "Fire Damage" EffName ) == 0
+						
+						break
+						
+					endif
+
+					Set EnchIter to ( EnchIter + 1 )	
+				loop
+
+				;-----------------------------------------------------------------------------
+				;Increment effects
+				;-----------------------------------------------------------------------------
+				if ( EnchIter != EnchIndex )
+
+					;-----------------------------------------------------------------------------
+					;Fire Damage
+					;-----------------------------------------------------------------------------
+					Set Magnitude to Call aaDusfergonIncrVal fELDGMagnMult aaDusfergonEnch1
+					Set Area to Call aaDusfergonIncrVal fELDGAreaMult aaDusfergonEnch1
+					Set Duration to Call aaDusfergonIncrVal fELDGDuraMult aaDusfergonEnch1
+
+					ModNthEffectItemMagnitude Magnitude ench EnchIter
+					ModNthEffectItemArea Area ench EnchIter
+					ModNthEffectItemDuration Duration ench EnchIter
+					
+					;-----------------------------------------------------------------------------
+					;Weakness to Fire
+					;-----------------------------------------------------------------------------
+					Set EnchIter to ( EnchIter + 1 )
+
+					Set Magnitude to Call aaDusfergonIncrVal fWKELMagnMult aaDusfergonEnch1
+					Set Area to Call aaDusfergonIncrVal fWKELAreaMult aaDusfergonEnch1	
+					Set Duration to Call aaDusfergonIncrVal fWKELDuraMult aaDusfergonEnch1
+
+					ModNthEffectItemMagnitude Magnitude ench EnchIter
+					ModNthEffectItemArea Area ench EnchIter
+					ModNthEffectItemDuration Duration ench EnchIter
+					
+					;-----------------------------------------------------------------------------
+					;Weakness to Magic
+					;-----------------------------------------------------------------------------
+					Set EnchIter to ( EnchIndex - 1 )
+
+					Set Magnitude to Call aaDusfergonIncrVal fWKMAMagnMult aaDusfergonEnch1
+					Set Area to Call aaDusfergonIncrVal fWKMAAreaMult aaDusfergonEnch1
+					Set Duration to Call aaDusfergonIncrVal fWKMADuraMult aaDusfergonEnch1
+
+					ModNthEffectItemMagnitude Magnitude ench EnchIter
+					ModNthEffectItemArea Area ench EnchIter
+					ModNthEffectItemDuration Duration ench EnchIter
+
+					Set Cost to ( Cost + fELDGCostMult + fWKELCostMult + fWKMACostMult )
+					
+				endif
+				
+			;-----------------------------------------------------------------------------
+			;Increment Ice option
+			;-----------------------------------------------------------------------------
+			elseif ( aaDusfergonEnch == 2 )
+			;-----------------------------------------------------------------------------
+				Set aaDusfergonEnch2 to ( aaDusfergonEnch2 + 1 )
+
+				;-----------------------------------------------------------------------------
+				;Find the index of the effects
+				;-----------------------------------------------------------------------------
+				Set EnchIter to 0
+				While ( EnchIter < EnchIndex )
+
+					Let EffName := GetNthEffectItemName ench EnchIter
+					
+					if ( sv_Compare "Frost Damage" EffName ) == 0
+						
+						break
+						
+					endif
+
+					Set EnchIter to ( EnchIter + 1 )	
+				loop
+
+				;-----------------------------------------------------------------------------
+				;Increment effects
+				;-----------------------------------------------------------------------------
+				if ( EnchIter != EnchIndex )
+
+					;-----------------------------------------------------------------------------
+					;Frost Damage
+					;-----------------------------------------------------------------------------
+					Set Magnitude to Call aaDusfergonIncrVal fELDGMagnMult aaDusfergonEnch2
+					Set Area to Call aaDusfergonIncrVal fELDGAreaMult aaDusfergonEnch2
+					Set Duration to Call aaDusfergonIncrVal fELDGDuraMult aaDusfergonEnch2
+
+					ModNthEffectItemMagnitude Magnitude ench EnchIter
+					ModNthEffectItemArea Area ench EnchIter
+					ModNthEffectItemDuration Duration ench EnchIter
+					
+					;-----------------------------------------------------------------------------
+					;Weakness to Frost
+					;-----------------------------------------------------------------------------
+					Set EnchIter to ( EnchIter + 1 )
+
+					Set Magnitude to Call aaDusfergonIncrVal fWKELMagnMult aaDusfergonEnch2
+					Set Area to Call aaDusfergonIncrVal fWKELAreaMult aaDusfergonEnch2
+					Set Duration to Call aaDusfergonIncrVal fWKELDuraMult aaDusfergonEnch2
+
+					ModNthEffectItemMagnitude Magnitude ench EnchIter
+					ModNthEffectItemArea Area ench EnchIter
+					ModNthEffectItemDuration Duration ench EnchIter		
+					
+					;-----------------------------------------------------------------------------
+					;Weakness to Magic
+					;-----------------------------------------------------------------------------
+					Set EnchIter to ( EnchIndex - 1 )
+
+					Set Magnitude to Call aaDusfergonIncrVal fWKMAMagnMult aaDusfergonEnch2
+					Set Area to Call aaDusfergonIncrVal fWKMAAreaMult aaDusfergonEnch2
+					Set Duration to Call aaDusfergonIncrVal fWKMADuraMult aaDusfergonEnch2
+
+					ModNthEffectItemMagnitude Magnitude ench EnchIter
+					ModNthEffectItemArea Area ench EnchIter
+					ModNthEffectItemDuration Duration ench EnchIter
+
+					Set Cost to ( Cost + fELDGCostMult + fWKELCostMult + fWKMACostMult )
+					
+				endif
+
+			;-----------------------------------------------------------------------------
+			;Increment Volt option
+			;-----------------------------------------------------------------------------
+			elseif ( aaDusfergonEnch == 3 )
+			;-----------------------------------------------------------------------------
+				Set aaDusfergonEnch3 to ( aaDusfergonEnch3 + 1 )
+
+				;-----------------------------------------------------------------------------
+				;Find the index of the effects
+				;-----------------------------------------------------------------------------
+				Set EnchIter to 0
+				While ( EnchIter < EnchIndex )
+
+					Let EffName := GetNthEffectItemName ench EnchIter
+					
+					if ( sv_Compare "Shock Damage" EffName ) == 0
+						
+						break
+						
+					endif
+
+					Set EnchIter to ( EnchIter + 1 )	
+				loop
+
+				;-----------------------------------------------------------------------------
+				;Increment effects
+				;-----------------------------------------------------------------------------
+				if ( EnchIter != EnchIndex )
+
+					;-----------------------------------------------------------------------------
+					;Shock Damage
+					;-----------------------------------------------------------------------------
+					Set Magnitude to Call aaDusfergonIncrVal fELDGMagnMult aaDusfergonEnch3
+					Set Area to Call aaDusfergonIncrVal fELDGAreaMult aaDusfergonEnch3
+					Set Duration to Call aaDusfergonIncrVal fELDGDuraMult aaDusfergonEnch3
+
+					ModNthEffectItemMagnitude Magnitude ench EnchIter
+					ModNthEffectItemArea Area ench EnchIter
+					ModNthEffectItemDuration Duration ench EnchIter
+					
+					;-----------------------------------------------------------------------------
+					;Weakness to Shock
+					;-----------------------------------------------------------------------------
+					Set EnchIter to ( EnchIter + 1 )
+
+					Set Magnitude to Call aaDusfergonIncrVal fWKELMagnMult aaDusfergonEnch3
+					Set Area to Call aaDusfergonIncrVal fWKELAreaMult aaDusfergonEnch3
+					Set Duration to Call aaDusfergonIncrVal fWKELDuraMult aaDusfergonEnch3
+
+					ModNthEffectItemMagnitude Magnitude ench EnchIter
+					ModNthEffectItemArea Area ench EnchIter
+					ModNthEffectItemDuration Duration ench EnchIter
+					
+					;-----------------------------------------------------------------------------
+					;Weakness to Magic
+					;-----------------------------------------------------------------------------
+					Set EnchIter to ( EnchIndex - 1 )
+
+					Set Magnitude to Call aaDusfergonIncrVal fWKMAMagnMult aaDusfergonEnch3
+					Set Area to Call aaDusfergonIncrVal fWKMAAreaMult aaDusfergonEnch3
+					Set Duration to Call aaDusfergonIncrVal fWKMADuraMult aaDusfergonEnch3
+
+					ModNthEffectItemMagnitude Magnitude ench EnchIter
+					ModNthEffectItemArea Area ench EnchIter
+					ModNthEffectItemDuration Duration ench EnchIter
+
+					Set Cost to ( Cost + fELDGCostMult + fWKELCostMult + fWKMACostMult )
+					
+				endif
+
+			;-----------------------------------------------------------------------------
+			;Increment Knight-Slayer option
+			;-----------------------------------------------------------------------------
+			elseif ( aaDusfergonEnch == 4 )
+			;-----------------------------------------------------------------------------
+				Set aaDusfergonEnch4 to ( aaDusfergonEnch4 + 1 )
+
+				;-----------------------------------------------------------------------------
+				;Find the index of the effects
+				;-----------------------------------------------------------------------------
+				Set EnchIter to 0
+				While ( EnchIter < EnchIndex )
+
+					Let EffName := GetNthEffectItemName ench EnchIter
+					
+					if ( sv_Compare "Damage Fatigue" EffName ) == 0
+						
+						break
+						
+					endif
+
+					Set EnchIter to ( EnchIter + 1 )	
+				loop
+
+				;-----------------------------------------------------------------------------
+				;Increment effects
+				;-----------------------------------------------------------------------------
+				if ( EnchIter != EnchIndex )
+
+					;-----------------------------------------------------------------------------
+					;Damage Fatigue
+					;-----------------------------------------------------------------------------
+					Set Magnitude to Call aaDusfergonIncrVal fDGFAMagnMult aaDusfergonEnch4
+					Set Area to Call aaDusfergonIncrVal fDGFAAreaMult aaDusfergonEnch4
+					Set Duration to Call aaDusfergonIncrVal fDGFADuraMult aaDusfergonEnch4
+
+					ModNthEffectItemMagnitude Magnitude ench EnchIter
+					ModNthEffectItemArea Area ench EnchIter
+					ModNthEffectItemDuration Duration ench EnchIter
+					
+					;-----------------------------------------------------------------------------
+					;Disintegrate Weapon
+					;-----------------------------------------------------------------------------
+					Set EnchIter to ( EnchIter + 1 )
+
+					Set Magnitude to Call aaDusfergonIncrVal fDIWEMagnMult aaDusfergonEnch4
+					Set Area to Call aaDusfergonIncrVal fDIWEAreaMult aaDusfergonEnch4
+					Set Duration to Call aaDusfergonIncrVal fDIWEDuraMult aaDusfergonEnch4
+
+					ModNthEffectItemMagnitude Magnitude ench EnchIter
+					ModNthEffectItemArea Area ench EnchIter
+					ModNthEffectItemDuration Duration ench EnchIter
+					
+					;-----------------------------------------------------------------------------
+					;Disintegrate Armor
+					;-----------------------------------------------------------------------------
+					Set EnchIter to ( EnchIter + 1 )
+
+					Set Magnitude to Call aaDusfergonIncrVal fDIARMagnMult aaDusfergonEnch4
+					Set Area to Call aaDusfergonIncrVal fDIARAreaMult aaDusfergonEnch4
+					Set Duration to Call aaDusfergonIncrVal fDIARDuraMult aaDusfergonEnch4
+
+					ModNthEffectItemMagnitude Magnitude ench EnchIter
+					ModNthEffectItemArea Area ench EnchIter
+					ModNthEffectItemDuration Duration ench EnchIter
+
+					Set Cost to ( Cost + fDGFACostMult + fDIWECostMult + fDIARCostMult )
+					
+				endif
+
+			;-----------------------------------------------------------------------------
+			;Increment Mage-Slayer option
+			;-----------------------------------------------------------------------------
+			elseif ( aaDusfergonEnch == 5 )
+			;-----------------------------------------------------------------------------
+				Set aaDusfergonEnch5 to ( aaDusfergonEnch5 + 1 )
+
+				;-----------------------------------------------------------------------------
+				;Find the index of the effects
+				;-----------------------------------------------------------------------------
+				Set EnchIter to 0
+				While ( EnchIter < EnchIndex )
+
+					Let EffName := GetNthEffectItemName ench EnchIter
+					
+					if ( sv_Compare "Damage Magicka" EffName ) == 0
+						
+						break
+						
+					endif
+
+					Set EnchIter to ( EnchIter + 1 )	
+				loop
+
+				;-----------------------------------------------------------------------------
+				;Increment effects
+				;-----------------------------------------------------------------------------
+				if ( EnchIter != EnchIndex )
+
+					;-----------------------------------------------------------------------------
+					;Damage Magicka
+					;-----------------------------------------------------------------------------
+					Set Magnitude to Call aaDusfergonIncrVal fDGSPMagnMult aaDusfergonEnch5
+					Set Area to Call aaDusfergonIncrVal fDGSPAreaMult aaDusfergonEnch5
+					Set Duration to Call aaDusfergonIncrVal fDGSPDuraMult aaDusfergonEnch5
+
+					ModNthEffectItemMagnitude Magnitude ench EnchIter
+					ModNthEffectItemArea Area ench EnchIter
+					ModNthEffectItemDuration Duration ench EnchIter
+					
+					;-----------------------------------------------------------------------------
+					;Dispel
+					;-----------------------------------------------------------------------------
+					Set EnchIter to ( EnchIter + 1 )
+
+					Set Magnitude to Call aaDusfergonIncrVal fDSPLMagnMult aaDusfergonEnch5
+					Set Area to Call aaDusfergonIncrVal fDSPLAreaMult aaDusfergonEnch5
+					
+					ModNthEffectItemMagnitude Magnitude ench EnchIter
+					ModNthEffectItemArea Area ench EnchIter
+					
+					;-----------------------------------------------------------------------------
+					;Silence
+					;-----------------------------------------------------------------------------
+					Set EnchIter to ( EnchIter + 1 )
+
+					Set Area to Call aaDusfergonIncrVal fSLNCAreaMult aaDusfergonEnch5
+					Set Duration to Call aaDusfergonIncrVal fSLNCDuraMult aaDusfergonEnch5
+
+					ModNthEffectItemArea Area ench EnchIter
+					ModNthEffectItemDuration Duration ench EnchIter
+
+					Set Cost to ( Cost + fDGSPCostMult + fDSPLCostMult + fSLNCCostMult )
+					
+				endif
+
+			;-----------------------------------------------------------------------------
+			;Increment Weaken option
+			;-----------------------------------------------------------------------------
+			elseif ( aaDusfergonEnch == 6 )
+			;-----------------------------------------------------------------------------
+				Set aaDusfergonEnch6 to ( aaDusfergonEnch6 + 1 )
+
+				;-----------------------------------------------------------------------------
+				;Find the index of the effects
+				;-----------------------------------------------------------------------------
+				Set EnchIter to 0
+				While ( EnchIter < EnchIndex )
+
+					Let EffName := GetNthEffectItemName ench EnchIter
+					
+					if ( sv_Compare "Burden" EffName ) == 0
+						
+						break
+						
+					endif
+
+					Set EnchIter to ( EnchIter + 1 )	
+				loop
+
+				;-----------------------------------------------------------------------------
+				;Increment effects
+				;-----------------------------------------------------------------------------
+				if ( EnchIter != EnchIndex )
+
+					;-----------------------------------------------------------------------------
+					;Burden
+					;-----------------------------------------------------------------------------
+					Set Magnitude to Call aaDusfergonIncrVal fBRDNMagnMult aaDusfergonEnch6
+					Set Area to Call aaDusfergonIncrVal fBRDNAreaMult aaDusfergonEnch6
+					Set Duration to Call aaDusfergonIncrVal fBRDNDuraMult aaDusfergonEnch6
+
+					ModNthEffectItemMagnitude Magnitude ench EnchIter
+					ModNthEffectItemArea Area ench EnchIter
+					ModNthEffectItemDuration Duration ench EnchIter
+					
+					;-----------------------------------------------------------------------------
+					;Drain Strength
+					;-----------------------------------------------------------------------------
+					Set EnchIter to ( EnchIter + 1 )
+
+					Set Magnitude to Call aaDusfergonIncrVal fDRATMagnMult aaDusfergonEnch6
+					Set Area to Call aaDusfergonIncrVal fDRATAreaMult aaDusfergonEnch6
+					Set Duration to Call aaDusfergonIncrVal fDRATDuraMult aaDusfergonEnch6
+
+					ModNthEffectItemMagnitude Magnitude ench EnchIter
+					ModNthEffectItemArea Area ench EnchIter
+					ModNthEffectItemDuration Duration ench EnchIter		
+					
+					;-----------------------------------------------------------------------------
+					;Weakness to Magic
+					;-----------------------------------------------------------------------------
+					Set EnchIter to ( EnchIndex - 1 )
+
+					Set Magnitude to Call aaDusfergonIncrVal fWKMAMagnMult aaDusfergonEnch6
+					Set Area to Call aaDusfergonIncrVal fWKMAAreaMult aaDusfergonEnch6
+					Set Duration to Call aaDusfergonIncrVal fWKMADuraMult aaDusfergonEnch6
+
+					ModNthEffectItemMagnitude Magnitude ench EnchIter
+					ModNthEffectItemArea Area ench EnchIter
+					ModNthEffectItemDuration Duration ench EnchIter
+
+					Set Cost to ( Cost + fELDGCostMult + fWKELCostMult + fWKMACostMult )
+					
+				endif
+
+			;-----------------------------------------------------------------------------
+			endif ;( aaDusfergonEnch != 0 )
+			;-----------------------------------------------------------------------------
+			
+			Set Charge to lChargeBase + ( fChargeMult * ( aaDusfergonLevel - 1 ) )
+			SetObjectCharge Charge self
+			SetEnchantmentCost Cost ench
+
+		;-----------------------------------------------------------------------------
+		endif ;( aaDusfergonLevel >= sEnchStart )
+		;-----------------------------------------------------------------------------
+		
+		;-----------------------------------------------------------------------------
+		;Set XPReq
+		;-----------------------------------------------------------------------------
+		Set XPReqHalf to Call aaDusfergonCalcXPReq sXPReqBase sXPReqMult XPReqHalf
+
+		Set HalfOnce to 0
+
+		;-----------------------------------------------------------------------------
+		;Level up message
+		;-----------------------------------------------------------------------------
+		printc "%n leveled up to %g!" self aaDusfergonLevel
+
+		Set Rando to rand 0 1
+
+		if ( Rando < 0.23 )
+
+			MessageEX "%n looks a little cleaner." self
+
+		elseif ( Rando < 0.46 )
+
+			MessageEX "%n feels more comfortable." self
+
+		elseif ( Rando < 0.69 )
+
+			MessageEX "%n adjusts in the hand." self
+
+		elseif ( Rando < 0.92 )
+
+			MessageEX "%n seems a little heftier." self
+
+		else
+
+			MessageEX "%n grasps latent power." self
+
+		endif
+		
+	;-----------------------------------------------------------------------------
+	loop ;( aaDusfergonLevel < sLevelCap && aaDusfergonXP >= aaDusfergonXPReq && EnchSelect == 0 )
+	;-----------------------------------------------------------------------------
+
+
+	;-----------------------------------------------------------------------------
+	;Reset model swapper menus if force exited
+	;-----------------------------------------------------------------------------
+	if ( ModelChange > 0 )
+
+		Set ModelChange to 0
+
+	endif
+	
+	;-----------------------------------------------------------------------------
+	;Remove all event handlers if weapon was enchanted by player
+	;-----------------------------------------------------------------------------
+	if ( WarnOnce == 1 )
+
+		if ( aaDusfergonEquip == 0 )
+
+			RemoveEventHandler "OnHitWith" aaDusfergonOnHit
+			
+		endif
+
+		RemoveEventHandler "OnEnchant" aaDusfergonOnEnchant
+
+		Set WarnOnce to 0
+
+	endif
+	
+;-----------------------------------------------------------------------------
+end ;GameMode
+;-----------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+;-----------------------------------------------------------------------------
+begin MenuMode 1002 ;Inventory
+;-----------------------------------------------------------------------------
+
+	if ( fQuestDelayTime != MenuLag )
+
+		Set fQuestDelayTime to MenuLag
+
+	endif
+
+	;-----------------------------------------------------------------------------
+	;Shows enchantment effects if Player Ctrl + right-clicks weapon
+	;-----------------------------------------------------------------------------
+	if ( GetActiveMenuSelection == self && ( IsKeyPressed2 29 ) && ( IsKeyPressed2 257 ) )
+	;-----------------------------------------------------------------------------
+	
+		;Get actively growing enchantment
+		if ( aaDusfergonEnch == 0 )
+
+			Let EffActv := "Active enchantment: None"
+
+		elseif ( aaDusfergonEnch == 1 )
+
+			Let EffActv := "Active enchantment: Fire"
+
+		elseif ( aaDusfergonEnch == 2 )
+
+			Let EffActv := "Active enchantment: Ice"
+
+		elseif ( aaDusfergonEnch == 3 )
+
+			Let EffActv := "Active enchantment: Volt"
+
+		elseif ( aaDusfergonEnch == 4 )
+
+			Let EffActv := "Active enchantment: Knight-Slayer"
+
+		elseif ( aaDusfergonEnch == 5 )
+
+			Let EffActv := "Active enchantment: Mage-Slayer"
+
+		elseif ( aaDusfergonEnch == 6 )
+
+			Let EffActv := "Active enchantment: Weaken"
+
+		endif	
+
+		
+		Set EnchIter to 0
+		While ( EnchIter < EnchIndex )
+			
+			Let EffName := GetNthEffectItemName ench EnchIter
+			Set Magnitude to GetNthEffectItemMagnitude ench EnchIter
+			Set Area to GetNthEffectItemArea ench EnchIter
+			Set Duration to GetNthEffectItemDuration ench EnchIter
+
+			Set EffActv to sv_Construct "%z%r%r%z:%r%gpts %gft %gsec" EffActv EffName Magnitude Area Duration
+				
+			Set EnchIter to ( EnchIter + 1 )	
+		loop
+
+		MessageBoxEx "%z" EffActv
+		
+	;-----------------------------------------------------------------------------
+	endif ;( GetActiveMenuSelection == self && ( IsKeyPressed2 29 ) && ( IsKeyPressed2 257 ) )
+	;-----------------------------------------------------------------------------
+	
+
+
+
+
+
+
+
+
+
+	
+	;-----------------------------------------------------------------------------
+	;Start ModelChange menus if Player right-clicks weapon
+	;-----------------------------------------------------------------------------
+	if ( GetActiveMenuSelection == self && ModelChange == 0 && ( IsKeyPressed2 257 ) )
+
+		Set Button to -1
+		Set ModelChange to 1
+		
+	endif
+
+	;-----------------------------------------------------------------------------
+	;Get the last option chosen
+	;-----------------------------------------------------------------------------
+	if ( ModelChange > 1 && Button < 0 )
+
+		Set Button to GetButtonPressed
+
+	endif
+
+	;-----------------------------------------------------------------------------
+	;Cancel
+	;-----------------------------------------------------------------------------
+	;Cancel is always the first button
+	if ( Button == 0 )
+
+		Set ModelChange to 0
+
+	endif
+
+
+
+
+
+	
+	;-----------------------------------------------------------------------------
+	;Choose primary weapon type
+	;-----------------------------------------------------------------------------
+	if ( ModelChange == 1 && Button == -1 )
+
+		MessageBox "Choose a type:" "Cancel" "2H - Blade" "1H - Blade" "2H - Blunt" "1H - Blunt" "Random"
+		Set ModelChange to 2
+
+
+
+
+
+		
+	;-----------------------------------------------------------------------------
+	;Choose secondary weapon type
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 2 && Button > -1 )
+
+		;-----------------------------------------------------------------------------
+		;2H Blades
+		;-----------------------------------------------------------------------------
+		if ( Button == 1 )
+
+			MessageBox "Choose a sub-type:" "Cancel" "Back" "Claymore" "Bastard"
+			Set ModelChange to 3000
+			Set Button to -1
+
+		;-----------------------------------------------------------------------------
+		;1H Blades
+		;-----------------------------------------------------------------------------
+		elseif ( Button == 2 )
+
+			MessageBox "Choose a sub-type:" "Cancel" "Back" "Bastard" "Longsword" "Shortsword" "Dagger"
+			Set ModelChange to 4000
+			Set Button to -1
+
+		;-----------------------------------------------------------------------------
+		;2H Blunts
+		;-----------------------------------------------------------------------------
+		elseif ( Button == 3 )
+
+			MessageBox "Choose a sub-type:" "Cancel" "Back" "Warhammer" "Battleaxe"
+			Set ModelChange to 5000
+			Set Button to -1
+
+		;-----------------------------------------------------------------------------
+		;1H Blunts
+		;-----------------------------------------------------------------------------
+		elseif ( Button == 4 )
+
+			MessageBox "Choose a sub-type:" "Cancel" "Back" "Mace" "Waraxe"
+			Set ModelChange to 6000
+			Set Button to -1
+
+		elseif ( Button == 5 )
+
+			Set Button to Call aaDusfergonRandomModel
+			Set IndexOffset to 0
+			Set ModelChange to 100
+
+		endif
+
+
+
+
+
+		
+	;-----------------------------------------------------------------------------
+	;Choose specific weapon model
+	;-----------------------------------------------------------------------------
+	;2H Blades
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 3000 && Button > -1 )
+
+		;Go back to type select
+		if ( Button == 1 )
+
+			Set ModelChange to 1
+			Set Button to -1
+
+		;Claymore pages
+		elseif ( Button == 2 )
+
+			Set ModelChange to 3100
+
+		;Bastard2h pages
+		elseif ( Button == 3 )
+
+			Set ModelChange to 3200
+
+		endif
+
+
+
+		
+	;-----------------------------------------------------------------------------
+	;Claymore pg1
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 3100 )
+
+		MessageBox "Choose a form:" "Cancel" "Back" "Bastard" "Merciless" "Wolf" "Wolf Ricasso" "Akatosh" "Serenity" "Zweihander" "Next"
+		Set Button to -1
+		Set ModelChange to 3101
+
+	elseif ( ModelChange == 3101 && Button > -1 )
+
+		;Back to 2H - Blade sub-type select
+		if ( Button == 1 )
+
+			Set ModelChange to 2
+			Set Button to 1
+
+		;Next Claymore page
+		elseif ( Button == 9 )
+
+			Set ModelChange to 3102
+
+		;Selected a model
+		else
+
+			Set IndexOffset to ClaymoreIdx
+			Set ModelChange to 100
+
+		endif
+
+	;-----------------------------------------------------------------------------
+	;Claymore pg2
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 3102 )
+
+		MessageBox "Choose a form:" "Cancel" "Prev" "Sathix" "Sathix Crimson" "Gotland" "Gotland Steel" "Gotland Old"; "" "" "Next"
+		Set Button to -1
+		Set ModelChange to 3103
+
+	elseif ( ModelChange == 3103 && Button > -1 )
+
+		;Previous Claymore page
+		if ( Button == 1 )
+
+			Set ModelChange to 3100
+
+		;Next Claymore page
+		elseif ( Button == 9 )
+
+			Set ModelChange to 3104
+
+		;Selected a model
+		else
+
+			Set IndexOffset to ClaymoreIdx + 7
+			Set ModelChange to 100
+
+		endif
+
+
+
+		
+	;-----------------------------------------------------------------------------
+	;Bastard2h pg1
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 3200 )
+
+		MessageBox "Choose a form:" "Cancel" "Back" "Mercy" "Trust" "Kinslayer" "Hope" "Despair" "Sorrow" "Truth" "Next"
+		Set Button to -1
+		Set ModelChange to 3201
+
+	elseif ( ModelChange == 3201 && Button > -1 )
+
+		;Back to 2H - Blade sub-type select
+		if ( Button == 1 )
+
+			Set ModelChange to 2
+			Set Button to 1
+
+		;Next Bastard2h page
+		elseif ( Button == 9 )
+
+			Set ModelChange to 3202
+
+		;Selected a model
+		else
+
+			Set IndexOffset to Bastard2hIdx
+			Set ModelChange to 100
+
+		endif
+
+	;-----------------------------------------------------------------------------
+	;Bastard2h pg2
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 3202 )
+
+		MessageBox "Choose a form:" "Cancel" "Prev" "Type-A" "Type-B" "Type-C" "Type-D" "Type-E" "Clint XVI" "Angular Leaf" "Next"
+		Set Button to -1
+		Set ModelChange to 3203
+
+	elseif ( ModelChange == 3203 && Button > -1 )
+
+		;Previous Bastard2h page
+		if ( Button == 1 )
+
+			Set ModelChange to 3200
+
+		;Next Bastard2h page
+		elseif ( Button == 9 )
+
+			Set ModelChange to 3204
+
+		;Selected a model
+		else
+
+			Set IndexOffset to Bastard2hIdx + 7
+			Set ModelChange to 100
+
+		endif
+
+	;-----------------------------------------------------------------------------
+	;Bastard2h pg3
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 3204 )
+
+		MessageBox "Choose a form:" "Cancel" "Prev" "Tapper" "Seaward" "Clint XVI Steel" "Angular Leaf Steel" "Tapper Steel" "Tapper Black" "Tapper Old"; "Next"
+		Set Button to -1
+		Set ModelChange to 3205
+
+	elseif ( ModelChange == 3205 && Button > -1 )
+
+		;Previous Bastard2h page
+		if ( Button == 1 )
+
+			Set ModelChange to 3202
+
+		;Next Bastard2h page
+		elseif ( Button == 9 )
+
+			Set ModelChange to 3206
+
+		;Selected a model
+		else
+
+			Set IndexOffset to Bastard2hIdx + 14
+			Set ModelChange to 100
+
+		endif
+
+
+
+
+
+		
+	;-----------------------------------------------------------------------------
+	;1H Blades
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 4000 && Button > -1 )
+
+		;Go back to type select
+		if ( Button == 1 )
+
+			Set ModelChange to 1
+			Set Button to -1
+
+		;Bastard1h pages
+		elseif ( Button == 2 )
+
+			Set ModelChange to 4100
+
+		;Longsword pages
+		elseif ( Button == 3 )
+
+			Set ModelChange to 4200
+
+		;Shortsword pages
+		elseif ( Button == 4 )
+
+			Set ModelChange to 4300
+
+		;Dagger pages
+		elseif ( Button == 5 )
+
+			Set ModelChange to 4400
+
+		endif
+
+
+
+		
+	;-----------------------------------------------------------------------------
+	;Bastard1h pg1
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 4100 )
+
+		MessageBox "Choose a form:" "Cancel" "Back" "Mercy" "Trust" "Kinslayer" "Hope" "Despair" "Sorrow" "Truth" "Next"
+		Set Button to -1
+		Set ModelChange to 4101
+
+	elseif ( ModelChange == 4101 && Button > -1 )
+
+		;Back to 1H - Blade sub-type select
+		if ( Button == 1 )
+
+			Set ModelChange to 2
+			Set Button to 2
+
+		;Next Bastard1h page
+		elseif ( Button == 9 )
+
+			Set ModelChange to 4102
+
+		;Selected a model
+		else
+
+			Set IndexOffset to Bastard1hIdx
+			Set ModelChange to 100
+
+		endif
+
+	;-----------------------------------------------------------------------------
+	;Bastard1h pg2
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 4102 )
+
+		MessageBox "Choose a form:" "Cancel" "Prev" "Type-A" "Type-B" "Type-C" "Type-D" "Type-E" "Clint XVI" "Angular Leaf" "Next"
+		Set Button to -1
+		Set ModelChange to 4103
+
+	elseif ( ModelChange == 4103 && Button > -1 )
+
+		;Previous Bastard1h page
+		if ( Button == 1 )
+
+			Set ModelChange to 4100
+
+		;Next Bastard1h page
+		elseif ( Button == 9 )
+
+			Set ModelChange to 4104
+
+		;Selected a model
+		else
+
+			Set IndexOffset to Bastard1hIdx + 7
+			Set ModelChange to 100
+
+		endif
+
+	;-----------------------------------------------------------------------------
+	;Bastard1h pg3
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 4104 )
+
+		MessageBox "Choose a form:" "Cancel" "Prev" "Tapper" "Seaward" "Clint XVI Steel" "Angular Leaf Steel" "Tapper Steel" "Tapper Black" "Tapper Old"; "Next"
+		Set Button to -1
+		Set ModelChange to 4105
+
+	elseif ( ModelChange == 4105 && Button > -1 )
+
+		;Previous Bastard1h page
+		if ( Button == 1 )
+
+			Set ModelChange to 4102
+
+		;Next Bastard1h page
+		elseif ( Button == 9 )
+
+			Set ModelChange to 4106
+
+		;Selected a model
+		else
+
+			Set IndexOffset to Bastard1hIdx + 14
+			Set ModelChange to 100
+
+		endif
+
+
+
+		
+	;-----------------------------------------------------------------------------
+	;Longsword pg1
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 4200 )
+
+		MessageBox "Choose a form:" "Cancel" "Back" "Iron" "Fine Iron" "Steel" "Fine Steel" "Silver" "Ebony" "Daedric" "Next"
+		Set Button to -1
+		Set ModelChange to 4201
+
+	elseif ( ModelChange == 4201 && Button > -1 )
+
+		;Back to 1H - Blade sub-type select
+		if ( Button == 1 )
+
+			Set ModelChange to 2
+			Set Button to 2
+
+		;Next Longsword page
+		elseif ( Button == 9 )
+
+			Set ModelChange to 4202
+
+		;Selected a model
+		else
+
+			Set IndexOffset to LongswordIdx
+			Set ModelChange to 100
+
+		endif
+
+	;-----------------------------------------------------------------------------
+	;Longsword pg2
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 4202 )
+
+		MessageBox "Choose a form:" "Cancel" "Prev" "Arming" "Corralor" "Gull" "Moonbrand" "Archer" "Solingen" "Tritonia" "Next"
+		Set Button to -1
+		Set ModelChange to 4203
+
+	elseif ( ModelChange == 4203 && Button > -1 )
+
+		;Previous Longsword page
+		if ( Button == 1 )
+
+			Set ModelChange to 4200
+
+		;Next Longsword page
+		elseif ( Button == 9 )
+
+			Set ModelChange to 4204
+
+		;Selected a model
+		else
+
+			Set IndexOffset to LongswordIdx + 7
+			Set ModelChange to 100
+
+		endif
+
+	;-----------------------------------------------------------------------------
+	;Longsword pg3
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 4204 )
+
+		MessageBox "Choose a form:" "Cancel" "Prev" "Necro" "Slavatio" "Goblin" "Leaf" "Shokuto" "Baskethilt" "Single Edge" "Next"
+		Set Button to -1
+		Set ModelChange to 4205
+
+	elseif ( ModelChange == 4205 && Button > -1 )
+
+		;Previous Longsword page
+		if ( Button == 1 )
+
+			Set ModelChange to 4202
+
+		;Next Longsword page
+		elseif ( Button == 9 )
+
+			Set ModelChange to 4206
+
+		;Selected a model
+		else
+
+			Set IndexOffset to LongswordIdx + 14
+			Set ModelChange to 100
+
+		endif
+
+	;-----------------------------------------------------------------------------
+	;Longsword pg4
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 4206 )
+
+		MessageBox "Choose a form:" "Cancel" "Prev" "Dragoon" "Kriss" "Elvin" "Broke Back" "Bone Daito" "Dragonfly" "Chimer" "Next"
+		Set Button to -1
+		Set ModelChange to 4207
+
+	elseif ( ModelChange == 4207 && Button > -1 )
+
+		;Previous Longsword page
+		if ( Button == 1 )
+
+			Set ModelChange to 4204
+
+		;Next Longsword page
+		elseif ( Button == 9 )
+
+			Set ModelChange to 4208
+
+		;Selected a model
+		else
+
+			Set IndexOffset to LongswordIdx + 21
+			Set ModelChange to 100
+
+		endif
+
+	;-----------------------------------------------------------------------------
+	;Longsword pg5
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 4208 )
+
+		MessageBox "Choose a form:" "Cancel" "Prev" "Commander" "Hook" "Scimitar" "Volsung" "Atmorian" "Beserker" "Cawood" "Next"
+		Set Button to -1
+		Set ModelChange to 4209
+
+	elseif ( ModelChange == 4209 && Button > -1 )
+
+		;Previous Longsword page
+		if ( Button == 1 )
+
+			Set ModelChange to 4206
+
+		;Next Longsword page
+		elseif ( Button == 9 )
+
+			Set ModelChange to 4210
+
+		;Selected a model
+		else
+
+			Set IndexOffset to LongswordIdx + 28
+			Set ModelChange to 100
+
+		endif
+
+	;-----------------------------------------------------------------------------
+	;Longsword pg6
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 4210 )
+
+		MessageBox "Choose a form:" "Cancel" "Prev" "Cawood II" "Gramr" "Naegling" "Norland" "Warp" "Archer Steel" "Solingen Steel" "Next"
+		Set Button to -1
+		Set ModelChange to 4211
+
+	elseif ( ModelChange == 4211 && Button > -1 )
+
+		;Previous Longsword page
+		if ( Button == 1 )
+
+			Set ModelChange to 4208
+
+		;Next Longsword page
+		elseif ( Button == 9 )
+
+			Set ModelChange to 4212
+
+		;Selected a model
+		else
+
+			Set IndexOffset to LongswordIdx + 35
+			Set ModelChange to 100
+
+		endif
+
+	;-----------------------------------------------------------------------------
+	;Longsword pg7
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 4212 )
+
+		MessageBox "Choose a form:" "Cancel" "Prev" "Tritonia Steel" "Necro Steel" "Salvatio Steel" "Baskethilt Steel" "Beserker Steel" "Warp Steel" "Leaf Old" "Next"
+		Set Button to -1
+		Set ModelChange to 4213
+
+	elseif ( ModelChange == 4213 && Button > -1 )
+
+		;Previous Longsword page
+		if ( Button == 1 )
+
+			Set ModelChange to 4210
+
+		;Next Longsword page
+		elseif ( Button == 9 )
+
+			Set ModelChange to 4214
+
+		;Selected a model
+		else
+
+			Set IndexOffset to LongswordIdx + 42
+			Set ModelChange to 100
+
+		endif
+
+	;-----------------------------------------------------------------------------
+	;Longsword pg8
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 4214 )
+
+		MessageBox "Choose a form:" "Cancel" "Prev" "Shokuto Old" "Chimer Old" "Commander Old" "Hook Old" "Scimitar Old" "Atmorian Old" "Beserker Old" "Next"
+		Set Button to -1
+		Set ModelChange to 4215
+
+	elseif ( ModelChange == 4215 && Button > -1 )
+
+		;Previous Longsword page
+		if ( Button == 1 )
+
+			Set ModelChange to 4212
+
+		;Next Longsword page
+		elseif ( Button == 9 )
+
+			Set ModelChange to 4216
+
+		;Selected a model
+		else
+
+			Set IndexOffset to LongswordIdx + 49
+			Set ModelChange to 100
+
+		endif
+
+	;-----------------------------------------------------------------------------
+	;Longsword pg9
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 4216 )
+
+		MessageBox "Choose a form:" "Cancel" "Prev" "Cawood Old" "Cawood II Old" "Gramr Old" "Naegling Old" "Norland Old" "Warp Old"; "" "Next"
+		Set Button to -1
+		Set ModelChange to 4217
+
+	elseif ( ModelChange == 4217 && Button > -1 )
+
+		;Previous Longsword page
+		if ( Button == 1 )
+
+			Set ModelChange to 4214
+
+		;Next Longsword page
+		elseif ( Button == 9 )
+
+			Set ModelChange to 4218
+
+		;Selected a model
+		else
+
+			Set IndexOffset to LongswordIdx + 56
+			Set ModelChange to 100
+
+		endif
+
+
+
+		
+	;-----------------------------------------------------------------------------
+	;Shortsword pg1
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 4300 )
+
+		MessageBox "Choose a form:" "Cancel" "Back" "Iron" "Fine Iron" "Steel" "Fine Steel" "Silver" "Ebony" "Barrow" "Next"
+		Set Button to -1
+		Set ModelChange to 4301
+
+	elseif ( ModelChange == 4301 && Button > -1 )
+
+		;Back to 1H - Blade sub-type select
+		if ( Button == 1 )
+
+			Set ModelChange to 2
+			Set Button to 2
+
+		;Next Shortsword page
+		elseif ( Button == 9 )
+
+			Set ModelChange to 4302
+
+		;Selected a model
+		else
+
+			Set IndexOffset to ShortswordIdx
+			Set ModelChange to 100
+
+		endif
+
+	;-----------------------------------------------------------------------------
+	;Shortsword pg2
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 4302 )
+
+		MessageBox "Choose a form:" "Cancel" "Prev" "Archer" "Archer Kriss" "Kriss" "Broad Kriss" "Barbed Leaf" "Panther Leaf" "Corralnium" "Next"
+		Set Button to -1
+		Set ModelChange to 4303
+
+	elseif ( ModelChange == 4303 && Button > -1 )
+
+		;Previous Shortsword page
+		if ( Button == 1 )
+
+			Set ModelChange to 4300
+
+		;Next Shortsword page
+		elseif ( Button == 9 )
+
+			Set ModelChange to 4304
+
+		;Selected a model
+		else
+
+			Set IndexOffset to ShortswordIdx + 7
+			Set ModelChange to 100
+
+		endif
+
+	;-----------------------------------------------------------------------------
+	;Shortsword pg3
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 4304 )
+
+		MessageBox "Choose a form:" "Cancel" "Prev" "Lemurian" "Broad Sword" "Broad Blade" "Elhazan" "Seaward" "Knuckle Bow" "Lion Claw" "Next"
+		Set Button to -1
+		Set ModelChange to 4305
+
+	elseif ( ModelChange == 4305 && Button > -1 )
+
+		;Previous Shortsword page
+		if ( Button == 1 )
+
+			Set ModelChange to 4302
+
+		;Next Shortsword page
+		elseif ( Button == 9 )
+
+			Set ModelChange to 4306
+
+		;Selected a model
+		else
+
+			Set IndexOffset to ShortswordIdx + 14
+			Set ModelChange to 100
+
+		endif
+
+	;-----------------------------------------------------------------------------
+	;Shortsword pg4
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 4306 )
+
+		MessageBox "Choose a form:" "Cancel" "Prev" "Elvin" "Commander" "Kukri" "Falshion" "Falshion Ranger" "Quandao" "Eagle" "Next"
+		Set Button to -1
+		Set ModelChange to 4307
+
+	elseif ( ModelChange == 4307 && Button > -1 )
+
+		;Previous Shortsword page
+		if ( Button == 1 )
+
+			Set ModelChange to 4304
+
+		;Next Shortsword page
+		elseif ( Button == 9 )
+
+			Set ModelChange to 4308
+
+		;Selected a model
+		else
+
+			Set IndexOffset to ShortswordIdx + 21
+			Set ModelChange to 100
+
+		endif
+
+	;-----------------------------------------------------------------------------
+	;Shortsword pg5
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 4308 )
+
+		MessageBox "Choose a form:" "Cancel" "Prev" "Crescent" "Orcish" "Moriche" "Curved" "Goblin Curved" "Cleaver" "Bone Shokuto" "Next"
+		Set Button to -1
+		Set ModelChange to 4309
+
+	elseif ( ModelChange == 4309 && Button > -1 )
+
+		;Previous Shortsword page
+		if ( Button == 1 )
+
+			Set ModelChange to 4306
+
+		;Next Shortsword page
+		elseif ( Button == 9 )
+
+			Set ModelChange to 4310
+
+		;Selected a model
+		else
+
+			Set IndexOffset to ShortswordIdx + 28
+			Set ModelChange to 100
+
+		endif
+
+	;-----------------------------------------------------------------------------
+	;Shortsword pg6
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 4310 )
+
+		MessageBox "Choose a form:" "Cancel" "Prev" "Bone Talon" "Bone Wakizaki" "Bone Dah" "Meyer" "Moria" "Poignard" "Falshion Steel" "Next"
+		Set Button to -1
+		Set ModelChange to 4311
+
+	elseif ( ModelChange == 4311 && Button > -1 )
+
+		;Previous Shortsword page
+		if ( Button == 1 )
+
+			Set ModelChange to 4308
+
+		;Next Shortsword page
+		elseif ( Button == 9 )
+
+			Set ModelChange to 4312
+
+		;Selected a model
+		else
+
+			Set IndexOffset to ShortswordIdx + 35
+			Set ModelChange to 100
+
+		endif
+
+	;-----------------------------------------------------------------------------
+	;Shortsword pg7
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 4312 )
+
+		MessageBox "Choose a form:" "Cancel" "Prev" "Falshion Ranger Steel" "Poignard Steel" "Commander Old" "Eagle Old" "Crescent Old" "Moriche Old" "Meyer Old" "Next"
+		Set Button to -1
+		Set ModelChange to 4313
+
+	elseif ( ModelChange == 4313 && Button > -1 )
+
+		;Previous Shortsword page
+		if ( Button == 1 )
+
+			Set ModelChange to 4310
+
+		;Next Shortsword page
+		elseif ( Button == 9 )
+
+			Set ModelChange to 4314
+
+		;Selected a model
+		else
+
+			Set IndexOffset to ShortswordIdx + 42
+			Set ModelChange to 100
+
+		endif
+
+	;-----------------------------------------------------------------------------
+	;Shortsword pg8
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 4314 )
+
+		MessageBox "Choose a form:" "Cancel" "Prev" "Poignard Old" "Broken"; "" "" "" "" "" "Next"
+		Set Button to -1
+		Set ModelChange to 4315
+
+	elseif ( ModelChange == 4315 && Button > -1 )
+
+		;Previous Shortsword page
+		if ( Button == 1 )
+
+			Set ModelChange to 4312
+
+		;Next Shortsword page
+		elseif ( Button == 9 )
+
+			Set ModelChange to 4316
+
+		;Selected a model
+		else
+
+			Set IndexOffset to ShortswordIdx + 49
+			Set ModelChange to 100
+
+		endif
+
+
+
+		
+	;-----------------------------------------------------------------------------
+	;Dagger pg1
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 4400 )
+
+		MessageBox "Choose a form:" "Cancel" "Back" "Iron" "Fine Iron" "Steel" "Fine Steel" "Silver" "Ebony" "Corralnium" "Next"
+		Set Button to -1
+		Set ModelChange to 4401
+
+	elseif ( ModelChange == 4401 && Button > -1 )
+
+		;Back to 1H - Blade sub-type select
+		if ( Button == 1 )
+
+			Set ModelChange to 2
+			Set Button to 2
+
+		;Next Dagger page
+		elseif ( Button == 9 )
+
+			Set ModelChange to 4402
+
+		;Selected a model
+		else
+
+			Set IndexOffset to DaggerIdx
+			Set ModelChange to 100
+
+		endif
+
+	;-----------------------------------------------------------------------------
+	;Dagger pg2
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 4402 )
+
+		MessageBox "Choose a form:" "Cancel" "Prev" "Kriss" "Tetela" "Spike" "Stiletto" "Bowie" "Hunting" "Miscitar" "Next"
+		Set Button to -1
+		Set ModelChange to 4403
+
+	elseif ( ModelChange == 4403 && Button > -1 )
+
+		;Previous Dagger page
+		if ( Button == 1 )
+
+			Set ModelChange to 4400
+
+		;Next Dagger page
+		elseif ( Button == 9 )
+
+			Set ModelChange to 4404
+
+		;Selected a model
+		else
+
+			Set IndexOffset to DaggerIdx + 7
+			Set ModelChange to 100
+
+		endif
+
+	;-----------------------------------------------------------------------------
+	;Dagger pg3
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 4404 )
+
+		MessageBox "Choose a form:" "Cancel" "Prev" "Jambaya" "Silver Knife" "Mori" "Elvin" "Jody" "Claw" "Crescent" "Next"
+		Set Button to -1
+		Set ModelChange to 4405
+
+	elseif ( ModelChange == 4405 && Button > -1 )
+
+		;Previous Dagger page
+		if ( Button == 1 )
+
+			Set ModelChange to 4402
+
+		;Next Dagger page
+		elseif ( Button == 9 )
+
+			Set ModelChange to 4406
+
+		;Selected a model
+		else
+
+			Set IndexOffset to DaggerIdx + 14
+			Set ModelChange to 100
+
+		endif
+
+	;-----------------------------------------------------------------------------
+	;Dagger pg4
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 4406 )
+
+		MessageBox "Choose a form:" "Cancel" "Prev" "Bone Tanto" "Ivory" "Poignard" "Poignard II" "Broadedge" "Spike Steel" "Stiletto Silver" "Next"
+		Set Button to -1
+		Set ModelChange to 4407
+
+	elseif ( ModelChange == 4407 && Button > -1 )
+
+		;Previous Dagger page
+		if ( Button == 1 )
+
+			Set ModelChange to 4404
+
+		;Next Dagger page
+		elseif ( Button == 9 )
+
+			Set ModelChange to 4408
+
+		;Selected a model
+		else
+
+			Set IndexOffset to DaggerIdx + 21
+			Set ModelChange to 100
+
+		endif
+
+	;-----------------------------------------------------------------------------
+	;Dagger pg5
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 4408 )
+
+		MessageBox "Choose a form:" "Cancel" "Prev" "Poignard Steel" "Poignard II Steel" "Broadedge Steel" "Jody Old" "Claw Old" "Crescent Old" "Poignard Old" "Next"
+		Set Button to -1
+		Set ModelChange to 4409
+
+	elseif ( ModelChange == 4409 && Button > -1 )
+
+		;Previous Dagger page
+		if ( Button == 1 )
+
+			Set ModelChange to 4406
+
+		;Next Dagger page
+		elseif ( Button == 9 )
+
+			Set ModelChange to 4410
+
+		;Selected a model
+		else
+
+			Set IndexOffset to DaggerIdx + 28
+			Set ModelChange to 100
+
+		endif
+
+	;-----------------------------------------------------------------------------
+	;Dagger pg6
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 4410 )
+
+		MessageBox "Choose a form:" "Cancel" "Prev" "Poignard II Old" "Broadedge Old"; "" "" "" "" "" "Next"
+		Set Button to -1
+		Set ModelChange to 4411
+
+	elseif ( ModelChange == 4411 && Button > -1 )
+
+		;Previous Dagger page
+		if ( Button == 1 )
+
+			Set ModelChange to 4408
+
+		;Next Dagger page
+		elseif ( Button == 9 )
+
+			Set ModelChange to 4412
+
+		;Selected a model
+		else
+
+			Set IndexOffset to DaggerIdx + 35
+			Set ModelChange to 100
+
+		endif
+
+
+
+
+
+		
+	;-----------------------------------------------------------------------------
+	;2H Blunts
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 5000 && Button > -1 )
+
+		;Go back to type select
+		if ( Button == 1 )
+
+			Set ModelChange to 1
+			Set Button to -1
+
+		;Warhammer pages
+		elseif ( Button == 2 )
+
+			Set ModelChange to 5100
+
+		;Battleaxe pages
+		elseif ( Button == 3 )
+
+			Set ModelChange to 5200
+
+		endif
+
+
+
+		
+	;-----------------------------------------------------------------------------
+	;Warhammer pg1
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 5100 )
+
+		MessageBox "Choose a form:" "Cancel" "Back" "Flanged" "Morningstar" "Mormacil" "Maul" "Goblinstar" "Mirondil" "Mirondil Gilded" "Next"
+		Set Button to -1
+		Set ModelChange to 5101
+
+	elseif ( ModelChange == 5101 && Button > -1 )
+
+		;Back to 2H - Blunt sub-type select
+		if ( Button == 1 )
+
+			Set ModelChange to 2
+			Set Button to 3
+
+		;Next Warhammer page
+		elseif ( Button == 9 )
+
+			Set ModelChange to 5102
+
+		;Selected a model
+		else
+
+			Set IndexOffset to WarhammerIdx
+			Set ModelChange to 100
+
+		endif
+
+	;-----------------------------------------------------------------------------
+	;Warhammer pg2
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 5102 )
+
+		MessageBox "Choose a form:" "Cancel" "Prev" "Flanged Steel" "Morningstar Steel"
+		Set Button to -1
+		Set ModelChange to 5103
+
+	elseif ( ModelChange == 5103 && Button > -1 )
+
+		;Previous Warhammer page
+		if ( Button == 1 )
+
+			Set ModelChange to 5100
+
+		;Next Warhammer page
+		elseif ( Button == 9 )
+
+			Set ModelChange to 5104
+
+		;Selected a model
+		else
+
+			Set IndexOffset to WarhammerIdx + 7
+			Set ModelChange to 100
+
+		endif
+
+
+
+		
+	;-----------------------------------------------------------------------------
+	;Battleaxe pg1
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 5200 )
+
+		MessageBox "Choose a form:" "Cancel" "Back" "Bearded" "Fine Bearded" "War" "Rhino" "Sotonhorian" "Thorgeir" "Ziragon" "Next"
+		Set Button to -1
+		Set ModelChange to 5201
+
+	elseif ( ModelChange == 5201 && Button > -1 )
+
+		;Back to 2H - Blunt sub-type select
+		if ( Button == 1 )
+
+			Set ModelChange to 2
+			Set Button to 3
+
+		;Next Battleaxe page
+		elseif ( Button == 9 )
+
+			Set ModelChange to 5202
+
+		;Selected a model
+		else
+
+			Set IndexOffset to BattleaxeIdx
+			Set ModelChange to 100
+
+		endif
+
+	;-----------------------------------------------------------------------------
+	;Battleaxe pg2
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 5202 )
+
+		MessageBox "Choose a form:" "Cancel" "Back" "Bearded Old" "War Old"; "" "" "" "" "" "Next"
+		Set Button to -1
+		Set ModelChange to 5203
+
+	elseif ( ModelChange == 5203 && Button > -1 )
+
+		;Previous Battleaxe page
+		if ( Button == 1 )
+
+			Set ModelChange to 5200
+			
+		;Next Battleaxe page
+		elseif ( Button == 9 )
+
+			Set ModelChange to 5204
+
+		;Selected a model
+		else
+
+			Set IndexOffset to BattleaxeIdx + 7
+			Set ModelChange to 100
+
+		endif
+
+
+
+
+
+		
+	;-----------------------------------------------------------------------------
+	;1H Blunts
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 6000 && Button > -1 )
+
+		;Go back to type select
+		if ( Button == 1 )
+
+			Set ModelChange to 1
+			Set Button to -1
+
+		;Mace pages
+		elseif ( Button == 2 )
+
+			Set ModelChange to 6100
+
+		;Waraxe pages
+		elseif ( Button == 3 )
+
+			Set ModelChange to 6200
+
+		endif
+
+
+
+		
+	;-----------------------------------------------------------------------------
+	;Mace pg1
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 6100 )
+
+		MessageBox "Choose a form:" "Cancel" "Back" "Warhammer" "Thame" "Morningstar" "Macil" "Warpick" "Sotonhorian" "Ziragon Warhammer" "Next"
+		Set Button to -1
+		Set ModelChange to 6101
+
+	elseif ( ModelChange == 6101 && Button > -1 )
+
+		;Back to 1H - Blunt sub-type select
+		if ( Button == 1 )
+
+			Set ModelChange to 2
+			Set Button to 4
+
+		;Next Mace page
+		elseif ( Button == 9 )
+
+			Set ModelChange to 6102
+
+		;Selected a model
+		else
+
+			Set IndexOffset to MaceIdx
+			Set ModelChange to 100
+
+		endif
+
+	;-----------------------------------------------------------------------------
+	;Mace pg2
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 6102 )
+
+		MessageBox "Choose a form:" "Cancel" "Prev" "Ziragon Warpick" "Morningstar Steel"; "" "" "" "" "" "Next"
+		Set Button to -1
+		Set ModelChange to 6103
+
+	elseif ( ModelChange == 6103 && Button > -1 )
+
+		;Previous Mace page
+		if ( Button == 1 )
+
+			Set ModelChange to 6100
+
+		;Next Mace page
+		elseif ( Button == 9 )
+
+			Set ModelChange to 6104
+
+		;Selected a model
+		else
+
+			Set IndexOffset to MaceIdx + 7
+			Set ModelChange to 100
+
+		endif
+
+
+
+		
+	;-----------------------------------------------------------------------------
+	;Waraxe pg1
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 6200 )
+
+		MessageBox "Choose a form:" "Cancel" "Back" "Bearded" "Fine Bearded" "War" "Sotonhorian" "Thorgeir" "Ziragon" "Mirondil" "Next"
+		Set Button to -1
+		Set ModelChange to 6201
+
+	elseif ( ModelChange == 6201 && Button > -1 )
+
+		;Back to 1H - Blunt sub-type select
+		if ( Button == 1 )
+
+			Set ModelChange to 2
+			Set Button to 4
+
+		;Next Waraxe page
+		elseif ( Button == 9 )
+
+			Set ModelChange to 6202
+
+		;Selected a model
+		else
+
+			Set IndexOffset to WaraxeIdx
+			Set ModelChange to 100
+
+		endif
+
+	;-----------------------------------------------------------------------------
+	;Waraxe pg2
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 6202 )
+
+		MessageBox "Choose a form:" "Cancel" "Prev" "Mirondil Gilded" "Bearded Old" "War Old"; "" "" "" "" "Next"
+		Set Button to -1
+		Set ModelChange to 6203
+
+	elseif ( ModelChange == 6203 && Button > -1 )
+
+		;Previous Waraxe page
+		If ( Button == 1 )
+
+			Set ModelChange to 6200
+
+		;Next Waraxe page
+		elseif ( Button == 9 )
+
+			Set ModelChange to 6204
+
+		;Selected a model
+		else
+
+			Set IndexOffset to WaraxeIdx + 7
+			Set ModelChange to 100
+
+		endif
+
+
+
+
+
+		
+	;-----------------------------------------------------------------------------
+	;Set new model
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 100 && Button > -1 )
+	
+		Set aaDusfergonModel to IndexOffset + Button - 2
+
+		;-----------------------------------------------------------------------------
+		;Set new stat adjustments
+		;-----------------------------------------------------------------------------
+		if ( aaDusfergonModel >= WaraxeIdx )
+
+			Set AdjDamageBase to sWaraxeDamageBase
+			Set AdjSpeedBase to fWaraxeSpeedBase
+			Set AdjReachBase to fWaraxeReachBase
+
+			Set AdjDamageMult to fWaraxeDamageMult
+			Set AdjSpeedMult to fWaraxeSpeedMult
+			Set AdjReachMult to fWaraxeReachMult
+
+		elseif ( aaDusfergonModel >= MaceIdx )
+
+			Set AdjDamageBase to sMaceDamageBase
+			Set AdjSpeedBase to fMaceSpeedBase
+			Set AdjReachBase to fMaceReachBase
+
+			Set AdjDamageMult to fMaceDamageMult
+			Set AdjSpeedMult to fMaceSpeedMult
+			Set AdjReachMult to fMaceReachMult
+
+		elseif ( aaDusfergonModel >= BattleaxeIdx )
+
+			Set AdjDamageBase to sBattleaxeDamageBase
+			Set AdjSpeedBase to fBattleaxeSpeedBase
+			Set AdjReachBase to fBattleaxeReachBase
+
+			Set AdjDamageMult to fBattleaxeDamageMult
+			Set AdjSpeedMult to fBattleaxeSpeedMult
+			Set AdjReachMult to fBattleaxeReachMult
+
+		elseif ( aaDusfergonModel >= WarhammerIdx )
+
+			Set AdjDamageBase to sWarhammerDamageBase
+			Set AdjSpeedBase to fWarhammerSpeedBase
+			Set AdjReachBase to fWarhammerReachBase
+
+			Set AdjDamageMult to fWarhammerDamageMult
+			Set AdjSpeedMult to fWarhammerSpeedMult
+			Set AdjReachMult to fWarhammerReachMult
+
+		elseif ( aaDusfergonModel >= DaggerIdx )
+
+			Set AdjDamageBase to sDaggerDamageBase
+			Set AdjSpeedBase to fDaggerSpeedBase
+			Set AdjReachBase to fDaggerReachBase
+
+			Set AdjDamageMult to fDaggerDamageMult
+			Set AdjSpeedMult to fDaggerSpeedMult
+			Set AdjReachMult to fDaggerReachMult
+
+		elseif ( aaDusfergonModel >= ShortswordIdx )
+
+			Set AdjDamageBase to sShortswordDamageBase
+			Set AdjSpeedBase to fShortswordSpeedBase
+			Set AdjReachBase to fShortswordReachBase
+
+			Set AdjDamageMult to fShortswordDamageMult
+			Set AdjSpeedMult to fShortswordSpeedMult
+			Set AdjReachMult to fShortswordReachMult
+
+		elseif ( aaDusfergonModel >= LongswordIdx )
+			
+			Set AdjDamageBase to sLongswordDamageBase
+			Set AdjSpeedBase to fLongswordSpeedBase
+			Set AdjReachBase to fLongswordReachBase
+
+			Set AdjDamageMult to fLongswordDamageMult
+			Set AdjSpeedMult to fLongswordSpeedMult
+			Set AdjReachMult to fLongswordReachMult
+
+		elseif ( aaDusfergonModel >= Bastard1hIdx )
+
+			Set AdjDamageBase to sBastard1HDamageBase
+			Set AdjSpeedBase to fBastard1HSpeedBase
+			Set AdjReachBase to fBastard1HReachBase
+
+			Set AdjDamageMult to fBastard1HDamageMult
+			Set AdjSpeedMult to fBastard1HSpeedMult
+			Set AdjReachMult to fBastard1HReachMult
+
+		elseif ( aaDusfergonModel >= Bastard2hIdx )
+
+			Set AdjDamageBase to sBastard2HDamageBase
+			Set AdjSpeedBase to fBastard2HSpeedBase
+			Set AdjReachBase to fBastard2HReachBase
+
+			Set AdjDamageMult to fBastard2HDamageMult
+			Set AdjSpeedMult to fBastard2HSpeedMult
+			Set AdjReachMult to fBastard2HReachMult
+
+		elseif ( aaDusfergonModel >= ClaymoreIdx )
+
+			Set AdjDamageBase to sClaymoreDamageBase
+			Set AdjSpeedBase to fClaymoreSpeedBase
+			Set AdjReachBase to fClaymoreReachBase
+
+			Set AdjDamageMult to fClaymoreDamageMult
+			Set AdjSpeedMult to fClaymoreSpeedMult
+			Set AdjReachMult to fClaymoreReachMult
+
+		;Safeguard incase junk data gets into aaDusfergonModel
+		else
+
+			Set AdjDamageBase to 0
+			Set AdjSpeedBase to 0
+			Set AdjReachBase to 0
+
+			Set AdjDamageMult to 0
+			Set AdjSpeedMult to 0
+			Set AdjReachMult to 0
+
+		endif
+
+		;-----------------------------------------------------------------------------
+		;Set new weapon stats and model
+		;-----------------------------------------------------------------------------
+
+		if ( aaDusfergonModel < 6000 )
+
+			Call aaDusfergonSetModel self
+
+		else
+
+			Call aaDusfergonSetModel2 self
+
+		endif
+
+		Set Damage to ( sDamageBase + AdjDamageBase ) + ( ( fDamageMult + AdjDamageMult ) * ( aaDusfergonLevel - 1 ) )
+		Set Speed to ( fSpeedBase + AdjSpeedBase ) + ( ( fSpeedMult + AdjSpeedMult ) * ( aaDusfergonLevel - 1 ) )
+		Set Reach to ( fReachBase + AdjReachBase ) + ( ( fReachMult + AdjReachMult ) * ( aaDusfergonLevel - 1 ) )
+		
+		SetAttackDamage Damage self
+		SetWeaponSpeed Speed self
+		SetWeaponReach Reach self
+		
+
+		MessageEx "%n has changed form." self
+		Set ModelChange to 0
+
+	;-----------------------------------------------------------------------------
+	endif ;ModelChange != 0
+	;-----------------------------------------------------------------------------
+	
+;-----------------------------------------------------------------------------
+end ;MenuMode Inventory
+;-----------------------------------------------------------------------------
+
+
+
+
+
+
+;-----------------------------------------------------------------------------
+begin MenuMode 1042 ;MenuMode Enchanting
+;-----------------------------------------------------------------------------
+
+	if ( fQuestDelayTime != MenuLag )
+
+		Set fQuestDelayTime to MenuLag
+
+	endif
+	
+	;-----------------------------------------------------------------------------
+	;Warn the player against enchanting	
+	;-----------------------------------------------------------------------------
+	if ( GetEnchMenuBaseItem == self && WarnOnce == 0)
+		
+		MessageBoxEx "%n rattles as if to resist enchantment." self
+		Set WarnOnce to 1
+		SetEventHandler "OnEnchant" aaDusfergonOnEnchant
+
+	elseif ( GetEnchMenuBaseItem != self )
+
+		Set WarnOnce to 0
+		RemoveEventHandler "OnEnchant" aaDusfergonOnEnchant
+		
+	endif
+	
+;-----------------------------------------------------------------------------
+end ;MenuMode Enchanting
+;-----------------------------------------------------------------------------
