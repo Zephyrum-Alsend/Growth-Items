@@ -1,0 +1,769 @@
+scn aaDusfergonEnchLvl
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;aaDusfergonManager
+;aaDusfergonEnchInit
+;aaDusfergonEnchSlct
+;aaDusfergonIncrVal
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;aaDusfergonEnch
+;aaDusfergonEnch1
+;aaDusfergonEnch2
+;aaDusfergonEnch3
+;aaDusfergonEnch4
+;aaDusfergonEnch5
+;aaDusfergonEnch6
+;aaDusfergonEnch7
+;aaDusfergonEnch8
+;aaDusfergonEnch9
+;aaDusfergonEnch10
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;According to global Ench, increments the appropriate global, the 
+;corresponding effect set on the passed enchantment according to the values set 
+;in Dusfergon.ini, and calculates the new total Cost.
+;Returns total Cost for book keeping.
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+long Magnitude
+long Area
+long Duration
+float Cost ;Return value
+
+short EnchIter
+short EnchIndex
+string_var EffName
+
+ref Ench
+;-----------------------------------------------------------------------------
+
+
+
+;-----------------------------------------------------------------------------
+begin Function { Ench, Cost }
+;-----------------------------------------------------------------------------
+	Set EnchIndex to GetMagicItemEffectCount Ench
+
+	;-----------------------------------------------------------------------------
+	;Increment Fire option
+	;-----------------------------------------------------------------------------
+	if ( aaDusfergonEnch == 1 )
+	;-----------------------------------------------------------------------------
+		Set aaDusfergonEnch1 to ( aaDusfergonEnch1 + 1 )
+
+		;-----------------------------------------------------------------------------
+		;Find the index of the effects
+		;-----------------------------------------------------------------------------
+		Set EnchIter to 0
+		While ( EnchIter < EnchIndex )
+
+			Let EffName := GetNthEffectItemName ench EnchIter
+					
+			if ( sv_Compare "Fire Damage" EffName ) == 0
+						
+				break
+						
+			endif
+
+			Set EnchIter to ( EnchIter + 1 )	
+		loop
+
+		;-----------------------------------------------------------------------------
+		;Increment effects
+		;-----------------------------------------------------------------------------
+		if ( EnchIter != EnchIndex )
+
+			;-----------------------------------------------------------------------------
+			;Fire Damage
+			;-----------------------------------------------------------------------------
+			Set Magnitude to Call aaDusfergonIncrVal aaDusfergonInit.fELDGMagnMult aaDusfergonEnch1
+			Set Area to Call aaDusfergonIncrVal aaDusfergonInit.fELDGAreaMult aaDusfergonEnch1
+			Set Duration to Call aaDusfergonIncrVal aaDusfergonInit.fELDGDuraMult aaDusfergonEnch1
+
+			ModNthEffectItemMagnitude Magnitude ench EnchIter
+			ModNthEffectItemArea Area ench EnchIter
+			ModNthEffectItemDuration Duration ench EnchIter
+					
+			;-----------------------------------------------------------------------------
+			;Weakness to Fire
+			;-----------------------------------------------------------------------------
+			Set EnchIter to ( EnchIter + 1 )
+
+			Set Magnitude to Call aaDusfergonIncrVal aaDusfergonInit.fWKELMagnMult aaDusfergonEnch1
+			Set Area to Call aaDusfergonIncrVal aaDusfergonInit.fWKELAreaMult aaDusfergonEnch1	
+			Set Duration to Call aaDusfergonIncrVal aaDusfergonInit.fWKELDuraMult aaDusfergonEnch1
+
+			ModNthEffectItemMagnitude Magnitude ench EnchIter
+			ModNthEffectItemArea Area ench EnchIter
+			ModNthEffectItemDuration Duration ench EnchIter
+					
+			;-----------------------------------------------------------------------------
+			;Weakness to Magic
+			;-----------------------------------------------------------------------------
+			Set EnchIter to ( EnchIndex - 1 )
+
+			Set Magnitude to Call aaDusfergonIncrVal aaDusfergonInit.fWKMAMagnMult aaDusfergonEnch1
+			Set Area to Call aaDusfergonIncrVal aaDusfergonInit.fWKMAAreaMult aaDusfergonEnch1
+			Set Duration to Call aaDusfergonIncrVal aaDusfergonInit.fWKMADuraMult aaDusfergonEnch1
+
+			ModNthEffectItemMagnitude Magnitude ench EnchIter
+			ModNthEffectItemArea Area ench EnchIter
+			ModNthEffectItemDuration Duration ench EnchIter
+
+			Set Cost to ( Cost + aaDusfergonInit.fELDGCostMult + aaDusfergonInit.fWKELCostMult + aaDusfergonInit.fWKMACostMult )
+					
+		endif
+				
+	;-----------------------------------------------------------------------------
+	;Increment Ice option
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonEnch == 2 )
+	;-----------------------------------------------------------------------------
+		Set aaDusfergonEnch2 to ( aaDusfergonEnch2 + 1 )
+
+		;-----------------------------------------------------------------------------
+		;Find the index of the effects
+		;-----------------------------------------------------------------------------
+		Set EnchIter to 0
+		While ( EnchIter < EnchIndex )
+
+			Let EffName := GetNthEffectItemName ench EnchIter
+					
+			if ( sv_Compare "Frost Damage" EffName ) == 0
+						
+				break
+						
+			endif
+
+			Set EnchIter to ( EnchIter + 1 )	
+		loop
+
+		;-----------------------------------------------------------------------------
+		;Increment effects
+		;-----------------------------------------------------------------------------
+		if ( EnchIter != EnchIndex )
+
+			;-----------------------------------------------------------------------------
+			;Frost Damage
+			;-----------------------------------------------------------------------------
+			Set Magnitude to Call aaDusfergonIncrVal aaDusfergonInit.fELDGMagnMult aaDusfergonEnch2
+			Set Area to Call aaDusfergonIncrVal aaDusfergonInit.fELDGAreaMult aaDusfergonEnch2
+			Set Duration to Call aaDusfergonIncrVal aaDusfergonInit.fELDGDuraMult aaDusfergonEnch2
+
+			ModNthEffectItemMagnitude Magnitude ench EnchIter
+			ModNthEffectItemArea Area ench EnchIter
+			ModNthEffectItemDuration Duration ench EnchIter
+					
+			;-----------------------------------------------------------------------------
+			;Weakness to Frost
+			;-----------------------------------------------------------------------------
+			Set EnchIter to ( EnchIter + 1 )
+
+			Set Magnitude to Call aaDusfergonIncrVal aaDusfergonInit.fWKELMagnMult aaDusfergonEnch2
+			Set Area to Call aaDusfergonIncrVal aaDusfergonInit.fWKELAreaMult aaDusfergonEnch2
+			Set Duration to Call aaDusfergonIncrVal aaDusfergonInit.fWKELDuraMult aaDusfergonEnch2
+
+			ModNthEffectItemMagnitude Magnitude ench EnchIter
+			ModNthEffectItemArea Area ench EnchIter
+			ModNthEffectItemDuration Duration ench EnchIter		
+					
+			;-----------------------------------------------------------------------------
+			;Weakness to Magic
+			;-----------------------------------------------------------------------------
+			Set EnchIter to ( EnchIndex - 1 )
+
+			Set Magnitude to Call aaDusfergonIncrVal aaDusfergonInit.fWKMAMagnMult aaDusfergonEnch2
+			Set Area to Call aaDusfergonIncrVal aaDusfergonInit.fWKMAAreaMult aaDusfergonEnch2
+			Set Duration to Call aaDusfergonIncrVal aaDusfergonInit.fWKMADuraMult aaDusfergonEnch2
+
+			ModNthEffectItemMagnitude Magnitude ench EnchIter
+			ModNthEffectItemArea Area ench EnchIter
+			ModNthEffectItemDuration Duration ench EnchIter
+
+			Set Cost to ( Cost + aaDusfergonInit.fELDGCostMult + aaDusfergonInit.fWKELCostMult + aaDusfergonInit.fWKMACostMult )
+					
+		endif
+
+	;-----------------------------------------------------------------------------
+	;Increment Volt option
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonEnch == 3 )
+	;-----------------------------------------------------------------------------
+		Set aaDusfergonEnch3 to ( aaDusfergonEnch3 + 1 )
+
+		;-----------------------------------------------------------------------------
+		;Find the index of the effects
+		;-----------------------------------------------------------------------------
+		Set EnchIter to 0
+		While ( EnchIter < EnchIndex )
+			
+			Let EffName := GetNthEffectItemName ench EnchIter
+				
+			if ( sv_Compare "Shock Damage" EffName ) == 0
+						
+				break
+						
+			endif
+
+			Set EnchIter to ( EnchIter + 1 )	
+		loop
+
+		;-----------------------------------------------------------------------------
+		;Increment effects
+		;-----------------------------------------------------------------------------
+		if ( EnchIter != EnchIndex )
+
+			;-----------------------------------------------------------------------------
+			;Shock Damage
+			;-----------------------------------------------------------------------------
+			Set Magnitude to Call aaDusfergonIncrVal aaDusfergonInit.fELDGMagnMult aaDusfergonEnch3
+			Set Area to Call aaDusfergonIncrVal aaDusfergonInit.fELDGAreaMult aaDusfergonEnch3
+			Set Duration to Call aaDusfergonIncrVal aaDusfergonInit.fELDGDuraMult aaDusfergonEnch3
+
+			ModNthEffectItemMagnitude Magnitude ench EnchIter
+			ModNthEffectItemArea Area ench EnchIter
+			ModNthEffectItemDuration Duration ench EnchIter
+					
+			;-----------------------------------------------------------------------------
+			;Weakness to Shock
+			;-----------------------------------------------------------------------------
+			Set EnchIter to ( EnchIter + 1 )
+
+			Set Magnitude to Call aaDusfergonIncrVal aaDusfergonInit.fWKELMagnMult aaDusfergonEnch3
+			Set Area to Call aaDusfergonIncrVal aaDusfergonInit.fWKELAreaMult aaDusfergonEnch3
+			Set Duration to Call aaDusfergonIncrVal aaDusfergonInit.fWKELDuraMult aaDusfergonEnch3
+
+			ModNthEffectItemMagnitude Magnitude ench EnchIter
+			ModNthEffectItemArea Area ench EnchIter
+			ModNthEffectItemDuration Duration ench EnchIter
+					
+			;-----------------------------------------------------------------------------
+			;Weakness to Magic
+			;-----------------------------------------------------------------------------
+			Set EnchIter to ( EnchIndex - 1 )
+
+			Set Magnitude to Call aaDusfergonIncrVal aaDusfergonInit.fWKMAMagnMult aaDusfergonEnch3
+			Set Area to Call aaDusfergonIncrVal aaDusfergonInit.fWKMAAreaMult aaDusfergonEnch3
+			Set Duration to Call aaDusfergonIncrVal aaDusfergonInit.fWKMADuraMult aaDusfergonEnch3
+
+			ModNthEffectItemMagnitude Magnitude ench EnchIter
+			ModNthEffectItemArea Area ench EnchIter
+			ModNthEffectItemDuration Duration ench EnchIter
+
+			Set Cost to ( Cost + aaDusfergonInit.fELDGCostMult + aaDusfergonInit.fWKELCostMult + aaDusfergonInit.fWKMACostMult )
+					
+		endif
+
+	;-----------------------------------------------------------------------------
+	;Increment Knight-Slayer option
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonEnch == 4 )
+	;-----------------------------------------------------------------------------
+		Set aaDusfergonEnch4 to ( aaDusfergonEnch4 + 1 )
+
+		;-----------------------------------------------------------------------------
+		;Find the index of the effects
+		;-----------------------------------------------------------------------------
+		Set EnchIter to 0
+		While ( EnchIter < EnchIndex )
+
+			Let EffName := GetNthEffectItemName ench EnchIter
+				
+			if ( sv_Compare "Disintegrate Weapon" EffName ) == 0
+						
+				break
+				
+			endif
+
+			Set EnchIter to ( EnchIter + 1 )	
+		loop
+
+		;-----------------------------------------------------------------------------
+		;Increment effects
+		;-----------------------------------------------------------------------------
+		if ( EnchIter != EnchIndex )
+
+			;-----------------------------------------------------------------------------
+			;Disintegrate Weapon
+			;-----------------------------------------------------------------------------
+			Set Magnitude to Call aaDusfergonIncrVal aaDusfergonInit.fDIWEMagnMult aaDusfergonEnch4
+			Set Area to Call aaDusfergonIncrVal aaDusfergonInit.fDIWEAreaMult aaDusfergonEnch4
+			Set Duration to Call aaDusfergonIncrVal aaDusfergonInit.fDIWEDuraMult aaDusfergonEnch4
+
+			ModNthEffectItemMagnitude Magnitude ench EnchIter
+			ModNthEffectItemArea Area ench EnchIter
+			ModNthEffectItemDuration Duration ench EnchIter
+					
+			;-----------------------------------------------------------------------------
+			;Disintegrate Armor
+			;-----------------------------------------------------------------------------
+			Set EnchIter to ( EnchIter + 1 )
+
+			Set Magnitude to Call aaDusfergonIncrVal aaDusfergonInit.fDIARMagnMult aaDusfergonEnch4
+			Set Area to Call aaDusfergonIncrVal aaDusfergonInit.fDIARAreaMult aaDusfergonEnch4
+			Set Duration to Call aaDusfergonIncrVal aaDusfergonInit.fDIARDuraMult aaDusfergonEnch4
+
+			ModNthEffectItemMagnitude Magnitude ench EnchIter
+			ModNthEffectItemArea Area ench EnchIter
+			ModNthEffectItemDuration Duration ench EnchIter
+
+			;-----------------------------------------------------------------------------
+			;Damage Fatigue
+			;-----------------------------------------------------------------------------
+			if ( MagicItemHasEffect WKMA ench )
+
+				Set EnchIter to ( EnchIndex - 2 )
+
+			else
+
+				Set EnchIter to ( EnchIndex - 1 )
+
+			endif
+			
+			Set Magnitude to Call aaDusfergonIncrVal aaDusfergonInit.fDGFAMagnMult aaDusfergonEnch4
+			Set Area to Call aaDusfergonIncrVal aaDusfergonInit.fDGFAAreaMult aaDusfergonEnch4
+			Set Duration to Call aaDusfergonIncrVal aaDusfergonInit.fDGFADuraMult aaDusfergonEnch4
+
+			ModNthEffectItemMagnitude Magnitude ench EnchIter
+			ModNthEffectItemArea Area ench EnchIter
+			ModNthEffectItemDuration Duration ench EnchIter
+					
+			Set Cost to ( Cost + aaDusfergonInit.fDIWECostMult + aaDusfergonInit.fDIARCostMult + aaDusfergonInit.fDGFACostMult )
+					
+		endif
+
+	;-----------------------------------------------------------------------------
+	;Increment Mage-Slayer option
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonEnch == 5 )
+	;-----------------------------------------------------------------------------
+		Set aaDusfergonEnch5 to ( aaDusfergonEnch5 + 1 )
+
+		;-----------------------------------------------------------------------------
+		;Find the index of the effects
+		;-----------------------------------------------------------------------------
+		Set EnchIter to 0
+		While ( EnchIter < EnchIndex )
+
+			Let EffName := GetNthEffectItemName ench EnchIter
+					
+			if ( sv_Compare "Damage Magicka" EffName ) == 0
+						
+				break
+						
+			endif
+
+			Set EnchIter to ( EnchIter + 1 )	
+		loop
+
+		;-----------------------------------------------------------------------------
+		;Increment effects
+		;-----------------------------------------------------------------------------
+		if ( EnchIter != EnchIndex )
+
+			;-----------------------------------------------------------------------------
+			;Damage Magicka
+			;-----------------------------------------------------------------------------
+			Set Magnitude to Call aaDusfergonIncrVal aaDusfergonInit.fDGSPMagnMult aaDusfergonEnch5
+			Set Area to Call aaDusfergonIncrVal aaDusfergonInit.fDGSPAreaMult aaDusfergonEnch5
+			Set Duration to Call aaDusfergonIncrVal aaDusfergonInit.fDGSPDuraMult aaDusfergonEnch5
+
+			ModNthEffectItemMagnitude Magnitude ench EnchIter
+			ModNthEffectItemArea Area ench EnchIter
+			ModNthEffectItemDuration Duration ench EnchIter
+					
+			;-----------------------------------------------------------------------------
+			;Dispel
+			;-----------------------------------------------------------------------------
+			Set EnchIter to ( EnchIter + 1 )
+
+			Set Magnitude to Call aaDusfergonIncrVal aaDusfergonInit.fDSPLMagnMult aaDusfergonEnch5
+			Set Area to Call aaDusfergonIncrVal aaDusfergonInit.fDSPLAreaMult aaDusfergonEnch5
+					
+			ModNthEffectItemMagnitude Magnitude ench EnchIter
+			ModNthEffectItemArea Area ench EnchIter
+					
+			;-----------------------------------------------------------------------------
+			;Silence
+			;-----------------------------------------------------------------------------
+			Set EnchIter to ( EnchIter + 1 )
+
+			Set Area to Call aaDusfergonIncrVal aaDusfergonInit.fSLNCAreaMult aaDusfergonEnch5
+			Set Duration to Call aaDusfergonIncrVal aaDusfergonInit.fSLNCDuraMult aaDusfergonEnch5
+
+			ModNthEffectItemArea Area ench EnchIter
+			ModNthEffectItemDuration Duration ench EnchIter
+
+			Set Cost to ( Cost + aaDusfergonInit.fDGSPCostMult + aaDusfergonInit.fDSPLCostMult + aaDusfergonInit.fSLNCCostMult )
+					
+		endif
+
+	;-----------------------------------------------------------------------------
+	;Increment Weaken option
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonEnch == 6 )
+	;-----------------------------------------------------------------------------
+		Set aaDusfergonEnch6 to ( aaDusfergonEnch6 + 1 )
+
+		;-----------------------------------------------------------------------------
+		;Find the index of the effects
+		;-----------------------------------------------------------------------------
+		Set EnchIter to 0
+		While ( EnchIter < EnchIndex )
+
+			Let EffName := GetNthEffectItemName ench EnchIter
+			
+			if ( sv_Compare "Burden" EffName ) == 0
+						
+				break
+						
+			endif
+
+			Set EnchIter to ( EnchIter + 1 )	
+		loop
+
+		;-----------------------------------------------------------------------------
+		;Increment effects
+		;-----------------------------------------------------------------------------
+		if ( EnchIter != EnchIndex )
+
+			;-----------------------------------------------------------------------------
+			;Burden
+			;-----------------------------------------------------------------------------
+			Set Magnitude to Call aaDusfergonIncrVal aaDusfergonInit.fBRDNMagnMult aaDusfergonEnch6
+			Set Area to Call aaDusfergonIncrVal aaDusfergonInit.fBRDNAreaMult aaDusfergonEnch6
+			Set Duration to Call aaDusfergonIncrVal aaDusfergonInit.fBRDNDuraMult aaDusfergonEnch6
+
+			ModNthEffectItemMagnitude Magnitude ench EnchIter
+			ModNthEffectItemArea Area ench EnchIter
+			ModNthEffectItemDuration Duration ench EnchIter
+					
+			;-----------------------------------------------------------------------------
+			;Drain Strength
+			;-----------------------------------------------------------------------------
+			Set EnchIter to ( EnchIter + 1 )
+
+			Set Magnitude to Call aaDusfergonIncrVal aaDusfergonInit.fDRATMagnMult aaDusfergonEnch6
+			Set Area to Call aaDusfergonIncrVal aaDusfergonInit.fDRATAreaMult aaDusfergonEnch6
+			Set Duration to Call aaDusfergonIncrVal aaDusfergonInit.fDRATDuraMult aaDusfergonEnch6
+
+			ModNthEffectItemMagnitude Magnitude ench EnchIter
+			ModNthEffectItemArea Area ench EnchIter
+			ModNthEffectItemDuration Duration ench EnchIter		
+					
+			;-----------------------------------------------------------------------------
+			;Weakness to Magic
+			;-----------------------------------------------------------------------------
+			Set EnchIter to ( EnchIndex - 1 )
+
+			Set Magnitude to Call aaDusfergonIncrVal aaDusfergonInit.fWKMAMagnMult aaDusfergonEnch6
+			Set Area to Call aaDusfergonIncrVal aaDusfergonInit.fWKMAAreaMult aaDusfergonEnch6
+			Set Duration to Call aaDusfergonIncrVal aaDusfergonInit.fWKMADuraMult aaDusfergonEnch6
+
+			ModNthEffectItemMagnitude Magnitude ench EnchIter
+			ModNthEffectItemArea Area ench EnchIter
+			ModNthEffectItemDuration Duration ench EnchIter
+
+			Set Cost to ( Cost + aaDusfergonInit.fBRDNCostMult + aaDusfergonInit.fDRATCostMult + aaDusfergonInit.fWKMACostMult )
+					
+		endif
+
+
+	;-----------------------------------------------------------------------------
+	;Increment Subjugate option
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonEnch == 7 )
+	;-----------------------------------------------------------------------------
+		Set aaDusfergonEnch7 to ( aaDusfergonEnch7 + 1 )
+
+		;-----------------------------------------------------------------------------
+		;Find the index of the effects
+		;-----------------------------------------------------------------------------
+		Set EnchIter to 0
+		While ( EnchIter < EnchIndex )
+
+			Let EffName := GetNthEffectItemName ench EnchIter
+			
+			if ( sv_Compare "Command Creature" EffName ) == 0
+						
+				break
+						
+			endif
+
+			Set EnchIter to ( EnchIter + 1 )	
+		loop
+
+		;-----------------------------------------------------------------------------
+		;Increment effects
+		;-----------------------------------------------------------------------------
+		if ( EnchIter != EnchIndex )
+
+			;-----------------------------------------------------------------------------
+			;Command Creature
+			;-----------------------------------------------------------------------------
+			Set Magnitude to Call aaDusfergonIncrVal aaDusfergonInit.fCOMMMagnMult aaDusfergonEnch7
+			Set Area to Call aaDusfergonIncrVal aaDusfergonInit.fCOMMAreaMult aaDusfergonEnch7
+			Set Duration to Call aaDusfergonIncrVal aaDusfergonInit.fCOMMDuraMult aaDusfergonEnch7
+
+			ModNthEffectItemMagnitude Magnitude ench EnchIter
+			ModNthEffectItemArea Area ench EnchIter
+			ModNthEffectItemDuration Duration ench EnchIter
+					
+			;-----------------------------------------------------------------------------
+			;Command Humanoid
+			;-----------------------------------------------------------------------------
+			Set EnchIter to ( EnchIter + 1 )
+
+			Set Magnitude to Call aaDusfergonIncrVal aaDusfergonInit.fCOMMMagnMult aaDusfergonEnch7
+			Set Area to Call aaDusfergonIncrVal aaDusfergonInit.fCOMMAreaMult aaDusfergonEnch7
+			Set Duration to Call aaDusfergonIncrVal aaDusfergonInit.fCOMMDuraMult aaDusfergonEnch7
+
+			ModNthEffectItemMagnitude Magnitude ench EnchIter
+			ModNthEffectItemArea Area ench EnchIter
+			ModNthEffectItemDuration Duration ench EnchIter		
+					
+			;-----------------------------------------------------------------------------
+			;Rally
+			;-----------------------------------------------------------------------------
+			Set EnchIter to ( EnchIter + 1 )
+
+			Set Magnitude to Call aaDusfergonIncrVal aaDusfergonInit.fRALYMagnMult aaDusfergonEnch7
+			Set Area to Call aaDusfergonIncrVal aaDusfergonInit.fRALYAreaMult aaDusfergonEnch7
+			Set Duration to Call aaDusfergonIncrVal aaDusfergonInit.fRALYDuraMult aaDusfergonEnch7
+
+			ModNthEffectItemMagnitude Magnitude ench EnchIter
+			ModNthEffectItemArea Area ench EnchIter
+			ModNthEffectItemDuration Duration ench EnchIter
+
+			Set Cost to ( Cost + aaDusfergonInit.fCOMMCostMult + aaDusfergonInit.fCOMMCostMult + aaDusfergonInit.fRALYCostMult )
+					
+		endif
+
+	;-----------------------------------------------------------------------------
+	;Increment Corruption option
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonEnch == 8 )
+	;-----------------------------------------------------------------------------
+		Set aaDusfergonEnch8 to ( aaDusfergonEnch8 + 1 )
+
+		;-----------------------------------------------------------------------------
+		;Find the index of the effects
+		;-----------------------------------------------------------------------------
+		Set EnchIter to 0
+		While ( EnchIter < EnchIndex )
+
+			Let EffName := GetNthEffectItemName ench EnchIter
+					
+			if ( sv_Compare "Frenzy" EffName ) == 0
+						
+				break
+						
+			endif
+
+			Set EnchIter to ( EnchIter + 1 )	
+		loop
+
+		;-----------------------------------------------------------------------------
+		;Increment effects
+		;-----------------------------------------------------------------------------
+		if ( EnchIter != EnchIndex )
+
+			;-----------------------------------------------------------------------------
+			;Frenzy
+			;-----------------------------------------------------------------------------
+			Set Magnitude to Call aaDusfergonIncrVal aaDusfergonInit.fFRNZMagnMult aaDusfergonEnch8
+			Set Area to Call aaDusfergonIncrVal aaDusfergonInit.fFRNZAreaMult aaDusfergonEnch8
+			Set Duration to Call aaDusfergonIncrVal aaDusfergonInit.fFRNZDuraMult aaDusfergonEnch8
+
+			ModNthEffectItemMagnitude Magnitude ench EnchIter
+			ModNthEffectItemArea Area ench EnchIter
+			ModNthEffectItemDuration Duration ench EnchIter
+					
+			;-----------------------------------------------------------------------------
+			;Light
+			;-----------------------------------------------------------------------------
+			Set EnchIter to ( EnchIter + 1 )
+
+			Set Magnitude to Call aaDusfergonIncrVal aaDusfergonInit.fLGHTMagnMult aaDusfergonEnch8
+			Set Area to Call aaDusfergonIncrVal aaDusfergonInit.fLGHTAreaMult aaDusfergonEnch8
+			Set Duration to Call aaDusfergonIncrVal aaDusfergonInit.fLGHTDuraMult aaDusfergonEnch8
+					
+			ModNthEffectItemMagnitude Magnitude ench EnchIter
+			ModNthEffectItemArea Area ench EnchIter
+			ModNthEffectItemDuration Duration ench EnchIter
+					
+			;-----------------------------------------------------------------------------
+			;Soul Trap
+			;-----------------------------------------------------------------------------
+			Set EnchIter to ( EnchIter + 1 )
+
+			Set Area to Call aaDusfergonIncrVal aaDusfergonInit.fSTRPAreaMult aaDusfergonEnch8
+			Set Duration to Call aaDusfergonIncrVal aaDusfergonInit.fSTRPDuraMult aaDusfergonEnch8
+
+			ModNthEffectItemArea Area ench EnchIter
+			ModNthEffectItemDuration Duration ench EnchIter
+
+			Set Cost to ( Cost + aaDusfergonInit.fFRNZCostMult + aaDusfergonInit.fLGHTCostMult + aaDusfergonInit.fSTRPCostMult )
+					
+		endif
+
+	;-----------------------------------------------------------------------------
+	;Increment Unbalance option
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonEnch == 9 )
+	;-----------------------------------------------------------------------------
+		Set aaDusfergonEnch9 to ( aaDusfergonEnch9 + 1 )
+
+		;-----------------------------------------------------------------------------
+		;Find the index of the effects
+		;-----------------------------------------------------------------------------
+		Set EnchIter to 0
+		While ( EnchIter < EnchIndex )
+
+			Let EffName := GetNthEffectItemName ench EnchIter
+			
+			if ( sv_Compare "Drain Agility" EffName ) == 0
+						
+				break
+						
+			endif
+
+			Set EnchIter to ( EnchIter + 1 )	
+		loop
+
+		;-----------------------------------------------------------------------------
+		;Increment effects
+		;-----------------------------------------------------------------------------
+		if ( EnchIter != EnchIndex )
+
+			;-----------------------------------------------------------------------------
+			;Drain Agility
+			;-----------------------------------------------------------------------------
+			Set Magnitude to Call aaDusfergonIncrVal aaDusfergonInit.fDRATMagnMult aaDusfergonEnch9
+			Set Area to Call aaDusfergonIncrVal aaDusfergonInit.fDRATAreaMult aaDusfergonEnch9
+			Set Duration to Call aaDusfergonIncrVal aaDusfergonInit.fDRATDuraMult aaDusfergonEnch9
+
+			ModNthEffectItemMagnitude Magnitude ench EnchIter
+			ModNthEffectItemArea Area ench EnchIter
+			ModNthEffectItemDuration Duration ench EnchIter
+					
+			;-----------------------------------------------------------------------------
+			;Damage Fatigue
+			;-----------------------------------------------------------------------------
+			Set EnchIter to ( EnchIndex - 2 )
+
+			Set Magnitude to Call aaDusfergonIncrVal aaDusfergonInit.fDGFAMagnMult aaDusfergonEnch9
+			Set Area to Call aaDusfergonIncrVal aaDusfergonInit.fDGFAAreaMult aaDusfergonEnch9
+			Set Duration to Call aaDusfergonIncrVal aaDusfergonInit.fDGFADuraMult aaDusfergonEnch9
+
+			ModNthEffectItemMagnitude Magnitude ench EnchIter
+			ModNthEffectItemArea Area ench EnchIter
+			ModNthEffectItemDuration Duration ench EnchIter
+					
+			;-----------------------------------------------------------------------------
+			;Weakness to Magic
+			;-----------------------------------------------------------------------------
+			Set EnchIter to ( EnchIndex - 1 )
+
+			Set Magnitude to Call aaDusfergonIncrVal aaDusfergonInit.fWKMAMagnMult aaDusfergonEnch9
+			Set Area to Call aaDusfergonIncrVal aaDusfergonInit.fWKMAAreaMult aaDusfergonEnch9
+			Set Duration to Call aaDusfergonIncrVal aaDusfergonInit.fWKMADuraMult aaDusfergonEnch9
+
+			ModNthEffectItemMagnitude Magnitude ench EnchIter
+			ModNthEffectItemArea Area ench EnchIter
+			ModNthEffectItemDuration Duration ench EnchIter
+
+			Set Cost to ( Cost + aaDusfergonInit.fDRATCostMult + aaDusfergonInit.fDGFACostMult + aaDusfergonInit.fWKMACostMult )
+					
+		endif
+
+	;-----------------------------------------------------------------------------
+	;Increment Siphon option
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonEnch == 10 )
+	;-----------------------------------------------------------------------------
+		Set aaDusfergonEnch10 to ( aaDusfergonEnch10 + 1 )
+
+		;-----------------------------------------------------------------------------
+		;Find the index of the effects
+		;-----------------------------------------------------------------------------
+		Set EnchIter to 0
+		While ( EnchIter < EnchIndex )
+
+			Let EffName := GetNthEffectItemName ench EnchIter
+			
+			if ( sv_Compare "Absorb Fatigue" EffName ) == 0
+						
+				break
+						
+			endif
+
+			Set EnchIter to ( EnchIter + 1 )	
+		loop
+
+		;-----------------------------------------------------------------------------
+		;Increment effects
+		;-----------------------------------------------------------------------------
+		if ( EnchIter != EnchIndex )
+
+			;-----------------------------------------------------------------------------
+			;Absorb Fatigue
+			;-----------------------------------------------------------------------------
+			Set Magnitude to Call aaDusfergonIncrVal aaDusfergonInit.fABFAMagnMult aaDusfergonEnch10
+			Set Area to Call aaDusfergonIncrVal aaDusfergonInit.fABFAAreaMult aaDusfergonEnch10
+			Set Duration to Call aaDusfergonIncrVal aaDusfergonInit.fABFADuraMult aaDusfergonEnch10
+
+			ModNthEffectItemMagnitude Magnitude ench EnchIter
+			ModNthEffectItemArea Area ench EnchIter
+			ModNthEffectItemDuration Duration ench EnchIter
+					
+			;-----------------------------------------------------------------------------
+			;Absorb Health
+			;-----------------------------------------------------------------------------
+			Set EnchIter to ( EnchIter + 1 )
+
+			Set Magnitude to Call aaDusfergonIncrVal aaDusfergonInit.fABHEMagnMult aaDusfergonEnch10
+			Set Area to Call aaDusfergonIncrVal aaDusfergonInit.fABHEAreaMult aaDusfergonEnch10
+			Set Duration to Call aaDusfergonIncrVal aaDusfergonInit.fABHEDuraMult aaDusfergonEnch10
+
+			ModNthEffectItemMagnitude Magnitude ench EnchIter
+			ModNthEffectItemArea Area ench EnchIter
+			ModNthEffectItemDuration Duration ench EnchIter		
+					
+			;-----------------------------------------------------------------------------
+			;Absorb Magicka
+			;-----------------------------------------------------------------------------
+			Set EnchIter to ( EnchIter + 1 )
+
+			Set Magnitude to Call aaDusfergonIncrVal aaDusfergonInit.fABSPMagnMult aaDusfergonEnch10
+			Set Area to Call aaDusfergonIncrVal aaDusfergonInit.fABSPAreaMult aaDusfergonEnch10
+			Set Duration to Call aaDusfergonIncrVal aaDusfergonInit.fABSPDuraMult aaDusfergonEnch10
+
+			ModNthEffectItemMagnitude Magnitude ench EnchIter
+			ModNthEffectItemArea Area ench EnchIter
+			ModNthEffectItemDuration Duration ench EnchIter
+
+			Set Cost to ( Cost + aaDusfergonInit.fABFACostMult + aaDusfergonInit.fABHECostMult + aaDusfergonInit.fABSPCostMult )
+					
+		endif
+
+	;-----------------------------------------------------------------------------
+	endif ;( aaDusfergonEnch != 0 )
+	;-----------------------------------------------------------------------------
+
+
+	SetEnchantmentCost Cost Ench	
+
+	SetFunctionValue Cost
+	Return
+;-----------------------------------------------------------------------------
+end ;Function { Ench, Cost }
+;-----------------------------------------------------------------------------
