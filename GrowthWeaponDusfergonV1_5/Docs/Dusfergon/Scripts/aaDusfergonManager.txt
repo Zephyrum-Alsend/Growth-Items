@@ -8,6 +8,7 @@ float MenuLag
 ;aaDusfergonManager
 ;aaDusfergonObject
 ;aaDusfergonObjectB
+;aaDusfergonBreak
 ;aaDusfergonOnHit
 ;aaDusfergonOnBowHit
 ;aaDusfergonOnArrowHit
@@ -19,6 +20,7 @@ float MenuLag
 ;aaDusfergonEnchSlct
 ;aaDusfergonEnchLvl
 ;aaDusfergonEnchDisplay
+;aaDusfergonSwap
 ;aaDusfergonSetModel
 ;aaDusfergonSetModel2
 ;aaDusfergonRandomModel
@@ -27,6 +29,7 @@ float MenuLag
 ;aaDusfergonIncrVal
 ;aaDusfergonLevelMessage
 ;aaDusfergonOnEnchant
+;aaDusfergonOnSigilStone
 ;-----------------------------------------------------------------------------
 
 ;Related globals
