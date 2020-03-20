@@ -1,0 +1,151 @@
+scn aaDusfergonModelToC
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;aaDusfergonManager
+;aaDusfergonModelPage
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;Given the model change menu's index and the option chosen, redirect Manager
+;to the appropriate sub-type menu page.
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+short ModelChange ;Return value
+short Button
+;-----------------------------------------------------------------------------
+
+;-----------------------------------------------------------------------------
+begin Function { ModelChange, Button }
+;-----------------------------------------------------------------------------
+
+	;-----------------------------------------------------------------------------
+	if ( Button == 1 )
+	;-----------------------------------------------------------------------------
+
+		;Back to type select
+		Set ModelChange to 1
+		Set aaDusfergonInit.Button to -1
+
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 3000 )
+	;-----------------------------------------------------------------------------
+
+		;Claymore pages
+		if ( Button == 2 )
+
+			Set ModelChange to 3100
+
+		;Bastard2H pages
+		elseif ( Button == 3 )
+
+			Set ModelChange to 3200
+
+		endif
+		
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 4000 )
+	;-----------------------------------------------------------------------------
+
+		;Bastard1H pages
+		if ( Button == 2 )
+
+			Set ModelChange to 4100
+
+		;Longsword pages
+		elseif ( Button == 3 )
+
+			Set ModelChange to 4200
+
+		;Longsword II pages
+		elseif ( Button == 4 )
+
+			Set ModelChange to 4210
+
+		;Shortsword pages
+		elseif ( Button == 5 )
+
+			Set ModelChange to 4300
+
+		;Shortsword II pages
+		elseif ( Button == 6 )
+
+			Set ModelChange to 4310
+
+		;Dagger pages
+		elseif ( Button == 7 )
+
+			Set ModelChange to 4400
+
+		;Dagger II pages
+		elseif ( Button == 8 )
+
+			Set ModelChange to 4410
+
+		endif
+		
+	;-----------------------------------------------------------------------------		
+	elseif ( ModelChange == 5000 )
+	;-----------------------------------------------------------------------------
+
+		;Warhammer pages
+		if ( Button == 2 )
+
+			Set ModelChange to 5100
+
+		;Battleaxe pages
+		elseif ( Button == 3 )
+
+			Set ModelChange to 5200
+
+		endif
+		
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 6000 )
+	;-----------------------------------------------------------------------------
+
+		;Mace pages
+		if ( Button == 2 )
+
+			Set ModelChange to 6100
+
+		;Waraxe pages
+		elseif ( Button == 3 )
+
+			Set ModelChange to 6200
+
+		endif
+		
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 7000 )
+	;-----------------------------------------------------------------------------
+
+		;Bow pages
+		if ( Button == 2 )
+
+			Set ModelChange to 7100
+
+		;Bow II pages
+		elseif ( Button == 3 )
+
+			Set ModelChange to 7110
+
+		endif
+		
+	;-----------------------------------------------------------------------------
+	endif ;if ( Button == 1 || ModelChange == 3000 || ModelChange == 4000 || ModelChange == 5000 || ModelChange == 6000 || ModelChange == 7000 )
+	;-----------------------------------------------------------------------------
+
+	
+	SetFunctionValue ModelChange
+	Return
+;-----------------------------------------------------------------------------
+end ;Function { ModelChange, Button }
+;-----------------------------------------------------------------------------

@@ -25,6 +25,8 @@ float MenuLag
 ;aaDusfergonSetModel2
 ;aaDusfergonRandomModel
 ;aaDusfergonShowModelName
+;aaDusfergonModelPage
+;aaDusfergonModelToC
 ;aaDusfergonCalcXPReq
 ;aaDusfergonIncrVal
 ;aaDusfergonLevelMessage
@@ -561,7 +563,7 @@ begin GameMode
 		;If there is an enchantment, apply it after calcing Charge
 		if ( GetMagicItemEffectCount ench > 0 )
 
-			Set Charge to lChargeBase + ( fChargeMult * ( aaDusfergonLevel - 1 ) )
+			Set Charge to lChargeBase + ( fChargeMult * ( aaDusfergonLevel - sEnchStart ) )
 			SetObjectCharge Charge self
 
 			SetEnchantment ench self
@@ -732,7 +734,7 @@ begin GameMode
 			Set Cost to Call aaDusfergonEnchLvl Ench Cost
 
 			;Set Charge
-			Set Charge to lChargeBase + ( fChargeMult * ( aaDusfergonLevel - 1 ) )
+			Set Charge to lChargeBase + ( fChargeMult * ( aaDusfergonLevel - sEnchStart ) )
 			SetObjectCharge Charge self
 
 		endif
@@ -774,7 +776,7 @@ begin GameMode
 
 		if ( GetMagicItemEffectCount ench > 0 )
 
-			Set Charge to lChargeBase + ( fChargeMult * ( aaDusfergonLevel - 1 ) )
+			Set Charge to lChargeBase + ( fChargeMult * ( aaDusfergonLevel - sEnchStart ) )
 			SetObjectCharge Charge self
 
 			SetEnchantment ench self
@@ -1008,35 +1010,17 @@ begin MenuMode 1002 ;Inventory
 
 
 
+	;-----------------------------------------------------------------------------
+	;Redirect to appropriate sub-type menu
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 3000 || ModelChange == 4000 || ModelChange == 5000 || ModelChange == 6000 || ModelChange == 7000 ) && ( Button > -1 )
+
+		Set ModelChange to Call aaDusfergonModelToC ModelChange Button
 		
-	;-----------------------------------------------------------------------------
-	;Choose specific weapon model
-	;-----------------------------------------------------------------------------
-	;2H Blades
-	;-----------------------------------------------------------------------------
-	elseif ( ModelChange == 3000 && Button > -1 )
-
-		;Go back to type select
-		if ( Button == 1 )
-
-			Set ModelChange to 1
-			Set Button to -1
-
-		;Claymore pages
-		elseif ( Button == 2 )
-
-			Set ModelChange to 3100
-
-		;Bastard2h pages
-		elseif ( Button == 3 )
-
-			Set ModelChange to 3200
-
-		endif
 
 
 
-		
+
 	;-----------------------------------------------------------------------------
 	;Claymore pg1
 	;-----------------------------------------------------------------------------
@@ -1048,24 +1032,7 @@ begin MenuMode 1002 ;Inventory
 
 	elseif ( ModelChange == 3101 && Button > -1 )
 
-		;Back to 2H - Blade sub-type select
-		if ( Button == 1 )
-
-			Set ModelChange to 2
-			Set Button to 1
-
-		;Next Claymore page
-		elseif ( Button == 9 )
-
-			Set ModelChange to 3102
-
-		;Selected a model
-		else
-
-			Set IndexOffset to ClaymoreIdx
-			Set ModelChange to 100
-
-		endif
+		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 0 ClaymoreIdx
 
 	;-----------------------------------------------------------------------------
 	;Claymore pg2
@@ -1078,23 +1045,7 @@ begin MenuMode 1002 ;Inventory
 
 	elseif ( ModelChange == 3103 && Button > -1 )
 
-		;Previous Claymore page
-		if ( Button == 1 )
-
-			Set ModelChange to 3100
-
-		;Next Claymore page
-		elseif ( Button == 9 )
-
-			Set ModelChange to 3104
-
-		;Selected a model
-		else
-
-			Set IndexOffset to ClaymoreIdx + 7
-			Set ModelChange to 100
-
-		endif
+		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 1 ClaymoreIdx
 
 	;-----------------------------------------------------------------------------
 	;Claymore pg3
@@ -1107,23 +1058,7 @@ begin MenuMode 1002 ;Inventory
 
 	elseif ( ModelChange == 3105 && Button > -1 )
 
-		;Previous Claymore page
-		if ( Button == 1 )
-
-			Set ModelChange to 3102
-
-		;Next Claymore page
-		elseif ( Button == 9 )
-
-			Set ModelChange to 3106
-
-		;Selected a model
-		else
-
-			Set IndexOffset to ClaymoreIdx + 14
-			Set ModelChange to 100
-
-		endif
+		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 2 ClaymoreIdx
 
 	;-----------------------------------------------------------------------------
 	;Claymore pg4
@@ -1136,23 +1071,8 @@ begin MenuMode 1002 ;Inventory
 
 	elseif ( ModelChange == 3107 && Button > -1 )
 
-		;Previous Claymore page
-		if ( Button == 1 )
+		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 3 ClaymoreIdx
 
-			Set ModelChange to 3104
-
-		;Next Claymore page
-		;elseif ( Button == 9 )
-
-			;Set ModelChange to 3108
-
-		;Selected a model
-		else
-
-			Set IndexOffset to ClaymoreIdx + 21
-			Set ModelChange to 100
-
-		endif
 
 
 
@@ -1168,25 +1088,8 @@ begin MenuMode 1002 ;Inventory
 
 	elseif ( ModelChange == 3201 && Button > -1 )
 
-		;Back to 2H - Blade sub-type select
-		if ( Button == 1 )
-
-			Set ModelChange to 2
-			Set Button to 1
-
-		;Next Bastard2h page
-		elseif ( Button == 9 )
-
-			Set ModelChange to 3202
-
-		;Selected a model
-		else
-
-			Set IndexOffset to Bastard2hIdx
-			Set ModelChange to 100
-
-		endif
-
+		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 0 Bastard2hIdx
+		
 	;-----------------------------------------------------------------------------
 	;Bastard2h pg2
 	;-----------------------------------------------------------------------------
@@ -1198,23 +1101,7 @@ begin MenuMode 1002 ;Inventory
 
 	elseif ( ModelChange == 3203 && Button > -1 )
 
-		;Previous Bastard2h page
-		if ( Button == 1 )
-
-			Set ModelChange to 3200
-
-		;Next Bastard2h page
-		elseif ( Button == 9 )
-
-			Set ModelChange to 3204
-
-		;Selected a model
-		else
-
-			Set IndexOffset to Bastard2hIdx + 7
-			Set ModelChange to 100
-
-		endif
+		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 1 Bastard2hIdx
 
 	;-----------------------------------------------------------------------------
 	;Bastard2h pg3
@@ -1227,23 +1114,7 @@ begin MenuMode 1002 ;Inventory
 
 	elseif ( ModelChange == 3205 && Button > -1 )
 
-		;Previous Bastard2h page
-		if ( Button == 1 )
-
-			Set ModelChange to 3202
-
-		;Next Bastard2h page
-		elseif ( Button == 9 )
-
-			Set ModelChange to 3206
-
-		;Selected a model
-		else
-
-			Set IndexOffset to Bastard2hIdx + 14
-			Set ModelChange to 100
-
-		endif
+		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 2 Bastard2hIdx
 
 	;-----------------------------------------------------------------------------
 	;Bastard2h pg4
@@ -1256,76 +1127,9 @@ begin MenuMode 1002 ;Inventory
 
 	elseif ( ModelChange == 3207 && Button > -1 )
 
-		;Previous Bastard2h page
-		if ( Button == 1 )
-
-			Set ModelChange to 3204
-
-		;Next Bastard2h page
-		;elseif ( Button == 9 )
-
-			;Set ModelChange to 3208
-
-		;Selected a model
-		else
-
-			Set IndexOffset to Bastard2hIdx + 21
-			Set ModelChange to 100
-
-		endif
+		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 3 Bastard2hIdx
 
 
-
-
-
-		
-	;-----------------------------------------------------------------------------
-	;1H Blades
-	;-----------------------------------------------------------------------------
-	elseif ( ModelChange == 4000 && Button > -1 )
-
-		;Go back to type select
-		if ( Button == 1 )
-
-			Set ModelChange to 1
-			Set Button to -1
-
-		;Bastard1h pages
-		elseif ( Button == 2 )
-
-			Set ModelChange to 4100
-
-		;Longsword pages
-		elseif ( Button == 3 )
-
-			Set ModelChange to 4200
-
-		;Longsword II pages
-		elseif ( Button == 4 )
-
-			Set ModelChange to 4210
-
-		;Shortsword pages
-		elseif ( Button == 5 )
-
-			Set ModelChange to 4300
-
-		;Shortsword II pages
-		elseif ( Button == 6 )
-
-			Set ModelChange to 4310
-
-		;Dagger pages
-		elseif ( Button == 7 )
-
-			Set ModelChange to 4400
-
-		;Dagger II pages
-		elseif ( Button == 8 )
-
-			Set ModelChange to 4410
-
-		endif
 
 
 
@@ -1341,24 +1145,7 @@ begin MenuMode 1002 ;Inventory
 
 	elseif ( ModelChange == 4101 && Button > -1 )
 
-		;Back to 1H - Blade sub-type select
-		if ( Button == 1 )
-
-			Set ModelChange to 2
-			Set Button to 2
-
-		;Next Bastard1h page
-		elseif ( Button == 9 )
-
-			Set ModelChange to 4102
-
-		;Selected a model
-		else
-
-			Set IndexOffset to Bastard1hIdx
-			Set ModelChange to 100
-
-		endif
+		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 0 Bastard1hIdx
 
 	;-----------------------------------------------------------------------------
 	;Bastard1h pg2
@@ -1371,23 +1158,7 @@ begin MenuMode 1002 ;Inventory
 
 	elseif ( ModelChange == 4103 && Button > -1 )
 
-		;Previous Bastard1h page
-		if ( Button == 1 )
-
-			Set ModelChange to 4100
-
-		;Next Bastard1h page
-		elseif ( Button == 9 )
-
-			Set ModelChange to 4104
-
-		;Selected a model
-		else
-
-			Set IndexOffset to Bastard1hIdx + 7
-			Set ModelChange to 100
-
-		endif
+		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 1 Bastard1hIdx
 
 	;-----------------------------------------------------------------------------
 	;Bastard1h pg3
@@ -1400,23 +1171,7 @@ begin MenuMode 1002 ;Inventory
 
 	elseif ( ModelChange == 4105 && Button > -1 )
 
-		;Previous Bastard1h page
-		if ( Button == 1 )
-
-			Set ModelChange to 4102
-
-		;Next Bastard1h page
-		elseif ( Button == 9 )
-
-			Set ModelChange to 4106
-
-		;Selected a model
-		else
-
-			Set IndexOffset to Bastard1hIdx + 14
-			Set ModelChange to 100
-
-		endif
+		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 2 Bastard1hIdx
 
 	;-----------------------------------------------------------------------------
 	;Bastard2h pg4
@@ -1429,23 +1184,7 @@ begin MenuMode 1002 ;Inventory
 
 	elseif ( ModelChange == 4107 && Button > -1 )
 
-		;Previous Bastard2h page
-		if ( Button == 1 )
-
-			Set ModelChange to 4104
-
-		;Next Bastard2h page
-		;elseif ( Button == 9 )
-
-			;Set ModelChange to 4108
-
-		;Selected a model
-		else
-
-			Set IndexOffset to Bastard1hIdx + 21
-			Set ModelChange to 100
-
-		endif
+		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 3 Bastard1hIdx
 
 
 
@@ -1461,24 +1200,7 @@ begin MenuMode 1002 ;Inventory
 
 	elseif ( ModelChange == 4201 && Button > -1 )
 
-		;Back to 1H - Blade sub-type select
-		if ( Button == 1 )
-
-			Set ModelChange to 2
-			Set Button to 2
-
-		;Next Longsword page
-		elseif ( Button == 9 )
-
-			Set ModelChange to 4202
-
-		;Selected a model
-		else
-
-			Set IndexOffset to LongswordIdx
-			Set ModelChange to 100
-
-		endif
+		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 0 LongswordIdx
 
 	;-----------------------------------------------------------------------------
 	;Longsword pg2
@@ -1491,23 +1213,7 @@ begin MenuMode 1002 ;Inventory
 
 	elseif ( ModelChange == 4203 && Button > -1 )
 
-		;Previous Longsword page
-		if ( Button == 1 )
-
-			Set ModelChange to 4200
-
-		;Next Longsword page
-		elseif ( Button == 9 )
-
-			Set ModelChange to 4204
-
-		;Selected a model
-		else
-
-			Set IndexOffset to LongswordIdx + 7
-			Set ModelChange to 100
-
-		endif
+		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 1 LongswordIdx
 
 	;-----------------------------------------------------------------------------
 	;Longsword pg3
@@ -1520,23 +1226,7 @@ begin MenuMode 1002 ;Inventory
 
 	elseif ( ModelChange == 4205 && Button > -1 )
 
-		;Previous Longsword page
-		if ( Button == 1 )
-
-			Set ModelChange to 4202
-
-		;Next Longsword page
-		elseif ( Button == 9 )
-
-			Set ModelChange to 4206
-
-		;Selected a model
-		else
-
-			Set IndexOffset to LongswordIdx + 14
-			Set ModelChange to 100
-
-		endif
+		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 2 LongswordIdx
 
 	;-----------------------------------------------------------------------------
 	;Longsword pg4
@@ -1549,23 +1239,7 @@ begin MenuMode 1002 ;Inventory
 
 	elseif ( ModelChange == 4207 && Button > -1 )
 
-		;Previous Longsword page
-		if ( Button == 1 )
-
-			Set ModelChange to 4204
-
-		;Next Longsword page
-		elseif ( Button == 9 )
-
-			Set ModelChange to 4208
-
-		;Selected a model
-		else
-
-			Set IndexOffset to LongswordIdx + 21
-			Set ModelChange to 100
-
-		endif
+		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 3 LongswordIdx
 
 	;-----------------------------------------------------------------------------
 	;Longsword pg5
@@ -1578,23 +1252,7 @@ begin MenuMode 1002 ;Inventory
 
 	elseif ( ModelChange == 4209 && Button > -1 )
 
-		;Previous Longsword page
-		if ( Button == 1 )
-
-			Set ModelChange to 4206
-
-		;Next Longsword page
-;		elseif ( Button == 9 )
-
-;			Set ModelChange to 4210
-
-		;Selected a model
-		else
-
-			Set IndexOffset to LongswordIdx + 28
-			Set ModelChange to 100
-
-		endif
+		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 4 LongswordIdx
 
 	;-----------------------------------------------------------------------------
 	;Longsword II pg1
@@ -1607,24 +1265,7 @@ begin MenuMode 1002 ;Inventory
 
 	elseif ( ModelChange == 4211 && Button > -1 )
 
-		;Back to 1H - Blade sub-type select
-		if ( Button == 1 )
-
-			Set ModelChange to 2
-			Set Button to 2
-
-		;Next Longsword page
-		elseif ( Button == 9 )
-
-			Set ModelChange to 4212
-
-		;Selected a model
-		else
-
-			Set IndexOffset to LongswordIdx + 35
-			Set ModelChange to 100
-
-		endif
+		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 0 LongswordIdx+35
 
 	;-----------------------------------------------------------------------------
 	;Longsword II pg2
@@ -1637,23 +1278,7 @@ begin MenuMode 1002 ;Inventory
 
 	elseif ( ModelChange == 4213 && Button > -1 )
 
-		;Previous Longsword page
-		if ( Button == 1 )
-
-			Set ModelChange to 4210
-
-		;Next Longsword page
-		elseif ( Button == 9 )
-
-			Set ModelChange to 4214
-
-		;Selected a model
-		else
-
-			Set IndexOffset to LongswordIdx + 42
-			Set ModelChange to 100
-
-		endif
+		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 1 LongswordIdx+35
 
 	;-----------------------------------------------------------------------------
 	;Longsword II pg3
@@ -1666,23 +1291,7 @@ begin MenuMode 1002 ;Inventory
 
 	elseif ( ModelChange == 4215 && Button > -1 )
 
-		;Previous Longsword page
-		if ( Button == 1 )
-
-			Set ModelChange to 4212
-
-		;Next Longsword page
-		elseif ( Button == 9 )
-
-			Set ModelChange to 4216
-
-		;Selected a model
-		else
-
-			Set IndexOffset to LongswordIdx + 49
-			Set ModelChange to 100
-
-		endif
+		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 2 LongswordIdx+35
 
 	;-----------------------------------------------------------------------------
 	;Longsword II pg4
@@ -1695,23 +1304,7 @@ begin MenuMode 1002 ;Inventory
 
 	elseif ( ModelChange == 4217 && Button > -1 )
 
-		;Previous Longsword page
-		if ( Button == 1 )
-
-			Set ModelChange to 4214
-
-		;Next Longsword page
-		elseif ( Button == 9 )
-
-			Set ModelChange to 4218
-
-		;Selected a model
-		else
-
-			Set IndexOffset to LongswordIdx + 56
-			Set ModelChange to 100
-
-		endif
+		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 3 LongswordIdx+35
 
 	;-----------------------------------------------------------------------------
 	;Longsword II pg5
@@ -1724,23 +1317,7 @@ begin MenuMode 1002 ;Inventory
 
 	elseif ( ModelChange == 4219 && Button > -1 )
 
-		;Previous Longsword page
-		if ( Button == 1 )
-
-			Set ModelChange to 4216
-
-		;Next Longsword page
-;		elseif ( Button == 9 )
-
-;			Set ModelChange to 4218
-
-		;Selected a model
-		else
-
-			Set IndexOffset to LongswordIdx + 63
-			Set ModelChange to 100
-
-		endif
+		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 4 LongswordIdx+35
 
 
 
@@ -1756,24 +1333,7 @@ begin MenuMode 1002 ;Inventory
 
 	elseif ( ModelChange == 4301 && Button > -1 )
 
-		;Back to 1H - Blade sub-type select
-		if ( Button == 1 )
-
-			Set ModelChange to 2
-			Set Button to 2
-
-		;Next Shortsword page
-		elseif ( Button == 9 )
-
-			Set ModelChange to 4302
-
-		;Selected a model
-		else
-
-			Set IndexOffset to ShortswordIdx
-			Set ModelChange to 100
-
-		endif
+		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 0 ShortswordIdx
 
 	;-----------------------------------------------------------------------------
 	;Shortsword pg2
@@ -1786,23 +1346,7 @@ begin MenuMode 1002 ;Inventory
 
 	elseif ( ModelChange == 4303 && Button > -1 )
 
-		;Previous Shortsword page
-		if ( Button == 1 )
-
-			Set ModelChange to 4300
-
-		;Next Shortsword page
-		elseif ( Button == 9 )
-
-			Set ModelChange to 4304
-
-		;Selected a model
-		else
-
-			Set IndexOffset to ShortswordIdx + 7
-			Set ModelChange to 100
-
-		endif
+		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 1 ShortswordIdx
 
 	;-----------------------------------------------------------------------------
 	;Shortsword pg3
@@ -1815,23 +1359,7 @@ begin MenuMode 1002 ;Inventory
 
 	elseif ( ModelChange == 4305 && Button > -1 )
 
-		;Previous Shortsword page
-		if ( Button == 1 )
-
-			Set ModelChange to 4302
-
-		;Next Shortsword page
-		elseif ( Button == 9 )
-
-			Set ModelChange to 4306
-
-		;Selected a model
-		else
-
-			Set IndexOffset to ShortswordIdx + 14
-			Set ModelChange to 100
-
-		endif
+		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 2 ShortswordIdx
 
 	;-----------------------------------------------------------------------------
 	;Shortsword pg4
@@ -1844,23 +1372,7 @@ begin MenuMode 1002 ;Inventory
 
 	elseif ( ModelChange == 4307 && Button > -1 )
 
-		;Previous Shortsword page
-		if ( Button == 1 )
-
-			Set ModelChange to 4304
-
-		;Next Shortsword page
-		elseif ( Button == 9 )
-
-			Set ModelChange to 4308
-
-		;Selected a model
-		else
-
-			Set IndexOffset to ShortswordIdx + 21
-			Set ModelChange to 100
-
-		endif
+		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 3 ShortswordIdx
 
 	;-----------------------------------------------------------------------------
 	;Shortsword pg5
@@ -1873,23 +1385,7 @@ begin MenuMode 1002 ;Inventory
 
 	elseif ( ModelChange == 4309 && Button > -1 )
 
-		;Previous Shortsword page
-		if ( Button == 1 )
-
-			Set ModelChange to 4306
-
-		;Next Shortsword page
-;		elseif ( Button == 9 )
-
-;			Set ModelChange to 4310
-
-		;Selected a model
-		else
-
-			Set IndexOffset to ShortswordIdx + 28
-			Set ModelChange to 100
-
-		endif
+		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 4 ShortswordIdx
 
 	;-----------------------------------------------------------------------------
 	;Shortsword II pg1
@@ -1902,24 +1398,7 @@ begin MenuMode 1002 ;Inventory
 
 	elseif ( ModelChange == 4311 && Button > -1 )
 
-		;Back to 1H - Blade sub-type select
-		if ( Button == 1 )
-
-			Set ModelChange to 2
-			Set Button to 2
-
-		;Next Shortsword page
-		elseif ( Button == 9 )
-
-			Set ModelChange to 4312
-
-		;Selected a model
-		else
-
-			Set IndexOffset to ShortswordIdx + 35
-			Set ModelChange to 100
-
-		endif
+		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 0 ShortswordIdx+35
 
 	;-----------------------------------------------------------------------------
 	;Shortsword II pg2
@@ -1932,23 +1411,7 @@ begin MenuMode 1002 ;Inventory
 
 	elseif ( ModelChange == 4313 && Button > -1 )
 
-		;Previous Shortsword page
-		if ( Button == 1 )
-
-			Set ModelChange to 4310
-
-		;Next Shortsword page
-		elseif ( Button == 9 )
-
-			Set ModelChange to 4314
-
-		;Selected a model
-		else
-
-			Set IndexOffset to ShortswordIdx + 42
-			Set ModelChange to 100
-
-		endif
+		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 1 ShortswordIdx+35
 
 	;-----------------------------------------------------------------------------
 	;Shortsword II pg3
@@ -1961,23 +1424,7 @@ begin MenuMode 1002 ;Inventory
 
 	elseif ( ModelChange == 4315 && Button > -1 )
 
-		;Previous Shortsword page
-		if ( Button == 1 )
-
-			Set ModelChange to 4312
-
-		;Next Shortsword page
-		elseif ( Button == 9 )
-
-			Set ModelChange to 4316
-
-		;Selected a model
-		else
-
-			Set IndexOffset to ShortswordIdx + 49
-			Set ModelChange to 100
-
-		endif
+		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 2 ShortswordIdx+35
 
 	;-----------------------------------------------------------------------------
 	;Shortsword II pg4
@@ -1990,23 +1437,7 @@ begin MenuMode 1002 ;Inventory
 
 	elseif ( ModelChange == 4317 && Button > -1 )
 
-		;Previous Shortsword page
-		if ( Button == 1 )
-
-			Set ModelChange to 4314
-
-		;Next Shortsword page
-;		elseif ( Button == 9 )
-
-;			Set ModelChange to 4318
-
-		;Selected a model
-		else
-
-			Set IndexOffset to ShortswordIdx + 56
-			Set ModelChange to 100
-
-		endif
+		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 3 ShortswordIdx+35
 
 
 
@@ -2022,24 +1453,7 @@ begin MenuMode 1002 ;Inventory
 
 	elseif ( ModelChange == 4401 && Button > -1 )
 
-		;Back to 1H - Blade sub-type select
-		if ( Button == 1 )
-
-			Set ModelChange to 2
-			Set Button to 2
-
-		;Next Dagger page
-		elseif ( Button == 9 )
-
-			Set ModelChange to 4402
-
-		;Selected a model
-		else
-
-			Set IndexOffset to DaggerIdx
-			Set ModelChange to 100
-
-		endif
+		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 0 DaggerIdx
 
 	;-----------------------------------------------------------------------------
 	;Dagger pg2
@@ -2052,23 +1466,7 @@ begin MenuMode 1002 ;Inventory
 
 	elseif ( ModelChange == 4403 && Button > -1 )
 
-		;Previous Dagger page
-		if ( Button == 1 )
-
-			Set ModelChange to 4400
-
-		;Next Dagger page
-		elseif ( Button == 9 )
-
-			Set ModelChange to 4404
-
-		;Selected a model
-		else
-
-			Set IndexOffset to DaggerIdx + 7
-			Set ModelChange to 100
-
-		endif
+		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 1 DaggerIdx
 
 	;-----------------------------------------------------------------------------
 	;Dagger pg3
@@ -2081,23 +1479,7 @@ begin MenuMode 1002 ;Inventory
 
 	elseif ( ModelChange == 4405 && Button > -1 )
 
-		;Previous Dagger page
-		if ( Button == 1 )
-
-			Set ModelChange to 4402
-
-		;Next Dagger page
-		elseif ( Button == 9 )
-
-			Set ModelChange to 4406
-
-		;Selected a model
-		else
-
-			Set IndexOffset to DaggerIdx + 14
-			Set ModelChange to 100
-
-		endif
+		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 2 DaggerIdx
 
 	;-----------------------------------------------------------------------------
 	;Dagger pg4
@@ -2110,23 +1492,7 @@ begin MenuMode 1002 ;Inventory
 
 	elseif ( ModelChange == 4407 && Button > -1 )
 
-		;Previous Dagger page
-		if ( Button == 1 )
-
-			Set ModelChange to 4404
-
-		;Next Dagger page
-		elseif ( Button == 9 )
-
-			Set ModelChange to 4408
-
-		;Selected a model
-		else
-
-			Set IndexOffset to DaggerIdx + 21
-			Set ModelChange to 100
-
-		endif
+		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 3 DaggerIdx
 
 	;-----------------------------------------------------------------------------
 	;Dagger pg5
@@ -2139,23 +1505,7 @@ begin MenuMode 1002 ;Inventory
 
 	elseif ( ModelChange == 4409 && Button > -1 )
 
-		;Previous Dagger page
-		if ( Button == 1 )
-
-			Set ModelChange to 4406
-
-		;Next Dagger page
-;		elseif ( Button == 9 )
-
-;			Set ModelChange to 4410
-
-		;Selected a model
-		else
-
-			Set IndexOffset to DaggerIdx + 28
-			Set ModelChange to 100
-
-		endif
+		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 4 DaggerIdx
 
 	;-----------------------------------------------------------------------------
 	;Dagger II pg1
@@ -2168,24 +1518,7 @@ begin MenuMode 1002 ;Inventory
 
 	elseif ( ModelChange == 4411 && Button > -1 )
 
-		;Back to 1H - Blade sub-type select
-		if ( Button == 1 )
-
-			Set ModelChange to 2
-			Set Button to 2
-
-		;Next Dagger II page
-		elseif ( Button == 9 )
-
-			Set ModelChange to 4412
-
-		;Selected a model
-		else
-
-			Set IndexOffset to DaggerIdx + 35
-			Set ModelChange to 100
-
-		endif
+		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 0 DaggerIdx+35
 
 	;-----------------------------------------------------------------------------
 	;Dagger II pg2
@@ -2198,51 +1531,9 @@ begin MenuMode 1002 ;Inventory
 
 	elseif ( ModelChange == 4413 && Button > -1 )
 
-		;Previous Dagger page
-		if ( Button == 1 )
-
-			Set ModelChange to 4410
-
-		;Next Dagger II page
-;		elseif ( Button == 9 )
-
-;			Set ModelChange to 4414
-
-		;Selected a model
-		else
-
-			Set IndexOffset to DaggerIdx + 42
-			Set ModelChange to 100
-
-		endif
+		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 1 DaggerIdx+35
 
 
-
-
-
-		
-	;-----------------------------------------------------------------------------
-	;2H Blunts
-	;-----------------------------------------------------------------------------
-	elseif ( ModelChange == 5000 && Button > -1 )
-
-		;Go back to type select
-		if ( Button == 1 )
-
-			Set ModelChange to 1
-			Set Button to -1
-
-		;Warhammer pages
-		elseif ( Button == 2 )
-
-			Set ModelChange to 5100
-
-		;Battleaxe pages
-		elseif ( Button == 3 )
-
-			Set ModelChange to 5200
-
-		endif
 
 
 
@@ -2258,24 +1549,7 @@ begin MenuMode 1002 ;Inventory
 
 	elseif ( ModelChange == 5101 && Button > -1 )
 
-		;Back to 2H - Blunt sub-type select
-		if ( Button == 1 )
-
-			Set ModelChange to 2
-			Set Button to 3
-
-		;Next Warhammer page
-		elseif ( Button == 9 )
-
-			Set ModelChange to 5102
-
-		;Selected a model
-		else
-
-			Set IndexOffset to WarhammerIdx
-			Set ModelChange to 100
-
-		endif
+		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 0 WarhammerIdx
 
 	;-----------------------------------------------------------------------------
 	;Warhammer pg2
@@ -2288,23 +1562,7 @@ begin MenuMode 1002 ;Inventory
 
 	elseif ( ModelChange == 5103 && Button > -1 )
 
-		;Previous Warhammer page
-		if ( Button == 1 )
-
-			Set ModelChange to 5100
-
-		;Next Warhammer page
-		elseif ( Button == 9 )
-
-			Set ModelChange to 5104
-
-		;Selected a model
-		else
-
-			Set IndexOffset to WarhammerIdx + 7
-			Set ModelChange to 100
-
-		endif
+		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 1 WarhammerIdx
 
 	;-----------------------------------------------------------------------------
 	;Warhammer pg3
@@ -2317,23 +1575,7 @@ begin MenuMode 1002 ;Inventory
 
 	elseif ( ModelChange == 5105 && Button > -1 )
 
-		;Previous Warhammer page
-		if ( Button == 1 )
-
-			Set ModelChange to 5102
-
-		;Next Warhammer page
-		;elseif ( Button == 9 )
-
-			;Set ModelChange to 5106
-
-		;Selected a model
-		else
-
-			Set IndexOffset to WarhammerIdx + 14
-			Set ModelChange to 100
-
-		endif
+		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 2 WarhammerIdx
 
 
 
@@ -2349,24 +1591,7 @@ begin MenuMode 1002 ;Inventory
 
 	elseif ( ModelChange == 5201 && Button > -1 )
 
-		;Back to 2H - Blunt sub-type select
-		if ( Button == 1 )
-
-			Set ModelChange to 2
-			Set Button to 3
-
-		;Next Battleaxe page
-		elseif ( Button == 9 )
-
-			Set ModelChange to 5202
-
-		;Selected a model
-		else
-
-			Set IndexOffset to BattleaxeIdx
-			Set ModelChange to 100
-
-		endif
+		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 0 BattleaxeIdx
 
 	;-----------------------------------------------------------------------------
 	;Battleaxe pg2
@@ -2379,23 +1604,7 @@ begin MenuMode 1002 ;Inventory
 
 	elseif ( ModelChange == 5203 && Button > -1 )
 
-		;Previous Battleaxe page
-		if ( Button == 1 )
-
-			Set ModelChange to 5200
-			
-		;Next Battleaxe page
-		elseif ( Button == 9 )
-
-			Set ModelChange to 5204
-
-		;Selected a model
-		else
-
-			Set IndexOffset to BattleaxeIdx + 7
-			Set ModelChange to 100
-
-		endif
+		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 1 BattleaxeIdx
 
 	;-----------------------------------------------------------------------------
 	;Battleaxe pg3
@@ -2408,51 +1617,9 @@ begin MenuMode 1002 ;Inventory
 
 	elseif ( ModelChange == 5205 && Button > -1 )
 
-		;Previous Battleaxe page
-		if ( Button == 1 )
-
-			Set ModelChange to 5202
-			
-		;Next Battleaxe page
-		elseif ( Button == 9 )
-
-			Set ModelChange to 5206
-
-		;Selected a model
-		else
-
-			Set IndexOffset to BattleaxeIdx + 14
-			Set ModelChange to 100
-
-		endif
+		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 2 BattleaxeIdx
 
 
-
-
-
-		
-	;-----------------------------------------------------------------------------
-	;1H Blunts
-	;-----------------------------------------------------------------------------
-	elseif ( ModelChange == 6000 && Button > -1 )
-
-		;Go back to type select
-		if ( Button == 1 )
-
-			Set ModelChange to 1
-			Set Button to -1
-
-		;Mace pages
-		elseif ( Button == 2 )
-
-			Set ModelChange to 6100
-
-		;Waraxe pages
-		elseif ( Button == 3 )
-
-			Set ModelChange to 6200
-
-		endif
 
 
 
@@ -2468,24 +1635,7 @@ begin MenuMode 1002 ;Inventory
 
 	elseif ( ModelChange == 6101 && Button > -1 )
 
-		;Back to 1H - Blunt sub-type select
-		if ( Button == 1 )
-
-			Set ModelChange to 2
-			Set Button to 4
-
-		;Next Mace page
-		elseif ( Button == 9 )
-
-			Set ModelChange to 6102
-
-		;Selected a model
-		else
-
-			Set IndexOffset to MaceIdx
-			Set ModelChange to 100
-
-		endif
+		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 0 MaceIdx
 
 	;-----------------------------------------------------------------------------
 	;Mace pg2
@@ -2498,23 +1648,7 @@ begin MenuMode 1002 ;Inventory
 
 	elseif ( ModelChange == 6103 && Button > -1 )
 
-		;Previous Mace page
-		if ( Button == 1 )
-
-			Set ModelChange to 6100
-
-		;Next Mace page
-		elseif ( Button == 9 )
-
-			Set ModelChange to 6104
-
-		;Selected a model
-		else
-
-			Set IndexOffset to MaceIdx + 7
-			Set ModelChange to 100
-
-		endif
+		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 1 MaceIdx
 
 	;-----------------------------------------------------------------------------
 	;Mace pg3
@@ -2527,23 +1661,7 @@ begin MenuMode 1002 ;Inventory
 
 	elseif ( ModelChange == 6105 && Button > -1 )
 
-		;Previous Mace page
-		if ( Button == 1 )
-
-			Set ModelChange to 6102
-
-		;Next Mace page
-		;elseif ( Button == 9 )
-
-			;Set ModelChange to 6106
-
-		;Selected a model
-		else
-
-			Set IndexOffset to MaceIdx + 14
-			Set ModelChange to 100
-
-		endif
+		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 2 MaceIdx
 
 
 
@@ -2559,24 +1677,7 @@ begin MenuMode 1002 ;Inventory
 
 	elseif ( ModelChange == 6201 && Button > -1 )
 
-		;Back to 1H - Blunt sub-type select
-		if ( Button == 1 )
-
-			Set ModelChange to 2
-			Set Button to 4
-
-		;Next Waraxe page
-		elseif ( Button == 9 )
-
-			Set ModelChange to 6202
-
-		;Selected a model
-		else
-
-			Set IndexOffset to WaraxeIdx
-			Set ModelChange to 100
-
-		endif
+		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 0 WaraxeIdx
 
 	;-----------------------------------------------------------------------------
 	;Waraxe pg2
@@ -2589,23 +1690,7 @@ begin MenuMode 1002 ;Inventory
 
 	elseif ( ModelChange == 6203 && Button > -1 )
 
-		;Previous Waraxe page
-		If ( Button == 1 )
-
-			Set ModelChange to 6200
-
-		;Next Waraxe page
-		elseif ( Button == 9 )
-
-			Set ModelChange to 6204
-
-		;Selected a model
-		else
-
-			Set IndexOffset to WaraxeIdx + 7
-			Set ModelChange to 100
-
-		endif
+		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 1 WaraxeIdx
 
 	;-----------------------------------------------------------------------------
 	;Waraxe pg3
@@ -2618,51 +1703,9 @@ begin MenuMode 1002 ;Inventory
 
 	elseif ( ModelChange == 6205 && Button > -1 )
 
-		;Previous Waraxe page
-		If ( Button == 1 )
-
-			Set ModelChange to 6202
-
-		;Next Waraxe page
-		;elseif ( Button == 9 )
-
-			;Set ModelChange to 6206
-
-		;Selected a model
-		else
-
-			Set IndexOffset to WaraxeIdx + 14
-			Set ModelChange to 100
-
-		endif
+		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 2 WaraxeIdx
 
 
-
-
-
-		
-	;-----------------------------------------------------------------------------
-	;Marksman
-	;-----------------------------------------------------------------------------
-	elseif ( ModelChange == 7000 && Button > -1 )
-
-		;Go back to type select
-		if ( Button == 1 )
-
-			Set ModelChange to 1
-			Set Button to -1
-
-		;Bow pages
-		elseif ( Button == 2 )
-
-			Set ModelChange to 7100
-
-		;Bow II pages
-		elseif ( Button == 3 )
-
-			Set ModelChange to 7110
-
-		endif
 
 
 
@@ -2678,24 +1721,7 @@ begin MenuMode 1002 ;Inventory
 
 	elseif ( ModelChange == 7101 && Button > -1 )
 
-		;Back to Marksman sub-type select
-		if ( Button == 1 )
-
-			Set ModelChange to 2
-			Set Button to 5
-
-		;Next Bow page
-		elseif ( Button == 9 )
-
-			Set ModelChange to 7102
-
-		;Selected a model
-		else
-
-			Set IndexOffset to BowIdx
-			Set ModelChange to 100
-
-		endif
+		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 0 BowIdx
 
 	;-----------------------------------------------------------------------------
 	;Bow pg2
@@ -2708,23 +1734,7 @@ begin MenuMode 1002 ;Inventory
 
 	elseif ( ModelChange == 7103 && Button > -1 )
 
-		;Previous Bow page
-		if ( Button == 1 )
-
-			Set ModelChange to 7100
-
-		;Next Bow page
-		elseif ( Button == 9 )
-
-			Set ModelChange to 7104
-
-		;Selected a model
-		else
-
-			Set IndexOffset to BowIdx + 7
-			Set ModelChange to 100
-
-		endif
+		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 1 BowIdx
 
 	;-----------------------------------------------------------------------------
 	;Bow pg3
@@ -2737,23 +1747,7 @@ begin MenuMode 1002 ;Inventory
 
 	elseif ( ModelChange == 7105 && Button > -1 )
 
-		;Previous Bow page
-		if ( Button == 1 )
-
-			Set ModelChange to 7102
-
-		;Next Bow page
-		elseif ( Button == 9 )
-
-			Set ModelChange to 7106
-
-		;Selected a model
-		else
-
-			Set IndexOffset to BowIdx + 14
-			Set ModelChange to 100
-
-		endif
+		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 2 BowIdx
 
 	;-----------------------------------------------------------------------------
 	;Bow pg4
@@ -2766,23 +1760,7 @@ begin MenuMode 1002 ;Inventory
 
 	elseif ( ModelChange == 7107 && Button > -1 )
 
-		;Previous Bow page
-		if ( Button == 1 )
-
-			Set ModelChange to 7104
-
-		;Next Bow page
-		elseif ( Button == 9 )
-
-			Set ModelChange to 7108
-
-		;Selected a model
-		else
-
-			Set IndexOffset to BowIdx + 21
-			Set ModelChange to 100
-
-		endif
+		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 3 BowIdx
 
 	;-----------------------------------------------------------------------------
 	;Bow pg5
@@ -2795,23 +1773,7 @@ begin MenuMode 1002 ;Inventory
 
 	elseif ( ModelChange == 7109 && Button > -1 )
 
-		;Previous Bow page
-		if ( Button == 1 )
-
-			Set ModelChange to 7106
-
-		;Next Bow page
-		;elseif ( Button == 9 )
-
-			;Set ModelChange to 7110
-
-		;Selected a model
-		else
-
-			Set IndexOffset to BowIdx + 28
-			Set ModelChange to 100
-
-		endif
+		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 4 BowIdx
 
 	;-----------------------------------------------------------------------------
 	;Bow II pg1
@@ -2824,24 +1786,7 @@ begin MenuMode 1002 ;Inventory
 
 	elseif ( ModelChange == 7111 && Button > -1 )
 
-		;Back to Marksman sub-type select
-		if ( Button == 1 )
-
-			Set ModelChange to 2
-			Set Button to 5
-
-		;Next Bow page
-		elseif ( Button == 9 )
-
-			Set ModelChange to 7112
-
-		;Selected a model
-		else
-
-			Set IndexOffset to BowIdx + 35
-			Set ModelChange to 100
-
-		endif
+		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 0 BowIdx+35
 
 	;-----------------------------------------------------------------------------
 	;Bow II pg2
@@ -2854,23 +1799,7 @@ begin MenuMode 1002 ;Inventory
 
 	elseif ( ModelChange == 7113 && Button > -1 )
 
-		;Back to Marksman sub-type select
-		if ( Button == 1 )
-
-			Set ModelChange to 7110
-
-		;Next Bow page
-		;elseif ( Button == 9 )
-
-			;Set ModelChange to 7114
-
-		;Selected a model
-		else
-
-			Set IndexOffset to BowIdx + 42
-			Set ModelChange to 100
-
-		endif
+		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 1 BowIdx+35
 
 
 

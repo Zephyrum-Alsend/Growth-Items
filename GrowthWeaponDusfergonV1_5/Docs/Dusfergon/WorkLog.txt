@@ -126,3 +126,10 @@
 
 13.03.2020
 -I'm not touching Oblivion for a while.  What went wrong, where and when elude me, but it's still wrong.
+
+19.03.2020
+-Resolved issues with even cleaner install, begun thinking of Staff implementation
+-Fixed error in HP check on bow ...forgot the B in DLScalar3B
+-Fixed some comments/headers/documentation that I failed to update previously
+-Rewrote Charge formula
+-Added function to set ModelChange when paging, cut down on repeating code
