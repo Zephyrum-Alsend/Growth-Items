@@ -12,7 +12,7 @@ scn aaDusfergonOnSigilStone
 
 ;Description
 ;-----------------------------------------------------------------------------
-;Undoes the last Sigil Stone enchantment.
+;Undoes the last Sigil Stone enchantment if the passed item was used.
 ;-----------------------------------------------------------------------------
 
 ;Parameters
@@ -28,14 +28,23 @@ ref Weap
 begin Function { Weap }
 ;-----------------------------------------------------------------------------
 
-	MessageBoxEX "%n rejects the Sigil Stone used on it." Weap
-	
-	Set Sigil to GetLastUsedSigilStone
-	Set Enchanted to GetLastSigilStoneCreatedItem
+	if ( GetLastSigilStoneEnchantedItem == Weap )
 
-	Player.RemoveItemNS Enchanted 1
-	Player.AddItemNS Weap 1
-	Player.AddItem Sigil 1
+		RemoveEventHandler "OnHitWith" aaDusfergonOnHit
+		RemoveEventHandler "OnRelease" aaDusfergonOnBowHit
+		RemoveEventHandler "OnHitWith" aaDusfergonOnArrowHit
+		Set aaDusfergonEquip to 0	
+
+		MessageBoxEX "%n rejects the Sigil Stone used on it." Weap
+
+		Set Sigil to GetLastUsedSigilStone
+		Set Enchanted to GetLastSigilStoneCreatedItem
+
+		Player.RemoveItemNS Enchanted 1
+		Player.AddItemNS Weap 1
+		Player.AddItem Sigil 1
+
+	endif
 
 	Return
 ;-----------------------------------------------------------------------------

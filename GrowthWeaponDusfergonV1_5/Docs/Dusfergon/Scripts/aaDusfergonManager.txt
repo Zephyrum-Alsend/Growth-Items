@@ -6,6 +6,7 @@ float MenuLag
 ;Related scripts
 ;-----------------------------------------------------------------------------
 ;aaDusfergonManager
+;aaDusfergonDefaultINI
 ;aaDusfergonObject
 ;aaDusfergonObjectB
 ;aaDusfergonBreak
@@ -20,13 +21,14 @@ float MenuLag
 ;aaDusfergonEnchSlct
 ;aaDusfergonEnchLvl
 ;aaDusfergonEnchDisplay
-;aaDusfergonSwap
+;aaDusfergonModelChange
+;aaDusfergonModelPage
+;aaDusfergonModelToC
 ;aaDusfergonSetModel
 ;aaDusfergonSetModel2
 ;aaDusfergonRandomModel
+;aaDusfergonSwap
 ;aaDusfergonShowModelName
-;aaDusfergonModelPage
-;aaDusfergonModelToC
 ;aaDusfergonCalcXPReq
 ;aaDusfergonIncrVal
 ;aaDusfergonLevelMessage
@@ -456,6 +458,15 @@ short BowIdx
 short SetModel2Idx
 
 ;-----------------------------------------------------------------------------
+;Keybindings
+;-----------------------------------------------------------------------------
+short sMMainKey
+short sMEnchKey
+short sMEnchKey2
+short sMNameKey
+short sMNameKey2
+
+;-----------------------------------------------------------------------------
 ;RefID of ObjectID and EnchantID
 ;-----------------------------------------------------------------------------
 ref self
@@ -517,7 +528,12 @@ begin GameMode
 		Set ModelChange to 0
 		Set WarnOnce to 0
 
+		;Initialize with default values
+		Call aaDusfergonDefaultINI
+
+		;Initialize with user defined values
 		RunBatchScript "Data\ini\Dusfergon.ini"
+
 		SetNameEx "%z" str_Name self
 
 		
@@ -621,11 +637,17 @@ begin GameMode
 	endif ;GetGameLoaded
 	;-----------------------------------------------------------------------------
 
+	;-----------------------------------------------------------------------------
+	;Set script lag
+	;-----------------------------------------------------------------------------
 	if ( fQuestDelayTime != ScriptLag )
-	
+	;-----------------------------------------------------------------------------
+
 			Set fQuestDelayTime to ScriptLag
 	
+	;-----------------------------------------------------------------------------
 	endif
+	;-----------------------------------------------------------------------------
 
 
 
@@ -805,27 +827,16 @@ begin GameMode
 
 
 	;-----------------------------------------------------------------------------
-	;Remove all event handlers if weapon was enchanted by player
+	;Undo enchantment if weapon was enchanted by player
 	;-----------------------------------------------------------------------------
 	if ( WarnOnce == 1 )
 
 		RemoveEventHandler "OnEnchant" aaDusfergonOnEnchant
-
 		Set WarnOnce to 0
 
 	elseif ( WarnOnce == 2 )
 
-		if ( GetLastSigilStoneEnchantedItem == self )
-
-			RemoveEventHandler "OnHitWith" aaDusfergonOnHit
-			RemoveEventHandler "OnRelease" aaDusfergonOnBowHit
-			RemoveEventHandler "OnHitWith" aaDusfergonOnArrowHit
-			Set aaDusfergonEquip to 0
-
-			Call aaDusfergonOnSigilStone self
-			
-		endif
-
+		Call aaDusfergonOnSigilStone self
 		Set WarnOnce to 0
 		
 	endif
@@ -848,34 +859,29 @@ end ;GameMode
 begin MenuMode 1002 ;Inventory
 ;-----------------------------------------------------------------------------
 
+	;-----------------------------------------------------------------------------
+	;Set script lag
+	;-----------------------------------------------------------------------------
 	if ( fQuestDelayTime != MenuLag )
-
+	;-----------------------------------------------------------------------------
+	
 		Set fQuestDelayTime to MenuLag
 
+	;-----------------------------------------------------------------------------
 	endif
+	;-----------------------------------------------------------------------------
 
 	;-----------------------------------------------------------------------------
-	;Remove all event handlers if weapon was enchanted by player
+	;Undo enchantment if weapon was enchanted by player
 	;-----------------------------------------------------------------------------
 	if ( WarnOnce == 1 )
 
 		RemoveEventHandler "OnEnchant" aaDusfergonOnEnchant
-
 		Set WarnOnce to 0
 
 	elseif ( WarnOnce == 2 )
 
-		if ( GetLastSigilStoneEnchantedItem == self )
-
-			RemoveEventHandler "OnHitWith" aaDusfergonOnHit
-			RemoveEventHandler "OnRelease" aaDusfergonOnBowHit
-			RemoveEventHandler "OnHitWith" aaDusfergonOnArrowHit
-			Set aaDusfergonEquip to 0
-
-			Call aaDusfergonOnSigilStone self
-			
-		endif
-
+		Call aaDusfergonOnSigilStone self
 		Set WarnOnce to 0
 		
 	endif
@@ -883,7 +889,7 @@ begin MenuMode 1002 ;Inventory
 	;-----------------------------------------------------------------------------
 	;Shows enchantment effects if Player Ctrl + right-clicks weapon
 	;-----------------------------------------------------------------------------
-	if ( GetActiveMenuSelection == self && ( ( IsKeyPressed2 29 ) || ( IsKeyPressed2 157 ) ) && ( IsKeyPressed2 257 ) )
+	if ( GetActiveMenuSelection == self && ( ( IsKeyPressed2 sMEnchKey ) || ( IsKeyPressed2 sMEnchKey2 ) ) && ( IsKeyPressed2 sMMainKey ) )
 	;-----------------------------------------------------------------------------
 
 		Call aaDusfergonEnchDisplay ench
@@ -891,7 +897,7 @@ begin MenuMode 1002 ;Inventory
 	;-----------------------------------------------------------------------------
 	;Shows current model's name if Player Shift + right-clicks weapon
 	;-----------------------------------------------------------------------------
-	elseif ( GetActiveMenuSelection == self && ( ( IsKeyPressed2 42 ) || ( IsKeyPressed2 54 ) ) && ( IsKeyPressed2 257 ) )
+	elseif ( GetActiveMenuSelection == self && ( ( IsKeyPressed2 sMNameKey ) || ( IsKeyPressed2 sMNameKey2 ) ) && ( IsKeyPressed2 sMMainKey ) )
 	;-----------------------------------------------------------------------------
 
 		Call aaDusfergonShowModelName self
@@ -899,7 +905,7 @@ begin MenuMode 1002 ;Inventory
 	;-----------------------------------------------------------------------------
 	;Start ModelChange menus if Player right-clicks weapon
 	;-----------------------------------------------------------------------------
-	elseif ( GetActiveMenuSelection == self && ModelChange == 0 && ( IsKeyPressed2 257 ) )
+	elseif ( GetActiveMenuSelection == self && ModelChange == 0 && ( IsKeyPressed2 sMMainKey ) )
 
 		Set Button to -1
 		Set ModelChange to 1
@@ -907,909 +913,26 @@ begin MenuMode 1002 ;Inventory
 	endif
 
 	
-	;-----------------------------------------------------------------------------
-	;Get the last option chosen
-	;-----------------------------------------------------------------------------
-	if ( ModelChange > 1 && Button < 0 )
-
-		Set Button to GetButtonPressed
-
-	endif
-
 	
-	;-----------------------------------------------------------------------------
-	;Cancel
-	;-----------------------------------------------------------------------------
-	;Cancel is always the first button
-	if ( Button == 0 )
 
-		Set ModelChange to 0
 
+
+
+
+	;-----------------------------------------------------------------------------
+	;Call ModelChange menus
+	;-----------------------------------------------------------------------------
+	if ( ModelChange > 0 && ModelChange != 100 )
+
+		Set ModelChange to Call aaDusfergonModelChange ModelChange
+		
 	endif
 
 
-
-
-
-	
-	;-----------------------------------------------------------------------------
-	;Choose primary weapon type
-	;-----------------------------------------------------------------------------
-	if ( ModelChange == 1 && Button == -1 )
-
-		MessageBox "Choose a type:" "Cancel" "2H - Blade" "1H - Blade" "2H - Blunt" "1H - Blunt" "Marksman" "Random"
-		Set ModelChange to 2
-
-
-
-
-
-		
-	;-----------------------------------------------------------------------------
-	;Choose secondary weapon type
-	;-----------------------------------------------------------------------------
-	elseif ( ModelChange == 2 && Button > -1 )
-
-		;-----------------------------------------------------------------------------
-		;2H Blades
-		;-----------------------------------------------------------------------------
-		if ( Button == 1 )
-
-			MessageBox "Choose a sub-type:" "Cancel" "Back" "Claymore" "Bastard"
-			Set ModelChange to 3000
-			Set Button to -1
-
-		;-----------------------------------------------------------------------------
-		;1H Blades
-		;-----------------------------------------------------------------------------
-		elseif ( Button == 2 )
-
-			MessageBox "Choose a sub-type:" "Cancel" "Back" "Bastard" "Longsword" "Longsword II" "Shortsword" "Shortsword II" "Dagger" "Dagger II"
-			Set ModelChange to 4000
-			Set Button to -1
-
-		;-----------------------------------------------------------------------------
-		;2H Blunts
-		;-----------------------------------------------------------------------------
-		elseif ( Button == 3 )
-
-			MessageBox "Choose a sub-type:" "Cancel" "Back" "Warhammer" "Battleaxe"
-			Set ModelChange to 5000
-			Set Button to -1
-
-		;-----------------------------------------------------------------------------
-		;1H Blunts
-		;-----------------------------------------------------------------------------
-		elseif ( Button == 4 )
-
-			MessageBox "Choose a sub-type:" "Cancel" "Back" "Mace" "Waraxe"
-			Set ModelChange to 6000
-			Set Button to -1
-
-		;-----------------------------------------------------------------------------
-		;Marksman
-		;-----------------------------------------------------------------------------
-		elseif ( Button == 5 )
-
-			MessageBox "Choose a sub-type:" "Cancel" "Back" "Bow" "Bow II"
-			Set ModelChange to 7000
-			Set Button to -1
-
-		;-----------------------------------------------------------------------------
-		;Random
-		;-----------------------------------------------------------------------------
-		elseif ( Button == 6 )
-
-			Set Button to Call aaDusfergonRandomModel
-			Set IndexOffset to 2
-			Set ModelChange to 100
-
-		endif
-
-
-
-
-
-	;-----------------------------------------------------------------------------
-	;Redirect to appropriate sub-type menu
-	;-----------------------------------------------------------------------------
-	elseif ( ModelChange == 3000 || ModelChange == 4000 || ModelChange == 5000 || ModelChange == 6000 || ModelChange == 7000 ) && ( Button > -1 )
-
-		Set ModelChange to Call aaDusfergonModelToC ModelChange Button
-		
-
-
-
-
-	;-----------------------------------------------------------------------------
-	;Claymore pg1
-	;-----------------------------------------------------------------------------
-	elseif ( ModelChange == 3100 )
-
-		MessageBox "Choose a form:" "Cancel" "Back" "Bastard" "Merciless" "Wolf" "Wolf Ricasso" "Akatosh" "Serenity" "Zweihander" "Next"
-		Set Button to -1
-		Set ModelChange to 3101
-
-	elseif ( ModelChange == 3101 && Button > -1 )
-
-		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 0 ClaymoreIdx
-
-	;-----------------------------------------------------------------------------
-	;Claymore pg2
-	;-----------------------------------------------------------------------------
-	elseif ( ModelChange == 3102 )
-
-		MessageBox "Choose a form:" "Cancel" "Prev" "Sunfire" "Ivellon Claymore" "Ivellon Zweihander" "Sathix" "Sathix Crimson" "Gotland" "Gotland Steel" "Next"
-		Set Button to -1
-		Set ModelChange to 3103
-
-	elseif ( ModelChange == 3103 && Button > -1 )
-
-		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 1 ClaymoreIdx
-
-	;-----------------------------------------------------------------------------
-	;Claymore pg3
-	;-----------------------------------------------------------------------------
-	elseif ( ModelChange == 3104 )
-
-		MessageBox "Choose a form:" "Cancel" "Prev" "Gotland Old" "Vanilla Iron" "Vanilla Steel" "Vanilla Fine Steel" "Vanilla Silver" "Vanilla Dwarven" "Vanilla Elven" "Next"
-		Set Button to -1
-		Set ModelChange to 3105
-
-	elseif ( ModelChange == 3105 && Button > -1 )
-
-		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 2 ClaymoreIdx
-
-	;-----------------------------------------------------------------------------
-	;Claymore pg4
-	;-----------------------------------------------------------------------------
-	elseif ( ModelChange == 3106 )
-
-		MessageBox "Choose a form:" "Cancel" "Prev" "Vanilla Glass" "Vanilla Ebony" "Vanilla Daedric"; "" "" "" "" "Next"
-		Set Button to -1
-		Set ModelChange to 3107
-
-	elseif ( ModelChange == 3107 && Button > -1 )
-
-		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 3 ClaymoreIdx
-
-
-
-
-		
-	;-----------------------------------------------------------------------------
-	;Bastard2h pg1
-	;-----------------------------------------------------------------------------
-	elseif ( ModelChange == 3200 )
-
-		MessageBox "Choose a form:" "Cancel" "Back" "Mercy" "Trust" "Kinslayer" "Hope" "Despair" "Sorrow" "Truth" "Next"
-		Set Button to -1
-		Set ModelChange to 3201
-
-	elseif ( ModelChange == 3201 && Button > -1 )
-
-		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 0 Bastard2hIdx
-		
-	;-----------------------------------------------------------------------------
-	;Bastard2h pg2
-	;-----------------------------------------------------------------------------
-	elseif ( ModelChange == 3202 )
-
-		MessageBox "Choose a form:" "Cancel" "Prev" "Type-A" "Type-B" "Type-C" "Type-D" "Type-E" "Hiero" "Surazal" "Next"
-		Set Button to -1
-		Set ModelChange to 3203
-
-	elseif ( ModelChange == 3203 && Button > -1 )
-
-		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 1 Bastard2hIdx
-
-	;-----------------------------------------------------------------------------
-	;Bastard2h pg3
-	;-----------------------------------------------------------------------------
-	elseif ( ModelChange == 3204 )
-
-		MessageBox "Choose a form:" "Cancel" "Prev" "Ivellon" "Clint XVI" "Angular Leaf" "Tapper" "Seaward" "Clint XVI Steel" "Angular Leaf Steel" "Next"
-		Set Button to -1
-		Set ModelChange to 3205
-
-	elseif ( ModelChange == 3205 && Button > -1 )
-
-		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 2 Bastard2hIdx
-
-	;-----------------------------------------------------------------------------
-	;Bastard2h pg4
-	;-----------------------------------------------------------------------------
-	elseif ( ModelChange == 3206 )
-
-		MessageBox "Choose a form:" "Cancel" "Prev" "Tapper Steel" "Tapper Black" "Tapper Old"; "" "" "" "" "Next"
-		Set Button to -1
-		Set ModelChange to 3207
-
-	elseif ( ModelChange == 3207 && Button > -1 )
-
-		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 3 Bastard2hIdx
-
-
-
-
-
-		
-	;-----------------------------------------------------------------------------
-	;Bastard1h pg1
-	;-----------------------------------------------------------------------------
-	elseif ( ModelChange == 4100 )
-
-		MessageBox "Choose a form:" "Cancel" "Back" "Mercy" "Trust" "Kinslayer" "Hope" "Despair" "Sorrow" "Truth" "Next"
-		Set Button to -1
-		Set ModelChange to 4101
-
-	elseif ( ModelChange == 4101 && Button > -1 )
-
-		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 0 Bastard1hIdx
-
-	;-----------------------------------------------------------------------------
-	;Bastard1h pg2
-	;-----------------------------------------------------------------------------
-	elseif ( ModelChange == 4102 )
-
-		MessageBox "Choose a form:" "Cancel" "Prev" "Type-A" "Type-B" "Type-C" "Type-D" "Type-E" "Hiero" "Surazal" "Next"
-		Set Button to -1
-		Set ModelChange to 4103
-
-	elseif ( ModelChange == 4103 && Button > -1 )
-
-		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 1 Bastard1hIdx
-
-	;-----------------------------------------------------------------------------
-	;Bastard1h pg3
-	;-----------------------------------------------------------------------------
-	elseif ( ModelChange == 4104 )
-
-		MessageBox "Choose a form:" "Cancel" "Prev" "Ivellon" "Clint XVI" "Angular Leaf" "Tapper" "Seaward" "Clint XVI Steel" "Angular Leaf Steel" "Next"
-		Set Button to -1
-		Set ModelChange to 4105
-
-	elseif ( ModelChange == 4105 && Button > -1 )
-
-		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 2 Bastard1hIdx
-
-	;-----------------------------------------------------------------------------
-	;Bastard2h pg4
-	;-----------------------------------------------------------------------------
-	elseif ( ModelChange == 4106 )
-
-		MessageBox "Choose a form:" "Cancel" "Prev" "Tapper Steel" "Tapper Black" "Tapper Old"; "" "" "" "" "Next"
-		Set Button to -1
-		Set ModelChange to 4107
-
-	elseif ( ModelChange == 4107 && Button > -1 )
-
-		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 3 Bastard1hIdx
-
-
-
-		
-	;-----------------------------------------------------------------------------
-	;Longsword pg1
-	;-----------------------------------------------------------------------------
-	elseif ( ModelChange == 4200 )
-
-		MessageBox "Choose a form:" "Cancel" "Back" "Iron" "Fine Iron" "Steel" "Fine Steel" "Silver" "Ebony" "Daedric" "Next"
-		Set Button to -1
-		Set ModelChange to 4201
-
-	elseif ( ModelChange == 4201 && Button > -1 )
-
-		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 0 LongswordIdx
-
-	;-----------------------------------------------------------------------------
-	;Longsword pg2
-	;-----------------------------------------------------------------------------
-	elseif ( ModelChange == 4202 )
-
-		MessageBox "Choose a form:" "Cancel" "Prev" "Arming" "Ivellon" "Corralor" "Gull" "Moonbrand" "Archer" "Solingen" "Next"
-		Set Button to -1
-		Set ModelChange to 4203
-
-	elseif ( ModelChange == 4203 && Button > -1 )
-
-		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 1 LongswordIdx
-
-	;-----------------------------------------------------------------------------
-	;Longsword pg3
-	;-----------------------------------------------------------------------------
-	elseif ( ModelChange == 4204 )
-
-		MessageBox "Choose a form:" "Cancel" "Prev" "Tritonia" "Necro" "Slavatio" "Goblin" "Leaf" "Shokuto" "Baskethilt" "Next"
-		Set Button to -1
-		Set ModelChange to 4205
-
-	elseif ( ModelChange == 4205 && Button > -1 )
-
-		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 2 LongswordIdx
-
-	;-----------------------------------------------------------------------------
-	;Longsword pg4
-	;-----------------------------------------------------------------------------
-	elseif ( ModelChange == 4206 )
-
-		MessageBox "Choose a form:" "Cancel" "Prev" "Single Edge" "Dragoon" "Kriss" "Elvin" "Broke Back" "Bone Daito" "Dragonfly" "Next"
-		Set Button to -1
-		Set ModelChange to 4207
-
-	elseif ( ModelChange == 4207 && Button > -1 )
-
-		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 3 LongswordIdx
-
-	;-----------------------------------------------------------------------------
-	;Longsword pg5
-	;-----------------------------------------------------------------------------
-	elseif ( ModelChange == 4208 )
-
-		MessageBox "Choose a form:" "Cancel" "Prev" "Chimer" "Commander" "Hook" "Scimitar" "Volsung" "Atmorian" "Beserker"; "Next"
-		Set Button to -1
-		Set ModelChange to 4209
-
-	elseif ( ModelChange == 4209 && Button > -1 )
-
-		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 4 LongswordIdx
-
-	;-----------------------------------------------------------------------------
-	;Longsword II pg1
-	;-----------------------------------------------------------------------------
-	elseif ( ModelChange == 4210 )
-
-		MessageBox "Choose a form:" "Cancel" "Back" "Cawood" "Cawood II" "Gramr" "Norland" "Warp" "Archer Steel" "Solingen Steel" "Next"
-		Set Button to -1
-		Set ModelChange to 4211
-
-	elseif ( ModelChange == 4211 && Button > -1 )
-
-		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 0 LongswordIdx+35
-
-	;-----------------------------------------------------------------------------
-	;Longsword II pg2
-	;-----------------------------------------------------------------------------
-	elseif ( ModelChange == 4212 )
-
-		MessageBox "Choose a form:" "Cancel" "Prev" "Tritonia Steel" "Necro Steel" "Salvatio Steel" "Baskethilt Steel" "Beserker Steel" "Warp Steel" "Leaf Old" "Next"
-		Set Button to -1
-		Set ModelChange to 4213
-
-	elseif ( ModelChange == 4213 && Button > -1 )
-
-		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 1 LongswordIdx+35
-
-	;-----------------------------------------------------------------------------
-	;Longsword II pg3
-	;-----------------------------------------------------------------------------
-	elseif ( ModelChange == 4214 )
-
-		MessageBox "Choose a form:" "Cancel" "Prev" "Shokuto Old" "Chimer Old" "Commander Old" "Hook Old" "Scimitar Old" "Atmorian Old" "Beserker Old" "Next"
-		Set Button to -1
-		Set ModelChange to 4215
-
-	elseif ( ModelChange == 4215 && Button > -1 )
-
-		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 2 LongswordIdx+35
-
-	;-----------------------------------------------------------------------------
-	;Longsword II pg4
-	;-----------------------------------------------------------------------------
-	elseif ( ModelChange == 4216 )
-
-		MessageBox "Choose a form:" "Cancel" "Prev" "Cawood Old" "Cawood II Old" "Gramr Old" "Norland Old" "Warp Old" "Vanilla Iron" "Vanilla Steel" "Next"
-		Set Button to -1
-		Set ModelChange to 4217
-
-	elseif ( ModelChange == 4217 && Button > -1 )
-
-		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 3 LongswordIdx+35
-
-	;-----------------------------------------------------------------------------
-	;Longsword II pg5
-	;-----------------------------------------------------------------------------
-	elseif ( ModelChange == 4218 )
-
-		MessageBox "Choose a form:" "Cancel" "Prev" "Vanilla Fine Steel" "Vanilla Silver" "Vanilla Dwarven" "Vanilla Elven" "Vanilla Glass" "Vanilla Ebony" "Vanilla Daedric"; "Next"
-		Set Button to -1
-		Set ModelChange to 4219
-
-	elseif ( ModelChange == 4219 && Button > -1 )
-
-		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 4 LongswordIdx+35
-
-
-
-		
-	;-----------------------------------------------------------------------------
-	;Shortsword pg1
-	;-----------------------------------------------------------------------------
-	elseif ( ModelChange == 4300 )
-
-		MessageBox "Choose a form:" "Cancel" "Back" "Iron" "Fine Iron" "Steel" "Fine Steel" "Silver" "Ebony" "Ivellon" "Next"
-		Set Button to -1
-		Set ModelChange to 4301
-
-	elseif ( ModelChange == 4301 && Button > -1 )
-
-		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 0 ShortswordIdx
-
-	;-----------------------------------------------------------------------------
-	;Shortsword pg2
-	;-----------------------------------------------------------------------------
-	elseif ( ModelChange == 4302 )
-
-		MessageBox "Choose a form:" "Cancel" "Prev" "Barrow" "Archer" "Archer Kriss" "Kriss" "Broad Kriss" "Barbed Leaf" "Panther Leaf" "Next"
-		Set Button to -1
-		Set ModelChange to 4303
-
-	elseif ( ModelChange == 4303 && Button > -1 )
-
-		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 1 ShortswordIdx
-
-	;-----------------------------------------------------------------------------
-	;Shortsword pg3
-	;-----------------------------------------------------------------------------
-	elseif ( ModelChange == 4304 )
-
-		MessageBox "Choose a form:" "Cancel" "Prev" "Corralnium" "Lemurian" "Broad Sword" "Broad Blade" "Elhazan" "Seaward" "Knuckle Bow" "Next"
-		Set Button to -1
-		Set ModelChange to 4305
-
-	elseif ( ModelChange == 4305 && Button > -1 )
-
-		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 2 ShortswordIdx
-
-	;-----------------------------------------------------------------------------
-	;Shortsword pg4
-	;-----------------------------------------------------------------------------
-	elseif ( ModelChange == 4306 )
-
-		MessageBox "Choose a form:" "Cancel" "Prev" "Lion Claw" "Elvin" "Commander" "Kukri" "Falshion" "Falshion Ranger" "Quandao" "Next"
-		Set Button to -1
-		Set ModelChange to 4307
-
-	elseif ( ModelChange == 4307 && Button > -1 )
-
-		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 3 ShortswordIdx
-
-	;-----------------------------------------------------------------------------
-	;Shortsword pg5
-	;-----------------------------------------------------------------------------
-	elseif ( ModelChange == 4308 )
-
-		MessageBox "Choose a form:" "Cancel" "Prev" "Eagle" "Crescent" "Orcish" "Moriche" "Curved" "Goblin Curved" "Cleaver"; "Next"
-		Set Button to -1
-		Set ModelChange to 4309
-
-	elseif ( ModelChange == 4309 && Button > -1 )
-
-		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 4 ShortswordIdx
-
-	;-----------------------------------------------------------------------------
-	;Shortsword II pg1
-	;-----------------------------------------------------------------------------
-	elseif ( ModelChange == 4310 )
-
-		MessageBox "Choose a form:" "Cancel" "Back" "Bone Shokuto" "Bone Talon" "Bone Wakizaki" "Bone Dah" "Meyer" "Moria" "Poignard" "Next"
-		Set Button to -1
-		Set ModelChange to 4311
-
-	elseif ( ModelChange == 4311 && Button > -1 )
-
-		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 0 ShortswordIdx+35
-
-	;-----------------------------------------------------------------------------
-	;Shortsword II pg2
-	;-----------------------------------------------------------------------------
-	elseif ( ModelChange == 4312 )
-
-		MessageBox "Choose a form:" "Cancel" "Prev" "Falshion Steel" "Falshion Ranger Steel" "Poignard Steel" "Commander Old" "Eagle Old" "Crescent Old" "Moriche Old" "Next"
-		Set Button to -1
-		Set ModelChange to 4313
-
-	elseif ( ModelChange == 4313 && Button > -1 )
-
-		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 1 ShortswordIdx+35
-
-	;-----------------------------------------------------------------------------
-	;Shortsword II pg3
-	;-----------------------------------------------------------------------------
-	elseif ( ModelChange == 4314 )
-
-		MessageBox "Choose a form:" "Cancel" "Prev" "Meyer Old" "Poignard Old" "Broken" "Vanilla Iron" "Vanilla Steel" "Vanilla Fine Steel" "Vanilla Silver" "Next"
-		Set Button to -1
-		Set ModelChange to 4315
-
-	elseif ( ModelChange == 4315 && Button > -1 )
-
-		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 2 ShortswordIdx+35
-
-	;-----------------------------------------------------------------------------
-	;Shortsword II pg4
-	;-----------------------------------------------------------------------------
-	elseif ( ModelChange == 4316 )
-
-		MessageBox "Choose a form:" "Cancel" "Prev" "Vanilla Dwarven" "Vanilla Elven" "Vanilla Glass" "Vanilla Ebony" "Vanilla Daedric"; "" "" "Next"
-		Set Button to -1
-		Set ModelChange to 4317
-
-	elseif ( ModelChange == 4317 && Button > -1 )
-
-		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 3 ShortswordIdx+35
-
-
-
-		
-	;-----------------------------------------------------------------------------
-	;Dagger pg1
-	;-----------------------------------------------------------------------------
-	elseif ( ModelChange == 4400 )
-
-		MessageBox "Choose a form:" "Cancel" "Back" "Iron" "Fine Iron" "Steel" "Fine Steel" "Silver" "Ebony" "Corralnium" "Next"
-		Set Button to -1
-		Set ModelChange to 4401
-
-	elseif ( ModelChange == 4401 && Button > -1 )
-
-		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 0 DaggerIdx
-
-	;-----------------------------------------------------------------------------
-	;Dagger pg2
-	;-----------------------------------------------------------------------------
-	elseif ( ModelChange == 4402 )
-
-		MessageBox "Choose a form:" "Cancel" "Prev" "Kriss" "Tetela" "Spike" "Stiletto" "Bowie" "Hunting" "Miscitar" "Next"
-		Set Button to -1
-		Set ModelChange to 4403
-
-	elseif ( ModelChange == 4403 && Button > -1 )
-
-		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 1 DaggerIdx
-
-	;-----------------------------------------------------------------------------
-	;Dagger pg3
-	;-----------------------------------------------------------------------------
-	elseif ( ModelChange == 4404 )
-
-		MessageBox "Choose a form:" "Cancel" "Prev" "Jambaya" "Silver Knife" "Mori" "Elvin" "Jody" "Claw" "Crescent" "Next"
-		Set Button to -1
-		Set ModelChange to 4405
-
-	elseif ( ModelChange == 4405 && Button > -1 )
-
-		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 2 DaggerIdx
-
-	;-----------------------------------------------------------------------------
-	;Dagger pg4
-	;-----------------------------------------------------------------------------
-	elseif ( ModelChange == 4406 )
-
-		MessageBox "Choose a form:" "Cancel" "Prev" "Bone Tanto" "Ivory" "Poignard" "Poignard II" "Broadedge" "Spike Steel" "Stiletto Silver" "Next"
-		Set Button to -1
-		Set ModelChange to 4407
-
-	elseif ( ModelChange == 4407 && Button > -1 )
-
-		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 3 DaggerIdx
-
-	;-----------------------------------------------------------------------------
-	;Dagger pg5
-	;-----------------------------------------------------------------------------
-	elseif ( ModelChange == 4408 )
-
-		MessageBox "Choose a form:" "Cancel" "Prev" "Poignard Steel" "Poignard II Steel" "Broadedge Steel" "Jody Old" "Claw Old" "Crescent Old" "Poignard Old"; "Next"
-		Set Button to -1
-		Set ModelChange to 4409
-
-	elseif ( ModelChange == 4409 && Button > -1 )
-
-		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 4 DaggerIdx
-
-	;-----------------------------------------------------------------------------
-	;Dagger II pg1
-	;-----------------------------------------------------------------------------
-	elseif ( ModelChange == 4410 )
-
-		MessageBox "Choose a form:" "Cancel" "Back" "Poignard II Old" "Broadedge Old" "Vanilla Iron" "Vanilla Steel" "Vanilla Fine Steel" "Vanilla Silver" "Vanilla Dwarven" "Next"
-		Set Button to -1
-		Set ModelChange to 4411
-
-	elseif ( ModelChange == 4411 && Button > -1 )
-
-		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 0 DaggerIdx+35
-
-	;-----------------------------------------------------------------------------
-	;Dagger II pg2
-	;-----------------------------------------------------------------------------
-	elseif ( ModelChange == 4412 )
-
-		MessageBox "Choose a form:" "Cancel" "Prev" "Vanilla Elven" "Vanilla Glass" "Vanilla Ebony" "Vanilla Daedric"; "" "" "" "Next"
-		Set Button to -1
-		Set ModelChange to 4413
-
-	elseif ( ModelChange == 4413 && Button > -1 )
-
-		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 1 DaggerIdx+35
-
-
-
-
-
-		
-	;-----------------------------------------------------------------------------
-	;Warhammer pg1
-	;-----------------------------------------------------------------------------
-	elseif ( ModelChange == 5100 )
-
-		MessageBox "Choose a form:" "Cancel" "Back" "Flanged" "Morningstar" "Mormacil" "Maul" "Stendarr" "Goblinstar" "Mirondil" "Next"
-		Set Button to -1
-		Set ModelChange to 5101
-
-	elseif ( ModelChange == 5101 && Button > -1 )
-
-		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 0 WarhammerIdx
-
-	;-----------------------------------------------------------------------------
-	;Warhammer pg2
-	;-----------------------------------------------------------------------------
-	elseif ( ModelChange == 5102 )
-
-		MessageBox "Choose a form:" "Cancel" "Prev" "Mirondil Gilded" "Flanged Steel" "Morningstar Steel" "Vanilla Iron" "Vanilla Steel" "Vanilla Fine Steel" "Vanilla Silver" "Next"
-		Set Button to -1
-		Set ModelChange to 5103
-
-	elseif ( ModelChange == 5103 && Button > -1 )
-
-		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 1 WarhammerIdx
-
-	;-----------------------------------------------------------------------------
-	;Warhammer pg3
-	;-----------------------------------------------------------------------------
-	elseif ( ModelChange == 5104 )
-
-		MessageBox "Choose a form:" "Cancel" "Prev" "Vanilla Dwarven" "Vanilla Elven" "Vanilla Glass" "Vanilla Ebony" "Vanilla Daedric"; "" "" "Next"
-		Set Button to -1
-		Set ModelChange to 5105
-
-	elseif ( ModelChange == 5105 && Button > -1 )
-
-		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 2 WarhammerIdx
-
-
-
-		
-	;-----------------------------------------------------------------------------
-	;Battleaxe pg1
-	;-----------------------------------------------------------------------------
-	elseif ( ModelChange == 5200 )
-
-		MessageBox "Choose a form:" "Cancel" "Back" "Bearded" "Fine Bearded" "War" "Cleaver" "Ivellon" "Rhino" "Sotonhorian" "Next"
-		Set Button to -1
-		Set ModelChange to 5201
-
-	elseif ( ModelChange == 5201 && Button > -1 )
-
-		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 0 BattleaxeIdx
-
-	;-----------------------------------------------------------------------------
-	;Battleaxe pg2
-	;-----------------------------------------------------------------------------
-	elseif ( ModelChange == 5202 )
-
-		MessageBox "Choose a form:" "Cancel" "Prev" "Thorgeir" "Ziragon" "Bearded Old" "War Old" "Vanilla Iron" "Vanilla Steel" "Vanilla Fine Steel" "Next"
-		Set Button to -1
-		Set ModelChange to 5203
-
-	elseif ( ModelChange == 5203 && Button > -1 )
-
-		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 1 BattleaxeIdx
-
-	;-----------------------------------------------------------------------------
-	;Battleaxe pg3
-	;-----------------------------------------------------------------------------
-	elseif ( ModelChange == 5204 )
-
-		MessageBox "Choose a form:" "Cancel" "Prev" "Vanilla Silver" "Vanilla Dwarven" "Vanilla Elven" "Vanilla Glass" "Vanilla Ebony" "Vanilla Daedric"; "" "Next"
-		Set Button to -1
-		Set ModelChange to 5205
-
-	elseif ( ModelChange == 5205 && Button > -1 )
-
-		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 2 BattleaxeIdx
-
-
-
-
-
-		
-	;-----------------------------------------------------------------------------
-	;Mace pg1
-	;-----------------------------------------------------------------------------
-	elseif ( ModelChange == 6100 )
-
-		MessageBox "Choose a form:" "Cancel" "Back" "Warhammer" "Ivellon Warhammer" "Ivellon Mace" "Thame" "Morningstar" "Macil" "Warpick" "Next"
-		Set Button to -1
-		Set ModelChange to 6101
-
-	elseif ( ModelChange == 6101 && Button > -1 )
-
-		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 0 MaceIdx
-
-	;-----------------------------------------------------------------------------
-	;Mace pg2
-	;-----------------------------------------------------------------------------
-	elseif ( ModelChange == 6102 )
-
-		MessageBox "Choose a form:" "Cancel" "Prev" "Sotonhorian" "Ziragon Warhammer" "Ziragon Warpick" "Morningstar Steel" "Vanilla Iron" "Vanilla Steel" "Vanilla Fine Steel" "Next"
-		Set Button to -1
-		Set ModelChange to 6103
-
-	elseif ( ModelChange == 6103 && Button > -1 )
-
-		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 1 MaceIdx
-
-	;-----------------------------------------------------------------------------
-	;Mace pg3
-	;-----------------------------------------------------------------------------
-	elseif ( ModelChange == 6104 )
-
-		MessageBox "Choose a form:" "Cancel" "Prev" "Vanilla Silver" "Vanilla Dwarven" "Vanilla Elven" "Vanilla Glass" "Vanilla Ebony" "Vanilla Daedric"; "" "Next"
-		Set Button to -1
-		Set ModelChange to 6105
-
-	elseif ( ModelChange == 6105 && Button > -1 )
-
-		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 2 MaceIdx
-
-
-
-		
-	;-----------------------------------------------------------------------------
-	;Waraxe pg1
-	;-----------------------------------------------------------------------------
-	elseif ( ModelChange == 6200 )
-
-		MessageBox "Choose a form:" "Cancel" "Back" "Bearded" "Fine Bearded" "War" "Sotonhorian" "Thorgeir" "Ziragon" "Mirondil" "Next"
-		Set Button to -1
-		Set ModelChange to 6201
-
-	elseif ( ModelChange == 6201 && Button > -1 )
-
-		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 0 WaraxeIdx
-
-	;-----------------------------------------------------------------------------
-	;Waraxe pg2
-	;-----------------------------------------------------------------------------
-	elseif ( ModelChange == 6202 )
-
-		MessageBox "Choose a form:" "Cancel" "Prev" "Mirondil Gilded" "Bearded Old" "War Old" "Vanilla Iron" "Vanilla Steel" "Vanilla Fine Steel" "Vanilla Silver" "Next"
-		Set Button to -1
-		Set ModelChange to 6203
-
-	elseif ( ModelChange == 6203 && Button > -1 )
-
-		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 1 WaraxeIdx
-
-	;-----------------------------------------------------------------------------
-	;Waraxe pg3
-	;-----------------------------------------------------------------------------
-	elseif ( ModelChange == 6204 )
-
-		MessageBox "Choose a form:" "Cancel" "Prev" "Vanilla Dwarven" "Vanilla Elven" "Vanilla Glass" "Vanilla Ebony" "Vanilla Daedric"; "" "" "Next"
-		Set Button to -1
-		Set ModelChange to 6205
-
-	elseif ( ModelChange == 6205 && Button > -1 )
-
-		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 2 WaraxeIdx
-
-
-
-
-
-		
-	;-----------------------------------------------------------------------------
-	;Bow pg1
-	;-----------------------------------------------------------------------------
-	elseif ( ModelChange == 7100 )
-
-		MessageBox "Choose a form:" "Cancel" "Back" "Ranger" "Ranger Ivory" "Ivellon" "Stendarr" "Breton" "Breton Black" "Recurve" "Next"
-		Set Button to -1
-		Set ModelChange to 7101
-
-	elseif ( ModelChange == 7101 && Button > -1 )
-
-		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 0 BowIdx
-
-	;-----------------------------------------------------------------------------
-	;Bow pg2
-	;-----------------------------------------------------------------------------
-	elseif ( ModelChange == 7102 )
-
-		MessageBox "Choose a form:" "Cancel" "Prev" "Recurve Leather" "Recurve Steel" "Nil Rosewood" "Nil Ebony" "Goblin" "Goblin Black" "Ashlander" "Next"
-		Set Button to -1
-		Set ModelChange to 7103
-
-	elseif ( ModelChange == 7103 && Button > -1 )
-
-		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 1 BowIdx
-
-	;-----------------------------------------------------------------------------
-	;Bow pg3
-	;-----------------------------------------------------------------------------
-	elseif ( ModelChange == 7104 )
-
-		MessageBox "Choose a form:" "Cancel" "Prev" "Ashlander II" "Ivory" "Ivory Wood" "Redwood" "Bone" "Classic" "Horn" "Next"
-		Set Button to -1
-		Set ModelChange to 7105
-
-	elseif ( ModelChange == 7105 && Button > -1 )
-
-		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 2 BowIdx
-
-	;-----------------------------------------------------------------------------
-	;Bow pg4
-	;-----------------------------------------------------------------------------
-	elseif ( ModelChange == 7106 )
-
-		MessageBox "Choose a form:" "Cancel" "Prev" "Horn II" "Sacred Horn" "Springsteel" "Springsteel Bell" "Springsteel Leather" "Nord" "Fine Nord" "Next"
-		Set Button to -1
-		Set ModelChange to 7107
-
-	elseif ( ModelChange == 7107 && Button > -1 )
-
-		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 3 BowIdx
-
-	;-----------------------------------------------------------------------------
-	;Bow pg5
-	;-----------------------------------------------------------------------------
-	elseif ( ModelChange == 7108 )
-
-		MessageBox "Choose a form:" "Cancel" "Prev" "Nord Magic" "Nord Magic II" "Nord Old"; "" "" "" "" "Next"
-		Set Button to -1
-		Set ModelChange to 7109
-
-	elseif ( ModelChange == 7109 && Button > -1 )
-
-		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 4 BowIdx
-
-	;-----------------------------------------------------------------------------
-	;Bow II pg1
-	;-----------------------------------------------------------------------------
-	elseif ( ModelChange == 7110 )
-
-		MessageBox "Choose a form:" "Cancel" "Back" "Vanilla Iron" "Vanilla Steel" "Vanilla Silver" "Vanilla Dwarven" "Vanilla Elven" "Vanilla Glass" "Vanilla Ebony" "Next"
-		Set Button to -1
-		Set ModelChange to 7111
-
-	elseif ( ModelChange == 7111 && Button > -1 )
-
-		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 0 BowIdx+35
-
-	;-----------------------------------------------------------------------------
-	;Bow II pg2
-	;-----------------------------------------------------------------------------
-	elseif ( ModelChange == 7112 )
-
-		MessageBox "Choose a form:" "Cancel" "Prev" "Vanilla Daedric"; "" "" "" "" "" "" "Next"
-		Set Button to -1
-		Set ModelChange to 7113
-
-	elseif ( ModelChange == 7113 && Button > -1 )
-
-		Set ModelChange to Call aaDusfergonModelPage ModelChange Button 1 BowIdx+35
-
-
-
-
-
-		
 	;-----------------------------------------------------------------------------
 	;Set new model and stats
 	;-----------------------------------------------------------------------------
-	elseif ( ModelChange == 100 && Button > -1 )
+	if ( ModelChange == 100 && Button > -1 )
 
 		;Set Model
 		Set aaDusfergonModel to IndexOffset + Button - 2
@@ -1855,7 +978,7 @@ begin MenuMode 1002 ;Inventory
 	;-----------------------------------------------------------------------------
 	
 ;-----------------------------------------------------------------------------
-end ;MenuMode Inventory
+end ;Inventory
 ;-----------------------------------------------------------------------------
 
 
@@ -1864,50 +987,67 @@ end ;MenuMode Inventory
 
 
 ;-----------------------------------------------------------------------------
-begin MenuMode 1042 ;MenuMode Enchanting
+begin MenuMode 1042 ;Enchanting
 ;-----------------------------------------------------------------------------
 
+	;-----------------------------------------------------------------------------
+	;Set script lag
+	;-----------------------------------------------------------------------------
 	if ( fQuestDelayTime != MenuLag )
-
+	;-----------------------------------------------------------------------------
+	
 		Set fQuestDelayTime to MenuLag
 
+	;-----------------------------------------------------------------------------
 	endif
+	;-----------------------------------------------------------------------------
 	
 	;-----------------------------------------------------------------------------
 	;Warn the player against enchanting	
 	;-----------------------------------------------------------------------------
-	if ( GetEnchMenuBaseItem == self && WarnOnce == 0)
+	if ( GetEnchMenuBaseItem == self )
 		
-		MessageBoxEx "%n rattles as if to resist enchantment." self
-		Set WarnOnce to 1
-		SetEventHandler "OnEnchant" aaDusfergonOnEnchant
+		if ( WarnOnce == 0 )
+
+			MessageBoxEx "%n rattles as if to resist enchantment." self
+			SetEventHandler "OnEnchant" aaDusfergonOnEnchant
+			Set WarnOnce to 1
+			
+		endif
+		
 		Set SoulGem to GetEnchMenuSoulgem
 
 	elseif ( GetEnchMenuBaseItem != self )
 
-		Set WarnOnce to 0
 		RemoveEventHandler "OnEnchant" aaDusfergonOnEnchant
+		Set WarnOnce to 0
 		
 	endif
 	
 ;-----------------------------------------------------------------------------
-end ;MenuMode Enchanting
+end ;Enchanting
 ;-----------------------------------------------------------------------------
 
 ;-----------------------------------------------------------------------------
-begin MenuMode 1048 ;MenuMode SigilStone
+begin MenuMode 1048 ;SigilStone
 ;-----------------------------------------------------------------------------
 
+	;-----------------------------------------------------------------------------
+	;Set script lag
+	;-----------------------------------------------------------------------------
 	if ( fQuestDelayTime != MenuLag )
-
+	;-----------------------------------------------------------------------------
+	
 		Set fQuestDelayTime to MenuLag
 
+	;-----------------------------------------------------------------------------
 	endif
+	;-----------------------------------------------------------------------------
 	
 	;-----------------------------------------------------------------------------
 	;Warn the player against enchanting	
 	;-----------------------------------------------------------------------------
-	if ( aaDusfergonLevel < sEnchStart && WarnOnce == 0)
+	if ( aaDusfergonLevel < sEnchStart && WarnOnce == 0 )
 		
 		MessageBoxEx "%n rattles in response to chaotic creatia." self
 		Set WarnOnce to 2
@@ -1915,5 +1055,5 @@ begin MenuMode 1048 ;MenuMode SigilStone
 	endif
 	
 ;-----------------------------------------------------------------------------
-end ;MenuMode SigilStone
+end ;SigilStone
 ;-----------------------------------------------------------------------------

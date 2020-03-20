@@ -61,3 +61,9 @@ V1.4
  - Swapping to and from bow while weapon is unequipped no longer re-equips your current weapon
  - Dropping the weapon will clear all listeners
  - Messages in the upper left will now have the icon of weapon's current form
+
+V1.5
+ - Ini adjustments
+ - - Added setting for keybindings
+ - Fixed error in HP check on Bow form
+ - Rewrote Charge formula, initial charge is now relevant to EnchStart instead of total level

@@ -133,3 +133,8 @@
 -Fixed some comments/headers/documentation that I failed to update previously
 -Rewrote Charge formula
 -Added function to set ModelChange when paging, cut down on repeating code
+
+20.03.2020
+-Added ToC function to set ModelChange after sub-type select, refactored code
+-Added option for keybindings in ini, as well as keycode table
+-Refactored menu code into its own function - reduced Manager size by 80%!
