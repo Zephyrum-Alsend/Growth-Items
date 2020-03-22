@@ -19,6 +19,8 @@ Known limitations of the scripting language:
 
 - Max 10 parameters for any function call, more will either not be read or throw an error, even if the function itself asks for more than 10
 
+- No arrays, though OBSE hacks in some with quirks
+
 
 
 Construction Set: https://cs.elderscrolls.com/index.php?title=The_Elder_Scrolls_Construction_Set
