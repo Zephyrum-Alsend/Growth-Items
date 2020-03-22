@@ -65,5 +65,11 @@ V1.4
 V1.5
  - Ini adjustments
  - - Added setting for keybindings
+ - - Added key for form quickswap during gameplay
+ - - Added key for form name display during gameplay
+ - - Added key for enchantment display during gameplay
+ - - Added key for random form during gameplay
+ - - Added setting for script latency
  - Fixed error in HP check on Bow form
  - Rewrote Charge formula, initial charge is now relevant to EnchStart instead of total level
+ - Added Staff forms

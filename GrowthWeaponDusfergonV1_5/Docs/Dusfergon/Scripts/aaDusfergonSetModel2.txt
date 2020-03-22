@@ -1309,6 +1309,17 @@ begin Function { weapon }
 		SetIconPath "Weapons\DaedricBow.dds" weapon
 		
 	;-----------------------------------------------------------------------------
+	;Staves
+	;-----------------------------------------------------------------------------
+	;Due to some wacky bugs with enchantment, Staves are also a separate entity like Bows
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11000 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\MC_Iron_Staff.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\MC_Iron_Staff_Icon.dds" weapon
+		
+	;-----------------------------------------------------------------------------
 	endif ;( aaDusfergonModel > 4999 )
 	;-----------------------------------------------------------------------------
 

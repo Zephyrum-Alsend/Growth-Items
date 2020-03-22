@@ -104,7 +104,7 @@ begin Function { ModelChange }
 		;-----------------------------------------------------------------------------
 		elseif ( aaDusfergonInit.Button == 5 )
 
-			MessageBox "Choose a sub-type:" "Cancel" "Back" "Bow" "Bow II"
+			MessageBox "Choose a sub-type:" "Cancel" "Back" "Bow" "Bow II" "Staff"
 			Set ModelChange to 7000
 			Set aaDusfergonInit.Button to -1
 
@@ -913,6 +913,19 @@ begin Function { ModelChange }
 	elseif ( ModelChange == 7113 && aaDusfergonInit.Button > -1 )
 
 		Set ModelChange to Call aaDusfergonModelPage ModelChange aaDusfergonInit.Button 1 aaDusfergonInit.BowIdx+35
+
+	;-----------------------------------------------------------------------------
+	;Staff pg1
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 7200 )
+
+		MessageBox "Choose a form:" "Cancel" "Back" "Staff"; "" "" "" "" "" "" "Next"
+		Set aaDusfergonInit.Button to -1
+		Set ModelChange to 7201
+
+	elseif ( ModelChange == 7201 && aaDusfergonInit.Button > -1 )
+
+		Set ModelChange to Call aaDusfergonModelPage ModelChange aaDusfergonInit.Button 0 aaDusfergonInit.StaffIdx
 
 	endif
 

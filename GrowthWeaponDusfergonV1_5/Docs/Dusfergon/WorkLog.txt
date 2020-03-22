@@ -138,3 +138,30 @@
 -Added ToC function to set ModelChange after sub-type select, refactored code
 -Added option for keybindings in ini, as well as keycode table
 -Refactored menu code into its own function - reduced Manager size by 80%!
+-Begun staff code
+	-StatAdj added Staff section
+	-Swap going to assume SetWeaponType won't CTD Staff like it does Bow for now
+	-Not going to touch enchantments until above issue is tested
+	-Added variables for Damage Health effect under Weapon Type Adjustments
+	-SetModel2 added entry for vanilla staff
+	-ModelChange put Staff under Marksman
+	-ModelToC put Staff pages at 7200
+	-ModelChange set up Staff page 1
+	-SetWeaponType does not CTD when switching to or from Staff
+
+21.03.2020
+-Added ability to call form change, enchantment display and name display from GameMode and added corresponding keybindings in INI
+-Added sXPStaff, set to 2
+-Moved Damage Health variables to top of Enchantment variables, added to INI
+-EnchInit working ok, except when you load in with a Staff, then load in without a Staff or vice versa, the enchantment isn't applied, but loading in with a staff, then swapping to a not Staff THEN loading in with not a Staff is fine
+-I may just do the Bow thing for the Staff as well, enchantment too.
+-Importing MC's Staff Pack
+-Remapped Iron Staff's textures only to expedite testing
+-Created DLScalar3S and DLScalar3SEnch
+-Decided to manage both enchants in tandem instead of updating each other on swap
+-Got rid of ability to call Form change menu in GameMode due to an old bug recurring (despite the code being the same)
+-Decided to change the above function into a quickswap, like Half Life
+-Renamed sGFormKey to sGMainKey in lue of it no longer triggering the form change menu
+-Also added settings for script/menu lag to INI
+-Added sGRandKey so Random can be called during gameplay
+-Still have to finish Staff code: level up, setmodel, XP awarder, Random, NameDisplay

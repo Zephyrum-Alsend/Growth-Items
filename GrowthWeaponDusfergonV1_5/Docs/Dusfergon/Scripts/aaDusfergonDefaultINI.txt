@@ -197,6 +197,19 @@ Set aaDusfergonInit.sEnchLevel to 5			;5
 ;-----------------------------------------------------------------------------
 ;Effect stats
 ;-----------------------------------------------------------------------------
+;Damage Health
+;-----------------------------------------------------------------------------
+Set aaDusfergonInit.sDGHEMagnBase to 8			;8
+Set aaDusfergonInit.sDGHEAreaBase to 5			;5
+Set aaDusfergonInit.sDGHEDuraBase to 0			;0
+Set aaDusfergonInit.fDGHECostBase to 10			;10
+
+Set aaDusfergonInit.fDGHEMagnMult to 0.4		;0.4
+Set aaDusfergonInit.fDGHEAreaMult to 0.1		;0.1
+Set aaDusfergonInit.fDGHEDuraMult to 0			;0
+Set aaDusfergonInit.fDGHECostMult to 0			;0
+
+;-----------------------------------------------------------------------------
 ;Elemental Damage
 ;-----------------------------------------------------------------------------
 Set aaDusfergonInit.sELDGMagnBase to 4			;4
@@ -456,6 +469,7 @@ Set aaDusfergonInit.sXPReqMult to 5			;5
 Set aaDusfergonInit.sXPNormal to 1			;1
 Set aaDusfergonInit.sXPPower to 3			;3
 Set aaDusfergonInit.sXPBow to 3				;3
+Set aaDusfergonInit.sXPStaff to 2			;2
 Set aaDusfergonInit.sLevelCap to 201			;201
 
 ;-----------------------------------------------------------------------------
@@ -475,15 +489,37 @@ Set aaDusfergonInit.sBreakLevel to 0			;0
 ;-----------------------------------------------------------------------------
 ;Keybindings
 ;-----------------------------------------------------------------------------
+;In Gameplay:
+;Form		: Quickswap to last form
+;Ench		: Display enchantment effects
+;Name		: Display form name
+;Rand		: Random form
+;In Inventory (moused over weapon):
 ;Main		: Form change menu
 ;Main + Ench	: Display enchantment effects
 ;Main + Name	: Display form name
 ;-----------------------------------------------------------------------------
+Set aaDusfergonInit.sGMainKey to 26			;26	[
+Set aaDusfergonInit.sGEnchKey to 27			;27	]
+Set aaDusfergonInit.sGNameKey to 43			;43	\
+Set aaDusfergonInit.sGRandKey to 28			;28	Enter
+
 Set aaDusfergonInit.sMMainKey to 257			;257	RMB
 Set aaDusfergonInit.sMEnchKey to 29			;29	Left CTRL
 Set aaDusfergonInit.sMEnchKey2 to 157			;157	Right CTRL
 Set aaDusfergonInit.sMNameKey to 42			;42	Left SHIFT
 Set aaDusfergonInit.sMNameKey2 to 54			;54	Right SHIFT
+
+;-----------------------------------------------------------------------------
+;Latency
+;-----------------------------------------------------------------------------
+;Lower numbers are more responsive but put more load on Oblivion's engine
+
+;The scripts are run every this second(s) while outside of a menu
+Set aaDusfergonInit.fScriptLag to 0.5			;0.5
+
+;The scripts are run every this second(s) while inside of a menu
+Set aaDusfergonInit.fMenuLag to 0.001			;0.001
 
 ;-----------------------------------------------------------------------------
 ;Keycodes

@@ -1,12 +1,11 @@
 scn aaDusfergonManager
 float fQuestDelayTime
-float ScriptLag
-float MenuLag
+float fScriptLag
+float fMenuLag
 
 ;Related scripts
 ;-----------------------------------------------------------------------------
 ;aaDusfergonManager
-;aaDusfergonDefaultINI
 ;aaDusfergonObject
 ;aaDusfergonObjectB
 ;aaDusfergonBreak
@@ -21,14 +20,13 @@ float MenuLag
 ;aaDusfergonEnchSlct
 ;aaDusfergonEnchLvl
 ;aaDusfergonEnchDisplay
-;aaDusfergonModelChange
-;aaDusfergonModelPage
-;aaDusfergonModelToC
+;aaDusfergonSwap
 ;aaDusfergonSetModel
 ;aaDusfergonSetModel2
 ;aaDusfergonRandomModel
-;aaDusfergonSwap
 ;aaDusfergonShowModelName
+;aaDusfergonModelPage
+;aaDusfergonModelToC
 ;aaDusfergonCalcXPReq
 ;aaDusfergonIncrVal
 ;aaDusfergonLevelMessage
@@ -205,6 +203,7 @@ float fBowSpeedBase
 float fBowDamageMult
 float fBowSpeedMult
 
+
 short AdjDamageBase
 float AdjSpeedBase
 float AdjReachBase
@@ -218,6 +217,16 @@ float AdjReachMult
 ;-----------------------------------------------------------------------------		
 short sEnchStart
 short sEnchLevel
+
+short sDGHEMagnBase
+short sDGHEAreaBase
+short sDGHEDuraBase
+float fDGHECostBase
+
+float fDGHEMagnMult
+float fDGHEAreaMult
+float fDGHEDuraMult
+float fDGHECostMult
 
 short sELDGMagnBase
 short sELDGAreaBase
@@ -403,14 +412,15 @@ float fABSPAreaMult
 float fABSPDuraMult
 float fABSPCostMult
 
-
 long lChargeBase
 float fChargeMult
+
 
 long Magnitude
 long Area
 long Duration
 float Cost
+float Cost2
 long Charge
 
 short EnchSelect
@@ -429,6 +439,7 @@ short sXPReqMult
 short sXPNormal
 short sXPPower
 short sXPBow
+short sXPStaff
 short sLevelCap
 short sBreakLevel
 
@@ -454,12 +465,18 @@ short BattleaxeIdx
 short MaceIdx
 short WaraxeIdx
 short BowIdx
+short StaffIdx
 
 short SetModel2Idx
 
 ;-----------------------------------------------------------------------------
 ;Keybindings
 ;-----------------------------------------------------------------------------
+short sGMainKey
+short sGEnchKey
+short sGNameKey
+short sGRandKey
+
 short sMMainKey
 short sMEnchKey
 short sMEnchKey2
@@ -471,6 +488,7 @@ short sMNameKey2
 ;-----------------------------------------------------------------------------
 ref self
 ref ench
+ref ench2
 
 
 
@@ -489,12 +507,6 @@ begin GameMode
 	;-----------------------------------------------------------------------------
 
 		;-----------------------------------------------------------------------------
-		;Minimize the delay time to increase responsiveness
-		;-----------------------------------------------------------------------------
-		Set ScriptLag to 0.5
-		Set MenuLag to 0.001
-
-		;-----------------------------------------------------------------------------
 		;Initialize variables
 		;-----------------------------------------------------------------------------
 		Set ClaymoreIdx to 0
@@ -508,6 +520,7 @@ begin GameMode
 		Set MaceIdx to 8000
 		Set WaraxeIdx to 9000
 		Set BowIdx to 10000
+		Set StaffIdx to 11000
 
 		Set SetModel2Idx to DaggerIdx
 
@@ -515,13 +528,21 @@ begin GameMode
 
 			Set self to DLScalar3
 
-		else
+		elseif ( aaDusfergonModel < StaffIdx )
 
 			Set self to DLScalar3B
+
+		else
+
+			Set self to DLScalar3S
 			
 		endif
 
 		Set ench to DLScalar3Ench
+		Set ench2 to DLScalar3SEnch
+		
+		Set Cost to 0
+		Set Cost2 to 0
 
 		
 		Set EnchSelect to 0
@@ -556,11 +577,15 @@ begin GameMode
 		;-----------------------------------------------------------------------------
 		;Set weapon stats
 		;-----------------------------------------------------------------------------
-		;Set sub-type adjustments
-		Call aaDusfergonStatAdj
+		if ( aaDusfergonModel < StaffIdx )
 
-		;Set Damage, Speed, Reach
-		Call aaDusfergonStatSet self ( sDamageBase + AdjDamageBase ) ( fDamageMult + AdjDamageMult ) ( fSpeedBase + AdjSpeedBase ) ( fSpeedMult + AdjSpeedMult ) ( fReachBase + AdjReachBase ) ( fReachMult + AdjReachMult )
+			;Set sub-type adjustments
+			Call aaDusfergonStatAdj
+
+			;Set Damage, Speed, Reach
+			Call aaDusfergonStatSet self ( sDamageBase + AdjDamageBase ) ( fDamageMult + AdjDamageMult ) ( fSpeedBase + AdjSpeedBase ) ( fSpeedMult + AdjSpeedMult ) ( fReachBase + AdjReachBase ) ( fReachMult + AdjReachMult )
+
+		endif
 
 		;Set Weight, Health, Value
 		Call aaDusfergonStatSet2 self fWeightBase fWeightMult sHealthBase fHealthMult lValueBase fValueMult
@@ -571,18 +596,34 @@ begin GameMode
 		;-----------------------------------------------------------------------------
 		;Purge effects from previous load game
 		RemoveAllEffectItems ench
+		RemoveAllEffectItems ench2
 		RemoveEnchantment self
 
 		;Set enchantment stats, return total Cost
-		Set Cost to Call aaDusfergonEnchInit ench
+		Set Cost to Call aaDusfergonEnchInit ench 1 Cost
+		Set Cost2 to Call aaDusfergonStatSetS ench2 sDGHEMagnBase fDGHEMagnMult sDGHEAreaBase fDGHEAreaMult sDGHEDuraBase fDGHEDuraMult fDGHECostBase fDGHECostMult
+		Set Cost2 to Call aaDusfergonEnchInit ench2 2 Cost2
 
-		;If there is an enchantment, apply it after calcing Charge
-		if ( GetMagicItemEffectCount ench > 0 )
+		if ( aaDusfergonLevel < sEnchStart )
+
+			Set Charge to lChargeBase
+
+		else
 
 			Set Charge to lChargeBase + ( fChargeMult * ( aaDusfergonLevel - sEnchStart ) )
-			SetObjectCharge Charge self
 
+		endif
+		
+		SetObjectCharge Charge self
+		
+		;If there is an enchantment, apply it
+		if ( aaDusfergonModel < StaffIdx && GetMagicItemEffectCount ench > 0 )
+			
 			SetEnchantment ench self
+
+		elseif ( aaDusfergonModel >= StaffIdx )
+
+			SetEnchantment ench2 self
 
 		endif
 
@@ -640,10 +681,10 @@ begin GameMode
 	;-----------------------------------------------------------------------------
 	;Set script lag
 	;-----------------------------------------------------------------------------
-	if ( fQuestDelayTime != ScriptLag )
+	if ( fQuestDelayTime != fScriptLag )
 	;-----------------------------------------------------------------------------
 
-			Set fQuestDelayTime to ScriptLag
+			Set fQuestDelayTime to fScriptLag
 	
 	;-----------------------------------------------------------------------------
 	endif
@@ -788,22 +829,49 @@ begin GameMode
 
 		Call aaDusfergonBreak sBreakLevel self
 
-		Call aaDusfergonStatSet self ( sDamageBase + AdjDamageBase ) ( fDamageMult + AdjDamageMult ) ( fSpeedBase + AdjSpeedBase ) ( fSpeedMult + AdjSpeedMult ) ( fReachBase + AdjReachBase ) ( fReachMult + AdjReachMult )
-		Call aaDusfergonStatSet2 self fWeightBase fWeightMult sHealthBase fHealthMult lValueBase fValueMult
+		;-----------------------------------------------------------------------------
+		;Reinitialize
+		;-----------------------------------------------------------------------------
+		if ( aaDusfergonModel < StaffIdx )
 
-		RemoveAllEffectItems ench
-		RemoveEnchantment self
-
-		Set Cost to Call aaDusfergonEnchInit ench
-
-		if ( GetMagicItemEffectCount ench > 0 )
-
-			Set Charge to lChargeBase + ( fChargeMult * ( aaDusfergonLevel - sEnchStart ) )
-			SetObjectCharge Charge self
-
-			SetEnchantment ench self
+			Call aaDusfergonStatAdj
+			Call aaDusfergonStatSet self ( sDamageBase + AdjDamageBase ) ( fDamageMult + AdjDamageMult ) ( fSpeedBase + AdjSpeedBase ) ( fSpeedMult + AdjSpeedMult ) ( fReachBase + AdjReachBase ) ( fReachMult + AdjReachMult )
 
 		endif
+
+		Call aaDusfergonStatSet2 self fWeightBase fWeightMult sHealthBase fHealthMult lValueBase fValueMult
+
+		
+		RemoveAllEffectItems ench
+		RemoveAllEffectItems ench2
+		RemoveEnchantment self
+
+		Set Cost to Call aaDusfergonEnchInit ench 1 Cost
+		Set Cost2 to Call aaDusfergonStatSetS ench2 sDGHEMagnBase fDGHEMagnMult sDGHEAreaBase fDGHEAreaMult sDGHEDuraBase fDGHEDuraMult fDGHECostBase fDGHECostMult
+		Set Cost2 to Call aaDusfergonEnchInit ench2 2 Cost2
+
+		if ( aaDusfergonLevel < sEnchStart )
+
+			Set Charge to lChargeBase
+
+		else
+
+			Set Charge to lChargeBase + ( fChargeMult * ( aaDusfergonLevel - sEnchStart ) )
+
+		endif
+		
+		SetObjectCharge Charge self
+		
+		if ( aaDusfergonModel < StaffIdx && GetMagicItemEffectCount ench > 0 )
+			
+			SetEnchantment ench self
+
+		elseif ( aaDusfergonModel >= StaffIdx )
+
+			SetEnchantment ench2 self
+
+		endif
+		
 		
 		Set XPReqHalf to Call aaDusfergonCalcXPReq aaDusfergonLevel sXPReqBase sXPReqMult XPReqHalf
 		Set HalfOnce to 0
@@ -817,7 +885,7 @@ begin GameMode
 
 
 	;-----------------------------------------------------------------------------
-	;Reset model swapper menus if force exited
+	;Reset model swapper menus if force exited from Inventory
 	;-----------------------------------------------------------------------------
 	if ( ModelChange > 0 )
 
@@ -826,6 +894,159 @@ begin GameMode
 	endif
 
 
+
+
+
+
+	
+	;-----------------------------------------------------------------------------
+	;Shows enchantment effects if Player hits GEnchKey
+	;-----------------------------------------------------------------------------
+	if ( IsKeyPressed2 sGEnchKey )
+	;-----------------------------------------------------------------------------
+
+		if ( aaDusfergonModel < StaffIdx )
+
+			Call aaDusfergonEnchDisplay ench
+
+		else
+
+			Call aaDusfergonEnchDisplay ench2
+
+		endif
+		
+	;-----------------------------------------------------------------------------
+	;Shows current model's name if Player hits GNameKey
+	;-----------------------------------------------------------------------------
+	elseif ( IsKeyPressed2 sGNameKey )
+	;-----------------------------------------------------------------------------
+
+		Call aaDusfergonShowModelName self
+	
+	;-----------------------------------------------------------------------------
+	;Quick swap back to last form if Player hits GMainKey
+	;-----------------------------------------------------------------------------
+	elseif ( OnKeyDown sGMainKey && Player.GetItemCount self > 0 )
+
+		;Re-using short
+		Set Button to aaDusfergonModelLast
+
+		;Store current model ID
+		Set aaDusfergonModelLast to aaDusfergonModel
+		
+		;Set Model
+		Set aaDusfergonModel to Button
+
+		;Swap to/from Bow if necessary
+		if ( aaDusfergonModel < BowIdx )
+
+			Call aaDusfergonSwap self DLScalar3 ench
+				
+		elseif ( aaDusfergonModel < StaffIdx )
+
+			Call aaDusfergonSwap self DLScalar3B ench
+
+		else
+
+			Call aaDusfergonSwap self DLScalar3S ench
+				
+		endif
+
+
+		if ( aaDusfergonModel < StaffIdx )
+			
+			;Set stats
+			Call aaDusfergonStatAdj
+			Call aaDusfergonStatSet self ( sDamageBase + AdjDamageBase ) ( fDamageMult + AdjDamageMult ) ( fSpeedBase + AdjSpeedBase ) ( fSpeedMult + AdjSpeedMult ) ( fReachBase + AdjReachBase ) ( fReachMult + AdjReachMult )
+
+		endif
+		
+
+		;Change model
+		if ( aaDusfergonModel < SetModel2Idx )
+
+			Call aaDusfergonSetModel self
+
+		else
+
+			Call aaDusfergonSetModel2 self
+
+		endif
+		
+
+		;Reusing string_var
+		Let EffName := "Icons\" + ( GetIconPath self )
+		SetMessageIcon $EffName
+		MessageEX "%n has changed form." self 5
+
+		Set ModelChange to 0
+		
+	;-----------------------------------------------------------------------------
+	;Swap to a random form if Player hits GRandKey
+	;-----------------------------------------------------------------------------
+	elseif ( OnKeyDown sGRandKey && Player.GetItemCount self > 0 )
+
+		;Re-using short
+		Set Button to Call aaDusfergonRandomModel
+
+		;Store current model ID
+		Set aaDusfergonModelLast to aaDusfergonModel
+		
+		;Set Model
+		Set aaDusfergonModel to Button
+
+		;Swap to/from Bow if necessary
+		if ( aaDusfergonModel < BowIdx )
+
+			Call aaDusfergonSwap self DLScalar3 ench
+				
+		elseif ( aaDusfergonModel < StaffIdx )
+
+			Call aaDusfergonSwap self DLScalar3B ench
+
+		else
+
+			Call aaDusfergonSwap self DLScalar3S ench
+				
+		endif
+
+
+		if ( aaDusfergonModel < StaffIdx )
+			
+			;Set stats
+			Call aaDusfergonStatAdj
+			Call aaDusfergonStatSet self ( sDamageBase + AdjDamageBase ) ( fDamageMult + AdjDamageMult ) ( fSpeedBase + AdjSpeedBase ) ( fSpeedMult + AdjSpeedMult ) ( fReachBase + AdjReachBase ) ( fReachMult + AdjReachMult )
+
+		endif
+		
+
+		;Change model
+		if ( aaDusfergonModel < SetModel2Idx )
+
+			Call aaDusfergonSetModel self
+
+		else
+
+			Call aaDusfergonSetModel2 self
+
+		endif
+		
+
+		;Reusing string_var
+		Let EffName := "Icons\" + ( GetIconPath self )
+		SetMessageIcon $EffName
+		MessageEX "%n has changed form." self 5
+
+		Set ModelChange to 0
+		
+	endif
+
+
+
+
+
+
+	
 	;-----------------------------------------------------------------------------
 	;Undo enchantment if weapon was enchanted by player
 	;-----------------------------------------------------------------------------
@@ -862,10 +1083,10 @@ begin MenuMode 1002 ;Inventory
 	;-----------------------------------------------------------------------------
 	;Set script lag
 	;-----------------------------------------------------------------------------
-	if ( fQuestDelayTime != MenuLag )
+	if ( fQuestDelayTime != fMenuLag )
 	;-----------------------------------------------------------------------------
 	
-		Set fQuestDelayTime to MenuLag
+		Set fQuestDelayTime to fMenuLag
 
 	;-----------------------------------------------------------------------------
 	endif
@@ -892,7 +1113,15 @@ begin MenuMode 1002 ;Inventory
 	if ( GetActiveMenuSelection == self && ( ( IsKeyPressed2 sMEnchKey ) || ( IsKeyPressed2 sMEnchKey2 ) ) && ( IsKeyPressed2 sMMainKey ) )
 	;-----------------------------------------------------------------------------
 
-		Call aaDusfergonEnchDisplay ench
+		if ( aaDusfergonModel < StaffIdx )
+
+			Call aaDusfergonEnchDisplay ench
+
+		else
+
+			Call aaDusfergonEnchDisplay ench2
+
+		endif
 		
 	;-----------------------------------------------------------------------------
 	;Shows current model's name if Player Shift + right-clicks weapon
@@ -934,24 +1163,35 @@ begin MenuMode 1002 ;Inventory
 	;-----------------------------------------------------------------------------
 	if ( ModelChange == 100 && Button > -1 )
 
+		;Store last model ID
+		Set aaDusfergonModelLast to aaDusfergonModel
+		
 		;Set Model
 		Set aaDusfergonModel to IndexOffset + Button - 2
 
 		;Swap to/from Bow if necessary
 		if ( aaDusfergonModel < BowIdx )
 
-			Call aaDusfergonSwap DLScalar3B DLScalar3 ench
+			Call aaDusfergonSwap self DLScalar3 ench
 				
+		elseif ( aaDusfergonModel < StaffIdx )
+
+			Call aaDusfergonSwap self DLScalar3B ench
+
 		else
 
-			Call aaDusfergonSwap DLScalar3 DLScalar3B ench
+			Call aaDusfergonSwap self DLScalar3S ench
 				
 		endif
 
 
-		;Set stats
-		Call aaDusfergonStatAdj
-		Call aaDusfergonStatSet self ( sDamageBase + AdjDamageBase ) ( fDamageMult + AdjDamageMult ) ( fSpeedBase + AdjSpeedBase ) ( fSpeedMult + AdjSpeedMult ) ( fReachBase + AdjReachBase ) ( fReachMult + AdjReachMult )
+		if ( aaDusfergonModel < StaffIdx )
+			
+			;Set stats
+			Call aaDusfergonStatAdj
+			Call aaDusfergonStatSet self ( sDamageBase + AdjDamageBase ) ( fDamageMult + AdjDamageMult ) ( fSpeedBase + AdjSpeedBase ) ( fSpeedMult + AdjSpeedMult ) ( fReachBase + AdjReachBase ) ( fReachMult + AdjReachMult )
+
+		endif
 		
 
 		;Change model
@@ -993,10 +1233,10 @@ begin MenuMode 1042 ;Enchanting
 	;-----------------------------------------------------------------------------
 	;Set script lag
 	;-----------------------------------------------------------------------------
-	if ( fQuestDelayTime != MenuLag )
+	if ( fQuestDelayTime != fMenuLag )
 	;-----------------------------------------------------------------------------
 	
-		Set fQuestDelayTime to MenuLag
+		Set fQuestDelayTime to fMenuLag
 
 	;-----------------------------------------------------------------------------
 	endif
@@ -1035,10 +1275,10 @@ begin MenuMode 1048 ;SigilStone
 	;-----------------------------------------------------------------------------
 	;Set script lag
 	;-----------------------------------------------------------------------------
-	if ( fQuestDelayTime != MenuLag )
+	if ( fQuestDelayTime != fMenuLag )
 	;-----------------------------------------------------------------------------
 	
-		Set fQuestDelayTime to MenuLag
+		Set fQuestDelayTime to fMenuLag
 
 	;-----------------------------------------------------------------------------
 	endif

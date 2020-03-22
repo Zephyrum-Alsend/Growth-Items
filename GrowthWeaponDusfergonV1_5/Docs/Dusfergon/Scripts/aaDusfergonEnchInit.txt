@@ -35,6 +35,7 @@ scn aaDusfergonEnchInit
 long Magnitude
 long Area
 long Duration
+short Range
 float Cost ;Return value
 
 short EnchIter
@@ -47,12 +48,11 @@ ref Ench
 
 
 ;-----------------------------------------------------------------------------
-begin Function { Ench }
+begin Function { Ench, Range, Cost }
 ;-----------------------------------------------------------------------------
-	Set Cost to 0
 	Set WKMALv to 0
 	Set DGFALv to 0
-		
+
 	;-----------------------------------------------------------------------------
 	;Fire option
 	;-----------------------------------------------------------------------------
@@ -63,14 +63,14 @@ begin Function { Ench }
 		Set Duration to aaDusfergonInit.sELDGDuraBase + ( aaDusfergonInit.fELDGDuraMult * aaDusfergonEnch1 )
 		Set Cost to Cost + aaDusfergonInit.fELDGCostBase + ( aaDusfergonInit.fELDGCostMult * aaDusfergonEnch1 )
 			
-		AddFullEffectItem FIDG Magnitude Area Duration 1 Ench
+		AddFullEffectItem FIDG Magnitude Area Duration Range Ench
 
 		Set Magnitude to aaDusfergonInit.sWKELMagnBase + ( aaDusfergonInit.fWKELMagnMult * aaDusfergonEnch1 )
 		Set Area to aaDusfergonInit.sWKELAreaBase + ( aaDusfergonInit.fWKELAreaMult * aaDusfergonEnch1 )
 		Set Duration to aaDusfergonInit.sWKELDuraBase + ( aaDusfergonInit.fWKELDuraMult * aaDusfergonEnch1 )
 		Set Cost to Cost + aaDusfergonInit.fWKELCostBase + ( aaDusfergonInit.fWKELCostMult * aaDusfergonEnch1 )
 
-		AddFullEffectItem WKFI Magnitude Area Duration 1 Ench
+		AddFullEffectItem WKFI Magnitude Area Duration Range Ench
 
 		Set WKMALv to 1
 			
@@ -86,14 +86,14 @@ begin Function { Ench }
 		Set Duration to aaDusfergonInit.sELDGDuraBase + ( aaDusfergonInit.fELDGDuraMult * aaDusfergonEnch2 )
 		Set Cost to Cost + aaDusfergonInit.fELDGCostBase + ( aaDusfergonInit.fELDGCostMult * aaDusfergonEnch2 )
 
-		AddFullEffectItem FRDG Magnitude Area Duration 1 Ench
+		AddFullEffectItem FRDG Magnitude Area Duration Range Ench
 
 		Set Magnitude to aaDusfergonInit.sWKELMagnBase + ( aaDusfergonInit.fWKELMagnMult * aaDusfergonEnch2 )
 		Set Area to aaDusfergonInit.sWKELAreaBase + ( aaDusfergonInit.fWKELAreaMult * aaDusfergonEnch2 )
 		Set Duration to aaDusfergonInit.sWKELDuraBase + ( aaDusfergonInit.fWKELDuraMult * aaDusfergonEnch2 )
 		Set Cost to Cost + aaDusfergonInit.fWKELCostBase + ( aaDusfergonInit.fWKELCostMult * aaDusfergonEnch2 )
 
-		AddFullEffectItem WKFR Magnitude Area Duration 1 Ench
+		AddFullEffectItem WKFR Magnitude Area Duration Range Ench
 
 		Set WKMALv to 1
 			
@@ -109,14 +109,14 @@ begin Function { Ench }
 		Set Duration to aaDusfergonInit.sELDGDuraBase + ( aaDusfergonInit.fELDGDuraMult * aaDusfergonEnch3 )
 		Set Cost to Cost + aaDusfergonInit.fELDGCostBase + ( aaDusfergonInit.fELDGCostMult * aaDusfergonEnch3 )
 
-		AddFullEffectItem SHDG Magnitude Area Duration 1 Ench
+		AddFullEffectItem SHDG Magnitude Area Duration Range Ench
 
 		Set Magnitude to aaDusfergonInit.sWKELMagnBase + ( aaDusfergonInit.fWKELMagnMult * aaDusfergonEnch3 )
 		Set Area to aaDusfergonInit.sWKELAreaBase + ( aaDusfergonInit.fWKELAreaMult * aaDusfergonEnch3 )
 		Set Duration to aaDusfergonInit.sWKELDuraBase + ( aaDusfergonInit.fWKELDuraMult * aaDusfergonEnch3 )
 		Set Cost to Cost + aaDusfergonInit.fWKELCostBase + ( aaDusfergonInit.fWKELCostMult * aaDusfergonEnch3 )
 
-		AddFullEffectItem WKSH Magnitude Area Duration 1 Ench
+		AddFullEffectItem WKSH Magnitude Area Duration Range Ench
 
 		Set WKMALv to 1
 
@@ -132,14 +132,14 @@ begin Function { Ench }
 		Set Duration to aaDusfergonInit.sDIWEDuraBase + ( aaDusfergonInit.fDIWEDuraMult * aaDusfergonEnch4 )
 		Set Cost to Cost + aaDusfergonInit.fDIWECostBase + ( aaDusfergonInit.fDIWECostMult * aaDusfergonEnch4 )
 
-		AddFullEffectItem DIWE Magnitude Area Duration 1 Ench
+		AddFullEffectItem DIWE Magnitude Area Duration Range Ench
 
 		Set Magnitude to aaDusfergonInit.sDIARMagnBase + ( aaDusfergonInit.fDIARMagnMult * aaDusfergonEnch4 )
 		Set Area to aaDusfergonInit.sDIARAreaBase + ( aaDusfergonInit.fDIARAreaMult * aaDusfergonEnch4 )
 		Set Duration to aaDusfergonInit.sDIARDuraBase + ( aaDusfergonInit.fDIARDuraMult * aaDusfergonEnch4 )
 		Set Cost to Cost + aaDusfergonInit.fDIARCostBase + ( aaDusfergonInit.fDIARCostMult * aaDusfergonEnch4 )
 
-		AddFullEffectItem DIAR Magnitude Area Duration 1 Ench
+		AddFullEffectItem DIAR Magnitude Area Duration Range Ench
 			
 		Set DGFALv to 1
 
@@ -155,21 +155,21 @@ begin Function { Ench }
 		Set Duration to aaDusfergonInit.sDGSPDuraBase + ( aaDusfergonInit.fDGSPDuraMult * aaDusfergonEnch5 )
 		Set Cost to Cost + aaDusfergonInit.fDGSPCostBase + ( aaDusfergonInit.fDGSPCostMult * aaDusfergonEnch5 )
 
-		AddFullEffectItem DGSP Magnitude Area Duration 1 Ench
+		AddFullEffectItem DGSP Magnitude Area Duration Range Ench
 
 		Set Magnitude to aaDusfergonInit.sDSPLMagnBase + ( aaDusfergonInit.fDSPLMagnMult * aaDusfergonEnch5 )
 		Set Area to aaDusfergonInit.sDSPLAreaBase + ( aaDusfergonInit.fDSPLAreaMult * aaDusfergonEnch5 )
 		Set Duration to 0
 		Set Cost to Cost + aaDusfergonInit.fDSPLCostBase + ( aaDusfergonInit.fDSPLCostMult * aaDusfergonEnch5 )
 
-		AddFullEffectItem DSPL Magnitude Area Duration 1 Ench
+		AddFullEffectItem DSPL Magnitude Area Duration Range Ench
 
 		Set Magnitude to 0
 		Set Area to aaDusfergonInit.sSLNCAreaBase + ( aaDusfergonInit.fSLNCAreaMult * aaDusfergonEnch5 )
 		Set Duration to aaDusfergonInit.sSLNCDuraBase + ( aaDusfergonInit.fSLNCDuraMult * aaDusfergonEnch5 )
 		Set Cost to Cost + aaDusfergonInit.fSLNCCostBase + ( aaDusfergonInit.fSLNCCostMult * aaDusfergonEnch5 )
 
-		AddFullEffectItem SLNC Magnitude Area Duration 1 Ench
+		AddFullEffectItem SLNC Magnitude Area Duration Range Ench
 			
 	endif
 
@@ -183,14 +183,14 @@ begin Function { Ench }
 		Set Duration to aaDusfergonInit.sBRDNDuraBase + ( aaDusfergonInit.fBRDNDuraMult * aaDusfergonEnch6 )
 		Set Cost to Cost + aaDusfergonInit.fBRDNCostBase + ( aaDusfergonInit.fBRDNCostMult * aaDusfergonEnch6 )
 
-		AddFullEffectItem BRDN Magnitude Area Duration 1 Ench
+		AddFullEffectItem BRDN Magnitude Area Duration Range Ench
 
 		Set Magnitude to aaDusfergonInit.sDRATMagnBase + ( aaDusfergonInit.fDRATMagnMult * aaDusfergonEnch6 )
 		Set Area to aaDusfergonInit.sDRATAreaBase + ( aaDusfergonInit.fDRATAreaMult * aaDusfergonEnch6 )
 		Set Duration to aaDusfergonInit.sDRATDuraBase + ( aaDusfergonInit.fDRATDuraMult * aaDusfergonEnch6 )
 		Set Cost to Cost + aaDusfergonInit.fDRATCostBase + ( aaDusfergonInit.fDRATCostMult * aaDusfergonEnch6 )
 
-		Set EnchIter to AddFullEffectItem DRAT Magnitude Area Duration 1 Ench
+		Set EnchIter to AddFullEffectItem DRAT Magnitude Area Duration Range Ench
 		SetNthEffectItemActorValue "Strength" Ench EnchIter
 
 		Set WKMALv to 1
@@ -207,21 +207,21 @@ begin Function { Ench }
 		Set Duration to aaDusfergonInit.sCOMMDuraBase + ( aaDusfergonInit.fCOMMDuraMult * aaDusfergonEnch7 )
 		Set Cost to Cost + aaDusfergonInit.fCOMMCostBase + ( aaDusfergonInit.fCOMMCostMult * aaDusfergonEnch7 )
 
-		AddFullEffectItem COCR Magnitude Area Duration 1 Ench
+		AddFullEffectItem COCR Magnitude Area Duration Range Ench
 
 		Set Magnitude to aaDusfergonInit.sCOMMMagnBase + ( aaDusfergonInit.fCOMMMagnMult * aaDusfergonEnch7 )
 		Set Area to aaDusfergonInit.sCOMMAreaBase + ( aaDusfergonInit.fCOMMAreaMult * aaDusfergonEnch7 )
 		Set Duration to aaDusfergonInit.sCOMMDuraBase + ( aaDusfergonInit.fCOMMDuraMult * aaDusfergonEnch7 )
 		Set Cost to Cost + aaDusfergonInit.fCOMMCostBase + ( aaDusfergonInit.fCOMMCostMult * aaDusfergonEnch7 )
 
-		AddFullEffectItem COHU Magnitude Area Duration 1 Ench
+		AddFullEffectItem COHU Magnitude Area Duration Range Ench
 
 		Set Magnitude to aaDusfergonInit.sRALYMagnBase + ( aaDusfergonInit.fRALYMagnMult * aaDusfergonEnch7 )
 		Set Area to aaDusfergonInit.sRALYAreaBase + ( aaDusfergonInit.fRALYAreaMult * aaDusfergonEnch7 )
 		Set Duration to aaDusfergonInit.sRALYDuraBase + ( aaDusfergonInit.fRALYDuraMult * aaDusfergonEnch7 )
 		Set Cost to Cost + aaDusfergonInit.fRALYCostBase + ( aaDusfergonInit.fRALYCostMult * aaDusfergonEnch7 )
 
-		AddFullEffectItem RALY Magnitude Area Duration 1 Ench
+		AddFullEffectItem RALY Magnitude Area Duration Range Ench
 
 	endif
 	
@@ -235,20 +235,20 @@ begin Function { Ench }
 		Set Duration to aaDusfergonInit.sFRNZDuraBase + ( aaDusfergonInit.fFRNZDuraMult * aaDusfergonEnch8 )
 		Set Cost to Cost + aaDusfergonInit.fFRNZCostBase + ( aaDusfergonInit.fFRNZCostMult * aaDusfergonEnch8 )
 
-		AddFullEffectItem FRNZ Magnitude Area Duration 1 Ench
+		AddFullEffectItem FRNZ Magnitude Area Duration Range Ench
 
 		Set Magnitude to aaDusfergonInit.sLGHTMagnBase + ( aaDusfergonInit.fLGHTMagnMult * aaDusfergonEnch8 )
 		Set Area to aaDusfergonInit.sLGHTAreaBase + ( aaDusfergonInit.fLGHTAreaMult * aaDusfergonEnch8 )
 		Set Duration to aaDusfergonInit.sLGHTDuraBase + ( aaDusfergonInit.fLGHTDuraMult * aaDusfergonEnch8 )
 		Set Cost to Cost + aaDusfergonInit.fLGHTCostBase + ( aaDusfergonInit.fLGHTCostMult * aaDusfergonEnch8 )
 
-		AddFullEffectItem LGHT Magnitude Area Duration 1 Ench
+		AddFullEffectItem LGHT Magnitude Area Duration Range Ench
 
 		Set Area to aaDusfergonInit.sSTRPAreaBase + ( aaDusfergonInit.fSTRPAreaMult * aaDusfergonEnch8 )
 		Set Duration to aaDusfergonInit.sSTRPDuraBase + ( aaDusfergonInit.fSTRPDuraMult * aaDusfergonEnch8 )
 		Set Cost to Cost + aaDusfergonInit.fSTRPCostBase + ( aaDusfergonInit.fSTRPCostMult * aaDusfergonEnch8 )
 
-		AddFullEffectItem STRP 0 Area Duration 1 Ench
+		AddFullEffectItem STRP 0 Area Duration Range Ench
 	
 	endif
 
@@ -262,7 +262,7 @@ begin Function { Ench }
 		Set Duration to aaDusfergonInit.sDRATDuraBase + ( aaDusfergonInit.fDRATDuraMult * aaDusfergonEnch9 )
 		Set Cost to Cost + aaDusfergonInit.fDRATCostBase + ( aaDusfergonInit.fDRATCostMult * aaDusfergonEnch9 )
 
-		Set EnchIter to AddFullEffectItem DRAT Magnitude Area Duration 1 Ench
+		Set EnchIter to AddFullEffectItem DRAT Magnitude Area Duration Range Ench
 		SetNthEffectItemActorValue "Agility" Ench EnchIter
 
 		Set DGFALv to 1
@@ -281,21 +281,21 @@ begin Function { Ench }
 		Set Duration to aaDusfergonInit.sABFADuraBase + ( aaDusfergonInit.fABFADuraMult * aaDusfergonEnch10 )
 		Set Cost to Cost + aaDusfergonInit.fABFACostBase + ( aaDusfergonInit.fABFACostMult * aaDusfergonEnch10 )
 
-		AddFullEffectItem ABFA Magnitude Area Duration 1 Ench
+		AddFullEffectItem ABFA Magnitude Area Duration Range Ench
 
 		Set Magnitude to aaDusfergonInit.sABHEMagnBase + ( aaDusfergonInit.fABHEMagnMult * aaDusfergonEnch10 )
 		Set Area to aaDusfergonInit.sABHEAreaBase + ( aaDusfergonInit.fABHEAreaMult * aaDusfergonEnch10 )
 		Set Duration to aaDusfergonInit.sABHEDuraBase + ( aaDusfergonInit.fABHEDuraMult * aaDusfergonEnch10 )
 		Set Cost to Cost + aaDusfergonInit.fABHECostBase + ( aaDusfergonInit.fABHECostMult * aaDusfergonEnch10 )
 
-		AddFullEffectItem ABHE Magnitude Area Duration 1 Ench
+		AddFullEffectItem ABHE Magnitude Area Duration Range Ench
 
 		Set Magnitude to aaDusfergonInit.sABSPMagnBase + ( aaDusfergonInit.fABSPMagnMult * aaDusfergonEnch10 )
 		Set Area to aaDusfergonInit.sABSPAreaBase + ( aaDusfergonInit.fABSPAreaMult * aaDusfergonEnch10 )
 		Set Duration to aaDusfergonInit.sABSPDuraBase + ( aaDusfergonInit.fABSPDuraMult * aaDusfergonEnch10 )
 		Set Cost to Cost + aaDusfergonInit.fABSPCostBase + ( aaDusfergonInit.fABSPCostMult * aaDusfergonEnch10 )
 
-		AddFullEffectItem ABSP Magnitude Area Duration 1 Ench
+		AddFullEffectItem ABSP Magnitude Area Duration Range Ench
 
 	endif
 	
@@ -323,7 +323,7 @@ begin Function { Ench }
 		Set Duration to aaDusfergonInit.sDGFADuraBase + ( aaDusfergonInit.fDGFADuraMult * DGFALv )
 		Set Cost to Cost + aaDusfergonInit.fDGFACostBase + ( aaDusfergonInit.fDGFACostMult * DGFALv )
 
-		AddFullEffectItem DGFA Magnitude Area Duration 1 Ench
+		AddFullEffectItem DGFA Magnitude Area Duration Range Ench
 
 	endif
 
@@ -369,7 +369,7 @@ begin Function { Ench }
 		Set Duration to aaDusfergonInit.sWKMADuraBase + ( aaDusfergonInit.fWKMADuraMult * WKMALv )
 		Set Cost to Cost + aaDusfergonInit.fWKMACostBase + ( aaDusfergonInit.fWKMACostMult * WKMALv )
 
-		AddFullEffectItem WKMA Magnitude Area Duration 1 Ench
+		AddFullEffectItem WKMA Magnitude Area Duration Range Ench
 
 	endif
 
@@ -381,5 +381,5 @@ begin Function { Ench }
 	SetFunctionValue Cost
 	Return
 ;-----------------------------------------------------------------------------
-end ;Function { Ench }
+end ;Function { Ench, Range, Cost }
 ;-----------------------------------------------------------------------------

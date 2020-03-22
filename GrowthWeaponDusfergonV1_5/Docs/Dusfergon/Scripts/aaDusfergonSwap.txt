@@ -40,7 +40,7 @@ begin Function { OldWeap, NewWeap, Ench }
 ;-----------------------------------------------------------------------------
 	;Swap Old for New if necessary
 	;-----------------------------------------------------------------------------
-	if ( Player.GetItemCount OldWeap > 0 )
+	if ( Player.GetItemCount OldWeap > 0 && OldWeap != NewWeap )
 	;-----------------------------------------------------------------------------
 
 		;-----------------------------------------------------------------------------
@@ -58,15 +58,20 @@ begin Function { OldWeap, NewWeap, Ench }
 		CopyName OldWeap NewWeap
 		Call aaDusfergonStatSet2 NewWeap aaDusfergonInit.fWeightBase aaDusfergonInit.fWeightMult aaDusfergonInit.sHealthBase aaDusfergonInit.fHealthMult aaDusfergonInit.lValueBase aaDusfergonInit.fValueMult
 
-		;Set enchantment if necessary
-		if ( aaDusfergonlevel >= aaDusfergonInit.sEnchStart )
+		SetObjectCharge aaDusfergonInit.Charge NewWeap
+		
+		if ( aaDusfergonModel < aaDusfergonInit.StaffIdx )
+			
+			;Set enchantment if necessary
+			if ( aaDusfergonlevel >= aaDusfergonInit.sEnchStart )
 
-			SetEnchantment Ench NewWeap
-			SetObjectCharge aaDusfergonInit.Charge NewWeap
+				SetEnchantment Ench NewWeap	
 
-		else
+			else
 
-			RemoveEnchantment NewWeap
+				RemoveEnchantment NewWeap
+
+			endif
 
 		endif
 

@@ -137,6 +137,11 @@ begin Function { ModelChange, Button }
 
 			Set ModelChange to 7110
 
+		;Staff pages
+		elseif ( Button == 4 )
+
+			Set ModelChange to 7200
+
 		endif
 		
 	;-----------------------------------------------------------------------------
