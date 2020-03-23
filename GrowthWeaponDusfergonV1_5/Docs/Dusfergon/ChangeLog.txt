@@ -70,6 +70,7 @@ V1.5
  - - Added key for enchantment display during gameplay
  - - Added key for random form during gameplay
  - - Added setting for script latency
+ - Mod will now initialize with default values if the ini is missing or doesn't compile
  - Fixed error in HP check on Bow form
  - Fixed error in calc for adding Damage Magicka effect
  - Rewrote Charge formula, initial charge is now relevant to EnchStart instead of total level

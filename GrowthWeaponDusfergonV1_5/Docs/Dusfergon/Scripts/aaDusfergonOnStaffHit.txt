@@ -14,18 +14,11 @@ scn aaDusfergonOnStaffHit
 
 ;Description
 ;-----------------------------------------------------------------------------
-;
+;Awards XP when a valid target is hit by DLScalar3SEnch and starts logger.
 ;-----------------------------------------------------------------------------
 
 ;Parameters
 ;-----------------------------------------------------------------------------
-Float TargetHealth
-Long Damage
-float Resist
-Long TrueDmg
-
-short TimeElapsed
-
 ref Target
 ;-----------------------------------------------------------------------------
 
@@ -34,50 +27,23 @@ ref Target
 ;-----------------------------------------------------------------------------
 begin ScriptEffectStart
 ;-----------------------------------------------------------------------------
-	;Start combat logger
-	if ( aaDusfergonCombatXPLog == 0 )
+	Set Target to GetSelf
+	
+	if ( Target.IsActor == 1 && Target.GetDead == 0 )
+		
+		;Start combat logger
+		if ( aaDusfergonCombatXPLog == 0 )
 
-		Set aaDusfergonCombatXPStart to aaDusfergonXP
-		Set aaDusfergonCombatXPLog to 1
+			Set aaDusfergonCombatXPStart to aaDusfergonXP
+			Set aaDusfergonCombatXPLog to 1
+
+		endif
+
+		;Add XP
+		Set aaDusfergonXP to ( aaDusfergonXP + aaDusfergonInit.sXPStaff )
 
 	endif
-
-	;Add XP
-	Set aaDusfergonXP to ( aaDusfergonXP + aaDusfergonInit.sXPStaff )
-
-	Set Target to GetSelf
-	Set Resist to ( Target.GetAV ResistMagic ) / 100
-	Set Damage to -( ( aaDusfergonInit.sDGHEMagnBase ) + ( ( aaDusfergonInit.fDGHEMagnMult ) * ( aaDusfergonLevel - 1 ) ) )
-	Set TrueDmg to ( Damage * ( 1 - Resist ) )
-	Set TimeElapsed to 0
-	
-	Target.ModAVMod Health "damage" TrueDmg
-
-	Player.Cast StandardDamageHealthTarget2Apprentice Target
-
-	Set TargetHealth to Target.GetAV Health
-
-	printc "%g" TargetHealth
-
 	
 ;-----------------------------------------------------------------------------
 end ;ScriptEffectStart
-;-----------------------------------------------------------------------------
-
-;-----------------------------------------------------------------------------
-begin ScriptEffectUpdate
-;-----------------------------------------------------------------------------
-
-	if ( ScriptEffectElapsedSeconds >= ( TimeElapsed + 1 ) )
-		Set TimeElapsed to TimeElapsed + 1
-	
-		Target.ModAVMod Health "damage" TrueDmg
-		Set TargetHealth to Target.GetAV Health
-
-		printc "%g" TargetHealth
-
-	endif
-	
-;-----------------------------------------------------------------------------
-end ;ScriptEffectUpdate
 ;-----------------------------------------------------------------------------

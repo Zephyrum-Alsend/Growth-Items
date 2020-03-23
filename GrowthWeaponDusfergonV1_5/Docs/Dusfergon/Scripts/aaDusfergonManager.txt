@@ -6,27 +6,35 @@ float fMenuLag
 ;Related scripts
 ;-----------------------------------------------------------------------------
 ;aaDusfergonManager
+;aaDusfergonDefaultINI
 ;aaDusfergonObject
 ;aaDusfergonObjectB
+;aaDusfergonObjectS
 ;aaDusfergonBreak
 ;aaDusfergonOnHit
 ;aaDusfergonOnBowHit
 ;aaDusfergonOnArrowHit
+;aaDusfergonOnStaffHit
 ;aaDusfergonStatAdj
 ;aaDusfergonStatSet
 ;aaDusfergonStatSet2
+;aaDusfergonStatSetS
 ;aaDusfergonStatLvl
+;aaDusfergonStatLvlS
+;aaDusfergonRRemoveUnScriptedEffects
 ;aaDusfergonEnchInit
 ;aaDusfergonEnchSlct
 ;aaDusfergonEnchLvl
 ;aaDusfergonEnchDisplay
+;aaDusfergonModelChange
+;aaDusfergonModelToC
+;aaDusfergonModelPage
+;aaDusfergonExchange
 ;aaDusfergonSwap
 ;aaDusfergonSetModel
 ;aaDusfergonSetModel2
 ;aaDusfergonRandomModel
 ;aaDusfergonShowModelName
-;aaDusfergonModelPage
-;aaDusfergonModelToC
 ;aaDusfergonCalcXPReq
 ;aaDusfergonIncrVal
 ;aaDusfergonLevelMessage
@@ -54,17 +62,19 @@ float fMenuLag
 ;aaDusfergonEquip
 ;aaDusfergonLevel
 ;aaDusfergonModel
+;aaDusfergonModelLast
 ;aaDusfergonXP
 ;aaDusfergonXPReq
 ;-----------------------------------------------------------------------------
 
 ;Description
 ;-----------------------------------------------------------------------------
-;Main script of Dusfergon.  Handles all stats and core functionality.
+;Main script of Dusfergon.
 ;
-;When a save is loaded, looks at all globals and the .ini to set weapon's 
-;model, type, stats, enchantment, event handler and XPReq.  Both a console
-;message and weapon equip sound will happen when everything is initialized.
+;When a save is loaded, initialize variables then to set weapon's model, type,
+;stats, enchantment, event handler and XPReq.  Both a console message and 
+;weapon equip sound (if already equipped) will happen when everything is 
+;initialized.
 ;
 ;Upon combat end, log XP gained from said combat to console.
 ;
@@ -79,15 +89,16 @@ float fMenuLag
 ;new one, or continue growing an old one.  Set new XPReq.  A message will 
 ;appear in the upper left of the screen whenever a level up happens.
 ;
-;If the weapon breaks, decrease level by the amount specified in sBreakLevel.
+;If the weapon breaks, decrease level by the amount specified in sBreakLevel
+;and reinitialize with new stats.
 ;
-;While the player is in their inventory, right-clicking the weapon will prompt
-;the player to change it's model and type.  If the player Ctrl+RMBs the weapon
-;it will display all enchantment effects and the active enchantment.  If the
-;player Shift+RMBs the weapon it will display the current form's name and
-;sub-type menu.
-;These menus and changes all occur within the inventory menu, no need to to
-;exit to GameMode.
+;When the .ini defined key is pressed during gameplay, either show form name
+;in a message, show full enchantment in a message box, swap to the last form
+;the weapon held, or swap to a random form.
+;
+;When the .ini defined key(s) is pressed within the inventory menu while the
+;weapon is highlighted, either display the form name in a message, show full
+;enchantment in a message box, or begin the form change menus.
 ;
 ;Form change sub-type menus are capped at 5 pages due to navigation time; a
 ;II category can be made to hold additional pages, allowing for up to 10 pages
@@ -99,6 +110,7 @@ float fMenuLag
 ;Weapon variables
 ;-----------------------------------------------------------------------------
 string_var str_Name
+string_var Icon
 
 short sDamageBase
 float fSpeedBase
@@ -428,10 +440,6 @@ float Cost2
 long Charge
 
 short EnchSelect
-short EnchIter
-string_var EffName
-string_var EffActv
-
 short WarnOnce
 ref SoulGem
 
@@ -528,27 +536,33 @@ begin GameMode
 
 		Set SetModel2Idx to DaggerIdx
 
+		;Melee weapon
 		if ( aaDusfergonModel < BowIdx )
 
 			Set self to DLScalar3
 
+		;Bow
 		elseif ( aaDusfergonModel < StaffIdx )
 
 			Set self to DLScalar3B
 
+		;Staff
 		else
 
 			Set self to DLScalar3S
 			
 		endif
 
+		;Melee/Bow enchantment
 		Set ench to DLScalar3Ench
-		Set ench2 to DLScalar3SEnch
-		
 		Set Cost to 0
+
+		;Staff enchantment
+		Set ench2 to DLScalar3SEnch
 		Set Cost2 to 0
 
-		
+
+		;DoOnce vars
 		Set EnchSelect to 0
 		Set ModelChange to 0
 		Set WarnOnce to 0
@@ -570,9 +584,8 @@ begin GameMode
 			Player.AddItemNS self 1
 			Set aaDusfergonLevel to 1
 
-			;Reusing string_var
-			Let EffName := "Icons\" + ( GetIconPath self )
-			SetMessageIcon $EffName
+			Let Icon := "Icons\" + ( GetIconPath self )
+			SetMessageIcon $Icon
 			MessageEX "An artifact of unknown affiliation appears in your belongings..." 10
 
 		endif
@@ -583,7 +596,7 @@ begin GameMode
 		;-----------------------------------------------------------------------------
 		if ( aaDusfergonModel < StaffIdx )
 
-			;Set sub-type adjustments
+			;Set sub-type adjustments, directly modified inside function due to param limit
 			Call aaDusfergonStatAdj
 
 			;Set Damage, Speed, Reach
@@ -600,7 +613,7 @@ begin GameMode
 		;-----------------------------------------------------------------------------
 		;Purge effects from previous load game
 		RemoveAllEffectItems ench
-		;RemoveAllEffectItems ench2
+		Call aaDusfergonRemoveUnScriptedEffects ench2
 		RemoveEnchantment self
 
 		;Set enchantment stats, return total Cost
@@ -608,6 +621,7 @@ begin GameMode
 		Set Cost2 to Call aaDusfergonStatSetS ench2 sDGHEMagnBase fDGHEMagnMult ( sDGHEAreaBase + sStaffAreaBase ) ( fDGHEAreaMult + fStaffAreaMult ) sDGHEDuraBase fDGHEDuraMult fDGHECostBase fDGHECostMult
 		Set Cost2 to Call aaDusfergonEnchInit ench2 2 Cost2
 
+		;Set Charge
 		if ( aaDusfergonLevel < sEnchStart )
 
 			Set Charge to lChargeBase
@@ -625,6 +639,7 @@ begin GameMode
 			
 			SetEnchantment ench self
 
+		;Staves must always be enchanted, or else they're just fancy sticks
 		elseif ( aaDusfergonModel >= StaffIdx )
 
 			SetEnchantment ench2 self
@@ -635,10 +650,10 @@ begin GameMode
 		;-----------------------------------------------------------------------------
 		;Set XPReq
 		;-----------------------------------------------------------------------------
-		;Set XPReq, return halfway point
+		;Set XPReq in function, return halfway point
 		Set XPReqHalf to Call aaDusfergonCalcXPReq aaDusfergonLevel sXPReqBase sXPReqMult XPReqHalf
 
-		;Set halfway/levelcap message flag
+		;Set halfway/levelcap DoOnce
 		if ( aaDusfergonLevel < sLevelCap )
 
 			Set HalfOnce to 0
@@ -653,7 +668,7 @@ begin GameMode
 		;-----------------------------------------------------------------------------
 		;Set model and weapon type
 		;-----------------------------------------------------------------------------
-		;Resets handler if equipped, since has to be re-equipped to refresh model
+		;Set model, also resets handlers if equipped because function force re-equips to refresh model
 		if ( aaDusfergonModel < SetModel2Idx )
 			
 			Call aaDusfergonSetModel self
@@ -664,7 +679,7 @@ begin GameMode
 
 		endif
 		
-		;Removes handler from previous load game
+		;Removes handlers from previous load game
 		RemoveEventHandler "OnHitWith" aaDusfergonOnArrowHit
 		if ( aaDusfergonEquip == 0 )
 
@@ -686,14 +701,11 @@ begin GameMode
 	;Set script lag
 	;-----------------------------------------------------------------------------
 	if ( fQuestDelayTime != fScriptLag )
-	;-----------------------------------------------------------------------------
-
+	
 			Set fQuestDelayTime to fScriptLag
 	
-	;-----------------------------------------------------------------------------
 	endif
-	;-----------------------------------------------------------------------------
-
+	
 
 
 
@@ -719,6 +731,9 @@ begin GameMode
 	;Level up sub-blocks
 	;-----------------------------------------------------------------------------
 
+	;-----------------------------------------------------------------------------
+	;Get choice from enchant option menu
+	;-----------------------------------------------------------------------------	
 	if ( EnchSelect == 2 )
 
 		Set Button to GetButtonPressed
@@ -745,7 +760,7 @@ begin GameMode
 
 		Set aaDusfergonEnch to ( Button + 1 )
 
-		;Initialize enchant option if necessary
+		;Function initializes enchant option if necessary
 		Set Cost to Call aaDusfergonEnchSlct ench 1 Cost
 		Set Cost2 to Call aaDusfergonEnchSlct ench2 2 Cost2
 
@@ -761,12 +776,14 @@ begin GameMode
 	;-----------------------------------------------------------------------------
 	if ( HalfOnce == 0 && EnchSelect < 2 )
 
+		;Level cap message box
 		if ( aaDusfergonLevel >= sLevelCap )
 
 			MessageBoxEx "%n has reached its apex." self
 
 			Set HalfOnce to 1
 
+		;Half way message
 		elseif ( aaDusfergonXP >= XPReqHalf && aaDusfergonEquip == 1 )
 
 			Call aaDusfergonLevelMessage HalfOnce self
@@ -796,29 +813,30 @@ begin GameMode
 
 		endif
 
+		;Update Staff basic effects
 		Set Cost2 to Call aaDusfergonStatLvlS ench2 fDGHEMagnMult fDGHEAreaMult fDGHEDuraMult fDGHECostMult fStaffAreaMult Cost2
 		
 		;Update enchantment stats
 		if ( aaDusfergonLevel >= sEnchStart )
 
-			;Set flag for enchantment option menu
+			;Set flag for enchantment option menu if necessary
 			if ( ( ( aaDusfergonLevel - sEnchStart ) %  sEnchLevel ) == 0 )
 
 				Set EnchSelect to 1
 
 			endif
 
-			;Increment enchantment stats
+			;Increment active enchantment stats
 			Set Cost to Call aaDusfergonEnchLvl ench Cost 1
 			Set Cost2 to Call aaDusfergonEnchLvl ench2 Cost2 2
 
-			;Set Charge
+			;Increment Charge
 			Set Charge to lChargeBase + ( fChargeMult * ( aaDusfergonLevel - sEnchStart ) )
 			SetObjectCharge Charge self
 
 		endif
 		
-		;Set XPReq
+		;Set XPReq and XPReqHalf
 		Set XPReqHalf to Call aaDusfergonCalcXPReq aaDusfergonLevel sXPReqBase sXPReqMult XPReqHalf
 		
 		
@@ -842,7 +860,10 @@ begin GameMode
 	;De-level if broken
 	;-----------------------------------------------------------------------------
 	if ( aaDusfergonBroken == 1 )
-
+	;-----------------------------------------------------------------------------
+	;Flag is set in Object/ObjectB/ObjectS in UnEquip block, because Oblivion auto-unequips broken weapons
+	
+		;Function decrements stat and ench related globals
 		Call aaDusfergonBreak sBreakLevel self
 
 		;-----------------------------------------------------------------------------
@@ -857,9 +878,11 @@ begin GameMode
 
 		Call aaDusfergonStatSet2 self fWeightBase fWeightMult sHealthBase fHealthMult lValueBase fValueMult
 
+		Set Cost to 0
+		Set Cost2 to 0
 		
 		RemoveAllEffectItems ench
-		RemoveAllEffectItems ench2
+		Call aaDusfergonRemoveUnScriptedEffects ench2
 		RemoveEnchantment self
 
 		Set Cost to Call aaDusfergonEnchInit ench 1 Cost
@@ -888,20 +911,21 @@ begin GameMode
 
 		endif
 		
-		
 		Set XPReqHalf to Call aaDusfergonCalcXPReq aaDusfergonLevel sXPReqBase sXPReqMult XPReqHalf
 		Set HalfOnce to 0
 
 		Set aaDusfergonBroken to 0
 
-	endif
+	;-----------------------------------------------------------------------------
+	endif ;( aaDusfergonBroken == 1 )
+	;-----------------------------------------------------------------------------
 	
 
 
 
 
 	;-----------------------------------------------------------------------------
-	;Reset model swapper menus if force exited from Inventory
+	;Reset model swapper menus if force exited from Inventory somehow
 	;-----------------------------------------------------------------------------
 	if ( ModelChange > 0 )
 
@@ -921,10 +945,12 @@ begin GameMode
 	if ( IsKeyPressed2 sGEnchKey )
 	;-----------------------------------------------------------------------------
 
+		;Melee/Bow enchantment
 		if ( aaDusfergonModel < StaffIdx )
 
 			Call aaDusfergonEnchDisplay ench
 
+		;Staff enchantment
 		else
 
 			Call aaDusfergonEnchDisplay ench2
@@ -943,6 +969,7 @@ begin GameMode
 	;Quick swap back to last form if Player hits GMainKey
 	;-----------------------------------------------------------------------------
 	elseif ( OnKeyDown sGMainKey && Player.GetItemCount self > 0 )
+	;-----------------------------------------------------------------------------
 
 		Set self to Call aaDusfergonExchange self ench aaDusfergonModelLast sDamageBase fDamageMult fSpeedBase fSpeedMult fReachBase fReachMult
 		
@@ -950,10 +977,13 @@ begin GameMode
 	;Swap to a random form if Player hits GRandKey
 	;-----------------------------------------------------------------------------
 	elseif ( OnKeyDown sGRandKey && Player.GetItemCount self > 0 )
+	;-----------------------------------------------------------------------------
 
 		Set self to Call aaDusfergonExchange self ench ( Call aaDusfergonRandomModel ) sDamageBase fDamageMult fSpeedBase fSpeedMult fReachBase fReachMult
 				
-	endif
+	;-----------------------------------------------------------------------------
+	endif ;( OnKeyDown ( sGRandKey || sGMainKey ) || IsKeyPressed2 ( sGNameKey || sGEnchKey ) )
+	;-----------------------------------------------------------------------------
 
 
 
@@ -966,6 +996,7 @@ begin GameMode
 	;-----------------------------------------------------------------------------
 	if ( WarnOnce == 1 )
 
+		;Handler would have fired by now
 		RemoveEventHandler "OnEnchant" aaDusfergonOnEnchant
 		Set WarnOnce to 0
 
@@ -998,19 +1029,17 @@ begin MenuMode 1002 ;Inventory
 	;Set script lag
 	;-----------------------------------------------------------------------------
 	if ( fQuestDelayTime != fMenuLag )
-	;-----------------------------------------------------------------------------
 	
 		Set fQuestDelayTime to fMenuLag
 
-	;-----------------------------------------------------------------------------
 	endif
-	;-----------------------------------------------------------------------------
-
+	
 	;-----------------------------------------------------------------------------
 	;Undo enchantment if weapon was enchanted by player
 	;-----------------------------------------------------------------------------
 	if ( WarnOnce == 1 )
 
+		;Handler would have fired by now
 		RemoveEventHandler "OnEnchant" aaDusfergonOnEnchant
 		Set WarnOnce to 0
 
@@ -1022,15 +1051,17 @@ begin MenuMode 1002 ;Inventory
 	endif
 
 	;-----------------------------------------------------------------------------
-	;Shows enchantment effects if Player Ctrl + right-clicks weapon
+	;Shows enchantment effects if Player highlights weapon and hits sMMainKey + sMEnchKey
 	;-----------------------------------------------------------------------------
 	if ( GetActiveMenuSelection == self && ( ( IsKeyPressed2 sMEnchKey ) || ( IsKeyPressed2 sMEnchKey2 ) ) && ( IsKeyPressed2 sMMainKey ) )
 	;-----------------------------------------------------------------------------
 
+		;Melee/Bow enchantment
 		if ( aaDusfergonModel < StaffIdx )
 
 			Call aaDusfergonEnchDisplay ench
 
+		;Staff enchantment
 		else
 
 			Call aaDusfergonEnchDisplay ench2
@@ -1038,7 +1069,7 @@ begin MenuMode 1002 ;Inventory
 		endif
 		
 	;-----------------------------------------------------------------------------
-	;Shows current model's name if Player Shift + right-clicks weapon
+	;Shows current model's name if Player highlights weapon and hits sMMainKey + sMNameKey
 	;-----------------------------------------------------------------------------
 	elseif ( GetActiveMenuSelection == self && ( ( IsKeyPressed2 sMNameKey ) || ( IsKeyPressed2 sMNameKey2 ) ) && ( IsKeyPressed2 sMMainKey ) )
 	;-----------------------------------------------------------------------------
@@ -1046,15 +1077,18 @@ begin MenuMode 1002 ;Inventory
 		Call aaDusfergonShowModelName self
 	
 	;-----------------------------------------------------------------------------
-	;Start ModelChange menus if Player right-clicks weapon
+	;Start ModelChange menus if Player highlights weapon and hits sMMainKey
 	;-----------------------------------------------------------------------------
 	elseif ( GetActiveMenuSelection == self && ModelChange == 0 && ( IsKeyPressed2 sMMainKey ) )
-
+	;-----------------------------------------------------------------------------
+	
 		Set Button to -1
 		Set ModelChange to 1
 		
-	endif
-
+	;-----------------------------------------------------------------------------
+	endif ;( GetActiveMenuSelection == self && IsKeyPressed2 ( sMMainKey && ( sMNameKey || sMEnchKey ) ) )
+	;-----------------------------------------------------------------------------
+	
 	
 	
 
@@ -1080,9 +1114,7 @@ begin MenuMode 1002 ;Inventory
 		Set self to Call aaDusfergonExchange self ench ( IndexOffset + Button - 2 ) sDamageBase fDamageMult fSpeedBase fSpeedMult fReachBase fReachMult
 		Set ModelChange to 0
 
-	;-----------------------------------------------------------------------------
-	endif ;ModelChange != 0
-	;-----------------------------------------------------------------------------
+	endif
 	
 ;-----------------------------------------------------------------------------
 end ;Inventory
@@ -1101,13 +1133,10 @@ begin MenuMode 1042 ;Enchanting
 	;Set script lag
 	;-----------------------------------------------------------------------------
 	if ( fQuestDelayTime != fMenuLag )
-	;-----------------------------------------------------------------------------
 	
 		Set fQuestDelayTime to fMenuLag
 
-	;-----------------------------------------------------------------------------
 	endif
-	;-----------------------------------------------------------------------------
 	
 	;-----------------------------------------------------------------------------
 	;Warn the player against enchanting	
@@ -1117,11 +1146,14 @@ begin MenuMode 1042 ;Enchanting
 		if ( WarnOnce == 0 )
 
 			MessageBoxEx "%n rattles as if to resist enchantment." self
+
+			;Handler will undo enchantment if Player goes through with it
 			SetEventHandler "OnEnchant" aaDusfergonOnEnchant
 			Set WarnOnce to 1
 			
 		endif
-		
+
+		;Keep used soul gem updated so handler restores the right one
 		Set SoulGem to GetEnchMenuSoulgem
 
 	elseif ( GetEnchMenuBaseItem != self )
@@ -1143,20 +1175,20 @@ begin MenuMode 1048 ;SigilStone
 	;Set script lag
 	;-----------------------------------------------------------------------------
 	if ( fQuestDelayTime != fMenuLag )
-	;-----------------------------------------------------------------------------
 	
 		Set fQuestDelayTime to fMenuLag
 
-	;-----------------------------------------------------------------------------
 	endif
-	;-----------------------------------------------------------------------------
 	
 	;-----------------------------------------------------------------------------
 	;Warn the player against enchanting	
 	;-----------------------------------------------------------------------------
-	if ( aaDusfergonLevel < sEnchStart && WarnOnce == 0 )
-		
+	;No such equivalent function as GetEnchMenuBaseItem so throw the warning if it's possible to enchant self
+	if ( GetEnchantment self == 0 && WarnOnce == 0 )
+
 		MessageBoxEx "%n rattles in response to chaotic creatia." self
+
+		;No such equivalent handler type as "OnEnchant" so OnSigilStone is called from Inventory or GameMode
 		Set WarnOnce to 2
 
 	endif

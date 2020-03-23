@@ -1,40 +1,23 @@
-scn aaDusfergonStatSetS
+scn aaDusfergonRemoveUnScriptedEffects
 
 ;Related scripts
 ;-----------------------------------------------------------------------------
 ;aaDusfergonManager
-;aaDusfergonStatAdj
-;aaDusfergonStatSet
-;aaDusfergonStatSet2
-;aaDusfergonStatLvl
 ;-----------------------------------------------------------------------------
 
 ;Related globals
 ;-----------------------------------------------------------------------------
-;aaDusfergonLevel
 ;-----------------------------------------------------------------------------
 
 ;Description
 ;-----------------------------------------------------------------------------
-;Sets the staff's basic effect according the passed values and Level.
+;Purges all non-scripted effects from the passed Ench.
 ;-----------------------------------------------------------------------------
 
 ;Parameters
 ;-----------------------------------------------------------------------------
-short DmgB
-short AreB
-short DurB
-float CosB
-
-float DmgM
-float AreM
-float DurM
-float CosM
-
-long Damage
-long Area
-long Duration
-float Cost ;Return value
+short EnchIter
+short EnchIndex
 
 ref Ench
 ;-----------------------------------------------------------------------------
@@ -42,20 +25,23 @@ ref Ench
 
 
 ;-----------------------------------------------------------------------------
-begin Function { Ench, DmgB, DmgM, AreB, AreM, DurB, DurM, CosB, CosM }
+begin Function { Ench }
 ;-----------------------------------------------------------------------------
-	Set Damage to ( DmgB ) + ( ( DmgM ) * ( aaDusfergonLevel - 1 ) )
-	Set Area to ( AreB ) + ( ( AreM ) * ( aaDusfergonLevel - 1 ) )
-	Set Duration to ( DurB ) + ( ( DurM ) * ( aaDusfergonLevel - 1 ) )
-	Set Cost to ( CosB ) + ( ( CosM ) * ( aaDusfergonLevel - 1 ) )
+	Set EnchIndex to GetMagicItemEffectCount Ench
 
-	SetNthEffectItemArea Area Ench 0
-	AddFullEffectItem DGHE Damage Area Duration 2 Ench
+	Set EnchIter to EnchIndex
+	While ( EnchIter > 0 )
+		Set EnchIter to ( EnchIter - 1 )
 
-	SetEnchantmentCost Cost Ench
+		if eval( !( IsNthEffectItemScripted Ench EnchIter ) )
 
-	SetFunctionValue Cost	
+			RemoveNthEffectItem Ench EnchIter
+
+		endif
+		
+	loop
+
 	Return
 ;-----------------------------------------------------------------------------
-end ;Function { Ench, DmgB, DmgM, AreB, AreM, DurB, DurM, CosB, CosM }
+end ;Function { Ench }
 ;-----------------------------------------------------------------------------

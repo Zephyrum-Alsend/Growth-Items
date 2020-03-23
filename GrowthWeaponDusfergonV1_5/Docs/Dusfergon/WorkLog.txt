@@ -203,3 +203,31 @@
 -XP is awarded for inanimate objects and corpses, but also properly awards when hitting multiple targets with AoE
 -Just doing the uglier but simpler method of making Damage Health and script effect XP awarder separate is looking increasingly appealing
 -Potential problem with Staff XP: MagicEffect scripts are run after all the normal effects are applied, so target may be already dead - great for kill based XP, not so much for hit based
+
+23.03.2020
+-Went for the simply but ugly solution of having Damage Health be separate from the script effect that awards XP, added same checks on OnArrowHit and it works
+-Renamed script effect to Growth from Damage Health, since it's no longer trying to mimic the latter
+-Made a RemoveAllEffectItems that ignores scripted effects, ResetStaffEnch
+-I could
+	-Create DLScalar3SEnchBase
+	-RemoveAllEffectItems DLScalar3SEnch
+	-CopyAllEffectItems DLScalar3SEnchBase DLScalar3SEnch
+		-but that feels like more work than just making a custom RemoveAllEffectItems
+-if eval( !( IsNthEffectItemScripted Ench EnchIter ) ) doesn't seem to be fully working, partial purge of effects
+-Changed to hardcode skip first effect (which should always be the scripted effect)
+-Hardcode is also partially purging, roundabout it might need to be
+-Roundabout method works, did as described above
+-Deleted ResetStaffEnch
+-Went through Manager comments to make more helpful after the fiasco of navigating KOTNR's code
+-I just realized what was wrong with ResetStaffEnch
+	-Iterated forward through effects, deleting them
+	-Each delete would move the other effects forward and decrease total count
+	-Would end up skipping over effects as their indices changed
+-Reinstated ResetStaffEnch as RemoveUnScriptedEffects, changed iteration direction to backwards and it: works!
+-Deleting DLScalar3SEnchBase
+-To recount: Level up and XP awarder are done; to do: add more models, update DisplayName, Random
+-Small updates to DefaultINI, need to find better default keys for gameplay functions
+-Set GEnchKey and GNameKey to 10(9) and 11(0) respectively
+-Set GMainKey and GRandKey to 47(V) and 34(G) respectively
+-Tweaked SigilStone warning to trigger if weapon has no enchantment as opposed to if Level < EnchStart
+-Removed unused variables from Manager

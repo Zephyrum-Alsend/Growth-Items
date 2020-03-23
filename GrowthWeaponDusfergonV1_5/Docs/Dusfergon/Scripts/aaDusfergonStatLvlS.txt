@@ -15,7 +15,9 @@ scn aaDusfergonStatLvlS
 
 ;Description
 ;-----------------------------------------------------------------------------
-;
+;Increments the values of DGHE and Script effect by the values defined in the
+;.ini, then increments all effects' Area by the amount defined in 
+;fStaffAreaMult for the passed Ench.
 ;-----------------------------------------------------------------------------
 
 ;Parameters
@@ -45,7 +47,7 @@ begin Function { Ench, MagM, AreM, DurM, CostM, AreaSM, Cost }
 	Set EnchIndex to GetMagicItemEffectCount Ench
 
 	;-----------------------------------------------------------------------------
-	;Increment Damage Health effect
+	;Increment Damage Health and Script effect
 	;-----------------------------------------------------------------------------
 	Set Magnitude to Call aaDusfergonIncrVal MagM ( aaDusfergonLevel - 1 )
 	Set Area to Call aaDusfergonIncrVal AreM ( aaDusfergonLevel - 1 )
@@ -53,9 +55,11 @@ begin Function { Ench, MagM, AreM, DurM, CostM, AreaSM, Cost }
 
 	Set Cost to Cost + CostM
 
-	;Damage Health is always first
 	Set EnchIter to 0
-	;ModNthEffectItemMagnitude Magnitude Ench EnchIter
+	ModNthEffectItemArea Area Ench EnchIter
+
+	Set EnchIter to 1
+	ModNthEffectItemMagnitude Magnitude Ench EnchIter
 	ModNthEffectItemArea Area Ench EnchIter
 	ModNthEffectItemDuration Duration Ench EnchIter
 
