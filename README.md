@@ -9,7 +9,17 @@ Unfortunately, this means they lack all of the highlighting code files would oth
 The Construction Set itself also lacks highlighting, however the Construction Set Extender adds it.
 The Extender is also required to compile the .esp, as it uses many functions added by OBSE.
 
-Of note: Only global variables are saved by the game.
+Known limitations of the scripting language:
+
+- ~30KB max size per script (in-engine size, .txts are larger)
+
+- Only Global variables are saved, all other variables go poof on Quit Game
+
+- Variable data lingers between Load Games
+
+- Max 10 parameters for any function call, more will either not be read or throw an error, even if the function itself asks for more than 10
+
+- No arrays, though OBSE hacks in some with quirks
 
 
 
