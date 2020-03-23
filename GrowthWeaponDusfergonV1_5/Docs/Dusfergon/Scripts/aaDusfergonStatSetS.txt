@@ -22,8 +22,8 @@ scn aaDusfergonStatSetS
 ;Parameters
 ;-----------------------------------------------------------------------------
 short DmgB
-float AreB
-float DurB
+short AreB
+short DurB
 float CosB
 
 float DmgM
@@ -32,8 +32,8 @@ float DurM
 float CosM
 
 long Damage
-float Area
-float Duration
+long Area
+long Duration
 float Cost ;Return value
 
 ref Ench
@@ -44,12 +44,14 @@ ref Ench
 ;-----------------------------------------------------------------------------
 begin Function { Ench, DmgB, DmgM, AreB, AreM, DurB, DurM, CosB, CosM }
 ;-----------------------------------------------------------------------------
-	Set Damage to ( DmgB ) + ( ( DmgM ) * ( aaDusfergonLevel - 1 ) )
+	;Set Damage to ( DmgB ) + ( ( DmgM ) * ( aaDusfergonLevel - 1 ) )
 	Set Area to ( AreB ) + ( ( AreM ) * ( aaDusfergonLevel - 1 ) )
 	Set Duration to ( DurB ) + ( ( DurM ) * ( aaDusfergonLevel - 1 ) )
 	Set Cost to ( CosB ) + ( ( CosM ) * ( aaDusfergonLevel - 1 ) )
 
-	AddFullEffectItem DGHE Damage Area Duration 2 Ench
+	SetNthEffectItemArea Area Ench 0
+	SetNthEffectItemDuration Duration Ench 0
+	;AddFullEffectItem DGHE Damage Area Duration 2 Ench
 
 	SetEnchantmentCost Cost Ench
 

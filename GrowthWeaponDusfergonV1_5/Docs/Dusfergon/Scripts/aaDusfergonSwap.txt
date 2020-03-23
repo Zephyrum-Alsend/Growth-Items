@@ -19,7 +19,7 @@ scn aaDusfergonSwap
 ;Used by ModelChange block in Manager to swap to and from Bow form.
 ;Takes two weapons and an enchantment; if the weapon to be replaced is in the
 ;Player's inventory, exchange it for the new weapon and copy item values from
-;old to new.
+;old to new. Returns what new self RefID should be.
 ;-----------------------------------------------------------------------------
 
 ;Parameters
@@ -38,10 +38,13 @@ ref Ench
 ;-----------------------------------------------------------------------------
 begin Function { OldWeap, NewWeap, Ench }
 ;-----------------------------------------------------------------------------
+	SetFunctionValue OldWeap
+	
 	;Swap Old for New if necessary
 	;-----------------------------------------------------------------------------
 	if ( Player.GetItemCount OldWeap > 0 && OldWeap != NewWeap )
 	;-----------------------------------------------------------------------------
+		SetFunctionValue NewWeap
 
 		;-----------------------------------------------------------------------------
 		;Add NewWeap
@@ -51,9 +54,6 @@ begin Function { OldWeap, NewWeap, Ench }
 		;-----------------------------------------------------------------------------
 		;Set stats not updated in ModelChange
 		;-----------------------------------------------------------------------------
-		;Set new self
-		Set aaDusfergonInit.self to NewWeap
-		
 		;Set name and aux stats
 		CopyName OldWeap NewWeap
 		Call aaDusfergonStatSet2 NewWeap aaDusfergonInit.fWeightBase aaDusfergonInit.fWeightMult aaDusfergonInit.sHealthBase aaDusfergonInit.fHealthMult aaDusfergonInit.lValueBase aaDusfergonInit.fValueMult

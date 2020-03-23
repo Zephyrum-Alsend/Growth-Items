@@ -1,0 +1,105 @@
+scn aaDusfergonExchange
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;aaDusfergonManager
+;aaDusfergonStatAdj
+;aaDusfergonStatSet
+;aaDusfergonStatSet2
+;aaDusfergonSwap
+;aaDusfergonSetModel
+;aaDusfergonSetModel2
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;aaDusfergonArrowsUp
+;aaDusfergonBroken
+;aaDusfergonEquip
+;aaDusfergonLevel
+;aaDusfergonModel
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;Handles exchanging the current Model for the passed Model, changing 
+;appropriate stats and storing the previous selection for Quickswap.
+;Returns new self RefID.
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+short Model
+
+short DmgB
+float DmgM
+float SpdB
+float SpdM
+float RchB
+float RchM
+
+string_var Icon
+
+ref Weap ;Return value
+ref Ench
+;-----------------------------------------------------------------------------
+
+
+
+;-----------------------------------------------------------------------------
+begin Function { Weap, Ench, Model, DmgB, DmgM, SpdB, SpdM, RchB, RchM }
+;-----------------------------------------------------------------------------
+	;Store last model ID
+	Set aaDusfergonModelLast to aaDusfergonModel
+	
+	;Set Model
+	Set aaDusfergonModel to Model
+
+	;Swap to/from Bow if necessary
+	if ( aaDusfergonModel < aaDusfergonInit.BowIdx )
+
+		Set Weap to Call aaDusfergonSwap Weap DLScalar3 Ench
+			
+	elseif ( aaDusfergonModel < aaDusfergonInit.StaffIdx )
+
+		Set Weap to Call aaDusfergonSwap Weap DLScalar3B Ench
+		
+	else
+
+		Set Weap to Call aaDusfergonSwap Weap DLScalar3S Ench
+				
+	endif
+
+
+	if ( aaDusfergonModel < aaDusfergonInit.StaffIdx )
+			
+		;Set stats
+		Call aaDusfergonStatAdj
+		Call aaDusfergonStatSet Weap  ( DmgB + aaDusfergonInit.AdjDamageBase ) ( DmgM + aaDusfergonInit.AdjDamageMult ) ( SpdB + aaDusfergonInit.AdjSpeedBase ) ( SpdM + aaDusfergonInit.AdjSpeedMult ) ( RchB + aaDusfergonInit.AdjReachBase ) ( RchM + aaDusfergonInit.AdjReachMult )
+
+	endif
+		
+
+	;Change model
+	if ( aaDusfergonModel < aaDusfergonInit.SetModel2Idx )
+
+		Call aaDusfergonSetModel Weap
+
+	else
+
+		Call aaDusfergonSetModel2 Weap
+
+	endif
+		
+
+	;Reusing string_var
+	Let Icon := "Icons\" + ( GetIconPath Weap )
+	SetMessageIcon $Icon
+	MessageEX "%n has changed form." Weap 5
+
+
+	SetFunctionValue Weap
+	Return
+;-----------------------------------------------------------------------------
+end ;Function { Weap, Ench, Model, DmgB, DmgM, SpdB, SpdM, RchB, RchM }
+;-----------------------------------------------------------------------------

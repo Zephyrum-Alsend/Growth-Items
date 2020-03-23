@@ -38,6 +38,8 @@ long Area
 long Duration
 float Cost ;Return value
 
+short Incr
+
 short EnchIter
 short EnchIndex
 string_var EffName
@@ -48,7 +50,7 @@ ref Ench
 
 
 ;-----------------------------------------------------------------------------
-begin Function { Ench, Cost }
+begin Function { Ench, Cost, Incr }
 ;-----------------------------------------------------------------------------
 	Set EnchIndex to GetMagicItemEffectCount Ench
 
@@ -57,7 +59,11 @@ begin Function { Ench, Cost }
 	;-----------------------------------------------------------------------------
 	if ( aaDusfergonEnch == 1 )
 	;-----------------------------------------------------------------------------
-		Set aaDusfergonEnch1 to ( aaDusfergonEnch1 + 1 )
+		if ( Incr == 1 )
+
+			Set aaDusfergonEnch1 to ( aaDusfergonEnch1 + 1 )
+
+		endif
 
 		;-----------------------------------------------------------------------------
 		;Find the index of the effects
@@ -127,7 +133,11 @@ begin Function { Ench, Cost }
 	;-----------------------------------------------------------------------------
 	elseif ( aaDusfergonEnch == 2 )
 	;-----------------------------------------------------------------------------
-		Set aaDusfergonEnch2 to ( aaDusfergonEnch2 + 1 )
+		if ( Incr == 1 )
+
+			Set aaDusfergonEnch2 to ( aaDusfergonEnch2 + 1 )
+
+		endif
 
 		;-----------------------------------------------------------------------------
 		;Find the index of the effects
@@ -197,7 +207,11 @@ begin Function { Ench, Cost }
 	;-----------------------------------------------------------------------------
 	elseif ( aaDusfergonEnch == 3 )
 	;-----------------------------------------------------------------------------
-		Set aaDusfergonEnch3 to ( aaDusfergonEnch3 + 1 )
+		if ( Incr == 1 )
+
+			Set aaDusfergonEnch3 to ( aaDusfergonEnch3 + 1 )
+
+		endif
 
 		;-----------------------------------------------------------------------------
 		;Find the index of the effects
@@ -267,7 +281,11 @@ begin Function { Ench, Cost }
 	;-----------------------------------------------------------------------------
 	elseif ( aaDusfergonEnch == 4 )
 	;-----------------------------------------------------------------------------
-		Set aaDusfergonEnch4 to ( aaDusfergonEnch4 + 1 )
+		if ( Incr == 1 )
+
+			Set aaDusfergonEnch4 to ( aaDusfergonEnch4 + 1 )
+
+		endif
 
 		;-----------------------------------------------------------------------------
 		;Find the index of the effects
@@ -345,7 +363,11 @@ begin Function { Ench, Cost }
 	;-----------------------------------------------------------------------------
 	elseif ( aaDusfergonEnch == 5 )
 	;-----------------------------------------------------------------------------
-		Set aaDusfergonEnch5 to ( aaDusfergonEnch5 + 1 )
+		if ( Incr == 1 )
+
+			Set aaDusfergonEnch5 to ( aaDusfergonEnch5 + 1 )
+
+		endif
 
 		;-----------------------------------------------------------------------------
 		;Find the index of the effects
@@ -411,7 +433,11 @@ begin Function { Ench, Cost }
 	;-----------------------------------------------------------------------------
 	elseif ( aaDusfergonEnch == 6 )
 	;-----------------------------------------------------------------------------
-		Set aaDusfergonEnch6 to ( aaDusfergonEnch6 + 1 )
+		if ( Incr == 1 )
+
+			Set aaDusfergonEnch6 to ( aaDusfergonEnch6 + 1 )
+
+		endif
 
 		;-----------------------------------------------------------------------------
 		;Find the index of the effects
@@ -482,7 +508,11 @@ begin Function { Ench, Cost }
 	;-----------------------------------------------------------------------------
 	elseif ( aaDusfergonEnch == 7 )
 	;-----------------------------------------------------------------------------
-		Set aaDusfergonEnch7 to ( aaDusfergonEnch7 + 1 )
+		if ( Incr == 1 )
+
+			Set aaDusfergonEnch7 to ( aaDusfergonEnch7 + 1 )
+
+		endif
 
 		;-----------------------------------------------------------------------------
 		;Find the index of the effects
@@ -552,7 +582,11 @@ begin Function { Ench, Cost }
 	;-----------------------------------------------------------------------------
 	elseif ( aaDusfergonEnch == 8 )
 	;-----------------------------------------------------------------------------
-		Set aaDusfergonEnch8 to ( aaDusfergonEnch8 + 1 )
+		if ( Incr == 1 )
+
+			Set aaDusfergonEnch8 to ( aaDusfergonEnch8 + 1 )
+
+		endif
 
 		;-----------------------------------------------------------------------------
 		;Find the index of the effects
@@ -620,7 +654,11 @@ begin Function { Ench, Cost }
 	;-----------------------------------------------------------------------------
 	elseif ( aaDusfergonEnch == 9 )
 	;-----------------------------------------------------------------------------
-		Set aaDusfergonEnch9 to ( aaDusfergonEnch9 + 1 )
+		if ( Incr == 1 )
+
+			Set aaDusfergonEnch9 to ( aaDusfergonEnch9 + 1 )
+
+		endif
 
 		;-----------------------------------------------------------------------------
 		;Find the index of the effects
@@ -690,7 +728,11 @@ begin Function { Ench, Cost }
 	;-----------------------------------------------------------------------------
 	elseif ( aaDusfergonEnch == 10 )
 	;-----------------------------------------------------------------------------
-		Set aaDusfergonEnch10 to ( aaDusfergonEnch10 + 1 )
+		if ( Incr == 1 )
+
+			Set aaDusfergonEnch10 to ( aaDusfergonEnch10 + 1 )
+
+		endif
 
 		;-----------------------------------------------------------------------------
 		;Find the index of the effects

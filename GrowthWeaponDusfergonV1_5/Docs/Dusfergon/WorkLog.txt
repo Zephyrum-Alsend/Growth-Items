@@ -165,3 +165,41 @@
 -Also added settings for script/menu lag to INI
 -Added sGRandKey so Random can be called during gameplay
 -Still have to finish Staff code: level up, setmodel, XP awarder, Random, NameDisplay
+
+22.03.2020
+-Added innate AoE to Staff, compounds with basic DGHE area
+-Updated EnchSlct to handle Staves
+-Spied EnchSlct using DGFA values in DGSP calcs
+-Factored out model changing code from Manager into aaDusfergonExchange
+-The factored out code just doesn't work properly, for some reason
+	-Mace to Staff: OK
+	-Staff to Mace: Changed to DLScalar3, model updated to Staff
+	-Mace to Staff: Changed to DLScalar3S, model updated to Mace
+	-Mace to Bow: Changed to DLScalar3B, model NOT updated
+	-Checked aaDusfergonModel via DisplayName, is correct
+-Restored factored code to Manager and it works properly there so...
+-Turns out Swap changes Manager.self, so Exchange.Weap wasn't updated after Swap was called
+-Changed Swap to return what the new Manager.self should be, so Exchange.Weap can update and then pass it to Manager
+-Checking GameMode Random, Speed not changing properly - lagging behind by one form
+-StatAdj modifies Manager.Adj% vars, so weren't updated for Exchange vars.  Had to add calls to Manager.Adj% vars because too many parameters for function call otherwise
+-Made function StatLvlS for incrementing Staff specific stats, DGHE and Area
+-Despite the code being in place, DLScalar3SEnch is not incrementing on level up
+-Restored EnchLvl to before adding any Staff code, going to pursue second function for updating DLScalar3SEnch
+-Copypasta'd EnchLvl into EnchLvlS, took out code incrementing Ench globals, actually worked.  Weird.
+-So, deleted EnchLvlS, added new param to EnchLvl to indicate whether it should increment Ench globals and used it on DLScalar3SEnch: works. Huzzah.
+-Implementing ObjectS script and XP awarder
+-XP awarder needs to be attached to a Script Effect, after Ctrl+F'ing through docs, asked how to dynamically add script effects on Nexus forums - must wait for response to continue
+-Dug into Knights of the Nine: Revelation code because they have a Fire Damage effect with a script attached - shouldn't be possible
+	-It isn't, they made a script effect and named it Fire Damage!
+	-Attached script calls variables from other objects, little idea what it really does
+	-Found aaKOTNRCrusaderRelicController after scouring the CS ID lists and finally searching for it in TES4Edit - is an instance of aaKOTNRInvisibleActivator, has no script attached, dead end
+	-Found KOTNRRelicControl script, is quest script that does nothing with the var called by the enchant, no documentation on it either
+	-Looked up Crusader Sword since var name called by Fire Damage is CurrentSwordSpell, attached object script sets the var
+	-Looked up referenced spell, is just a normal spell that does Fire Damage
+	-So, the Fire Damage enchantment is a script effect called Fire Damage that moves an invisible activator to the target so it can cast an actual fire spell at the target while script does its bonus damage
+		-That is very roundabout
+-Set up OnStaffHit to deal damage in addition to award XP so it's only 1 additional effect on DLScalar3SEnch
+-Added compensation for Resist Magic on target
+-XP is awarded for inanimate objects and corpses, but also properly awards when hitting multiple targets with AoE
+-Just doing the uglier but simpler method of making Damage Health and script effect XP awarder separate is looking increasingly appealing
+-Potential problem with Staff XP: MagicEffect scripts are run after all the normal effects are applied, so target may be already dead - great for kill based XP, not so much for hit based

@@ -1,0 +1,82 @@
+scn aaDusfergonStatLvlS
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;aaDusfergonManager
+;aaDusfergonStatLvl
+;aaDusfergonEnchLvl
+;aaDusfergonIncrVal
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;aaDusfergonLevel
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+long Magnitude
+long Area
+long Duration
+float Cost ;Return value
+
+float MagM
+float AreM
+float DurM
+float AreaSM
+float CostM
+
+short EnchIter
+short EnchIndex
+
+ref Ench
+;-----------------------------------------------------------------------------
+
+
+
+;-----------------------------------------------------------------------------
+begin Function { Ench, MagM, AreM, DurM, CostM, AreaSM, Cost }
+;-----------------------------------------------------------------------------
+	Set EnchIndex to GetMagicItemEffectCount Ench
+
+	;-----------------------------------------------------------------------------
+	;Increment Damage Health effect
+	;-----------------------------------------------------------------------------
+	Set Magnitude to Call aaDusfergonIncrVal MagM ( aaDusfergonLevel - 1 )
+	Set Area to Call aaDusfergonIncrVal AreM ( aaDusfergonLevel - 1 )
+	Set Duration to Call aaDusfergonIncrVal DurM ( aaDusfergonLevel - 1 )
+
+	Set Cost to Cost + CostM
+
+	;Damage Health is always first
+	Set EnchIter to 0
+	;ModNthEffectItemMagnitude Magnitude Ench EnchIter
+	ModNthEffectItemArea Area Ench EnchIter
+	ModNthEffectItemDuration Duration Ench EnchIter
+
+	SetEnchantmentCost Cost Ench
+
+	;-----------------------------------------------------------------------------
+	;Increment Areas of all effects
+	;-----------------------------------------------------------------------------
+	Set EnchIter to 0
+	While ( EnchIter < EnchIndex )
+
+		Set Area to Call aaDusfergonIncrVal AreaSM ( aaDusfergonLevel - 1 )
+
+		ModNthEffectItemArea Area Ench EnchIter
+
+		Set EnchIter to ( EnchIter + 1 )	
+	loop
+
+
+	SetFunctionValue Cost
+	Return
+;-----------------------------------------------------------------------------
+end ;Function { Ench, Magnitude, Area, Duration, CostM, AreaSM, Cost }
+;-----------------------------------------------------------------------------

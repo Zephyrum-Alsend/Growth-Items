@@ -203,6 +203,10 @@ float fBowSpeedBase
 float fBowDamageMult
 float fBowSpeedMult
 
+short sStaffAreaBase
+
+float fStaffAreaMult
+
 
 short AdjDamageBase
 float AdjSpeedBase
@@ -596,12 +600,12 @@ begin GameMode
 		;-----------------------------------------------------------------------------
 		;Purge effects from previous load game
 		RemoveAllEffectItems ench
-		RemoveAllEffectItems ench2
+		;RemoveAllEffectItems ench2
 		RemoveEnchantment self
 
 		;Set enchantment stats, return total Cost
 		Set Cost to Call aaDusfergonEnchInit ench 1 Cost
-		Set Cost2 to Call aaDusfergonStatSetS ench2 sDGHEMagnBase fDGHEMagnMult sDGHEAreaBase fDGHEAreaMult sDGHEDuraBase fDGHEDuraMult fDGHECostBase fDGHECostMult
+		Set Cost2 to Call aaDusfergonStatSetS ench2 sDGHEMagnBase fDGHEMagnMult ( sDGHEAreaBase + sStaffAreaBase ) ( fDGHEAreaMult + fStaffAreaMult ) sDGHEDuraBase fDGHEDuraMult fDGHECostBase fDGHECostMult
 		Set Cost2 to Call aaDusfergonEnchInit ench2 2 Cost2
 
 		if ( aaDusfergonLevel < sEnchStart )
@@ -742,7 +746,8 @@ begin GameMode
 		Set aaDusfergonEnch to ( Button + 1 )
 
 		;Initialize enchant option if necessary
-		Set Cost to Call aaDusfergonEnchSlct ench Cost
+		Set Cost to Call aaDusfergonEnchSlct ench 1 Cost
+		Set Cost2 to Call aaDusfergonEnchSlct ench2 2 Cost2
 
 		SetEnchantment ench self
 		Set EnchSelect to 0
@@ -781,8 +786,18 @@ begin GameMode
 		Set aaDusfergonLevel to aaDusfergonLevel + 1
 
 		;Update weapon stats
-		Call aaDusfergonStatLvl self ( fDamageMult + AdjDamageMult ) ( fSpeedMult + AdjSpeedMult ) ( fReachMult + AdjReachMult ) fWeightMult fHealthMult lValueBase fValueMult
+		if ( aaDusfergonModel < StaffIdx )
+			
+			Call aaDusfergonStatLvl self ( fDamageMult + AdjDamageMult ) ( fSpeedMult + AdjSpeedMult ) ( fReachMult + AdjReachMult ) fWeightMult fHealthMult lValueBase fValueMult
 
+		else
+
+			Call aaDusfergonStatLvl self 0 0 0 fWeightMult fHealthMult lValueBase fValueMult
+
+		endif
+
+		Set Cost2 to Call aaDusfergonStatLvlS ench2 fDGHEMagnMult fDGHEAreaMult fDGHEDuraMult fDGHECostMult fStaffAreaMult Cost2
+		
 		;Update enchantment stats
 		if ( aaDusfergonLevel >= sEnchStart )
 
@@ -794,7 +809,8 @@ begin GameMode
 			endif
 
 			;Increment enchantment stats
-			Set Cost to Call aaDusfergonEnchLvl Ench Cost
+			Set Cost to Call aaDusfergonEnchLvl ench Cost 1
+			Set Cost2 to Call aaDusfergonEnchLvl ench2 Cost2 2
 
 			;Set Charge
 			Set Charge to lChargeBase + ( fChargeMult * ( aaDusfergonLevel - sEnchStart ) )
@@ -847,7 +863,7 @@ begin GameMode
 		RemoveEnchantment self
 
 		Set Cost to Call aaDusfergonEnchInit ench 1 Cost
-		Set Cost2 to Call aaDusfergonStatSetS ench2 sDGHEMagnBase fDGHEMagnMult sDGHEAreaBase fDGHEAreaMult sDGHEDuraBase fDGHEDuraMult fDGHECostBase fDGHECostMult
+		Set Cost2 to Call aaDusfergonStatSetS ench2 sDGHEMagnBase fDGHEMagnMult ( sDGHEAreaBase + sStaffAreaBase ) ( fDGHEAreaMult + fStaffAreaMult ) sDGHEDuraBase fDGHEDuraMult fDGHECostBase fDGHECostMult
 		Set Cost2 to Call aaDusfergonEnchInit ench2 2 Cost2
 
 		if ( aaDusfergonLevel < sEnchStart )
@@ -928,117 +944,15 @@ begin GameMode
 	;-----------------------------------------------------------------------------
 	elseif ( OnKeyDown sGMainKey && Player.GetItemCount self > 0 )
 
-		;Re-using short
-		Set Button to aaDusfergonModelLast
-
-		;Store current model ID
-		Set aaDusfergonModelLast to aaDusfergonModel
-		
-		;Set Model
-		Set aaDusfergonModel to Button
-
-		;Swap to/from Bow if necessary
-		if ( aaDusfergonModel < BowIdx )
-
-			Call aaDusfergonSwap self DLScalar3 ench
-				
-		elseif ( aaDusfergonModel < StaffIdx )
-
-			Call aaDusfergonSwap self DLScalar3B ench
-
-		else
-
-			Call aaDusfergonSwap self DLScalar3S ench
-				
-		endif
-
-
-		if ( aaDusfergonModel < StaffIdx )
-			
-			;Set stats
-			Call aaDusfergonStatAdj
-			Call aaDusfergonStatSet self ( sDamageBase + AdjDamageBase ) ( fDamageMult + AdjDamageMult ) ( fSpeedBase + AdjSpeedBase ) ( fSpeedMult + AdjSpeedMult ) ( fReachBase + AdjReachBase ) ( fReachMult + AdjReachMult )
-
-		endif
-		
-
-		;Change model
-		if ( aaDusfergonModel < SetModel2Idx )
-
-			Call aaDusfergonSetModel self
-
-		else
-
-			Call aaDusfergonSetModel2 self
-
-		endif
-		
-
-		;Reusing string_var
-		Let EffName := "Icons\" + ( GetIconPath self )
-		SetMessageIcon $EffName
-		MessageEX "%n has changed form." self 5
-
-		Set ModelChange to 0
+		Set self to Call aaDusfergonExchange self ench aaDusfergonModelLast sDamageBase fDamageMult fSpeedBase fSpeedMult fReachBase fReachMult
 		
 	;-----------------------------------------------------------------------------
 	;Swap to a random form if Player hits GRandKey
 	;-----------------------------------------------------------------------------
 	elseif ( OnKeyDown sGRandKey && Player.GetItemCount self > 0 )
 
-		;Re-using short
-		Set Button to Call aaDusfergonRandomModel
-
-		;Store current model ID
-		Set aaDusfergonModelLast to aaDusfergonModel
-		
-		;Set Model
-		Set aaDusfergonModel to Button
-
-		;Swap to/from Bow if necessary
-		if ( aaDusfergonModel < BowIdx )
-
-			Call aaDusfergonSwap self DLScalar3 ench
+		Set self to Call aaDusfergonExchange self ench ( Call aaDusfergonRandomModel ) sDamageBase fDamageMult fSpeedBase fSpeedMult fReachBase fReachMult
 				
-		elseif ( aaDusfergonModel < StaffIdx )
-
-			Call aaDusfergonSwap self DLScalar3B ench
-
-		else
-
-			Call aaDusfergonSwap self DLScalar3S ench
-				
-		endif
-
-
-		if ( aaDusfergonModel < StaffIdx )
-			
-			;Set stats
-			Call aaDusfergonStatAdj
-			Call aaDusfergonStatSet self ( sDamageBase + AdjDamageBase ) ( fDamageMult + AdjDamageMult ) ( fSpeedBase + AdjSpeedBase ) ( fSpeedMult + AdjSpeedMult ) ( fReachBase + AdjReachBase ) ( fReachMult + AdjReachMult )
-
-		endif
-		
-
-		;Change model
-		if ( aaDusfergonModel < SetModel2Idx )
-
-			Call aaDusfergonSetModel self
-
-		else
-
-			Call aaDusfergonSetModel2 self
-
-		endif
-		
-
-		;Reusing string_var
-		Let EffName := "Icons\" + ( GetIconPath self )
-		SetMessageIcon $EffName
-		MessageEX "%n has changed form." self 5
-
-		Set ModelChange to 0
-		
 	endif
 
 
@@ -1163,54 +1077,7 @@ begin MenuMode 1002 ;Inventory
 	;-----------------------------------------------------------------------------
 	if ( ModelChange == 100 && Button > -1 )
 
-		;Store last model ID
-		Set aaDusfergonModelLast to aaDusfergonModel
-		
-		;Set Model
-		Set aaDusfergonModel to IndexOffset + Button - 2
-
-		;Swap to/from Bow if necessary
-		if ( aaDusfergonModel < BowIdx )
-
-			Call aaDusfergonSwap self DLScalar3 ench
-				
-		elseif ( aaDusfergonModel < StaffIdx )
-
-			Call aaDusfergonSwap self DLScalar3B ench
-
-		else
-
-			Call aaDusfergonSwap self DLScalar3S ench
-				
-		endif
-
-
-		if ( aaDusfergonModel < StaffIdx )
-			
-			;Set stats
-			Call aaDusfergonStatAdj
-			Call aaDusfergonStatSet self ( sDamageBase + AdjDamageBase ) ( fDamageMult + AdjDamageMult ) ( fSpeedBase + AdjSpeedBase ) ( fSpeedMult + AdjSpeedMult ) ( fReachBase + AdjReachBase ) ( fReachMult + AdjReachMult )
-
-		endif
-		
-
-		;Change model
-		if ( aaDusfergonModel < SetModel2Idx )
-
-			Call aaDusfergonSetModel self
-
-		else
-
-			Call aaDusfergonSetModel2 self
-
-		endif
-		
-
-		;Reusing string_var
-		Let EffName := "Icons\" + ( GetIconPath self )
-		SetMessageIcon $EffName
-		MessageEX "%n has changed form." self 5
-
+		Set self to Call aaDusfergonExchange self ench ( IndexOffset + Button - 2 ) sDamageBase fDamageMult fSpeedBase fSpeedMult fReachBase fReachMult
 		Set ModelChange to 0
 
 	;-----------------------------------------------------------------------------

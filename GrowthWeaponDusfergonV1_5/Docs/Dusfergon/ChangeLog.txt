@@ -71,5 +71,6 @@ V1.5
  - - Added key for random form during gameplay
  - - Added setting for script latency
  - Fixed error in HP check on Bow form
+ - Fixed error in calc for adding Damage Magicka effect
  - Rewrote Charge formula, initial charge is now relevant to EnchStart instead of total level
  - Added Staff forms
