@@ -1320,6 +1320,118 @@ begin Function { weapon }
 		SetIconPath "Dusfergon\2h\Staff\MC_Iron_Staff_Icon.dds" weapon
 		
 	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11001 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\MC_Steel_Staff.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\MC_Steel_Staff_Icon.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11002 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\MC_Silver_Staff.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\MC_Silver_Staff_Icon.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11003 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\MC_Dwarven_Staff.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\MC_Dwarven_Staff_Icon.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11004 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\MC_Elven_Staff.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\MC_Elven_Staff_Icon.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11005 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\MC_Glass_Staff.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\MC_Glass_Staff_Icon.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11006 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\MC_Ebony_Staff.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\MC_Ebony_Staff_Icon.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11007 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\MC_Daedric_Staff.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\MC_Daedric_Staff_Icon.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11008 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\MC_Rider_Staff.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\MC_Rider_Staff_Icon.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11009 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\MC_Druid_Staff.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\MC_Druid_Staff_Icon.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11010 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\MC_Necro_Staff.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\MC_Necro_Staff_Icon.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11011 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\MC_Ayleid_Staff.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\MC_Ayleid_Staff_Icon.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11012 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\MC_Camoran_Staff.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\MC_Camoran_Staff_Icon.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11013 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\MC_Archmage_Staff.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\MC_Archmage_Staff_Icon.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11014 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\MagnusStaff.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\MagnusStaffIcon.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11015 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staffofchaos.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staffofchaos_icon.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11016 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staffofchaos_red.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staffofchaos_icon.dds" weapon
+		
+	;-----------------------------------------------------------------------------
 	endif ;( aaDusfergonModel > 4999 )
 	;-----------------------------------------------------------------------------
 

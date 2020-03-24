@@ -919,13 +919,39 @@ begin Function { ModelChange }
 	;-----------------------------------------------------------------------------
 	elseif ( ModelChange == 7200 )
 
-		MessageBox "Choose a form:" "Cancel" "Back" "Staff"; "" "" "" "" "" "" "Next"
+		MessageBox "Choose a form:" "Cancel" "Back" "Iron" "Steel" "Silver" "Dwarven" "Elven" "Glass" "Ebony" "Next"
 		Set aaDusfergonInit.Button to -1
 		Set ModelChange to 7201
 
 	elseif ( ModelChange == 7201 && aaDusfergonInit.Button > -1 )
 
 		Set ModelChange to Call aaDusfergonModelPage ModelChange aaDusfergonInit.Button 0 aaDusfergonInit.StaffIdx
+
+	;-----------------------------------------------------------------------------
+	;Staff pg2
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 7202 )
+
+		MessageBox "Choose a form:" "Cancel" "Back" "Daedric" "Rider" "Druid" "Necro" "Ayleid" "Camoran" "Archmage" "Next"
+		Set aaDusfergonInit.Button to -1
+		Set ModelChange to 7203
+
+	elseif ( ModelChange == 7203 && aaDusfergonInit.Button > -1 )
+
+		Set ModelChange to Call aaDusfergonModelPage ModelChange aaDusfergonInit.Button 0 aaDusfergonInit.StaffIdx+7
+
+	;-----------------------------------------------------------------------------
+	;Staff pg3
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 7204 )
+
+		MessageBox "Choose a form:" "Cancel" "Back" "Magnus" "Chaos" "Chaos Red"; "" "" "" "" "Next"
+		Set aaDusfergonInit.Button to -1
+		Set ModelChange to 7205
+
+	elseif ( ModelChange == 7205 && aaDusfergonInit.Button > -1 )
+
+		Set ModelChange to Call aaDusfergonModelPage ModelChange aaDusfergonInit.Button 0 aaDusfergonInit.StaffIdx+14
 
 	endif
 

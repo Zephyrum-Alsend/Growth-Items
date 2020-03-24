@@ -231,3 +231,6 @@
 -Set GMainKey and GRandKey to 47(V) and 34(G) respectively
 -Tweaked SigilStone warning to trigger if weapon has no enchantment as opposed to if Level < EnchStart
 -Removed unused variables from Manager
+-Remapped textures for MC's Staff Pack
+-Updated SetModel2, ModelChange and ShowModelName with new staves
+-Imported Staff of Magnus + Staff of Chaos, remapped, functions updated
