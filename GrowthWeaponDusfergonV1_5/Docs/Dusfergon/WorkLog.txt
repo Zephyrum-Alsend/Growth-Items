@@ -252,3 +252,6 @@
 	-OnBowHit	-OnEnchant	-OnHit	-OnSigilStone	-OnStaffHit	-RandomModel
 	-RemoveUnScriptedEffects	-SetModel	-SetModel2	-ShowModelName
 	-StatAdj	-StatLvl	-StatLvlS	-StatSet	-StatSet2	-StatSetS	-Swap
+-Remapped Armamantium Staffs
+-Updated ReadMe.txt
+-Prepare for release

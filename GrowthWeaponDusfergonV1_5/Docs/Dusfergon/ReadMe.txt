@@ -15,13 +15,18 @@ Suhoi72 - Bastard, Merciless, Wolf
 noirq - Fixing the collision meshes for Suhoi72's swords
 Lazarus89 - Somewhat Realistic Swords, Ivellon Dungeon
 billryo - Serenity
-Adonnay - Classical Weaponry, Iron/Fine Iron/Steel/Fine Steel/Silver/Ebony longswords
-Gardelin - Iron/Fine Iron/Steel/Fine Steel/Silver/Ebony shortswords and daggers
+Adonnay - Classical Weaponry, Classic Sword Replacer
+Gardelin - Classic Sword Replacer Extended
 Waalx - RealSwords Argonian, Bosmer, Khajiit, Orc, Dunmer, Breton, Redguard, Goblin, Nord
 Alastor117 - Daedric katana
 Andragorn - Mirondil, Sotonhorian, Thorgeir, Ziragon warhammers, battleaxes, maces, waraxes
 Lexx666 - Sathix
 tda Armoury - Akatosh
+The MC - MC's Staff Pack
+Havelock and Dorje - Staff of Magnus
+talion - Staff of Chaos
+Trollf - Armamentarium Staffs
+Isilmeriel - Nazgul Sword Set
 
 PERMISSIONS
 
@@ -42,10 +47,29 @@ Dat's it.
 
 INSTRUCTIONS FOR CHANGING LEVEL
 
+METHOD 1
+
+Make a Save.
+Type into the console:
+
+	Set aaDusfergonLevel to [int A]
+	Set aaDusfergonXP to aaDusfergonXPReq
+	Show aaDusfergonXPReq
+
+With [int B] as the number you got from the last command,
+load the Save you made at the start and type into the console:
+
+	Set aaDusfergonXP to [int B]
+
+This will take you through every enchant option select you
+would have missed and had to compensate for with Method 2.
+
+METHOD 2
+
 Type ﻿into the console:
 
 	Set aaDusfergonLevel to [int A]
-	Set aaDusfergonEnch to [1-8]
+	Set aaDusfergonEnch to [1-10]
 
 And divide [int A - 11] (11 is the default level the enchants kick in) between:
 
@@ -68,7 +92,8 @@ You'll also want to type:
 
 after reloading the save so the first level up doesn't take 8 years.
 
-If you want to downgrade Dusfergon, make use of sBreakLevel in the ini.
+
+If you want to level down Dusfergon, make use of sBreakLevel in the ini.
 
 
 
@@ -94,12 +119,15 @@ If you want to downgrade Dusfergon, make use of sBreakLevel in the ini.
 DESCRIPTION - SHORT, SPOILER FREE DESCRIPTION IS ON THE MOD PAGE
 		THIS IS THE LONG ONE - YE HATH BEEN WARNED, SOUR SUMMER CHILD
 
+-All values and keybindings listed are under default ini settings
+
 Like Agremon and Shurifen before it, Dusfergon grows stronger with use in combat.
 
 Initializing upon first starting Oblivion may take a couple seconds.  Until
 initialized, Dusfergon will be in its default model and stats.  When Dusfergon
 initializes "Dusfergon initialized!" will be output to the console and you will
-hear it being equipped as the model swapper script re-equips to force a refresh.
+hear it being equipped if you had it already equipped as the model swapper script
+re-equips to force a refresh.
 
 Once initialized, the script lag will be reduced to 0.5 seconds during gameplay
 and 0.001 seconds during inventory menus.  Loading other saves after this point 
@@ -110,6 +138,7 @@ should result in instant initialization.
 When equipped, an event handler will be set, looking for anytime a valid target
 is hit with Dusfergon.  It will then see if the player is power attacking and
 award appropriate XP.  The event handler is unset when Dusfergon is unequipped.
+
 
 Bows are handled a bit differently, as you don't actually hit anything with a bow.
 When equipped, an event handler is set, looking for anytime you release the bow
@@ -125,13 +154,20 @@ There are a couple edge cases where this won't work as expected:
 does.  In this case it treats that arrow as yours instead of your own.
 
 2) If you have multiple arrows airborne at the same time and they are of different
-types.  In this case only the first type can award XP and not all handlers will be
-removed.  The first handler only sets the second if it's not already up, but will
-increment the count of arrows airborne everytime you fire your bow regardless.  The
-second handler will only activate for the first type of arrow fired and is also what
-decrements the count of arrows airborne.  The second handler only removes itself
-when this count reaches 0, which it never will since there are not enough instances
-of the first arrow type to do so.
+types.  The handler can only listen for one arrow type but its counter is 
+incremented everytime you fire, so the counter will never reach 0 and the handler
+never removed.
+
+In the rare case (2) happens, you can drop Dusfergon, as that kills all handlers as
+a workaround for this exact issue.
+
+
+Staves are handled very differently, as again, you don't hit anything with a staff.
+The handler is built into the staff's enchantment as a scripted effect and as such
+fires everytime you hit something with the staff's magic.  It will do the same check
+as an arrow for if the target is a living NPC before awarding XP.  This "handler" is
+never unset because it's directly built into the enchantment.
+
 
 The XP logger has been overhauled to give a final combat report instead of logging
 every instance of XP gained and flooding your console log.  As soon as you hit a
@@ -146,8 +182,8 @@ in the new format "Dusfergon leveled up to X!"
 
 Dusfergon has a defualt level cap of 201, for 200 increases from Lv1.  The XP 
 formula is the same as Agremon's, with the same default values as well.  The amount
-of XP awarded per hit is 1 for a normal attack, 3 for a power attack and 3 for an
-arrow hit.  All these values are customizable in the ini file.
+of XP awarded per hit is 1 for a normal attack, 3 for a power attack, 3 for an
+arrow hit and 2 for a staff hit.
 
 XP Requirement formula:
 
@@ -178,12 +214,11 @@ At level cap a message box will appear, stating "Dusfergon has reached its apex.
 
 
 
-Dusfergon will, under default ini configuration, gain an enchantment at internal
-Lv11.  As soon as you're out of combat, a menu will appear prompting you to choose
-1 of 10 options:  Fire, Ice, Volt, Knight-Slayer, Mage-Slayer, Weaken, Subjugate, 
-Corruption, Unbalance and Siphon.  Each has their own effects, growth rates and costs.  
-See the ini file for full statistics on each effect, including base value, growth rate, 
-base cost and cost growth rate.
+Dusfergon will gain an enchantment at internal Lv11.  As soon as you're out of combat, 
+a menu will appear prompting you to choose 1 of 10 options:  Fire, Ice, Volt, 
+Knight-Slayer, Mage-Slayer, Weaken, Subjugate, Corruption, Unbalance and Siphon.  Each 
+has their own effects, growth rates and costs.  See the ini file for full statistics on 
+each effect, including base value, growth rate, base cost and cost growth rate.
 
 The effects of each option are as follows:
 
@@ -217,20 +252,21 @@ Drain Agility		Damage Fatigue		Weakness to Magic
 Siphon
 Absorb Fatigue		Absorb Health		Absorb Magicka
 
-At Lv11, Dusfergon will have a Charge of 500, which will increase by 75 every level.
-Values customizable in the ini file.
+Dusfergon has a Charge of 500 from the start, which is only used by the staff,
+as it is the only form with an enchantment.  Once Lv11 is reached and all forms
+gain an enchantment, Charge will increase by 75 every level.
 
-By default, every 5 additional internal levels you will be prompted again in the
-same way to choose an enchantment.  Whichever enchantment you choose is the one
-that will grow as Dusfergon levels.  All other enchantments will cease to grow.
-You can choose to pick a new option, your current option, or an old option.  Each
-effect has its own cost and cost growth associated with it, so selecting new options
-will also increase the cost of the enchantment, thereby reducing the uses.
+Every 5 additional internal levels you will be prompted again in the same way to 
+choose an enchantment.  Whichever enchantment you choose is the one that will grow 
+as Dusfergon levels.  All other enchantments will cease to grow.  You can choose 
+to pick a new option, your current option, or an old option.  Each effect has its 
+own cost and cost growth associated with it, so selecting new options will also 
+increase the cost of the enchantment, thereby reducing the uses.
 
 Oblivion's engine displays a maximum of 8 effects in the UI, but allows for many more.
 With as little as 3 options chosen, Dusfergon can have more than 8 effects on it.  As
-such, you can Ctrl+RMB Dusfergon in your inventory to bring up a message box displaying
-all effects.  It will have a scroll bar if necessary.
+such, you can Ctrl + RMB Dusfergon in your inventory or hold 9 ingame to bring up a 
+message box displaying all effects.  It will have a scroll bar if necessary.
 
 If the player decides to enchant Dusfergon, a message box will appear when Dusfergon
 is selected in the enchanting menu: "Dusfergon rattles as if to resist enchantment."
@@ -245,7 +281,7 @@ reseting XP to 0.  This is configurable in the ini, allowing this feature to eit
 be disabled or changed to a fixed level reduction.  In the case of fixed level reduction,
 the enchantment options will be cycled through and reduced by 5 levels where applicable,
 and setting the active enchantment to the last option reduced.  As breaking your weapon
-is Oblivion is exceptionally rare, the default punishment is harsh.
+in Oblivion is exceptionally rare, the default punishment is harsh.
 
 Of note with the delevel function:  Oblivion unequips weapons when their durability is
 less than 0, so the scripts check Dusfergon's health on unequip and subsequently flag for
@@ -261,13 +297,19 @@ go back a page in your selection.  This has also greatly expanded the number of
 forms allowed, so you will find multiple sub-types have multiple pages of forms.
 Dusfergon's stats will adjust according to the sub-type chosen.
 
+As of V1.5, for ease of use you can hold V ingame to quickswap back to the last
+form Dusfergon held.  With this, you can more easily change between melee and
+ranged forms in combat.
+
 Due to the sheer number of forms, a Random option is available in the first menu.
 It will pick a sub-type first, then specific form, so you have an equal chance of
-each sub-type appearing.
+each sub-type appearing.  You can also activate the Random option from ingame by
+holding down G.
 
 Incase you like the form Random chose and want to change to it later, Shift+RMB 
-Dusfergon in your inventory to receive a message stating 
+Dusfergon in your inventory or hold 0 ingame to receive a message stating 
 "Dusfergon's current form is [name] ([sub-type menu])."
+
 
 The sub-types ordered by main-type are:
 
@@ -292,7 +334,9 @@ Waraxe		- 0.5 shorter, 0.3 faster, somewhat less damage, shortsword of Blunt
 
 Bow		- 0.2 faster, significantly less damage, but very slightly more than Shortsword
 
-The specific stat adjustments can be found and changed in the ini file.
+Staff		- 0.2 faster, somewhat less damage, makes the enchantment area of effect
+
+The specific stat adjustments can be found in the ini file.
 
 The base stat increments per level up are:
 
@@ -301,4 +345,4 @@ Damage	Reach	Speed	Weight	Health	Value
 
 
 
-In addition, you will find transcripts of all code written for this mod in Data\Docs\Scripts.
+In addition, you will find transcripts of all code written for this mod in Data\Docs\Dusfergon\Scripts.
