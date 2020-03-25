@@ -1,8 +1,22 @@
 scn aaDusfergonRandomModel
 
-;Related scripts
+;Main script
 ;-----------------------------------------------------------------------------
 ;aaDusfergonManager
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;aaDusfergonSetModel
+;aaDusfergonSetModel2
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
 ;-----------------------------------------------------------------------------
 
 ;Related globals
@@ -29,7 +43,7 @@ begin Function { }
 	;-----------------------------------------------------------------------------
 	;Choose weapon sub-type
 	;-----------------------------------------------------------------------------
-	Set randy to ( rand 0 10.9 )
+	Set randy to ( rand 0 11.9 ) ;Truncates
 	Set randy to randy * 1000
 	
 
@@ -39,17 +53,12 @@ begin Function { }
 	;Claymore
 	if randy < aaDusfergonInit.Bastard2hIdx
 
-		Set randy to randy + ( rand 0 23.9 )
+		Set randy to randy + ( rand 0 24.9 )
 
-	;Bastard 2H
-	elseif randy < aaDusfergonInit.Bastard1hIdx
-
-		Set randy to randy + ( rand 0 23.9 )
-
-	;Bastard 1H
+	;Bastard 2H/1H
 	elseif randy < aaDusfergonInit.LongswordIdx
 
-		Set randy to randy + ( rand 0 23.9 )
+		Set randy to randy + ( rand 0 24.9 )
 
 	;Longsword
 	elseif randy < aaDusfergonInit.ShortswordIdx
@@ -87,7 +96,7 @@ begin Function { }
 		Set randy to randy + ( rand 0 18.9 )
 
 	;Bow
-	else
+	elseif randy < aaDusfergonInit.StaffIdx
 
 		Set randy to randy + ( rand 0 38.9 )
 
@@ -96,6 +105,11 @@ begin Function { }
 			Set randy to ( randy + 4 )
 
 		endif
+
+	;Staff
+	else
+
+		Set randy to randy + ( rand 0 69.9 )
 
 	endif
 	

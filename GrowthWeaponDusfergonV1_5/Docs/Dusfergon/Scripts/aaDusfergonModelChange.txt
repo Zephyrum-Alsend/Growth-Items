@@ -1,14 +1,31 @@
 scn aaDusfergonModelChange
 
-;Related scripts
+;Main script
 ;-----------------------------------------------------------------------------
-;aaDusfergonManager
+;aaDusfergonManger
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
 ;aaDusfergonModelPage
 ;aaDusfergonModelToC
+;aaDusfergonRandomModel
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;aaDusfergonSetModel
+;aaDusfergonSetModel2
+;aaDusfergonShowModelName
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
 ;-----------------------------------------------------------------------------
 
 ;Related globals
 ;-----------------------------------------------------------------------------
+;aaDusfergonModel
 ;-----------------------------------------------------------------------------
 
 ;Description
@@ -104,7 +121,7 @@ begin Function { ModelChange }
 		;-----------------------------------------------------------------------------
 		elseif ( aaDusfergonInit.Button == 5 )
 
-			MessageBox "Choose a sub-type:" "Cancel" "Back" "Bow" "Bow II" "Staff"
+			MessageBox "Choose a sub-type:" "Cancel" "Back" "Bow" "Bow II" "Staff" "Staff II"
 			Set ModelChange to 7000
 			Set aaDusfergonInit.Button to -1
 
@@ -152,7 +169,7 @@ begin Function { ModelChange }
 	;-----------------------------------------------------------------------------
 	elseif ( ModelChange == 3102 )
 
-		MessageBox "Choose a form:" "Cancel" "Prev" "Sunfire" "Ivellon Claymore" "Ivellon Zweihander" "Sathix" "Sathix Crimson" "Gotland" "Gotland Steel" "Next"
+		MessageBox "Choose a form:" "Cancel" "Prev" "Sunfire" "Ivellon Claymore" "Ivellon Zweihander" "Sathix" "Sathix Crimson" "Decrepit" "Gotland" "Next"
 		Set aaDusfergonInit.Button to -1
 		Set ModelChange to 3103
 
@@ -165,7 +182,7 @@ begin Function { ModelChange }
 	;-----------------------------------------------------------------------------
 	elseif ( ModelChange == 3104 )
 
-		MessageBox "Choose a form:" "Cancel" "Prev" "Gotland Old" "Vanilla Iron" "Vanilla Steel" "Vanilla Fine Steel" "Vanilla Silver" "Vanilla Dwarven" "Vanilla Elven" "Next"
+		MessageBox "Choose a form:" "Cancel" "Prev" "Gotland Steel" "Gotland Old" "Vanilla Iron" "Vanilla Steel" "Vanilla Fine Steel" "Vanilla Silver" "Vanilla Dwarven" "Next"
 		Set aaDusfergonInit.Button to -1
 		Set ModelChange to 3105
 
@@ -178,7 +195,7 @@ begin Function { ModelChange }
 	;-----------------------------------------------------------------------------
 	elseif ( ModelChange == 3106 )
 
-		MessageBox "Choose a form:" "Cancel" "Prev" "Vanilla Glass" "Vanilla Ebony" "Vanilla Daedric"; "" "" "" "" "Next"
+		MessageBox "Choose a form:" "Cancel" "Prev" "Vanilla Elven" "Vanilla Glass" "Vanilla Ebony" "Vanilla Daedric"; "" "" "" "Next"
 		Set aaDusfergonInit.Button to -1
 		Set ModelChange to 3107
 
@@ -221,7 +238,7 @@ begin Function { ModelChange }
 	;-----------------------------------------------------------------------------
 	elseif ( ModelChange == 3204 )
 
-		MessageBox "Choose a form:" "Cancel" "Prev" "Ivellon" "Clint XVI" "Angular Leaf" "Tapper" "Seaward" "Clint XVI Steel" "Angular Leaf Steel" "Next"
+		MessageBox "Choose a form:" "Cancel" "Prev" "Ivellon" "Wraith" "Clint XVI" "Angular Leaf" "Tapper" "Seaward" "Clint XVI Steel" "Next"
 		Set aaDusfergonInit.Button to -1
 		Set ModelChange to 3205
 
@@ -234,7 +251,7 @@ begin Function { ModelChange }
 	;-----------------------------------------------------------------------------
 	elseif ( ModelChange == 3206 )
 
-		MessageBox "Choose a form:" "Cancel" "Prev" "Tapper Steel" "Tapper Black" "Tapper Old"; "" "" "" "" "Next"
+		MessageBox "Choose a form:" "Cancel" "Prev" "Angular Leaf Steel" "Tapper Steel" "Tapper Black" "Tapper Old"; "" "" "" "Next"
 		Set aaDusfergonInit.Button to -1
 		Set ModelChange to 3207
 
@@ -278,7 +295,7 @@ begin Function { ModelChange }
 	;-----------------------------------------------------------------------------
 	elseif ( ModelChange == 4104 )
 
-		MessageBox "Choose a form:" "Cancel" "Prev" "Ivellon" "Clint XVI" "Angular Leaf" "Tapper" "Seaward" "Clint XVI Steel" "Angular Leaf Steel" "Next"
+		MessageBox "Choose a form:" "Cancel" "Prev" "Ivellon" "Wraith" "Clint XVI" "Angular Leaf" "Tapper" "Seaward" "Clint XVI Steel" "Next"
 		Set aaDusfergonInit.Button to -1
 		Set ModelChange to 4105
 
@@ -291,7 +308,7 @@ begin Function { ModelChange }
 	;-----------------------------------------------------------------------------
 	elseif ( ModelChange == 4106 )
 
-		MessageBox "Choose a form:" "Cancel" "Prev" "Tapper Steel" "Tapper Black" "Tapper Old"; "" "" "" "" "Next"
+		MessageBox "Choose a form:" "Cancel" "Prev" "Angular Leaf Steel" "Tapper Steel" "Tapper Black" "Tapper Old"; "" "" "" "Next"
 		Set aaDusfergonInit.Button to -1
 		Set ModelChange to 4107
 
@@ -932,26 +949,117 @@ begin Function { ModelChange }
 	;-----------------------------------------------------------------------------
 	elseif ( ModelChange == 7202 )
 
-		MessageBox "Choose a form:" "Cancel" "Back" "Daedric" "Rider" "Druid" "Necro" "Ayleid" "Camoran" "Archmage" "Next"
+		MessageBox "Choose a form:" "Cancel" "Prev" "Daedric" "Rider" "Druid" "Necro" "Red Varla" "Camoran" "Archmage" "Next"
 		Set aaDusfergonInit.Button to -1
 		Set ModelChange to 7203
 
 	elseif ( ModelChange == 7203 && aaDusfergonInit.Button > -1 )
 
-		Set ModelChange to Call aaDusfergonModelPage ModelChange aaDusfergonInit.Button 0 aaDusfergonInit.StaffIdx+7
+		Set ModelChange to Call aaDusfergonModelPage ModelChange aaDusfergonInit.Button 1 aaDusfergonInit.StaffIdx
 
 	;-----------------------------------------------------------------------------
 	;Staff pg3
 	;-----------------------------------------------------------------------------
 	elseif ( ModelChange == 7204 )
 
-		MessageBox "Choose a form:" "Cancel" "Back" "Magnus" "Chaos" "Chaos Red"; "" "" "" "" "Next"
+		MessageBox "Choose a form:" "Cancel" "Prev" "Magnus" "Magnus Archaic" "Chaos" "Chaos Red" "Ayleid" "Ayleid Red" "Ayleid Wood" "Next"
 		Set aaDusfergonInit.Button to -1
 		Set ModelChange to 7205
 
 	elseif ( ModelChange == 7205 && aaDusfergonInit.Button > -1 )
 
-		Set ModelChange to Call aaDusfergonModelPage ModelChange aaDusfergonInit.Button 0 aaDusfergonInit.StaffIdx+14
+		Set ModelChange to Call aaDusfergonModelPage ModelChange aaDusfergonInit.Button 2 aaDusfergonInit.StaffIdx
+
+	;-----------------------------------------------------------------------------
+	;Staff pg4
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 7206 )
+
+		MessageBox "Choose a form:" "Cancel" "Prev" "Ayleid Wood Thin" "Crystal Green" "Crystal Blue" "Crystal Yellow" "Crystal Orange" "Fine Crystal" "Fine Crystal White" "Next"
+		Set aaDusfergonInit.Button to -1
+		Set ModelChange to 7207
+
+	elseif ( ModelChange == 7207 && aaDusfergonInit.Button > -1 )
+
+		Set ModelChange to Call aaDusfergonModelPage ModelChange aaDusfergonInit.Button 3 aaDusfergonInit.StaffIdx
+
+	;-----------------------------------------------------------------------------
+	;Staff pg5
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 7208 )
+
+		MessageBox "Choose a form:" "Cancel" "Prev" "Fine Crystal Green" "Fine Crystal Orange" "Black Iron" "Vine Blue" "Vine White" "Vine Green" "Vine Orange"; "Next"
+		Set aaDusfergonInit.Button to -1
+		Set ModelChange to 7209
+
+	elseif ( ModelChange == 7209 && aaDusfergonInit.Button > -1 )
+
+		Set ModelChange to Call aaDusfergonModelPage ModelChange aaDusfergonInit.Button 4 aaDusfergonInit.StaffIdx
+
+	;-----------------------------------------------------------------------------
+	;Staff II pg1
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 7210 )
+
+		MessageBox "Choose a form:" "Cancel" "Prev" "Wood-A" "Wood-B" "Wood-C" "Wood-D" "Wood-E" "Wood-F" "Wood-G" "Next"
+		Set aaDusfergonInit.Button to -1
+		Set ModelChange to 7211
+
+	elseif ( ModelChange == 7211 && aaDusfergonInit.Button > -1 )
+
+		Set ModelChange to Call aaDusfergonModelPage ModelChange aaDusfergonInit.Button 0 aaDusfergonInit.StaffIdx+35
+
+	;-----------------------------------------------------------------------------
+	;Staff II pg2
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 7212 )
+
+		MessageBox "Choose a form:" "Cancel" "Prev" "Shepherd" "Grasp" "Skull" "Skull Horned" "Wood Gem" "Wood Gem White" "Wood Gem Green" "Next"
+		Set aaDusfergonInit.Button to -1
+		Set ModelChange to 7213
+
+	elseif ( ModelChange == 7213 && aaDusfergonInit.Button > -1 )
+
+		Set ModelChange to Call aaDusfergonModelPage ModelChange aaDusfergonInit.Button 1 aaDusfergonInit.StaffIdx+35
+
+	;-----------------------------------------------------------------------------
+	;Staff II pg3
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 7214 )
+
+		MessageBox "Choose a form:" "Cancel" "Prev" "Wood Gem Orange" "Tear-A" "Tear-B" "Tear-C" "Tear-D" "Tear-E" "Birch" "Next"
+		Set aaDusfergonInit.Button to -1
+		Set ModelChange to 7215
+
+	elseif ( ModelChange == 7215 && aaDusfergonInit.Button > -1 )
+
+		Set ModelChange to Call aaDusfergonModelPage ModelChange aaDusfergonInit.Button 2 aaDusfergonInit.StaffIdx+35
+
+	;-----------------------------------------------------------------------------
+	;Staff II pg4
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 7216 )
+
+		MessageBox "Choose a form:" "Cancel" "Prev" "Hemlock" "Maple" "Oak" "Oak Thin" "Pine" "Scotch Pine" "Birch Moss" "Next"
+		Set aaDusfergonInit.Button to -1
+		Set ModelChange to 7217
+
+	elseif ( ModelChange == 7217 && aaDusfergonInit.Button > -1 )
+
+		Set ModelChange to Call aaDusfergonModelPage ModelChange aaDusfergonInit.Button 3 aaDusfergonInit.StaffIdx+35
+
+	;-----------------------------------------------------------------------------
+	;Staff II pg5
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 7218 )
+
+		MessageBox "Choose a form:" "Cancel" "Prev" "Maple Moss" "Oak Moss" "Oak Thin Moss" "Pine Moss" "Vanilla Mage-A" "Vanilla Mage-B" "Vanilla Mage-C"; "Next"
+		Set aaDusfergonInit.Button to -1
+		Set ModelChange to 7219
+
+	elseif ( ModelChange == 7219 && aaDusfergonInit.Button > -1 )
+
+		Set ModelChange to Call aaDusfergonModelPage ModelChange aaDusfergonInit.Button 4 aaDusfergonInit.StaffIdx+35
 
 	endif
 

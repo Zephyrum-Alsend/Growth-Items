@@ -1,8 +1,21 @@
 scn aaDusfergonModelPage
 
+;Main script
+;-----------------------------------------------------------------------------
+;aaDusfergonManger
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
 ;Related scripts
 ;-----------------------------------------------------------------------------
-;aaDusfergonManager
+;aaDusfergonModelChange
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
 ;-----------------------------------------------------------------------------
 
 ;Related globals
@@ -11,8 +24,8 @@ scn aaDusfergonModelPage
 
 ;Description
 ;-----------------------------------------------------------------------------
-;Given model change menu's current index, page, option selected and weapon 
-;type index, tell Manager which menu index to go to next.
+;Given ModelChange's current menu index, page, option selected and weapon 
+;type index, return which menu index to go to next.
 ;-----------------------------------------------------------------------------
 
 ;Parameters

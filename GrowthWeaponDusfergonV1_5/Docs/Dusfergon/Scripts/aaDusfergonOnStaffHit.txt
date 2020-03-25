@@ -1,15 +1,31 @@
 scn aaDusfergonOnStaffHit
 
-;Related scripts
+;Main script
 ;-----------------------------------------------------------------------------
 ;aaDusfergonManager
-;aaDusfergonObjectS
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;aaDusfergonDefaultINI
+;aaDusfergonOnHit
+;aaDusfergonOnBowHit
+;aaDusfergonOnArrowHit
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
+;aaDusfergonCombatXPLog
+;aaDusfergonCombatXPStart
+;aaDusfergonXP
 ;-----------------------------------------------------------------------------
 
 ;Related globals
 ;-----------------------------------------------------------------------------
-;aaDusfergonXP
-;aaDusfergonXPReq
 ;-----------------------------------------------------------------------------
 
 ;Description
@@ -27,8 +43,10 @@ ref Target
 ;-----------------------------------------------------------------------------
 begin ScriptEffectStart
 ;-----------------------------------------------------------------------------
+	;Magic effect scripts are called/run by the one(s) hit by them
 	Set Target to GetSelf
-	
+
+	;Check if Target is a living NPC at time of impact
 	if ( Target.IsActor == 1 && Target.GetDead == 0 )
 		
 		;Start combat logger

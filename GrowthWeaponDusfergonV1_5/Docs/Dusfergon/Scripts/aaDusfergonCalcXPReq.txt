@@ -1,19 +1,32 @@
 scn aaDusfergonCalcXPReq
 
-;Related scripts
+;Main script
 ;-----------------------------------------------------------------------------
 ;aaDusfergonManager
 ;-----------------------------------------------------------------------------
 
-;Related globals
+;Used scripts
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;aaDusfergonBreak
+;-----------------------------------------------------------------------------
+
+;Used globals
 ;-----------------------------------------------------------------------------
 ;aaDusfergonXPReq
 ;-----------------------------------------------------------------------------
 
+;Related globals
+;-----------------------------------------------------------------------------
+;aaDusfergonLevel
+;-----------------------------------------------------------------------------
+
 ;Description
 ;-----------------------------------------------------------------------------
-;Calculates and sets XPReq, then returns the halfway point between the old
-;XPReq and the new XPReq.
+;Calculates and sets XPReq, then returns the half way point to the new XPReq.
 ;-----------------------------------------------------------------------------
 
 ;Parameters
@@ -28,8 +41,10 @@ short XPReqMult
 begin Function { Lvl, XPReqBase, XPReqMult, XPReqHalf }
 ;-----------------------------------------------------------------------------
 
+	;Calculate new XPReq
 	Set aaDusfergonXPReq to ( ( XPReqBase * Lvl ) + ( XPReqMult * ( Lvl * Lvl ) ) )
 
+	;Calculate half way point
 	Set XPReqHalf to aaDusfergonXPReq - ( ( XPReqBase + XPReqMult ) / 2 + ( XPReqMult * ( Lvl - 1 ) ) )
 
 	SetFunctionValue XPReqHalf

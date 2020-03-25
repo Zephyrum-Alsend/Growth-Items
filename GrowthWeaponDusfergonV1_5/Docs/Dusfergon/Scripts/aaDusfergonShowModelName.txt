@@ -1,22 +1,35 @@
 scn aaDusfergonShowModelName
 
-;Related scripts
+;Main script
 ;-----------------------------------------------------------------------------
 ;aaDusfergonManager
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;aaDusfergonModelChange
 ;aaDusfergonSetModel
 ;aaDusfergonSetModel2
 ;-----------------------------------------------------------------------------
 
-;Related globals
+;Used globals
 ;-----------------------------------------------------------------------------
 ;aaDusfergonModel
 ;-----------------------------------------------------------------------------
 
+;Related globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
 ;Description
 ;-----------------------------------------------------------------------------
-;According to the ordering in SetModel, displays a message stating the 
-;weapon's form's name as it appears in Manager's menus, and the sub-type menu 
-;that name is found under.
+;According to the ordering in SetModel(2), displays a message stating the 
+;weapon's form's name as it appears in ModelChange's menus, and the sub-type 
+;menu that name is found under.
 ;-----------------------------------------------------------------------------
 
 ;Parameters
@@ -117,20 +130,29 @@ begin Function { Weap }
 	elseif ( aaDusfergonModel == 12 )
 	;-----------------------------------------------------------------------------
 	
-		Set ModelName to sv_Construct "%zGotland" ModelName
+		Set ModelName to sv_Construct "%zDecrepit" ModelName
 
 	;-----------------------------------------------------------------------------
 	elseif ( aaDusfergonModel == 13 )
 	;-----------------------------------------------------------------------------
 	
-		Set ModelName to sv_Construct "%zGotland Steel" ModelName
+		Set ModelName to sv_Construct "%zGotland" ModelName
 
 	;-----------------------------------------------------------------------------
 	elseif ( aaDusfergonModel == 14 )
 	;-----------------------------------------------------------------------------
 	
+		Set ModelName to sv_Construct "%zGotland Steel" ModelName
+
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 15 )
+	;-----------------------------------------------------------------------------
+	
 		Set ModelName to sv_Construct "%zGotland Old" ModelName
 
+
+
+		
 	;-----------------------------------------------------------------------------
 	;Bastard
 	;-----------------------------------------------------------------------------
@@ -227,56 +249,65 @@ begin Function { Weap }
 	elseif ( ( aaDusfergonModel == 1015 ) || ( aaDusfergonModel == 2015 ) )
 	;-----------------------------------------------------------------------------
 
-		Set ModelName to sv_Construct "%zClint XVI" ModelName
+		Set ModelName to sv_Construct "%zWraith" ModelName
 
 	;-----------------------------------------------------------------------------
 	elseif ( ( aaDusfergonModel == 1016 ) || ( aaDusfergonModel == 2016 ) )
 	;-----------------------------------------------------------------------------
 
-		Set ModelName to sv_Construct "%zAngular Leaf" ModelName
+		Set ModelName to sv_Construct "%zClint XVI" ModelName
 
 	;-----------------------------------------------------------------------------
 	elseif ( ( aaDusfergonModel == 1017 ) || ( aaDusfergonModel == 2017 ) )
 	;-----------------------------------------------------------------------------
 
-		Set ModelName to sv_Construct "%zTapper" ModelName
+		Set ModelName to sv_Construct "%zAngular Leaf" ModelName
 
 	;-----------------------------------------------------------------------------
 	elseif ( ( aaDusfergonModel == 1018 ) || ( aaDusfergonModel == 2018 ) )
 	;-----------------------------------------------------------------------------
 
-		Set ModelName to sv_Construct "%zSeaward" ModelName
+		Set ModelName to sv_Construct "%zTapper" ModelName
 
 	;-----------------------------------------------------------------------------
 	elseif ( ( aaDusfergonModel == 1019 ) || ( aaDusfergonModel == 2019 ) )
 	;-----------------------------------------------------------------------------
 
-		Set ModelName to sv_Construct "%zClint XVI Steel" ModelName
+		Set ModelName to sv_Construct "%zSeaward" ModelName
 
 	;-----------------------------------------------------------------------------
 	elseif ( ( aaDusfergonModel == 1020 ) || ( aaDusfergonModel == 2020 ) )
 	;-----------------------------------------------------------------------------
 
-		Set ModelName to sv_Construct "%zAngular Leaf Steel" ModelName
+		Set ModelName to sv_Construct "%zClint XVI Steel" ModelName
 
 	;-----------------------------------------------------------------------------
 	elseif ( ( aaDusfergonModel == 1021 ) || ( aaDusfergonModel == 2021 ) )
 	;-----------------------------------------------------------------------------
 
-		Set ModelName to sv_Construct "%zTapper Steel" ModelName
+		Set ModelName to sv_Construct "%zAngular Leaf Steel" ModelName
 
 	;-----------------------------------------------------------------------------
 	elseif ( ( aaDusfergonModel == 1022 ) || ( aaDusfergonModel == 2022 ) )
 	;-----------------------------------------------------------------------------
 
-		Set ModelName to sv_Construct "%zTapper Black" ModelName
+		Set ModelName to sv_Construct "%zTapper Steel" ModelName
 
 	;-----------------------------------------------------------------------------
 	elseif ( ( aaDusfergonModel == 1023 ) || ( aaDusfergonModel == 2023 ) )
 	;-----------------------------------------------------------------------------
 
+		Set ModelName to sv_Construct "%zTapper Black" ModelName
+
+	;-----------------------------------------------------------------------------
+	elseif ( ( aaDusfergonModel == 1024 ) || ( aaDusfergonModel == 2024 ) )
+	;-----------------------------------------------------------------------------
+
 		Set ModelName to sv_Construct "%zTapper Old" ModelName
 
+
+
+		
 	;-----------------------------------------------------------------------------
 	;Longsword
 	;-----------------------------------------------------------------------------
@@ -657,6 +688,9 @@ begin Function { Weap }
 
 		Set ModelName to sv_Construct "%zWarp Old" ModelName
 
+
+
+		
 	;-----------------------------------------------------------------------------
 	;Shortsword
 	;-----------------------------------------------------------------------------
@@ -971,6 +1005,9 @@ begin Function { Weap }
 
 		Set ModelName to sv_Construct "%zBroken" ModelName
 
+
+
+		
 	;-----------------------------------------------------------------------------
 	;Dagger
 	;-----------------------------------------------------------------------------
@@ -1195,6 +1232,9 @@ begin Function { Weap }
 
 		Set ModelName to sv_Construct "%zBroadedge Old" ModelName
 
+
+
+		
 	;-----------------------------------------------------------------------------
 	;Warhammer
 	;-----------------------------------------------------------------------------
@@ -1257,6 +1297,9 @@ begin Function { Weap }
 
 		Set ModelName to sv_Construct "%zMorningstar Steel" ModelName
 
+
+
+		
 	;-----------------------------------------------------------------------------
 	;Battleaxe
 	;-----------------------------------------------------------------------------
@@ -1325,6 +1368,9 @@ begin Function { Weap }
 
 		Set ModelName to sv_Construct "%zWar Old" ModelName
 
+
+
+		
 	;-----------------------------------------------------------------------------
 	;Mace
 	;-----------------------------------------------------------------------------
@@ -1393,6 +1439,9 @@ begin Function { Weap }
 
 		Set ModelName to sv_Construct "%zMorningstar Steel" ModelName
 
+
+
+		
 	;-----------------------------------------------------------------------------
 	;Waraxe
 	;-----------------------------------------------------------------------------
@@ -1454,6 +1503,9 @@ begin Function { Weap }
 	;-----------------------------------------------------------------------------
 
 		Set ModelName to sv_Construct "%zWar Old" ModelName
+
+
+
 
 	;-----------------------------------------------------------------------------
 	;Bow
@@ -1643,6 +1695,9 @@ begin Function { Weap }
 
 		Set ModelName to sv_Construct "%zNord Old" ModelName
 
+
+
+
 	;-----------------------------------------------------------------------------
 	;Staff
 	;-----------------------------------------------------------------------------
@@ -1715,7 +1770,7 @@ begin Function { Weap }
 	elseif ( aaDusfergonModel == 11011 )
 	;-----------------------------------------------------------------------------
 
-		Set ModelName to sv_Construct "%zAyleid" ModelName
+		Set ModelName to sv_Construct "%zRed Varla" ModelName
 
 	;-----------------------------------------------------------------------------
 	elseif ( aaDusfergonModel == 11012 )
@@ -1739,66 +1794,387 @@ begin Function { Weap }
 	elseif ( aaDusfergonModel == 11015 )
 	;-----------------------------------------------------------------------------
 
-		Set ModelName to sv_Construct "%zChaos" ModelName
+		Set ModelName to sv_Construct "%zMagnus Archaic" ModelName
 
 	;-----------------------------------------------------------------------------
 	elseif ( aaDusfergonModel == 11016 )
 	;-----------------------------------------------------------------------------
 
+		Set ModelName to sv_Construct "%zChaos" ModelName
+
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11017 )
+	;-----------------------------------------------------------------------------
+
 		Set ModelName to sv_Construct "%zChaos Red" ModelName
+
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11018 )
+	;-----------------------------------------------------------------------------
+
+		Set ModelName to sv_Construct "%zAyleid" ModelName
+
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11019 )
+	;-----------------------------------------------------------------------------
+
+		Set ModelName to sv_Construct "%zAyleid Red" ModelName
+
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11020 )
+	;-----------------------------------------------------------------------------
+
+		Set ModelName to sv_Construct "%zAyleid Wood" ModelName
+
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11021 )
+	;-----------------------------------------------------------------------------
+
+		Set ModelName to sv_Construct "%zAyleid Wood Thin" ModelName
+
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11022 )
+	;-----------------------------------------------------------------------------
+
+		Set ModelName to sv_Construct "%zCrystal Green" ModelName
+
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11023 )
+	;-----------------------------------------------------------------------------
+
+		Set ModelName to sv_Construct "%zCrystal Blue" ModelName
+
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11024 )
+	;-----------------------------------------------------------------------------
+
+		Set ModelName to sv_Construct "%zCrystal Yellow" ModelName
+
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11025 )
+	;-----------------------------------------------------------------------------
+
+		Set ModelName to sv_Construct "%zCrystal Orange" ModelName
+
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11026 )
+	;-----------------------------------------------------------------------------
+
+		Set ModelName to sv_Construct "%zFine Crystal" ModelName
+
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11027 )
+	;-----------------------------------------------------------------------------
+
+		Set ModelName to sv_Construct "%zFine Cyrstal White" ModelName
+
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11028 )
+	;-----------------------------------------------------------------------------
+
+		Set ModelName to sv_Construct "%zFine Crystal Green" ModelName
+
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11029 )
+	;-----------------------------------------------------------------------------
+
+		Set ModelName to sv_Construct "%zFine Crystal Orange" ModelName
+
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11030 )
+	;-----------------------------------------------------------------------------
+
+		Set ModelName to sv_Construct "%zBlack Iron" ModelName
+
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11031 )
+	;-----------------------------------------------------------------------------
+
+		Set ModelName to sv_Construct "%zVine Blue" ModelName
+
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11032 )
+	;-----------------------------------------------------------------------------
+
+		Set ModelName to sv_Construct "%zVine White" ModelName
+
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11033 )
+	;-----------------------------------------------------------------------------
+
+		Set ModelName to sv_Construct "%zVine Green" ModelName
+
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11034 )
+	;-----------------------------------------------------------------------------
+
+		Set ModelName to sv_Construct "%zVine Orange" ModelName
+
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11035 )
+	;-----------------------------------------------------------------------------
+
+		Set ModelName to sv_Construct "%zWood-A" ModelName
+
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11036 )
+	;-----------------------------------------------------------------------------
+
+		Set ModelName to sv_Construct "%zWood-B" ModelName
+
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11037 )
+	;-----------------------------------------------------------------------------
+
+		Set ModelName to sv_Construct "%zWood-C" ModelName
+
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11038 )
+	;-----------------------------------------------------------------------------
+
+		Set ModelName to sv_Construct "%zWood-D" ModelName
+
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11039 )
+	;-----------------------------------------------------------------------------
+
+		Set ModelName to sv_Construct "%zWood-E" ModelName
+
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11040 )
+	;-----------------------------------------------------------------------------
+
+		Set ModelName to sv_Construct "%zWood-F" ModelName
+
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11041 )
+	;-----------------------------------------------------------------------------
+
+		Set ModelName to sv_Construct "%zWood-G" ModelName
+
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11042 )
+	;-----------------------------------------------------------------------------
+
+		Set ModelName to sv_Construct "%zShepherd" ModelName
+
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11043 )
+	;-----------------------------------------------------------------------------
+
+		Set ModelName to sv_Construct "%zGrasp" ModelName
+
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11044 )
+	;-----------------------------------------------------------------------------
+
+		Set ModelName to sv_Construct "%zSkull" ModelName
+
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11045 )
+	;-----------------------------------------------------------------------------
+
+		Set ModelName to sv_Construct "%zSkull Horned" ModelName
+
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11046 )
+	;-----------------------------------------------------------------------------
+
+		Set ModelName to sv_Construct "%zWood Gem" ModelName
+
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11047 )
+	;-----------------------------------------------------------------------------
+
+		Set ModelName to sv_Construct "%zWood Gem White" ModelName
+
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11048 )
+	;-----------------------------------------------------------------------------
+
+		Set ModelName to sv_Construct "%zWood Gem Green" ModelName
+
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11049 )
+	;-----------------------------------------------------------------------------
+
+		Set ModelName to sv_Construct "%zWood Gem Orange" ModelName
+
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11050 )
+	;-----------------------------------------------------------------------------
+
+		Set ModelName to sv_Construct "%zTear-A" ModelName
+
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11051 )
+	;-----------------------------------------------------------------------------
+
+		Set ModelName to sv_Construct "%zTear-B" ModelName
+
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11052 )
+	;-----------------------------------------------------------------------------
+
+		Set ModelName to sv_Construct "%zTear-C" ModelName
+
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11053 )
+	;-----------------------------------------------------------------------------
+
+		Set ModelName to sv_Construct "%zTear-D" ModelName
+
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11054 )
+	;-----------------------------------------------------------------------------
+
+		Set ModelName to sv_Construct "%zTear-E" ModelName
+
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11055 )
+	;-----------------------------------------------------------------------------
+
+		Set ModelName to sv_Construct "%zBirch" ModelName
+
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11056 )
+	;-----------------------------------------------------------------------------
+
+		Set ModelName to sv_Construct "%zHemlock" ModelName
+
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11057 )
+	;-----------------------------------------------------------------------------
+
+		Set ModelName to sv_Construct "%zMaple" ModelName
+
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11058 )
+	;-----------------------------------------------------------------------------
+
+		Set ModelName to sv_Construct "%zOak" ModelName
+
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11059 )
+	;-----------------------------------------------------------------------------
+
+		Set ModelName to sv_Construct "%zOak Thin" ModelName
+
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11060 )
+	;-----------------------------------------------------------------------------
+
+		Set ModelName to sv_Construct "%zPine" ModelName
+
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11061 )
+	;-----------------------------------------------------------------------------
+
+		Set ModelName to sv_Construct "%zScotch Pine" ModelName
+
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11062 )
+	;-----------------------------------------------------------------------------
+
+		Set ModelName to sv_Construct "%zBirch Moss" ModelName
+
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11063 )
+	;-----------------------------------------------------------------------------
+
+		Set ModelName to sv_Construct "%zMaple Moss" ModelName
+
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11064 )
+	;-----------------------------------------------------------------------------
+
+		Set ModelName to sv_Construct "%zOak Moss" ModelName
+
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11065 )
+	;-----------------------------------------------------------------------------
+
+		Set ModelName to sv_Construct "%zOak Thin Moss" ModelName
+
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11066 )
+	;-----------------------------------------------------------------------------
+
+		Set ModelName to sv_Construct "%zPine Moss" ModelName
+
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11067 )
+	;-----------------------------------------------------------------------------
+
+		Set ModelName to sv_Construct "%zVanilla Mage-A" ModelName
+
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11068 )
+	;-----------------------------------------------------------------------------
+
+		Set ModelName to sv_Construct "%zVanilla Mage-B" ModelName
+
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11069 )
+	;-----------------------------------------------------------------------------
+
+		Set ModelName to sv_Construct "%zVanilla Mage-C" ModelName
+
+
+
 
 	;-----------------------------------------------------------------------------
 	;Vanilla
 	;-----------------------------------------------------------------------------
-	elseif ( aaDusfergonModel == 15 || aaDusfergonModel == 3061 || aaDusfergonModel == 4052 || aaDusfergonModel == 5037 || aaDusfergonModel == 6010 || aaDusfergonModel == 7011 || aaDusfergonModel == 8011 || aaDusfergonModel == 9010 || aaDusfergonModel == 10035 )
+	elseif ( aaDusfergonModel == 16 || aaDusfergonModel == 3061 || aaDusfergonModel == 4052 || aaDusfergonModel == 5037 || aaDusfergonModel == 6010 || aaDusfergonModel == 7011 || aaDusfergonModel == 8011 || aaDusfergonModel == 9010 || aaDusfergonModel == 10035 )
 	;-----------------------------------------------------------------------------
 
 		Set ModelName to sv_Construct "%zVanilla Iron" ModelName
 
 	;-----------------------------------------------------------------------------
-	elseif ( aaDusfergonModel == 16 || aaDusfergonModel == 3062 || aaDusfergonModel == 4053 || aaDusfergonModel == 5038 || aaDusfergonModel == 6011 || aaDusfergonModel == 7012 || aaDusfergonModel == 8012 || aaDusfergonModel == 9011 || aaDusfergonModel == 10036 )
+	elseif ( aaDusfergonModel == 17 || aaDusfergonModel == 3062 || aaDusfergonModel == 4053 || aaDusfergonModel == 5038 || aaDusfergonModel == 6011 || aaDusfergonModel == 7012 || aaDusfergonModel == 8012 || aaDusfergonModel == 9011 || aaDusfergonModel == 10036 )
 	;-----------------------------------------------------------------------------
 
 		Set ModelName to sv_Construct "%zVanilla Steel" ModelName
 
 	;-----------------------------------------------------------------------------
-	elseif ( aaDusfergonModel == 17 || aaDusfergonModel == 3063 || aaDusfergonModel == 4054 || aaDusfergonModel == 5039 || aaDusfergonModel == 6012 || aaDusfergonModel == 7013 || aaDusfergonModel == 8013 || aaDusfergonModel == 9012 )
+	elseif ( aaDusfergonModel == 18 || aaDusfergonModel == 3063 || aaDusfergonModel == 4054 || aaDusfergonModel == 5039 || aaDusfergonModel == 6012 || aaDusfergonModel == 7013 || aaDusfergonModel == 8013 || aaDusfergonModel == 9012 )
 	;-----------------------------------------------------------------------------
 
 		Set ModelName to sv_Construct "%zVanilla Fine Steel" ModelName
 
 	;-----------------------------------------------------------------------------
-	elseif ( aaDusfergonModel == 18 || aaDusfergonModel == 3064 || aaDusfergonModel == 4055 || aaDusfergonModel == 5040 || aaDusfergonModel == 6013 || aaDusfergonModel == 7014 || aaDusfergonModel == 8014 || aaDusfergonModel == 9013 || aaDusfergonModel == 10037 )
+	elseif ( aaDusfergonModel == 19 || aaDusfergonModel == 3064 || aaDusfergonModel == 4055 || aaDusfergonModel == 5040 || aaDusfergonModel == 6013 || aaDusfergonModel == 7014 || aaDusfergonModel == 8014 || aaDusfergonModel == 9013 || aaDusfergonModel == 10037 )
 	;-----------------------------------------------------------------------------
 
 		Set ModelName to sv_Construct "%zVanilla Silver" ModelName
 
 	;-----------------------------------------------------------------------------
-	elseif ( aaDusfergonModel == 19 || aaDusfergonModel == 3065 || aaDusfergonModel == 4056 || aaDusfergonModel == 5041 || aaDusfergonModel == 6014 || aaDusfergonModel == 7015 || aaDusfergonModel == 8015 || aaDusfergonModel == 9014 || aaDusfergonModel == 10038 )
+	elseif ( aaDusfergonModel == 20 || aaDusfergonModel == 3065 || aaDusfergonModel == 4056 || aaDusfergonModel == 5041 || aaDusfergonModel == 6014 || aaDusfergonModel == 7015 || aaDusfergonModel == 8015 || aaDusfergonModel == 9014 || aaDusfergonModel == 10038 )
 	;-----------------------------------------------------------------------------
 
 		Set ModelName to sv_Construct "%zVanilla Dwarven" ModelName
 
 	;-----------------------------------------------------------------------------
-	elseif ( aaDusfergonModel == 20 || aaDusfergonModel == 3066 || aaDusfergonModel == 4057 || aaDusfergonModel == 5042 || aaDusfergonModel == 6015 || aaDusfergonModel == 7016 || aaDusfergonModel == 8016 || aaDusfergonModel == 9015 || aaDusfergonModel == 10039 )
+	elseif ( aaDusfergonModel == 21 || aaDusfergonModel == 3066 || aaDusfergonModel == 4057 || aaDusfergonModel == 5042 || aaDusfergonModel == 6015 || aaDusfergonModel == 7016 || aaDusfergonModel == 8016 || aaDusfergonModel == 9015 || aaDusfergonModel == 10039 )
 	;-----------------------------------------------------------------------------
 
 		Set ModelName to sv_Construct "%zVanilla Elven" ModelName
 
 	;-----------------------------------------------------------------------------
-	elseif ( aaDusfergonModel == 21 || aaDusfergonModel == 3067 || aaDusfergonModel == 4058 || aaDusfergonModel == 5043 || aaDusfergonModel == 6016 || aaDusfergonModel == 7017 || aaDusfergonModel == 8017 || aaDusfergonModel == 9016 || aaDusfergonModel == 10040 )
+	elseif ( aaDusfergonModel == 22 || aaDusfergonModel == 3067 || aaDusfergonModel == 4058 || aaDusfergonModel == 5043 || aaDusfergonModel == 6016 || aaDusfergonModel == 7017 || aaDusfergonModel == 8017 || aaDusfergonModel == 9016 || aaDusfergonModel == 10040 )
 	;-----------------------------------------------------------------------------
 
 		Set ModelName to sv_Construct "%zVanilla Glass" ModelName
 
 	;-----------------------------------------------------------------------------
-	elseif ( aaDusfergonModel == 22 || aaDusfergonModel == 3068 || aaDusfergonModel == 4059 || aaDusfergonModel == 5044 || aaDusfergonModel == 6017 || aaDusfergonModel == 7018 || aaDusfergonModel == 8018 || aaDusfergonModel == 9017 || aaDusfergonModel == 10041 )
+	elseif ( aaDusfergonModel == 23 || aaDusfergonModel == 3068 || aaDusfergonModel == 4059 || aaDusfergonModel == 5044 || aaDusfergonModel == 6017 || aaDusfergonModel == 7018 || aaDusfergonModel == 8018 || aaDusfergonModel == 9017 || aaDusfergonModel == 10041 )
 	;-----------------------------------------------------------------------------
 
 		Set ModelName to sv_Construct "%zVanilla Ebony" ModelName
 
 	;-----------------------------------------------------------------------------
-	elseif ( aaDusfergonModel == 23 || aaDusfergonModel == 3069 || aaDusfergonModel == 4060 || aaDusfergonModel == 5045 || aaDusfergonModel == 6018 || aaDusfergonModel == 7019 || aaDusfergonModel == 8019 || aaDusfergonModel == 9018 || aaDusfergonModel == 10042 )
+	elseif ( aaDusfergonModel == 24 || aaDusfergonModel == 3069 || aaDusfergonModel == 4060 || aaDusfergonModel == 5045 || aaDusfergonModel == 6018 || aaDusfergonModel == 7019 || aaDusfergonModel == 8019 || aaDusfergonModel == 9018 || aaDusfergonModel == 10042 )
 	;-----------------------------------------------------------------------------
 
 		Set ModelName to sv_Construct "%zVanilla Daedric" ModelName
@@ -1886,16 +2262,28 @@ begin Function { Weap }
 		Set ModelName to sv_Construct "%z (Waraxe)" ModelName
 		
 	;-----------------------------------------------------------------------------
-	elseif ( aaDusfergonModel < aaDusfergonInit.StaffIdx )
+	elseif ( aaDusfergonModel < aaDusfergonInit.BowIdx + 35 )
 	;-----------------------------------------------------------------------------
 
 		Set ModelName to sv_Construct "%z (Bow)" ModelName
 		
 	;-----------------------------------------------------------------------------
-	else
+	elseif ( aaDusfergonModel < aaDusfergonInit.StaffIdx )
+	;-----------------------------------------------------------------------------
+
+		Set ModelName to sv_Construct "%z (Bow II)" ModelName
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel < aaDusfergonInit.StaffIdx + 35 )
 	;-----------------------------------------------------------------------------
 
 		Set ModelName to sv_Construct "%z (Staff)" ModelName
+		
+	;-----------------------------------------------------------------------------
+	else
+	;-----------------------------------------------------------------------------
+
+		Set ModelName to sv_Construct "%z (Staff II)" ModelName
 		
 	;-----------------------------------------------------------------------------
 	endif ;( aaDusfergonModel > -1 )

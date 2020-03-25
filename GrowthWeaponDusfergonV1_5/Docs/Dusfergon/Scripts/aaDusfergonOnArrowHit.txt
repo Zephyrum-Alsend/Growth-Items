@@ -1,18 +1,35 @@
 scn aaDusfergonOnArrowHit
 
-;Related scripts
+;Main script
 ;-----------------------------------------------------------------------------
 ;aaDusfergonManager
-;aaDusfergonObjectB
-;aaDusfergonOnBowHit
 ;-----------------------------------------------------------------------------
 
-;Related globals
+;Used scripts
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;aaDusfergonDefaultINI
+;aaDusfergonObject
+;aaDusfergonObjectB
+;aaDusfergonObjectS
+;aaDusfergonOnHit
+;aaDusfergonOnBowHit
+;aaDusfergonOnStaffHit
+;-----------------------------------------------------------------------------
+
+;Used globals
 ;-----------------------------------------------------------------------------
 ;aaDusfergonArrowsUp
 ;aaDusfergonCombatXPLog
 ;aaDusfergonCombatXPStart
 ;aaDusfergonXP
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
 ;-----------------------------------------------------------------------------
 
 ;Description
@@ -35,6 +52,7 @@ ref Weapon ;Unused
 ;-----------------------------------------------------------------------------
 begin Function { Target, Weapon }
 ;-----------------------------------------------------------------------------
+	;if Target is a living NPC at time of impact
 	if ( Target.IsActor == 1 && Target.GetDead == 0 )
 		
 		;Start combat logger
@@ -50,7 +68,7 @@ begin Function { Target, Weapon }
 
 	endif
 
-	;Remove self if no player fired arrows airborne
+	;Remove self if no Player fired arrows airborne
 	Set aaDusfergonArrowsUp to ( aaDusfergonArrowsUp - 1 )
 
 	if ( aaDusfergonArrowsUp == 0 )

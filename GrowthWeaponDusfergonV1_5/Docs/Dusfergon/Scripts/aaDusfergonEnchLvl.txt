@@ -1,14 +1,21 @@
 scn aaDusfergonEnchLvl
 
-;Related scripts
+;Main script
 ;-----------------------------------------------------------------------------
 ;aaDusfergonManager
-;aaDusfergonEnchInit
-;aaDusfergonEnchSlct
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
 ;aaDusfergonIncrVal
 ;-----------------------------------------------------------------------------
 
-;Related globals
+;Related scripts
+;-----------------------------------------------------------------------------
+;aaDusfergonDefaultINI
+;-----------------------------------------------------------------------------
+
+;Used globals
 ;-----------------------------------------------------------------------------
 ;aaDusfergonEnch
 ;aaDusfergonEnch1
@@ -23,9 +30,13 @@ scn aaDusfergonEnchLvl
 ;aaDusfergonEnch10
 ;-----------------------------------------------------------------------------
 
+;Related globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
 ;Description
 ;-----------------------------------------------------------------------------
-;According to global Ench, increments the appropriate global, the 
+;According to aaDusfergonEnch, increments the other Used Globals, the 
 ;corresponding effect set on the passed enchantment according to the values set 
 ;in Dusfergon.ini, and calculates the new total Cost.
 ;Returns total Cost for book keeping.
@@ -38,6 +49,8 @@ long Area
 long Duration
 float Cost ;Return value
 
+;Incr determines whether the Used Globals are incremented, because this 
+;function is called twice per level up
 short Incr
 
 short EnchIter
@@ -53,7 +66,7 @@ ref Ench
 begin Function { Ench, Cost, Incr }
 ;-----------------------------------------------------------------------------
 	Set EnchIndex to GetMagicItemEffectCount Ench
-
+	
 	;-----------------------------------------------------------------------------
 	;Increment Fire option
 	;-----------------------------------------------------------------------------

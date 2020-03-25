@@ -3,18 +3,15 @@ float fQuestDelayTime
 float fScriptLag
 float fMenuLag
 
-;Related scripts
+;Main script
 ;-----------------------------------------------------------------------------
 ;aaDusfergonManager
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
 ;aaDusfergonDefaultINI
-;aaDusfergonObject
-;aaDusfergonObjectB
-;aaDusfergonObjectS
 ;aaDusfergonBreak
-;aaDusfergonOnHit
-;aaDusfergonOnBowHit
-;aaDusfergonOnArrowHit
-;aaDusfergonOnStaffHit
 ;aaDusfergonStatAdj
 ;aaDusfergonStatSet
 ;aaDusfergonStatSet2
@@ -36,18 +33,39 @@ float fMenuLag
 ;aaDusfergonRandomModel
 ;aaDusfergonShowModelName
 ;aaDusfergonCalcXPReq
-;aaDusfergonIncrVal
 ;aaDusfergonLevelMessage
 ;aaDusfergonOnEnchant
 ;aaDusfergonOnSigilStone
 ;-----------------------------------------------------------------------------
 
-;Related globals
+;Related scripts
 ;-----------------------------------------------------------------------------
-;aaDusfergonArrowsUp
+;aaDusfergonObject
+;aaDusfergonObjectB
+;aaDusfergonObjectS
+;aaDusfergonOnHit
+;aaDusfergonOnBowHit
+;aaDusfergonOnArrowHit
+;aaDusfergonOnStaffHit
+;aaDusfergonIncrVal
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
 ;aaDusfergonBroken
 ;aaDusfergonCombatXPLog
 ;aaDusfergonCombatXPStart
+;aaDusfergonEquip
+;aaDusfergonLevel
+;aaDusfergonModel
+;aaDusfergonModelLast
+;aaDusfergonXP
+;aaDusfergonXPReq
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;aaDusfergonArrowsUp
 ;aaDusfergonEnch
 ;aaDusfergonEnch1
 ;aaDusfergonEnch2
@@ -59,12 +77,6 @@ float fMenuLag
 ;aaDusfergonEnch8
 ;aaDusfergonEnch9
 ;aaDusfergonEnch10
-;aaDusfergonEquip
-;aaDusfergonLevel
-;aaDusfergonModel
-;aaDusfergonModelLast
-;aaDusfergonXP
-;aaDusfergonXPReq
 ;-----------------------------------------------------------------------------
 
 ;Description
@@ -103,6 +115,15 @@ float fMenuLag
 ;Form change sub-type menus are capped at 5 pages due to navigation time; a
 ;II category can be made to hold additional pages, allowing for up to 10 pages
 ;total of each sub-type.
+;-----------------------------------------------------------------------------
+
+;Engine objects
+;-----------------------------------------------------------------------------
+;Items > Weapons >	DLScalar3
+;			DLScalar3B
+;			DLScalar3S
+;Magic > Enchantment >	DLScalar3Ench
+;			DLScalar3SEnch
 ;-----------------------------------------------------------------------------
 
 ;Parameters
@@ -536,7 +557,7 @@ begin GameMode
 
 		Set SetModel2Idx to DaggerIdx
 
-		;Melee weapon
+		;Blade/Blunt
 		if ( aaDusfergonModel < BowIdx )
 
 			Set self to DLScalar3
@@ -553,7 +574,7 @@ begin GameMode
 			
 		endif
 
-		;Melee/Bow enchantment
+		;Blade/Blunt/Bow enchantment
 		Set ench to DLScalar3Ench
 		Set Cost to 0
 
@@ -945,7 +966,7 @@ begin GameMode
 	if ( IsKeyPressed2 sGEnchKey )
 	;-----------------------------------------------------------------------------
 
-		;Melee/Bow enchantment
+		;Blade/Blunt/Bow enchantment
 		if ( aaDusfergonModel < StaffIdx )
 
 			Call aaDusfergonEnchDisplay ench
@@ -1056,7 +1077,7 @@ begin MenuMode 1002 ;Inventory
 	if ( GetActiveMenuSelection == self && ( ( IsKeyPressed2 sMEnchKey ) || ( IsKeyPressed2 sMEnchKey2 ) ) && ( IsKeyPressed2 sMMainKey ) )
 	;-----------------------------------------------------------------------------
 
-		;Melee/Bow enchantment
+		;Blade/Blunt/Bow enchantment
 		if ( aaDusfergonModel < StaffIdx )
 
 			Call aaDusfergonEnchDisplay ench

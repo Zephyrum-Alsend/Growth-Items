@@ -1,16 +1,35 @@
 scn aaDusfergonOnHit
 
-;Related scripts
+;Main script
 ;-----------------------------------------------------------------------------
 ;aaDusfergonManager
-;aaDusfergonObject
 ;-----------------------------------------------------------------------------
 
-;Related globals
+;Used scripts
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;aaDusfergonDefaultINI
+;aaDusfergonObject
+;aaDusfergonObjectB
+;aaDusfergonObjectS
+;aaDusfergonOnBowHit
+;aaDusfergonOnArrowHit
+;aaDusfergonOnStaffHit
+;-----------------------------------------------------------------------------
+
+;Used globals
 ;-----------------------------------------------------------------------------
 ;aaDusfergonCombatXPLog
 ;aaDusfergonCombatXPStart
 ;aaDusfergonXP
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;aaDusfergonEquip
 ;-----------------------------------------------------------------------------
 
 ;Description
@@ -31,6 +50,7 @@ ref Weapon ;Unused
 ;-----------------------------------------------------------------------------
 begin Function { Target, Weapon }
 ;-----------------------------------------------------------------------------
+	;Fortunately, this handler only triggers on living NPCs, so no need to check
 	
 	;Start combat logger
 	if ( aaDusfergonCombatXPLog == 0 )

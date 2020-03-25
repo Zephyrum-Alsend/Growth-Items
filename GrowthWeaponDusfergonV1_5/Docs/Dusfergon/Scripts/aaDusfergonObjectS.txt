@@ -1,20 +1,38 @@
 scn aaDusfergonObjectS
 
-;Related scripts
+;Main script
 ;-----------------------------------------------------------------------------
 ;aaDusfergonManager
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;aaDusfergonOnHit
+;aaDusfergonOnBowHit
+;aaDusfergonOnArrowHit
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;aaDusfergonObject
+;aaDusfergonObjectB
 ;aaDusfergonOnStaffHit
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
+;aaDusfergonEquip
+;aaDusfergonBroken
+;aaDusfergonArrowsUp
 ;-----------------------------------------------------------------------------
 
 ;Related globals
 ;-----------------------------------------------------------------------------
-;aaDusfergonEquip
-;aaDusfergonBroken
 ;-----------------------------------------------------------------------------
 
 ;Description
 ;-----------------------------------------------------------------------------
-;Un/sets Equip flag when un/equipping the weapon.
+;Un/sets Equip flag when un/equipping the Staff.
 ;Removes all handlers and unsets Equip when removed from Player inventory.
 ;-----------------------------------------------------------------------------
 
@@ -76,6 +94,7 @@ begin OnDrop Player
 ;-----------------------------------------------------------------------------
 
 	Set aaDusfergonEquip to 0
+	Set aaDusfergonArrowsUp to 0
 	RemoveEventHandler "OnHitWith" aaDusfergonOnHit
 	RemoveEventHandler "OnRelease" aaDusfergonOnBowHit
 	RemoveEventHandler "OnHitWith" aaDusfergonOnArrowHit

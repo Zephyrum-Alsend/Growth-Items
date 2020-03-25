@@ -1,19 +1,43 @@
 scn aaDusfergonIncrVal
 
-;Related scripts
+;Main script
 ;-----------------------------------------------------------------------------
 ;aaDusfergonManager
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
 ;aaDusfergonStatLvl
+;aaDusfergonStatLvlS
 ;aaDusfergonEnchLvl
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
 ;-----------------------------------------------------------------------------
 
 ;Related globals
 ;-----------------------------------------------------------------------------
+;aaDusfergonLevel
+;aaDusfergonEnch1
+;aaDusfergonEnch2
+;aaDusfergonEnch3
+;aaDusfergonEnch4
+;aaDusfergonEnch5
+;aaDusfergonEnch6
+;aaDusfergonEnch7
+;aaDusfergonEnch8
+;aaDusfergonEnch9
+;aaDusfergonEnch10
 ;-----------------------------------------------------------------------------
 
 ;Description
 ;-----------------------------------------------------------------------------
-;Used in setting and modifying weapon/enchantment stats, compensates for
+;Used in setting and modifying weapon/enchantment stats; compensates for
 ;truncation in incrementing integer values by floats.
 ;-----------------------------------------------------------------------------
 

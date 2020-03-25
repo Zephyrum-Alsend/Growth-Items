@@ -1,15 +1,32 @@
 scn aaDusfergonObject
 
-;Related scripts
+;Main script
 ;-----------------------------------------------------------------------------
 ;aaDusfergonManager
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
 ;aaDusfergonOnHit
+;aaDusfergonOnBowHit
+;aaDusfergonOnArrowHit
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;aaDusfergonObjectB
+;aaDusfergonObjectS
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
+;aaDusfergonEquip
+;aaDusfergonBroken
+;aaDusfergonArrowsUp
 ;-----------------------------------------------------------------------------
 
 ;Related globals
 ;-----------------------------------------------------------------------------
-;aaDusfergonEquip
-;aaDusfergonBroken
 ;-----------------------------------------------------------------------------
 
 ;Description
@@ -79,6 +96,7 @@ begin OnDrop Player
 ;-----------------------------------------------------------------------------
 
 	Set aaDusfergonEquip to 0
+	Set aaDusfergonArrowsUp to 0
 	RemoveEventHandler "OnHitWith" aaDusfergonOnHit
 	RemoveEventHandler "OnRelease" aaDusfergonOnBowHit
 	RemoveEventHandler "OnHitWith" aaDusfergonOnArrowHit

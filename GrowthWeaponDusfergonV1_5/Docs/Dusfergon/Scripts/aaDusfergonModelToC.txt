@@ -1,9 +1,21 @@
 scn aaDusfergonModelToC
 
-;Related scripts
+;Main script
 ;-----------------------------------------------------------------------------
 ;aaDusfergonManager
-;aaDusfergonModelPage
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;aaDusfergonModelChange
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
 ;-----------------------------------------------------------------------------
 
 ;Related globals
@@ -12,8 +24,8 @@ scn aaDusfergonModelToC
 
 ;Description
 ;-----------------------------------------------------------------------------
-;Given the model change menu's index and the option chosen, redirect Manager
-;to the appropriate sub-type menu page.
+;Given ModelChange's menu index and the option chosen, return the index of the
+;appropriate sub-type page.
 ;-----------------------------------------------------------------------------
 
 ;Parameters
@@ -141,6 +153,11 @@ begin Function { ModelChange, Button }
 		elseif ( Button == 4 )
 
 			Set ModelChange to 7200
+
+		;Staff II pages
+		elseif ( Button == 5 )
+
+			Set ModelChange to 7210
 
 		endif
 		

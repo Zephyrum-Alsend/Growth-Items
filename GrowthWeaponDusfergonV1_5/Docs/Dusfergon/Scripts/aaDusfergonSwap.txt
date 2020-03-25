@@ -1,25 +1,36 @@
 scn aaDusfergonSwap
 
-;Related scripts
+;Main script
 ;-----------------------------------------------------------------------------
 ;aaDusfergonManager
-;aaDusfergonOnHit
-;aaDusfergonOnBowHit
-;aaDusfergonOnArrowHit
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
 ;aaDusfergonStatSet2
 ;-----------------------------------------------------------------------------
 
-;Related globals
+;Related scripts
+;-----------------------------------------------------------------------------
+;aaDusfergonDefaultINI
+;aaDusfergonExchange
+;-----------------------------------------------------------------------------
+
+;Used globals
 ;-----------------------------------------------------------------------------
 ;aaDusfergonEquip
 ;-----------------------------------------------------------------------------
 
+;Related globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
 ;Description
 ;-----------------------------------------------------------------------------
-;Used by ModelChange block in Manager to swap to and from Bow form.
-;Takes two weapons and an enchantment; if the weapon to be replaced is in the
-;Player's inventory, exchange it for the new weapon and copy item values from
-;old to new. Returns what new self RefID should be.
+;Takes two weapons and an enchantment; if the two weapons are different and 
+;the one to be replaced is in the Player's inventory, exchange it for the new 
+;weapon, copy item values from old to new and assign the passed enchantment if
+;the new weapon isn't the Staff. Returns what new self RefID should be.
 ;-----------------------------------------------------------------------------
 
 ;Parameters
@@ -59,7 +70,8 @@ begin Function { OldWeap, NewWeap, Ench }
 		Call aaDusfergonStatSet2 NewWeap aaDusfergonInit.fWeightBase aaDusfergonInit.fWeightMult aaDusfergonInit.sHealthBase aaDusfergonInit.fHealthMult aaDusfergonInit.lValueBase aaDusfergonInit.fValueMult
 
 		SetObjectCharge aaDusfergonInit.Charge NewWeap
-		
+
+		;The Staff has it's own enchantment that is always set
 		if ( aaDusfergonModel < aaDusfergonInit.StaffIdx )
 			
 			;Set enchantment if necessary
@@ -87,6 +99,7 @@ begin Function { OldWeap, NewWeap, Ench }
 
 			endif
 
+			;Inventory items are indexed in the order added, so NewWeap will always be after OldWeap
 			if ( Item.GetBaseObject == NewWeap )
 
 				Item.SetCurrentHealth Health
@@ -112,7 +125,7 @@ begin Function { OldWeap, NewWeap, Ench }
 		Player.RemoveItemNS OldWeap 1
 				
 	;-----------------------------------------------------------------------------
-	endif ;( Player.GetItemCount OldWeap > 0 )
+	endif ;( Player.GetItemCount OldWeap > 0 && OldWeap != NewWeap )
 	;-----------------------------------------------------------------------------
 
 	Return

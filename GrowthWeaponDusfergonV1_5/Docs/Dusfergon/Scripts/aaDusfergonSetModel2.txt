@@ -1,15 +1,32 @@
 scn aaDusfergonSetModel2
 
-;Related scripts
+;Main script
 ;-----------------------------------------------------------------------------
 ;aaDusfergonManager
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
 ;aaDusfergonSetModel
+;aaDusfergonModelChange
+;aaDusfergonExchange
+;aaDusfergonSwap
+;aaDusfergonRandomModel
+;aaDusfergonShowModelName
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
+;aaDusfergonEquip
+;aaDusfergonModel
 ;-----------------------------------------------------------------------------
 
 ;Related globals
 ;-----------------------------------------------------------------------------
-;aaDusfergonEquip
-;aaDusfergonModel
 ;-----------------------------------------------------------------------------
 
 ;Description
@@ -398,6 +415,9 @@ begin Function { weapon }
 		SetModelPath "Weapons\Daedric\Dagger.nif" weapon
 		SetIconPath "Weapons\DaedricDagger.dds" weapon
 		SetWeaponType 0 weapon
+
+
+
 		
 	;-----------------------------------------------------------------------------
 	;Warhammers
@@ -552,6 +572,9 @@ begin Function { weapon }
 		SetModelPath "Weapons\Daedric\Warhammer.nif" weapon
 		SetIconPath "Weapons\DaedricWarhammer.dds" weapon
 		SetWeaponType 3 weapon
+
+
+
 		
 	;-----------------------------------------------------------------------------
 	;Battleaxes
@@ -714,6 +737,9 @@ begin Function { weapon }
 		SetModelPath "Weapons\Daedric\Battleaxe.nif" weapon
 		SetIconPath "Weapons\DaedricBattleaxe.dds" weapon
 		SetWeaponType 3 weapon
+
+
+
 		
 	;-----------------------------------------------------------------------------
 	;Maces
@@ -876,6 +902,9 @@ begin Function { weapon }
 		SetModelPath "Weapons\Daedric\Mace.nif" weapon
 		SetIconPath "Weapons\DaedricMace.dds" weapon
 		SetWeaponType 2 weapon
+
+
+
 		
 	;-----------------------------------------------------------------------------
 	;Waraxes
@@ -1030,6 +1059,9 @@ begin Function { weapon }
 		SetModelPath "Weapons\Daedric\Waraxe.nif" weapon
 		SetIconPath "Weapons\DaedricWaraxe.dds" weapon
 		SetWeaponType 2 weapon
+
+
+
 		
 	;-----------------------------------------------------------------------------
 	;Bows
@@ -1307,6 +1339,9 @@ begin Function { weapon }
 
 		SetModelPath "Weapons\Daedric\Bow.nif" weapon
 		SetIconPath "Weapons\DaedricBow.dds" weapon
+
+
+
 		
 	;-----------------------------------------------------------------------------
 	;Staves
@@ -1421,15 +1456,386 @@ begin Function { weapon }
 	elseif ( aaDusfergonModel == 11015 )
 	;-----------------------------------------------------------------------------
 
-		SetModelPath "Weapons\Dusfergon\2h\Staff\staffofchaos.nif" weapon
-		SetIconPath "Dusfergon\2h\Staff\staffofchaos_icon.dds" weapon
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staff2mw02magnus.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staff2mw02magnus.dds" weapon
 		
 	;-----------------------------------------------------------------------------
 	elseif ( aaDusfergonModel == 11016 )
 	;-----------------------------------------------------------------------------
 
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staffofchaos.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staffofchaos_icon.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11017 )
+	;-----------------------------------------------------------------------------
+
 		SetModelPath "Weapons\Dusfergon\2h\Staff\staffofchaos_red.nif" weapon
 		SetIconPath "Dusfergon\2h\Staff\staffofchaos_icon.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11018 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staff2ayleid01.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staff2ayleid01.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11019 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staff2ayleid04.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staff2ayleid04.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11020 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staff2ayleid09.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staff2ayleid09.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11021 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staff2ayleid15.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staff2ayleid15.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11022 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staff2crystal01.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staff2crystal01.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11023 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staff2crystal02.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staff2crystal02.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11024 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staff2crystal03.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staff2crystal03.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11025 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staff2crystal04.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staff2crystal04.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11026 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staff2crystal05.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staff2crystal05.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11027 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staff2crystal06.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staff2crystal06.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11028 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staff2crystal07.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staff2crystal07.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11029 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staff2crystal08.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staff2crystal08.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11030 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staff2irondark1.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staff2irondark1.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11031 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staff2nature01.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staff2nature01.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11032 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staff2nature02.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staff2nature02.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11033 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staff2nature03.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staff2nature03.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11034 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staff2nature04.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staff2nature04.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11035 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staff2organic01.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staff2organic01.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11036 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staff2organic02.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staff2organic02.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11037 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staff2organic03.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staff2organic03.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11038 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staff2organic04.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staff2organic04.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11039 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staff2organic05.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staff2organic05.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11040 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staff2organic06.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staff2organic06.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11041 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staff2organic07.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staff2organic07.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11042 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staff2mw01wood.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staff2mw01wood.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11043 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staff2skeletalhand.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staff2skeletalhand.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11044 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staff2skull01.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staff2skull01.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11045 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staff2skull06.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staff2skull06.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11046 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staff2woodcrystal1.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staff2woodcrystal1.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11047 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staff2woodcrystal2.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staff2woodcrystal2.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11048 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staff2woodcrystal3.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staff2woodcrystal3.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11049 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staff2woodcrystal4.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staff2woodcrystal4.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11050 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staff2woodtear1.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staff2woodtear1.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11051 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staff2woodtear2.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staff2woodtear2.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11052 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staff2woodtear3.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staff2woodtear3.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11053 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staff2woodtear4.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staff2woodtear4.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11054 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staff2woodtear5.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staff2woodtear5.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11055 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staff2woodbirch1.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staff2woodbirch1.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11056 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staff2woodhemlock1.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staff2woodhemlock1.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11057 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staff2woodmaple1.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staff2woodmaple1.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11058 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staff2woodoak1.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staff2woodoak1.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11059 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staff2woodoak2.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staff2woodoak2.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11060 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staff2woodpine1.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staff2woodpine1.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11061 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staff2woodscotchpine1.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staff2woodscotchpine1.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11062 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staff2woodbirchmoss1.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staff2woodbirchmoss1.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11063 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staff2woodmaplemoss1.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staff2woodmaplemoss1.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11064 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staff2woodoakmoss1.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staff2woodoakmoss1.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11065 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staff2woodoakmoss2.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staff2woodoakmoss2.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11066 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staff2woodpinemoss1.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staff2woodpinemoss1.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11067 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Staffs\TestStaff.nif" weapon
+		SetIconPath "Weapons\Staff.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11068 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Staffs\TestStaff02.nif" weapon
+		SetIconPath "Weapons\Staff.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11069 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Staffs\TestStaff03.nif" weapon
+		SetIconPath "Weapons\Staff.dds" weapon
 		
 	;-----------------------------------------------------------------------------
 	endif ;( aaDusfergonModel > 4999 )

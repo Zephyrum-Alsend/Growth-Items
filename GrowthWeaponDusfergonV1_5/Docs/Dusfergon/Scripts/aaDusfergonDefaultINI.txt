@@ -1,8 +1,30 @@
 scn aaDusfergonDefaultINI
 
+;Main script
+;-----------------------------------------------------------------------------
+;aaDusfergonManger
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
 ;Related scripts
 ;-----------------------------------------------------------------------------
-;aaDusfergonManager
+;aaDusfergonStatAdj
+;aaDusfergonStatSet
+;aaDusfergonStatSet2
+;aaDusfergonStatSetS
+;aaDusfergonStatLvl
+;aaDusfergonStatLvlS
+;aaDusfergonEnchInit
+;aaDusfergonEnchSlct
+;aaDusfergonEnchLvl
+;aaDusfergonCalcXPReq
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
 ;-----------------------------------------------------------------------------
 
 ;Related globals

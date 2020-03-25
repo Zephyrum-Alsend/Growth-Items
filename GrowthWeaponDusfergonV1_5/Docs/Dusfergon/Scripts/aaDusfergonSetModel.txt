@@ -1,15 +1,31 @@
 scn aaDusfergonSetModel
 
-;Related scripts
+;Main script
 ;-----------------------------------------------------------------------------
 ;aaDusfergonManager
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
 ;aaDusfergonSetModel2
+;aaDusfergonModelChange
+;aaDusfergonExchange
+;aaDusfergonRandomModel
+;aaDusfergonShowModelName
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
+;aaDusfergonEquip
+;aaDusfergonModel
 ;-----------------------------------------------------------------------------
 
 ;Related globals
 ;-----------------------------------------------------------------------------
-;aaDusfergonEquip
-;aaDusfergonModel
 ;-----------------------------------------------------------------------------
 
 ;Description
@@ -131,12 +147,20 @@ begin Function { weapon }
 	elseif ( aaDusfergonModel == 12 )
 	;-----------------------------------------------------------------------------
 
+		SetModelPath "Weapons\Dusfergon\2h\Claymore\nazsword.nif" weapon
+		SetIconPath "Dusfergon\2h\Claymore\nazsword.dds" weapon
+		SetWeaponType 1 weapon
+
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 13 )
+	;-----------------------------------------------------------------------------
+
 		SetModelPath "Weapons\Dusfergon\2h\Claymore\Gotland2H.nif" weapon
 		SetIconPath "Dusfergon\2h\Claymore\iconGotland2H.dds" weapon
 		SetWeaponType 1 weapon
 
 	;-----------------------------------------------------------------------------
-	elseif ( aaDusfergonModel == 13 )
+	elseif ( aaDusfergonModel == 14 )
 	;-----------------------------------------------------------------------------
 
 		SetModelPath "Weapons\Dusfergon\2h\Claymore\Gotland2HSteel.nif" weapon
@@ -144,7 +168,7 @@ begin Function { weapon }
 		SetWeaponType 1 weapon
 
 	;-----------------------------------------------------------------------------
-	elseif ( aaDusfergonModel == 14 )
+	elseif ( aaDusfergonModel == 15 )
 	;-----------------------------------------------------------------------------
 
 		SetModelPath "Weapons\Dusfergon\2h\Claymore\Gotland2HOld.nif" weapon
@@ -152,7 +176,7 @@ begin Function { weapon }
 		SetWeaponType 1 weapon
 
 	;-----------------------------------------------------------------------------
-	elseif ( aaDusfergonModel == 15 )
+	elseif ( aaDusfergonModel == 16 )
 	;-----------------------------------------------------------------------------
 
 		SetModelPath "Weapons\Iron\Claymore.nif" weapon
@@ -160,7 +184,7 @@ begin Function { weapon }
 		SetWeaponType 1 weapon
 
 	;-----------------------------------------------------------------------------
-	elseif ( aaDusfergonModel == 16 )
+	elseif ( aaDusfergonModel == 17 )
 	;-----------------------------------------------------------------------------
 
 		SetModelPath "Weapons\Steel\Claymore.nif" weapon
@@ -168,7 +192,7 @@ begin Function { weapon }
 		SetWeaponType 1 weapon
 
 	;-----------------------------------------------------------------------------
-	elseif ( aaDusfergonModel == 17 )
+	elseif ( aaDusfergonModel == 18 )
 	;-----------------------------------------------------------------------------
 
 		SetModelPath "Weapons\Steel\ClaymoreFine.nif" weapon
@@ -176,7 +200,7 @@ begin Function { weapon }
 		SetWeaponType 1 weapon
 
 	;-----------------------------------------------------------------------------
-	elseif ( aaDusfergonModel == 18 )
+	elseif ( aaDusfergonModel == 19 )
 	;-----------------------------------------------------------------------------
 
 		SetModelPath "Weapons\Silver\Claymore.nif" weapon
@@ -184,7 +208,7 @@ begin Function { weapon }
 		SetWeaponType 1 weapon
 
 	;-----------------------------------------------------------------------------
-	elseif ( aaDusfergonModel == 19 )
+	elseif ( aaDusfergonModel == 20 )
 	;-----------------------------------------------------------------------------
 
 		SetModelPath "Weapons\Dwarven\Claymore.nif" weapon
@@ -192,7 +216,7 @@ begin Function { weapon }
 		SetWeaponType 1 weapon
 
 	;-----------------------------------------------------------------------------
-	elseif ( aaDusfergonModel == 20 )
+	elseif ( aaDusfergonModel == 21 )
 	;-----------------------------------------------------------------------------
 
 		SetModelPath "Weapons\Elven\Claymore.nif" weapon
@@ -200,7 +224,7 @@ begin Function { weapon }
 		SetWeaponType 1 weapon
 
 	;-----------------------------------------------------------------------------
-	elseif ( aaDusfergonModel == 21 )
+	elseif ( aaDusfergonModel == 22 )
 	;-----------------------------------------------------------------------------
 
 		SetModelPath "Weapons\Glass\Claymore.nif" weapon
@@ -208,7 +232,7 @@ begin Function { weapon }
 		SetWeaponType 1 weapon
 
 	;-----------------------------------------------------------------------------
-	elseif ( aaDusfergonModel == 22 )
+	elseif ( aaDusfergonModel == 23 )
 	;-----------------------------------------------------------------------------
 
 		SetModelPath "Weapons\Ebony\Claymore.nif" weapon
@@ -216,13 +240,16 @@ begin Function { weapon }
 		SetWeaponType 1 weapon
 
 	;-----------------------------------------------------------------------------
-	elseif ( aaDusfergonModel == 23 )
+	elseif ( aaDusfergonModel == 24 )
 	;-----------------------------------------------------------------------------
 
 		SetModelPath "Weapons\Daedric\Claymore.nif" weapon
 		SetIconPath "Weapons\DaedricClaymore.dds" weapon
 		SetWeaponType 1 weapon
 
+
+
+		
 	;-----------------------------------------------------------------------------
 	;Bastards 2H
 	;-----------------------------------------------------------------------------
@@ -349,12 +376,20 @@ begin Function { weapon }
 	elseif ( aaDusfergonModel == 1015 )
 	;-----------------------------------------------------------------------------
 
+		SetModelPath "Weapons\Dusfergon\2h\Bastard\Wraith2H.nif" weapon
+		SetIconPath "Dusfergon\Bastard\nazkicon.dds" weapon
+		SetWeaponType 1 weapon
+
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 1016 )
+	;-----------------------------------------------------------------------------
+
 		SetModelPath "Weapons\Dusfergon\2h\Bastard\ClintXVIbronze2H.nif" weapon
 		SetIconPath "Dusfergon\Bastard\iconClintBronze.dds" weapon
 		SetWeaponType 1 weapon
 
 	;-----------------------------------------------------------------------------
-	elseif ( aaDusfergonModel == 1016 )
+	elseif ( aaDusfergonModel == 1017 )
 	;-----------------------------------------------------------------------------
 
 		SetModelPath "Weapons\Dusfergon\2h\Bastard\AngularLeafBronze2H.nif" weapon
@@ -362,7 +397,7 @@ begin Function { weapon }
 		SetWeaponType 1 weapon
 
 	;-----------------------------------------------------------------------------
-	elseif ( aaDusfergonModel == 1017 )
+	elseif ( aaDusfergonModel == 1018 )
 	;-----------------------------------------------------------------------------
 
 		SetModelPath "Weapons\Dusfergon\2h\Bastard\TapperBroad2H.nif" weapon
@@ -370,7 +405,7 @@ begin Function { weapon }
 		SetWeaponType 1 weapon
 
 	;-----------------------------------------------------------------------------
-	elseif ( aaDusfergonModel == 1018 )
+	elseif ( aaDusfergonModel == 1019 )
 	;-----------------------------------------------------------------------------
 
 		SetModelPath "Weapons\Dusfergon\2h\Bastard\Seaward2H.nif" weapon
@@ -378,7 +413,7 @@ begin Function { weapon }
 		SetWeaponType 1 weapon
 
 	;-----------------------------------------------------------------------------
-	elseif ( aaDusfergonModel == 1019 )
+	elseif ( aaDusfergonModel == 1020 )
 	;-----------------------------------------------------------------------------
 
 		SetModelPath "Weapons\Dusfergon\2h\Bastard\ClintXVIsteel2H.nif" weapon
@@ -386,7 +421,7 @@ begin Function { weapon }
 		SetWeaponType 1 weapon
 
 	;-----------------------------------------------------------------------------
-	elseif ( aaDusfergonModel == 1020 )
+	elseif ( aaDusfergonModel == 1021 )
 	;-----------------------------------------------------------------------------
 
 		SetModelPath "Weapons\Dusfergon\2h\Bastard\AngularLeafSteel2H.nif" weapon
@@ -394,7 +429,7 @@ begin Function { weapon }
 		SetWeaponType 1 weapon
 
 	;-----------------------------------------------------------------------------
-	elseif ( aaDusfergonModel == 1021 )
+	elseif ( aaDusfergonModel == 1022 )
 	;-----------------------------------------------------------------------------
 
 		SetModelPath "Weapons\Dusfergon\2h\Bastard\TapperBroadSteel2H.nif" weapon
@@ -402,7 +437,7 @@ begin Function { weapon }
 		SetWeaponType 1 weapon
 
 	;-----------------------------------------------------------------------------
-	elseif ( aaDusfergonModel == 1022 )
+	elseif ( aaDusfergonModel == 1023 )
 	;-----------------------------------------------------------------------------
 
 		SetModelPath "Weapons\Dusfergon\2h\Bastard\TapperBroadBlack2H.nif" weapon
@@ -410,13 +445,16 @@ begin Function { weapon }
 		SetWeaponType 1 weapon
 
 	;-----------------------------------------------------------------------------
-	elseif ( aaDusfergonModel == 1023 )
+	elseif ( aaDusfergonModel == 1024 )
 	;-----------------------------------------------------------------------------
 
 		SetModelPath "Weapons\Dusfergon\2h\Bastard\TapperBroadOld2H.nif" weapon
 		SetIconPath "Dusfergon\Bastard\iconTapperBroadSwordBlack.dds" weapon
 		SetWeaponType 1 weapon
 
+
+
+		
 	;-----------------------------------------------------------------------------
 	;Bastards 1H
 	;-----------------------------------------------------------------------------
@@ -543,12 +581,20 @@ begin Function { weapon }
 	elseif ( aaDusfergonModel == 2015 )
 	;-----------------------------------------------------------------------------
 
+		SetModelPath "Weapons\Dusfergon\1h\Bastard\Wraith1H.nif" weapon
+		SetIconPath "Dusfergon\Bastard\nazkicon.dds" weapon
+		SetWeaponType 0 weapon
+
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 2016 )
+	;-----------------------------------------------------------------------------
+
 		SetModelPath "Weapons\Dusfergon\1h\Bastard\ClintXVIbronze1H.nif" weapon
 		SetIconPath "Dusfergon\Bastard\iconClintBronze.dds" weapon
 		SetWeaponType 0 weapon
 
 	;-----------------------------------------------------------------------------
-	elseif ( aaDusfergonModel == 2016 )
+	elseif ( aaDusfergonModel == 2017 )
 	;-----------------------------------------------------------------------------
 
 		SetModelPath "Weapons\Dusfergon\1h\Bastard\AngularLeafBronze1H.nif" weapon
@@ -556,7 +602,7 @@ begin Function { weapon }
 		SetWeaponType 0 weapon
 
 	;-----------------------------------------------------------------------------
-	elseif ( aaDusfergonModel == 2017 )
+	elseif ( aaDusfergonModel == 2018 )
 	;-----------------------------------------------------------------------------
 
 		SetModelPath "Weapons\Dusfergon\1h\Bastard\TapperBroad1H.nif" weapon
@@ -564,7 +610,7 @@ begin Function { weapon }
 		SetWeaponType 0 weapon
 
 	;-----------------------------------------------------------------------------
-	elseif ( aaDusfergonModel == 2018 )
+	elseif ( aaDusfergonModel == 2019 )
 	;-----------------------------------------------------------------------------
 
 		SetModelPath "Weapons\Dusfergon\1h\Bastard\Seaward1H.nif" weapon
@@ -572,7 +618,7 @@ begin Function { weapon }
 		SetWeaponType 0 weapon
 
 	;-----------------------------------------------------------------------------
-	elseif ( aaDusfergonModel == 2019 )
+	elseif ( aaDusfergonModel == 2020 )
 	;-----------------------------------------------------------------------------
 
 		SetModelPath "Weapons\Dusfergon\1h\Bastard\ClintXVIsteel1H.nif" weapon
@@ -580,7 +626,7 @@ begin Function { weapon }
 		SetWeaponType 0 weapon
 
 	;-----------------------------------------------------------------------------
-	elseif ( aaDusfergonModel == 2020 )
+	elseif ( aaDusfergonModel == 2021 )
 	;-----------------------------------------------------------------------------
 
 		SetModelPath "Weapons\Dusfergon\1h\Bastard\AngularLeafSteel1H.nif" weapon
@@ -588,7 +634,7 @@ begin Function { weapon }
 		SetWeaponType 0 weapon
 
 	;-----------------------------------------------------------------------------
-	elseif ( aaDusfergonModel == 2021 )
+	elseif ( aaDusfergonModel == 2022 )
 	;-----------------------------------------------------------------------------
 
 		SetModelPath "Weapons\Dusfergon\1h\Bastard\TapperBroadSteel1H.nif" weapon
@@ -596,7 +642,7 @@ begin Function { weapon }
 		SetWeaponType 0 weapon
 
 	;-----------------------------------------------------------------------------
-	elseif ( aaDusfergonModel == 2022 )
+	elseif ( aaDusfergonModel == 2023 )
 	;-----------------------------------------------------------------------------
 
 		SetModelPath "Weapons\Dusfergon\1h\Bastard\TapperBroadBlack1H.nif" weapon
@@ -604,13 +650,16 @@ begin Function { weapon }
 		SetWeaponType 0 weapon
 
 	;-----------------------------------------------------------------------------
-	elseif ( aaDusfergonModel == 2023 )
+	elseif ( aaDusfergonModel == 2024 )
 	;-----------------------------------------------------------------------------
 
 		SetModelPath "Weapons\Dusfergon\1h\Bastard\TapperBroadOld1H.nif" weapon
 		SetIconPath "Dusfergon\Bastard\iconTapperBroadSwordBlack.dds" weapon
 		SetWeaponType 0 weapon
 
+
+
+		
 	;-----------------------------------------------------------------------------
 	;Longswords
 	;-----------------------------------------------------------------------------
@@ -917,12 +966,6 @@ begin Function { weapon }
 		SetIconPath "Dusfergon\1h\Longsword\iconGramr.dds" weapon
 		SetWeaponType 0 weapon
 
-;	elseif ( aaDusfergonModel == 3037 )
-
-;		SetModelPath "Weapons\Dusfergon\1h\Longsword\Naegling.nif" weapon
-;		SetIconPath "Dusfergon\1h\Longsword\iconNaegling.dds" weapon
-;		SetWeaponType 0 weapon
-
 	;-----------------------------------------------------------------------------
 	elseif ( aaDusfergonModel == 3038 )
 	;-----------------------------------------------------------------------------
@@ -1091,12 +1134,6 @@ begin Function { weapon }
 		SetIconPath "Dusfergon\1h\Longsword\iconGramrOld.dds" weapon
 		SetWeaponType 0 weapon
 
-;	elseif ( aaDusfergonModel == 3059 )
-
-;		SetModelPath "Weapons\Dusfergon\1h\Longsword\NaeglingOld.nif" weapon
-;		SetIconPath "Dusfergon\1h\Longsword\iconNaeglingOld.dds" weapon
-;		SetWeaponType 0 weapon
-
 	;-----------------------------------------------------------------------------
 	elseif ( aaDusfergonModel == 3059 )
 	;-----------------------------------------------------------------------------
@@ -1185,6 +1222,9 @@ begin Function { weapon }
 		SetIconPath "Weapons\DaedricLongsword.dds" weapon
 		SetWeaponType 0 weapon
 
+
+
+		
 	;-----------------------------------------------------------------------------
 	;Shortswords
 	;-----------------------------------------------------------------------------

@@ -1,9 +1,13 @@
 scn aaDusfergonExchange
 
-;Related scripts
+;Main script
 ;-----------------------------------------------------------------------------
 ;aaDusfergonManager
-;aaDusfergonStatAdj
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;aaDusfergonAdj
 ;aaDusfergonStatSet
 ;aaDusfergonStatSet2
 ;aaDusfergonSwap
@@ -11,13 +15,19 @@ scn aaDusfergonExchange
 ;aaDusfergonSetModel2
 ;-----------------------------------------------------------------------------
 
-;Related globals
+;Related scripts
 ;-----------------------------------------------------------------------------
-;aaDusfergonArrowsUp
-;aaDusfergonBroken
-;aaDusfergonEquip
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
 ;aaDusfergonLevel
 ;aaDusfergonModel
+;aaDusfergonModelLast
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
 ;-----------------------------------------------------------------------------
 
 ;Description
@@ -49,21 +59,24 @@ ref Ench
 ;-----------------------------------------------------------------------------
 begin Function { Weap, Ench, Model, DmgB, DmgM, SpdB, SpdM, RchB, RchM }
 ;-----------------------------------------------------------------------------
-	;Store last model ID
+	;Store current model ID
 	Set aaDusfergonModelLast to aaDusfergonModel
 	
-	;Set Model
+	;Set new model ID
 	Set aaDusfergonModel to Model
 
-	;Swap to/from Bow if necessary
+	;Swap copies stats between weapons not specifically changed here
+	;Swap to Blade/Blunt
 	if ( aaDusfergonModel < aaDusfergonInit.BowIdx )
 
 		Set Weap to Call aaDusfergonSwap Weap DLScalar3 Ench
-			
+
+	;Swap to Bow
 	elseif ( aaDusfergonModel < aaDusfergonInit.StaffIdx )
 
 		Set Weap to Call aaDusfergonSwap Weap DLScalar3B Ench
-		
+
+	;Swap to Staff
 	else
 
 		Set Weap to Call aaDusfergonSwap Weap DLScalar3S Ench
@@ -71,6 +84,7 @@ begin Function { Weap, Ench, Model, DmgB, DmgM, SpdB, SpdM, RchB, RchM }
 	endif
 
 
+	;Adjust Damage, Speed, Reach if not a Staff
 	if ( aaDusfergonModel < aaDusfergonInit.StaffIdx )
 			
 		;Set stats
@@ -92,7 +106,7 @@ begin Function { Weap, Ench, Model, DmgB, DmgM, SpdB, SpdM, RchB, RchM }
 	endif
 		
 
-	;Reusing string_var
+	;Notify Player Exchange was successful
 	Let Icon := "Icons\" + ( GetIconPath Weap )
 	SetMessageIcon $Icon
 	MessageEX "%n has changed form." Weap 5

@@ -1,14 +1,23 @@
 scn aaDusfergonBreak
 
-;Related scripts
+;Main script
 ;-----------------------------------------------------------------------------
 ;aaDusfergonManager
-;aaDusfergonObject
-;aaDusfergonObjectB
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
 ;aaDusfergonCalcXPReq
 ;-----------------------------------------------------------------------------
 
-;Related globals
+;Related scripts
+;-----------------------------------------------------------------------------
+;aaDusfergonObject
+;aaDusfergonObjectB
+;aaDusfergonObjectS
+;-----------------------------------------------------------------------------
+
+;Used globals
 ;-----------------------------------------------------------------------------
 ;aaDusfergonEnch
 ;aaDusfergonEnch1
@@ -25,10 +34,15 @@ scn aaDusfergonBreak
 ;aaDusfergonXP
 ;-----------------------------------------------------------------------------
 
+;Related globals
+;-----------------------------------------------------------------------------
+;aaDusfergonBroken
+;-----------------------------------------------------------------------------
+
 ;Description
 ;-----------------------------------------------------------------------------
-;Decrements all the above variables based on the amount passed in Lvl.
-;If Lvl == 0, set everything to Lv1 values.
+;Decrements all the Used Globals based on the amount passed in Lvl.
+;If Lvl == 0, set everything to Lvl 1 values.
 ;If Lvl > 0, set weapon back that many levels and evenly distribute the level
 ;loss between enchant options.
 ;If Lvl < 0, do nothing.
@@ -52,7 +66,7 @@ begin Function { Lvl, Weap }
 	;-----------------------------------------------------------------------------
 	;Full reset
 	;-----------------------------------------------------------------------------
-	if ( Lvl == 0 || Lvl > aaDusfergonLevel )
+	if ( Lvl == 0 || Lvl > ( aaDusfergonLevel - 2 ) )
 
 		MessageBoxEX "Used and abused, %n loses what power it had gained..." Weap
 
@@ -79,7 +93,7 @@ begin Function { Lvl, Weap }
 
 		Set aaDusfergonLevel to aaDusfergonLevel - Lvl
 
-		;XPReq will be corrected in Manager
+		;Set XP to what was required to reach new Level, XPReq will be corrected in Manager
 		Call aaDusfergonCalcXPReq ( aaDusfergonLevel - 1 ) aaDusfergonInit.sXPReqBase aaDusfergonInit.sXPReqMult aaDusfergonInit.XPReqHalf
 		Set aaDusfergonXP to aaDusfergonXPReq
 
@@ -311,6 +325,7 @@ begin Function { Lvl, Weap }
 			;-----------------------------------------------------------------------------
 			loop ;while ( EnchBr > 0 )
 			;-----------------------------------------------------------------------------
+			
 			;Set Ench to the last option decremented.
 			Set aaDusfergonEnch to ( ( EnchIdx - 2 ) % 10 ) + 1
 

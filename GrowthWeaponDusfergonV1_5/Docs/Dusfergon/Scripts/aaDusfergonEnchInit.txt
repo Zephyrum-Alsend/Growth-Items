@@ -1,14 +1,20 @@
 scn aaDusfergonEnchInit
 
-;Related scripts
+;Main script
 ;-----------------------------------------------------------------------------
 ;aaDusfergonManager
-;aaDusfergonEnchSlct
-;aaDusfergonEnchLvl
-;aaDusfergonIncrVal
 ;-----------------------------------------------------------------------------
 
-;Related globals
+;Used scripts
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;aaDusfergonDefaultINI
+;-----------------------------------------------------------------------------
+
+;Used globals
 ;-----------------------------------------------------------------------------
 ;aaDusfergonEnch
 ;aaDusfergonEnch1
@@ -23,9 +29,13 @@ scn aaDusfergonEnchInit
 ;aaDusfergonEnch10
 ;-----------------------------------------------------------------------------
 
+;Related globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
 ;Description
 ;-----------------------------------------------------------------------------
-;According to the globals above and the stats set in Dusfergon.ini, adds the 
+;According to Used Globals and the stats set in Dusfergon.ini, adds the 
 ;appropriate effects with the appropriate stats to the passed enchantment.
 ;Returns total Cost for book keeping.
 ;-----------------------------------------------------------------------------
@@ -51,13 +61,18 @@ ref Ench
 ;-----------------------------------------------------------------------------
 begin Function { Ench, Range, Cost }
 ;-----------------------------------------------------------------------------
+	;Multiple options can add Weakness to Magic or Damage Fatigue
 	Set WKMALv to 0
 	Set DGFALv to 0
 
+	;Range not only indicates whether the effects should be Touch or Target, but also whether Ench is DLScalar3Ench or DLScalar3SEnch
+
+	;If Staff enchantment
 	if ( Range == 2 )
 
 		Set AreaS to aaDusfergonInit.sStaffAreaBase + ( aaDusfergonInit.fStaffAreaMult * ( aaDusfergonLevel - 1 ) )
 
+	;If Blade/Blunt/Bow enchantment
 	else
 
 		Set AreaS to 0
@@ -69,6 +84,7 @@ begin Function { Ench, Range, Cost }
 	;-----------------------------------------------------------------------------
 	if ( aaDusfergonEnch1 > 0 || aaDusfergonEnch == 1 )
 
+		;Fire Damage
 		Set Magnitude to aaDusfergonInit.sELDGMagnBase + ( aaDusfergonInit.fELDGMagnMult * aaDusfergonEnch1 )
 		Set Area to AreaS + aaDusfergonInit.sELDGAreaBase + ( aaDusfergonInit.fELDGAreaMult * aaDusfergonEnch1 )
 		Set Duration to aaDusfergonInit.sELDGDuraBase + ( aaDusfergonInit.fELDGDuraMult * aaDusfergonEnch1 )
@@ -76,6 +92,7 @@ begin Function { Ench, Range, Cost }
 			
 		AddFullEffectItem FIDG Magnitude Area Duration Range Ench
 
+		;Weakness to Fire
 		Set Magnitude to aaDusfergonInit.sWKELMagnBase + ( aaDusfergonInit.fWKELMagnMult * aaDusfergonEnch1 )
 		Set Area to AreaS + aaDusfergonInit.sWKELAreaBase + ( aaDusfergonInit.fWKELAreaMult * aaDusfergonEnch1 )
 		Set Duration to aaDusfergonInit.sWKELDuraBase + ( aaDusfergonInit.fWKELDuraMult * aaDusfergonEnch1 )
@@ -83,6 +100,7 @@ begin Function { Ench, Range, Cost }
 
 		AddFullEffectItem WKFI Magnitude Area Duration Range Ench
 
+		;Weakness to Magic
 		Set WKMALv to 1
 			
 	endif
@@ -92,6 +110,7 @@ begin Function { Ench, Range, Cost }
 	;-----------------------------------------------------------------------------
 	if ( aaDusfergonEnch2 > 0 || aaDusfergonEnch == 2 )
 
+		;Frost Damage
 		Set Magnitude to aaDusfergonInit.sELDGMagnBase + ( aaDusfergonInit.fELDGMagnMult * aaDusfergonEnch2 )
 		Set Area to AreaS + aaDusfergonInit.sELDGAreaBase + ( aaDusfergonInit.fELDGAreaMult * aaDusfergonEnch2 )
 		Set Duration to aaDusfergonInit.sELDGDuraBase + ( aaDusfergonInit.fELDGDuraMult * aaDusfergonEnch2 )
@@ -99,6 +118,7 @@ begin Function { Ench, Range, Cost }
 
 		AddFullEffectItem FRDG Magnitude Area Duration Range Ench
 
+		;Weakness to Frost
 		Set Magnitude to aaDusfergonInit.sWKELMagnBase + ( aaDusfergonInit.fWKELMagnMult * aaDusfergonEnch2 )
 		Set Area to AreaS + aaDusfergonInit.sWKELAreaBase + ( aaDusfergonInit.fWKELAreaMult * aaDusfergonEnch2 )
 		Set Duration to aaDusfergonInit.sWKELDuraBase + ( aaDusfergonInit.fWKELDuraMult * aaDusfergonEnch2 )
@@ -106,6 +126,7 @@ begin Function { Ench, Range, Cost }
 
 		AddFullEffectItem WKFR Magnitude Area Duration Range Ench
 
+		;Weakness to Magic
 		Set WKMALv to 1
 			
 	endif
@@ -115,6 +136,7 @@ begin Function { Ench, Range, Cost }
 	;-----------------------------------------------------------------------------
 	if ( aaDusfergonEnch3 > 0 || aaDusfergonEnch == 3 )
 
+		;Shock Damage
 		Set Magnitude to aaDusfergonInit.sELDGMagnBase + ( aaDusfergonInit.fELDGMagnMult * aaDusfergonEnch3 )
 		Set Area to AreaS + aaDusfergonInit.sELDGAreaBase + ( aaDusfergonInit.fELDGAreaMult * aaDusfergonEnch3 )
 		Set Duration to aaDusfergonInit.sELDGDuraBase + ( aaDusfergonInit.fELDGDuraMult * aaDusfergonEnch3 )
@@ -122,6 +144,7 @@ begin Function { Ench, Range, Cost }
 
 		AddFullEffectItem SHDG Magnitude Area Duration Range Ench
 
+		;Weakness to Shock
 		Set Magnitude to aaDusfergonInit.sWKELMagnBase + ( aaDusfergonInit.fWKELMagnMult * aaDusfergonEnch3 )
 		Set Area to AreaS + aaDusfergonInit.sWKELAreaBase + ( aaDusfergonInit.fWKELAreaMult * aaDusfergonEnch3 )
 		Set Duration to aaDusfergonInit.sWKELDuraBase + ( aaDusfergonInit.fWKELDuraMult * aaDusfergonEnch3 )
@@ -129,6 +152,7 @@ begin Function { Ench, Range, Cost }
 
 		AddFullEffectItem WKSH Magnitude Area Duration Range Ench
 
+		;Weakness to Magic
 		Set WKMALv to 1
 
 	endif
@@ -138,6 +162,7 @@ begin Function { Ench, Range, Cost }
 	;-----------------------------------------------------------------------------
 	if ( aaDusfergonEnch4 > 0 || aaDusfergonEnch == 4 )
 
+		;Disintegrate Weapon
 		Set Magnitude to aaDusfergonInit.sDIWEMagnBase + ( aaDusfergonInit.fDIWEMagnMult * aaDusfergonEnch4 )
 		Set Area to AreaS + aaDusfergonInit.sDIWEAreaBase + ( aaDusfergonInit.fDIWEAreaMult * aaDusfergonEnch4 )
 		Set Duration to aaDusfergonInit.sDIWEDuraBase + ( aaDusfergonInit.fDIWEDuraMult * aaDusfergonEnch4 )
@@ -145,13 +170,15 @@ begin Function { Ench, Range, Cost }
 
 		AddFullEffectItem DIWE Magnitude Area Duration Range Ench
 
+		;Disintegrate Armor
 		Set Magnitude to aaDusfergonInit.sDIARMagnBase + ( aaDusfergonInit.fDIARMagnMult * aaDusfergonEnch4 )
 		Set Area to AreaS + aaDusfergonInit.sDIARAreaBase + ( aaDusfergonInit.fDIARAreaMult * aaDusfergonEnch4 )
 		Set Duration to aaDusfergonInit.sDIARDuraBase + ( aaDusfergonInit.fDIARDuraMult * aaDusfergonEnch4 )
 		Set Cost to Cost + aaDusfergonInit.fDIARCostBase + ( aaDusfergonInit.fDIARCostMult * aaDusfergonEnch4 )
 
 		AddFullEffectItem DIAR Magnitude Area Duration Range Ench
-			
+
+		;Damage Fatigue
 		Set DGFALv to 1
 
 	endif	
@@ -161,6 +188,7 @@ begin Function { Ench, Range, Cost }
 	;-----------------------------------------------------------------------------
 	if ( aaDusfergonEnch5 > 0 || aaDusfergonEnch == 5 )
 
+		;Damage Magicka
 		Set Magnitude to aaDusfergonInit.sDGSPMagnBase + ( aaDusfergonInit.fDGSPMagnMult * aaDusfergonEnch5 )
 		Set Area to AreaS + aaDusfergonInit.sDGSPAreaBase + ( aaDusfergonInit.fDGSPAreaMult * aaDusfergonEnch5 )
 		Set Duration to aaDusfergonInit.sDGSPDuraBase + ( aaDusfergonInit.fDGSPDuraMult * aaDusfergonEnch5 )
@@ -168,6 +196,7 @@ begin Function { Ench, Range, Cost }
 
 		AddFullEffectItem DGSP Magnitude Area Duration Range Ench
 
+		;Dispel
 		Set Magnitude to aaDusfergonInit.sDSPLMagnBase + ( aaDusfergonInit.fDSPLMagnMult * aaDusfergonEnch5 )
 		Set Area to AreaS + aaDusfergonInit.sDSPLAreaBase + ( aaDusfergonInit.fDSPLAreaMult * aaDusfergonEnch5 )
 		Set Duration to 0
@@ -175,6 +204,7 @@ begin Function { Ench, Range, Cost }
 
 		AddFullEffectItem DSPL Magnitude Area Duration Range Ench
 
+		;Silence
 		Set Magnitude to 0
 		Set Area to AreaS + aaDusfergonInit.sSLNCAreaBase + ( aaDusfergonInit.fSLNCAreaMult * aaDusfergonEnch5 )
 		Set Duration to aaDusfergonInit.sSLNCDuraBase + ( aaDusfergonInit.fSLNCDuraMult * aaDusfergonEnch5 )
@@ -189,6 +219,7 @@ begin Function { Ench, Range, Cost }
 	;-----------------------------------------------------------------------------
 	if ( aaDusfergonEnch6 > 0 || aaDusfergonEnch == 6 )
 
+		;Burden
 		Set Magnitude to aaDusfergonInit.sBRDNMagnBase + ( aaDusfergonInit.fBRDNMagnMult * aaDusfergonEnch6 )
 		Set Area to AreaS + aaDusfergonInit.sBRDNAreaBase + ( aaDusfergonInit.fBRDNAreaMult * aaDusfergonEnch6 )
 		Set Duration to aaDusfergonInit.sBRDNDuraBase + ( aaDusfergonInit.fBRDNDuraMult * aaDusfergonEnch6 )
@@ -196,6 +227,7 @@ begin Function { Ench, Range, Cost }
 
 		AddFullEffectItem BRDN Magnitude Area Duration Range Ench
 
+		;Drain Strength
 		Set Magnitude to aaDusfergonInit.sDRATMagnBase + ( aaDusfergonInit.fDRATMagnMult * aaDusfergonEnch6 )
 		Set Area to AreaS + aaDusfergonInit.sDRATAreaBase + ( aaDusfergonInit.fDRATAreaMult * aaDusfergonEnch6 )
 		Set Duration to aaDusfergonInit.sDRATDuraBase + ( aaDusfergonInit.fDRATDuraMult * aaDusfergonEnch6 )
@@ -204,6 +236,7 @@ begin Function { Ench, Range, Cost }
 		Set EnchIter to AddFullEffectItem DRAT Magnitude Area Duration Range Ench
 		SetNthEffectItemActorValue "Strength" Ench EnchIter
 
+		;Weakness to Magic
 		Set WKMALv to 1
 
 	endif
@@ -213,6 +246,7 @@ begin Function { Ench, Range, Cost }
 	;-----------------------------------------------------------------------------
 	if ( aaDusfergonEnch7 > 0 || aaDusfergonEnch == 7 )
 
+		;Command Creature
 		Set Magnitude to aaDusfergonInit.sCOMMMagnBase + ( aaDusfergonInit.fCOMMMagnMult * aaDusfergonEnch7 )
 		Set Area to AreaS + aaDusfergonInit.sCOMMAreaBase + ( aaDusfergonInit.fCOMMAreaMult * aaDusfergonEnch7 )
 		Set Duration to aaDusfergonInit.sCOMMDuraBase + ( aaDusfergonInit.fCOMMDuraMult * aaDusfergonEnch7 )
@@ -220,6 +254,7 @@ begin Function { Ench, Range, Cost }
 
 		AddFullEffectItem COCR Magnitude Area Duration Range Ench
 
+		;Command Humanoid
 		Set Magnitude to aaDusfergonInit.sCOMMMagnBase + ( aaDusfergonInit.fCOMMMagnMult * aaDusfergonEnch7 )
 		Set Area to AreaS + aaDusfergonInit.sCOMMAreaBase + ( aaDusfergonInit.fCOMMAreaMult * aaDusfergonEnch7 )
 		Set Duration to aaDusfergonInit.sCOMMDuraBase + ( aaDusfergonInit.fCOMMDuraMult * aaDusfergonEnch7 )
@@ -227,6 +262,7 @@ begin Function { Ench, Range, Cost }
 
 		AddFullEffectItem COHU Magnitude Area Duration Range Ench
 
+		;Rally
 		Set Magnitude to aaDusfergonInit.sRALYMagnBase + ( aaDusfergonInit.fRALYMagnMult * aaDusfergonEnch7 )
 		Set Area to AreaS + aaDusfergonInit.sRALYAreaBase + ( aaDusfergonInit.fRALYAreaMult * aaDusfergonEnch7 )
 		Set Duration to aaDusfergonInit.sRALYDuraBase + ( aaDusfergonInit.fRALYDuraMult * aaDusfergonEnch7 )
@@ -241,6 +277,7 @@ begin Function { Ench, Range, Cost }
 	;-----------------------------------------------------------------------------
 	if ( aaDusfergonEnch8 > 0 || aaDusfergonEnch == 8 )
 
+		;Frenzy
 		Set Magnitude to aaDusfergonInit.sFRNZMagnBase + ( aaDusfergonInit.fFRNZMagnMult * aaDusfergonEnch8 )
 		Set Area to AreaS + aaDusfergonInit.sFRNZAreaBase + ( aaDusfergonInit.fFRNZAreaMult * aaDusfergonEnch8 )
 		Set Duration to aaDusfergonInit.sFRNZDuraBase + ( aaDusfergonInit.fFRNZDuraMult * aaDusfergonEnch8 )
@@ -248,6 +285,7 @@ begin Function { Ench, Range, Cost }
 
 		AddFullEffectItem FRNZ Magnitude Area Duration Range Ench
 
+		;Light
 		Set Magnitude to aaDusfergonInit.sLGHTMagnBase + ( aaDusfergonInit.fLGHTMagnMult * aaDusfergonEnch8 )
 		Set Area to AreaS + aaDusfergonInit.sLGHTAreaBase + ( aaDusfergonInit.fLGHTAreaMult * aaDusfergonEnch8 )
 		Set Duration to aaDusfergonInit.sLGHTDuraBase + ( aaDusfergonInit.fLGHTDuraMult * aaDusfergonEnch8 )
@@ -255,6 +293,7 @@ begin Function { Ench, Range, Cost }
 
 		AddFullEffectItem LGHT Magnitude Area Duration Range Ench
 
+		;Soul Trap
 		Set Area to AreaS + aaDusfergonInit.sSTRPAreaBase + ( aaDusfergonInit.fSTRPAreaMult * aaDusfergonEnch8 )
 		Set Duration to aaDusfergonInit.sSTRPDuraBase + ( aaDusfergonInit.fSTRPDuraMult * aaDusfergonEnch8 )
 		Set Cost to Cost + aaDusfergonInit.fSTRPCostBase + ( aaDusfergonInit.fSTRPCostMult * aaDusfergonEnch8 )
@@ -268,6 +307,7 @@ begin Function { Ench, Range, Cost }
 	;-----------------------------------------------------------------------------
 	if ( aaDusfergonEnch9 > 0 || aaDusfergonEnch == 9 )
 
+		;Drain Agility
 		Set Magnitude to aaDusfergonInit.sDRATMagnBase + ( aaDusfergonInit.fDRATMagnMult * aaDusfergonEnch9 )
 		Set Area to AreaS + aaDusfergonInit.sDRATAreaBase + ( aaDusfergonInit.fDRATAreaMult * aaDusfergonEnch9 )
 		Set Duration to aaDusfergonInit.sDRATDuraBase + ( aaDusfergonInit.fDRATDuraMult * aaDusfergonEnch9 )
@@ -276,8 +316,10 @@ begin Function { Ench, Range, Cost }
 		Set EnchIter to AddFullEffectItem DRAT Magnitude Area Duration Range Ench
 		SetNthEffectItemActorValue "Agility" Ench EnchIter
 
+		;Damage Fatigue
 		Set DGFALv to 1
 
+		;Weakness to Magic
 		Set WKMALv to 1
 
 	endif
@@ -287,6 +329,7 @@ begin Function { Ench, Range, Cost }
 	;-----------------------------------------------------------------------------
 	if ( aaDusfergonEnch10 > 0 || aaDusfergonEnch == 10 )
 
+		;Absorb Fatigue
 		Set Magnitude to aaDusfergonInit.sABFAMagnBase + ( aaDusfergonInit.fABFAMagnMult * aaDusfergonEnch10 )
 		Set Area to AreaS + aaDusfergonInit.sABFAAreaBase + ( aaDusfergonInit.fABFAAreaMult * aaDusfergonEnch10 )
 		Set Duration to aaDusfergonInit.sABFADuraBase + ( aaDusfergonInit.fABFADuraMult * aaDusfergonEnch10 )
@@ -294,6 +337,7 @@ begin Function { Ench, Range, Cost }
 
 		AddFullEffectItem ABFA Magnitude Area Duration Range Ench
 
+		;Absorb Health
 		Set Magnitude to aaDusfergonInit.sABHEMagnBase + ( aaDusfergonInit.fABHEMagnMult * aaDusfergonEnch10 )
 		Set Area to AreaS + aaDusfergonInit.sABHEAreaBase + ( aaDusfergonInit.fABHEAreaMult * aaDusfergonEnch10 )
 		Set Duration to aaDusfergonInit.sABHEDuraBase + ( aaDusfergonInit.fABHEDuraMult * aaDusfergonEnch10 )
@@ -301,6 +345,7 @@ begin Function { Ench, Range, Cost }
 
 		AddFullEffectItem ABHE Magnitude Area Duration Range Ench
 
+		;Absorb Magicka
 		Set Magnitude to aaDusfergonInit.sABSPMagnBase + ( aaDusfergonInit.fABSPMagnMult * aaDusfergonEnch10 )
 		Set Area to AreaS + aaDusfergonInit.sABSPAreaBase + ( aaDusfergonInit.fABSPAreaMult * aaDusfergonEnch10 )
 		Set Duration to aaDusfergonInit.sABSPDuraBase + ( aaDusfergonInit.fABSPDuraMult * aaDusfergonEnch10 )
@@ -315,6 +360,7 @@ begin Function { Ench, Range, Cost }
 	;-----------------------------------------------------------------------------
 	if ( DGFALv > 0 )
 
+		;Re-use the flag as sum of all relevant options' levels
 		Set DGFALv to 0
 			
 		if ( aaDusfergonEnch4 > 0 )
@@ -343,6 +389,7 @@ begin Function { Ench, Range, Cost }
 	;-----------------------------------------------------------------------------
 	if ( WKMALv > 0 )
 
+		;Re-use the flag as sum of all relevant options' levels
 		Set WKMALv to 0
 			
 		if ( aaDusfergonEnch1 > 0 )

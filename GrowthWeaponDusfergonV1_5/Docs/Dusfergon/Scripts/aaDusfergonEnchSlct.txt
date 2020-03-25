@@ -1,15 +1,23 @@
 scn aaDusfergonEnchSlct
 
-;Related scripts
+;Main script
 ;-----------------------------------------------------------------------------
 ;aaDusfergonManager
-;aaDusfergonEnchInit
-;aaDusfergonEnchLvl
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
 ;aaDusfergonIncrVal
 ;-----------------------------------------------------------------------------
 
-;Related globals
+;Related scripts
 ;-----------------------------------------------------------------------------
+;aaDusfergonDefaultINI
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
+;aaDusfergonLevel
 ;aaDusfergonEnch
 ;aaDusfergonEnch1
 ;aaDusfergonEnch2
@@ -21,6 +29,10 @@ scn aaDusfergonEnchSlct
 ;aaDusfergonEnch8
 ;aaDusfergonEnch9
 ;aaDusfergonEnch10
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
 ;-----------------------------------------------------------------------------
 
 ;Description
@@ -60,10 +72,12 @@ begin Function { Ench, Range, Cost }
 	;-----------------------------------------------------------------------------
 	;Set up Staff's innate Area
 	;-----------------------------------------------------------------------------
+	;Staff enchantment
 	if ( Range == 2 )
 
 		Set AreaS to aaDusfergonInit.sStaffAreaBase + ( aaDusfergonInit.fStaffAreaMult * ( aaDusfergonLevel - 1 ) )
 
+	;Blade/Blunt/Bow enchantment
 	else
 
 		Set AreaS to 0
@@ -73,8 +87,10 @@ begin Function { Ench, Range, Cost }
 	;-----------------------------------------------------------------------------
 	;Ensure Damage Fatigue and Weakness to Magic are always last
 	;-----------------------------------------------------------------------------
+	;Damage Fatigue
 	if ( MagicItemHasEffect DGFA Ench )
 
+		;DGFA is last unless WKMA is present
 		if ( MagicItemHasEffect WKMA Ench )
 
 			Set EnchIter to ( GetMagicItemEffectCount Ench ) - 2
@@ -98,7 +114,8 @@ begin Function { Ench, Range, Cost }
 		Set DGFALv to 0
 
 	endif
-	
+
+	;Weakness to Magic
 	if ( MagicItemHasEffect WKMA Ench )
 
 		Set EnchIter to ( GetMagicitemEffectCount Ench ) - 1
@@ -122,15 +139,18 @@ begin Function { Ench, Range, Cost }
 	;-----------------------------------------------------------------------------
 	if ( aaDusfergonEnch == 1 && aaDusfergonEnch1 == 0 )
 	;-----------------------------------------------------------------------------
+		;Weakness to Magic
 		if ( WKMALv == 0 )
 
 			Set WKMALv to 1
 
 		endif
 
+		;Fire Damage
 		Set Area to AreaS + aaDusfergonInit.sELDGAreaBase
 		AddFullEffectItem FIDG aaDusfergonInit.sELDGMagnBase Area aaDusfergonInit.sELDGDuraBase Range Ench
-		
+
+		;Weakness to Fire
 		Set Area to AreaS + aaDusfergonInit.sWKELAreaBase
 		AddFullEffectItem WKFI aaDusfergonInit.sWKELMagnBase Area aaDusfergonInit.sWKELDuraBase Range Ench
 
@@ -141,15 +161,18 @@ begin Function { Ench, Range, Cost }
 	;-----------------------------------------------------------------------------
 	elseif ( aaDusfergonEnch == 2 && aaDusfergonEnch2 == 0 )
 	;-----------------------------------------------------------------------------
+		;Weakness to Magic
 		if ( WKMALv == 0 )
 
 			Set WKMALv to 1
 
 		endif
 
+		;Frost Damage
 		Set Area to AreaS + aaDusfergonInit.sELDGAreaBase
 		AddFullEffectItem FRDG aaDusfergonInit.sELDGMagnBase Area aaDusfergonInit.sELDGDuraBase Range Ench
-		
+
+		;Weakness to Frost
 		Set Area to AreaS + aaDusfergonInit.sWKELAreaBase
 		AddFullEffectItem WKFR aaDusfergonInit.sWKELMagnBase Area aaDusfergonInit.sWKELDuraBase Range Ench
 
@@ -160,15 +183,18 @@ begin Function { Ench, Range, Cost }
 	;-----------------------------------------------------------------------------
 	elseif ( aaDusfergonEnch == 3 && aaDusfergonEnch3 == 0 )
 	;-----------------------------------------------------------------------------
+		;Weakness to Magic
 		if ( WKMALv == 0 )
 
 			Set WKMALv to 1
 
 		endif
 
+		;Shock Damage
 		Set Area to AreaS + aaDusfergonInit.sELDGAreaBase
 		AddFullEffectItem SHDG aaDusfergonInit.sELDGMagnBase Area aaDusfergonInit.sELDGDuraBase Range Ench
-		
+
+		;Weakness to Shock
 		Set Area to AreaS + aaDusfergonInit.sWKELAreaBase
 		AddFullEffectItem WKSH aaDusfergonInit.sWKELMagnBase Area aaDusfergonInit.sWKELDuraBase Range Ench
 
@@ -179,15 +205,18 @@ begin Function { Ench, Range, Cost }
 	;-----------------------------------------------------------------------------
 	elseif ( aaDusfergonEnch == 4 && aaDusfergonEnch4 == 0 )
 	;-----------------------------------------------------------------------------
+		;Damage Fatigue
 		if ( DGFALv == 0 )
 
 			Set DGFALv to 1
 
 		endif
 
+		;Disintegrate Weapon
 		Set Area to AreaS + aaDusfergonInit.sDIWEAreaBase
 		AddFullEffectItem DIWE aaDusfergonInit.sDIWEMagnBase Area aaDusfergonInit.sDIWEDuraBase Range Ench
 
+		;Disintegrate Armor
 		Set Area to AreaS + aaDusfergonInit.sDIARAreaBase
 		AddFullEffectItem DIAR aaDusfergonInit.sDIARMagnBase Area aaDusfergonInit.sDIARDuraBase Range Ench
 
@@ -198,12 +227,15 @@ begin Function { Ench, Range, Cost }
 	;-----------------------------------------------------------------------------
 	elseif ( aaDusfergonEnch == 5 && aaDusfergonEnch5 == 0 )
 	;-----------------------------------------------------------------------------
+		;Damage Magicka
 		Set Area to AreaS + aaDusfergonInit.sDGSPAreaBase
 		AddFullEffectItem DGSP aaDusfergonInit.sDGSPMagnBase Area aaDusfergonInit.sDGSPDuraBase Range Ench
 
+		;Dispel
 		Set Area to AreaS + aaDusfergonInit.sDSPLAreaBase
 		AddFullEffectItem DSPL aaDusfergonInit.sDSPLMagnBase Area 0 Range Ench
 
+		;Silence
 		Set Area to AreaS + aaDusfergonInit.sSLNCAreaBase
 		AddFullEffectItem SLNC 0 Area aaDusfergonInit.sSLNCDuraBase Range Ench
 		
@@ -214,15 +246,18 @@ begin Function { Ench, Range, Cost }
 	;-----------------------------------------------------------------------------
 	elseif ( aaDusfergonEnch == 6 && aaDusfergonEnch6 == 0 )
 	;-----------------------------------------------------------------------------		
+		;Weakness to Magic
 		if ( WKMALv == 0 )
 
 			Set WKMALv to 1
 
 		endif
 
+		;Burden
 		Set Area to AreaS + aaDusfergonInit.sBRDNAreaBase
 		AddFullEffectItem BRDN aaDusfergonInit.sBRDNMagnBase Area aaDusfergonInit.sBRDNDuraBase Range Ench
-		
+
+		;Drain Strength
 		Set Area to AreaS + aaDusfergonInit.sDRATAreaBase
 		Set EnchIter to AddFullEffectItem DRAT aaDusfergonInit.sDRATMagnBase Area aaDusfergonInit.sDRATDuraBase Range Ench
 		SetNthEffectItemActorValue "Strength" Ench EnchIter
@@ -234,12 +269,15 @@ begin Function { Ench, Range, Cost }
 	;-----------------------------------------------------------------------------
 	elseif ( aaDusfergonEnch == 7 && aaDusfergonEnch7 == 0 )
 	;-----------------------------------------------------------------------------
+		;Command Creature
 		Set Area to AreaS + aaDusfergonInit.sCOMMAreaBase
 		AddFullEffectItem COCR aaDusfergonInit.sCOMMMagnBase Area aaDusfergonInit.sCOMMDuraBase Range Ench
-		
+
+		;Command Humanoid
 		Set Area to AreaS + aaDusfergonInit.sCOMMAreaBase
 		AddFullEffectItem COHU aaDusfergonInit.sCOMMMagnBase Area aaDusfergonInit.sCOMMDuraBase Range Ench
-		
+
+		;Rally
 		Set Area to AreaS + aaDusfergonInit.sRALYAreaBase
 		AddFullEffectItem RALY aaDusfergonInit.sRALYMagnBase Area aaDusfergonInit.sRALYDuraBase Range Ench
 
@@ -250,12 +288,15 @@ begin Function { Ench, Range, Cost }
 	;-----------------------------------------------------------------------------
 	elseif ( aaDusfergonEnch == 8 && aaDusfergonEnch8 == 0 )
 	;-----------------------------------------------------------------------------
+		;Frenzy
 		Set Area to AreaS + aaDusfergonInit.sFRNZAreaBase
 		AddFullEffectItem FRNZ aaDusfergonInit.sFRNZMagnBase Area aaDusfergonInit.sFRNZDuraBase Range Ench
-		
+
+		;Light
 		Set Area to AreaS + aaDusfergonInit.sLGHTAreaBase
 		AddFullEffectItem LGHT aaDusfergonInit.sLGHTMagnBase Area aaDusfergonInit.sLGHTDuraBase Range Ench
-		
+
+		;Soul Trap
 		Set Area to AreaS + aaDusfergonInit.sSTRPAreaBase
 		AddFullEffectItem STRP 0 Area aaDusfergonInit.sSTRPDuraBase Range Ench
 
@@ -266,19 +307,21 @@ begin Function { Ench, Range, Cost }
 	;-----------------------------------------------------------------------------
 	elseif ( aaDusfergonEnch == 9 && aaDusfergonEnch9 == 0 )
 	;-----------------------------------------------------------------------------		
+		;Damage Fatigue
 		if ( DGFALv == 0 )
 
 			Set DGFALv to 1
 
 		endif
 
+		;Weakness to Magic
 		if ( WKMALv == 0 )
 
 			Set WKMALv to 1
 
 		endif
 
-		
+		;Drain Agility
 		Set Area to AreaS + aaDusfergonInit.sDRATAreaBase
 		Set EnchIter to AddFullEffectItem DRAT aaDusfergonInit.sDRATMagnBase Area aaDusfergonInit.sDRATDuraBase Range Ench
 		SetNthEffectItemActorValue "Agility" Ench EnchIter
@@ -290,12 +333,15 @@ begin Function { Ench, Range, Cost }
 	;-----------------------------------------------------------------------------
 	elseif ( aaDusfergonEnch == 10 && aaDusfergonEnch10 == 0 )
 	;-----------------------------------------------------------------------------
+		;Absorb Fatigue
 		Set Area to AreaS + aaDusfergonInit.sABFAAreaBase
 		AddFullEffectItem ABFA aaDusfergonInit.sABFAMagnBase Area aaDusfergonInit.sABFADuraBase Range Ench
-		
+
+		;Absorb Health
 		Set Area to AreaS + aaDusfergonInit.sABHEAreaBase
 		AddFullEffectItem ABHE aaDusfergonInit.sABHEMagnBase Area aaDusfergonInit.sABHEDuraBase Range Ench
-		
+
+		;Absorb Magicka
 		Set Area to AreaS + aaDusfergonInit.sABSPAreaBase
 		AddFullEffectItem ABSP aaDusfergonInit.sABSPMagnBase Area aaDusfergonInit.sABSPDuraBase Range Ench
 

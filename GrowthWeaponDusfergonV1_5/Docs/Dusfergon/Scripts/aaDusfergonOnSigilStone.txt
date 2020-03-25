@@ -1,9 +1,25 @@
 scn aaDusfergonOnSigilStone
 
-;Related scripts
+;Main script
 ;-----------------------------------------------------------------------------
 ;aaDusfergonManager
-;aaDusfergonOnEnchant
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;aaDusfergonOnHit
+;aaDusfergonOnBowHit
+;aaDusfergonOnArrowHit
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
+;aaDusfergonEquip
+;aaDusfergonArrowsUp
 ;-----------------------------------------------------------------------------
 
 ;Related globals
@@ -30,13 +46,16 @@ begin Function { Weap }
 
 	if ( GetLastSigilStoneEnchantedItem == Weap )
 
+		;Remove all handlers
 		RemoveEventHandler "OnHitWith" aaDusfergonOnHit
 		RemoveEventHandler "OnRelease" aaDusfergonOnBowHit
 		RemoveEventHandler "OnHitWith" aaDusfergonOnArrowHit
-		Set aaDusfergonEquip to 0	
+		Set aaDusfergonEquip to 0
+		Set aaDusfergonArrowsUp to 0
 
 		MessageBoxEX "%n rejects the Sigil Stone used on it." Weap
 
+		;Get items used/created in the enchantment
 		Set Sigil to GetLastUsedSigilStone
 		Set Enchanted to GetLastSigilStoneCreatedItem
 
