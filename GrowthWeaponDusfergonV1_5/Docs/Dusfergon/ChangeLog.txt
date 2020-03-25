@@ -75,3 +75,6 @@ V1.5
  - Fixed error in calc for adding Damage Magicka effect
  - Rewrote Charge formula, initial charge is now relevant to EnchStart instead of total level
  - Added Staff forms
+ - Added 1 Claymore, 1 Bastard forms
+ - Total mesh count increased to 356
+ - Claymore or Bastard form may be incorrect after updating due to new additions

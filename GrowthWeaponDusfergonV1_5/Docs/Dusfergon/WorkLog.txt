@@ -234,3 +234,21 @@
 -Remapped textures for MC's Staff Pack
 -Updated SetModel2, ModelChange and ShowModelName with new staves
 -Imported Staff of Magnus + Staff of Chaos, remapped, functions updated
+
+24.03.2020
+-Imported Armamantium Staffs, functions updated, textures not remapped yet
+-Implemented 3 Vanilla staves (TestStaff, TestStaff02, TestStaff03)
+-Updated RandomModel to include Staves
+-Added Nazgul Sword Set, functions updated, textures remapped
+-ToDo: remap Armamantium Staffs, thoroughly document all code, update ReadMe
+-Going through old code to update commenting style, updated:
+	-Break	-CalcXPReq	-DefaultINI	-EnchDisplay	-EnchInit	-EnchLvl
+	-EnchSlct	-Exchange	-IncrVal	-LevelMessage	-Manager	-ModelChange
+
+25.03.2020
+-Realised if I don't set ArrowsUp to 0, even if I unset OnArrowHit, no new handlers will be made, so OnDrop blocks also set that global to 0 now
+-Going through old code to update commenting style, udpated:
+	-ModelPage	-ModelToC	-Object	-ObjectB	-ObjectS	-OnArrowHit
+	-OnBowHit	-OnEnchant	-OnHit	-OnSigilStone	-OnStaffHit	-RandomModel
+	-RemoveUnScriptedEffects	-SetModel	-SetModel2	-ShowModelName
+	-StatAdj	-StatLvl	-StatLvlS	-StatSet	-StatSet2	-StatSetS	-Swap
