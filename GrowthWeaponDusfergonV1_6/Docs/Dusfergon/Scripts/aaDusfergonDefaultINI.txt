@@ -1,0 +1,673 @@
+scn aaDusfergonDefaultINI
+
+;Main script
+;-----------------------------------------------------------------------------
+;aaDusfergonManger
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;aaDusfergonStatAdj
+;aaDusfergonStatSet
+;aaDusfergonStatSet2
+;aaDusfergonStatSetS
+;aaDusfergonStatLvl
+;aaDusfergonStatLvlS
+;aaDusfergonEnchInit
+;aaDusfergonEnchSlct
+;aaDusfergonEnchLvl
+;aaDusfergonCalcXPReq
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;A complete copy of the default Dusfergon.ini, to act as a backup incase the
+;actual ini has an error that prevents compiling or is missing.
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+
+
+;-----------------------------------------------------------------------------
+begin Function { }
+;-----------------------------------------------------------------------------
+
+;-----------------------------------------------------------------------------
+;These settings are read by the mod every time you load a save
+;-----------------------------------------------------------------------------
+
+;-----------------------------------------------------------------------------
+;Name
+;-----------------------------------------------------------------------------
+Set aaDusfergonInit.str_Name to sv_Construct "Dusfergon"
+
+;sShort = Up to 32767
+;lLong  = Up to 2147483647
+;fFloat = Short but can have decimals
+							;Default values here
+;-----------------------------------------------------------------------------
+;Base stats
+;-----------------------------------------------------------------------------
+Set aaDusfergonInit.sDamageBase to 12			;12
+Set aaDusfergonInit.fSpeedBase to 0.8			;0.8
+Set aaDusfergonInit.fReachBase to 1.3			;1.3
+Set aaDusfergonInit.fWeightBase to 10			;10
+Set aaDusfergonInit.sHealthBase to 150			;150
+Set aaDusfergonInit.lValueBase to 50			;50
+
+;-----------------------------------------------------------------------------
+;Growth rates
+;-----------------------------------------------------------------------------
+Set aaDusfergonInit.fDamageMult to 0.5			;0.5
+Set aaDusfergonInit.fSpeedMult to 0.003			;0.003
+Set aaDusfergonInit.fReachMult to 0			;0
+Set aaDusfergonInit.fWeightMult to 0.5			;0.5
+Set aaDusfergonInit.fHealthMult to 30			;30
+Set aaDusfergonInit.fValueMult to 115			;115
+
+;-----------------------------------------------------------------------------
+;Weapon type stat adjustments
+;-----------------------------------------------------------------------------
+;Claymore
+;-----------------------------------------------------------------------------
+Set aaDusfergonInit.sClaymoreDamageBase to 0		;0
+Set aaDusfergonInit.fClaymoreSpeedBase to 0		;0
+Set aaDusfergonInit.fClaymoreReachBase to 0		;0
+
+Set aaDusfergonInit.fClaymoreDamageMult to 0		;0
+Set aaDusfergonInit.fClaymoreSpeedMult to 0		;0
+Set aaDusfergonInit.fClaymoreReachMult to 0		;0
+
+;-----------------------------------------------------------------------------
+;Bastard 2h
+;-----------------------------------------------------------------------------
+Set aaDusfergonInit.sBastard2HDamageBase to -1		;-1
+Set aaDusfergonInit.fBastard2HSpeedBase to 0.2		;0.2
+Set aaDusfergonInit.fBastard2HReachBase to -0.2		;-0.2
+
+Set aaDusfergonInit.fBastard2HDamageMult to -0.05	;-0.05
+Set aaDusfergonInit.fBastard2HSpeedMult to 0.0006	;0.0006
+Set aaDusfergonInit.fBastard2HReachMult to 0		;0
+
+;-----------------------------------------------------------------------------
+;Bastard 1h
+;-----------------------------------------------------------------------------
+Set aaDusfergonInit.sBastard1HDamageBase to -1		;-1
+Set aaDusfergonInit.fBastard1HSpeedBase to 0.1		;0.1
+Set aaDusfergonInit.fBastard1HReachBase to -0.2		;-0.2
+
+Set aaDusfergonInit.fBastard1HDamageMult to -0.05	;-0.05
+Set aaDusfergonInit.fBastard1HSpeedMult to 0.0003	;0.0003
+Set aaDusfergonInit.fBastard1HReachMult to 0		;0
+
+;-----------------------------------------------------------------------------
+;Longsword
+;-----------------------------------------------------------------------------
+Set aaDusfergonInit.sLongswordDamageBase to -2		;-2
+Set aaDusfergonInit.fLongswordSpeedBase to 0.2		;0.2
+Set aaDusfergonInit.fLongswordReachBase to -0.3		;-0.3
+
+Set aaDusfergonInit.fLongswordDamageMult to -0.075	;-0.075
+Set aaDusfergonInit.fLongswordSpeedMult to 0.0006	;0.0006
+Set aaDusfergonInit.fLongswordReachMult to 0		;0
+
+;-----------------------------------------------------------------------------
+;Shortsword
+;-----------------------------------------------------------------------------
+Set aaDusfergonInit.sShortswordDamageBase to -4		;-4
+Set aaDusfergonInit.fShortswordSpeedBase to 0.4		;0.4
+Set aaDusfergonInit.fShortswordReachBase to -0.5	;-0.5
+
+Set aaDusfergonInit.fShortswordDamageMult to -0.14	;-0.14
+Set aaDusfergonInit.fShortswordSpeedMult to 0.0012	;0.0012
+Set aaDusfergonInit.fShortswordReachMult to 0		;0
+
+;-----------------------------------------------------------------------------
+;Dagger
+;-----------------------------------------------------------------------------
+Set aaDusfergonInit.sDaggerDamageBase to -6		;-6
+Set aaDusfergonInit.fDaggerSpeedBase to 0.6		;0.6
+Set aaDusfergonInit.fDaggerReachBase to -0.7		;-0.7
+
+Set aaDusfergonInit.fDaggerDamageMult to -0.25		;-0.25
+Set aaDusfergonInit.fDaggerSpeedMult to 0.0018		;0.0018
+Set aaDusfergonInit.fDaggerReachMult to 0		;0
+
+;-----------------------------------------------------------------------------
+;Warhammer
+;-----------------------------------------------------------------------------
+Set aaDusfergonInit.sWarhammerDamageBase to 3		;3
+Set aaDusfergonInit.fWarhammerSpeedBase to 0		;0
+Set aaDusfergonInit.fWarhammerReachBase to -0.4		;-0.4
+
+Set aaDusfergonInit.fWarhammerDamageMult to 0.18	;0.18
+Set aaDusfergonInit.fWarhammerSpeedMult to -0.0003	;-0.0003
+Set aaDusfergonInit.fWarhammerReachMult to 0		;0
+
+;-----------------------------------------------------------------------------
+;Battleaxe
+;-----------------------------------------------------------------------------
+Set aaDusfergonInit.sBattleaxeDamageBase to 1		;1
+Set aaDusfergonInit.fBattleaxeSpeedBase to 0.1		;0.1
+Set aaDusfergonInit.fBattleaxeReachBase to -0.4		;-0.4
+
+Set aaDusfergonInit.fBattleaxeDamageMult to 0.1		;0.1
+Set aaDusfergonInit.fBattleaxeSpeedMult to 0		;0
+Set aaDusfergonInit.fBattleaxeReachMult to 0		;0
+
+;-----------------------------------------------------------------------------
+;Mace
+;-----------------------------------------------------------------------------
+Set aaDusfergonInit.sMaceDamageBase to -1		;-1
+Set aaDusfergonInit.fMaceSpeedBase to 0.1		;0.1
+Set aaDusfergonInit.fMaceReachBase to -0.5		;-0.5
+
+Set aaDusfergonInit.fMaceDamageMult to -0.02		;-0.02
+Set aaDusfergonInit.fMaceSpeedMult to 0.0003		;0.0003
+Set aaDusfergonInit.fMaceReachMult to 0			;0
+
+;-----------------------------------------------------------------------------
+;Waraxe
+;-----------------------------------------------------------------------------
+Set aaDusfergonInit.sWaraxeDamageBase to -3		;-3
+Set aaDusfergonInit.fWaraxeSpeedBase to 0.3		;0.3
+Set aaDusfergonInit.fWaraxeReachBase to -0.5		;-0.5
+
+Set aaDusfergonInit.fWaraxeDamageMult to -0.07		;-0.07
+Set aaDusfergonInit.fWaraxeSpeedMult to 0.0009		;0.0009
+Set aaDusfergonInit.fWaraxeReachMult to 0		;0
+
+;-----------------------------------------------------------------------------
+;Bow
+;-----------------------------------------------------------------------------
+Set aaDusfergonInit.sBowDamageBase to -4		;-4
+Set aaDusfergonInit.fBowSpeedBase to 0.2		;0.2
+
+Set aaDusfergonInit.fBowDamageMult to -0.12		;-0.12
+Set aaDusfergonInit.fBowSpeedMult to 0			;0
+
+;-----------------------------------------------------------------------------
+;Staff
+;-----------------------------------------------------------------------------
+Set aaDusfergonInit.sStaffAreaBase to 5			;5
+Set aaDusfergonInit.fStaffAreaMult to 0.1		;0.1
+
+
+
+
+
+
+
+;-----------------------------------------------------------------------------
+;Enchantment stats
+;-----------------------------------------------------------------------------
+;The level the enchantment is first applied
+Set aaDusfergonInit.sEnchStart to 11			;11
+
+;The number of levels between re-enchantments
+Set aaDusfergonInit.sEnchLevel to 5			;5
+
+;-----------------------------------------------------------------------------
+;Effect stats
+;-----------------------------------------------------------------------------
+;Damage Health
+;-----------------------------------------------------------------------------
+Set aaDusfergonInit.sDGHEMagnBase to 8			;8
+Set aaDusfergonInit.sDGHEAreaBase to 5			;5
+Set aaDusfergonInit.sDGHEDuraBase to 0			;0
+Set aaDusfergonInit.fDGHECostBase to 10			;10
+
+Set aaDusfergonInit.fDGHEMagnMult to 0.4		;0.4
+Set aaDusfergonInit.fDGHEAreaMult to 0			;0
+Set aaDusfergonInit.fDGHEDuraMult to 0			;0
+Set aaDusfergonInit.fDGHECostMult to 0			;0
+
+;-----------------------------------------------------------------------------
+;Elemental Damage
+;-----------------------------------------------------------------------------
+Set aaDusfergonInit.sELDGMagnBase to 4			;4
+Set aaDusfergonInit.sELDGAreaBase to 0			;0
+Set aaDusfergonInit.sELDGDuraBase to 0			;0
+Set aaDusfergonInit.fELDGCostBase to 12			;12
+
+Set aaDusfergonInit.fELDGMagnMult to 0.4		;0.4
+Set aaDusfergonInit.fELDGAreaMult to 0			;0
+Set aaDusfergonInit.fELDGDuraMult to 0			;0
+Set aaDusfergonInit.fELDGCostMult to 0.3		;0.3
+
+;-----------------------------------------------------------------------------
+;Weakness to Element
+;-----------------------------------------------------------------------------
+Set aaDusfergonInit.sWKELMagnBase to 40			;40
+Set aaDusfergonInit.sWKELAreaBase to 0			;0
+Set aaDusfergonInit.sWKELDuraBase to 4			;4
+Set aaDusfergonInit.fWKELCostBase to 5			;5
+
+Set aaDusfergonInit.fWKELMagnMult to 4			;4
+Set aaDusfergonInit.fWKELAreaMult to 0			;0
+Set aaDusfergonInit.fWKELDuraMult to 0			;0
+Set aaDusfergonInit.fWKELCostMult to 0.1		;0.1
+
+;-----------------------------------------------------------------------------
+;Weakness to Magic
+;-----------------------------------------------------------------------------
+Set aaDusfergonInit.sWKMAMagnBase to 20			;20
+Set aaDusfergonInit.sWKMAAreaBase to 0			;0
+Set aaDusfergonInit.sWKMADuraBase to 4			;4
+Set aaDusfergonInit.fWKMACostBase to 8			;8
+
+Set aaDusfergonInit.fWKMAMagnMult to 2			;2
+Set aaDusfergonInit.fWKMAAreaMult to 0			;0
+Set aaDusfergonInit.fWKMADuraMult to 0			;0
+Set aaDusfergonInit.fWKMACostMult to 0.4		;0.4
+
+;-----------------------------------------------------------------------------
+;Damage Fatigue
+;-----------------------------------------------------------------------------
+Set aaDusfergonInit.sDGFAMagnBase to 10			;10
+Set aaDusfergonInit.sDGFAAreaBase to 0			;0
+Set aaDusfergonInit.sDGFADuraBase to 0			;0
+Set aaDusfergonInit.fDGFACostBase to 2			;2
+
+Set aaDusfergonInit.fDGFAMagnMult to 2			;2
+Set aaDusfergonInit.fDGFAAreaMult to 0			;0
+Set aaDusfergonInit.fDGFADuraMult to 0			;0
+Set aaDusfergonInit.fDGFACostMult to 0.1		;0.1
+
+;-----------------------------------------------------------------------------
+;Disintegrate Weapon
+;-----------------------------------------------------------------------------
+Set aaDusfergonInit.sDIWEMagnBase to 20			;20
+Set aaDusfergonInit.sDIWEAreaBase to 0			;0
+Set aaDusfergonInit.sDIWEDuraBase to 0			;0
+Set aaDusfergonInit.fDIWECostBase to 8			;8
+
+Set aaDusfergonInit.fDIWEMagnMult to 4			;4
+Set aaDusfergonInit.fDIWEAreaMult to 0			;0
+Set aaDusfergonInit.fDIWEDuraMult to 0			;0
+Set aaDusfergonInit.fDIWECostMult to 0.5		;0.5
+
+;-----------------------------------------------------------------------------
+;Disintegrate Armor
+;-----------------------------------------------------------------------------
+Set aaDusfergonInit.sDIARMagnBase to 50			;50
+Set aaDusfergonInit.sDIARAreaBase to 0			;0
+Set aaDusfergonInit.sDIARDuraBase to 0			;0
+Set aaDusfergonInit.fDIARCostBase to 8			;8
+
+Set aaDusfergonInit.fDIARMagnMult to 10			;10
+Set aaDusfergonInit.fDIARAreaMult to 0			;0
+Set aaDusfergonInit.fDIARDuraMult to 0			;0
+Set aaDusfergonInit.fDIARCostMult to 0.5		;0.5
+
+;-----------------------------------------------------------------------------
+;Damage Magicka
+;-----------------------------------------------------------------------------
+Set aaDusfergonInit.sDGSPMagnBase to 5			;5
+Set aaDusfergonInit.sDGSPAreaBase to 0			;0
+Set aaDusfergonInit.sDGSPDuraBase to 0			;0
+Set aaDusfergonInit.fDGSPCostBase to 2			;2
+
+Set aaDusfergonInit.fDGSPMagnMult to 2			;2
+Set aaDusfergonInit.fDGSPAreaMult to 0			;0
+Set aaDusfergonInit.fDGSPDuraMult to 0			;0
+Set aaDusfergonInit.fDGSPCostMult to 0.1		;0.1
+
+;-----------------------------------------------------------------------------
+;Dispel
+;-----------------------------------------------------------------------------
+Set aaDusfergonInit.sDSPLMagnBase to 10			;10
+Set aaDusfergonInit.sDSPLAreaBase to 0			;0
+Set aaDusfergonInit.fDSPLCostBase to 5			;5
+
+Set aaDusfergonInit.fDSPLMagnMult to 5			;5
+Set aaDusfergonInit.fDSPLAreaMult to 0			;0
+Set aaDusfergonInit.fDSPLCostMult to 0.5		;0.5
+
+;-----------------------------------------------------------------------------
+;Silence
+;-----------------------------------------------------------------------------
+Set aaDusfergonInit.sSLNCAreaBase to 0			;0
+Set aaDusfergonInit.sSLNCDuraBase to 1			;1
+Set aaDusfergonInit.fSLNCCostBase to 10			;10
+
+Set aaDusfergonInit.fSLNCAreaMult to 0			;0
+Set aaDusfergonInit.fSLNCDuraMult to 0.1		;0.1
+Set aaDusfergonInit.fSLNCCostMult to 0.1		;0.1
+
+;-----------------------------------------------------------------------------
+;Burden
+;-----------------------------------------------------------------------------
+Set aaDusfergonInit.sBRDNMagnBase to 100		;100
+Set aaDusfergonInit.sBRDNAreaBase to 0			;0
+Set aaDusfergonInit.sBRDNDuraBase to 3			;3
+Set aaDusfergonInit.fBRDNCostBase to 5			;5
+
+Set aaDusfergonInit.fBRDNMagnMult to 10			;10
+Set aaDusfergonInit.fBRDNAreaMult to 0			;0
+Set aaDusfergonInit.fBRDNDuraMult to 0			;0
+Set aaDusfergonInit.fBRDNCostMult to 0.1		;0.1
+
+;-----------------------------------------------------------------------------
+;Drain Attribute
+;-----------------------------------------------------------------------------
+Set aaDusfergonInit.sDRATMagnBase to 10			;10
+Set aaDusfergonInit.sDRATAreaBase to 0			;0
+Set aaDusfergonInit.sDRATDuraBase to 3			;3
+Set aaDusfergonInit.fDRATCostBase to 10			;10
+
+Set aaDusfergonInit.fDRATMagnMult to 0.5		;0.5
+Set aaDusfergonInit.fDRATAreaMult to 0			;0
+Set aaDusfergonInit.fDRATDuraMult to 0			;0
+Set aaDusfergonInit.fDRATCostMult to 0.4		;0.4
+
+;-----------------------------------------------------------------------------
+;Command
+;-----------------------------------------------------------------------------
+Set aaDusfergonInit.sCOMMMagnBase to 1			;1
+Set aaDusfergonInit.sCOMMAreaBase to 0			;0
+Set aaDusfergonInit.sCOMMDuraBase to 2			;2
+Set aaDusfergonInit.fCOMMCostBase to 10			;10
+
+Set aaDusfergonInit.fCOMMMagnMult to 1			;1
+Set aaDusfergonInit.fCOMMAreaMult to 0			;0
+Set aaDusfergonInit.fCOMMDuraMult to 2			;2
+Set aaDusfergonInit.fCOMMCostMult to 0.5		;0.5
+
+;-----------------------------------------------------------------------------
+;Rally
+;-----------------------------------------------------------------------------
+Set aaDusfergonInit.sRALYMagnBase to 10			;10
+Set aaDusfergonInit.sRALYAreaBase to 0			;0
+Set aaDusfergonInit.sRALYDuraBase to 2			;2
+Set aaDusfergonInit.fRALYCostBase to 2			;2
+
+Set aaDusfergonInit.fRALYMagnMult to 2			;2
+Set aaDusfergonInit.fRALYAreaMult to 0			;0
+Set aaDusfergonInit.fRALYDuraMult to 2			;2
+Set aaDusfergonInit.fRALYCostMult to 0.1		;0.1
+
+;-----------------------------------------------------------------------------
+;Frenzy
+;-----------------------------------------------------------------------------
+Set aaDusfergonInit.sFRNZMagnBase to 1			;1
+Set aaDusfergonInit.sFRNZAreaBase to 0			;0
+Set aaDusfergonInit.sFRNZDuraBase to 2			;2
+Set aaDusfergonInit.fFRNZCostBase to 2			;2
+
+Set aaDusfergonInit.fFRNZMagnMult to 1.3		;1.3
+Set aaDusfergonInit.fFRNZAreaMult to 1			;1
+Set aaDusfergonInit.fFRNZDuraMult to 0.5		;0.5
+Set aaDusfergonInit.fFRNZCostMult to 0.2		;0.2
+
+;-----------------------------------------------------------------------------
+;Light
+;-----------------------------------------------------------------------------
+Set aaDusfergonInit.sLGHTMagnBase to 1			;1
+Set aaDusfergonInit.sLGHTAreaBase to 0			;0
+Set aaDusfergonInit.sLGHTDuraBase to 2			;2
+Set aaDusfergonInit.fLGHTCostBase to 1			;1
+
+Set aaDusfergonInit.fLGHTMagnMult to 1			;1
+Set aaDusfergonInit.fLGHTAreaMult to 1			;1
+Set aaDusfergonInit.fLGHTDuraMult to 0.5		;0.5
+Set aaDusfergonInit.fLGHTCostMult to 0.1		;0.1
+
+;-----------------------------------------------------------------------------
+;Soul Trap
+;-----------------------------------------------------------------------------
+Set aaDusfergonInit.sSTRPAreaBase to 0			;0
+Set aaDusfergonInit.sSTRPDuraBase to 2			;2
+Set aaDusfergonInit.fSTRPCostBase to 10			;10
+
+Set aaDusfergonInit.fSTRPAreaMult to 1			;1
+Set aaDusfergonInit.fSTRPDuraMult to 0.5		;0.5
+Set aaDusfergonInit.fSTRPCostMult to 0.5		;0.5
+
+;-----------------------------------------------------------------------------
+;Absorb Fatigue
+;-----------------------------------------------------------------------------
+Set aaDusfergonInit.sABFAMagnBase to 4			;4
+Set aaDusfergonInit.sABFAAreaBase to 0			;0
+Set aaDusfergonInit.sABFADuraBase to 0			;0
+Set aaDusfergonInit.fABFACostBase to 4			;4
+
+Set aaDusfergonInit.fABFAMagnMult to 0.8		;0.8
+Set aaDusfergonInit.fABFAAreaMult to 0			;0
+Set aaDusfergonInit.fABFADuraMult to 0.1		;0.1
+Set aaDusfergonInit.fABFACostMult to 0.2		;0.2
+
+;-----------------------------------------------------------------------------
+;Absorb Health
+;-----------------------------------------------------------------------------
+Set aaDusfergonInit.sABHEMagnBase to 2			;2
+Set aaDusfergonInit.sABHEAreaBase to 0			;0
+Set aaDusfergonInit.sABHEDuraBase to 0			;0
+Set aaDusfergonInit.fABHECostBase to 8			;8
+
+Set aaDusfergonInit.fABHEMagnMult to 0.4		;0.4
+Set aaDusfergonInit.fABHEAreaMult to 0			;0
+Set aaDusfergonInit.fABHEDuraMult to 0.1		;0.1
+Set aaDusfergonInit.fABHECostMult to 0.4		;0.4
+
+;-----------------------------------------------------------------------------
+;Absorb Magicka
+;-----------------------------------------------------------------------------
+Set aaDusfergonInit.sABSPMagnBase to 3			;3
+Set aaDusfergonInit.sABSPAreaBase to 0			;0
+Set aaDusfergonInit.sABSPDuraBase to 0			;0
+Set aaDusfergonInit.fABSPCostBase to 6			;6
+
+Set aaDusfergonInit.fABSPMagnMult to 0.6		;0.6
+Set aaDusfergonInit.fABSPAreaMult to 0			;0
+Set aaDusfergonInit.fABSPDuraMult to 0.1		;0.1
+Set aaDusfergonInit.fABSPCostMult to 0.3		;0.3
+
+;-----------------------------------------------------------------------------
+;Charge
+;-----------------------------------------------------------------------------
+Set aaDusfergonInit.lChargeBase to 500			;500
+Set aaDusfergonInit.fChargeMult to 75			;75
+
+
+
+
+
+
+;-----------------------------------------------------------------------------
+;XP
+;-----------------------------------------------------------------------------
+Set aaDusfergonInit.sXPReqBase to 95			;95
+Set aaDusfergonInit.sXPReqMult to 5			;5
+Set aaDusfergonInit.sXPNormal to 1			;1
+Set aaDusfergonInit.sXPPower to 3			;3
+Set aaDusfergonInit.sXPBow to 3				;3
+Set aaDusfergonInit.sXPStaff to 2			;2
+Set aaDusfergonInit.sLevelCap to 201			;201
+
+;Conversion rate of durability to XP for offerings
+;Set to 0.0 or below to disable
+Set aaDusfergonInit.fAbsorption to 0.15			;0.15
+
+;-----------------------------------------------------------------------------
+;Delevel on Break
+;-----------------------------------------------------------------------------
+;0 is reset to Lv1
+;Positive is delevel by that amount
+;Negative is disable feature
+;-----------------------------------------------------------------------------
+Set aaDusfergonInit.sBreakLevel to 0			;0
+
+
+
+
+
+
+;-----------------------------------------------------------------------------
+;Keybindings
+;-----------------------------------------------------------------------------
+;In Gameplay:
+;Form		: Quickswap to last form
+;Ench		: Display enchantment effects
+;Name		: Display form name
+;Rand		: Random form
+;In Inventory (moused over weapon):
+;Main		: Form change menu
+;Main + Ench	: Display enchantment effects
+;Main + Name	: Display form name
+;In Inventory (moused over another weapon):
+;Main		: Offering menu
+;-----------------------------------------------------------------------------
+Set aaDusfergonInit.sGMainKey to 47			;26	V
+Set aaDusfergonInit.sGEnchKey to 10			;10	9
+Set aaDusfergonInit.sGNameKey to 11			;11	0
+Set aaDusfergonInit.sGRandKey to 34			;28	G
+
+Set aaDusfergonInit.sMMainKey to 257			;257	RMB
+Set aaDusfergonInit.sMEnchKey to 29			;29	Left CTRL
+Set aaDusfergonInit.sMEnchKey2 to 157			;157	Right CTRL
+Set aaDusfergonInit.sMNameKey to 42			;42	Left SHIFT
+Set aaDusfergonInit.sMNameKey2 to 54			;54	Right SHIFT
+
+;-----------------------------------------------------------------------------
+;Latency
+;-----------------------------------------------------------------------------
+;Lower numbers are more responsive but put more load on Oblivion's engine
+
+;The scripts are run every this second(s) while outside of a menu
+Set aaDusfergonInit.fScriptLag to 0.5			;0.5
+
+;The scripts are run every this second(s) while inside of a menu
+Set aaDusfergonInit.fMenuLag to 0.001			;0.001
+
+;-----------------------------------------------------------------------------
+;Keycodes
+;-----------------------------------------------------------------------------
+;1	Escape
+;2	1
+;3	2
+;4	3
+;5	4
+;6  	5
+;7  	6
+;8  	7
+;9  	8
+;10  	9
+;11  	0
+;12  	Minus
+;13  	Equals
+;14  	Backspace
+;15  	Tab
+;16  	Q
+;17  	W
+;18  	E
+;19  	R
+;20  	T
+;21  	Y
+;22  	U
+;23  	I
+;24  	O
+;25  	P
+;26  	Left Bracket
+;27  	Right Bracket
+;28  	Enter
+;29  	Left Control
+;30  	A
+;31  	S
+;32  	D
+;33  	F
+;34  	G
+;35  	H
+;36  	J
+;37  	K
+;38  	L
+;39  	Semicolon
+;40  	Apostrophe
+;41  	~ (Console)
+;42  	Left Shift
+;43  	Back Slash
+;44  	Z
+;45  	X
+;46  	C
+;47  	V
+;48  	B
+;49  	N
+;50  	M
+;51  	Comma
+;52  	Period
+;53  	Forward Slash  
+;54  	Right Shift
+;55  	NUM*
+;56  	Left Alt
+;57 	Spacebar
+;58  	Caps Lock
+;59  	F1
+;60  	F2
+;61  	F3
+;62  	F4
+;63  	F5
+;64  	F6
+;65  	F7
+;66  	F8
+;67  	F9
+;68  	F10
+;69  	Num Lock
+;70  	Scroll Lock
+;71  	NUM7
+;72  	NUM8
+;73  	NUM9
+;74  	NUM-
+;75  	NUM4
+;76  	NUM5
+;77  	NUM6
+;78  	NUM+
+;79  	NUM1
+;80  	NUM2
+;81  	NUM3
+;82  	NUM0
+;83  	NUM.
+;87  	F11
+;88  	F12
+;156  	NUM Enter
+;157  	Right Control
+;181  	NUM/
+;184  	Right Alt
+;199  	Home
+;200  	Up Arrow
+;201  	PgUp
+;203  	Left Arrow
+;205  	Right Arrow
+;207  	End
+;208  	Down Arrow
+;209  	PgDown
+;210  	Insert
+;211  	Delete
+;256  	Left Mouse Button
+;257  	Right Mouse Button
+;258  	Middle/Wheel Mouse Button
+;259  	Mouse Button 3
+;260  	Mouse Button 4
+;261  	Mouse Button 5
+;262  	Mouse Button 6
+;263  	Mouse Button 7
+;264  	Mouse Wheel Up
+;265  	Mouse Wheel Down
+
+;-----------------------------------------------------------------------------
+end ;Function { }
+;-----------------------------------------------------------------------------

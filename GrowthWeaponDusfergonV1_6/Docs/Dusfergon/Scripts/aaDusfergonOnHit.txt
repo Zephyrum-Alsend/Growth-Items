@@ -1,0 +1,76 @@
+scn aaDusfergonOnHit
+
+;Main script
+;-----------------------------------------------------------------------------
+;aaDusfergonManager
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;aaDusfergonDefaultINI
+;aaDusfergonObject
+;aaDusfergonObjectB
+;aaDusfergonObjectS
+;aaDusfergonOnBowHit
+;aaDusfergonOnArrowHit
+;aaDusfergonOnStaffHit
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
+;aaDusfergonCombatXPLog
+;aaDusfergonCombatXPStart
+;aaDusfergonXP
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;aaDusfergonEquip
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;When any valid target is hit with DLScalar3:
+;Start recording the XP gained in this combat encounter for post combat report
+;Award XP appropriate to the attack performed
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+ref Target ;Unused
+ref Weapon ;Unused
+;-----------------------------------------------------------------------------
+
+
+
+;-----------------------------------------------------------------------------
+begin Function { Target, Weapon }
+;-----------------------------------------------------------------------------
+	;Fortunately, this handler only triggers on living NPCs, so no need to check
+	
+	;Start combat logger
+	if ( aaDusfergonCombatXPLog == 0 )
+
+		Set aaDusfergonCombatXPStart to aaDusfergonXP
+		Set aaDusfergonCombatXPLog to 1
+
+	endif
+
+	;Add XP
+	if ( Player.IsPowerAttacking )
+
+		Set aaDusfergonXP to ( aaDusfergonXP + aaDusfergonInit.sXPPower )
+
+	else
+
+		Set aaDusfergonXP to ( aaDusfergonXP + aaDusfergonInit.sXPNormal )
+
+	endif
+
+;-----------------------------------------------------------------------------
+end ;Function { Target, Weapon }
+;-----------------------------------------------------------------------------

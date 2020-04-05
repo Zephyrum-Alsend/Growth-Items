@@ -1,0 +1,70 @@
+scn aaDusfergonStatLvl
+
+;Main script
+;-----------------------------------------------------------------------------
+;aaDusfergonManager
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;aaDusfergonIncrVal
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;aaDusfergonStatSet
+;aaDusfergonStatSet2
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
+;aaDusfergonLevel
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;Increments passed Weap stats by the provided values.
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+float DmgM
+float SpdM
+float RchM
+float WgtM
+float HltM
+long ValB
+float ValM
+
+long Damage
+long Value
+
+ref Weap
+;-----------------------------------------------------------------------------
+
+
+
+;-----------------------------------------------------------------------------
+begin Function { Weap, DmgM, SpdM, RchM, WgtM, HltM, ValB, ValM }
+;-----------------------------------------------------------------------------
+	Set Damage to Call aaDusfergonIncrVal DmgM ( aaDusfergonLevel - 1 )
+
+	;There is no ModGoldValue_T as of OBSE v21, so need to recalculate and set
+	Set Value to ValB + ( ValM * ( aaDusfergonLevel - 1 ) )
+
+	;Use Mod functions instead of Set, incase another mod modifies these values
+	ModAttackDamage Damage Weap
+	ModWeaponSpeed SpdM Weap
+	ModWeaponReach RchM Weap
+	ModWeight WgtM Weap
+	ModObjectHealth HltM Weap
+	SetGoldValue_T Value Weap
+
+	Return
+;-----------------------------------------------------------------------------
+end ;Function { Weap, DmgM, SpdM, RchM, WgtM, HltM, ValB, ValM }
+;-----------------------------------------------------------------------------

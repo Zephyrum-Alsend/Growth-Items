@@ -1,0 +1,131 @@
+scn aaDusfergonEnchDisplay
+
+;Main script
+;-----------------------------------------------------------------------------
+;aaDusfergonManager
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
+;aaDusfergonEnch
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;Displays weapon's growing enchantment and all effects of the passed
+;enchantment in a messagebox.
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+string_var EffActv
+string_Var EffName
+
+short EnchIndex
+short EnchIter
+
+long Magnitude
+long Area
+long Duration
+
+ref Ench
+;-----------------------------------------------------------------------------
+
+
+
+;-----------------------------------------------------------------------------
+begin Function { Ench }
+;-----------------------------------------------------------------------------
+	;-----------------------------------------------------------------------------
+	;Initialize string
+	;-----------------------------------------------------------------------------
+	Let EffActv := "Active enchantment: "
+
+
+	;-----------------------------------------------------------------------------
+	;Get actively growing enchantment
+	;-----------------------------------------------------------------------------
+	if ( aaDusfergonEnch == 0 )
+
+		Set EffActv to sv_Construct "%zNone" EffActv
+
+	elseif ( aaDusfergonEnch == 1 )
+
+		Set EffActv to sv_Construct "%zFire" EffActv
+
+	elseif ( aaDusfergonEnch == 2 )
+
+		Set EffActv to sv_Construct "%zIce" EffActv
+
+	elseif ( aaDusfergonEnch == 3 )
+
+		Set EffActv to sv_Construct "%zVolt" EffActv
+
+	elseif ( aaDusfergonEnch == 4 )
+
+		Set EffActv to sv_Construct "%zKnight-Slayer" EffActv
+
+	elseif ( aaDusfergonEnch == 5 )
+
+		Set EffActv to sv_Construct "%zMage-Slayer" EffActv
+
+	elseif ( aaDusfergonEnch == 6 )
+
+		Set EffActv to sv_Construct "%zWeaken" EffActv
+
+	elseif ( aaDusfergonEnch == 7 )
+
+		Set EffActv to sv_Construct "%zSubjugate" EffActv
+
+	elseif ( aaDusfergonEnch == 8 )
+
+		Set EffActv to sv_Construct "%zCorruption" EffActv
+
+	elseif ( aaDusfergonEnch == 9 )
+
+		Set EffActv to sv_Construct "%zUnbalance" EffActv
+
+	elseif ( aaDusfergonEnch == 10 )
+
+		Set EffActv to sv_Construct "%zSiphon" EffActv
+
+	endif	
+
+	;-----------------------------------------------------------------------------
+	;Get all effects and their stats
+	;-----------------------------------------------------------------------------
+	Set EnchIndex to GetMagicItemEffectCount Ench
+	Set EnchIter to 0
+	While ( EnchIter < EnchIndex )
+		
+		Let EffName := GetNthEffectItemName Ench EnchIter
+		Set Magnitude to GetNthEffectItemMagnitude Ench EnchIter
+		Set Area to GetNthEffectItemArea Ench EnchIter
+		Set Duration to GetNthEffectItemDuration Ench EnchIter
+
+		Set EffActv to sv_Construct "%z%r%r%z:%r%gpts %gft %gsec" EffActv EffName Magnitude Area Duration
+			
+		Set EnchIter to ( EnchIter + 1 )	
+	loop
+
+	;-----------------------------------------------------------------------------
+	;Display
+	;-----------------------------------------------------------------------------
+	MessageBoxEx "%z" EffActv
+	;-----------------------------------------------------------------------------
+
+;-----------------------------------------------------------------------------
+end ;Function { Ench }
+;-----------------------------------------------------------------------------

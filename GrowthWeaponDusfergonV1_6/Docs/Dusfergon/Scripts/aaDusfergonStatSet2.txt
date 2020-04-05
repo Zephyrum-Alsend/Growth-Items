@@ -1,0 +1,68 @@
+scn aaDusfergonStatSet2
+
+;Main script
+;-----------------------------------------------------------------------------
+;aaDusfergonManager
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;aaDusfergonStatSet
+;aaDusfergonStatLvl
+;aaDusfergonSwap
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
+;aaDusfergonLevel
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;Sets Weight, Health, and Value for the passed Weap according the passed 
+;values and Level.
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+float WgtB
+short HltB
+long ValB
+
+float WgtM
+float HltM
+float ValM
+
+float Weight
+long Health
+long Value
+
+ref Weap
+;-----------------------------------------------------------------------------
+
+
+
+;-----------------------------------------------------------------------------
+begin Function { Weap, WgtB, WgtM, HltB, HltM, ValB, ValM }
+;-----------------------------------------------------------------------------
+	Set Weight to WgtB + ( WgtM * ( aaDusfergonLevel - 1 ) )
+	Set Health to HltB + ( HltM * ( aaDusfergonLevel - 1 ) )
+	Set Value to ValB + ( ValM * ( aaDusfergonLevel - 1 ) )
+
+	SetWeight Weight Weap
+	SetObjectHealth Health Weap
+	SetGoldValue_T Value Weap
+	;No stats are stored in the save game - except for GoldValue, _T makes it also not
+	
+	Return
+;-----------------------------------------------------------------------------
+end ;Function { Weap, WgtB, WgtM, HltB, HltM, ValB, ValM }
+;-----------------------------------------------------------------------------

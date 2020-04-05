@@ -1,0 +1,82 @@
+scn aaDusfergonOnArrowHit
+
+;Main script
+;-----------------------------------------------------------------------------
+;aaDusfergonManager
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;aaDusfergonDefaultINI
+;aaDusfergonObject
+;aaDusfergonObjectB
+;aaDusfergonObjectS
+;aaDusfergonOnHit
+;aaDusfergonOnBowHit
+;aaDusfergonOnStaffHit
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
+;aaDusfergonArrowsUp
+;aaDusfergonCombatXPLog
+;aaDusfergonCombatXPStart
+;aaDusfergonXP
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;When any valid target is hit with an arrow fired from DLScalar3B:
+;Start recording the XP gained in this combat encounter for post combat report
+;Award XP
+;Decrement ArrowsUp
+;Remove self if ArrowsUp == 0
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+ref Target
+ref Weapon ;Unused
+;-----------------------------------------------------------------------------
+
+
+
+;-----------------------------------------------------------------------------
+begin Function { Target, Weapon }
+;-----------------------------------------------------------------------------
+	;if Target is a living NPC at time of impact
+	if ( Target.IsActor == 1 && Target.GetDead == 0 )
+		
+		;Start combat logger
+		if ( aaDusfergonCombatXPLog == 0 )
+
+			Set aaDusfergonCombatXPStart to aaDusfergonXP
+			Set aaDusfergonCombatXPLog to 1
+
+		endif
+
+		;Add XP
+		Set aaDusfergonXP to ( aaDusfergonXP + aaDusfergonInit.sXPBow )
+
+	endif
+
+	;Remove self if no Player fired arrows airborne
+	Set aaDusfergonArrowsUp to ( aaDusfergonArrowsUp - 1 )
+
+	if ( aaDusfergonArrowsUp == 0 )
+
+		RemoveEventHandler "OnHitWith" aaDusfergonOnArrowHit
+
+	endif
+	
+;-----------------------------------------------------------------------------
+end ;Function { Target, Weapon }
+;-----------------------------------------------------------------------------

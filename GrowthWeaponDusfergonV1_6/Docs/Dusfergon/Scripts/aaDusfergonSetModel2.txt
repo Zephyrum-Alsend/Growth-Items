@@ -1,0 +1,1862 @@
+scn aaDusfergonSetModel2
+
+;Main script
+;-----------------------------------------------------------------------------
+;aaDusfergonManager
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;aaDusfergonSetModel
+;aaDusfergonModelChange
+;aaDusfergonExchange
+;aaDusfergonSwap
+;aaDusfergonRandomModel
+;aaDusfergonShowModelName
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
+;aaDusfergonEquip
+;aaDusfergonModel
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;Changes the model and type of weapon according to the value in
+;aaDusfergonModel, then re-equips the weapon if the Equip flag is set to force
+;refresh the model.
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+ref weapon
+;-----------------------------------------------------------------------------
+
+
+;-----------------------------------------------------------------------------
+begin Function { weapon }
+;-----------------------------------------------------------------------------
+
+	;-----------------------------------------------------------------------------
+	;Daggers
+	;-----------------------------------------------------------------------------
+	if ( aaDusfergonModel == 5000 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\1h\Dagger\IronDagger.nif" weapon
+		SetIconPath "Dusfergon\1h\ironlongsword.dds" weapon
+		SetWeaponType 0 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 5001 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\1h\Dagger\IronDaggerFine.nif" weapon
+		SetIconPath "Dusfergon\1h\fineiron.dds" weapon
+		SetWeaponType 0 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 5002 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\1h\Dagger\SteelDagger.nif" weapon
+		SetIconPath "Dusfergon\1h\steellongsword.dds" weapon
+		SetWeaponType 0 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 5003 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\1h\Dagger\SteelDaggerFine.nif" weapon
+		SetIconPath "Dusfergon\1h\steellongsword.dds" weapon
+		SetWeaponType 0 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 5004 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\1h\Dagger\SilverDagger.nif" weapon
+		SetIconPath "Dusfergon\1h\silverlongsword.dds" weapon
+		SetWeaponType 0 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 5005 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\1h\Dagger\EbonyDagger.nif" weapon
+		SetIconPath "Dusfergon\1h\ebonylongsword.dds" weapon
+		SetWeaponType 0 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 5006 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\1h\Dagger\CorralniumNail.nif" weapon
+		SetIconPath "Dusfergon\1h\Dagger\iconCorralniumNail.dds" weapon
+		SetWeaponType 0 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 5007 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\1h\Dagger\CurvyKrissDagger.nif" weapon
+		SetIconPath "Dusfergon\1h\Dagger\iconCurvyKrissDagger.dds" weapon
+		SetWeaponType 0 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 5008 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\1h\Dagger\TetelaDagger.nif" weapon
+		SetIconPath "Dusfergon\1h\Dagger\iconTetelaDagger.dds" weapon
+		SetWeaponType 0 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 5009 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\1h\Dagger\SpikeDaggerBronze.nif" weapon
+		SetIconPath "Dusfergon\1h\Dagger\iconSpikeDaggerBronze.dds" weapon
+		SetWeaponType 0 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 5010 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\1h\Dagger\StilettoGold.nif" weapon
+		SetIconPath "Dusfergon\1h\Dagger\iconStilettoGold.dds" weapon
+		SetWeaponType 0 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 5011 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\1h\Dagger\Bowie.nif" weapon
+		SetIconPath "Dusfergon\1h\Dagger\iconBowie.dds" weapon
+		SetWeaponType 0 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 5012 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\1h\Dagger\HuntingDagger.nif" weapon
+		SetIconPath "Dusfergon\1h\Dagger\iconHuntingDagger.dds" weapon
+		SetWeaponType 0 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 5013 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\1h\Dagger\Miscitar.nif" weapon
+		SetIconPath "Dusfergon\1h\Dagger\iconMiscitar.dds" weapon
+		SetWeaponType 0 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 5014 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\1h\Dagger\Jambaya.nif" weapon
+		SetIconPath "Dusfergon\1h\Dagger\iconJambaya.dds" weapon
+		SetWeaponType 0 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 5015 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\1h\Dagger\SilverKnife.nif" weapon
+		SetIconPath "Dusfergon\1h\Dagger\iconSilveKnife.dds" weapon
+		SetWeaponType 0 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 5016 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\1h\Dagger\GoblinMori.nif" weapon
+		SetIconPath "Dusfergon\1h\Dagger\iconGoblinMori.dds" weapon
+		SetWeaponType 0 weapon
+			
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 5017 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\1h\Dagger\ElvinKnife.nif" weapon
+		SetIconPath "Dusfergon\1h\Dagger\iconElvinKnife.dds" weapon
+		SetWeaponType 0 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 5018 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\1h\Dagger\JodyDagger.nif" weapon
+		SetIconPath "Dusfergon\1h\Dagger\iconJodyDagger.dds" weapon
+		SetWeaponType 0 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 5019 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\1h\Dagger\EbonyClaw.nif" weapon
+		SetIconPath "Dusfergon\1h\Dagger\iconEbonyClaw.dds" weapon
+		SetWeaponType 0 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 5020 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\1h\Dagger\CrescentDagger.nif" weapon
+		SetIconPath "Dusfergon\1h\Dagger\iconCrescentDagger.dds" weapon
+		SetWeaponType 0 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 5021 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\1h\Dagger\BoneTanto.nif" weapon
+		SetIconPath "Dusfergon\1h\Dagger\iconBoneTanto.dds" weapon
+		SetWeaponType 0 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 5022 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\1h\Dagger\IvoryDagger.nif" weapon
+		SetIconPath "Dusfergon\1h\Dagger\iconIvoryDagger.dds" weapon
+		SetWeaponType 0 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 5023 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\1h\Dagger\Poignard.nif" weapon
+		SetIconPath "Dusfergon\1h\Dagger\iconPoignard.dds" weapon
+		SetWeaponType 0 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 5024 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\1h\Dagger\PoignardII.nif" weapon
+		SetIconPath "Dusfergon\1h\Dagger\iconPoignardII.dds" weapon
+		SetWeaponType 0 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 5025 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\1h\Dagger\Broadedge.nif" weapon
+		SetIconPath "Dusfergon\1h\Dagger\iconBroadedge.dds" weapon
+		SetWeaponType 0 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 5026 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\1h\Dagger\SpikeDaggerSteel.nif" weapon
+		SetIconPath "Dusfergon\1h\Dagger\iconSpikeDaggerSteel.dds" weapon
+		SetWeaponType 0 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 5027 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\1h\Dagger\StilettoSilver.nif" weapon
+		SetIconPath "Dusfergon\1h\Dagger\iconStilettoSilver.dds" weapon
+		SetWeaponType 0 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 5028 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\1h\Dagger\PoignardSteel.nif" weapon
+		SetIconPath "Dusfergon\1h\Dagger\iconPoignardSteel.dds" weapon
+		SetWeaponType 0 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 5029 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\1h\Dagger\PoignardIISteel.nif" weapon
+		SetIconPath "Dusfergon\1h\Dagger\iconPoignardIISteel.dds" weapon
+		SetWeaponType 0 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 5030 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\1h\Dagger\BroadedgeSteel.nif" weapon
+		SetIconPath "Dusfergon\1h\Dagger\iconBroadedgeSteel.dds" weapon
+		SetWeaponType 0 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 5031 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\1h\Dagger\JodyDaggerOld.nif" weapon
+		SetIconPath "Dusfergon\1h\Dagger\iconJodyDagger.dds" weapon
+		SetWeaponType 0 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 5032 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\1h\Dagger\EbonyClawOld.nif" weapon
+		SetIconPath "Dusfergon\1h\Dagger\iconEbonyClaw.dds" weapon
+		SetWeaponType 0 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 5033 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\1h\Dagger\CrescentDaggerOld.nif" weapon
+		SetIconPath "Dusfergon\1h\Dagger\iconCrescentDagger.dds" weapon
+		SetWeaponType 0 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 5034 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\1h\Dagger\PoignardOld.nif" weapon
+		SetIconPath "Dusfergon\1h\Dagger\iconPoignardOld.dds" weapon
+		SetWeaponType 0 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 5035 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\1h\Dagger\PoignardIIOld.nif" weapon
+		SetIconPath "Dusfergon\1h\Dagger\iconPoignardIIOld.dds" weapon
+		SetWeaponType 0 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 5036 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\1h\Dagger\BroadedgeOld.nif" weapon
+		SetIconPath "Dusfergon\1h\Dagger\iconBroadedgeOld.dds" weapon
+		SetWeaponType 0 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 5037 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Iron\Dagger.nif" weapon
+		SetIconPath "Weapons\IronDagger.dds" weapon
+		SetWeaponType 0 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 5038 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Steel\Dagger.nif" weapon
+		SetIconPath "Weapons\SteelDagger.dds" weapon
+		SetWeaponType 0 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 5039 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Steel\DaggerFine.nif" weapon
+		SetIconPath "Weapons\SteelDagger.dds" weapon
+		SetWeaponType 0 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 5040 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Silver\Dagger.nif" weapon
+		SetIconPath "Weapons\SilverDagger.dds" weapon
+		SetWeaponType 0 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 5041 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dwarven\Dagger.nif" weapon
+		SetIconPath "Weapons\DwarvenDagger.dds" weapon
+		SetWeaponType 0 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 5042 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Elven\Dagger.nif" weapon
+		SetIconPath "Weapons\ElvenDagger.dds" weapon
+		SetWeaponType 0 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 5043 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Glass\Dagger.nif" weapon
+		SetIconPath "Weapons\GlassDagger.dds" weapon
+		SetWeaponType 0 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 5044 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Ebony\Dagger.nif" weapon
+		SetIconPath "Weapons\EbonyDagger.dds" weapon
+		SetWeaponType 0 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 5045 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Daedric\Dagger.nif" weapon
+		SetIconPath "Weapons\DaedricDagger.dds" weapon
+		SetWeaponType 0 weapon
+
+
+
+		
+	;-----------------------------------------------------------------------------
+	;Warhammers
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 6000 )
+	;-----------------------------------------------------------------------------
+		
+		SetModelPath "Weapons\Dusfergon\2h\Warhammer\FlangedMaceBronze.nif" weapon
+		SetIconPath "Dusfergon\2h\Warhammer\iconFlangedMaceBronze.dds" weapon
+		SetWeaponType 3 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 6001 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Warhammer\MorningstarSpikedBronze.nif" weapon
+		SetIconPath "Dusfergon\2h\Warhammer\iconSpikeMaceBronze.dds" weapon
+		SetWeaponType 3 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 6002 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Warhammer\Mormacil.nif" weapon
+		SetIconPath "Dusfergon\2h\Warhammer\iconMormacil.dds" weapon
+		SetWeaponType 3 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 6003 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Warhammer\maul_2h.nif" weapon
+		SetIconPath "Dusfergon\2h\Warhammer\Spinebreaker.dds" weapon
+		SetWeaponType 3 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 6004 )
+	;-----------------------------------------------------------------------------
+		
+		SetModelPath "Weapons\Dusfergon\2h\Warhammer\StendarrHammer.nif" weapon
+		SetIconPath "Dusfergon\2h\Warhammer\stendarrhammer.dds" weapon
+		SetWeaponType 3 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 6005 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Warhammer\GoblinStar.nif" weapon
+		SetIconPath "Dusfergon\2h\Warhammer\iconGoblinStar.dds" weapon
+		SetWeaponType 3 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 6006 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Warhammer\whammer02.nif" weapon
+		SetIconPath "Dusfergon\2h\Warhammer\Wh02s.dds" weapon
+		SetWeaponType 3 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 6007 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Warhammer\Supwhammer02.nif" weapon
+		SetIconPath "Dusfergon\2h\Warhammer\Wh02s.dds" weapon
+		SetWeaponType 3 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 6008 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Warhammer\FlangedMaceSteel.nif" weapon
+		SetIconPath "Dusfergon\2h\Warhammer\iconFlangedMaceSteel.dds" weapon
+		SetWeaponType 3 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 6009 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Warhammer\MorningstarSpikedSteel.nif" weapon
+		SetIconPath "Dusfergon\2h\Warhammer\iconSpikeMaceSteel.dds" weapon
+		SetWeaponType 3 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 6010 )
+	;-----------------------------------------------------------------------------
+		
+		SetModelPath "Weapons\Iron\Warhammer.nif" weapon
+		SetIconPath "Weapons\IronWarhammer.dds" weapon
+		SetWeaponType 3 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 6011 )
+	;-----------------------------------------------------------------------------
+		
+		SetModelPath "Weapons\Steel\Warhammer.nif" weapon
+		SetIconPath "Weapons\SteelWarhammer.dds" weapon
+		SetWeaponType 3 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 6012 )
+	;-----------------------------------------------------------------------------
+		
+		SetModelPath "Weapons\Steel\WarhammerFine.nif" weapon
+		SetIconPath "Weapons\SteelWarhammer.dds" weapon
+		SetWeaponType 3 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 6013 )
+	;-----------------------------------------------------------------------------
+		
+		SetModelPath "Weapons\Silver\Warhammer.nif" weapon
+		SetIconPath "Weapons\SilverWarhammer.dds" weapon
+		SetWeaponType 3 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 6014 )
+	;-----------------------------------------------------------------------------
+		
+		SetModelPath "Weapons\Dwarven\Warhammer.nif" weapon
+		SetIconPath "Weapons\DwarvenWarhammer.dds" weapon
+		SetWeaponType 3 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 6015 )
+	;-----------------------------------------------------------------------------
+		
+		SetModelPath "Weapons\Elven\Warhammer.nif" weapon
+		SetIconPath "Weapons\ElvenWarhammer.dds" weapon
+		SetWeaponType 3 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 6016 )
+	;-----------------------------------------------------------------------------
+		
+		SetModelPath "Weapons\Glass\Warhammer.nif" weapon
+		SetIconPath "Weapons\GlassWarhammer.dds" weapon
+		SetWeaponType 3 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 6017 )
+	;-----------------------------------------------------------------------------
+		
+		SetModelPath "Weapons\Ebony\Warhammer.nif" weapon
+		SetIconPath "Weapons\EbonyWarhammer.dds" weapon
+		SetWeaponType 3 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 6018 )
+	;-----------------------------------------------------------------------------
+		
+		SetModelPath "Weapons\Daedric\Warhammer.nif" weapon
+		SetIconPath "Weapons\DaedricWarhammer.dds" weapon
+		SetWeaponType 3 weapon
+
+
+
+		
+	;-----------------------------------------------------------------------------
+	;Battleaxes
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 7000 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Battleaxe\AxeBearded2H.nif" weapon
+		SetIconPath "Dusfergon\iconAxeBearded.dds" weapon
+		SetWeaponType 3 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 7001 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Battleaxe\AxeBeardedFine2H.nif" weapon
+		SetIconPath "Dusfergon\iconAxeBeardedFine.dds" weapon
+		SetWeaponType 3 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 7002 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Battleaxe\AxeWar2H.nif" weapon
+		SetIconPath "Dusfergon\iconAxeWar.dds" weapon
+		SetWeaponType 3 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 7003 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Battleaxe\Cleaver.nif" weapon
+		SetIconPath "Dusfergon\iconAxeBearded.dds" weapon
+		SetWeaponType 3 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 7004 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Battleaxe\IvellonBeardedAxe2h.nif" weapon
+		SetIconPath "Dusfergon\2h\Battleaxe\bartaxt.dds" weapon
+		SetWeaponType 3 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 7005 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Battleaxe\GoblinAxe.nif" weapon
+		SetIconPath "Dusfergon\2h\Battleaxe\iconGoblinAxe.dds" weapon
+		SetWeaponType 3 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 7006 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Battleaxe\SotonhorianDoubleAxe.nif" weapon
+		SetIconPath "Dusfergon\2h\Battleaxe\sot_double.dds" weapon
+		SetWeaponType 3 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 7007 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Battleaxe\ThorgeirDoubleAxe.nif" weapon
+		SetIconPath "Dusfergon\2h\Battleaxe\thor_dax.dds" weapon
+		SetWeaponType 3 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 7008 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Battleaxe\ZiragonDoubleAxe.nif" weapon
+		SetIconPath "Dusfergon\2h\Battleaxe\ird_double.dds" weapon
+		SetWeaponType 3 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 7009 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Battleaxe\AxeBearded2HOld.nif" weapon
+		SetIconPath "Dusfergon\iconAxeBearded.dds" weapon
+		SetWeaponType 3 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 7010 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Battleaxe\AxeWar2HOld.nif" weapon
+		SetIconPath "Dusfergon\iconAxeWar.dds" weapon
+		SetWeaponType 3 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 7011 )
+	;-----------------------------------------------------------------------------
+		
+		SetModelPath "Weapons\Iron\Battleaxe.nif" weapon
+		SetIconPath "Weapons\IronBattleaxe.dds" weapon
+		SetWeaponType 3 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 7012 )
+	;-----------------------------------------------------------------------------
+		
+		SetModelPath "Weapons\Steel\Battleaxe.nif" weapon
+		SetIconPath "Weapons\SteelBattleaxe.dds" weapon
+		SetWeaponType 3 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 7013 )
+	;-----------------------------------------------------------------------------
+		
+		SetModelPath "Weapons\Steel\BattleaxeFine.nif" weapon
+		SetIconPath "Weapons\SteelBattleaxe.dds" weapon
+		SetWeaponType 3 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 7014 )
+	;-----------------------------------------------------------------------------
+		
+		SetModelPath "Weapons\Silver\Battleaxe.nif" weapon
+		SetIconPath "Weapons\SilverBattleaxe.dds" weapon
+		SetWeaponType 3 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 7015 )
+	;-----------------------------------------------------------------------------
+		
+		SetModelPath "Weapons\Dwarven\Battleaxe.nif" weapon
+		SetIconPath "Weapons\DwarvenBattleaxe.dds" weapon
+		SetWeaponType 3 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 7016 )
+	;-----------------------------------------------------------------------------
+		
+		SetModelPath "Weapons\Elven\Battleaxe.nif" weapon
+		SetIconPath "Weapons\ElvenBattleaxe.dds" weapon
+		SetWeaponType 3 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 7017 )
+	;-----------------------------------------------------------------------------
+		
+		SetModelPath "Weapons\Glass\Battleaxe.nif" weapon
+		SetIconPath "Weapons\GlassBattleaxe.dds" weapon
+		SetWeaponType 3 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 7018 )
+	;-----------------------------------------------------------------------------
+		
+		SetModelPath "Weapons\Ebony\Battleaxe.nif" weapon
+		SetIconPath "Weapons\EbonyBattleaxe.dds" weapon
+		SetWeaponType 3 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 7019 )
+	;-----------------------------------------------------------------------------
+		
+		SetModelPath "Weapons\Daedric\Battleaxe.nif" weapon
+		SetIconPath "Weapons\DaedricBattleaxe.dds" weapon
+		SetWeaponType 3 weapon
+
+
+
+		
+	;-----------------------------------------------------------------------------
+	;Maces
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 8000 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\1h\Mace\CPHammer.nif" weapon
+		SetIconPath "Dusfergon\1h\Mace\iconWarHammer.dds" weapon
+		SetWeaponType 2 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 8001 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\1h\Mace\IvellonBattlehammer.nif" weapon
+		SetIconPath "Dusfergon\1h\Mace\streithammer.dds" weapon
+		SetWeaponType 2 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 8002 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\1h\Mace\IvellonMace.nif" weapon
+		SetIconPath "Dusfergon\1h\Mace\streitkolben.dds" weapon
+		SetWeaponType 2 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 8003 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\1h\Mace\ThameMace.nif" weapon
+		SetIconPath "Dusfergon\1h\Mace\iconThameMace.dds" weapon
+		SetWeaponType 2 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 8004 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\1h\Mace\MorningstarBronze.nif" weapon
+		SetIconPath "Dusfergon\1h\Mace\iconMorningstarBronze.dds" weapon
+		SetWeaponType 2 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 8005 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\1h\Mace\Macil.nif" weapon
+		SetIconPath "Dusfergon\1h\Mace\iconMacil.dds" weapon
+		SetWeaponType 2 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 8006 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\1h\Mace\Fwhammer01.nif" weapon
+		SetIconPath "Dusfergon\1h\Mace\Wh01f.dds" weapon
+		SetWeaponType 2 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 8007 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\1h\Mace\SotonhorianMace.nif" weapon
+		SetIconPath "Dusfergon\1h\Mace\sot_mace.dds" weapon
+		SetWeaponType 2 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 8008 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\1h\Mace\ZiragonWarHammer.nif" weapon
+		SetIconPath "Dusfergon\1h\Mace\ird_warhammer.dds" weapon
+		SetWeaponType 2 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 8009 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\1h\Mace\ZiragonWarPick.nif" weapon
+		SetIconPath "Dusfergon\1h\Mace\ird_warpick.dds" weapon
+		SetWeaponType 2 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 8010 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\1h\Mace\MorningstarSteel.nif" weapon
+		SetIconPath "Dusfergon\1h\Mace\iconMorningstarSteel.dds" weapon
+		SetWeaponType 2 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 8011 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Iron\Mace.nif" weapon
+		SetIconPath "Weapons\IronMace.dds" weapon
+		SetWeaponType 2 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 8012 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Steel\Mace.nif" weapon
+		SetIconPath "Weapons\SteelMace.dds" weapon
+		SetWeaponType 2 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 8013 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Steel\MaceFine.nif" weapon
+		SetIconPath "Weapons\SteelMace.dds" weapon
+		SetWeaponType 2 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 8014 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Silver\Mace.nif" weapon
+		SetIconPath "Weapons\SilverMace.dds" weapon
+		SetWeaponType 2 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 8015 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dwarven\Mace.nif" weapon
+		SetIconPath "Weapons\DwarvenMace.dds" weapon
+		SetWeaponType 2 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 8016 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Elven\Mace.nif" weapon
+		SetIconPath "Weapons\ElvenMace.dds" weapon
+		SetWeaponType 2 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 8017 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Glass\Mace.nif" weapon
+		SetIconPath "Weapons\GlassMace.dds" weapon
+		SetWeaponType 2 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 8018 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Ebony\Mace.nif" weapon
+		SetIconPath "Weapons\EbonyMace.dds" weapon
+		SetWeaponType 2 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 8019 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Daedric\Mace.nif" weapon
+		SetIconPath "Weapons\DaedricMace.dds" weapon
+		SetWeaponType 2 weapon
+
+
+
+		
+	;-----------------------------------------------------------------------------
+	;Waraxes
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 9000 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\1h\Waraxe\AxeBearded.nif" weapon
+		SetIconPath "Dusfergon\iconAxeBearded.dds" weapon
+		SetWeaponType 2 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 9001 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\1h\Waraxe\AxeBeardedFine.nif" weapon
+		SetIconPath "Dusfergon\iconAxeBeardedFine.dds" weapon
+		SetWeaponType 2 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 9002 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\1h\Waraxe\AxeWar.nif" weapon
+		SetIconPath "Dusfergon\iconAxeWar.dds" weapon
+		SetWeaponType 2 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 9003 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\1h\Waraxe\SotonhorianWarAxe.nif" weapon
+		SetIconPath "Dusfergon\1h\Waraxe\sot_waraxe.dds" weapon
+		SetWeaponType 2 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 9004 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\1h\Waraxe\ThorgeirWarAxe.nif" weapon
+		SetIconPath "Dusfergon\1h\Waraxe\thor_wax.dds" weapon
+		SetWeaponType 2 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 9005 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\1h\Waraxe\ZiragonWarAxe.nif" weapon
+		SetIconPath "Dusfergon\1h\Waraxe\ird_waraxe.dds" weapon
+		SetWeaponType 2 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 9006 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\1h\Waraxe\Fax01.nif" weapon
+		SetIconPath "Dusfergon\1h\Waraxe\ax01f.dds" weapon
+		SetWeaponType 2 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 9007 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\1h\Waraxe\ax01.nif" weapon
+		SetIconPath "Dusfergon\1h\Waraxe\ax01.dds" weapon
+		SetWeaponType 2 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 9008 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\1h\Waraxe\AxeBeardedOld.nif" weapon
+		SetIconPath "Dusfergon\iconAxeBearded.dds" weapon
+		SetWeaponType 2 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 9009 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\1h\Waraxe\AxeWarOld.nif" weapon
+		SetIconPath "Dusfergon\iconAxeWar.dds" weapon
+		SetWeaponType 2 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 9010 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Iron\Waraxe.nif" weapon
+		SetIconPath "Weapons\IronWaraxe.dds" weapon
+		SetWeaponType 2 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 9011 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Steel\Waraxe.nif" weapon
+		SetIconPath "Weapons\SteelWaraxe.dds" weapon
+		SetWeaponType 2 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 9012 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Steel\WaraxeFine.nif" weapon
+		SetIconPath "Weapons\SteelWaraxe.dds" weapon
+		SetWeaponType 2 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 9013 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Silver\Waraxe.nif" weapon
+		SetIconPath "Weapons\SilverWaraxe.dds" weapon
+		SetWeaponType 2 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 9014 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dwarven\Waraxe.nif" weapon
+		SetIconPath "Weapons\DwarvenWaraxe.dds" weapon
+		SetWeaponType 2 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 9015 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Elven\Waraxe.nif" weapon
+		SetIconPath "Weapons\ElvenWaraxe.dds" weapon
+		SetWeaponType 2 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 9016 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Glass\Waraxe.nif" weapon
+		SetIconPath "Weapons\GlassWaraxe.dds" weapon
+		SetWeaponType 2 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 9017 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Ebony\Waraxe.nif" weapon
+		SetIconPath "Weapons\EbonyWaraxe.dds" weapon
+		SetWeaponType 2 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 9018 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Daedric\Waraxe.nif" weapon
+		SetIconPath "Weapons\DaedricWaraxe.dds" weapon
+		SetWeaponType 2 weapon
+
+
+
+		
+	;-----------------------------------------------------------------------------
+	;Bows
+	;-----------------------------------------------------------------------------
+	;SetWeaponType CTDs when changing from a Bow, so we handle type change in aaDusfergonSwap
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 10000 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Bow\rangerbow.nif" weapon
+		SetIconPath "Dusfergon\2h\Bow\Rangerbow1.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 10001 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Bow\ivorybow.nif" weapon
+		SetIconPath "Dusfergon\2h\Bow\Rangerbow1.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 10002 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Bow\IvellonBow.nif" weapon
+		SetIconPath "Dusfergon\2h\Bow\bogen.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 10003 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Bow\StendarrBow.nif" weapon
+		SetIconPath "Dusfergon\2h\Bow\stendarrbow.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 10004 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Bow\BretonBow.nif" weapon
+		SetIconPath "Dusfergon\2h\Bow\iconBretonBow.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 10005 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Bow\BretonBowBlack.nif" weapon
+		SetIconPath "Dusfergon\2h\Bow\iconBretonBowBlack.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 10006 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Bow\MongolWood.nif" weapon
+		SetIconPath "Dusfergon\2h\Bow\iconMongolBowWood.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 10007 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Bow\MongolLeather.nif" weapon
+		SetIconPath "Dusfergon\2h\Bow\iconMongolBowLeather.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 10008 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Bow\MongolSteel.nif" weapon
+		SetIconPath "Dusfergon\2h\Bow\iconMongolBowSteel.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 10009 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Bow\NilBowRoseWood.nif" weapon
+		SetIconPath "Dusfergon\2h\Bow\iconNilBowRoseWood.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 10010 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Bow\NilBowEbony.nif" weapon
+		SetIconPath "Dusfergon\2h\Bow\iconNilBowEbony.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 10011 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Bow\GoblinBow.nif" weapon
+		SetIconPath "Dusfergon\2h\Bow\iconGoblinBow.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 10012 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Bow\GoblinBowBlack.nif" weapon
+		SetIconPath "Dusfergon\2h\Bow\iconGoblinBow.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 10013 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Bow\AshlanderBow.nif" weapon
+		SetIconPath "Dusfergon\2h\Bow\iconAshlanderBow.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 10014 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Bow\AshlanderBow2.nif" weapon
+		SetIconPath "Dusfergon\2h\Bow\iconAshlanderBow.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 10015 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Bow\bow.nif" weapon
+		SetIconPath "Dusfergon\2h\Bow\iconIvoryBow.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 10016 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Bow\bowwood.nif" weapon
+		SetIconPath "Dusfergon\2h\Bow\iconIvoryBow.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 10017 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Bow\RedWood.nif" weapon
+		SetIconPath "Dusfergon\2h\Bow\iconRedWoodBow.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 10018 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Bow\BoneWood.nif" weapon
+		SetIconPath "Dusfergon\2h\Bow\iconBoneWoodBow.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 10019 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Bow\ClassicBow.nif" weapon
+		SetIconPath "Dusfergon\2h\Bow\iconClassicBow.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 10020 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Bow\LongBow.nif" weapon
+		SetIconPath "Dusfergon\2h\Bow\iconLongBow.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 10021 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Bow\HornBow.nif" weapon
+		SetIconPath "Dusfergon\2h\Bow\iconSacredHornBow.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 10022 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Bow\SacredHornBow.nif" weapon
+		SetIconPath "Dusfergon\2h\Bow\iconSacredHornBow.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 10023 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Bow\Springsteel.nif" weapon
+		SetIconPath "Dusfergon\2h\Bow\iconSpringsteelBow.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 10024 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Bow\SpringsteelBell.nif" weapon
+		SetIconPath "Dusfergon\2h\Bow\iconSpringsteelLeatherBow.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 10025 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Bow\SpringsteelLeather.nif" weapon
+		SetIconPath "Dusfergon\2h\Bow\iconSpringsteelLeatherBow.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 10026 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Bow\Nord\bow.nif" weapon
+		SetIconPath "Dusfergon\2h\Bow\iconBow.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 10027 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Bow\Nord\bowFine.nif" weapon
+		SetIconPath "Dusfergon\2h\Bow\iconBow.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 10028 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Bow\Nord\bowMagic.nif" weapon
+		SetIconPath "Dusfergon\2h\Bow\iconBow.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 10029 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Bow\Nord\bowMagic2.nif" weapon
+		SetIconPath "Dusfergon\2h\Bow\iconBow.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 10030 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Bow\Nord\bowOld.nif" weapon
+		SetIconPath "Dusfergon\2h\Bow\iconBow.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 10035 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Iron\Bow.nif" weapon
+		SetIconPath "Weapons\IronBow.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 10036 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Steel\Bow.nif" weapon
+		SetIconPath "Weapons\SteelBow.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 10037 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Silver\Bow.nif" weapon
+		SetIconPath "Weapons\SilverBow.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 10038 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dwarven\Bow.nif" weapon
+		SetIconPath "Weapons\DwarvenBow.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 10039 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Elven\Bow.nif" weapon
+		SetIconPath "Weapons\ElvenBow.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 10040 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Glass\Bow.nif" weapon
+		SetIconPath "Weapons\GlassBow.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 10041 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Ebony\Bow.nif" weapon
+		SetIconPath "Weapons\EbonyBow.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 10042 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Daedric\Bow.nif" weapon
+		SetIconPath "Weapons\DaedricBow.dds" weapon
+
+
+
+		
+	;-----------------------------------------------------------------------------
+	;Staves
+	;-----------------------------------------------------------------------------
+	;Due to some wacky bugs with enchantment, Staves are also a separate entity like Bows
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11000 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\MC_Iron_Staff.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\MC_Iron_Staff_Icon.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11001 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\MC_Steel_Staff.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\MC_Steel_Staff_Icon.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11002 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\MC_Silver_Staff.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\MC_Silver_Staff_Icon.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11003 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\MC_Dwarven_Staff.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\MC_Dwarven_Staff_Icon.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11004 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\MC_Elven_Staff.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\MC_Elven_Staff_Icon.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11005 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\MC_Glass_Staff.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\MC_Glass_Staff_Icon.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11006 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\MC_Ebony_Staff.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\MC_Ebony_Staff_Icon.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11007 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\MC_Daedric_Staff.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\MC_Daedric_Staff_Icon.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11008 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\MC_Rider_Staff.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\MC_Rider_Staff_Icon.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11009 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\MC_Druid_Staff.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\MC_Druid_Staff_Icon.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11010 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\MC_Necro_Staff.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\MC_Necro_Staff_Icon.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11011 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\MC_Ayleid_Staff.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\MC_Ayleid_Staff_Icon.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11012 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\MC_Camoran_Staff.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\MC_Camoran_Staff_Icon.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11013 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\MC_Archmage_Staff.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\MC_Archmage_Staff_Icon.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11014 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\MagnusStaff.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\MagnusStaffIcon.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11015 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staff2mw02magnus.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staff2mw02magnus.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11016 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staffofchaos.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staffofchaos_icon.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11017 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staffofchaos_red.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staffofchaos_icon.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11018 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staff2ayleid01.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staff2ayleid01.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11019 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staff2ayleid04.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staff2ayleid04.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11020 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staff2ayleid09.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staff2ayleid09.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11021 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staff2ayleid15.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staff2ayleid15.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11022 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staff2crystal01.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staff2crystal01.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11023 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staff2crystal02.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staff2crystal02.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11024 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staff2crystal03.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staff2crystal03.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11025 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staff2crystal04.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staff2crystal04.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11026 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staff2crystal05.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staff2crystal05.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11027 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staff2crystal06.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staff2crystal06.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11028 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staff2crystal07.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staff2crystal07.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11029 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staff2crystal08.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staff2crystal08.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11030 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staff2irondark1.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staff2irondark1.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11031 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staff2nature01.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staff2nature01.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11032 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staff2nature02.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staff2nature02.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11033 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staff2nature03.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staff2nature03.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11034 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staff2nature04.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staff2nature04.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11035 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staff2organic01.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staff2organic01.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11036 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staff2organic02.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staff2organic02.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11037 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staff2organic03.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staff2organic03.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11038 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staff2organic04.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staff2organic04.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11039 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staff2organic05.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staff2organic05.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11040 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staff2organic06.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staff2organic06.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11041 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staff2organic07.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staff2organic07.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11042 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staff2mw01wood.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staff2mw01wood.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11043 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staff2skeletalhand.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staff2skeletalhand.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11044 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staff2skull01.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staff2skull01.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11045 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staff2skull06.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staff2skull06.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11046 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staff2woodcrystal1.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staff2woodcrystal1.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11047 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staff2woodcrystal2.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staff2woodcrystal2.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11048 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staff2woodcrystal3.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staff2woodcrystal3.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11049 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staff2woodcrystal4.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staff2woodcrystal4.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11050 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staff2woodtear1.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staff2woodtear1.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11051 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staff2woodtear2.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staff2woodtear2.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11052 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staff2woodtear3.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staff2woodtear3.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11053 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staff2woodtear4.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staff2woodtear4.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11054 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staff2woodtear5.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staff2woodtear5.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11055 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staff2woodbirch1.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staff2woodbirch1.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11056 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staff2woodhemlock1.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staff2woodhemlock1.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11057 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staff2woodmaple1.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staff2woodmaple1.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11058 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staff2woodoak1.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staff2woodoak1.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11059 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staff2woodoak2.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staff2woodoak2.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11060 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staff2woodpine1.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staff2woodpine1.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11061 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staff2woodscotchpine1.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staff2woodscotchpine1.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11062 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staff2woodbirchmoss1.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staff2woodbirchmoss1.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11063 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staff2woodmaplemoss1.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staff2woodmaplemoss1.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11064 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staff2woodoakmoss1.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staff2woodoakmoss1.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11065 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staff2woodoakmoss2.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staff2woodoakmoss2.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11066 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Staff\staff2woodpinemoss1.nif" weapon
+		SetIconPath "Dusfergon\2h\Staff\staff2woodpinemoss1.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11067 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Staffs\TestStaff.nif" weapon
+		SetIconPath "Weapons\Staff.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11068 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Staffs\TestStaff02.nif" weapon
+		SetIconPath "Weapons\Staff.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 11069 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Staffs\TestStaff03.nif" weapon
+		SetIconPath "Weapons\Staff.dds" weapon
+		
+	;-----------------------------------------------------------------------------
+	endif ;( aaDusfergonModel > 4999 )
+	;-----------------------------------------------------------------------------
+
+
+
+
+	
+	;-----------------------------------------------------------------------------
+	if ( aaDusfergonEquip == 1 )
+	;-----------------------------------------------------------------------------
+
+		;Re-equip required to refresh model
+		Player.UnEquipItemSilent weapon
+		Player.EquipItem2NS weapon ;Runs OnEquip block
+			
+	;-----------------------------------------------------------------------------
+	endif
+	;-----------------------------------------------------------------------------
+
+;-----------------------------------------------------------------------------
+end ;Function { weapon }
+;-----------------------------------------------------------------------------
