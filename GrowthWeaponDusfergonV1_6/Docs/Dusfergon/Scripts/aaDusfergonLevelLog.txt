@@ -1,25 +1,22 @@
-scn aaDusfergonOnEnchant
+scn aaDusfergonLevelLog
 
 ;Main script
 ;-----------------------------------------------------------------------------
-;aaDusfergonManager
+;aaDusfergonManger
 ;-----------------------------------------------------------------------------
 
 ;Used scripts
 ;-----------------------------------------------------------------------------
-;aaDusfergonOnHit
-;aaDusfergonOnBowHit
-;aaDusfergonOnArrowHit
 ;-----------------------------------------------------------------------------
 
 ;Related scripts
 ;-----------------------------------------------------------------------------
+;aaDusfergonBreak
 ;-----------------------------------------------------------------------------
 
 ;Used globals
 ;-----------------------------------------------------------------------------
-;aaDusfergonArrowsUp
-;aaDusfergonEquip
+;aaDusfergonLevel
 ;-----------------------------------------------------------------------------
 
 ;Related globals
@@ -28,51 +25,23 @@ scn aaDusfergonOnEnchant
 
 ;Description
 ;-----------------------------------------------------------------------------
-;Undoes the last enchantment if it was DLScalar3(B) and unsets handlers and 
-;flags, incase enchantment doesn't run OnUnEquip blocks. Refunds used soul 
-;gem, unless it's Azura's Star -- variables don't work with SetSoulLevel.
+;Logs the new level to console.
 ;-----------------------------------------------------------------------------
 
 ;Parameters
 ;-----------------------------------------------------------------------------
-string_var Prompt
-
-ref Item
-ref enchantedItem
+string_var Name
 ;-----------------------------------------------------------------------------
 
 
 
 ;-----------------------------------------------------------------------------
-begin Function { enchantedItem }
+begin Function { Name }
 ;-----------------------------------------------------------------------------
 
-	;Remove all handlers
-	RemoveEventHandler "OnHitWith" aaDusfergonOnHit
-	RemoveEventHandler "OnRelease" aaDusfergonOnBowHit
-	RemoveEventHandler "OnHitWith" aaDusfergonOnArrowHit
-	Set aaDusfergonEquip to 0
-	Set aaDusfergonArrowsUp to 0
+	printc "%B%z has become level %b%.0f%B!%b" Name aaDusfergonLevel
 
-	Let Prompt := aaDusfergonInit.str_Name + " defies enchantment."	
-	MessageBox $Prompt
-
-	;Refund soul gem
-	Set Item to aaDusfergonInit.SoulGem
-	if ( Item != AzurasStar )
-		
-		Player.AddItem Item 1
-
-	endif
-
-	;Remove new enchanted item
-	Player.RemoveItemNS enchantedItem 1
-
-	;Add base weapon back
-	Set Item to aaDusfergonInit.self
-	Player.AddItemNS Item 1
-
-	sv_Destruct Prompt
+	Return
 ;-----------------------------------------------------------------------------
-end ;Function { enchantedItem }
+end ;Function { Name }
 ;-----------------------------------------------------------------------------

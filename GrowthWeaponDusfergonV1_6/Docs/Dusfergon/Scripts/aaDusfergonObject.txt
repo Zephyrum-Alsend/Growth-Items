@@ -37,7 +37,7 @@ scn aaDusfergonObject
 
 ;Parameters
 ;-----------------------------------------------------------------------------
-float Health
+array_var Stack
 
 ref Item
 ;-----------------------------------------------------------------------------
@@ -54,23 +54,13 @@ begin OnUnEquip Player
 	;-----------------------------------------------------------------------------
 	;Check if broken
 	;-----------------------------------------------------------------------------
-	foreach ( Item <- PlayerRef ) 
+	Let Stack := Player.GetInvRefsForItem DLScalar3
+	Let Item := Stack[0]
+	if ( Item.GetRefCount > 0 && Item.GetCurrentHealth <= 0 )
 
-		if ( Item.GetBaseObject == DLScalar3 ) 
+		Set aaDusfergonBroken to 1
 
-			Let Health := Item.GetCurrentHealth
-
-			if ( Health <= 0 )
-
-				Set aaDusfergonBroken to 1
-
-			endif
-			
-			Break
-			
-		endif
-		
-	loop
+	endif
 	
 ;-----------------------------------------------------------------------------
 end ;OnUnequip Player

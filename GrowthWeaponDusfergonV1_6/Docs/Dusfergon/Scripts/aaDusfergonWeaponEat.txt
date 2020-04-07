@@ -8,6 +8,7 @@ scn aaDusfergonWeaponEat
 ;Used scripts
 ;-----------------------------------------------------------------------------
 ;aaDusfergonRefreshInv
+;aaDUsfergonXPReport
 ;-----------------------------------------------------------------------------
 
 ;Related scripts
@@ -34,13 +35,18 @@ short LvlCap
 short Eater ;Return value
 float Absor
 short XPGain
+short Health
+short Count
 
 string_var Prompt
 string_var Name
 string_var Icon
 
+array_var Stack
+
 ref Weap
 ref Item
+ref Temp
 ;-----------------------------------------------------------------------------
 
 
@@ -93,42 +99,52 @@ begin Function { LvlCap, Eater, Weap, Name, Icon, Absor }
 		;-----------------------------------------------------------------------------
 		if ( aaDusfergonInit.Button == 0 )
 
-			;-----------------------------------------------------------------------------
 			;State item's consumption and play item break SFX
-			;-----------------------------------------------------------------------------
 			SetMessageIcon $Icon
 			SetMessageSound UIArmorWeaponRepairBreak
 			MessageEX "%z consumes %n." Name Weap
 
-			;-----------------------------------------------------------------------------
-			printd "Iterating through player inventory..."
-			;-----------------------------------------------------------------------------
-			foreach ( Item <- PlayerRef ) 
+			;Get inventory references and durability
+			Let Stack := Player.GetInvRefsForItem Weap
+			Let Item := Stack[0]
+			Let Health := Item.GetCurrentHealth
+			Let Count := Item.GetRefCount
 
-				printd "Comparing Item to Weap"
-				if ( Item.GetBaseObject == Weap )
+			;Calculate XPGain
+			Let XPGain := Absor * Health
 
-					printd "Found Weap, calculating XPGain"
-					Let XPGain := Absor * Item.GetCurrentHealth
-
-					printd "Removing Item"
-					Item.RemoveMeIR
-
-					Break
+			;Item is invalid from this point onwards
+			Item.RemoveMeIR
 			
-				endif
-		
-			loop
+			
+			;RemoveMeIR removed the entire stack, so add back all but 1
+			if ( Count > 1 )
+				Let Count := Count - 1
+				
+				Let Temp := CreateTempRef Weap
+				Temp.SetRefCount Count
+				Temp.SetCurrentHealth Health
+				Temp.CopyIR PlayerRef
+
+				Let Temp := 0
+
+			endif
 
 			
-			printd "Refreshing player inventory..."
 			Call aaDusfergonRefreshInv
 
-			printd "Adding XP"
 			Let aaDusfergonXP := aaDusfergonXP + XPGain
 
+			;If combat logger is active, make sure we aren't counted
+			if ( aaDusfergonCombatXPLog == 1 )
+
+				Let aaDusfergonCombatXPStart := aaDusfergonCombatXPStart + XPGain
+
+			endif
+
 			;-----------------------------------------------------------------------------
-			printc "%z gained %.0fXP from consuming %n." Name XPGain Weap
+			Let Prompt := $Weap + " consumed."
+			Call aaDusfergonXPReport XPGain Prompt
 			;-----------------------------------------------------------------------------
 
 		;-----------------------------------------------------------------------------
@@ -141,7 +157,8 @@ begin Function { LvlCap, Eater, Weap, Name, Icon, Absor }
 	endif ;( Level < sLevelCap && Eater > 0 )
 	;-----------------------------------------------------------------------------
 	
-	
+
+	sv_Destruct Prompt
 	SetFunctionValue Eater
 	Return
 ;-----------------------------------------------------------------------------

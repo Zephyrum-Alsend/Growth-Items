@@ -37,6 +37,8 @@ float fMenuLag
 ;aaDusfergonOnEnchant
 ;aaDusfergonOnSigilStone
 ;aaDusfergonWeaponEat
+;aaDusfergonXPReport
+;aaDusfergonLevelLog
 ;-----------------------------------------------------------------------------
 
 ;Related scripts
@@ -526,7 +528,7 @@ short sMNameKey
 short sMNameKey2
 
 ;-----------------------------------------------------------------------------
-;RefID of ObjectID and EnchantID
+;References to WeaponID and EnchantID
 ;-----------------------------------------------------------------------------
 ref self
 ref ench
@@ -722,7 +724,7 @@ begin GameMode
 
 		
 		;-----------------------------------------------------------------------------
-		printc "%z initialized!" str_Name
+		printc "%z%B initialized!%b" str_Name
 		;-----------------------------------------------------------------------------
 
 	;-----------------------------------------------------------------------------
@@ -749,7 +751,7 @@ begin GameMode
 	if ( Player.IsInCombat == 0 && aaDusfergonCombatXPLog == 1 )
 
 		Set CombatXP to aaDusfergonXP - aaDusfergonCombatXPStart
-		printc "%4.0f/%4.0f  +%2.0fXP" aaDusfergonXP aaDusfergonXPReq CombatXP
+		Call aaDusfergonXPReport CombatXP "Combat log."
 		Set aaDusfergonCombatXPLog to 0
 
 	endif
@@ -884,7 +886,7 @@ begin GameMode
 		;-----------------------------------------------------------------------------
 		;Level up message
 		;-----------------------------------------------------------------------------
-		printc "%z leveled up to %.0f!" str_Name aaDusfergonLevel
+		Call aaDusfergonLevelLog str_Name
 
 		Let Icon := "Icons\" + ( GetIconPath self )
 		Call aaDusfergonLevelMessage HalfOnce Icon str_Name

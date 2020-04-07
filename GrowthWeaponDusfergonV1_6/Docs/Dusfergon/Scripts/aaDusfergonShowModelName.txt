@@ -1295,7 +1295,49 @@ begin Function { Icon, Name }
 
 		Set ModelName to sv_Construct "%zMorningstar Steel" ModelName
 
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 6010 )
+	;-----------------------------------------------------------------------------
 
+		Set ModelName to sv_Construct "%zKanabo" ModelName
+
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 6011 )
+	;-----------------------------------------------------------------------------
+
+		Set ModelName to sv_Construct "%zKanabo II" ModelName
+
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 6012 )
+	;-----------------------------------------------------------------------------
+
+		Set ModelName to sv_Construct "%zKanabo Fine" ModelName
+
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 6013 )
+	;-----------------------------------------------------------------------------
+
+		Set ModelName to sv_Construct "%zKanabo Copper" ModelName
+
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 6014 )
+	;-----------------------------------------------------------------------------
+
+		Set ModelName to sv_Construct "%zKanabo Steel" ModelName
+
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 6015 )
+	;-----------------------------------------------------------------------------
+
+		Set ModelName to sv_Construct "%zKanabo Fine Steel" ModelName
+
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 6016 )
+	;-----------------------------------------------------------------------------
+
+		Set ModelName to sv_Construct "%zKanabo Marble" ModelName
+
+	
 
 		
 	;-----------------------------------------------------------------------------
@@ -1366,7 +1408,31 @@ begin Function { Icon, Name }
 
 		Set ModelName to sv_Construct "%zWar Old" ModelName
 
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 7011 )
+	;-----------------------------------------------------------------------------
 
+		Set ModelName to sv_Construct "%zCurved" ModelName
+
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 7012 )
+	;-----------------------------------------------------------------------------
+
+		Set ModelName to sv_Construct "%zIron" ModelName
+
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 7013 )
+	;-----------------------------------------------------------------------------
+
+		Set ModelName to sv_Construct "%zSteel" ModelName
+
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 7014 )
+	;-----------------------------------------------------------------------------
+
+		Set ModelName to sv_Construct "%zDouble" ModelName
+
+	
 
 		
 	;-----------------------------------------------------------------------------
@@ -1437,7 +1503,13 @@ begin Function { Icon, Name }
 
 		Set ModelName to sv_Construct "%zMorningstar Steel" ModelName
 
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 8011 )
+	;-----------------------------------------------------------------------------
 
+		Set ModelName to sv_Construct "%zHammer" ModelName
+
+	
 
 		
 	;-----------------------------------------------------------------------------
@@ -1502,7 +1574,37 @@ begin Function { Icon, Name }
 
 		Set ModelName to sv_Construct "%zWar Old" ModelName
 
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 9010 )
+	;-----------------------------------------------------------------------------
 
+		Set ModelName to sv_Construct "%zBent" ModelName
+
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 9011 )
+	;-----------------------------------------------------------------------------
+
+		Set ModelName to sv_Construct "%zCurved" ModelName
+
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 9012 )
+	;-----------------------------------------------------------------------------
+
+		Set ModelName to sv_Construct "%zIron" ModelName
+
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 9013 )
+	;-----------------------------------------------------------------------------
+
+		Set ModelName to sv_Construct "%zSteel" ModelName
+
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 9014 )
+	;-----------------------------------------------------------------------------
+
+		Set ModelName to sv_Construct "%zMithril" ModelName
+
+	
 
 
 	;-----------------------------------------------------------------------------
@@ -2124,55 +2226,55 @@ begin Function { Icon, Name }
 	;-----------------------------------------------------------------------------
 	;Vanilla
 	;-----------------------------------------------------------------------------
-	elseif ( aaDusfergonModel == 16 || aaDusfergonModel == 3061 || aaDusfergonModel == 4052 || aaDusfergonModel == 5037 || aaDusfergonModel == 6010 || aaDusfergonModel == 7011 || aaDusfergonModel == 8011 || aaDusfergonModel == 9010 || aaDusfergonModel == 10035 )
+	elseif ( aaDusfergonModel == 16 || aaDusfergonModel == 3061 || aaDusfergonModel == 4052 || aaDusfergonModel == 5037 || aaDusfergonModel == 6017 || aaDusfergonModel == 7015 || aaDusfergonModel == 8012 || aaDusfergonModel == 9015 || aaDusfergonModel == 10035 )
 	;-----------------------------------------------------------------------------
 
 		Set ModelName to sv_Construct "%zVanilla Iron" ModelName
 
 	;-----------------------------------------------------------------------------
-	elseif ( aaDusfergonModel == 17 || aaDusfergonModel == 3062 || aaDusfergonModel == 4053 || aaDusfergonModel == 5038 || aaDusfergonModel == 6011 || aaDusfergonModel == 7012 || aaDusfergonModel == 8012 || aaDusfergonModel == 9011 || aaDusfergonModel == 10036 )
+	elseif ( aaDusfergonModel == 17 || aaDusfergonModel == 3062 || aaDusfergonModel == 4053 || aaDusfergonModel == 5038 || aaDusfergonModel == 6018 || aaDusfergonModel == 7016 || aaDusfergonModel == 8013 || aaDusfergonModel == 9016 || aaDusfergonModel == 10036 )
 	;-----------------------------------------------------------------------------
 
 		Set ModelName to sv_Construct "%zVanilla Steel" ModelName
 
 	;-----------------------------------------------------------------------------
-	elseif ( aaDusfergonModel == 18 || aaDusfergonModel == 3063 || aaDusfergonModel == 4054 || aaDusfergonModel == 5039 || aaDusfergonModel == 6012 || aaDusfergonModel == 7013 || aaDusfergonModel == 8013 || aaDusfergonModel == 9012 )
+	elseif ( aaDusfergonModel == 18 || aaDusfergonModel == 3063 || aaDusfergonModel == 4054 || aaDusfergonModel == 5039 || aaDusfergonModel == 6019 || aaDusfergonModel == 7017 || aaDusfergonModel == 8014 || aaDusfergonModel == 9017 )
 	;-----------------------------------------------------------------------------
 
 		Set ModelName to sv_Construct "%zVanilla Fine Steel" ModelName
 
 	;-----------------------------------------------------------------------------
-	elseif ( aaDusfergonModel == 19 || aaDusfergonModel == 3064 || aaDusfergonModel == 4055 || aaDusfergonModel == 5040 || aaDusfergonModel == 6013 || aaDusfergonModel == 7014 || aaDusfergonModel == 8014 || aaDusfergonModel == 9013 || aaDusfergonModel == 10037 )
+	elseif ( aaDusfergonModel == 19 || aaDusfergonModel == 3064 || aaDusfergonModel == 4055 || aaDusfergonModel == 5040 || aaDusfergonModel == 6020 || aaDusfergonModel == 7018 || aaDusfergonModel == 8015 || aaDusfergonModel == 9018 || aaDusfergonModel == 10037 )
 	;-----------------------------------------------------------------------------
 
 		Set ModelName to sv_Construct "%zVanilla Silver" ModelName
 
 	;-----------------------------------------------------------------------------
-	elseif ( aaDusfergonModel == 20 || aaDusfergonModel == 3065 || aaDusfergonModel == 4056 || aaDusfergonModel == 5041 || aaDusfergonModel == 6014 || aaDusfergonModel == 7015 || aaDusfergonModel == 8015 || aaDusfergonModel == 9014 || aaDusfergonModel == 10038 )
+	elseif ( aaDusfergonModel == 20 || aaDusfergonModel == 3065 || aaDusfergonModel == 4056 || aaDusfergonModel == 5041 || aaDusfergonModel == 6021 || aaDusfergonModel == 7019 || aaDusfergonModel == 8016 || aaDusfergonModel == 9019 || aaDusfergonModel == 10038 )
 	;-----------------------------------------------------------------------------
 
 		Set ModelName to sv_Construct "%zVanilla Dwarven" ModelName
 
 	;-----------------------------------------------------------------------------
-	elseif ( aaDusfergonModel == 21 || aaDusfergonModel == 3066 || aaDusfergonModel == 4057 || aaDusfergonModel == 5042 || aaDusfergonModel == 6015 || aaDusfergonModel == 7016 || aaDusfergonModel == 8016 || aaDusfergonModel == 9015 || aaDusfergonModel == 10039 )
+	elseif ( aaDusfergonModel == 21 || aaDusfergonModel == 3066 || aaDusfergonModel == 4057 || aaDusfergonModel == 5042 || aaDusfergonModel == 6022 || aaDusfergonModel == 7020 || aaDusfergonModel == 8017 || aaDusfergonModel == 9020 || aaDusfergonModel == 10039 )
 	;-----------------------------------------------------------------------------
 
 		Set ModelName to sv_Construct "%zVanilla Elven" ModelName
 
 	;-----------------------------------------------------------------------------
-	elseif ( aaDusfergonModel == 22 || aaDusfergonModel == 3067 || aaDusfergonModel == 4058 || aaDusfergonModel == 5043 || aaDusfergonModel == 6016 || aaDusfergonModel == 7017 || aaDusfergonModel == 8017 || aaDusfergonModel == 9016 || aaDusfergonModel == 10040 )
+	elseif ( aaDusfergonModel == 22 || aaDusfergonModel == 3067 || aaDusfergonModel == 4058 || aaDusfergonModel == 5043 || aaDusfergonModel == 6023 || aaDusfergonModel == 7021 || aaDusfergonModel == 8018 || aaDusfergonModel == 9021 || aaDusfergonModel == 10040 )
 	;-----------------------------------------------------------------------------
 
 		Set ModelName to sv_Construct "%zVanilla Glass" ModelName
 
 	;-----------------------------------------------------------------------------
-	elseif ( aaDusfergonModel == 23 || aaDusfergonModel == 3068 || aaDusfergonModel == 4059 || aaDusfergonModel == 5044 || aaDusfergonModel == 6017 || aaDusfergonModel == 7018 || aaDusfergonModel == 8018 || aaDusfergonModel == 9017 || aaDusfergonModel == 10041 )
+	elseif ( aaDusfergonModel == 23 || aaDusfergonModel == 3068 || aaDusfergonModel == 4059 || aaDusfergonModel == 5044 || aaDusfergonModel == 6024 || aaDusfergonModel == 7022 || aaDusfergonModel == 8019 || aaDusfergonModel == 9022 || aaDusfergonModel == 10041 )
 	;-----------------------------------------------------------------------------
 
 		Set ModelName to sv_Construct "%zVanilla Ebony" ModelName
 
 	;-----------------------------------------------------------------------------
-	elseif ( aaDusfergonModel == 24 || aaDusfergonModel == 3069 || aaDusfergonModel == 4060 || aaDusfergonModel == 5045 || aaDusfergonModel == 6018 || aaDusfergonModel == 7019 || aaDusfergonModel == 8019 || aaDusfergonModel == 9018 || aaDusfergonModel == 10042 )
+	elseif ( aaDusfergonModel == 24 || aaDusfergonModel == 3069 || aaDusfergonModel == 4060 || aaDusfergonModel == 5045 || aaDusfergonModel == 6025 || aaDusfergonModel == 7023 || aaDusfergonModel == 8020 || aaDusfergonModel == 9023 || aaDusfergonModel == 10042 )
 	;-----------------------------------------------------------------------------
 
 		Set ModelName to sv_Construct "%zVanilla Daedric" ModelName
@@ -2296,7 +2398,8 @@ begin Function { Icon, Name }
 	;-----------------------------------------------------------------------------
 	MessageEX "%z." ModelName 5
 	;-----------------------------------------------------------------------------
-	
+
+	sv_Destruct ModelName
 ;-----------------------------------------------------------------------------
 end ;Function { Icon, Name }
 ;-----------------------------------------------------------------------------

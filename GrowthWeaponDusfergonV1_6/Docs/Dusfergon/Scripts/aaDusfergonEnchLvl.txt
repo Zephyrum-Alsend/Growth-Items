@@ -817,6 +817,7 @@ begin Function { Ench, Cost, Incr }
 
 	SetEnchantmentCost Cost Ench	
 
+	sv_Destruct EffName
 	SetFunctionValue Cost
 	Return
 ;-----------------------------------------------------------------------------

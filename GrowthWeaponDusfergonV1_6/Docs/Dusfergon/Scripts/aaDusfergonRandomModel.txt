@@ -78,29 +78,29 @@ begin Function { }
 	;Warhammer
 	elseif randy < aaDusfergonInit.BattleaxeIdx
 
-		Set randy to randy + ( rand 0 18.9 )
+		Set randy to randy + ( rand 0 25.9 )
 
 	;Battleaxe
 	elseif randy < aaDusfergonInit.MaceIdx
 
-		Set randy to randy + ( rand 0 19.9 )
+		Set randy to randy + ( rand 0 23.9 )
 
 	;Mace
 	elseif randy < aaDusfergonInit.WaraxeIdx
 	
-		Set randy to randy + ( rand 0 19.9 )
+		Set randy to randy + ( rand 0 20.9 )
 
 	;Waraxe
 	elseif randy < aaDusfergonInit.BowIdx
 
-		Set randy to randy + ( rand 0 18.9 )
+		Set randy to randy + ( rand 0 23.9 )
 
 	;Bow
 	elseif randy < aaDusfergonInit.StaffIdx
 
 		Set randy to randy + ( rand 0 38.9 )
 
-		if ( randy > 30 )
+		if ( randy >= 31 )
 
 			Set randy to ( randy + 4 )
 

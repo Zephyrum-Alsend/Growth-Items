@@ -686,7 +686,7 @@ begin Function { ModelChange }
 	;-----------------------------------------------------------------------------
 	elseif ( ModelChange == 5102 )
 
-		MessageBox "Choose a form:" "Cancel" "Prev" "Mirondil Gilded" "Flanged Steel" "Morningstar Steel" "Vanilla Iron" "Vanilla Steel" "Vanilla Fine Steel" "Vanilla Silver" "Next"
+		MessageBox "Choose a form:" "Cancel" "Prev" "Mirondil Gilded" "Flanged Steel" "Morningstar Steel" "Kanabo" "Kanabo II" "Kanabo Fine" "Kanabo Copper" "Next"
 		Set aaDusfergonInit.Button to -1
 		Set ModelChange to 5103
 
@@ -699,7 +699,7 @@ begin Function { ModelChange }
 	;-----------------------------------------------------------------------------
 	elseif ( ModelChange == 5104 )
 
-		MessageBox "Choose a form:" "Cancel" "Prev" "Vanilla Dwarven" "Vanilla Elven" "Vanilla Glass" "Vanilla Ebony" "Vanilla Daedric"; "" "" "Next"
+		MessageBox "Choose a form:" "Cancel" "Prev" "Kanabo Steel" "Kanabo Fine Steel" "Kanabo Marble" "Vanilla Iron" "Vanilla Steel" "Vanilla Fine Steel" "Vanilla Silver" "Next"
 		Set aaDusfergonInit.Button to -1
 		Set ModelChange to 5105
 
@@ -707,7 +707,20 @@ begin Function { ModelChange }
 
 		Set ModelChange to Call aaDusfergonModelPage ModelChange aaDusfergonInit.Button 2 aaDusfergonInit.WarhammerIdx
 
+	;-----------------------------------------------------------------------------
+	;Warhammer pg4
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 5106 )
 
+		MessageBox "Choose a form:" "Cancel" "Prev" "Vanilla Dwarven" "Vanilla Elven" "Vanilla Glass" "Vanilla Ebony" "Vanilla Daedric"; "" "" "Next"
+		Set aaDusfergonInit.Button to -1
+		Set ModelChange to 5107
+
+	elseif ( ModelChange == 5107 && aaDusfergonInit.Button > -1 )
+
+		Set ModelChange to Call aaDusfergonModelPage ModelChange aaDusfergonInit.Button 3 aaDusfergonInit.WarhammerIdx
+
+	
 
 		
 	;-----------------------------------------------------------------------------
@@ -728,7 +741,7 @@ begin Function { ModelChange }
 	;-----------------------------------------------------------------------------
 	elseif ( ModelChange == 5202 )
 
-		MessageBox "Choose a form:" "Cancel" "Prev" "Thorgeir" "Ziragon" "Bearded Old" "War Old" "Vanilla Iron" "Vanilla Steel" "Vanilla Fine Steel" "Next"
+		MessageBox "Choose a form:" "Cancel" "Prev" "Thorgeir" "Ziragon" "Bearded Old" "War Old" "Curved" "Iron" "Steel" "Next"
 		Set aaDusfergonInit.Button to -1
 		Set ModelChange to 5203
 
@@ -741,7 +754,7 @@ begin Function { ModelChange }
 	;-----------------------------------------------------------------------------
 	elseif ( ModelChange == 5204 )
 
-		MessageBox "Choose a form:" "Cancel" "Prev" "Vanilla Silver" "Vanilla Dwarven" "Vanilla Elven" "Vanilla Glass" "Vanilla Ebony" "Vanilla Daedric"; "" "Next"
+		MessageBox "Choose a form:" "Cancel" "Prev" "Double" "Vanilla Iron" "Vanilla Steel" "Vanilla Fine Steel" "Vanilla Silver" "Vanilla Dwarven" "Vanilla Elven" "Next"
 		Set aaDusfergonInit.Button to -1
 		Set ModelChange to 5205
 
@@ -749,7 +762,20 @@ begin Function { ModelChange }
 
 		Set ModelChange to Call aaDusfergonModelPage ModelChange aaDusfergonInit.Button 2 aaDusfergonInit.BattleaxeIdx
 
+	;-----------------------------------------------------------------------------
+	;Battleaxe pg4
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 5206 )
 
+		MessageBox "Choose a form:" "Cancel" "Prev" "Vanilla Glass" "Vanilla Ebony" "Vanilla Daedric"; "" "" "" "" "Next"
+		Set aaDusfergonInit.Button to -1
+		Set ModelChange to 5207
+
+	elseif ( ModelChange == 5207 && aaDusfergonInit.Button > -1 )
+
+		Set ModelChange to Call aaDusfergonModelPage ModelChange aaDusfergonInit.Button 3 aaDusfergonInit.BattleaxeIdx
+
+	
 
 
 
@@ -772,7 +798,7 @@ begin Function { ModelChange }
 	;-----------------------------------------------------------------------------
 	elseif ( ModelChange == 6102 )
 
-		MessageBox "Choose a form:" "Cancel" "Prev" "Sotonhorian" "Ziragon Warhammer" "Ziragon Warpick" "Morningstar Steel" "Vanilla Iron" "Vanilla Steel" "Vanilla Fine Steel" "Next"
+		MessageBox "Choose a form:" "Cancel" "Prev" "Sotonhorian" "Ziragon Warhammer" "Ziragon Warpick" "Morningstar Steel" "Hammer" "Vanilla Iron" "Vanilla Steel" "Next"
 		Set aaDusfergonInit.Button to -1
 		Set ModelChange to 6103
 
@@ -785,7 +811,7 @@ begin Function { ModelChange }
 	;-----------------------------------------------------------------------------
 	elseif ( ModelChange == 6104 )
 
-		MessageBox "Choose a form:" "Cancel" "Prev" "Vanilla Silver" "Vanilla Dwarven" "Vanilla Elven" "Vanilla Glass" "Vanilla Ebony" "Vanilla Daedric"; "" "Next"
+		MessageBox "Choose a form:" "Cancel" "Prev" "Vanilla Fine Steel" "Vanilla Silver" "Vanilla Dwarven" "Vanilla Elven" "Vanilla Glass" "Vanilla Ebony" "Vanilla Daedric"; "Next"
 		Set aaDusfergonInit.Button to -1
 		Set ModelChange to 6105
 
@@ -814,7 +840,7 @@ begin Function { ModelChange }
 	;-----------------------------------------------------------------------------
 	elseif ( ModelChange == 6202 )
 
-		MessageBox "Choose a form:" "Cancel" "Prev" "Mirondil Gilded" "Bearded Old" "War Old" "Vanilla Iron" "Vanilla Steel" "Vanilla Fine Steel" "Vanilla Silver" "Next"
+		MessageBox "Choose a form:" "Cancel" "Prev" "Mirondil Gilded" "Bearded Old" "War Old" "Bent" "Curved" "Iron" "Steel" "Next"
 		Set aaDusfergonInit.Button to -1
 		Set ModelChange to 6203
 
@@ -827,7 +853,7 @@ begin Function { ModelChange }
 	;-----------------------------------------------------------------------------
 	elseif ( ModelChange == 6204 )
 
-		MessageBox "Choose a form:" "Cancel" "Prev" "Vanilla Dwarven" "Vanilla Elven" "Vanilla Glass" "Vanilla Ebony" "Vanilla Daedric"; "" "" "Next"
+		MessageBox "Choose a form:" "Cancel" "Prev" "Mithril" "Vanilla Iron" "Vanilla Steel" "Vanilla Fine Steel" "Vanilla Silver" "Vanilla Dwarven" "Vanilla Elven" "Next"
 		Set aaDusfergonInit.Button to -1
 		Set ModelChange to 6205
 
@@ -835,7 +861,20 @@ begin Function { ModelChange }
 
 		Set ModelChange to Call aaDusfergonModelPage ModelChange aaDusfergonInit.Button 2 aaDusfergonInit.WaraxeIdx
 
+	;-----------------------------------------------------------------------------
+	;Waraxe pg4
+	;-----------------------------------------------------------------------------
+	elseif ( ModelChange == 6206 )
 
+		MessageBox "Choose a form:" "Cancel" "Prev" "Vanilla Glass" "Vanilla Ebony" "Vanilla Daedric"; "" "" "" "" "Next"
+		Set aaDusfergonInit.Button to -1
+		Set ModelChange to 6207
+
+	elseif ( ModelChange == 6207 && aaDusfergonInit.Button > -1 )
+
+		Set ModelChange to Call aaDusfergonModelPage ModelChange aaDusfergonInit.Button 3 aaDusfergonInit.WaraxeIdx
+
+	
 
 
 

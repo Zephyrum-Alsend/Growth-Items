@@ -502,7 +502,7 @@ Set aaDusfergonInit.sLevelCap to 201			;201
 
 ;Conversion rate of durability to XP for offerings
 ;Set to 0.0 or below to disable
-Set aaDusfergonInit.fAbsorption to 0.15			;0.15
+Set aaDusfergonInit.fAbsorption to 0.13			;0.13
 
 ;-----------------------------------------------------------------------------
 ;Delevel on Break

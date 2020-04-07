@@ -272,3 +272,46 @@
 -Set SFX to UIArmorWeaponRepairBreak, short, easily understood, but not how I'd imagine weapon eating sounds
 -Copied changes to DefaultINI to actual ini
 -Updated ReadMe and ChangeLog
+
+05.04.2020
+-After playing with it for a bit, discovered it removes the entire stack of items when sacrificing 1 of a group
+-Switched to Player.RemoveItemNS Weap 1 to specifically remove 1, even if it may not be the one we read the durability of
+-Now inventory is really not updating properly...
+	-Weight is decrementing
+	-if you offer up the entire stack they disappear properly
+	-if you offer up less than all of them, none of them disappear, even if you close and reopen the inventory
+	-if not all offered, save, reload, none are missing from inventory
+-Reverted all changes, will look into GetInvRefsForItem
+-GetInvRefsForItem shortens code, but otherwise behaves exactly the same
+-Tried equipping item to be removed first because that separates into a separate stack in inventory UI, but that just makes RemoveMeIR behave like Player.RemoveItem
+-I think I'll just have to sacrifice whole stacks at this rate
+-Welp, gonna add GetInvRefsForItem to functions that used ForEach loops to find things
+	-Object	-ObjectB	-ObjectS	-Leaving Swap as is
+-Tested Add/RemoveItem ingame with console commands to be sure it's not just my code
+	-Added 3 daedric claymores
+	-Repaired them to 125%, they then split into 3 separate stacks... for no reason
+	-Removed 1
+	-SAME BUG AS ABOVE
+	-Removed 1 x2 more, removed all
+	-Added 3
+	-Did NOT touch them
+	-Removed 1
+	-2 left
+		-BETHESDA
+-Using GetRefCount and CreateTempRef was able to make function behave as intended
+-Store the number in the stack and their durability, RemoveMeIR then add back all but 1, inventory updates and only 1 was taken
+-Created XPReport function so console log styling is consistent across CombatLog and WeaponEat
+-Reading about user-defined functions for optional parameters, learned local strings aren't cleaned up, I'll need to run through my own functions
+	-EnchDisplay	-EnchLvl	-Exchange	-OnEnchant	-ShowModelName	-WeaponEat
+-There are no optional paramters
+-Setting message icon from another function doesn't work
+-Updated ReadMe.txt
+-Added LevelLog function to make formatting consistent across Level Up and Level Down logs
+-Changed fAbsorption to 0.13 after offering my war chest
+-Playtesting revealed disarm triggers Break flag, fixed by having Object scripts check RefCount > 0
+
+06.04.2020
+-Imported and remapped LilaMue Axes, updated functions
+-Imported and remapped Mauler Pack V3, updated functions
+-Imported and remapped Art of War Weapon Pack 1, updated functions
+-Updated local documentation for release

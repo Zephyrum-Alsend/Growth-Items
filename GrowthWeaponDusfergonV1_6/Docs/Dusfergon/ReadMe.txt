@@ -27,6 +27,9 @@ Havelock and Dorje - Staff of Magnus
 talion - Staff of Chaos
 Trollf - Armamentarium Staffs
 Isilmeriel - Nazgul Sword Set
+LilaMue - LilaMue Axes
+templargfx - Mauler Pack V3
+RDjeke - Art of War Weapon Pack
 
 PERMISSIONS
 
@@ -92,33 +95,6 @@ You'll also want to type:
 
 after reloading the save so the first level up doesn't take 8 years.
 
-DELEVEL
-
-Type into the console
-
-	Set aaDusfergonXP to 0
-	Set aaDusfergonLevel to [int A]
-	Set aaDusfergonXPReq to 0
-
-Wait for Dusfergon to level up, then
-
-	Set aaDusfergonLevel to 1
-	Set aaDusfergonEnch to 0
-	Set aaDusfergonEnch1 to 0
-	Set aaDusfergonEnch2 to 0
-	Set aaDusfergonEnch3 to 0
-	Set aaDusfergonEnch4 to 0
-	Set aaDusfergonEnch5 to 0
-	Set aaDusfergonEnch6 to 0
-	Set aaDusfergonEnch7 to 0
-	Set aaDusfergonEnch8 to 0
-	Set aaDusfergonEnch9 to 0
-	Set aaDusfergonEnch10 to 0
-	Set aaDusfergonXP to aaDusfergonXPReq
-
-This will take you through all the enchant select menus as it relevels.
-
-Or use sBreakLevel in the ini.
 
 
 
@@ -155,7 +131,7 @@ Or use sBreakLevel in the ini.
 DESCRIPTION - SHORT, SPOILER FREE DESCRIPTION IS ON THE MOD PAGE
 		THIS IS THE LONG ONE - YE HATH BEEN WARNED, SOUR SUMMER CHILD
 
--All values and keybindings listed are under default ini settings
+ - All values and keybindings listed are under default ini settings - 
 
 Like Agremon and Shurifen before it, Dusfergon grows stronger with use in combat.
 
@@ -205,16 +181,6 @@ as an arrow for if the target is a living NPC before awarding XP.  This "handler
 never unset because it's directly built into the enchantment.
 
 
-The XP logger has been overhauled to give a final combat report instead of logging
-every instance of XP gained and flooding your console log.  As soon as you hit a
-target with Dusfergon, the event handler will mark the current XP value and flag
-the combat logger.  When combat ends, the combat logger will print to console
-A/B +CXP, where A is Dusfergon's current total XP, B is the total XP needed to
-level up and C is the XP gained since the combat logger was flagged.  The level up
-console message was also improved to show you what level Dusfergon is currently at
-in the new format "Dusfergon leveled up to [int]!"
-
-
 
 Dusfergon has a defualt level cap of 201, for 200 increases from Lv1.  The XP 
 formula is the same as Agremon's, with the same default values as well.  The amount
@@ -232,10 +198,21 @@ This will cause the XP required to level up go 100, 110, 120, 130, 140, etc.
 
 To help with leveling Dusfergon, and return meaning to all the loot you find along the
 way, you can RMB another weapon in your inventory to offer it to Dusfergon.  Offering
-the weapon will convert its current durability into XP at 15% efficiency and destroy
+the weapon will convert its current durability into XP at 13% efficiency and destroy
 the weapon offered.  A message will appear in the upper left stating "Dusfergon consumes
-[weapon]." at the same time you hear an item break SFX.  A console message will also be
-logged, stating "Dusfergon gained [int]XP from consuming [weapon]."
+[weapon]." at the same time you hear an item break SFX.
+
+
+
+The XP logger has been overhauled to be more verbose and less spammy.  Instead of
+logging every instance of XP gained and flooding your console log, it will only
+report completed events that awarded XP.  It will print to console "A/B +CXP 
+[string]", where A is Dusfergon's current total XP, B is the total XP needed to
+level up, C is the XP gained, and [string] is a message stating where the XP came
+from.  The level change console log has also been improved to display "Dusfergon
+has become level [int]!"
+
+XP will be logged upon combat end and when offering a weapon.
 
 
 

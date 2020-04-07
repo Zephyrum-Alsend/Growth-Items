@@ -88,3 +88,8 @@ V1.6
  - Ini adjustments
  - - Added setting for absorption rate
  - Added ability to offer weapons in exchange for XP, offered weapons are destroyed
+ - Fixed memory leak
+ - Console XP logger made more verbose
+ - Added 7 Warhammer, 4 Battleaxe, 1 Mace, 5 Waraxe forms
+ - Total mesh count increased to 373
+ - Blunt form may be incorrect after updating due to new additions

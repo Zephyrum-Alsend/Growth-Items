@@ -112,6 +112,7 @@ begin Function { Weap, Ench, Model, DmgB, DmgM, SpdB, SpdM, RchB, RchM }
 	MessageEX "%n has changed form." Weap 5
 
 
+	sv_Destruct Icon
 	SetFunctionValue Weap
 	Return
 ;-----------------------------------------------------------------------------

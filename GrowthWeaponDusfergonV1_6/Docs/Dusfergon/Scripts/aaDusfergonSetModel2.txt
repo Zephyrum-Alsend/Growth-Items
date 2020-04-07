@@ -504,13 +504,69 @@ begin Function { weapon }
 	;-----------------------------------------------------------------------------
 	elseif ( aaDusfergonModel == 6010 )
 	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Warhammer\TheMaulerWood.nif" weapon
+		SetIconPath "Dusfergon\2h\Warhammer\iconMormacil.dds" weapon
+		SetWeaponType 3 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 6011 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Warhammer\TheMaulerWood2H.nif" weapon
+		SetIconPath "Dusfergon\2h\Warhammer\iconMormacil.dds" weapon
+		SetWeaponType 3 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 6012 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Warhammer\TheMaulerFineWood.nif" weapon
+		SetIconPath "Dusfergon\2h\Warhammer\iconMormacil.dds" weapon
+		SetWeaponType 3 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 6013 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Warhammer\TheMaulerCopper.nif" weapon
+		SetIconPath "Dusfergon\2h\Warhammer\iconMormacil.dds" weapon
+		SetWeaponType 3 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 6014 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Warhammer\TheMaulerSteel.nif" weapon
+		SetIconPath "Dusfergon\2h\Warhammer\iconMormacil.dds" weapon
+		SetWeaponType 3 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 6015 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Warhammer\TheMaulerFineSteelCap2H.nif" weapon
+		SetIconPath "Dusfergon\2h\Warhammer\iconMormacil.dds" weapon
+		SetWeaponType 3 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 6016 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Warhammer\TheMaulerMarble.nif" weapon
+		SetIconPath "Dusfergon\2h\Warhammer\iconMormacil.dds" weapon
+		SetWeaponType 3 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 6017 )
+	;-----------------------------------------------------------------------------
 		
 		SetModelPath "Weapons\Iron\Warhammer.nif" weapon
 		SetIconPath "Weapons\IronWarhammer.dds" weapon
 		SetWeaponType 3 weapon
 		
 	;-----------------------------------------------------------------------------
-	elseif ( aaDusfergonModel == 6011 )
+	elseif ( aaDusfergonModel == 6018 )
 	;-----------------------------------------------------------------------------
 		
 		SetModelPath "Weapons\Steel\Warhammer.nif" weapon
@@ -518,7 +574,7 @@ begin Function { weapon }
 		SetWeaponType 3 weapon
 		
 	;-----------------------------------------------------------------------------
-	elseif ( aaDusfergonModel == 6012 )
+	elseif ( aaDusfergonModel == 6019 )
 	;-----------------------------------------------------------------------------
 		
 		SetModelPath "Weapons\Steel\WarhammerFine.nif" weapon
@@ -526,7 +582,7 @@ begin Function { weapon }
 		SetWeaponType 3 weapon
 		
 	;-----------------------------------------------------------------------------
-	elseif ( aaDusfergonModel == 6013 )
+	elseif ( aaDusfergonModel == 6020 )
 	;-----------------------------------------------------------------------------
 		
 		SetModelPath "Weapons\Silver\Warhammer.nif" weapon
@@ -534,7 +590,7 @@ begin Function { weapon }
 		SetWeaponType 3 weapon
 		
 	;-----------------------------------------------------------------------------
-	elseif ( aaDusfergonModel == 6014 )
+	elseif ( aaDusfergonModel == 6021 )
 	;-----------------------------------------------------------------------------
 		
 		SetModelPath "Weapons\Dwarven\Warhammer.nif" weapon
@@ -542,7 +598,7 @@ begin Function { weapon }
 		SetWeaponType 3 weapon
 		
 	;-----------------------------------------------------------------------------
-	elseif ( aaDusfergonModel == 6015 )
+	elseif ( aaDusfergonModel == 6022 )
 	;-----------------------------------------------------------------------------
 		
 		SetModelPath "Weapons\Elven\Warhammer.nif" weapon
@@ -550,7 +606,7 @@ begin Function { weapon }
 		SetWeaponType 3 weapon
 		
 	;-----------------------------------------------------------------------------
-	elseif ( aaDusfergonModel == 6016 )
+	elseif ( aaDusfergonModel == 6023 )
 	;-----------------------------------------------------------------------------
 		
 		SetModelPath "Weapons\Glass\Warhammer.nif" weapon
@@ -558,7 +614,7 @@ begin Function { weapon }
 		SetWeaponType 3 weapon
 		
 	;-----------------------------------------------------------------------------
-	elseif ( aaDusfergonModel == 6017 )
+	elseif ( aaDusfergonModel == 6024 )
 	;-----------------------------------------------------------------------------
 		
 		SetModelPath "Weapons\Ebony\Warhammer.nif" weapon
@@ -566,7 +622,7 @@ begin Function { weapon }
 		SetWeaponType 3 weapon
 		
 	;-----------------------------------------------------------------------------
-	elseif ( aaDusfergonModel == 6018 )
+	elseif ( aaDusfergonModel == 6025 )
 	;-----------------------------------------------------------------------------
 		
 		SetModelPath "Weapons\Daedric\Warhammer.nif" weapon
@@ -669,13 +725,45 @@ begin Function { weapon }
 	;-----------------------------------------------------------------------------
 	elseif ( aaDusfergonModel == 7011 )
 	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Battleaxe\LMGreatAxe2H.nif" weapon
+		SetIconPath "Dusfergon\2h\Battleaxe\LMAxeGreat2HIcon.dds" weapon
+		SetWeaponType 3 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 7012 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Battleaxe\rdbeardedaxe.nif" weapon
+		SetIconPath "Dusfergon\rdironbeard.dds" weapon
+		SetWeaponType 3 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 7013 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Battleaxe\rd2hsteelbeardaxe.nif" weapon
+		SetIconPath "Dusfergon\rdsteelbeard.dds" weapon
+		SetWeaponType 3 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 7014 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\2h\Battleaxe\rdvikingaxe1.nif" weapon
+		SetIconPath "Dusfergon\2h\Battleaxe\rdtwobladedax.dds" weapon
+		SetWeaponType 3 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 7015 )
+	;-----------------------------------------------------------------------------
 		
 		SetModelPath "Weapons\Iron\Battleaxe.nif" weapon
 		SetIconPath "Weapons\IronBattleaxe.dds" weapon
 		SetWeaponType 3 weapon
 		
 	;-----------------------------------------------------------------------------
-	elseif ( aaDusfergonModel == 7012 )
+	elseif ( aaDusfergonModel == 7016 )
 	;-----------------------------------------------------------------------------
 		
 		SetModelPath "Weapons\Steel\Battleaxe.nif" weapon
@@ -683,7 +771,7 @@ begin Function { weapon }
 		SetWeaponType 3 weapon
 		
 	;-----------------------------------------------------------------------------
-	elseif ( aaDusfergonModel == 7013 )
+	elseif ( aaDusfergonModel == 7017 )
 	;-----------------------------------------------------------------------------
 		
 		SetModelPath "Weapons\Steel\BattleaxeFine.nif" weapon
@@ -691,7 +779,7 @@ begin Function { weapon }
 		SetWeaponType 3 weapon
 		
 	;-----------------------------------------------------------------------------
-	elseif ( aaDusfergonModel == 7014 )
+	elseif ( aaDusfergonModel == 7018 )
 	;-----------------------------------------------------------------------------
 		
 		SetModelPath "Weapons\Silver\Battleaxe.nif" weapon
@@ -699,7 +787,7 @@ begin Function { weapon }
 		SetWeaponType 3 weapon
 		
 	;-----------------------------------------------------------------------------
-	elseif ( aaDusfergonModel == 7015 )
+	elseif ( aaDusfergonModel == 7019 )
 	;-----------------------------------------------------------------------------
 		
 		SetModelPath "Weapons\Dwarven\Battleaxe.nif" weapon
@@ -707,7 +795,7 @@ begin Function { weapon }
 		SetWeaponType 3 weapon
 		
 	;-----------------------------------------------------------------------------
-	elseif ( aaDusfergonModel == 7016 )
+	elseif ( aaDusfergonModel == 7020 )
 	;-----------------------------------------------------------------------------
 		
 		SetModelPath "Weapons\Elven\Battleaxe.nif" weapon
@@ -715,7 +803,7 @@ begin Function { weapon }
 		SetWeaponType 3 weapon
 		
 	;-----------------------------------------------------------------------------
-	elseif ( aaDusfergonModel == 7017 )
+	elseif ( aaDusfergonModel == 7021 )
 	;-----------------------------------------------------------------------------
 		
 		SetModelPath "Weapons\Glass\Battleaxe.nif" weapon
@@ -723,7 +811,7 @@ begin Function { weapon }
 		SetWeaponType 3 weapon
 		
 	;-----------------------------------------------------------------------------
-	elseif ( aaDusfergonModel == 7018 )
+	elseif ( aaDusfergonModel == 7022 )
 	;-----------------------------------------------------------------------------
 		
 		SetModelPath "Weapons\Ebony\Battleaxe.nif" weapon
@@ -731,14 +819,14 @@ begin Function { weapon }
 		SetWeaponType 3 weapon
 		
 	;-----------------------------------------------------------------------------
-	elseif ( aaDusfergonModel == 7019 )
+	elseif ( aaDusfergonModel == 7023 )
 	;-----------------------------------------------------------------------------
 		
 		SetModelPath "Weapons\Daedric\Battleaxe.nif" weapon
 		SetIconPath "Weapons\DaedricBattleaxe.dds" weapon
 		SetWeaponType 3 weapon
 
-
+	
 
 		
 	;-----------------------------------------------------------------------------
@@ -835,12 +923,20 @@ begin Function { weapon }
 	elseif ( aaDusfergonModel == 8011 )
 	;-----------------------------------------------------------------------------
 
+		SetModelPath "Weapons\Dusfergon\1h\Mace\rdsil1hhammer.nif" weapon
+		SetIconPath "Dusfergon\1h\Mace\rdsteelhammer.dds" weapon
+		SetWeaponType 2 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 8012 )
+	;-----------------------------------------------------------------------------
+
 		SetModelPath "Weapons\Iron\Mace.nif" weapon
 		SetIconPath "Weapons\IronMace.dds" weapon
 		SetWeaponType 2 weapon
 		
 	;-----------------------------------------------------------------------------
-	elseif ( aaDusfergonModel == 8012 )
+	elseif ( aaDusfergonModel == 8013 )
 	;-----------------------------------------------------------------------------
 
 		SetModelPath "Weapons\Steel\Mace.nif" weapon
@@ -848,7 +944,7 @@ begin Function { weapon }
 		SetWeaponType 2 weapon
 		
 	;-----------------------------------------------------------------------------
-	elseif ( aaDusfergonModel == 8013 )
+	elseif ( aaDusfergonModel == 8014 )
 	;-----------------------------------------------------------------------------
 
 		SetModelPath "Weapons\Steel\MaceFine.nif" weapon
@@ -856,7 +952,7 @@ begin Function { weapon }
 		SetWeaponType 2 weapon
 		
 	;-----------------------------------------------------------------------------
-	elseif ( aaDusfergonModel == 8014 )
+	elseif ( aaDusfergonModel == 8015 )
 	;-----------------------------------------------------------------------------
 
 		SetModelPath "Weapons\Silver\Mace.nif" weapon
@@ -864,7 +960,7 @@ begin Function { weapon }
 		SetWeaponType 2 weapon
 		
 	;-----------------------------------------------------------------------------
-	elseif ( aaDusfergonModel == 8015 )
+	elseif ( aaDusfergonModel == 8016 )
 	;-----------------------------------------------------------------------------
 
 		SetModelPath "Weapons\Dwarven\Mace.nif" weapon
@@ -872,7 +968,7 @@ begin Function { weapon }
 		SetWeaponType 2 weapon
 		
 	;-----------------------------------------------------------------------------
-	elseif ( aaDusfergonModel == 8016 )
+	elseif ( aaDusfergonModel == 8017 )
 	;-----------------------------------------------------------------------------
 
 		SetModelPath "Weapons\Elven\Mace.nif" weapon
@@ -880,7 +976,7 @@ begin Function { weapon }
 		SetWeaponType 2 weapon
 		
 	;-----------------------------------------------------------------------------
-	elseif ( aaDusfergonModel == 8017 )
+	elseif ( aaDusfergonModel == 8018 )
 	;-----------------------------------------------------------------------------
 
 		SetModelPath "Weapons\Glass\Mace.nif" weapon
@@ -888,7 +984,7 @@ begin Function { weapon }
 		SetWeaponType 2 weapon
 		
 	;-----------------------------------------------------------------------------
-	elseif ( aaDusfergonModel == 8018 )
+	elseif ( aaDusfergonModel == 8019 )
 	;-----------------------------------------------------------------------------
 
 		SetModelPath "Weapons\Ebony\Mace.nif" weapon
@@ -896,7 +992,7 @@ begin Function { weapon }
 		SetWeaponType 2 weapon
 		
 	;-----------------------------------------------------------------------------
-	elseif ( aaDusfergonModel == 8019 )
+	elseif ( aaDusfergonModel == 8020 )
 	;-----------------------------------------------------------------------------
 
 		SetModelPath "Weapons\Daedric\Mace.nif" weapon
@@ -992,12 +1088,52 @@ begin Function { weapon }
 	elseif ( aaDusfergonModel == 9010 )
 	;-----------------------------------------------------------------------------
 
+		SetModelPath "Weapons\Dusfergon\1h\Waraxe\LMGreatAxe1H.nif" weapon
+		SetIconPath "Dusfergon\1h\Waraxe\LMAxeGreat1HIcon.dds" weapon
+		SetWeaponType 2 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 9011 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\1h\Waraxe\LMSmallAxe.nif" weapon
+		SetIconPath "Dusfergon\1h\Waraxe\LMAxeSmallIcon.dds" weapon
+		SetWeaponType 2 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 9012 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\1h\Waraxe\rd1hironbeardaxe.nif" weapon
+		SetIconPath "Dusfergon\rdironbeard.dds" weapon
+		SetWeaponType 2 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 9013 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\1h\Waraxe\rd1hsteelbeardaxe.nif" weapon
+		SetIconPath "Dusfergon\rdsteelbeard.dds" weapon
+		SetWeaponType 2 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 9014 )
+	;-----------------------------------------------------------------------------
+
+		SetModelPath "Weapons\Dusfergon\1h\Waraxe\rdmithrilaxe.nif" weapon
+		SetIconPath "Dusfergon\1h\Waraxe\rdmithaxe.dds" weapon
+		SetWeaponType 2 weapon
+		
+	;-----------------------------------------------------------------------------
+	elseif ( aaDusfergonModel == 9015 )
+	;-----------------------------------------------------------------------------
+
 		SetModelPath "Weapons\Iron\Waraxe.nif" weapon
 		SetIconPath "Weapons\IronWaraxe.dds" weapon
 		SetWeaponType 2 weapon
 		
 	;-----------------------------------------------------------------------------
-	elseif ( aaDusfergonModel == 9011 )
+	elseif ( aaDusfergonModel == 9016 )
 	;-----------------------------------------------------------------------------
 
 		SetModelPath "Weapons\Steel\Waraxe.nif" weapon
@@ -1005,7 +1141,7 @@ begin Function { weapon }
 		SetWeaponType 2 weapon
 		
 	;-----------------------------------------------------------------------------
-	elseif ( aaDusfergonModel == 9012 )
+	elseif ( aaDusfergonModel == 9017 )
 	;-----------------------------------------------------------------------------
 
 		SetModelPath "Weapons\Steel\WaraxeFine.nif" weapon
@@ -1013,7 +1149,7 @@ begin Function { weapon }
 		SetWeaponType 2 weapon
 		
 	;-----------------------------------------------------------------------------
-	elseif ( aaDusfergonModel == 9013 )
+	elseif ( aaDusfergonModel == 9018 )
 	;-----------------------------------------------------------------------------
 
 		SetModelPath "Weapons\Silver\Waraxe.nif" weapon
@@ -1021,7 +1157,7 @@ begin Function { weapon }
 		SetWeaponType 2 weapon
 		
 	;-----------------------------------------------------------------------------
-	elseif ( aaDusfergonModel == 9014 )
+	elseif ( aaDusfergonModel == 9019 )
 	;-----------------------------------------------------------------------------
 
 		SetModelPath "Weapons\Dwarven\Waraxe.nif" weapon
@@ -1029,7 +1165,7 @@ begin Function { weapon }
 		SetWeaponType 2 weapon
 		
 	;-----------------------------------------------------------------------------
-	elseif ( aaDusfergonModel == 9015 )
+	elseif ( aaDusfergonModel == 9020 )
 	;-----------------------------------------------------------------------------
 
 		SetModelPath "Weapons\Elven\Waraxe.nif" weapon
@@ -1037,7 +1173,7 @@ begin Function { weapon }
 		SetWeaponType 2 weapon
 		
 	;-----------------------------------------------------------------------------
-	elseif ( aaDusfergonModel == 9016 )
+	elseif ( aaDusfergonModel == 9021 )
 	;-----------------------------------------------------------------------------
 
 		SetModelPath "Weapons\Glass\Waraxe.nif" weapon
@@ -1045,7 +1181,7 @@ begin Function { weapon }
 		SetWeaponType 2 weapon
 		
 	;-----------------------------------------------------------------------------
-	elseif ( aaDusfergonModel == 9017 )
+	elseif ( aaDusfergonModel == 9022 )
 	;-----------------------------------------------------------------------------
 
 		SetModelPath "Weapons\Ebony\Waraxe.nif" weapon
@@ -1053,14 +1189,14 @@ begin Function { weapon }
 		SetWeaponType 2 weapon
 		
 	;-----------------------------------------------------------------------------
-	elseif ( aaDusfergonModel == 9018 )
+	elseif ( aaDusfergonModel == 9023 )
 	;-----------------------------------------------------------------------------
 
 		SetModelPath "Weapons\Daedric\Waraxe.nif" weapon
 		SetIconPath "Weapons\DaedricWaraxe.dds" weapon
 		SetWeaponType 2 weapon
 
-
+		
 
 		
 	;-----------------------------------------------------------------------------

@@ -15,6 +15,7 @@ scn aaDusfergonBreak
 ;aaDusfergonObject
 ;aaDusfergonObjectB
 ;aaDusfergonObjectS
+;aaDusfergonLevelLog
 ;-----------------------------------------------------------------------------
 
 ;Used globals
@@ -333,7 +334,7 @@ begin Function { Lvl, Name }
 		endif ;if ( aaDusfergonLevel < aaDusfergonInit.sEnchStart )
 		;-----------------------------------------------------------------------------
 
-		printc "%z deleveled to Lv%.0f!" Name aaDusfergonLevel
+		Call aaDusfergonLevelLog Name
 		
 	;-----------------------------------------------------------------------------
 	endif ;if ( Lvl >= 0 )
