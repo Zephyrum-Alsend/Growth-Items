@@ -11,12 +11,15 @@ scn aaDusfergonRandomModel
 
 ;Related scripts
 ;-----------------------------------------------------------------------------
+;aaDusfergon
 ;aaDusfergonSetModel
 ;aaDusfergonSetModel2
+;aaDusfergonKeyBinds
 ;-----------------------------------------------------------------------------
 
 ;Used globals
 ;-----------------------------------------------------------------------------
+;aaDusfergonModel
 ;-----------------------------------------------------------------------------
 
 ;Related globals
@@ -32,6 +35,7 @@ scn aaDusfergonRandomModel
 ;Parameters
 ;-----------------------------------------------------------------------------
 short randy ;Return value
+short repeat
 ;-----------------------------------------------------------------------------
 
 
@@ -40,79 +44,93 @@ short randy ;Return value
 begin Function { }
 ;-----------------------------------------------------------------------------
 
+	Set repeat to 1
 	;-----------------------------------------------------------------------------
-	;Choose weapon sub-type
+	While ( repeat == 1 )
 	;-----------------------------------------------------------------------------
-	Set randy to ( rand 0 11.9 ) ;Truncates
-	Set randy to randy * 1000
+
+		;-----------------------------------------------------------------------------
+		;Choose weapon sub-type
+		;-----------------------------------------------------------------------------
+		Set randy to ( rand 0 11.9 ) ;Truncates
+		Set randy to randy * 1000
+		
 	
-
-	;-----------------------------------------------------------------------------
-	;Choose specific model
-	;-----------------------------------------------------------------------------
-	;Claymore
-	if randy < aaDusfergonInit.Bastard2hIdx
-
-		Set randy to randy + ( rand 0 24.9 )
-
-	;Bastard 2H/1H
-	elseif randy < aaDusfergonInit.LongswordIdx
-
-		Set randy to randy + ( rand 0 24.9 )
-
-	;Longsword
-	elseif randy < aaDusfergonInit.ShortswordIdx
-
-		Set randy to randy + ( rand 0 69.9 )
-
-	;Shortsword
-	elseif randy < aaDusfergonInit.DaggerIdx
-
-		Set randy to randy + ( rand 0 60.9 )
-
-	;Dagger
-	elseif randy < aaDusfergonInit.WarhammerIdx
-
-		Set randy to randy + ( rand 0 45.9 )
-
-	;Warhammer
-	elseif randy < aaDusfergonInit.BattleaxeIdx
-
-		Set randy to randy + ( rand 0 25.9 )
-
-	;Battleaxe
-	elseif randy < aaDusfergonInit.MaceIdx
-
-		Set randy to randy + ( rand 0 23.9 )
-
-	;Mace
-	elseif randy < aaDusfergonInit.WaraxeIdx
+		;-----------------------------------------------------------------------------
+		;Choose specific model
+		;-----------------------------------------------------------------------------
+		;Claymore
+		if randy < aaDusfergonInit.Bastard2hIdx
 	
-		Set randy to randy + ( rand 0 20.9 )
-
-	;Waraxe
-	elseif randy < aaDusfergonInit.BowIdx
-
-		Set randy to randy + ( rand 0 23.9 )
-
-	;Bow
-	elseif randy < aaDusfergonInit.StaffIdx
-
-		Set randy to randy + ( rand 0 38.9 )
-
-		if ( randy >= 31 )
-
-			Set randy to ( randy + 4 )
-
+			Set randy to randy + ( rand 0 24.9 )
+	
+		;Bastard 2H/1H
+		elseif randy < aaDusfergonInit.LongswordIdx
+	
+			Set randy to randy + ( rand 0 24.9 )
+	
+		;Longsword
+		elseif randy < aaDusfergonInit.ShortswordIdx
+	
+			Set randy to randy + ( rand 0 69.9 )
+	
+		;Shortsword
+		elseif randy < aaDusfergonInit.DaggerIdx
+	
+			Set randy to randy + ( rand 0 60.9 )
+	
+		;Dagger
+		elseif randy < aaDusfergonInit.WarhammerIdx
+	
+			Set randy to randy + ( rand 0 45.9 )
+	
+		;Warhammer
+		elseif randy < aaDusfergonInit.BattleaxeIdx
+	
+			Set randy to randy + ( rand 0 25.9 )
+	
+		;Battleaxe
+		elseif randy < aaDusfergonInit.MaceIdx
+	
+			Set randy to randy + ( rand 0 23.9 )
+	
+		;Mace
+		elseif randy < aaDusfergonInit.WaraxeIdx
+		
+			Set randy to randy + ( rand 0 20.9 )
+	
+		;Waraxe
+		elseif randy < aaDusfergonInit.BowIdx
+	
+			Set randy to randy + ( rand 0 23.9 )
+	
+		;Bow
+		elseif randy < aaDusfergonInit.StaffIdx
+	
+			Set randy to randy + ( rand 0 38.9 )
+	
+			if ( randy >= 31 )
+	
+				Set randy to ( randy + 4 )
+	
+			endif
+	
+		;Staff
+		else
+	
+			Set randy to randy + ( rand 0 69.9 )
+	
 		endif
-
-	;Staff
-	else
-
-		Set randy to randy + ( rand 0 69.9 )
-
-	endif
 	
+		if ( randy != aaDusfergonModel )
+	
+			Set repeat to 0
+	
+		endif
+	
+	;-----------------------------------------------------------------------------
+	loop ;( repeat == 1 )
+	;-----------------------------------------------------------------------------
 	
 	SetFunctionValue randy
 	Return

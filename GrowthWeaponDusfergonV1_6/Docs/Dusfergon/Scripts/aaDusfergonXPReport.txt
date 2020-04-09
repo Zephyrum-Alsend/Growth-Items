@@ -28,6 +28,8 @@ scn aaDusfergonXPReport
 ;Description
 ;-----------------------------------------------------------------------------
 ;Outputs XP gained to console, with optional additional information.
+;You still have to pass a string for Verbose -- OBSE doesn't allow optional
+;parameters in user defined functions -- but it can be an empty string,
 ;-----------------------------------------------------------------------------
 
 ;Parameters

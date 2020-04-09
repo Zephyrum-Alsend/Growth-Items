@@ -12,17 +12,16 @@ scn aaDusfergonOnArrowHit
 ;Related scripts
 ;-----------------------------------------------------------------------------
 ;aaDusfergonDefaultINI
-;aaDusfergonObject
+;aaDusfergonForcePurge
 ;aaDusfergonObjectB
-;aaDusfergonObjectS
 ;aaDusfergonOnHit
 ;aaDusfergonOnBowHit
+;aaDusfergonOnBowRelease
 ;aaDusfergonOnStaffHit
 ;-----------------------------------------------------------------------------
 
 ;Used globals
 ;-----------------------------------------------------------------------------
-;aaDusfergonArrowsUp
 ;aaDusfergonCombatXPLog
 ;aaDusfergonCombatXPStart
 ;aaDusfergonXP
@@ -37,18 +36,18 @@ scn aaDusfergonOnArrowHit
 ;When any valid target is hit with an arrow fired from DLScalar3B:
 ;Start recording the XP gained in this combat encounter for post combat report
 ;Award XP
-;Decrement ArrowsUp
-;Remove self if ArrowsUp == 0
+;Clean up
 ;-----------------------------------------------------------------------------
 
 ;Parameters
 ;-----------------------------------------------------------------------------
 ref Target
-ref Weapon ;Unused
+ref Weapon
 ;-----------------------------------------------------------------------------
 
 
 
+;This won't fire if the arrow hits the ground or water, causing a memory leak which is handled in Manager
 ;-----------------------------------------------------------------------------
 begin Function { Target, Weapon }
 ;-----------------------------------------------------------------------------
@@ -68,15 +67,9 @@ begin Function { Target, Weapon }
 
 	endif
 
-	;Remove self if no Player fired arrows airborne
-	Set aaDusfergonArrowsUp to ( aaDusfergonArrowsUp - 1 )
+	;Remove self
+	RemoveEventHandler "OnHitWith" aaDusfergonOnArrowHit "object"::Weapon
 
-	if ( aaDusfergonArrowsUp == 0 )
-
-		RemoveEventHandler "OnHitWith" aaDusfergonOnArrowHit
-
-	endif
-	
 ;-----------------------------------------------------------------------------
 end ;Function { Target, Weapon }
 ;-----------------------------------------------------------------------------

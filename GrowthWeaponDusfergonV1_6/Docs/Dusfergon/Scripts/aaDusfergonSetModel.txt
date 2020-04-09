@@ -14,6 +14,7 @@ scn aaDusfergonSetModel
 ;aaDusfergonSetModel2
 ;aaDusfergonModelChange
 ;aaDusfergonExchange
+;aaDusfergonSwap
 ;aaDusfergonRandomModel
 ;aaDusfergonShowModelName
 ;-----------------------------------------------------------------------------

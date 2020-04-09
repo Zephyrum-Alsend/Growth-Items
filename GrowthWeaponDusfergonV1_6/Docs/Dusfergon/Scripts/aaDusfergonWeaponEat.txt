@@ -35,24 +35,26 @@ short LvlCap
 short Eater ;Return value
 float Absor
 short XPGain
-short Health
+float Health
+long Charge
+float SelfHealth
+long SelfCharge
 short Count
 
 string_var Prompt
-string_var Name
 string_var Icon
 
 array_var Stack
 
 ref Weap
+ref Self
 ref Item
-ref Temp
 ;-----------------------------------------------------------------------------
 
 
 
 ;-----------------------------------------------------------------------------
-begin Function { LvlCap, Eater, Weap, Name, Icon, Absor }
+begin Function { LvlCap, Eater, Weap, Self, Absor }
 ;-----------------------------------------------------------------------------
 
 	;-----------------------------------------------------------------------------
@@ -72,7 +74,7 @@ begin Function { LvlCap, Eater, Weap, Name, Icon, Absor }
 	if ( aaDusfergonLevel >= LvlCap )
 	;-----------------------------------------------------------------------------
 	
-		Let Prompt := Name + " has no need for further offerings."		
+		Let Prompt := $Self + " has no need for further offerings."		
 		MessageBox $Prompt
 
 		Set Eater to 0
@@ -83,7 +85,7 @@ begin Function { LvlCap, Eater, Weap, Name, Icon, Absor }
 	elseif ( Eater == 1 )
 	;-----------------------------------------------------------------------------
 	
-		Set Prompt to sv_Construct "Do you want to offer %n to %z?" Weap Name
+		Set Prompt to sv_Construct "Do you want to offer %n to %n?" Weap Self
 		MessageBox $Prompt "Yes" "No"
 
 		Set Eater to 2
@@ -99,38 +101,81 @@ begin Function { LvlCap, Eater, Weap, Name, Icon, Absor }
 		;-----------------------------------------------------------------------------
 		if ( aaDusfergonInit.Button == 0 )
 
+			;-----------------------------------------------------------------------------
 			;State item's consumption and play item break SFX
+			;-----------------------------------------------------------------------------
+			Let Icon := "Icons\" + ( GetIconPath self )
 			SetMessageIcon $Icon
 			SetMessageSound UIArmorWeaponRepairBreak
-			MessageEX "%z consumes %n." Name Weap
+			MessageEX "%n consumes %n." Self Weap
 
+			;-----------------------------------------------------------------------------
 			;Get inventory references and durability
+			;-----------------------------------------------------------------------------
 			Let Stack := Player.GetInvRefsForItem Weap
 			Let Item := Stack[0]
 			Let Health := Item.GetCurrentHealth
 			Let Count := Item.GetRefCount
 
-			;Calculate XPGain
-			Let XPGain := Absor * Health
+			;-----------------------------------------------------------------------------
+			;Get charge if it has an enchantment
+			;-----------------------------------------------------------------------------
+			Let Charge := 0
+			if ( GetEnchantment Weap != 0 )
 
-			;Item is invalid from this point onwards
+				Let Charge := Item.GetCurrentCharge
+
+			endif
+
+			;-----------------------------------------------------------------------------
+			;The entire stack Item points to is removed
+			;-----------------------------------------------------------------------------
 			Item.RemoveMeIR
 			
 			
-			;RemoveMeIR removed the entire stack, so add back all but 1
+			;-----------------------------------------------------------------------------
+			;So add back all but 1
+			;-----------------------------------------------------------------------------
 			if ( Count > 1 )
 				Let Count := Count - 1
-				
-				Let Temp := CreateTempRef Weap
-				Temp.SetRefCount Count
-				Temp.SetCurrentHealth Health
-				Temp.CopyIR PlayerRef
 
-				Let Temp := 0
+				;TempRefs only exist for this exact frame
+				Let Item := CreateTempRef Weap
+				Item.SetRefCount Count
+				Item.SetCurrentHealth Health
+				Item.SetCurrentCharge Charge
+				Item.CopyIR PlayerRef
 
 			endif
 
 			
+			;-----------------------------------------------------------------------------
+			;Calculate XPGain
+			;-----------------------------------------------------------------------------
+			Let XPGain := Absor * ( Health + Charge )
+
+			;-----------------------------------------------------------------------------
+			;Add durability and charge
+			;-----------------------------------------------------------------------------
+			Let Stack := Player.GetInvRefsForItem Self
+			Let Item := Stack[0]
+			Let SelfHealth := ( Health * Absor ) + Item.GetCurrentHealth
+			Let SelfCharge := ( Charge * Absor ) + Item.GetCurrentCharge
+			
+			;SetCurrentCharge will refuse any value above max charge
+			if ( SelfCharge > Item.GetObjectCharge )
+			
+				Let SelfCharge := Item.GetObjectCharge
+
+			endif
+			
+			Item.SetCurrentHealth SelfHealth
+			Item.SetCurrentCharge SelfCharge
+
+			
+			;-----------------------------------------------------------------------------
+			;Refresh inventory and update globals
+			;-----------------------------------------------------------------------------
 			Call aaDusfergonRefreshInv
 
 			Let aaDusfergonXP := aaDusfergonXP + XPGain

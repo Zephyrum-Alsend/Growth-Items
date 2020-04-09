@@ -7,9 +7,7 @@ scn aaDusfergonOnSigilStone
 
 ;Used scripts
 ;-----------------------------------------------------------------------------
-;aaDusfergonOnHit
-;aaDusfergonOnBowHit
-;aaDusfergonOnArrowHit
+;aaDusfergonForcePurge
 ;-----------------------------------------------------------------------------
 
 ;Related scripts
@@ -19,7 +17,6 @@ scn aaDusfergonOnSigilStone
 ;Used globals
 ;-----------------------------------------------------------------------------
 ;aaDusfergonEquip
-;aaDusfergonArrowsUp
 ;-----------------------------------------------------------------------------
 
 ;Related globals
@@ -33,6 +30,8 @@ scn aaDusfergonOnSigilStone
 
 ;Parameters
 ;-----------------------------------------------------------------------------
+string_var Prompt
+
 ref Sigil
 ref Enchanted
 ref Weap
@@ -46,22 +45,21 @@ begin Function { Weap }
 
 	if ( GetLastSigilStoneEnchantedItem == Weap )
 
-		;Remove all handlers
-		RemoveEventHandler "OnHitWith" aaDusfergonOnHit
-		RemoveEventHandler "OnRelease" aaDusfergonOnBowHit
-		RemoveEventHandler "OnHitWith" aaDusfergonOnArrowHit
-		Set aaDusfergonEquip to 0
-		Set aaDusfergonArrowsUp to 0
-
-		MessageBoxEX "%n rejects the Sigil Stone used on it." Weap
+		Let Prompt := $Weap + " rejects the Sigil Stone used on it."
+		MessageBox $Prompt
 
 		;Get items used/created in the enchantment
 		Set Sigil to GetLastUsedSigilStone
 		Set Enchanted to GetLastSigilStoneCreatedItem
 
+		;Remove new item, add old item, refund sigil stone
 		Player.RemoveItemNS Enchanted 1
 		Player.AddItemNS Weap 1
 		Player.AddItem Sigil 1
+
+		;Clean up
+		Set aaDusfergonEquip to 0
+		Call aaDusfergonForcePurge
 
 	endif
 

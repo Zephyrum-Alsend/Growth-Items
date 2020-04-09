@@ -21,6 +21,8 @@ scn aaDusfergonDefaultINI
 ;aaDusfergonEnchSlct
 ;aaDusfergonEnchLvl
 ;aaDusfergonCalcXPReq
+;aaDusfergonWeaponEat
+;aaDusfergonKeyBinds
 ;-----------------------------------------------------------------------------
 
 ;Used globals
@@ -500,7 +502,7 @@ Set aaDusfergonInit.sXPBow to 3				;3
 Set aaDusfergonInit.sXPStaff to 2			;2
 Set aaDusfergonInit.sLevelCap to 201			;201
 
-;Conversion rate of durability to XP for offerings
+;Conversion rate of durability/charge for offerings
 ;Set to 0.0 or below to disable
 Set aaDusfergonInit.fAbsorption to 0.13			;0.13
 
@@ -522,7 +524,7 @@ Set aaDusfergonInit.sBreakLevel to 0			;0
 ;Keybindings
 ;-----------------------------------------------------------------------------
 ;In Gameplay:
-;Form		: Quickswap to last form
+;Main		: Quickswap to last form
 ;Ench		: Display enchantment effects
 ;Name		: Display form name
 ;Rand		: Random form
@@ -533,10 +535,10 @@ Set aaDusfergonInit.sBreakLevel to 0			;0
 ;In Inventory (moused over another weapon):
 ;Main		: Offering menu
 ;-----------------------------------------------------------------------------
-Set aaDusfergonInit.sGMainKey to 47			;26	V
+Set aaDusfergonInit.sGMainKey to 47			;47	V
 Set aaDusfergonInit.sGEnchKey to 10			;10	9
 Set aaDusfergonInit.sGNameKey to 11			;11	0
-Set aaDusfergonInit.sGRandKey to 34			;28	G
+Set aaDusfergonInit.sGRandKey to 34			;34	G
 
 Set aaDusfergonInit.sMMainKey to 257			;257	RMB
 Set aaDusfergonInit.sMEnchKey to 29			;29	Left CTRL
@@ -544,17 +546,58 @@ Set aaDusfergonInit.sMEnchKey2 to 157			;157	Right CTRL
 Set aaDusfergonInit.sMNameKey to 42			;42	Left SHIFT
 Set aaDusfergonInit.sMNameKey2 to 54			;54	Right SHIFT
 
+Set aaDusfergonInit.sGMainBut to 42			;42	Unbound
+Set aaDusfergonInit.sGEnchBut to 42			;42	Unbound
+Set aaDusfergonInit.sGNameBut to 42			;42	Unbound
+Set aaDusfergonInit.sGRandBut to 42			;42	Unbound
+
+Set aaDusfergonInit.sMMainBut to 42			;42	Unbound
+Set aaDusfergonInit.sMEnchBut to 42			;42	Unbound
+Set aaDusfergonInit.sMNameBut to 42			;42	Unbound
+
 ;-----------------------------------------------------------------------------
 ;Latency
 ;-----------------------------------------------------------------------------
-;Lower numbers are more responsive but put more load on Oblivion's engine
+;Key presses are checked every this second(s)
+Set aaDusfergonInit.fKeyLag to 0.05				;0.05
 
-;The scripts are run every this second(s) while outside of a menu
-Set aaDusfergonInit.fScriptLag to 0.5			;0.5
+;Menu key presses are checked every 0.001 seconds
 
-;The scripts are run every this second(s) while inside of a menu
-Set aaDusfergonInit.fMenuLag to 0.001			;0.001
+;Arrows that exist for this second(s) long are removed from the mod's memory
+Set aaDusfergonInit.sLifeTime to 10				;10
 
+;-----------------------------------------------------------------------------
+;Control codes
+;-----------------------------------------------------------------------------
+;Forward 	0
+;Back 		1
+;Slide Left 	2
+;Slide Right 	3
+;Attack 	4
+;Activate 	5
+;Block 		6
+;Cast 		7
+;Ready Weapon 	8
+;Crouch/Sneak 	9
+;Run 		10
+;Always Run 	11
+;Auto Move 	12
+;Jump 		13
+;Toggle POV 	14
+;Menu Mode 	15
+;Rest 		16
+;Quick Menu 	17
+;Quick1 	18
+;Quick2 	19
+;Quick3 	20
+;Quick4 	21
+;Quick5 	22
+;Quick6 	23
+;Quick7 	24
+;Quick8 	25
+;QuickSave 	26
+;QuickLoad 	27
+;Grab 		28
 ;-----------------------------------------------------------------------------
 ;Keycodes
 ;-----------------------------------------------------------------------------

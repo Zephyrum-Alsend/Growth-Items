@@ -1,7 +1,14 @@
 scn aaDusfergonManager
+
+;The quest this is attached to, 
+;and therefore this script, 
+;run every this second(s).
 float fQuestDelayTime
-float fScriptLag
-float fMenuLag
+
+float ScriptLag
+float MenuLag
+
+
 
 ;Main script
 ;-----------------------------------------------------------------------------
@@ -39,6 +46,8 @@ float fMenuLag
 ;aaDusfergonWeaponEat
 ;aaDusfergonXPReport
 ;aaDusfergonLevelLog
+;aaDusfergonForcePurge
+;aaDusfergonGetBroken
 ;-----------------------------------------------------------------------------
 
 ;Related scripts
@@ -48,10 +57,12 @@ float fMenuLag
 ;aaDusfergonObjectS
 ;aaDusfergonOnHit
 ;aaDusfergonOnBowHit
+;aaDusfergonOnBowRelease
 ;aaDusfergonOnArrowHit
 ;aaDusfergonOnStaffHit
 ;aaDusfergonIncrVal
 ;aaDusfergonRefreshInv
+;aaDusfergonKeyBinds
 ;-----------------------------------------------------------------------------
 
 ;Used globals
@@ -69,7 +80,6 @@ float fMenuLag
 
 ;Related globals
 ;-----------------------------------------------------------------------------
-;aaDusfergonArrowsUp
 ;aaDusfergonEnch
 ;aaDusfergonEnch1
 ;aaDusfergonEnch2
@@ -105,6 +115,8 @@ float fMenuLag
 ;new one, or continue growing an old one.  Set new XPReq.  A message will 
 ;appear in the upper left of the screen whenever a level up happens.
 ;
+;Checks if weapon is broken, continually if equipped and only once if not.
+;
 ;If the weapon breaks, decrease level by the amount specified in sBreakLevel
 ;and reinitialize with new stats.
 ;
@@ -126,12 +138,12 @@ float fMenuLag
 
 ;Engine objects
 ;-----------------------------------------------------------------------------
-;Items	>	Clothing >	DLMisc
-;		Weapons >	DLScalar3
-;				DLScalar3B
-;				DLScalar3S
+;Items	>	Clothing >		DLMisc
+;			Weapons >		DLScalar3
+;							DLScalar3B
+;							DLScalar3S
 ;Magic >	Enchantment >	DLScalar3Ench
-;				DLScalar3SEnch
+;							DLScalar3SEnch
 ;-----------------------------------------------------------------------------
 
 ;Parameters
@@ -470,7 +482,10 @@ long Charge
 
 short EnchSelect
 short WarnOnce
+short SoulLevel
+array_var Stack
 ref SoulGem
+ref Item
 
 ;-----------------------------------------------------------------------------
 ;Level Up variables
@@ -488,6 +503,7 @@ short sBreakLevel
 short CombatXP
 short XPReqHalf
 short HalfOnce
+short BreakOnce
 
 ;-----------------------------------------------------------------------------
 ;Form Change variables
@@ -516,16 +532,38 @@ short SetModel2Idx
 ;-----------------------------------------------------------------------------
 ;Keybindings
 ;-----------------------------------------------------------------------------
+;Latency
+float fKeyLag
+
+;GameMode
 short sGMainKey
 short sGEnchKey
 short sGNameKey
 short sGRandKey
 
+short sGMainBut
+short sGEnchBut
+short sGNameBut
+short sGRandBut
+
+;Inventory
 short sMMainKey
 short sMEnchKey
 short sMEnchKey2
 short sMNameKey
 short sMNameKey2
+
+short sMMainBut
+short sMEnchBut
+short sMNameBut
+
+;-----------------------------------------------------------------------------
+;Garbage collection
+;-----------------------------------------------------------------------------
+array_var ArrowsUp
+array_var Arrow
+short sLifeTime
+ref Ammo
 
 ;-----------------------------------------------------------------------------
 ;References to WeaponID and EnchantID
@@ -599,6 +637,11 @@ begin GameMode
 		Set ModelChange to 0
 		Set Eater to 0
 		Set WarnOnce to 0
+		Set BreakOnce to 0
+
+		;Set script latencies
+		Set ScriptLag to 0.5
+		Set MenuLag to 0.001
 
 		;Initialize with default values
 		Call aaDusfergonDefaultINI
@@ -607,6 +650,11 @@ begin GameMode
 		RunBatchScript "Data\ini\Dusfergon.ini"
 
 		SetNameEx "%z" str_Name self
+
+		;Restart keybind quest
+		Set aaDusfergonHotKeys.fQuestDelayTime to fKeyLag
+		StopQuest aaDusfergonHotKeys
+		StartQuest aaDusfergonHotKeys
 
 		
 		;-----------------------------------------------------------------------------
@@ -699,6 +747,25 @@ begin GameMode
 
 
 		;-----------------------------------------------------------------------------
+		;Garbage collection
+		;-----------------------------------------------------------------------------
+		;Ensure garbage collection is always working
+		if ( sLifeTime < 1 )
+
+			Set sLifeTime to 1
+
+		endif
+
+		;Reconstruct arrays
+		Let ArrowsUp := ar_Null
+		Let ArrowsUp := ar_Construct Array
+		Let Arrow := ar_Null
+
+		;Removes handlers from previous load game
+		Call aaDusfergonForcePurge
+
+
+		;-----------------------------------------------------------------------------
 		;Set model and weapon type
 		;-----------------------------------------------------------------------------
 		;Set model, also resets handlers if equipped because function force re-equips to refresh model
@@ -710,17 +777,7 @@ begin GameMode
 
 			Call aaDusfergonSetModel2 self
 
-		endif
-		
-		;Removes handlers from previous load game
-		RemoveEventHandler "OnHitWith" aaDusfergonOnArrowHit
-		Set aaDusfergonArrowsUp to 0
-		if ( aaDusfergonEquip == 0 )
-
-			RemoveEventHandler "OnHitWith" aaDusfergonOnHit
-			RemoveEventHandler "OnRelease" aaDusfergonOnBowHit
-			
-		endif
+		endif		
 
 		
 		;-----------------------------------------------------------------------------
@@ -734,9 +791,9 @@ begin GameMode
 	;-----------------------------------------------------------------------------
 	;Set script lag
 	;-----------------------------------------------------------------------------
-	if ( fQuestDelayTime != fScriptLag )
+	if ( fQuestDelayTime != ScriptLag )
 	
-			Set fQuestDelayTime to fScriptLag
+			Set fQuestDelayTime to ScriptLag
 	
 	endif
 	
@@ -745,6 +802,32 @@ begin GameMode
 
 
 	
+	;-----------------------------------------------------------------------------
+	;Remove arrow listeners that never fired
+	;-----------------------------------------------------------------------------
+	;ArrowsUp is populated by OnBowRelease
+	ForEach ( Arrow <- ArrowsUp )
+
+		Let Ammo := Arrow["value"]
+		
+		;If the arrow is picked up, its reference will be deleted by the game
+		if ( IsRefDeleted Ammo || Ammo.GetProjectileLifetime > sLifeTime )
+
+			RemoveEventHandler "OnArrowHit" aaDusfergonOnArrowHit "object"::Ammo
+			ar_Erase ArrowsUp Arrow["key"]
+
+		endif
+
+	loop
+
+
+
+
+
+
+
+
+
 	;-----------------------------------------------------------------------------
 	;Log XP gained from most recent combat encounter to console
 	;-----------------------------------------------------------------------------
@@ -901,6 +984,25 @@ begin GameMode
 
 	
 	;-----------------------------------------------------------------------------
+	;Check if broken
+	;-----------------------------------------------------------------------------
+	if ( BreakOnce == 0 )
+	
+		Set aaDusfergonBroken to Call aaDusfergonGetBroken Player self 16
+		Set BreakOnce to 1
+
+	endif
+
+	;If unequipped or still broken, only check once		
+	if ( aaDusfergonEquip == 1 && 0 < Player.GetEquippedCurrentHealth 16 )
+	
+		Set BreakOnce to 0
+
+	endif
+
+
+	
+	;-----------------------------------------------------------------------------
 	;De-level if broken
 	;-----------------------------------------------------------------------------
 	if ( aaDusfergonBroken == 1 )
@@ -969,7 +1071,7 @@ begin GameMode
 
 
 	;-----------------------------------------------------------------------------
-	;Reset model swapper menus if force exited from Inventory somehow
+	;Reset menus if force exited from Inventory somehow
 	;-----------------------------------------------------------------------------
 	if ( ModelChange > 0 )
 
@@ -977,58 +1079,11 @@ begin GameMode
 
 	endif
 
+	if ( Eater > 0 )
 
+		Set Eater to 0
 
-
-
-
-	
-	;-----------------------------------------------------------------------------
-	;Shows enchantment effects if Player hits GEnchKey
-	;-----------------------------------------------------------------------------
-	if ( IsKeyPressed2 sGEnchKey )
-	;-----------------------------------------------------------------------------
-
-		;Blade/Blunt/Bow enchantment
-		if ( aaDusfergonModel < StaffIdx )
-
-			Call aaDusfergonEnchDisplay ench
-
-		;Staff enchantment
-		else
-
-			Call aaDusfergonEnchDisplay ench2
-
-		endif
-		
-	;-----------------------------------------------------------------------------
-	;Shows current model's name if Player hits GNameKey
-	;-----------------------------------------------------------------------------
-	elseif ( IsKeyPressed2 sGNameKey )
-	;-----------------------------------------------------------------------------
-
-		Let Icon := "Icons\" + ( GetIconPath self )
-		Call aaDusfergonShowModelName Icon str_Name
-	
-	;-----------------------------------------------------------------------------
-	;Quick swap back to last form if Player hits GMainKey
-	;-----------------------------------------------------------------------------
-	elseif ( OnKeyDown sGMainKey && Player.GetItemCount self > 0 )
-	;-----------------------------------------------------------------------------
-
-		Set self to Call aaDusfergonExchange self ench aaDusfergonModelLast sDamageBase fDamageMult fSpeedBase fSpeedMult fReachBase fReachMult
-		
-	;-----------------------------------------------------------------------------
-	;Swap to a random form if Player hits GRandKey
-	;-----------------------------------------------------------------------------
-	elseif ( OnKeyDown sGRandKey && Player.GetItemCount self > 0 )
-	;-----------------------------------------------------------------------------
-
-		Set self to Call aaDusfergonExchange self ench ( Call aaDusfergonRandomModel ) sDamageBase fDamageMult fSpeedBase fSpeedMult fReachBase fReachMult
-				
-	;-----------------------------------------------------------------------------
-	endif ;( OnKeyDown ( sGRandKey || sGMainKey ) || IsKeyPressed2 ( sGNameKey || sGEnchKey ) )
-	;-----------------------------------------------------------------------------
+	endif
 
 
 
@@ -1042,7 +1097,6 @@ begin GameMode
 	if ( WarnOnce == 1 )
 
 		;Handler would have fired by now
-		RemoveEventHandler "OnEnchant" aaDusfergonOnEnchant
 		Set WarnOnce to 0
 
 	elseif ( WarnOnce == 2 )
@@ -1073,28 +1127,16 @@ begin MenuMode 1002 ;Inventory
 	;-----------------------------------------------------------------------------
 	;Set script lag
 	;-----------------------------------------------------------------------------
-	if ( fQuestDelayTime != fMenuLag )
+	if ( fQuestDelayTime != MenuLag )
 	
-		Set fQuestDelayTime to fMenuLag
+		Set fQuestDelayTime to MenuLag
 
 	endif
+
+
+
+
 	
-	;-----------------------------------------------------------------------------
-	;Undo enchantment if weapon was enchanted by player
-	;-----------------------------------------------------------------------------
-	if ( WarnOnce == 1 )
-
-		;Handler would have fired by now
-		RemoveEventHandler "OnEnchant" aaDusfergonOnEnchant
-		Set WarnOnce to 0
-
-	elseif ( WarnOnce == 2 )
-
-		Call aaDusfergonOnSigilStone self
-		Set WarnOnce to 0
-		
-	endif
-
 	;-----------------------------------------------------------------------------
 	;Update highlighted item
 	;-----------------------------------------------------------------------------
@@ -1104,10 +1146,11 @@ begin MenuMode 1002 ;Inventory
 
 	endif
 
+	
 	;-----------------------------------------------------------------------------
 	;Shows enchantment effects if Player highlights weapon and hits sMMainKey + sMEnchKey
 	;-----------------------------------------------------------------------------
-	if ( Selection == self && ( ( IsKeyPressed2 sMEnchKey ) || ( IsKeyPressed2 sMEnchKey2 ) ) && ( IsKeyPressed2 sMMainKey ) )
+	if ( Selection == self && ( ( IsKeyPressed2 sMEnchKey || IsControlPressed sMEnchBut ) || ( IsKeyPressed2 sMEnchKey2 ) ) && ( IsKeyPressed2 sMMainKey || IsControlPressed sMMainBut ) )
 	;-----------------------------------------------------------------------------
 
 		;Blade/Blunt/Bow enchantment
@@ -1125,7 +1168,7 @@ begin MenuMode 1002 ;Inventory
 	;-----------------------------------------------------------------------------
 	;Shows current model's name if Player highlights weapon and hits sMMainKey + sMNameKey
 	;-----------------------------------------------------------------------------
-	elseif ( Selection == self && ( ( IsKeyPressed2 sMNameKey ) || ( IsKeyPressed2 sMNameKey2 ) ) && ( IsKeyPressed2 sMMainKey ) )
+	elseif ( Selection == self && ( ( IsKeyPressed2 sMNameKey || IsControlPressed sMNameBut ) || ( IsKeyPressed2 sMNameKey2 ) ) && ( IsKeyPressed2 sMMainKey || IsControlPressed sMMainBut ) )
 	;-----------------------------------------------------------------------------
 
 		Let Icon := "Icons\" + ( GetIconPath self )
@@ -1134,7 +1177,7 @@ begin MenuMode 1002 ;Inventory
 	;-----------------------------------------------------------------------------
 	;Start ModelChange menus if Player highlights weapon and hits sMMainKey
 	;-----------------------------------------------------------------------------
-	elseif ( Selection == self && ModelChange == 0 && ( IsKeyPressed2 sMMainKey ) )
+	elseif ( Selection == self && ModelChange == 0 && ( IsKeyPressed2 sMMainKey || IsControlPressed sMMainBut ) )
 	;-----------------------------------------------------------------------------
 	
 		Set Button to -1
@@ -1143,7 +1186,7 @@ begin MenuMode 1002 ;Inventory
 	;-----------------------------------------------------------------------------
 	;Start WeaponEater menu if Player highlights another weapon and hits sMMainKey, won't activate if weapon is not in inventory or fAbsorption <= 0.0
 	;-----------------------------------------------------------------------------
-	elseif ( ( IsWeapon Selection ) && Eater == 0 && ( IsKeyPressed2 sMMainKey ) && Player.GetItemCount self > 0 && fAbsorption > 0.0 )
+	elseif ( ( IsWeapon Selection ) && Eater == 0 && ( IsKeyPressed2 sMMainKey || IsControlPressed sMMainBut ) && Player.GetItemCount self > 0 && fAbsorption > 0.0 )
 	;-----------------------------------------------------------------------------
 	
 		Set Button to -1
@@ -1153,12 +1196,9 @@ begin MenuMode 1002 ;Inventory
 	endif ;( IsKeyPressed2 ( sMMainKey && ( sMNameKey || sMEnchKey ) ) )
 	;-----------------------------------------------------------------------------
 	
+
 	
 	
-
-
-
-
 
 	;-----------------------------------------------------------------------------
 	;Call ModelChange menus
@@ -1186,8 +1226,26 @@ begin MenuMode 1002 ;Inventory
 	;-----------------------------------------------------------------------------
 	if ( Eater > 0 )
 
-		Let Icon := "Icons\" + ( GetIconPath self )
-		Set Eater to Call aaDusfergonWeaponEat sLevelCap Eater Selection str_Name Icon fAbsorption
+		Set Eater to Call aaDusfergonWeaponEat sLevelCap Eater Selection self fAbsorption
+		
+	endif
+
+
+
+
+	
+	;-----------------------------------------------------------------------------
+	;Undo enchantment if weapon was enchanted by player
+	;-----------------------------------------------------------------------------
+	if ( WarnOnce == 1 )
+
+		;Handler would have fired by now
+		Set WarnOnce to 0
+
+	elseif ( WarnOnce == 2 )
+
+		Call aaDusfergonOnSigilStone self
+		Set WarnOnce to 0
 		
 	endif
 
@@ -1207,9 +1265,9 @@ begin MenuMode 1042 ;Enchanting
 	;-----------------------------------------------------------------------------
 	;Set script lag
 	;-----------------------------------------------------------------------------
-	if ( fQuestDelayTime != fMenuLag )
+	if ( fQuestDelayTime != MenuLag )
 	
-		Set fQuestDelayTime to fMenuLag
+		Set fQuestDelayTime to MenuLag
 
 	endif
 	
@@ -1232,6 +1290,15 @@ begin MenuMode 1042 ;Enchanting
 		;Keep used soul gem updated so handler restores the right one
 		Set SoulGem to GetEnchMenuSoulgem
 
+		;We need soul level for Azura's Star, since we can't add another
+		if ( SoulGem == AzurasStar )
+
+			Let Stack := Player.GetInvRefsForItem SoulGem
+			Let Item := Stack[0]
+			Let SoulLevel := Item.GetCurrentSoulLevel
+
+		endif
+
 	elseif ( GetEnchMenuBaseItem != self )
 
 		RemoveEventHandler "OnEnchant" aaDusfergonOnEnchant
@@ -1250,9 +1317,9 @@ begin MenuMode 1048 ;SigilStone
 	;-----------------------------------------------------------------------------
 	;Set script lag
 	;-----------------------------------------------------------------------------
-	if ( fQuestDelayTime != fMenuLag )
+	if ( fQuestDelayTime != MenuLag )
 	
-		Set fQuestDelayTime to fMenuLag
+		Set fQuestDelayTime to MenuLag
 
 	endif
 	

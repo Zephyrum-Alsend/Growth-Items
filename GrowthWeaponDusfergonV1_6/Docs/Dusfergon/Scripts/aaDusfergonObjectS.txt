@@ -7,9 +7,7 @@ scn aaDusfergonObjectS
 
 ;Used scripts
 ;-----------------------------------------------------------------------------
-;aaDusfergonOnHit
-;aaDusfergonOnBowHit
-;aaDusfergonOnArrowHit
+;aaDusfergonForcePurge
 ;-----------------------------------------------------------------------------
 
 ;Related scripts
@@ -22,8 +20,6 @@ scn aaDusfergonObjectS
 ;Used globals
 ;-----------------------------------------------------------------------------
 ;aaDusfergonEquip
-;aaDusfergonBroken
-;aaDusfergonArrowsUp
 ;-----------------------------------------------------------------------------
 
 ;Related globals
@@ -32,15 +28,11 @@ scn aaDusfergonObjectS
 
 ;Description
 ;-----------------------------------------------------------------------------
-;Un/sets Equip flag when un/equipping the Staff.
-;Removes all handlers and unsets Equip when removed from Player inventory.
+;Un/sets Equip flag when un/equipping the Staff. Purge listeners on drop.
 ;-----------------------------------------------------------------------------
 
 ;Parameters
 ;-----------------------------------------------------------------------------
-array_var Stack
-
-ref Item
 ;-----------------------------------------------------------------------------
 
 
@@ -50,17 +42,6 @@ begin OnUnEquip Player
 ;-----------------------------------------------------------------------------
 
 	Set aaDusfergonEquip to 0
-
-	;-----------------------------------------------------------------------------
-	;Check if broken
-	;-----------------------------------------------------------------------------
-	Let Stack := Player.GetInvRefsForItem DLScalar3S
-	Let Item := Stack[0]
-	if ( Item.GetRefCount > 0 && Item.GetCurrentHealth <= 0 )
-
-		Set aaDusfergonBroken to 1
-
-	endif
 	
 ;-----------------------------------------------------------------------------
 end ;OnUnequip Player
@@ -84,10 +65,7 @@ begin OnDrop Player
 ;-----------------------------------------------------------------------------
 
 	Set aaDusfergonEquip to 0
-	Set aaDusfergonArrowsUp to 0
-	RemoveEventHandler "OnHitWith" aaDusfergonOnHit
-	RemoveEventHandler "OnRelease" aaDusfergonOnBowHit
-	RemoveEventHandler "OnHitWith" aaDusfergonOnArrowHit
+	Call aaDusfergonForcePurge
 
 ;-----------------------------------------------------------------------------
 end ;OnDrop Player

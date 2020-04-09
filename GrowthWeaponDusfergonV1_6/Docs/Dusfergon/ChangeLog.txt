@@ -93,3 +93,17 @@ V1.6
  - Added 7 Warhammer, 4 Battleaxe, 1 Mace, 5 Waraxe forms
  - Total mesh count increased to 373
  - Blunt form may be incorrect after updating due to new additions
+
+V1.6.1
+ - Ini adjustments
+ - - Replaced Latency settings with singular key lag setting
+ - - Added setting for garbage collection frequency under Latency
+ - Separated hotkey lag from script lag, greatly increased responsiveness
+ - Rewrote XP handler for Bow, no longer suffers from previous edge cases
+ - Random will no longer choose the same form you already have
+ - Delevel scripts will now trigger regardless of whether Oblivion dequips it or not
+ - Azura's Star is now refunded like every other soul gem on attempted enchantment
+ - Added controller support
+ - Offering now factors in current charge in XP conversion
+ - Offerings now restore weapon's durability above max at same rate as XP conversion
+ - Offerings now restore weapon's charge up to max at same rate as XP conversion

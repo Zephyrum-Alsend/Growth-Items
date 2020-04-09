@@ -9,7 +9,6 @@ scn aaDusfergonExchange
 ;-----------------------------------------------------------------------------
 ;aaDusfergonAdj
 ;aaDusfergonStatSet
-;aaDusfergonStatSet2
 ;aaDusfergonSwap
 ;aaDusfergonSetModel
 ;aaDusfergonSetModel2
@@ -21,7 +20,6 @@ scn aaDusfergonExchange
 
 ;Used globals
 ;-----------------------------------------------------------------------------
-;aaDusfergonLevel
 ;aaDusfergonModel
 ;aaDusfergonModelLast
 ;-----------------------------------------------------------------------------

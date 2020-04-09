@@ -1,4 +1,4 @@
-scn aaDusfergonOnHit
+scn aaDusfergonForcePurge
 
 ;Main script
 ;-----------------------------------------------------------------------------
@@ -7,69 +7,51 @@ scn aaDusfergonOnHit
 
 ;Used scripts
 ;-----------------------------------------------------------------------------
+;aaDusfergonOnHit
+;aaDusfergonOnBowHit
+;aaDusfergonOnBowRelease
+;aaDusfergonOnArrowHit
+;aaDusfergonOnEnchant
 ;-----------------------------------------------------------------------------
 
 ;Related scripts
 ;-----------------------------------------------------------------------------
-;aaDusfergonDefaultINI
-;aaDusfergonForcePurge
 ;aaDusfergonObject
-;aaDusfergonOnBowHit
-;aaDusfergonOnArrowHit
-;aaDusfergonOnStaffHit
+;aaDusfergonObjectB
+;aaDusfergonObjectS
+;aaDusfergonOnSigilStone
 ;-----------------------------------------------------------------------------
 
 ;Used globals
 ;-----------------------------------------------------------------------------
-;aaDusfergonCombatXPLog
-;aaDusfergonCombatXPStart
-;aaDusfergonXP
 ;-----------------------------------------------------------------------------
 
 ;Related globals
 ;-----------------------------------------------------------------------------
-;aaDusfergonEquip
 ;-----------------------------------------------------------------------------
 
 ;Description
 ;-----------------------------------------------------------------------------
-;When any valid target is hit with DLScalar3:
-;Start recording the XP gained in this combat encounter for post combat report
-;Award XP appropriate to the attack performed
+;Purges all listeners and dumps garbage collection array.
 ;-----------------------------------------------------------------------------
 
 ;Parameters
 ;-----------------------------------------------------------------------------
-ref Target ;Unused
-ref Weapon ;Unused
 ;-----------------------------------------------------------------------------
 
 
 
 ;-----------------------------------------------------------------------------
-begin Function { Target, Weapon }
+begin Function { }
 ;-----------------------------------------------------------------------------
-	;Fortunately, this handler only triggers on living NPCs, so no need to check
+
+	RemoveEventHandler "OnHitWith" aaDusfergonOnHit
+	RemoveEventHandler "OnBowAttack" aaDusfergonOnBowHit
+	RemoveEventHandler "OnRelease" aaDusfergonOnBowRelease
+	RemoveEventHandler "OnHitWith" aaDusfergonOnArrowHit
+	RemoveEventHandler "OnEnchant" aaDusfergonOnEnchant
+	ar_Erase aaDusfergonInit.ArrowsUp
 	
-	;Start combat logger
-	if ( aaDusfergonCombatXPLog == 0 )
-
-		Set aaDusfergonCombatXPStart to aaDusfergonXP
-		Set aaDusfergonCombatXPLog to 1
-
-	endif
-
-	;Add XP
-	if ( Player.IsPowerAttacking )
-
-		Set aaDusfergonXP to ( aaDusfergonXP + aaDusfergonInit.sXPPower )
-
-	else
-
-		Set aaDusfergonXP to ( aaDusfergonXP + aaDusfergonInit.sXPNormal )
-
-	endif
-
 ;-----------------------------------------------------------------------------
-end ;Function { Target, Weapon }
+end ;Function { }
 ;-----------------------------------------------------------------------------

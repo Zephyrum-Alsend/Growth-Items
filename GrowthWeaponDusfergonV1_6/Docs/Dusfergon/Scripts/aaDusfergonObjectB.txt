@@ -7,22 +7,21 @@ scn aaDusfergonObjectB
 
 ;Used scripts
 ;-----------------------------------------------------------------------------
-;aaDusfergonOnHit
 ;aaDusfergonOnBowHit
-;aaDusfergonOnArrowHit
+;aaDusfergonForcePurge
 ;-----------------------------------------------------------------------------
 
 ;Related scripts
 ;-----------------------------------------------------------------------------
 ;aaDusfergonObject
 ;aaDusfergonObjectS
+;aaDusfergonOnBowRelease
+;aaDusfergonOnArrowHit
 ;-----------------------------------------------------------------------------
 
 ;Used globals
 ;-----------------------------------------------------------------------------
 ;aaDusfergonEquip
-;aaDusfergonBroken
-;aaDusfergonArrowsUp
 ;-----------------------------------------------------------------------------
 
 ;Related globals
@@ -31,15 +30,12 @@ scn aaDusfergonObjectB
 
 ;Description
 ;-----------------------------------------------------------------------------
-;Un/sets Equip flag and OnRelease event handler when un/equipping the Bow.
-;Removes all handlers and unsets Equip when removed from Player inventory.
+;Un/sets Equip flag and OnBowAttack event handler when un/equipping the Bow.
+;Purge listeners on drop.
 ;-----------------------------------------------------------------------------
 
 ;Parameters
 ;-----------------------------------------------------------------------------
-array_var Stack
-
-ref Item
 ;-----------------------------------------------------------------------------
 
 
@@ -49,18 +45,7 @@ begin OnUnEquip Player
 ;-----------------------------------------------------------------------------
 
 	Set aaDusfergonEquip to 0
-	RemoveEventHandler "OnRelease" aaDusfergonOnBowHit
-
-	;-----------------------------------------------------------------------------
-	;Check if broken
-	;-----------------------------------------------------------------------------
-	Let Stack := Player.GetInvRefsForItem DLScalar3B
-	Let Item := Stack[0]
-	if ( Item.GetRefCount > 0 && Item.GetCurrentHealth <= 0 )
-
-		Set aaDusfergonBroken to 1
-
-	endif
+	RemoveEventHandler "OnBowAttack" aaDusfergonOnBowHit
 	
 ;-----------------------------------------------------------------------------
 end ;OnUnequip Player
@@ -73,7 +58,7 @@ begin OnEquip Player
 ;-----------------------------------------------------------------------------
 
 	Set aaDusfergonEquip to 1
-	SetEventHandler "OnRelease" aaDusfergonOnBowHit "ref"::Player
+	SetEventHandler "OnBowAttack" aaDusfergonOnBowHit "ref"::Player
 
 ;-----------------------------------------------------------------------------
 end ;OnEquip Player
@@ -86,11 +71,8 @@ begin OnDrop Player
 ;-----------------------------------------------------------------------------
 
 	Set aaDusfergonEquip to 0
-	Set aaDusfergonArrowsUp to 0
-	RemoveEventHandler "OnHitWith" aaDusfergonOnHit
-	RemoveEventHandler "OnRelease" aaDusfergonOnBowHit
-	RemoveEventHandler "OnHitWith" aaDusfergonOnArrowHit
-
+	Call aaDusfergonForcePurge
+	
 ;-----------------------------------------------------------------------------
 end ;OnDrop Player
 ;-----------------------------------------------------------------------------

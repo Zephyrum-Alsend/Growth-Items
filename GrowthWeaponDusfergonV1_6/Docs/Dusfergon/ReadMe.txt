@@ -151,34 +151,26 @@ When equipped, an event handler will be set, looking for anytime a valid target
 is hit with Dusfergon.  It will then see if the player is power attacking and
 award appropriate XP.  The event handler is unset when Dusfergon is unequipped.
 
-
 Bows are handled a bit differently, as you don't actually hit anything with a bow.
-When equipped, an event handler is set, looking for anytime you release the bow
-(fire an arrow).  That handler then checks your currently equipped ammo type and
-sets an event handler looking for anytime anything is hit by the type of arrow
-you just fired.  The second handler checks if the thing your arrow hit is a living 
-NPC before awarding XP, it then removes itself regardless of whether the hit 
-awarded XP or not.
-
-There are a couple edge cases where this won't work as expected: 
-
-1) If an arrow of the same type as the one you fired impacts something before yours 
-does.  In this case it treats that arrow as yours instead of your own.
-
-2) If you have multiple arrows airborne at the same time and they are of different
-types.  The handler can only listen for one arrow type but its counter is 
-incremented everytime you fire, so the counter will never reach 0 and the handler
-never removed.
-
-In the rare case (2) happens, you can drop Dusfergon, as that kills all handlers as
-a workaround for this exact issue.
-
+When equipped, an event handler is set, looking for anytime you pull the bow.  That
+handler then sets one looking for when you release the bow.  Upon release, that
+handler will create a listener for specifically the arrow you just fired and register
+it with garbage collection, then remove itself.  The arrow listener will activate 
+when the projectile impacts an object; it will then check if the object is a 
+living NPC and award XP from there.  The arrow listener will then remove itself.
+Upon certain circumstances, the listener is not activated on impact, which is when
+garbage collection comes in.  Garbage collection will check the lifetime of each
+arrow and remove its listener after 10 seconds.
 
 Staves are handled very differently, as again, you don't hit anything with a staff.
 The handler is built into the staff's enchantment as a scripted effect and as such
 fires everytime you hit something with the staff's magic.  It will do the same check
 as an arrow for if the target is a living NPC before awarding XP.  This "handler" is
 never unset because it's directly built into the enchantment.
+
+If at any point you suspect a handler isn't being properly removed (creating a 
+memory leak), dropping Dusfergon will force a purge of all handlers and listeners.
+
 
 
 
@@ -198,9 +190,11 @@ This will cause the XP required to level up go 100, 110, 120, 130, 140, etc.
 
 To help with leveling Dusfergon, and return meaning to all the loot you find along the
 way, you can RMB another weapon in your inventory to offer it to Dusfergon.  Offering
-the weapon will convert its current durability into XP at 13% efficiency and destroy
-the weapon offered.  A message will appear in the upper left stating "Dusfergon consumes
-[weapon]." at the same time you hear an item break SFX.
+the weapon will absorb its current durability and charge into the weapon at 13% efficiency 
+and convert the sum total into XP, destroying the weapon in the process.  Durability can
+exceed 100% but charge cannot.  A message will appear in the upper left stating 
+"Dusfergon consumes [weapon]." at the same time you hear an item break SFX.
+
 
 
 
@@ -289,7 +283,7 @@ increase the cost of the enchantment, thereby reducing the uses.
 
 Oblivion's engine displays a maximum of 8 effects in the UI, but allows for many more.
 With as little as 3 options chosen, Dusfergon can have more than 8 effects on it.  As
-such, you can Ctrl + RMB Dusfergon in your inventory or hold 9 ingame to bring up a 
+such, you can Ctrl + RMB Dusfergon in your inventory or press 9 ingame to bring up a 
 message box displaying all effects.  It will have a scroll bar if necessary.
 
 If the player decides to enchant Dusfergon, a message box will appear when Dusfergon
@@ -307,11 +301,6 @@ the enchantment options will be cycled through and reduced by 5 levels where app
 and setting the active enchantment to the last option reduced.  As breaking your weapon
 in Oblivion is exceptionally rare, the default punishment is harsh.
 
-Of note with the delevel function:  Oblivion unequips weapons when their durability is
-less than 0, so the scripts check Dusfergon's health on unequip and subsequently flag for
-delevel.  There are a couple instances, namely with Disintegrate Weapon on Self effects,
-where the weapon's durability can be reduced to 0 but not automatically unequipped.
-
 
 
 Dusfergon can change form to suit the wielder.  Specifically, RMB Dusfergon in your
@@ -321,17 +310,17 @@ go back a page in your selection.  This has also greatly expanded the number of
 forms allowed, so you will find multiple sub-types have multiple pages of forms.
 Dusfergon's stats will adjust according to the sub-type chosen.
 
-As of V1.5, for ease of use you can hold V ingame to quickswap back to the last
+As of V1.5, for ease of use you can press V ingame to quickswap back to the last
 form Dusfergon held.  With this, you can more easily change between melee and
 ranged forms in combat.
 
 Due to the sheer number of forms, a Random option is available in the first menu.
 It will pick a sub-type first, then specific form, so you have an equal chance of
 each sub-type appearing.  You can also activate the Random option from ingame by
-holding down G.
+pressing G.
 
 Incase you like the form Random chose and want to change to it later, Shift+RMB 
-Dusfergon in your inventory or hold 0 ingame to receive a message stating 
+Dusfergon in your inventory or press 0 ingame to receive a message stating 
 "Dusfergon's current form is [name] ([sub-type menu])."
 
 
@@ -368,5 +357,9 @@ Damage	Reach	Speed	Weight	Health	Value
 0.5	0	0.003	0.5	30	115
 
 
+
+Checks for control presses have been added alongside those for key presses, allowing
+for basic controller support.  However, these binds are unset by default and must be
+changed in the ini file.
 
 In addition, you will find transcripts of all code written for this mod in Data\Docs\Dusfergon\Scripts.

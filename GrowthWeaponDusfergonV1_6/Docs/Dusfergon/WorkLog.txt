@@ -315,3 +315,41 @@
 -Imported and remapped Mauler Pack V3, updated functions
 -Imported and remapped Art of War Weapon Pack 1, updated functions
 -Updated local documentation for release
+
+08.04.2020
+-After playtesting, found more edge cases that break current Bow XP handler, begun researching alternative methods
+-Rewrote handler to use GetProjectile instead of GetProjectileSource and it works, but still causes a memory leak
+	-Leak is caused by OnArrowHit not getting called when the arrow hits the ground or water, handler is supposed to remove itself after firing
+-Spell casting also triggers OnRelease, so adding additional handler OnBowAttack that will then set OnRelease that will then set OnHitWith
+-Added OnBowRelease handler, which is now set by OnBowHit, and itself sets OnArrowHit
+-Deleted ArrowsUp global, no longer necessary
+-Added ArrowsUp and Arrow array_vars, for garbage collection
+-Added sLifeTime so player can set when garbage collection runs
+-All fired arrows are registered in ArrowsUp, which will purge their handlers after they've existed for sLifeTime
+-Handlers will still self purge when activated, but those that hit ground or water won't activate, hence garbage collection
+-Purging and/or reconstructing the garbage collection array OnDrop throws an error ingame, but doesn't crash the script
+	-Tried erasing all values	-Resizing to 0	-Nulling and reconstructing	-Just nulling and letting Manager reconstruct
+	-Threw in checks in Manager for everything above
+-Errors still thrown, non-critical bug, actually just console clog, but annoying nonetheless
+-Turns out the error is from the HP check on unequip, which is now running on drop and did not throw these errors before
+-Factored out break check into GetBroken and moved IsInInventory check to earlier, fixed runtime errors
+-Made quest to handle keybinds, so Manager can't overload the engine with low latency
+-Latency has a new variable, fKeyLag, to replace the previous two
+-Added checks for ControlPress and OnControlDown so controllers are supported, too
+	-Oblivion's native controller support is shit so I don't actually know if a controller works, but the checks do work for KB+M
+-Moved GetBroken check to Manager and put in Equip checks to prevent continually searching the player's inventory
+-Also resolves the known issue of breaking but not dequipping, since it's no longer reliant on OnUnEquip blocks
+-However, once broken but still equipped, GetBroken gets spammed
+-Rearranged condition checks to not spam
+-Began testinf of refunding Azura's Star, found new enchanted item isn't removed anymore, despite no changes to code since when I last tested this
+-Apparently, when OnEnchant is run, the new item has't been added to the player yet, so there's nothing to remove
+-Passed new enchantedItem back to Manager so it can remove it when it unsets WarnOnce
+-After MUCH testing, turns out Azura's Star can be set with SetSoulLevel with variables, but GetSoulLevel always returns 0 for it
+-Am going to try calling GetSoulLevel on AS's inventory reference instead of what GetEnchMenuSoulGem returns
+-Got it!
+-Instead of having Manager double check removal, I'll have OnEnchant do a busy while loop till it's added
+-Going to add OnEnchant to the ForcePurge incase another mod also removes enchanted items, putting the handler in an infinite loop
+-Appear to be done with the coding for today, just need to look over the documentation ...tomorrow
+-WeaponEat now factors in current charge in XP conversion, and restores durability and charge at fAbsorption rate
+-Updated documentation on scripts, updating local documentation for release
+-Updated ReadMe.txt

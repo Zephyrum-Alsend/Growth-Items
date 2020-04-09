@@ -8,14 +8,12 @@ scn aaDusfergonBreak
 ;Used scripts
 ;-----------------------------------------------------------------------------
 ;aaDusfergonCalcXPReq
+;aaDusfergonLevelLog
 ;-----------------------------------------------------------------------------
 
 ;Related scripts
 ;-----------------------------------------------------------------------------
-;aaDusfergonObject
-;aaDusfergonObjectB
-;aaDusfergonObjectS
-;aaDusfergonLevelLog
+;aaDusfergonGetBroken
 ;-----------------------------------------------------------------------------
 
 ;Used globals

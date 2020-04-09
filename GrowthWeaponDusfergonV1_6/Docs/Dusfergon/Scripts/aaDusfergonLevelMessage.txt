@@ -50,27 +50,27 @@ begin Function { Mode, Icon, Name }
 
 		if ( Rando <= 18 )
 
-			MessageEX "%z itches..." Name 10
+			MessageEX "%z itches..." Name 4
 	
 		elseif ( Rando <= 36 )
 	
-			MessageEX "%z stirs..." Name 10
+			MessageEX "%z stirs..." Name 4
 	
 		elseif ( Rando <= 54 )
 	
-			MessageEX "%z quivers..." Name 10
+			MessageEX "%z quivers..." Name 4
 	
 		elseif ( Rando <= 72 )
 	
-			MessageEX "%z sips magicka..." Name 10
+			MessageEX "%z sips magicka..." Name 4
 	
 		elseif ( Rando <= 90 )
 	
-			MessageEX "%z sheens..." Name 10
+			MessageEX "%z sheens..." Name 4
 
 		elseif ( Rando <= 100 )
 
-			MessageEX "%z seethes..." Name 10
+			MessageEX "%z seethes..." Name 4
 	
 		endif
 
@@ -80,27 +80,27 @@ begin Function { Mode, Icon, Name }
 
 		if ( Rando <= 18 )
 
-			MessageEX "%z seems a little cleaner." Name 10
+			MessageEX "%z seems a little cleaner." Name 8
 
 		elseif ( Rando <= 36 )
 
-			MessageEX "%z gleams satisfactorily." Name 10
+			MessageEX "%z gleams satisfactorily." Name 8
 
 		elseif ( Rando <= 54 )
 
-			MessageEX "%z rests comfortably in the hand." Name 10
+			MessageEX "%z rests comfortably in the hand." Name 8
 
 		elseif ( Rando <= 72 )
 
-			MessageEX "%z feels a little heftier." Name 10
+			MessageEX "%z feels a little heftier." Name 8
 
 		elseif ( Rando <= 90 )
 
-			MessageEX "%z radiates ambient magicka." Name 10
+			MessageEX "%z radiates ambient magicka." Name 8
 
 		elseif ( Rando <= 100 )
 
-			MessageEX "%z grasps latent power." Name 10
+			MessageEX "%z grasps latent power." Name 8
 
 		endif
 

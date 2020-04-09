@@ -7,21 +7,20 @@ scn aaDusfergonOnBowHit
 
 ;Used scripts
 ;-----------------------------------------------------------------------------
-;aaDusfergonOnArrowHit
+;aaDusfergonOnBowRelease
 ;-----------------------------------------------------------------------------
 
 ;Related scripts
 ;-----------------------------------------------------------------------------
-;aaDusfergonObject
+;aaDusfergonForcePurge
 ;aaDusfergonObjectB
-;aaDusfergonObjectS
 ;aaDusfergonOnHit
 ;aaDusfergonOnStaffHit
+;aaDusfergonOnArrowHit
 ;-----------------------------------------------------------------------------
 
 ;Used globals
 ;-----------------------------------------------------------------------------
-;aaDusfergonArrowsUp
 ;-----------------------------------------------------------------------------
 
 ;Related globals
@@ -31,14 +30,12 @@ scn aaDusfergonOnBowHit
 
 ;Description
 ;-----------------------------------------------------------------------------
-;When any arrow is shot from DLScalar3B, set a listener for when that arrow
-;lands and increment ArrowsUp so the listener knows when to stop.
+;When DLScalar3B begins to be drawn, set a listener for the release.
 ;-----------------------------------------------------------------------------
 
 ;Parameters
 ;-----------------------------------------------------------------------------
-ref Ammo
-ref Actor ;Unused
+ref Actor
 ;-----------------------------------------------------------------------------
 
 
@@ -47,16 +44,8 @@ ref Actor ;Unused
 begin Function { Actor }
 ;-----------------------------------------------------------------------------
 
-	;Setting more than one event handler multiplies the XP gained
-	if ( aaDusfergonArrowsUp == 0 )
-		
-		Set Ammo to Player.GetEquippedObject 17
-		SetEventHandler "OnHitWith" aaDusfergonOnArrowHit "object"::Ammo
-
-	endif
-
-	Set aaDusfergonArrowsUp to ( aaDusfergonArrowsUp + 1 )
-
+	SetEventHandler "OnRelease" aaDusfergonOnBowRelease "ref"::Player
+	
 ;-----------------------------------------------------------------------------
 end ;Function { Target }
 ;-----------------------------------------------------------------------------
