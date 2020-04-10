@@ -8,6 +8,7 @@ scn aaDusfergonObjectB
 ;Used scripts
 ;-----------------------------------------------------------------------------
 ;aaDusfergonOnBowHit
+;aaDusfergonOnBowRelease
 ;aaDusfergonForcePurge
 ;-----------------------------------------------------------------------------
 
@@ -15,7 +16,6 @@ scn aaDusfergonObjectB
 ;-----------------------------------------------------------------------------
 ;aaDusfergonObject
 ;aaDusfergonObjectS
-;aaDusfergonOnBowRelease
 ;aaDusfergonOnArrowHit
 ;-----------------------------------------------------------------------------
 
@@ -46,6 +46,7 @@ begin OnUnEquip Player
 
 	Set aaDusfergonEquip to 0
 	RemoveEventHandler "OnBowAttack" aaDusfergonOnBowHit
+	RemoveEventHandler "OnRelease" aaDusfergonOnBowRelease
 	
 ;-----------------------------------------------------------------------------
 end ;OnUnequip Player
