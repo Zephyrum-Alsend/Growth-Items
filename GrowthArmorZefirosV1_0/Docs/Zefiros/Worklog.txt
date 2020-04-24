@@ -1,0 +1,124 @@
+2020.04.13
+-Begun work on mod
+-Setting up basic growth system
+-Created SetWeight
+-Created SetStat
+-Created SetXPReq
+
+2020.04.14
+-Created DefaultINI
+-Created Object
+-Had to stall work as I further mull how to implement growing damage type resistance
+	-OBSE handler to get damage taken	-handler to get magic effect hit by
+	-function to get if weapon ignores normal weapon resistance
+	-nothing to get how much fire/frost/shock/etc. damage taken, only total
+	-can get enchantment of what hit, pull magnitudes from there
+	-can get resistances of player, apply to magnitudes
+	-but also need difficulty setting, unknown multiplier to damage taken
+	-how do I sync multiple event handlers?	-probably need another quest
+
+2020.04.18
+-Made name setting more robust by adding str_Prefix and str_Postfix along with s%Fix flags to indicate which %fix to omit
+-Created SetName
+-Message icon path is magenta
+-GetIconPath returns ""
+-GetTexturePath returns ""
+-Armor has 2 icon paths, so can't resolve which
+-Found GetBipodIconPath, but need to indicate which sex
+-Created GetPCBIP (GetPCBipedIconPath) which returns the Male/Female path based on Player's sex
+-Message icon works
+-Will leave in printc's I use for testing as printd's, which won't show up without the debug flag set
+-Added Debug global so can toggle printd ingame, also added to ini for diagnosing initializer problems
+-Switched to DebugPrint from printd b/c printd doesn't read format strings
+-Went ingame to test OnHealthDamage handler, works as expected so far, except...
+	-damage over time triggers every frame, 100s of ticks from a single spell
+-AR of all pieces is 1
+-Turns out, despite the Object Window displaying AR as a float, it is in fact a long and 400AR = 4AR
+-Converted all AR vars from floats to shorts
+-Forgot to SetArmorType in SetWeight
+-Seems OnMagicEffectHit is always called before OnHealthDamage
+-OnMagicApply has inconsistent filtering, but with GetSelf inside, can get caster, target and spell
+-OnHitWith will not fire for spells
+-If I can't get the time for a DoT, can't reliably accredit elemXP to it
+-DoT can come from enchant or spell, OnMagicApply or OnHitWith, conflict ho
+-Maybe DoTs appear on Active Effects?
+-They do!
+-I can also indirectly get the magnitude, duration and caster of all Active Effects, maybe solve recalc damage formula problem?
+-Instant effects don't appear on Active Effects, there goes that
+-But can still do even distribution with ability to get duration on DoTs
+
+2020.04.19
+-Created LogXP and added globals for tracking combat XP, expanded OnDamage to add XP
+	-Using globals because QuestID.VarName is slow, as file read/write on Dusfergon showed
+-Added fDamageLag for latency control, starting DamageAnalysis quest script
+-DamageAnalysis is shorter than expected, uses HasMagicEffect instead of GetActiveEffects to test for DoT
+-Created OnWeaponHit to trigger physical damage type flags
+-Removed OnMagicApply, unreliably fires and data unecessary in current approach
+-Moved handler sets to Object
+-Equipping another shield does not run OnUnEquip block for the shield, but directly unequipping it does
+-Circumvented issue by using OnActorUnequip handler, may convert all On(Un)Equip blocks to this so don't have to maintain 2 Object scripts
+-Converted blocks to handlers, made SetEquipHandlers to set all
+-Expanded CleanUp to not only purge handlers, but re-evaluate Equip flag and reset handlers if necessary
+-Learned OBSE Let supports +=, I have code to shorten!
+-Created SetEquipHandlers to handle handler creation for On(Un)Equip
+-Double checked and corrected documentation of existing code
+
+2020.04.20
+-Created SetResists to add resist effects to enchantments
+-Started using array_vars as parameters more often, functions then support variable parameters
+-Created SetEnchants to avoid typing out 6 checks and sets for enchantments
+-Updated CleanUp to null array_vars when Mode is 1 and moved further up Init block
+-Created SetEffectMagnitude to update Resists, but also designed to be used for any effect
+-Properly adds new Resists
+-Properly updates existing Resists
+-Works with Fortify effects
+-But with multiple Fortify effects, updating freezes game - single Fortify effect is fine
+-GetNthEffectItemActorValue freezes the game
+
+2020.04.21
+-GetNthEffectItemActorValue wasn't the problem, I forgot to increment the iterator within the while loop
+-SetEffectMagnitude now works for all cases, finishing documentation
+-Realised I can repurpose function handle setting all stats instead of making one for each stat, so SetEffectMagnitude is now SetEffectItem
+-Added conditions for deleting effect items in SetEffectItem
+-List of allowable enchants, plan to be 1 by 1 instead of effect sets
+	-Fortify Attribute
+	-Fortify Skill
+	-Fortify Health/Fatigue/Magicka
+	-Shield
+	-Feather
+	-Restore Health/Fatigue/Magicka
+-Shield exclusive enchant effects
+	-Reflect Damage
+	-Reflect Spell
+
+2020.04.22
+-Invetigated ways to detect application of diseases and poisons
+-The best method is either to scan Active Effects list and get the sources to check for spell type or use OnMagicApply and check GetSelf == Player then spell type
+
+2020.04.23
+-OnMagicApply can detect when diseases are applied, but it's unfortunate the filtering options are subpar
+-GetSelf when it fires, then do rest if Player
+-Diseases are cast on the Player by the Player
+-Finding an enemy who uses Poison has been harder, bandits most likely to carry and use it
+-Poisons are registered as SpellType 0 (Spell) instead of 5 (Poison), cumulative poison resist is out then
+-Added Drain Health to list of effects that count as non-elemental damage
+-Added section to purge enchantments on game load
+-Enchanted weapons do not have the ignorenormalresistance flag set, added check for enchantment in OnWeaponHit
+-Applied enchantments do not take effect until the item is re-equipped
+-Player.EquipItem triggers the OnEquip handler twice
+-Turns out there's 2 OnEquip handlers set, now to find out where
+-Somehow, SetEquipHandlers is setting 2 OnEquip handlers, despite explicitly setting only 1
+-I see no syntax error in the code, and moving it to Manager did not resolve the issue
+-For now, all I can do is put a check in OnEquip to prevent Equip from going over 6
+-OnEquip handler runs twice for every armor except the Shield
+-Tried different syntax for SetEventHandler, no difference
+-May have to revert to using the actual blocks instead of handlers
+-Commented out OnEquip handler, moved code to OnEquip block in Object
+-After more testing, discovered OnActorEquip handler fires twice for enchanted items
+-Added Resist Disease variables and globals, updated SetResists and Manager
+-Created OnMagicApply to handle detection of diseases
+-Changed how Paralysis and Disease resistances work so ini vars are more intuitive
+	-Both resists now use sXPResist to determine resist effect
+	-sXPPara now dictates how much RXP/sec paralyzed is awarded, instead of seconds paralyzed till resist effect up
+	-fXPDisease used to be number of diseases caught till resist effect up, now sXPDisease and how much RXP/illness
+-Created RefreshEquipped to handle re-equipping items after enchanting, can also use for form changing

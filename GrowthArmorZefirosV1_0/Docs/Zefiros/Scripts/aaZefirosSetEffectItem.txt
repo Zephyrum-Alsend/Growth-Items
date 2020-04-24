@@ -1,0 +1,146 @@
+scn aaZefirosSetEffectItem
+
+;Main script
+;-----------------------------------------------------------------------------
+;aaZefirosManager
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;Finds an effect on an enchantment and sets its values to those provided.
+;If the effect does not exist on the enchantment, add it.
+;If the magnitude, area and duration passed are 0, delete the effect.
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+short Count
+short Idx
+
+long Magn
+long Area
+long Dura
+short Rng
+long EffC
+long AuxC
+ref Ench
+;-----------------------------------------------------------------------------
+
+
+
+;-----------------------------------------------------------------------------
+begin Function { Magn, Area, Dura, Rng, EffC, AuxC, Ench }
+;-----------------------------------------------------------------------------
+
+	;-----------------------------------------------------------------------------
+	;Effect does not affect an Attribute or Skill
+	;-----------------------------------------------------------------------------
+	if ( AuxC == 256 && MagicItemHasEffectCode EffC Ench )
+	;-----------------------------------------------------------------------------
+
+		DebugPrint "Effect exists on enchant, searching for index..."
+
+		Let Count := GetMagicItemEffectCount Ench
+		Let Idx := 0
+		While ( Idx < Count )
+
+			if ( EffC == GetNthEffectItemCode Ench Idx )
+
+				DebugPrint "Found effect index..."
+				if ( Magn == 0 && Area == 0 && Dura == 0 )
+
+					DebugPrint "Deleting effect."
+					RemoveNthEffectItem Ench Idx
+
+				else
+
+					DebugPrint "Setting effect stats."
+					SetNthEffectItemMagnitude Magn Ench Idx
+					SetNthEffectItemArea Area Ench Idx
+					SetNthEffectItemDuration Dura Ench Idx
+					SetNthEffectItemRange Rng Ench Idx
+					
+				endif
+				
+				break
+
+			endif
+
+			
+			Let Idx += 1
+		loop
+
+	;-----------------------------------------------------------------------------
+	;Effect does affect an Attribute or Skill
+	;-----------------------------------------------------------------------------
+	elseif ( MagicItemHasEffectCode EffC Ench AuxC )
+	;-----------------------------------------------------------------------------
+
+		DebugPrint "Effect exists on enchant, searching for index..."
+
+		Let Count := GetMagicItemEffectCount Ench
+		Let Idx := 0
+		While ( Idx < Count )
+
+			if ( EffC == GetNthEffectItemCode Ench Idx && AuxC == GetNthEffectItemActorValue Ench Idx )
+
+				DebugPrint "Found effect index..."
+				if ( Magn == 0 && Area == 0 && Dura == 0 )
+
+					DebugPrint "Deleting effect."
+					RemoveNthEffectItem Ench Idx
+
+				else
+
+					DebugPrint "Setting effect stats."
+					SetNthEffectItemMagnitude Magn Ench Idx
+					SetNthEffectItemArea Area Ench Idx
+					SetNthEffectItemDuration Dura Ench Idx
+					SetNthEffectItemRange Rng Ench Idx
+					
+				endif
+				
+				break
+
+			endif
+
+
+			Let Idx += 1
+		loop
+		
+	;-----------------------------------------------------------------------------
+	;Effect does not exist but is also not slated for deletion
+	;-----------------------------------------------------------------------------
+	elseif ( Magn != 0 || Area != 0 || Dura != 0 )
+	;-----------------------------------------------------------------------------
+
+		DebugPrint "Effect does not exist on enchant, adding full effect item."
+
+		Let Idx := AddFullEffectItemC EffC Magn Area Dura Rng Ench
+		SetNthEffectItemActorValueC AuxC Ench Idx
+
+	;-----------------------------------------------------------------------------
+	endif ;( MagicItemHasEffectCode EffC Ench (AuxC) )
+	;-----------------------------------------------------------------------------
+	
+	
+	Return
+;-----------------------------------------------------------------------------
+end ;Function { Magn, Area, Dura, Rng, EffC, AuxC, Ench }
+;-----------------------------------------------------------------------------

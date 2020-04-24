@@ -1,0 +1,85 @@
+scn aaZefirosSetWeight
+
+;Main script
+;-----------------------------------------------------------------------------
+;aaZefirosManager
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;aaZefirosDefaultINI
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;aaZefirosWeightBody
+;aaZefirosWeightFoot
+;aaZefirosWeightHand
+;aaZefirosWeightHead
+;aaZefirosWeightLegs
+;aaZefirosWeightShld
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;Sets the weight of the armor passed according to the passed flag and adjusts
+;the item's stats accordingly.
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+short Type
+
+short AR
+float Wgt
+float ARMult
+float WgtMult
+
+ref Armr
+;-----------------------------------------------------------------------------
+
+
+
+;-----------------------------------------------------------------------------
+begin Function { ARMult, WgtMult, Type, Armr }
+;-----------------------------------------------------------------------------
+
+	;If the armor type already matches the flag, do nothing
+	if ( GetArmorType Armr != Type )
+
+		Let AR := GetArmorAR Armr
+		Let Wgt := GetWeight Armr
+
+		;Light armor
+		if ( Type == 0 )
+
+			Let AR /= ARMult
+			Let Wgt /= WgtMult
+
+		;Heavy armor
+		else
+
+			Let AR *= ARMult
+			Let Wgt *= WgtMult
+
+		endif
+
+		SetArmorAR AR Armr
+		SetWeight Wgt Armr
+		SetArmorType Type Armr
+		
+	endif
+
+
+	Return
+;-----------------------------------------------------------------------------
+end ;Function { ARMult, WgtMult, Type, Armr }
+;-----------------------------------------------------------------------------

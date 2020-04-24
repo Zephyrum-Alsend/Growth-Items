@@ -1,0 +1,180 @@
+scn aaZefirosDefaultINI
+
+;Main script
+;-----------------------------------------------------------------------------
+;aaZefirosManager
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
+;aaZefirosDebug
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;A carbon copy of Zefiros.ini with default settings.  Used to initialize
+;incase Zefiros.ini fails to run.
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;-----------------------------------------------------------------------------
+begin Function { }
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+;These settings are read everytime you load a save
+;-----------------------------------------------------------------------------
+
+;sShort = Up to 32767
+;lLong  = Up to 2147483647
+;fFloat = Short but can have decimals
+												;Default values
+;-----------------------------------------------------------------------------
+;Name
+;-----------------------------------------------------------------------------
+Let aaZefirosInit.str_Prefix := "Zefiros"
+Let aaZefirosInit.str_Postfix := ""
+Let aaZefirosInit.str_BodyName := "Cuirass"
+Let aaZefirosInit.str_FootName := "Greaves"
+Let aaZefirosInit.str_HandName := "Gauntlets"
+Let aaZefirosInit.str_HeadName := "Helmet"
+Let aaZefirosInit.str_LegsName := "Cuisse"
+Let aaZefirosInit.str_ShldName := "Shield"
+
+;Flags for omitting pre/postfixes
+;0 = Include prefix and postfix
+;1 = Omit prefix
+;2 = Omit postfix
+;3 = Omit prefix and postfix
+Let aaZefirosInit.sBodyFix := 0
+Let aaZefirosInit.sFootFix := 0
+Let aaZefirosInit.sHandFix := 0
+Let aaZefirosInit.sHeadFix := 0
+Let aaZefirosInit.sLegsFix := 0
+Let aaZefirosInit.sShldFix := 0
+
+
+;-----------------------------------------------------------------------------
+;Base stats
+;-----------------------------------------------------------------------------
+;AR/100 is what will appear ingame
+Let aaZefirosInit.sBodyARBase := 700			;700
+Let aaZefirosInit.fBodyWeightBase := 20.000		;20
+Let aaZefirosInit.sBodyHealthBase := 200		;200
+Let aaZefirosInit.lBodyValueBase := 50			;50
+
+Let aaZefirosInit.sFootARBase := 300			;300
+Let aaZefirosInit.fFootWeightBase := 6.0000		;6
+Let aaZefirosInit.sFootHealthBase := 100		;100
+Let aaZefirosInit.lFootValueBase := 15			;15
+
+Let aaZefirosInit.sHandARBase := 300			;300
+Let aaZefirosInit.fHandWeightBase := 4.0000		;4
+Let aaZefirosInit.sHandHealthBase := 100		;100
+Let aaZefirosInit.lHandValueBase := 15			;15
+
+Let aaZefirosInit.sHeadARBase := 300			;300
+Let aaZefirosInit.fHeadWeightBase := 4.0000		;4
+Let aaZefirosInit.sHeadHealthBase := 100		;100
+Let aaZefirosInit.lHeadValueBase := 15			;15
+
+Let aaZefirosInit.sLegsARBase := 400			;400
+Let aaZefirosInit.fLegsWeightBase := 12.0000	;12
+Let aaZefirosInit.sLegsHealthBase := 150		;150
+Let aaZefirosInit.lLegsValueBase := 30			;30
+
+Let aaZefirosInit.sShldARBase := 800			;800
+Let aaZefirosInit.fShldWeightBase := 8.0000		;8
+Let aaZefirosInit.sShldHealthBase := 150		;150
+Let aaZefirosInit.lShldValueBase := 30			;30
+
+
+;-----------------------------------------------------------------------------
+;Growth rates
+;-----------------------------------------------------------------------------
+Let aaZefirosInit.sBodyARMult := 022			;22
+Let aaZefirosInit.fBodyWeightMult := 0.8		;0.8
+Let aaZefirosInit.fBodyHealthMult := 72			;72
+Let aaZefirosInit.fBodyValueMult := 50			;50
+
+Let aaZefirosInit.sFootARMult := 008			;8
+Let aaZefirosInit.fFootWeightMult := 0.24		;0.24
+Let aaZefirosInit.fFootHealthMult := 36			;36
+Let aaZefirosInit.fFootValueMult := 15			;15
+
+Let aaZefirosInit.sHandARMult := 008			;8
+Let aaZefirosInit.fHandWeightMult := 0.16		;0.16
+Let aaZefirosInit.fHandHealthMult := 36			;36
+Let aaZefirosInit.fHandValueMult := 15			;15
+
+Let aaZefirosInit.sHeadARMult := 008			;8
+Let aaZefirosInit.fHeadWeightMult := 0.16		;0.16
+Let aaZefirosInit.fHeadHealthMult := 36			;36
+Let aaZefirosInit.fHeadValueMult := 15			;15
+
+Let aaZefirosInit.sLegsARMult := 014			;14
+Let aaZefirosInit.fLegsWeightMult := 0.48		;0.48
+Let aaZefirosInit.fLegsHealthMult := 54			;54
+Let aaZefirosInit.fLegsValueMult := 30			;30
+
+Let aaZefirosInit.sShldARMult := 028			;28
+Let aaZefirosInit.fShldWeightMult := 0.32		;0.32
+Let aaZefirosInit.fShldHealthMult := 54			;54
+Let aaZefirosInit.fShldValueMult := 30			;30
+
+
+;-----------------------------------------------------------------------------
+;Heavy armor multipliers
+;-----------------------------------------------------------------------------
+Let aaZefirosInit.fHeavyAR := 1.5				;1.5
+Let aaZefirosInit.fHeavyWeight := 1.5			;1.5
+
+
+;-----------------------------------------------------------------------------
+;Level up variables
+;-----------------------------------------------------------------------------
+Let aaZefirosInit.sXPReqBase := 200				;200
+Let aaZefirosInit.sXPReqMult := 20				;20
+
+Let aaZefirosInit.sXPResist := 500				;500
+Let aaZefirosInit.sXPPara := 50					;50
+Let aaZefirosInit.sXPDisease := 250				;250
+Let aaZefirosInit.sXPNoDmg := 3					;3
+
+Let aaZefirosInit.sLevelCap := 201				;201
+
+Let aaZefirosInit.fAbsorption := 0.01			;0.01
+
+;= 0 : reset to Lv1, < 0 : disable, > 0 : delevel by that amount
+Let aaZefirosInit.sBreakLevel := 0				;0
+
+
+;-----------------------------------------------------------------------------
+;Latency
+;-----------------------------------------------------------------------------
+;Controls how often the mod analyzes damage taken, in seconds
+Let aaZefirosInit.fDamageLag := 0.1				;0.1
+
+;-----------------------------------------------------------------------------
+;Debug flag
+;-----------------------------------------------------------------------------
+;Toggles appearance of debug messages in console
+Let aaZefirosDebug := 1							;0
+
+;-----------------------------------------------------------------------------
+end ;Function { }
+;-----------------------------------------------------------------------------

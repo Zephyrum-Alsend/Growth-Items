@@ -1,0 +1,132 @@
+scn aaZefirosCleanUp
+
+;Main script
+;-----------------------------------------------------------------------------
+;aaZefirosManager
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;aaZefirosOnEquip
+;aaZefirosOnUnEquip
+;aaZefirosOnDamage
+;aaZefirosOnMagicHit
+;aaZefirosOnWeaponHit
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;aaZefirosObject
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
+;aaZefirosEquip
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;Purges non-permanent handlers and re-evaluates conditions for setting them.
+;If Mode = 1, also purge permanent handlers and Manager arrays.
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+short Mode
+;-----------------------------------------------------------------------------
+
+;-----------------------------------------------------------------------------
+begin Function { Mode }
+;-----------------------------------------------------------------------------
+
+	if ( Mode == 1 )
+
+		;-----------------------------------------------------------------------------
+		DebugPrint "Purging OnActorEquip, OnActorUnequip handlers."
+		;-----------------------------------------------------------------------------
+		RemoveEventHandler "OnActorEquip" aaZefirosOnEquip
+		RemoveEventHandler "OnActorUnequip" aaZefirosOnUnEquip
+
+		;-----------------------------------------------------------------------------
+		DebugPrint "Nulling Selfs, Enchs, Stack, Item arrays."
+		;-----------------------------------------------------------------------------
+		Let aaZefirosInit.Selfs := ar_Null
+		Let aaZefirosInit.Enchs := ar_Null
+		Let aaZefirosInit.Stack := ar_Null
+		Let aaZefirosInit.Item := ar_Null
+
+	endif
+
+	;-----------------------------------------------------------------------------
+	DebugPrint "Purging OnHealthDamage, OnMagicEffectHit, OnHitWith, OnMagicApply handlers."
+	;-----------------------------------------------------------------------------
+	RemoveEventHandler "OnHealthDamage" aaZefirosOnDamage
+	RemoveEventHandler "OnMagicEffectHit" aaZefirosOnMagicHit
+	RemoveEventHandler "OnHitWith" aaZefirosOnWeaponHit
+	RemoveEventHandler "OnMagicApply" aaZefirosOnMagicApply
+
+	;-----------------------------------------------------------------------------
+	DebugPrint "Re-evaluating Equip flag..."
+	;-----------------------------------------------------------------------------
+	Let aaZefirosEquip := 0
+
+	;Check if each item is equipped
+	if ( Player.GetEquipped DLScalar4Body )
+
+		Let aaZefirosEquip += 1
+
+	endif
+	if ( Player.GetEquipped DLScalar4Foot )
+
+		Let aaZefirosEquip += 1
+
+	endif
+	if ( Player.GetEquipped DLScalar4Hand )
+
+		Let aaZefirosEquip += 1
+
+	endif
+	if ( Player.GetEquipped DLScalar4Head )
+
+		Let aaZefirosEquip += 1
+
+	endif
+	if ( Player.GetEquipped DLScalar4Legs )
+
+		Let aaZefirosEquip += 1
+
+	endif
+	if ( Player.GetEquipped DLScalar4Shld )
+
+		Let aaZefirosEquip += 1
+
+	endif
+
+	DebugPrint "Equip flag re-evaluated."
+
+	;-----------------------------------------------------------------------------
+	;Reset purged handlers if necessary
+	;-----------------------------------------------------------------------------
+	if ( aaZefirosEquip > 0 )
+
+		DebugPrint "Resetting OnHealthDamage, OnMagicEffectHit, OnHitWith, OnMagicApply handlers."
+		
+		SetEventHandler "OnHealthDamage" aaZefirosOnDamage "object"::Player
+		SetEventHandler "OnMagicEffectHit" aaZefirosOnMagicHit first::Player
+		SetEventHandler "OnHitWith" aaZefirosOnWeaponHit first::Player
+		SetEventHandler "OnMagicApply" aaZefirosOnMagicApply second::Player
+
+	endif
+
+
+	;-----------------------------------------------------------------------------
+	DebugPrint "Finished CleanUp."
+	;-----------------------------------------------------------------------------
+	Return
+;-----------------------------------------------------------------------------
+end ;Function { Mode }
+;-----------------------------------------------------------------------------

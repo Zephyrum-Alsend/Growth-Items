@@ -1,0 +1,629 @@
+scn aaZefirosManager
+
+;The quest this is attached to, 
+;and therefore this script, 
+;run every this second(s).
+float fQuestDelayTime
+
+
+
+;Main script
+;-----------------------------------------------------------------------------
+;aaZefirosManager
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;aaZefirosDefaultINI
+;aaZefirosCleanUp
+;aaZefirosSetName
+;aaZefirosGetPCBIP
+;aaZefirosSetStat
+;aaZefirosSetWeight
+;aaZefirosSetXPReq
+;aaZefirosSetEquipHandlers
+;aaZefirosLogXP
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;aaZefirosDamageAnalysis
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
+;aaZefirosDebug
+;aaZefirosLevel
+;aaZefirosWeightBody
+;aaZefirosWeightFoot
+;aaZefirosWeightHand
+;aaZefirosWeightHead
+;aaZefirosWeightLegs
+;aaZefirosWeightShld
+;aaZefirosXPLog
+;aaZefirosXP
+;aaZefirosXPCombat
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;aaZefirosEquip
+;aaZefirosRLogFire
+;aaZefirosRLogFrost
+;aaZefirosRLogMagic
+;aaZefirosRLogNormal
+;aaZefirosRLogParalysis
+;aaZefirosRLogPhysical
+;aaZefirosRLogShock
+;aaZefirosRXPDisease
+;aaZefirosRXPFire
+;aaZefirosRXPFrost
+;aaZefirosRXPMagic
+;aaZefirosRXPNormal
+;aaZefirosRXPParalysis
+;aaZefirosRXPShock
+;aaZefirosXPReq
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;Main script of Zefiros.
+;-----------------------------------------------------------------------------
+
+;Engine objects
+;-----------------------------------------------------------------------------
+;Items	>	Armor >			DLScalar4Body
+;							DLScalar4Foot
+;							DLScalar4Hand
+;							DLScalar4Head
+;							DLScarar4Legs
+;							DLScalar4Shld
+;Magic >	Enchantment >	DLScalar4Body
+;							DLScalar4Foot
+;							DLScalar4Hand
+;							DLScalar4Head
+;							DLScarar4Legs
+;							DLScalar4Shld
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+;References to ArmorID and EnchantID
+;-----------------------------------------------------------------------------
+ref SelfBody
+ref SelfFoot
+ref SelfHand
+ref SelfHead
+ref SelfLegs
+ref SelfShld
+
+ref EnchBody
+ref EnchFoot
+ref EnchHand
+ref EnchHead
+ref EnchLegs
+ref EnchShld
+
+;-----------------------------------------------------------------------------
+;Armor variables
+;-----------------------------------------------------------------------------
+short sBodyARBase
+short sFootARBase
+short sHandARBase
+short sHeadARBase
+short sLegsARBase
+short sShldARBase
+
+float fBodyWeightBase
+float fFootWeightBase
+float fHandWeightBase
+float fHeadWeightBase
+float fLegsWeightBase
+float fShldWeightBase
+
+short sBodyHealthBase
+short sFootHealthBase
+short sHandHealthBase
+short sHeadHealthBase
+short sLegsHealthBase
+short sShldHealthBase
+
+long lBodyValueBase
+long lFootValueBase
+long lHandValueBase
+long lHeadValueBase
+long lLegsValueBase
+long lShldValueBase
+
+short sBodyARMult
+short sFootARMult
+short sHandARMult
+short sHeadARMult
+short sLegsARMult
+short sShldARMult
+
+float fBodyWeightMult
+float fFootWeightMult
+float fHandWeightMult
+float fHeadWeightMult
+float fLegsWeightMult
+float fShldWeightMult
+
+float fBodyHealthMult
+float fFootHealthMult
+float fHandHealthMult
+float fHeadHealthMult
+float fLegsHealthMult
+float fShldHealthMult
+
+float fBodyValueMult
+float fFootValueMult
+float fHandValueMult
+float fHeadValueMult
+float fLegsValueMult
+float fShldValueMult
+
+;-----------------------------------------------------------------------------
+;Weight adjustment variables
+;-----------------------------------------------------------------------------
+float fHeavyAR
+float fHeavyWeight
+
+;-----------------------------------------------------------------------------
+;Level up variables
+;-----------------------------------------------------------------------------
+short sXPReqBase
+short sXPReqMult
+short sXPResist
+short sXPPara
+float sXPDisease
+short sXPNoDmg
+short sLevelCap
+short sBreakLevel
+float fAbsorption
+
+short CombatXP
+long XPReqHalf
+
+short HalfOnce
+short CapOnce
+short BreakOnce
+
+;-----------------------------------------------------------------------------
+;Enchantment variables
+;-----------------------------------------------------------------------------
+short EnchOnce
+
+;-----------------------------------------------------------------------------
+;Resistance variables
+;-----------------------------------------------------------------------------
+short ResistFI
+short ResistFR
+short ResistSH
+short ResistMA
+short ResistNW
+short ResistPA
+short ResistDI
+
+short NewFI
+short NewFR
+short NewSH
+short NewMA
+short NewNW
+short NewPA
+short NewDI
+
+;-----------------------------------------------------------------------------
+;Latency variables
+;-----------------------------------------------------------------------------
+float ScriptLag
+float MenuLag
+float fDamageLag
+
+;-----------------------------------------------------------------------------
+;Name pre/postfix flags
+;-----------------------------------------------------------------------------
+short sBodyFix
+short sFootFix
+short sHandFix
+short sHeadFix
+short sLegsFix
+short sShldFix
+
+;-----------------------------------------------------------------------------
+;Strings
+;-----------------------------------------------------------------------------
+string_var str_Prefix
+string_var str_Postfix
+string_var str_BodyName
+string_var str_FootName
+string_var str_HandName
+string_var str_HeadName
+string_var str_LegsName
+string_var str_ShldName
+string_var Icon
+
+;-----------------------------------------------------------------------------
+;Arrays
+;-----------------------------------------------------------------------------
+array_var Selfs
+array_var Enchs
+array_var Stack
+array_var Item
+
+;-----------------------------------------------------------------------------
+;References
+;-----------------------------------------------------------------------------
+ref Val
+;-----------------------------------------------------------------------------
+
+
+
+
+
+;-----------------------------------------------------------------------------
+begin GameMode
+;-----------------------------------------------------------------------------
+
+	;-----------------------------------------------------------------------------
+	;Initializer sub-block
+	;-----------------------------------------------------------------------------
+	if ( GetGameLoaded )
+	;-----------------------------------------------------------------------------
+
+		;-----------------------------------------------------------------------------
+		;Initialize variables
+		;-----------------------------------------------------------------------------
+		;Armor refs
+		Let SelfBody := DLScalar4Body
+		Let SelfFoot := DLScalar4Foot
+		Let SelfHand := DLScalar4Hand
+		Let SelfHead := DLScalar4Head
+		Let SelfLegs := DLScalar4Legs
+		Let SelfShld := DLScalar4Shld
+
+		;Enchantment refs
+		Let EnchBody := DLScalar4BodyEnch
+		Let EnchFoot := DLScalar4FootEnch
+		Let EnchHand := DLScalar4HandEnch
+		Let EnchHead := DLScalar4HeadEnch
+		Let EnchLegs := DLScalar4LegsEnch
+		Let EnchShld := DLScalar4ShldEnch
+
+		;Initialize with default values
+		Call aaZefirosDefaultINI
+
+		;Initialize with user defined values
+		RunBatchScript "Data\ini\Zefiros.ini"
+
+		;Set debug mode
+		SetDebugMode aaZefirosDebug
+
+		;Clean up lingering data from last load
+		Call aaZefirosCleanUp 1
+
+		;Create arrays
+		Let Selfs := ar_Construct Array
+		ar_Append Selfs SelfBody
+		ar_Append Selfs SelfFoot
+		ar_Append Selfs SelfHand
+		ar_Append Selfs SelfHead
+		ar_Append Selfs SelfLegs
+		ar_Append Selfs SelfShld
+
+		Let Enchs := ar_Construct Array
+		ar_Append Enchs EnchBody
+		ar_Append Enchs EnchFoot
+		ar_Append Enchs EnchHand
+		ar_Append Enchs EnchHead
+		ar_Append Enchs EnchLegs
+		ar_Append Enchs EnchShld
+
+		;Set names
+		Let str_BodyName := Call aaZefirosSetname str_Prefix str_Postfix sBodyFix str_BodyName
+		Let str_FootName := Call aaZefirosSetname str_Prefix str_Postfix sFootFix str_FootName
+		Let str_HandName := Call aaZefirosSetname str_Prefix str_Postfix sHandFix str_HandName
+		Let str_HeadName := Call aaZefirosSetname str_Prefix str_Postfix sHeadFix str_HeadName
+		Let str_LegsName := Call aaZefirosSetname str_Prefix str_Postfix sLegsFix str_LegsName
+		Let str_ShldName := Call aaZefirosSetname str_Prefix str_Postfix sShldFix str_ShldName
+		
+		SetName $str_BodyName SelfBody
+		SetName $str_FootName SelfFoot
+		SetName $str_HandName SelfHand
+		SetName $str_HeadName SelfHead
+		SetName $str_LegsName SelfLegs
+		SetName $str_ShldName SelfShld
+
+		;Set latency during GameMode/MenuMode
+		Let ScriptLag := 0.5
+		Let MenuLag := 0.01
+
+		;Set DamageAnalysis variables
+		Let aaZefirosDmgAnal.fQuestDelayTime := fDamageLag
+		Let aaZefirosDmgAnal.ParaXP := sXPPara * fDamageLag
+
+		;DoOnce flags
+		Let HalfOnce := 0
+		Let CapOnce := 0
+		Let BreakOnce := 0
+		Let EnchOnce := 0
+
+
+		;-----------------------------------------------------------------------------
+		;Set permanent handlers
+		;-----------------------------------------------------------------------------
+		Call aaZefirosSetEquipHandlers Player Selfs
+
+		
+		;-----------------------------------------------------------------------------
+		;Add to Player on first start up
+		;-----------------------------------------------------------------------------
+		if ( aaZefirosLevel == 0 )
+
+			Player.AddItemNS SelfBody 1
+			Player.AddItemNS SelfFoot 1
+			Player.AddItemNS SelfHand 1
+			Player.AddItemNS SelfHead 1
+			Player.AddItemNS SelfLegs 1
+			Player.AddItemNS SelfShld 1
+
+			;1 is heavy, 0 is light
+			Let aaZefirosWeightBody := 1
+			Let aaZefirosWeightFoot := 1
+			Let aaZefirosWeightHand := 1
+			Let aaZefirosWeightHead := 1
+			Let aaZefirosWeightLegs := 1
+			Let aaZefirosWeightShld := 1
+			
+			Let aaZefirosLevel := 1
+
+			Let Icon := "Icons\" + Call aaZefirosGetPCBIP SelfBody
+			SetMessageIcon $Icon
+			MessageEX "A great weight is heft upon your shoulders..." 10
+
+		endif
+
+		
+		;-----------------------------------------------------------------------------
+		;Set armor stats
+		;-----------------------------------------------------------------------------
+		;Set stats of each armor piece
+		Call aaZefirosSetStat sBodyARBase fBodyWeightBase sBodyHealthBase lBodyValueBase sBodyARMult fBodyWeightMult fBodyHealthMult fBodyValueMult aaZefirosLevel SelfBody
+		Call aaZefirosSetStat sFootARBase fFootWeightBase sFootHealthBase lFootValueBase sFootARMult fFootWeightMult fFootHealthMult fFootValueMult aaZefirosLevel SelfFoot
+		Call aaZefirosSetStat sHandARBase fHandWeightBase sHandHealthBase lHandValueBase sHandARMult fHandWeightMult fHandHealthMult fHandValueMult aaZefirosLevel SelfHand
+		Call aaZefirosSetStat sHeadARBase fHeadWeightBase sHeadHealthBase lHeadValueBase sHeadARMult fHeadWeightMult fHeadHealthMult fHeadValueMult aaZefirosLevel SelfHead
+		Call aaZefirosSetStat sLegsARBase fLegsWeightBase sLegsHealthBase lLegsValueBase sLegsARMult fLegsWeightMult fLegsHealthMult fLegsValueMult aaZefirosLevel SelfLegs
+		Call aaZefirosSetStat sShldARBase fShldWeightBase sShldHealthBase lShldValueBase sShldARMult fShldWeightMult fShldHealthMult fShldValueMult aaZefirosLevel SelfShld
+
+		;Set weight of each armor piece
+		Call aaZefirosSetWeight fHeavyAR fHeavyWeight aaZefirosWeightBody SelfBody
+		Call aaZefirosSetWeight fHeavyAR fHeavyWeight aaZefirosWeightFoot SelfFoot
+		Call aaZefirosSetWeight fHeavyAR fHeavyWeight aaZefirosWeightHand SelfHand
+		Call aaZefirosSetWeight fHeavyAR fHeavyWeight aaZefirosWeightHead SelfHead
+		Call aaZefirosSetWeight fHeavyAR fHeavyWeight aaZefirosWeightLegs SelfLegs
+		Call aaZefirosSetWeight fHeavyAR fHeavyWeight aaZefirosWeightShld SelfShld
+
+
+		;-----------------------------------------------------------------------------
+		;Set XPReq
+		;-----------------------------------------------------------------------------
+		;XPReq is modified within the function, halfway point returned
+		Let XPReqHalf := Call aaZefirosSetXPReq sXPReqBase sXPReqMult aaZefirosLevel
+
+		;Set levelcap and halfway flags
+		if ( aaZefirosLevel >= sLevelCap )
+
+			Let HalfOnce := 1
+			Let CapOnce := 1
+
+		endif
+
+		
+		;-----------------------------------------------------------------------------
+		;Set Enchantments
+		;-----------------------------------------------------------------------------
+		;Reset enchantments
+		ForEach Item <- Enchs
+
+			Let Val := Item["value"]
+			RemoveAllEffectItems Val
+
+		loop
+
+		;Purge from armor
+		ForEach Item <- Selfs
+
+			Let Val := Item["value"]
+			RemoveEnchantment Val
+
+		loop
+			
+
+		;-----------------------------------------------------------------------------
+		;Set Resistances
+		;-----------------------------------------------------------------------------
+		if ( sXPResist > 0 )
+
+			Let ResistFI := NewFI := aaZefirosRXPFire / sXPResist
+			Let ResistFR := NewFR := aaZefirosRXPFrost / sXPResist
+			Let ResistSH := NewSH := aaZefirosRXPShock / sXPResist
+			Let ResistMA := NewMA := aaZefirosRXPMagic / sXPResist
+			Let ResistNW := NewNW := aaZefirosRXPNormal / sXPResist
+			Let ResistPA := NewPA := aaZefirosRXPParalysis / sXPResist
+			Let ResistDI := NewDI := aaZefirosRXPDisease / sXPResist
+
+			Call aaZefirosSetResists ResistFI ResistFR ResistSH ResistMA ResistNW ResistPA ResistDI Enchs[0:4]
+
+		endif
+		
+		Call aaZefirosSetEnchants Enchs Selfs
+
+		Call aaZefirosRefreshEquipped Player Selfs
+
+
+		;-----------------------------------------------------------------------------
+		printc "%z%B initialized!%b" str_Prefix
+		;-----------------------------------------------------------------------------
+		
+
+	;-----------------------------------------------------------------------------
+	endif ;( GetGameLoaded )
+	;-----------------------------------------------------------------------------
+
+	;-----------------------------------------------------------------------------
+	;Set debug mode
+	;-----------------------------------------------------------------------------
+	SetDebugMode aaZefirosDebug
+
+	;-----------------------------------------------------------------------------
+	;Set script lag
+	;-----------------------------------------------------------------------------
+	if ( fQuestDelayTime != ScriptLag )
+	
+			Set fQuestDelayTime to ScriptLag
+	
+	endif
+
+	;-----------------------------------------------------------------------------
+	;Log XP from combat
+	;-----------------------------------------------------------------------------
+	if ( aaZefirosXPLog == 1 && Player.IsInCombat == 0 )
+
+		Call aaZefirosLogXP ( aaZefirosXP - aaZefirosXPCombat ) "Damage taken."
+		Let aaZefirosXPLog := 0
+
+	endif
+
+	;-----------------------------------------------------------------------------
+	;Update resistances
+	;-----------------------------------------------------------------------------
+	if ( sXPResist > 0 )
+	;-----------------------------------------------------------------------------
+	
+		Let NewFI := aaZefirosRXPFire / sXPResist
+		Let NewFR := aaZefirosRXPFrost / sXPResist
+		Let NewSH := aaZefirosRXPShock / sXPResist
+		Let NewMa := aaZefirosRXPMagic / sXPResist
+		Let NewNW := aaZefirosRXPNormal / sXPResist
+		Let NewPA := aaZefirosRXPParalysis / sXPResist
+		Let NewDI := aaZefirosRXPDisease / sXPResist
+
+		if ( NewFI != ResistFI )
+
+			DebugPrint "Updating Resist Fire..."
+			
+			Let ResistFI := NewFI
+
+			ForEach Item <- Enchs[0:4]
+
+				Call aaZefirosSetEffectItem ResistFI 0 0 0 ( GetMagicEffectCode RSFI ) 256 Item["value"]
+
+			loop
+			
+			DebugPrint "Resist Fire updated."
+
+		endif
+
+		if ( NewFR != ResistFR )
+
+			DebugPrint "Updating Resist Frost..."
+			
+			Let ResistFR := NewFR
+
+			ForEach Item <- Enchs[0:4]
+
+				Call aaZefirosSetEffectItem ResistFR 0 0 0 ( GetMagicEffectCode RSFR ) 256 Item["value"]
+
+			loop
+			
+			DebugPrint "Resist Frost updated."
+
+		endif
+
+		if ( NewSH != ResistSH )
+
+			DebugPrint "Updating Resist Shock..."
+			
+			Let ResistSH := NewSH
+
+			ForEach Item <- Enchs[0:4]
+
+				Call aaZefirosSetEffectItem ResistSH 0 0 0 ( GetMagicEffectCode RSSH ) 256 Item["value"]
+
+			loop
+			
+			DebugPrint "Resist Shock updated."
+
+		endif
+
+		if ( NewMA != ResistMA )
+
+			DebugPrint "Updating Resist Magic..."
+			
+			Let ResistMA := NewMA
+
+			ForEach Item <- Enchs[0:4]
+
+				Call aaZefirosSetEffectItem ResistMA 0 0 0 ( GetMagicEffectCode RSMA ) 256 Item["value"]
+
+			loop
+			
+			DebugPrint "Resist Magic updated."
+
+		endif
+
+		if ( NewNW != ResistNW )
+
+			DebugPrint "Updating Resist Normal Weapons..."
+			
+			Let ResistNW := NewNW
+
+			ForEach Item <- Enchs[0:4]
+
+				Call aaZefirosSetEffectItem ResistNW 0 0 0 ( GetMagicEffectCode RSNW ) 256 Item["value"]
+
+			loop
+			
+			DebugPrint "Resist Normal Weapons updated."
+
+		endif
+
+		if ( NewPA != ResistPA )
+
+			DebugPrint "Updating Resist Paralysis..."
+			
+			Let ResistPA := NewPA
+
+			ForEach Item <- Enchs[0:4]
+
+				Call aaZefirosSetEffectItem ResistPA 0 0 0 ( GetMagicEffectCode RSPA ) 256 Item["value"]
+
+			loop
+			
+			DebugPrint "Resist Paralysis updated."
+
+		endif
+
+		if ( NewDI != ResistDI )
+
+			DebugPrint "Updating Resist Disease..."
+			
+			Let ResistDI := NewDI
+
+			ForEach Item <- Enchs[0:4]
+
+				Call aaZefirosSetEffectItem ResistDI 0 0 0 ( GetMagicEffectCode RSDI ) 256 Item["value"]
+
+			loop
+			
+			DebugPrint "Resist Disease updated."
+
+		endif
+
+	;-----------------------------------------------------------------------------
+	endif ;( sXPResist > 0 )
+	;-----------------------------------------------------------------------------
+	
+;-----------------------------------------------------------------------------
+end ;GameMode
+;-----------------------------------------------------------------------------

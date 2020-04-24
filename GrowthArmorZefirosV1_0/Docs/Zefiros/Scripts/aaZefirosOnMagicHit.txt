@@ -1,0 +1,121 @@
+scn aaZefirosOnMagicHit
+
+;Main script
+;-----------------------------------------------------------------------------
+;aaZefirosManager
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;aaZefirosDefaultINI
+;aaZefirosDamageAnalysis
+;aaZefirosCleanUp
+;aaZefirosObject
+;aaZefirosOnEquip
+;aaZefirosOnUnEquip
+;aaZefirosOnDamage
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
+;aaZefirosRLogFire
+;aaZefirosRLogFrost
+;aaZefirosRLogShock
+;aaZefirosRLogMagic
+;aaZefirosRLogParalysis
+;aaZefirosXPLog
+;aaZefirosXPCombat
+;aaZefirosXP
+;aaZefirosRXPMagic
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;Fires whenever the Player is hit by a magic effect.
+;Will not fire if effect is absorbed or reflected.
+;Checks for effect type and sets relevant flag.  If not accounted for but 
+;hostile, adds BaseXP to XP and Magic Resistance.
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+short BaseXP
+long EffectCode
+ref Target
+string_var EffectName
+;-----------------------------------------------------------------------------
+
+;-----------------------------------------------------------------------------
+begin Function { Target, EffectCode }
+;-----------------------------------------------------------------------------
+
+	;Fire
+	if ( EffectCode == GetMagicEffectCode FIDG )
+
+		DebugPrint "Hit with Fire Damage."
+		Let aaZefirosRLogFire := 1
+
+	;Frost
+	elseif ( EffectCode == GetMagicEffectCode FRDG )
+
+		DebugPrint "Hit with Frost Damage."
+		Let aaZefirosRLogFrost := 1
+
+	;Shock
+	elseif ( EffectCode == GetMagicEffectCode SHDG )
+
+		DebugPrint "Hit with Shock Damage."
+		Let aaZefirosRLogShock := 1
+
+	;Damage Health
+	elseif ( EffectCode == GetMagicEffectCode DGHE )
+
+		DebugPrint "Hit with Damage Health."
+		Let aaZefirosRLogMagic := 1
+
+	;Drain Health
+	elseif ( EffectCode == GetMagicEffectCode DRHE )
+
+		DebugPrint "Hit with Drain Health."
+		Let aaZefirosRLogMagic := 1
+
+	;Paralysis
+	elseif ( EffectCode == GetMagicEffectCode PARA )
+
+		DebugPrint "Hit with Paralysis."
+		Let aaZefirosRLogParalysis := 1
+
+	;Hostile other
+	elseif ( IsMagicEffectHostileC EffectCode )
+
+		;Start XP logger
+		if ( aaZefirosXPLog == 0 )
+
+			Let aaZefirosXPLog := 1
+			Let aaZefirosXPCombat := aaZefirosXP
+
+		endif
+		
+		Let BaseXP := aaZefirosInit.sXPNoDmg
+		
+		Let EffectName := GetMagicEffectNameC EffectCode
+		DebugPrint "Hit with %z, awarding %.0f XP." EffectName BaseXP
+		sv_Destruct EffectName
+
+		Let aaZefirosXP += BaseXP
+		Let aaZefirosRXPMagic += BaseXP
+
+	endif
+
+	
+;-----------------------------------------------------------------------------
+end ;Function { Target, EffectCode }
+;-----------------------------------------------------------------------------

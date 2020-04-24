@@ -1,0 +1,72 @@
+scn aaZefirosOnEquip
+
+;Main script
+;-----------------------------------------------------------------------------
+;aaZefirosManager
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;aaZefirosOnDamage
+;aaZefirosOnMagicHit
+;aaZefirosOnWeaponHit
+;aaZefirosOnMagicApply
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;aaZefirosCleanUp
+;aaZefirosSetEquipHandlers
+;aaZefirosOnUnEquip
+;aaZefirosObject
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
+;aaZefirosEquip
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;Fires whenever the Player equips one of the armor's pieces.
+;Checks if Equip is 0, sets handlers if so, then increments Equip.
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+ref Target
+ref Item
+;-----------------------------------------------------------------------------
+
+;-----------------------------------------------------------------------------
+begin Function { Target, Item }
+;-----------------------------------------------------------------------------
+
+	DebugPrint "Running OnEquip block."
+
+	if ( aaZefirosEquip <= 0 )
+
+		DebugPrint "aaZefirosEquip is %.0f, setting to 0 and setting handlers." aaZefirosEquip
+
+		Let aaZefirosEquip := 0
+		SetEventHandler "OnHealthDamage" aaZefirosOnDamage "object"::Player
+		SetEventHandler "OnMagicEffectHit" aaZefirosOnMagicHit first::Player
+		SetEventHandler "OnHitWith" aaZefirosOnWeaponHit first::Player
+		SetEventHandler "OnMagicApply" aaZefirosOnMagicApply second::Player
+
+	endif
+	
+	if ( aaZefirosEquip < 6 )
+
+		Let aaZefirosEquip += 1
+
+	endif
+
+	
+;-----------------------------------------------------------------------------
+end ;Function { Target, Item }
+;-----------------------------------------------------------------------------

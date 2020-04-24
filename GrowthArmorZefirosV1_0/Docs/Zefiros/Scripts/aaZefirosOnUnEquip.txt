@@ -1,0 +1,68 @@
+scn aaZefirosOnUnEquip
+
+;Main script
+;-----------------------------------------------------------------------------
+;aaZefirosManager
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;aaZefirosOnDamage
+;aaZefirosOnMagicHit
+;aaZefirosOnWeaponHit
+;aaZefirosOnMagicApply
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;aaZefirosCleanUp
+;aaZefirosSetEquipHandlers
+;aaZefirosOnEquip
+;aaZefirosObject
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
+;aaZefirosEquip
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;Fires whenever the Player unequips one of the armor's pieces.
+;Decrements Equip then checks if it's at or below 0, unsets handlers if so.
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+ref Target
+ref Item
+;-----------------------------------------------------------------------------
+
+;-----------------------------------------------------------------------------
+begin Function { Target, Item }
+;-----------------------------------------------------------------------------
+
+	DebugPrint "Running OnUnEquip block."
+
+	Let aaZefirosEquip := aaZefirosEquip - 1
+	
+	if ( aaZefirosEquip <= 0 )
+
+		DebugPrint "aaZefirosEquip is %.0f, setting to 0 and removing handlers." aaZefirosEquip
+
+		Let aaZefirosEquip := 0
+		RemoveEventHandler "OnHealthDamage" aaZefirosOnDamage
+		RemoveEventHandler "OnMagicEffectHit" aaZefirosOnMagicHit
+		RemoveEventHandler "OnHitWith" aaZefirosOnWeaponHit
+		RemoveEventHandler "OnMagicApply" aaZefirosOnMagicApply
+
+	endif
+
+	
+;-----------------------------------------------------------------------------
+end ;Function { Target, Item }
+;-----------------------------------------------------------------------------

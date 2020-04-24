@@ -1,0 +1,78 @@
+scn aaZefirosSetStat
+
+;Main script
+;-----------------------------------------------------------------------------
+;aaZefirosManager
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;aaZefirosDefaultINI
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;aaZefirosLevel
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;Sets the stats of the passed item according to the passed values and level.
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+short Lvl
+
+short ARB
+float WgtB
+short HltB
+long ValB
+
+short ARM
+float WgtM
+float HltM
+float ValM
+
+float Armor
+float Weight
+long Health
+long Value
+
+ref Armr
+;-----------------------------------------------------------------------------
+
+
+
+;-----------------------------------------------------------------------------
+begin Function { ARB, WgtB, HltB, ValB, ARM, WgtM, HltM, ValM, Lvl, Armr }
+;-----------------------------------------------------------------------------
+
+	;At Lv1, stat == Base
+	Let Lvl -= 1
+
+	Let Armor := ARB + ( ARM * Lvl )
+	Let Weight := WgtB + ( WgtM * Lvl )
+	Let Health := HltB + ( HltM * Lvl )
+	Let Value := ValB + ( ValM * Lvl )
+
+	DebugPrint "%n	%.0fAR" Armr Armor
+	SetArmorAR Armor Armr
+	SetWeight Weight Armr
+	SetObjectHealth Health Armr
+	SetGoldValue_T Value Armr
+	;_T makes Value not be stored in the save, like all other stats
+
+
+	Return
+;-----------------------------------------------------------------------------
+end ;Function { ARB, WgtB, HltB, ValB, ARM, WgtM, HltM, ValM, Lvl, Armr }
+;-----------------------------------------------------------------------------
