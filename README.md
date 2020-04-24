@@ -1,4 +1,4 @@
-# Growth-Weapon
+# Growth-Items
 Mod series for the Elder Scrolls IV: Oblivion
 
 Mods are written in Oblivion's scripting language, which resembles C.
@@ -13,13 +13,11 @@ Known limitations of the scripting language:
 
 - ~30KB max size per script (in-engine size, .txts are larger)
 
-- Only Global variables are saved, all other variables go poof on Quit Game
+- Only Global variables and strings are saved, all other variables go poof on Quit Game
 
 - Variable data lingers between Load Games
 
 - Max 10 parameters for any function call, more will either not be read or throw an error, even if the function itself asks for more than 10
-
-- No arrays, though OBSE hacks in some with quirks
 
 
 
