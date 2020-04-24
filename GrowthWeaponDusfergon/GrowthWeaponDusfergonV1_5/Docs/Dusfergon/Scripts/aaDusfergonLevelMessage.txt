@@ -1,0 +1,113 @@
+scn aaDusfergonLevelMessage
+
+;Main script
+;-----------------------------------------------------------------------------
+;aaDusfergonManager
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;Displays either a random half-way message or a random level up message,
+;depending on whether Mode is 0 or 1 respectively.
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+short Mode
+float Rando
+string_var Icon
+
+ref Weap
+;-----------------------------------------------------------------------------
+
+
+
+;-----------------------------------------------------------------------------
+begin Function { Mode, Weap }
+;-----------------------------------------------------------------------------
+
+	Set Rando to rand 0 100
+
+	Let Icon := "Icons\" + ( GetIconPath Weap )
+	SetMessageIcon $Icon
+	
+	;Half-way messages
+	if ( Mode == 0 )
+
+		if ( Rando <= 18 )
+
+			MessageEX "%n itches..." Weap 10
+	
+		elseif ( Rando <= 36 )
+	
+			MessageEX "%n stirs..." Weap 10
+	
+		elseif ( Rando <= 54 )
+	
+			MessageEX "%n quivers..." Weap 10
+	
+		elseif ( Rando <= 72 )
+	
+			MessageEX "%n sips magicka..." Weap 10
+	
+		elseif ( Rando <= 90 )
+	
+			MessageEX "%n sheens..." Weap 10
+
+		elseif ( Rando <= 100 )
+
+			MessageEX "%n seethes..." Weap 10
+	
+		endif
+
+
+	;Level Up messages
+	else
+
+		if ( Rando <= 18 )
+
+			MessageEX "%n seems a little cleaner." Weap 10
+
+		elseif ( Rando <= 36 )
+
+			MessageEX "%n gleams satisfactorily." Weap 10
+
+		elseif ( Rando <= 54 )
+
+			MessageEX "%n rests comfortably in the hand." Weap 10
+
+		elseif ( Rando <= 72 )
+
+			MessageEX "%n feels a little heftier." Weap 10
+
+		elseif ( Rando <= 90 )
+
+			MessageEX "%n radiates ambient magicka." Weap 10
+
+		elseif ( Rando <= 100 )
+
+			MessageEX "%n grasps latent power." Weap 10
+
+		endif
+
+	endif
+
+;-----------------------------------------------------------------------------
+end ;Function { Mode, Weap }
+;-----------------------------------------------------------------------------

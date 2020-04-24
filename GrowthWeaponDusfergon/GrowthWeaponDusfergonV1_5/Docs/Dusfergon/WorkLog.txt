@@ -1,0 +1,257 @@
+18.02.2020
+-Started Dusfergon
+-Set up base initializer and model swapping
+-Added 3 claymore and 5 bastard sword models
+-Changed logging method, XPReq no longer necessary global; left it as global so player can tweak for catchup commands
+-Fixed model refresh unsetting event handler; order OnUnEquip BEFORE OnEquip
+
+19.02.2020
+-Finished base initializer and level up block
+-Implemented model swapper menu
+-Implemented enchantment initializer, forgot Cost and Charge calcs
+
+20.02.2020
+-Added Cost and Charge calcs
+-Implemented enchantment level up
+-Added enchant options for Fire, Frost and Shock
+-Finished enchant option framework
+-Added/Cleaned up comments
+
+21.02.2020
+-Enchant option menu only appears when player is not in combat
+-Added 7 claymore, 5 bastard sword, 10 longsword, 10 shortsword, 10 dagger, 8 warhammer, 7 battleaxe, 9 mace and 7 waraxe models
+-Implemented sub-type stat adjustment code and added stat adjustment vars to .ini
+
+22.02.2020
+-Went over comments
+-Polished code
+-Got second opinion on comments/readability
+-Level up message variety added
+-Added 1 warhammer and 1 waraxe model
+-Added enchant options for Knight-Slayer and Mage-Slayer
+
+23.02.2020
+-Repackaged textures and icons
+-Remapped texture paths to repackaged files for 20 bastard, 7 battleaxe, 8 waraxe, 9 mace, 9 warhammer, 10 claymore, 10 dagger, 10 longsword and 10 shortsword meshes
+-Added icon change to SetModel function
+-Wrote ReadMe.txt
+-Set up mod page
+
+25.02.2020
+-Fixed incorrect texture path on Type-D
+-Adjusted ini settings after playing with it
+
+26.02.2020
+-Attempted to rewrite model swapper menu code to support paging and canceling, judged would require full rewrite
+-Switched to adding Bow forms, narrowed 28 models down to 10 from Realswords
+-Swapping from Bow to !Bow causes CTD, unknown cause
+
+27.02.2020
+-Dropped Bow code for now
+-Rewrote model swapper menu code to support paging and canceling
+-Added MenuLag variable so paging code can be more responsive
+-Added Weaken enchant option
+
+28.02.2020
+-Added entirety of Classical Weaponry, Realswords Argonian, Khajiit, Orc, Bosmer, Breton, Dunmer, Goblin, Nord, Redguard
+-Discovered max script size of 30KB, split SetModel into SetModel and SetModel2, Manager is 26KB atm
+-Longsword hit 11 pages, self-capping at 10
+-Worn variants removed to cut down size
+-Begun reorganizing model numbers
+
+29.02.2020
+-Reorganized model numbers
+-Rewrote menu buttons to reflect new numbers
+-Tweaked ini values
+-Began repackaging and remapping textures and icons
+
+01.03.2020
+-Repackaged and mapped icons
+-Added Random option to model swapper menu, since there's altogether too many models now
+-Repackaged and remapped bastard, battleaxe, waraxe, claymore, longsword, shortsword, dagger textures
+-Tweaked Random so it never picks the already active model
+-Updated all local documentation
+
+04.03.2020
+-With the realization I can use [questID].[varname] to use variables from other scripts, Manager's size is halved as I move chunks into functions I once thought impossible
+-Coded bow swap, no CTD, also no XP
+-Got XP working and not triggering on walls or corpses
+
+05.03.2020
+-Decided to add .ini setting for XP amount on hit
+-Pondered new enchant option
+
+06.03.2020
+-Added Ivellon weapons, 3 claymore, 3 bastard, 1 longsword, 1 shortsword, 1 warhammer, 2 battleaxe, 2 mace models
+-Resized Maul mesh so grip can be lowered while keeping length parity with other warhammers
+-Added Subjugate enchant option, considering Frenzy and Demoralize effects
+-Repackaged and remapped Ivellon textures and icons, should do this as I add meshes from now on to cut down last sprint work load
+
+07.03.2020
+-Added inventory function Shift+RMB to show current form name and sub-type menu it's found in, since you may like what Random gave you and can't find it
+-Updated all local documentation
+-Removed Naegling Longsword to make space for vanilla models
+-Added Iron, Steel, Fine Steel, Silver, Dwarven, Elven, Glass, Ebony, Daedric vanilla models
+-Added Corruption enchant option
+-Added, repackaged and remapped RealSwords Bosmer, Breton, Dunmer, Goblin, Nord, Redguard bows
+
+08.03.2020
+-Reorganized menus and indices
+-Changed level up messages, bows can't sharpen
+-Updated all local documentation for deployment
+-Updated online documentation and released V1.2
+-Sigil Stone menu != Enchantment menu, tf
+-Made function to undo Sigil Stone enchant if it was on weapon, adapted code to OnEnchant too
+-Released V1.3
+
+11.03.2020
+-Added Unbalance enchant option
+-Added Siphon enchant option
+-Spotted and fixed error in Subjugate calcs, used Ench6 level instead of Ench7
+-Finally figured out fucking inventory references!
+-Fixed Swap function so it no longer silently re-equips current weapon
+-Started work on delevel feature
+
+12.03.2020
+-Finished delevel feature
+-Found OBSE stringify operand, messages now have icon of current form
+-Despite no change in code, components sporadically failing
+-Suspect sudden corruption, many other mods also ceased functioning
+-Malwarebytes scan showed no threats, probably Construction Set fuckup or rare Oblivion bug
+-After reinstalling everything and examining what does work ingame, came to conclusion .esp is corrupted
+-Due to corruption, had to revert to V1.3, have a renamed copy of work done on V1.4 - not all is lost
+-Recovered all lost work
+-Fixed error in Break enchant decrement loop
+-Not all mods' functionality restored, need clean install
+
+13.03.2020
+-I'm not touching Oblivion for a while.  What went wrong, where and when elude me, but it's still wrong.
+
+19.03.2020
+-Resolved issues with even cleaner install, begun thinking of Staff implementation
+-Fixed error in HP check on bow ...forgot the B in DLScalar3B
+-Fixed some comments/headers/documentation that I failed to update previously
+-Rewrote Charge formula
+-Added function to set ModelChange when paging, cut down on repeating code
+
+20.03.2020
+-Added ToC function to set ModelChange after sub-type select, refactored code
+-Added option for keybindings in ini, as well as keycode table
+-Refactored menu code into its own function - reduced Manager size by 80%!
+-Begun staff code
+	-StatAdj added Staff section
+	-Swap going to assume SetWeaponType won't CTD Staff like it does Bow for now
+	-Not going to touch enchantments until above issue is tested
+	-Added variables for Damage Health effect under Weapon Type Adjustments
+	-SetModel2 added entry for vanilla staff
+	-ModelChange put Staff under Marksman
+	-ModelToC put Staff pages at 7200
+	-ModelChange set up Staff page 1
+	-SetWeaponType does not CTD when switching to or from Staff
+
+21.03.2020
+-Added ability to call form change, enchantment display and name display from GameMode and added corresponding keybindings in INI
+-Added sXPStaff, set to 2
+-Moved Damage Health variables to top of Enchantment variables, added to INI
+-EnchInit working ok, except when you load in with a Staff, then load in without a Staff or vice versa, the enchantment isn't applied, but loading in with a staff, then swapping to a not Staff THEN loading in with not a Staff is fine
+-I may just do the Bow thing for the Staff as well, enchantment too.
+-Importing MC's Staff Pack
+-Remapped Iron Staff's textures only to expedite testing
+-Created DLScalar3S and DLScalar3SEnch
+-Decided to manage both enchants in tandem instead of updating each other on swap
+-Got rid of ability to call Form change menu in GameMode due to an old bug recurring (despite the code being the same)
+-Decided to change the above function into a quickswap, like Half Life
+-Renamed sGFormKey to sGMainKey in lue of it no longer triggering the form change menu
+-Also added settings for script/menu lag to INI
+-Added sGRandKey so Random can be called during gameplay
+-Still have to finish Staff code: level up, setmodel, XP awarder, Random, NameDisplay
+
+22.03.2020
+-Added innate AoE to Staff, compounds with basic DGHE area
+-Updated EnchSlct to handle Staves
+-Spied EnchSlct using DGFA values in DGSP calcs
+-Factored out model changing code from Manager into aaDusfergonExchange
+-The factored out code just doesn't work properly, for some reason
+	-Mace to Staff: OK
+	-Staff to Mace: Changed to DLScalar3, model updated to Staff
+	-Mace to Staff: Changed to DLScalar3S, model updated to Mace
+	-Mace to Bow: Changed to DLScalar3B, model NOT updated
+	-Checked aaDusfergonModel via DisplayName, is correct
+-Restored factored code to Manager and it works properly there so...
+-Turns out Swap changes Manager.self, so Exchange.Weap wasn't updated after Swap was called
+-Changed Swap to return what the new Manager.self should be, so Exchange.Weap can update and then pass it to Manager
+-Checking GameMode Random, Speed not changing properly - lagging behind by one form
+-StatAdj modifies Manager.Adj% vars, so weren't updated for Exchange vars.  Had to add calls to Manager.Adj% vars because too many parameters for function call otherwise
+-Made function StatLvlS for incrementing Staff specific stats, DGHE and Area
+-Despite the code being in place, DLScalar3SEnch is not incrementing on level up
+-Restored EnchLvl to before adding any Staff code, going to pursue second function for updating DLScalar3SEnch
+-Copypasta'd EnchLvl into EnchLvlS, took out code incrementing Ench globals, actually worked.  Weird.
+-So, deleted EnchLvlS, added new param to EnchLvl to indicate whether it should increment Ench globals and used it on DLScalar3SEnch: works. Huzzah.
+-Implementing ObjectS script and XP awarder
+-XP awarder needs to be attached to a Script Effect, after Ctrl+F'ing through docs, asked how to dynamically add script effects on Nexus forums - must wait for response to continue
+-Dug into Knights of the Nine: Revelation code because they have a Fire Damage effect with a script attached - shouldn't be possible
+	-It isn't, they made a script effect and named it Fire Damage!
+	-Attached script calls variables from other objects, little idea what it really does
+	-Found aaKOTNRCrusaderRelicController after scouring the CS ID lists and finally searching for it in TES4Edit - is an instance of aaKOTNRInvisibleActivator, has no script attached, dead end
+	-Found KOTNRRelicControl script, is quest script that does nothing with the var called by the enchant, no documentation on it either
+	-Looked up Crusader Sword since var name called by Fire Damage is CurrentSwordSpell, attached object script sets the var
+	-Looked up referenced spell, is just a normal spell that does Fire Damage
+	-So, the Fire Damage enchantment is a script effect called Fire Damage that moves an invisible activator to the target so it can cast an actual fire spell at the target while script does its bonus damage
+		-That is very roundabout
+-Set up OnStaffHit to deal damage in addition to award XP so it's only 1 additional effect on DLScalar3SEnch
+-Added compensation for Resist Magic on target
+-XP is awarded for inanimate objects and corpses, but also properly awards when hitting multiple targets with AoE
+-Just doing the uglier but simpler method of making Damage Health and script effect XP awarder separate is looking increasingly appealing
+-Potential problem with Staff XP: MagicEffect scripts are run after all the normal effects are applied, so target may be already dead - great for kill based XP, not so much for hit based
+
+23.03.2020
+-Went for the simply but ugly solution of having Damage Health be separate from the script effect that awards XP, added same checks on OnArrowHit and it works
+-Renamed script effect to Growth from Damage Health, since it's no longer trying to mimic the latter
+-Made a RemoveAllEffectItems that ignores scripted effects, ResetStaffEnch
+-I could
+	-Create DLScalar3SEnchBase
+	-RemoveAllEffectItems DLScalar3SEnch
+	-CopyAllEffectItems DLScalar3SEnchBase DLScalar3SEnch
+		-but that feels like more work than just making a custom RemoveAllEffectItems
+-if eval( !( IsNthEffectItemScripted Ench EnchIter ) ) doesn't seem to be fully working, partial purge of effects
+-Changed to hardcode skip first effect (which should always be the scripted effect)
+-Hardcode is also partially purging, roundabout it might need to be
+-Roundabout method works, did as described above
+-Deleted ResetStaffEnch
+-Went through Manager comments to make more helpful after the fiasco of navigating KOTNR's code
+-I just realized what was wrong with ResetStaffEnch
+	-Iterated forward through effects, deleting them
+	-Each delete would move the other effects forward and decrease total count
+	-Would end up skipping over effects as their indices changed
+-Reinstated ResetStaffEnch as RemoveUnScriptedEffects, changed iteration direction to backwards and it: works!
+-Deleting DLScalar3SEnchBase
+-To recount: Level up and XP awarder are done; to do: add more models, update DisplayName, Random
+-Small updates to DefaultINI, need to find better default keys for gameplay functions
+-Set GEnchKey and GNameKey to 10(9) and 11(0) respectively
+-Set GMainKey and GRandKey to 47(V) and 34(G) respectively
+-Tweaked SigilStone warning to trigger if weapon has no enchantment as opposed to if Level < EnchStart
+-Removed unused variables from Manager
+-Remapped textures for MC's Staff Pack
+-Updated SetModel2, ModelChange and ShowModelName with new staves
+-Imported Staff of Magnus + Staff of Chaos, remapped, functions updated
+
+24.03.2020
+-Imported Armamantium Staffs, functions updated, textures not remapped yet
+-Implemented 3 Vanilla staves (TestStaff, TestStaff02, TestStaff03)
+-Updated RandomModel to include Staves
+-Added Nazgul Sword Set, functions updated, textures remapped
+-ToDo: remap Armamantium Staffs, thoroughly document all code, update ReadMe
+-Going through old code to update commenting style, updated:
+	-Break	-CalcXPReq	-DefaultINI	-EnchDisplay	-EnchInit	-EnchLvl
+	-EnchSlct	-Exchange	-IncrVal	-LevelMessage	-Manager	-ModelChange
+
+25.03.2020
+-Realised if I don't set ArrowsUp to 0, even if I unset OnArrowHit, no new handlers will be made, so OnDrop blocks also set that global to 0 now
+-Going through old code to update commenting style, udpated:
+	-ModelPage	-ModelToC	-Object	-ObjectB	-ObjectS	-OnArrowHit
+	-OnBowHit	-OnEnchant	-OnHit	-OnSigilStone	-OnStaffHit	-RandomModel
+	-RemoveUnScriptedEffects	-SetModel	-SetModel2	-ShowModelName
+	-StatAdj	-StatLvl	-StatLvlS	-StatSet	-StatSet2	-StatSetS	-Swap
+-Remapped Armamantium Staffs
+-Updated ReadMe.txt
+-Prepare for release

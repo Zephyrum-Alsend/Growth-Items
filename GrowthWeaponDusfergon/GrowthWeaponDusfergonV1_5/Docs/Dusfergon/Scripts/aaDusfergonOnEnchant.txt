@@ -1,0 +1,75 @@
+scn aaDusfergonOnEnchant
+
+;Main script
+;-----------------------------------------------------------------------------
+;aaDusfergonManager
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;aaDusfergonOnHit
+;aaDusfergonOnBowHit
+;aaDusfergonOnArrowHit
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
+;aaDusfergonArrowsUp
+;aaDusfergonEquip
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;Undoes the last enchantment if it was DLScalar3(B) and unsets handlers and 
+;flags, incase enchantment doesn't run OnUnEquip blocks. Refunds used soul 
+;gem, unless it's Azura's Star -- variables don't work with SetSoulLevel.
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+ref Item
+
+ref enchantedItem
+;-----------------------------------------------------------------------------
+
+
+
+;-----------------------------------------------------------------------------
+begin Function { enchantedItem }
+;-----------------------------------------------------------------------------
+
+	;Remove all handlers
+	RemoveEventHandler "OnHitWith" aaDusfergonOnHit
+	RemoveEventHandler "OnRelease" aaDusfergonOnBowHit
+	RemoveEventHandler "OnHitWith" aaDusfergonOnArrowHit
+	Set aaDusfergonEquip to 0
+	Set aaDusfergonArrowsUp to 0
+	
+	MessageBoxEx "%n defies enchantment." aaDusfergonInit.self
+
+	;Refund soul gem
+	Set Item to aaDusfergonInit.SoulGem
+	if ( Item != AzurasStar )
+		
+		Player.AddItem Item 1
+
+	endif
+
+	;Remove new enchanted item
+	Player.RemoveItemNS enchantedItem 1
+
+	;Add base weapon back
+	Set Item to aaDusfergonInit.self
+	Player.AddItemNS Item 1
+
+;-----------------------------------------------------------------------------
+end ;Function { enchantedItem }
+;-----------------------------------------------------------------------------

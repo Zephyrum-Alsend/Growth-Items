@@ -1,0 +1,344 @@
+scn aaDusfergonBreak
+
+;Main script
+;-----------------------------------------------------------------------------
+;aaDusfergonManager
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;aaDusfergonCalcXPReq
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;aaDusfergonObject
+;aaDusfergonObjectB
+;aaDusfergonObjectS
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
+;aaDusfergonEnch
+;aaDusfergonEnch1
+;aaDusfergonEnch2
+;aaDusfergonEnch3
+;aaDusfergonEnch4
+;aaDusfergonEnch5
+;aaDusfergonEnch6
+;aaDusfergonEnch7
+;aaDusfergonEnch8
+;aaDusfergonEnch9
+;aaDusfergonEnch10
+;aaDusfergonLevel
+;aaDusfergonXP
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;aaDusfergonBroken
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;Decrements all the Used Globals based on the amount passed in Lvl.
+;If Lvl == 0, set everything to Lvl 1 values.
+;If Lvl > 0, set weapon back that many levels and evenly distribute the level
+;loss between enchant options.
+;If Lvl < 0, do nothing.
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+short Lvl
+short EnchBr
+short EnchIdx
+
+ref Weap
+;-----------------------------------------------------------------------------
+
+
+
+;-----------------------------------------------------------------------------
+begin Function { Lvl, Weap }
+;-----------------------------------------------------------------------------
+
+	;-----------------------------------------------------------------------------
+	;Full reset
+	;-----------------------------------------------------------------------------
+	if ( Lvl == 0 || Lvl > ( aaDusfergonLevel - 2 ) )
+
+		MessageBoxEX "Used and abused, %n loses what power it had gained..." Weap
+
+		Set aaDusfergonLevel to 1
+		Set aaDusfergonXP to 0
+		Set aaDusfergonEnch to 0
+		Set aaDusfergonEnch1 to 0
+		Set aaDusfergonEnch2 to 0
+		Set aaDusfergonEnch3 to 0
+		Set aaDusfergonEnch4 to 0
+		Set aaDusfergonEnch5 to 0
+		Set aaDusfergonEnch6 to 0
+		Set aaDusfergonEnch7 to 0
+		Set aaDusfergonEnch8 to 0
+		Set aaDusfergonEnch9 to 0
+		Set aaDusfergonEnch10 to 0
+
+	;-----------------------------------------------------------------------------
+	;Fixed level reset
+	;-----------------------------------------------------------------------------
+	elseif ( Lvl > 0 )
+
+		MessageBoxEX "Battered and bent, magicka leaks from %n..." Weap
+
+		Set aaDusfergonLevel to aaDusfergonLevel - Lvl
+
+		;Set XP to what was required to reach new Level, XPReq will be corrected in Manager
+		Call aaDusfergonCalcXPReq ( aaDusfergonLevel - 1 ) aaDusfergonInit.sXPReqBase aaDusfergonInit.sXPReqMult aaDusfergonInit.XPReqHalf
+		Set aaDusfergonXP to aaDusfergonXPReq
+
+		;-----------------------------------------------------------------------------
+		;Reset to below sEnchStart
+		;-----------------------------------------------------------------------------
+		if ( aaDusfergonLevel < aaDusfergonInit.sEnchStart )
+
+			Set aaDusfergonEnch to 0
+			Set aaDusfergonEnch1 to 0
+			Set aaDusfergonEnch2 to 0
+			Set aaDusfergonEnch3 to 0
+			Set aaDusfergonEnch4 to 0
+			Set aaDusfergonEnch5 to 0
+			Set aaDusfergonEnch6 to 0
+			Set aaDusfergonEnch7 to 0
+			Set aaDusfergonEnch8 to 0
+			Set aaDusfergonEnch9 to 0
+			Set aaDusfergonEnch10 to 0
+
+		;-----------------------------------------------------------------------------
+		;Partially reset Ench
+		;-----------------------------------------------------------------------------
+		else
+
+			Set EnchBr to ( Lvl )
+			Set EnchIdx to aaDusfergonEnch
+
+			;-----------------------------------------------------------------------------
+			;Rotate through each enchant option, decrementing them by sEnchLevel each time
+			;-----------------------------------------------------------------------------
+			while ( EnchBr > 0 )
+			;-----------------------------------------------------------------------------
+			
+				;-----------------------------------------------------------------------------
+				;Option 1
+				;-----------------------------------------------------------------------------
+				if ( EnchIdx == 1 )
+
+					if ( aaDusfergonEnch1 >= aaDusfergonInit.sEnchLevel )
+
+						Set aaDusfergonEnch1 to aaDusfergonEnch1 - aaDusfergonInit.sEnchLevel
+						Set EnchBr to EnchBr - aaDusfergonInit.sEnchLevel
+
+					else
+
+						Set EnchBr to EnchBr - aaDusfergonEnch1
+						Set aaDusfergonEnch1 to 0
+
+					endif
+
+					Set EnchIdx to 2
+
+				;-----------------------------------------------------------------------------
+				;Option 2
+				;-----------------------------------------------------------------------------
+				elseif ( EnchIdx == 2 )
+
+					if ( aaDusfergonEnch2 >= aaDusfergonInit.sEnchLevel )
+
+						Set aaDusfergonEnch2 to aaDusfergonEnch2 - aaDusfergonInit.sEnchLevel
+						Set EnchBr to EnchBr - aaDusfergonInit.sEnchLevel
+
+					else
+
+						Set EnchBr to EnchBr - aaDusfergonEnch2
+						Set aaDusfergonEnch2 to 0
+
+					endif
+
+					Set EnchIdx to 3
+
+				;-----------------------------------------------------------------------------
+				;Option 3
+				;-----------------------------------------------------------------------------
+				elseif ( EnchIdx == 3 )
+
+					if ( aaDusfergonEnch3 >= aaDusfergonInit.sEnchLevel )
+
+						Set aaDusfergonEnch3 to aaDusfergonEnch3 - aaDusfergonInit.sEnchLevel
+						Set EnchBr to EnchBr - aaDusfergonInit.sEnchLevel
+
+					else
+
+						Set EnchBr to EnchBr - aaDusfergonEnch3
+						Set aaDusfergonEnch3 to 0
+
+					endif
+
+					Set EnchIdx to 4
+
+				;-----------------------------------------------------------------------------
+				;Option 4
+				;-----------------------------------------------------------------------------
+				elseif ( EnchIdx == 4 )
+
+					if ( aaDusfergonEnch4 >= aaDusfergonInit.sEnchLevel )
+
+						Set aaDusfergonEnch4 to aaDusfergonEnch4 - aaDusfergonInit.sEnchLevel
+						Set EnchBr to EnchBr - aaDusfergonInit.sEnchLevel
+
+					else
+
+						Set EnchBr to EnchBr - aaDusfergonEnch4
+						Set aaDusfergonEnch4 to 0
+
+					endif
+
+					Set EnchIdx to 5
+
+				;-----------------------------------------------------------------------------
+				;Option 5
+				;-----------------------------------------------------------------------------
+				elseif ( EnchIdx == 5 )
+
+					if ( aaDusfergonEnch5 >= aaDusfergonInit.sEnchLevel )
+
+						Set aaDusfergonEnch5 to aaDusfergonEnch5 - aaDusfergonInit.sEnchLevel
+						Set EnchBr to EnchBr - aaDusfergonInit.sEnchLevel
+
+					else
+
+						Set EnchBr to EnchBr - aaDusfergonEnch5
+						Set aaDusfergonEnch5 to 0
+
+					endif
+
+					Set EnchIdx to 6
+
+				;-----------------------------------------------------------------------------
+				;Option 6
+				;-----------------------------------------------------------------------------
+				elseif ( EnchIdx == 6 )
+
+					if ( aaDusfergonEnch6 >= aaDusfergonInit.sEnchLevel )
+
+						Set aaDusfergonEnch6 to aaDusfergonEnch6 - aaDusfergonInit.sEnchLevel
+						Set EnchBr to EnchBr - aaDusfergonInit.sEnchLevel
+
+					else
+
+						Set EnchBr to EnchBr - aaDusfergonEnch6
+						Set aaDusfergonEnch6 to 0
+
+					endif
+
+					Set EnchIdx to 7
+
+				;-----------------------------------------------------------------------------
+				;Option 7
+				;-----------------------------------------------------------------------------
+				elseif ( EnchIdx == 7 )
+
+					if ( aaDusfergonEnch7 >= aaDusfergonInit.sEnchLevel )
+
+						Set aaDusfergonEnch7 to aaDusfergonEnch7 - aaDusfergonInit.sEnchLevel
+						Set EnchBr to EnchBr - aaDusfergonInit.sEnchLevel
+
+					else
+
+						Set EnchBr to EnchBr - aaDusfergonEnch7
+						Set aaDusfergonEnch7 to 0
+
+					endif
+
+					Set EnchIdx to 8
+
+				;-----------------------------------------------------------------------------
+				;Option 8
+				;-----------------------------------------------------------------------------
+				elseif ( EnchIdx == 8 )
+
+					if ( aaDusfergonEnch8 >= aaDusfergonInit.sEnchLevel )
+
+						Set aaDusfergonEnch8 to aaDusfergonEnch8 - aaDusfergonInit.sEnchLevel
+						Set EnchBr to EnchBr - aaDusfergonInit.sEnchLevel
+
+					else
+
+						Set EnchBr to EnchBr - aaDusfergonEnch8
+						Set aaDusfergonEnch8 to 0
+
+					endif
+
+					Set EnchIdx to 9
+
+				;-----------------------------------------------------------------------------
+				;Option 9
+				;-----------------------------------------------------------------------------
+				elseif ( EnchIdx == 9 )
+
+					if ( aaDusfergonEnch9 >= aaDusfergonInit.sEnchLevel )
+
+						Set aaDusfergonEnch9 to aaDusfergonEnch9 - aaDusfergonInit.sEnchLevel
+						Set EnchBr to EnchBr - aaDusfergonInit.sEnchLevel
+
+					else
+
+						Set EnchBr to EnchBr - aaDusfergonEnch9
+						Set aaDusfergonEnch9 to 0
+
+					endif
+
+					Set EnchIdx to 10
+
+				;-----------------------------------------------------------------------------
+				;Option 10
+				;-----------------------------------------------------------------------------
+				elseif ( EnchIdx == 10 )
+
+					if ( aaDusfergonEnch10 >= aaDusfergonInit.sEnchLevel )
+
+						Set aaDusfergonEnch10 to aaDusfergonEnch10 - aaDusfergonInit.sEnchLevel
+						Set EnchBr to EnchBr - aaDusfergonInit.sEnchLevel
+
+					else
+
+						Set EnchBr to EnchBr - aaDusfergonEnch10
+						Set aaDusfergonEnch10 to 0
+
+					endif
+
+					Set EnchIdx to 1
+
+				;-----------------------------------------------------------------------------
+				endif ;( EnchIdx > 0 )
+				;-----------------------------------------------------------------------------
+				
+			;-----------------------------------------------------------------------------
+			loop ;while ( EnchBr > 0 )
+			;-----------------------------------------------------------------------------
+			
+			;Set Ench to the last option decremented.
+			Set aaDusfergonEnch to ( ( EnchIdx - 2 ) % 10 ) + 1
+
+		;-----------------------------------------------------------------------------
+		endif ;if ( aaDusfergonLevel < aaDusfergonInit.sEnchStart )
+		;-----------------------------------------------------------------------------
+
+		printc "%n deleveled to Lv%g!" Weap aaDusfergonLevel
+		
+	;-----------------------------------------------------------------------------
+	endif ;if ( Lvl >= 0 )
+	;-----------------------------------------------------------------------------
+
+;-----------------------------------------------------------------------------
+end ;Function { Lvl, Weap }
+;-----------------------------------------------------------------------------
