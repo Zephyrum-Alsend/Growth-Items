@@ -1,0 +1,110 @@
+scn aaZefirosSetEnchant
+
+;Main script
+;-----------------------------------------------------------------------------
+;aaZefirosManager
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;aaZefirosSetEffectStat
+;aaZefirosSetEffectItem
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;aaZefirosDefaultINI
+;aaZefirosGetEnchantData
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;aaZefirosActvEnchBody
+;aaZefirosActvEnchFoot
+;aaZefirosActvEnchHand
+;aaZefirosActvEnchHead
+;aaZefirosActvEnchLegs
+;aaZefirosActvEnchShld
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;Given arrays of enchantment data and levels, add effects to the passed Ench.
+;
+;EnchData contains Maps in the format:
+; { EffectCode, ActorValueCode, MagnitudeBase, MagnitudeMult, AreaBase, 
+;AreaMult, DurationBase, DurationMult, Range }
+;
+;EnchLvls contains Shorts, one for each Map in EnchData.
+;Including them in the same array can require an initialization so large it
+;easily exceeds the 32KB script size limit.
+;
+;Active is the index of the currently growing effect and allows it to be 
+;applied despite being Lv0.
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+ref Ench
+
+short Active
+short i
+short Count
+
+short Lvl
+short MagB
+short AreB
+short DurB
+short Rng
+
+long EffC
+long AuxC
+
+float MagM
+float AreM
+float DurM
+
+array_var EnchData
+array_var EnchLvls
+array_var Item
+;-----------------------------------------------------------------------------
+
+;-----------------------------------------------------------------------------
+begin Function { EnchData, EnchLvls, Active, Ench }
+;-----------------------------------------------------------------------------
+
+	Let Count := ar_Size EnchLvls
+
+	Let i := 0
+	while ( i < Count )
+
+		Let Lvl := EnchLvls[i]
+		if ( Lvl > 0 || Active == i )
+
+			Let EffC := EnchData[i][0]
+			Let AuxC := EnchData[i][1]
+			Let MagB := EnchData[i][2]
+			Let MagM := EnchData[i][3]
+			Let AreB := EnchData[i][4]
+			Let AreM := EnchData[i][5]
+			Let DurB := EnchData[i][6]
+			Let DurM := EnchData[i][7]
+			Let Rng := EnchData[i][8]
+
+			Let Item := Call aaZefirosSetEffectStat MagB MagM AreB AreM DurB DurM Lvl
+			Call aaZefirosSetEffectItem Item[0] Item[1] Item[2] Rng EffC AuxC Ench
+
+		endif
+		
+		Let i += 1
+	loop
+
+
+	Return
+;-----------------------------------------------------------------------------
+end ;Function { EnchData, EnchLvls, Active, Ench }
+;-----------------------------------------------------------------------------

@@ -90,6 +90,7 @@
 -Shield exclusive enchant effects
 	-Reflect Damage
 	-Reflect Spell
+	-Absorb Spell
 
 2020.04.22
 -Invetigated ways to detect application of diseases and poisons
@@ -114,6 +115,8 @@
 -Tried different syntax for SetEventHandler, no difference
 -May have to revert to using the actual blocks instead of handlers
 -Commented out OnEquip handler, moved code to OnEquip block in Object
+
+2020.04.24
 -After more testing, discovered OnActorEquip handler fires twice for enchanted items
 -Added Resist Disease variables and globals, updated SetResists and Manager
 -Created OnMagicApply to handle detection of diseases
@@ -122,3 +125,36 @@
 	-sXPPara now dictates how much RXP/sec paralyzed is awarded, instead of seconds paralyzed till resist effect up
 	-fXPDisease used to be number of diseases caught till resist effect up, now sXPDisease and how much RXP/illness
 -Created RefreshEquipped to handle re-equipping items after enchanting, can also use for form changing
+-Looking over Manager code, noticed did not keep header documentation up to date
+
+2020.04.27
+-Began designing SetEnchant, for setting all enchant effects on all items
+-Created SetEffectStat
+-Added Enchantment variables for effect magnitudes
+-Added Enchantment section to DefaultINI
+-Adjusted DefaultINI comments to better explain Dynamic Resistances
+
+2020.05.02
+-While I'd like to not use dot notation in creating enchantments, the idea of creating an array to house the data for hunndreds of effects and maintaining is too daunting
+-dot notation is easier to code
+-In order to facilitate making Dusfergon's active enchant indexing possible, created GetEffectCode to convert global short into EffectCode and ActorValueCode
+-Creating 246 new globals to track enchantment levels and active enchantment for each piece, 41 globals per item
+	-I considered overloading globals with multiple values, but that would reduce their individual level caps, which need to be ( sLevelCap - sEnchStart )
+		-The player can pheasibly pick only one effect every Seek, having its level match the item's
+-Created Body globals
+-Created Foot globals
+-Created Hand globals
+-Created Head globals
+-Created Legs globals
+-Created Shld globals
+-Went for an array approach afterall, to remove the need to copy&paste a giant block 6 times
+-Creating the multi-dimensional array to hold all the enchant data exceeds the max script size
+-Cannot make the complete array even in a separate function, MAX_SCRIPT_SIZE exceeded
+-Dropping level data from array, cut down array size to 1/6, will need second array to hold level data
+-Created GetEnchantLevels
+-Created framework for setting leveled enchantments on items, throwing runtime errors
+-Array creation was placed before CleanUp in my re-ordering then re-re-ordering of init block
+-Tested Fortify Strength, Fortify Blade, Shield ingame, all work as expected
+-Manager header is still not uptodate
+-Reviewing during documentation process, GetEffectCode may not be necessary... Will keep it around until leveling block(s) are done
+-Added XP > 0 check to DamageAnalysis to save cycles while not in combat

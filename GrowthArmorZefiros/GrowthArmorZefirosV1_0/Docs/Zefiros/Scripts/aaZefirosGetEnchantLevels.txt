@@ -1,0 +1,574 @@
+scn aaZefirosGetEnchantLevels
+
+;Main script
+;-----------------------------------------------------------------------------
+;aaZefirosManager
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
+;aaZefirosEnch00Body
+;aaZefirosEnch01Body
+;aaZefirosEnch02Body
+;aaZefirosEnch03Body
+;aaZefirosEnch04Body
+;aaZefirosEnch05Body
+;aaZefirosEnch06Body
+;aaZefirosEnch07Body
+;aaZefirosEnch08Body
+;aaZefirosEnch09Body
+;aaZefirosEnch10Body
+;aaZefirosEnch11Body
+;aaZefirosEnch12Body
+;aaZefirosEnch13Body
+;aaZefirosEnch14Body
+;aaZefirosEnch15Body
+;aaZefirosEnch16Body
+;aaZefirosEnch17Body
+;aaZefirosEnch18Body
+;aaZefirosEnch19Body
+;aaZefirosEnch20Body
+;aaZefirosEnch21Body
+;aaZefirosEnch22Body
+;aaZefirosEnch23Body
+;aaZefirosEnch24Body
+;aaZefirosEnch25Body
+;aaZefirosEnch26Body
+;aaZefirosEnch27Body
+;aaZefirosEnch28Body
+;aaZefirosEnch29Body
+;aaZefirosEnch30Body
+;aaZefirosEnch31Body
+;aaZefirosEnch32Body
+;aaZefirosEnch33Body
+;aaZefirosEnch34Body
+;aaZefirosEnch35Body
+;aaZefirosEnch36Body
+;aaZefirosEnch37Body
+;aaZefirosEnch38Body
+;aaZefirosEnch39Body
+;aaZefirosEnch00Foot
+;aaZefirosEnch01Foot
+;aaZefirosEnch02Foot
+;aaZefirosEnch03Foot
+;aaZefirosEnch04Foot
+;aaZefirosEnch05Foot
+;aaZefirosEnch06Foot
+;aaZefirosEnch07Foot
+;aaZefirosEnch08Foot
+;aaZefirosEnch09Foot
+;aaZefirosEnch10Foot
+;aaZefirosEnch11Foot
+;aaZefirosEnch12Foot
+;aaZefirosEnch13Foot
+;aaZefirosEnch14Foot
+;aaZefirosEnch15Foot
+;aaZefirosEnch16Foot
+;aaZefirosEnch17Foot
+;aaZefirosEnch18Foot
+;aaZefirosEnch19Foot
+;aaZefirosEnch20Foot
+;aaZefirosEnch21Foot
+;aaZefirosEnch22Foot
+;aaZefirosEnch23Foot
+;aaZefirosEnch24Foot
+;aaZefirosEnch25Foot
+;aaZefirosEnch26Foot
+;aaZefirosEnch27Foot
+;aaZefirosEnch28Foot
+;aaZefirosEnch29Foot
+;aaZefirosEnch30Foot
+;aaZefirosEnch31Foot
+;aaZefirosEnch32Foot
+;aaZefirosEnch33Foot
+;aaZefirosEnch34Foot
+;aaZefirosEnch35Foot
+;aaZefirosEnch36Foot
+;aaZefirosEnch37Foot
+;aaZefirosEnch38Foot
+;aaZefirosEnch39Foot
+;aaZefirosEnch00Hand
+;aaZefirosEnch01Hand
+;aaZefirosEnch02Hand
+;aaZefirosEnch03Hand
+;aaZefirosEnch04Hand
+;aaZefirosEnch05Hand
+;aaZefirosEnch06Hand
+;aaZefirosEnch07Hand
+;aaZefirosEnch08Hand
+;aaZefirosEnch09Hand
+;aaZefirosEnch10Hand
+;aaZefirosEnch11Hand
+;aaZefirosEnch12Hand
+;aaZefirosEnch13Hand
+;aaZefirosEnch14Hand
+;aaZefirosEnch15Hand
+;aaZefirosEnch16Hand
+;aaZefirosEnch17Hand
+;aaZefirosEnch18Hand
+;aaZefirosEnch19Hand
+;aaZefirosEnch20Hand
+;aaZefirosEnch21Hand
+;aaZefirosEnch22Hand
+;aaZefirosEnch23Hand
+;aaZefirosEnch24Hand
+;aaZefirosEnch25Hand
+;aaZefirosEnch26Hand
+;aaZefirosEnch27Hand
+;aaZefirosEnch28Hand
+;aaZefirosEnch29Hand
+;aaZefirosEnch30Hand
+;aaZefirosEnch31Hand
+;aaZefirosEnch32Hand
+;aaZefirosEnch33Hand
+;aaZefirosEnch34Hand
+;aaZefirosEnch35Hand
+;aaZefirosEnch36Hand
+;aaZefirosEnch37Hand
+;aaZefirosEnch38Hand
+;aaZefirosEnch39Hand
+;aaZefirosEnch00Head
+;aaZefirosEnch01Head
+;aaZefirosEnch02Head
+;aaZefirosEnch03Head
+;aaZefirosEnch04Head
+;aaZefirosEnch05Head
+;aaZefirosEnch06Head
+;aaZefirosEnch07Head
+;aaZefirosEnch08Head
+;aaZefirosEnch09Head
+;aaZefirosEnch10Head
+;aaZefirosEnch11Head
+;aaZefirosEnch12Head
+;aaZefirosEnch13Head
+;aaZefirosEnch14Head
+;aaZefirosEnch15Head
+;aaZefirosEnch16Head
+;aaZefirosEnch17Head
+;aaZefirosEnch18Head
+;aaZefirosEnch19Head
+;aaZefirosEnch20Head
+;aaZefirosEnch21Head
+;aaZefirosEnch22Head
+;aaZefirosEnch23Head
+;aaZefirosEnch24Head
+;aaZefirosEnch25Head
+;aaZefirosEnch26Head
+;aaZefirosEnch27Head
+;aaZefirosEnch28Head
+;aaZefirosEnch29Head
+;aaZefirosEnch30Head
+;aaZefirosEnch31Head
+;aaZefirosEnch32Head
+;aaZefirosEnch33Head
+;aaZefirosEnch34Head
+;aaZefirosEnch35Head
+;aaZefirosEnch36Head
+;aaZefirosEnch37Head
+;aaZefirosEnch38Head
+;aaZefirosEnch39Head
+;aaZefirosEnch00Legs
+;aaZefirosEnch01Legs
+;aaZefirosEnch02Legs
+;aaZefirosEnch03Legs
+;aaZefirosEnch04Legs
+;aaZefirosEnch05Legs
+;aaZefirosEnch06Legs
+;aaZefirosEnch07Legs
+;aaZefirosEnch08Legs
+;aaZefirosEnch09Legs
+;aaZefirosEnch10Legs
+;aaZefirosEnch11Legs
+;aaZefirosEnch12Legs
+;aaZefirosEnch13Legs
+;aaZefirosEnch14Legs
+;aaZefirosEnch15Legs
+;aaZefirosEnch16Legs
+;aaZefirosEnch17Legs
+;aaZefirosEnch18Legs
+;aaZefirosEnch19Legs
+;aaZefirosEnch20Legs
+;aaZefirosEnch21Legs
+;aaZefirosEnch22Legs
+;aaZefirosEnch23Legs
+;aaZefirosEnch24Legs
+;aaZefirosEnch25Legs
+;aaZefirosEnch26Legs
+;aaZefirosEnch27Legs
+;aaZefirosEnch28Legs
+;aaZefirosEnch29Legs
+;aaZefirosEnch30Legs
+;aaZefirosEnch31Legs
+;aaZefirosEnch32Legs
+;aaZefirosEnch33Legs
+;aaZefirosEnch34Legs
+;aaZefirosEnch35Legs
+;aaZefirosEnch36Legs
+;aaZefirosEnch37Legs
+;aaZefirosEnch38Legs
+;aaZefirosEnch39Legs
+;aaZefirosEnch00Shld
+;aaZefirosEnch01Shld
+;aaZefirosEnch02Shld
+;aaZefirosEnch03Shld
+;aaZefirosEnch04Shld
+;aaZefirosEnch05Shld
+;aaZefirosEnch06Shld
+;aaZefirosEnch07Shld
+;aaZefirosEnch08Shld
+;aaZefirosEnch09Shld
+;aaZefirosEnch10Shld
+;aaZefirosEnch11Shld
+;aaZefirosEnch12Shld
+;aaZefirosEnch13Shld
+;aaZefirosEnch14Shld
+;aaZefirosEnch15Shld
+;aaZefirosEnch16Shld
+;aaZefirosEnch17Shld
+;aaZefirosEnch18Shld
+;aaZefirosEnch19Shld
+;aaZefirosEnch20Shld
+;aaZefirosEnch21Shld
+;aaZefirosEnch22Shld
+;aaZefirosEnch23Shld
+;aaZefirosEnch24Shld
+;aaZefirosEnch25Shld
+;aaZefirosEnch26Shld
+;aaZefirosEnch27Shld
+;aaZefirosEnch28Shld
+;aaZefirosEnch29Shld
+;aaZefirosEnch30Shld
+;aaZefirosEnch31Shld
+;aaZefirosEnch32Shld
+;aaZefirosEnch33Shld
+;aaZefirosEnch34Shld
+;aaZefirosEnch35Shld
+;aaZefirosEnch36Shld
+;aaZefirosEnch37Shld
+;aaZefirosEnch38Shld
+;aaZefirosEnch39Shld
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;Based on the value passed in Mode, returns an array of all enchantment levels
+;associated with a specific item.
+;0 = Body
+;1 = Foot
+;2 = Hand
+;3 = Head
+;4 = Legs
+;5 = Shld
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+short Mode
+array_var Data
+;-----------------------------------------------------------------------------
+
+;-----------------------------------------------------------------------------
+begin Function { Mode }
+;-----------------------------------------------------------------------------
+
+	Let Data := ar_Construct Array
+
+	if ( Mode == 0 )
+
+		;-----------------------------------------------------------------------------
+		DebugPrint "Getting Body enchant levels..."
+		;-----------------------------------------------------------------------------
+		ar_Append Data aaZefirosEnch00Body
+		ar_Append Data aaZefirosEnch01Body
+		ar_Append Data aaZefirosEnch02Body
+		ar_Append Data aaZefirosEnch03Body
+		ar_Append Data aaZefirosEnch04Body
+		ar_Append Data aaZefirosEnch05Body
+		ar_Append Data aaZefirosEnch06Body
+		ar_Append Data aaZefirosEnch07Body
+		ar_Append Data aaZefirosEnch08Body
+		ar_Append Data aaZefirosEnch09Body
+		ar_Append Data aaZefirosEnch10Body
+		ar_Append Data aaZefirosEnch11Body
+		ar_Append Data aaZefirosEnch12Body
+		ar_Append Data aaZefirosEnch13Body
+		ar_Append Data aaZefirosEnch14Body
+		ar_Append Data aaZefirosEnch15Body
+		ar_Append Data aaZefirosEnch16Body
+		ar_Append Data aaZefirosEnch17Body
+		ar_Append Data aaZefirosEnch18Body
+		ar_Append Data aaZefirosEnch19Body
+		ar_Append Data aaZefirosEnch20Body
+		ar_Append Data aaZefirosEnch21Body
+		ar_Append Data aaZefirosEnch22Body
+		ar_Append Data aaZefirosEnch23Body
+		ar_Append Data aaZefirosEnch24Body
+		ar_Append Data aaZefirosEnch25Body
+		ar_Append Data aaZefirosEnch26Body
+		ar_Append Data aaZefirosEnch27Body
+		ar_Append Data aaZefirosEnch28Body
+		ar_Append Data aaZefirosEnch29Body
+		ar_Append Data aaZefirosEnch30Body
+		ar_Append Data aaZefirosEnch31Body
+		ar_Append Data aaZefirosEnch32Body
+		ar_Append Data aaZefirosEnch33Body
+		ar_Append Data aaZefirosEnch34Body
+		ar_Append Data aaZefirosEnch35Body
+		ar_Append Data aaZefirosEnch36Body
+		ar_Append Data aaZefirosEnch37Body
+		ar_Append Data aaZefirosEnch38Body
+		ar_Append Data aaZefirosEnch39Body
+
+	elseif ( Mode == 1 )
+
+		;-----------------------------------------------------------------------------
+		DebugPrint "Getting Foot enchant levels..."
+		;-----------------------------------------------------------------------------
+		ar_Append Data aaZefirosEnch00Foot
+		ar_Append Data aaZefirosEnch01Foot
+		ar_Append Data aaZefirosEnch02Foot
+		ar_Append Data aaZefirosEnch03Foot
+		ar_Append Data aaZefirosEnch04Foot
+		ar_Append Data aaZefirosEnch05Foot
+		ar_Append Data aaZefirosEnch06Foot
+		ar_Append Data aaZefirosEnch07Foot
+		ar_Append Data aaZefirosEnch08Foot
+		ar_Append Data aaZefirosEnch09Foot
+		ar_Append Data aaZefirosEnch10Foot
+		ar_Append Data aaZefirosEnch11Foot
+		ar_Append Data aaZefirosEnch12Foot
+		ar_Append Data aaZefirosEnch13Foot
+		ar_Append Data aaZefirosEnch14Foot
+		ar_Append Data aaZefirosEnch15Foot
+		ar_Append Data aaZefirosEnch16Foot
+		ar_Append Data aaZefirosEnch17Foot
+		ar_Append Data aaZefirosEnch18Foot
+		ar_Append Data aaZefirosEnch19Foot
+		ar_Append Data aaZefirosEnch20Foot
+		ar_Append Data aaZefirosEnch21Foot
+		ar_Append Data aaZefirosEnch22Foot
+		ar_Append Data aaZefirosEnch23Foot
+		ar_Append Data aaZefirosEnch24Foot
+		ar_Append Data aaZefirosEnch25Foot
+		ar_Append Data aaZefirosEnch26Foot
+		ar_Append Data aaZefirosEnch27Foot
+		ar_Append Data aaZefirosEnch28Foot
+		ar_Append Data aaZefirosEnch29Foot
+		ar_Append Data aaZefirosEnch30Foot
+		ar_Append Data aaZefirosEnch31Foot
+		ar_Append Data aaZefirosEnch32Foot
+		ar_Append Data aaZefirosEnch33Foot
+		ar_Append Data aaZefirosEnch34Foot
+		ar_Append Data aaZefirosEnch35Foot
+		ar_Append Data aaZefirosEnch36Foot
+		ar_Append Data aaZefirosEnch37Foot
+		ar_Append Data aaZefirosEnch38Foot
+		ar_Append Data aaZefirosEnch39Foot
+
+	elseif ( Mode == 2 )
+
+		;-----------------------------------------------------------------------------
+		DebugPrint "Getting Hand enchant levels..."
+		;-----------------------------------------------------------------------------
+		ar_Append Data aaZefirosEnch00Hand
+		ar_Append Data aaZefirosEnch01Hand
+		ar_Append Data aaZefirosEnch02Hand
+		ar_Append Data aaZefirosEnch03Hand
+		ar_Append Data aaZefirosEnch04Hand
+		ar_Append Data aaZefirosEnch05Hand
+		ar_Append Data aaZefirosEnch06Hand
+		ar_Append Data aaZefirosEnch07Hand
+		ar_Append Data aaZefirosEnch08Hand
+		ar_Append Data aaZefirosEnch09Hand
+		ar_Append Data aaZefirosEnch10Hand
+		ar_Append Data aaZefirosEnch11Hand
+		ar_Append Data aaZefirosEnch12Hand
+		ar_Append Data aaZefirosEnch13Hand
+		ar_Append Data aaZefirosEnch14Hand
+		ar_Append Data aaZefirosEnch15Hand
+		ar_Append Data aaZefirosEnch16Hand
+		ar_Append Data aaZefirosEnch17Hand
+		ar_Append Data aaZefirosEnch18Hand
+		ar_Append Data aaZefirosEnch19Hand
+		ar_Append Data aaZefirosEnch20Hand
+		ar_Append Data aaZefirosEnch21Hand
+		ar_Append Data aaZefirosEnch22Hand
+		ar_Append Data aaZefirosEnch23Hand
+		ar_Append Data aaZefirosEnch24Hand
+		ar_Append Data aaZefirosEnch25Hand
+		ar_Append Data aaZefirosEnch26Hand
+		ar_Append Data aaZefirosEnch27Hand
+		ar_Append Data aaZefirosEnch28Hand
+		ar_Append Data aaZefirosEnch29Hand
+		ar_Append Data aaZefirosEnch30Hand
+		ar_Append Data aaZefirosEnch31Hand
+		ar_Append Data aaZefirosEnch32Hand
+		ar_Append Data aaZefirosEnch33Hand
+		ar_Append Data aaZefirosEnch34Hand
+		ar_Append Data aaZefirosEnch35Hand
+		ar_Append Data aaZefirosEnch36Hand
+		ar_Append Data aaZefirosEnch37Hand
+		ar_Append Data aaZefirosEnch38Hand
+		ar_Append Data aaZefirosEnch39Hand
+
+	elseif ( Mode == 3 )
+
+		;-----------------------------------------------------------------------------
+		DebugPrint "Getting Head enchant levels..."
+		;-----------------------------------------------------------------------------
+		ar_Append Data aaZefirosEnch00Head
+		ar_Append Data aaZefirosEnch01Head
+		ar_Append Data aaZefirosEnch02Head
+		ar_Append Data aaZefirosEnch03Head
+		ar_Append Data aaZefirosEnch04Head
+		ar_Append Data aaZefirosEnch05Head
+		ar_Append Data aaZefirosEnch06Head
+		ar_Append Data aaZefirosEnch07Head
+		ar_Append Data aaZefirosEnch08Head
+		ar_Append Data aaZefirosEnch09Head
+		ar_Append Data aaZefirosEnch10Head
+		ar_Append Data aaZefirosEnch11Head
+		ar_Append Data aaZefirosEnch12Head
+		ar_Append Data aaZefirosEnch13Head
+		ar_Append Data aaZefirosEnch14Head
+		ar_Append Data aaZefirosEnch15Head
+		ar_Append Data aaZefirosEnch16Head
+		ar_Append Data aaZefirosEnch17Head
+		ar_Append Data aaZefirosEnch18Head
+		ar_Append Data aaZefirosEnch19Head
+		ar_Append Data aaZefirosEnch20Head
+		ar_Append Data aaZefirosEnch21Head
+		ar_Append Data aaZefirosEnch22Head
+		ar_Append Data aaZefirosEnch23Head
+		ar_Append Data aaZefirosEnch24Head
+		ar_Append Data aaZefirosEnch25Head
+		ar_Append Data aaZefirosEnch26Head
+		ar_Append Data aaZefirosEnch27Head
+		ar_Append Data aaZefirosEnch28Head
+		ar_Append Data aaZefirosEnch29Head
+		ar_Append Data aaZefirosEnch30Head
+		ar_Append Data aaZefirosEnch31Head
+		ar_Append Data aaZefirosEnch32Head
+		ar_Append Data aaZefirosEnch33Head
+		ar_Append Data aaZefirosEnch34Head
+		ar_Append Data aaZefirosEnch35Head
+		ar_Append Data aaZefirosEnch36Head
+		ar_Append Data aaZefirosEnch37Head
+		ar_Append Data aaZefirosEnch38Head
+		ar_Append Data aaZefirosEnch39Head
+
+	elseif ( Mode == 4 )
+
+		;-----------------------------------------------------------------------------
+		DebugPrint "Getting Legs enchant levels..."
+		;-----------------------------------------------------------------------------
+		ar_Append Data aaZefirosEnch00Legs
+		ar_Append Data aaZefirosEnch01Legs
+		ar_Append Data aaZefirosEnch02Legs
+		ar_Append Data aaZefirosEnch03Legs
+		ar_Append Data aaZefirosEnch04Legs
+		ar_Append Data aaZefirosEnch05Legs
+		ar_Append Data aaZefirosEnch06Legs
+		ar_Append Data aaZefirosEnch07Legs
+		ar_Append Data aaZefirosEnch08Legs
+		ar_Append Data aaZefirosEnch09Legs
+		ar_Append Data aaZefirosEnch10Legs
+		ar_Append Data aaZefirosEnch11Legs
+		ar_Append Data aaZefirosEnch12Legs
+		ar_Append Data aaZefirosEnch13Legs
+		ar_Append Data aaZefirosEnch14Legs
+		ar_Append Data aaZefirosEnch15Legs
+		ar_Append Data aaZefirosEnch16Legs
+		ar_Append Data aaZefirosEnch17Legs
+		ar_Append Data aaZefirosEnch18Legs
+		ar_Append Data aaZefirosEnch19Legs
+		ar_Append Data aaZefirosEnch20Legs
+		ar_Append Data aaZefirosEnch21Legs
+		ar_Append Data aaZefirosEnch22Legs
+		ar_Append Data aaZefirosEnch23Legs
+		ar_Append Data aaZefirosEnch24Legs
+		ar_Append Data aaZefirosEnch25Legs
+		ar_Append Data aaZefirosEnch26Legs
+		ar_Append Data aaZefirosEnch27Legs
+		ar_Append Data aaZefirosEnch28Legs
+		ar_Append Data aaZefirosEnch29Legs
+		ar_Append Data aaZefirosEnch30Legs
+		ar_Append Data aaZefirosEnch31Legs
+		ar_Append Data aaZefirosEnch32Legs
+		ar_Append Data aaZefirosEnch33Legs
+		ar_Append Data aaZefirosEnch34Legs
+		ar_Append Data aaZefirosEnch35Legs
+		ar_Append Data aaZefirosEnch36Legs
+		ar_Append Data aaZefirosEnch37Legs
+		ar_Append Data aaZefirosEnch38Legs
+		ar_Append Data aaZefirosEnch39Legs
+
+	elseif ( Mode == 5 )
+
+		;-----------------------------------------------------------------------------
+		DebugPrint "Getting Shld enchant levels..."
+		;-----------------------------------------------------------------------------
+		ar_Append Data aaZefirosEnch00Shld
+		ar_Append Data aaZefirosEnch01Shld
+		ar_Append Data aaZefirosEnch02Shld
+		ar_Append Data aaZefirosEnch03Shld
+		ar_Append Data aaZefirosEnch04Shld
+		ar_Append Data aaZefirosEnch05Shld
+		ar_Append Data aaZefirosEnch06Shld
+		ar_Append Data aaZefirosEnch07Shld
+		ar_Append Data aaZefirosEnch08Shld
+		ar_Append Data aaZefirosEnch09Shld
+		ar_Append Data aaZefirosEnch10Shld
+		ar_Append Data aaZefirosEnch11Shld
+		ar_Append Data aaZefirosEnch12Shld
+		ar_Append Data aaZefirosEnch13Shld
+		ar_Append Data aaZefirosEnch14Shld
+		ar_Append Data aaZefirosEnch15Shld
+		ar_Append Data aaZefirosEnch16Shld
+		ar_Append Data aaZefirosEnch17Shld
+		ar_Append Data aaZefirosEnch18Shld
+		ar_Append Data aaZefirosEnch19Shld
+		ar_Append Data aaZefirosEnch20Shld
+		ar_Append Data aaZefirosEnch21Shld
+		ar_Append Data aaZefirosEnch22Shld
+		ar_Append Data aaZefirosEnch23Shld
+		ar_Append Data aaZefirosEnch24Shld
+		ar_Append Data aaZefirosEnch25Shld
+		ar_Append Data aaZefirosEnch26Shld
+		ar_Append Data aaZefirosEnch27Shld
+		ar_Append Data aaZefirosEnch28Shld
+		ar_Append Data aaZefirosEnch29Shld
+		ar_Append Data aaZefirosEnch30Shld
+		ar_Append Data aaZefirosEnch31Shld
+		ar_Append Data aaZefirosEnch32Shld
+		ar_Append Data aaZefirosEnch33Shld
+		ar_Append Data aaZefirosEnch34Shld
+		ar_Append Data aaZefirosEnch35Shld
+		ar_Append Data aaZefirosEnch36Shld
+		ar_Append Data aaZefirosEnch37Shld
+		ar_Append Data aaZefirosEnch38Shld
+		ar_Append Data aaZefirosEnch39Shld
+
+	endif
+
+
+	;-----------------------------------------------------------------------------
+	SetFunctionValue Data
+	DebugPrint "Levels returned."
+	;-----------------------------------------------------------------------------
+	Return
+;-----------------------------------------------------------------------------
+end ;Function { Mode }
+;-----------------------------------------------------------------------------

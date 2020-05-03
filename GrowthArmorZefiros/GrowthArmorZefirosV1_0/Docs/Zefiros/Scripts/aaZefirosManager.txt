@@ -78,12 +78,12 @@ float fQuestDelayTime
 ;							DLScalar4Head
 ;							DLScarar4Legs
 ;							DLScalar4Shld
-;Magic >	Enchantment >	DLScalar4Body
-;							DLScalar4Foot
-;							DLScalar4Hand
-;							DLScalar4Head
-;							DLScarar4Legs
-;							DLScalar4Shld
+;Magic >	Enchantment >	DLScalar4BodyEnch
+;							DLScalar4FootEnch
+;							DLScalar4HandEnch
+;							DLScalar4HeadEnch
+;							DLScarar4LegsEnch
+;							DLScalar4ShldEnch
 ;-----------------------------------------------------------------------------
 
 ;Parameters
@@ -185,14 +185,50 @@ float fAbsorption
 short CombatXP
 long XPReqHalf
 
-short HalfOnce
-short CapOnce
-short BreakOnce
-
 ;-----------------------------------------------------------------------------
 ;Enchantment variables
 ;-----------------------------------------------------------------------------
-short EnchOnce
+short sEnchStart
+short sEnchSeek
+
+short sFOATBase
+float fFOATMult
+
+short sFOSKBase
+float fFOSKMult
+
+short sFOFABase
+float fFOFAMult
+
+short sFOHEBase
+float fFOHEMult
+
+short sFOSPBase
+float fFOSPMult
+
+short sREFABase
+float fREFAMult
+
+short sREHEBase
+float fREHEMult
+
+short sRESPBase
+float fRESPMult
+
+short sSHLDBase
+float fSHLDMult
+
+short sFTHRBase
+float fFTHRMult
+
+short sREDGBase
+float fREDGMult
+
+short sRFLCBase
+float fRFLCMult
+
+short sSABSBase
+float fSABSMult
 
 ;-----------------------------------------------------------------------------
 ;Resistance variables
@@ -221,7 +257,7 @@ float MenuLag
 float fDamageLag
 
 ;-----------------------------------------------------------------------------
-;Name pre/postfix flags
+;Flags
 ;-----------------------------------------------------------------------------
 short sBodyFix
 short sFootFix
@@ -229,6 +265,11 @@ short sHandFix
 short sHeadFix
 short sLegsFix
 short sShldFix
+
+short HalfOnce
+short CapOnce
+short BreakOnce
+short EnchOnce
 
 ;-----------------------------------------------------------------------------
 ;Strings
@@ -248,6 +289,7 @@ string_var Icon
 ;-----------------------------------------------------------------------------
 array_var Selfs
 array_var Enchs
+array_var EncSt
 array_var Stack
 array_var Item
 
@@ -318,6 +360,8 @@ begin GameMode
 		ar_Append Enchs EnchHead
 		ar_Append Enchs EnchLegs
 		ar_Append Enchs EnchShld
+
+		Let EncSt := Call aaZefirosGetEnchantData
 
 		;Set names
 		Let str_BodyName := Call aaZefirosSetname str_Prefix str_Postfix sBodyFix str_BodyName
@@ -420,7 +464,7 @@ begin GameMode
 
 		
 		;-----------------------------------------------------------------------------
-		;Set Enchantments
+		;Rebuild Enchantments
 		;-----------------------------------------------------------------------------
 		;Reset enchantments
 		ForEach Item <- Enchs
@@ -437,7 +481,32 @@ begin GameMode
 			RemoveEnchantment Val
 
 		loop
+
+		;Build enchantments
+		if ( aaZefirosLevel >= sEnchStart )
+
+			Let Stack := Call aaZefirosGetEnchantLevels 0
+			Call aaZefirosSetEnchant EncSt Stack aaZefirosActvEnchBody EnchBody
 			
+			Let Stack := Call aaZefirosGetEnchantLevels 1
+			Call aaZefirosSetEnchant EncSt Stack aaZefirosActvEnchFoot EnchFoot
+			
+			Let Stack := Call aaZefirosGetEnchantLevels 2
+			Call aaZefirosSetEnchant EncSt Stack aaZefirosActvEnchHand EnchHand
+			
+			Let Stack := Call aaZefirosGetEnchantLevels 3
+			Call aaZefirosSetEnchant EncSt Stack aaZefirosActvEnchHead EnchHead
+			
+			Let Stack := Call aaZefirosGetEnchantLevels 4
+			Call aaZefirosSetEnchant EncSt Stack aaZefirosActvEnchLegs EnchLegs
+			
+			Let Stack := Call aaZefirosGetEnchantLevels 5
+			Call aaZefirosSetEnchant EncSt Stack aaZefirosActvEnchShld EnchShld
+			
+			Let Stack := ar_Null
+
+		endif
+	
 
 		;-----------------------------------------------------------------------------
 		;Set Resistances
@@ -456,8 +525,9 @@ begin GameMode
 
 		endif
 		
-		Call aaZefirosSetEnchants Enchs Selfs
+		Call aaZefirosSetEnchOnItem Enchs Selfs
 
+		;Enchantment effects and model changes do not apply until the item is re-equipped
 		Call aaZefirosRefreshEquipped Player Selfs
 
 

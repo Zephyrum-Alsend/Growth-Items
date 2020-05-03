@@ -1,0 +1,227 @@
+scn aaZefirosGetEnchantData
+
+;Main script
+;-----------------------------------------------------------------------------
+;aaZefirosManager
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;aaZefirosGetEffectCode
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;aaZefirosDefaultINI
+;aaZefirosSetEnchant
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;aaZefirosActvEnchBody
+;aaZefirosActvEnchFoot
+;aaZefirosActvEnchHand
+;aaZefirosActvEnchHead
+;aaZefirosActvEnchLegs
+;aaZefirosActvEnchShld
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;Returns a multi-dimensional array containing most enchantment information.
+;
+;Map structure is: { EffectCode, ActorValueCode, MagnitudeBase, MagnitudeMult,
+;AreaBase, AreaMult, DurationBase, DurationMult, Range }
+;
+;Related globals point to indexes in this array.
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+array_var Data
+array_var Item
+;-----------------------------------------------------------------------------
+
+;-----------------------------------------------------------------------------
+begin Function { }
+;-----------------------------------------------------------------------------
+
+	Let Data := ar_Construct Array
+
+	;-----------------------------------------------------------------------------
+	DebugPrint "Generating enchantment data..."
+	;-----------------------------------------------------------------------------
+
+	;Fortify Strength
+	Let Item := Call aaZefirosGetEffectCode 0
+	ar_Append Data ar_Map 0::Item[0] 1::Item[1] 2::aaZefirosInit.sFOATBase 3::aaZefirosInit.fFOATMult 4::0 5::0 6::0 7::0 8::0
+	;-----------------------------------------------------------------------------
+	;Fortify Intelligence
+	Let Item := Call aaZefirosGetEffectCode 1
+	ar_Append Data ar_Map 0::Item[0] 1::Item[1] 2::aaZefirosInit.sFOATBase 3::aaZefirosInit.fFOATMult 4::0 5::0 6::0 7::0 8::0
+	;-----------------------------------------------------------------------------
+	;Fortify Willpower
+	Let Item := Call aaZefirosGetEffectCode 2
+	ar_Append Data ar_Map 0::Item[0] 1::Item[1] 2::aaZefirosInit.sFOATBase 3::aaZefirosInit.fFOATMult 4::0 5::0 6::0 7::0 8::0
+	;-----------------------------------------------------------------------------
+	;Fortify Agility
+	Let Item := Call aaZefirosGetEffectCode 3
+	ar_Append Data ar_Map 0::Item[0] 1::Item[1] 2::aaZefirosInit.sFOATBase 3::aaZefirosInit.fFOATMult 4::0 5::0 6::0 7::0 8::0
+	;-----------------------------------------------------------------------------
+	;Fortify Speed
+	Let Item := Call aaZefirosGetEffectCode 4
+	ar_Append Data ar_Map 0::Item[0] 1::Item[1] 2::aaZefirosInit.sFOATBase 3::aaZefirosInit.fFOATMult 4::0 5::0 6::0 7::0 8::0
+	;-----------------------------------------------------------------------------
+	;Fortify Endurance
+	Let Item := Call aaZefirosGetEffectCode 5
+	ar_Append Data ar_Map 0::Item[0] 1::Item[1] 2::aaZefirosInit.sFOATBase 3::aaZefirosInit.fFOATMult 4::0 5::0 6::0 7::0 8::0
+	;-----------------------------------------------------------------------------
+	;Fortify Personality
+	Let Item := Call aaZefirosGetEffectCode 6
+	ar_Append Data ar_Map 0::Item[0] 1::Item[1] 2::aaZefirosInit.sFOATBase 3::aaZefirosInit.fFOATMult 4::0 5::0 6::0 7::0 8::0
+	;-----------------------------------------------------------------------------
+	;Fortify Luck
+	Let Item := Call aaZefirosGetEffectCode 7
+	ar_Append Data ar_Map 0::Item[0] 1::Item[1] 2::aaZefirosInit.sFOATBase 3::aaZefirosInit.fFOATMult 4::0 5::0 6::0 7::0 8::0
+	;-----------------------------------------------------------------------------
+	;Fortify Armorer
+	Let Item := Call aaZefirosGetEffectCode 8
+	ar_Append Data ar_Map 0::Item[0] 1::Item[1] 2::aaZefirosInit.sFOSKBase 3::aaZefirosInit.fFOSKMult 4::0 5::0 6::0 7::0 8::0
+	;-----------------------------------------------------------------------------
+	;Fortify Athletics
+	Let Item := Call aaZefirosGetEffectCode 9
+	ar_Append Data ar_Map 0::Item[0] 1::Item[1] 2::aaZefirosInit.sFOSKBase 3::aaZefirosInit.fFOSKMult 4::0 5::0 6::0 7::0 8::0
+	;-----------------------------------------------------------------------------
+	;Fortify Blade
+	Let Item := Call aaZefirosGetEffectCode 10
+	ar_Append Data ar_Map 0::Item[0] 1::Item[1] 2::aaZefirosInit.sFOSKBase 3::aaZefirosInit.fFOSKMult 4::0 5::0 6::0 7::0 8::0
+	;-----------------------------------------------------------------------------
+	;Fortify Block
+	Let Item := Call aaZefirosGetEffectCode 11
+	ar_Append Data ar_Map 0::Item[0] 1::Item[1] 2::aaZefirosInit.sFOSKBase 3::aaZefirosInit.fFOSKMult 4::0 5::0 6::0 7::0 8::0
+	;-----------------------------------------------------------------------------
+	;Fortify Blunt
+	Let Item := Call aaZefirosGetEffectCode 12
+	ar_Append Data ar_Map 0::Item[0] 1::Item[1] 2::aaZefirosInit.sFOSKBase 3::aaZefirosInit.fFOSKMult 4::0 5::0 6::0 7::0 8::0
+	;-----------------------------------------------------------------------------
+	;Fortify Hand To Hand
+	Let Item := Call aaZefirosGetEffectCode 13
+	ar_Append Data ar_Map 0::Item[0] 1::Item[1] 2::aaZefirosInit.sFOSKBase 3::aaZefirosInit.fFOSKMult 4::0 5::0 6::0 7::0 8::0
+	;-----------------------------------------------------------------------------
+	;Fortify Heavy Armor
+	Let Item := Call aaZefirosGetEffectCode 14
+	ar_Append Data ar_Map 0::Item[0] 1::Item[1] 2::aaZefirosInit.sFOSKBase 3::aaZefirosInit.fFOSKMult 4::0 5::0 6::0 7::0 8::0
+	;-----------------------------------------------------------------------------
+	;Fortify Alchemy
+	Let Item := Call aaZefirosGetEffectCode 15
+	ar_Append Data ar_Map 0::Item[0] 1::Item[1] 2::aaZefirosInit.sFOSKBase 3::aaZefirosInit.fFOSKMult 4::0 5::0 6::0 7::0 8::0
+	;-----------------------------------------------------------------------------
+	;Fortify Alteration
+	Let Item := Call aaZefirosGetEffectCode 16
+	ar_Append Data ar_Map 0::Item[0] 1::Item[1] 2::aaZefirosInit.sFOSKBase 3::aaZefirosInit.fFOSKMult 4::0 5::0 6::0 7::0 8::0
+	;-----------------------------------------------------------------------------
+	;Fortify Conjuration
+	Let Item := Call aaZefirosGetEffectCode 17
+	ar_Append Data ar_Map 0::Item[0] 1::Item[1] 2::aaZefirosInit.sFOSKBase 3::aaZefirosInit.fFOSKMult 4::0 5::0 6::0 7::0 8::0
+	;-----------------------------------------------------------------------------
+	;Fortify Destruction
+	Let Item := Call aaZefirosGetEffectCode 18
+	ar_Append Data ar_Map 0::Item[0] 1::Item[1] 2::aaZefirosInit.sFOSKBase 3::aaZefirosInit.fFOSKMult 4::0 5::0 6::0 7::0 8::0
+	;-----------------------------------------------------------------------------
+	;Fortify Illusion
+	Let Item := Call aaZefirosGetEffectCode 19
+	ar_Append Data ar_Map 0::Item[0] 1::Item[1] 2::aaZefirosInit.sFOSKBase 3::aaZefirosInit.fFOSKMult 4::0 5::0 6::0 7::0 8::0
+	;-----------------------------------------------------------------------------
+	;Fortify Mysticism
+	Let Item := Call aaZefirosGetEffectCode 20
+	ar_Append Data ar_Map 0::Item[0] 1::Item[1] 2::aaZefirosInit.sFOSKBase 3::aaZefirosInit.fFOSKMult 4::0 5::0 6::0 7::0 8::0
+	;-----------------------------------------------------------------------------
+	;Fortify Restoration
+	Let Item := Call aaZefirosGetEffectCode 21
+	ar_Append Data ar_Map 0::Item[0] 1::Item[1] 2::aaZefirosInit.sFOSKBase 3::aaZefirosInit.fFOSKMult 4::0 5::0 6::0 7::0 8::0
+	;-----------------------------------------------------------------------------
+	;Fortify Acrobatics
+	Let Item := Call aaZefirosGetEffectCode 22
+	ar_Append Data ar_Map 0::Item[0] 1::Item[1] 2::aaZefirosInit.sFOSKBase 3::aaZefirosInit.fFOSKMult 4::0 5::0 6::0 7::0 8::0
+	;-----------------------------------------------------------------------------
+	;Fortify Light Armor
+	Let Item := Call aaZefirosGetEffectCode 23
+	ar_Append Data ar_Map 0::Item[0] 1::Item[1] 2::aaZefirosInit.sFOSKBase 3::aaZefirosInit.fFOSKMult 4::0 5::0 6::0 7::0 8::0
+	;-----------------------------------------------------------------------------
+	;Fortify Marksman
+	Let Item := Call aaZefirosGetEffectCode 24
+	ar_Append Data ar_Map 0::Item[0] 1::Item[1] 2::aaZefirosInit.sFOSKBase 3::aaZefirosInit.fFOSKMult 4::0 5::0 6::0 7::0 8::0
+	;-----------------------------------------------------------------------------
+	;Fortify Mercantile
+	Let Item := Call aaZefirosGetEffectCode 25
+	ar_Append Data ar_Map 0::Item[0] 1::Item[1] 2::aaZefirosInit.sFOSKBase 3::aaZefirosInit.fFOSKMult 4::0 5::0 6::0 7::0 8::0
+	;-----------------------------------------------------------------------------
+	;Fortify Security
+	Let Item := Call aaZefirosGetEffectCode 26
+	ar_Append Data ar_Map 0::Item[0] 1::Item[1] 2::aaZefirosInit.sFOSKBase 3::aaZefirosInit.fFOSKMult 4::0 5::0 6::0 7::0 8::0
+	;-----------------------------------------------------------------------------
+	;Fortify Sneak
+	Let Item := Call aaZefirosGetEffectCode 27
+	ar_Append Data ar_Map 0::Item[0] 1::Item[1] 2::aaZefirosInit.sFOSKBase 3::aaZefirosInit.fFOSKMult 4::0 5::0 6::0 7::0 8::0
+	;-----------------------------------------------------------------------------
+	;Fortify Speechcraft
+	Let Item := Call aaZefirosGetEffectCode 28
+	ar_Append Data ar_Map 0::Item[0] 1::Item[1] 2::aaZefirosInit.sFOSKBase 3::aaZefirosInit.fFOSKMult 4::0 5::0 6::0 7::0 8::0
+	;-----------------------------------------------------------------------------
+	;Fortify Fatigue
+	Let Item := Call aaZefirosGetEffectCode 29
+	ar_Append Data ar_Map 0::Item[0] 1::Item[1] 2::aaZefirosInit.sFOFABase 3::aaZefirosInit.fFOFAMult 4::0 5::0 6::0 7::0 8::0
+	;-----------------------------------------------------------------------------
+	;Fortify Health
+	Let Item := Call aaZefirosGetEffectCode 30
+	ar_Append Data ar_Map 0::Item[0] 1::Item[1] 2::aaZefirosInit.sFOHEBase 3::aaZefirosInit.fFOHEMult 4::0 5::0 6::0 7::0 8::0
+	;-----------------------------------------------------------------------------
+	;Fortify Magicka
+	Let Item := Call aaZefirosGetEffectCode 31
+	ar_Append Data ar_Map 0::Item[0] 1::Item[1] 2::aaZefirosInit.sFOSPBase 3::aaZefirosInit.fFOSPMult 4::0 5::0 6::0 7::0 8::0
+	;-----------------------------------------------------------------------------
+	;Restore Fatigue
+	Let Item := Call aaZefirosGetEffectCode 32
+	ar_Append Data ar_Map 0::Item[0] 1::Item[1] 2::aaZefirosInit.sREFABase 3::aaZefirosInit.fREFAMult 4::0 5::0 6::0 7::0 8::0
+	;-----------------------------------------------------------------------------
+	;Restore Health
+	Let Item := Call aaZefirosGetEffectCode 33
+	ar_Append Data ar_Map 0::Item[0] 1::Item[1] 2::aaZefirosInit.sREHEBase 3::aaZefirosInit.fREHEMult 4::0 5::0 6::0 7::0 8::0
+	;-----------------------------------------------------------------------------
+	;Restore Magicka
+	Let Item := Call aaZefirosGetEffectCode 34
+	ar_Append Data ar_Map 0::Item[0] 1::Item[1] 2::aaZefirosInit.sRESPBase 3::aaZefirosInit.fRESPMult 4::0 5::0 6::0 7::0 8::0
+	;-----------------------------------------------------------------------------
+	;Shield
+	Let Item := Call aaZefirosGetEffectCode 35
+	ar_Append Data ar_Map 0::Item[0] 1::Item[1] 2::aaZefirosInit.sSHLDBase 3::aaZefirosInit.fSHLDMult 4::0 5::0 6::0 7::0 8::0
+	;-----------------------------------------------------------------------------
+	;Feather
+	Let Item := Call aaZefirosGetEffectCode 36
+	ar_Append Data ar_Map 0::Item[0] 1::Item[1] 2::aaZefirosInit.sFTHRBase 3::aaZefirosInit.fFTHRMult 4::0 5::0 6::0 7::0 8::0
+	;-----------------------------------------------------------------------------
+	;Reflect Damage
+	Let Item := Call aaZefirosGetEffectCode 37
+	ar_Append Data ar_Map 0::Item[0] 1::Item[1] 2::aaZefirosInit.sREDGBase 3::aaZefirosInit.fREDGMult 4::0 5::0 6::0 7::0 8::0
+	;-----------------------------------------------------------------------------
+	;Reflect Spell
+	Let Item := Call aaZefirosGetEffectCode 38
+	ar_Append Data ar_Map 0::Item[0] 1::Item[1] 2::aaZefirosInit.sRFLCBase 3::aaZefirosInit.fRFLCMult 4::0 5::0 6::0 7::0 8::0
+	;-----------------------------------------------------------------------------
+	;Spell Absorption
+	Let Item := Call aaZefirosGetEffectCode 39
+	ar_Append Data ar_Map 0::Item[0] 1::Item[1] 2::aaZefirosInit.sSABSBase 3::aaZefirosInit.fSABSMult 4::0 5::0 6::0 7::0 8::0
+
+
+	;-----------------------------------------------------------------------------
+	SetFunctionValue Data
+	DebugPrint "Returning enchantment data."
+	;-----------------------------------------------------------------------------
+	Return
+;-----------------------------------------------------------------------------
+end ;Function { }
+;-----------------------------------------------------------------------------

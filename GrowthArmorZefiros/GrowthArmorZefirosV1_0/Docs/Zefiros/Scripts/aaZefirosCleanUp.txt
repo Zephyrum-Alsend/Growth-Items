@@ -52,10 +52,11 @@ begin Function { Mode }
 		RemoveEventHandler "OnActorUnequip" aaZefirosOnUnEquip
 
 		;-----------------------------------------------------------------------------
-		DebugPrint "Nulling Selfs, Enchs, Stack, Item arrays."
+		DebugPrint "Nulling Selfs, Enchs, EncSt, Stack, Item arrays."
 		;-----------------------------------------------------------------------------
 		Let aaZefirosInit.Selfs := ar_Null
 		Let aaZefirosInit.Enchs := ar_Null
+		Let aaZefirosInit.EncSt := ar_Null
 		Let aaZefirosInit.Stack := ar_Null
 		Let aaZefirosInit.Item := ar_Null
 

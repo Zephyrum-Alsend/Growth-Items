@@ -1,4 +1,4 @@
-scn aaZefirosSetEnchants
+scn aaZefirosSetEnchOnItem
 
 ;Main script
 ;-----------------------------------------------------------------------------
@@ -32,27 +32,27 @@ scn aaZefirosSetEnchants
 short Count
 short Idx
 
-ref Self
+ref Item
 ref Ench
 
-array_var Selfs
+array_var Items
 array_var Enchs
 ;-----------------------------------------------------------------------------
 
 
 
 ;-----------------------------------------------------------------------------
-begin Function { Enchs, Selfs }
+begin Function { Enchs, Items }
 ;-----------------------------------------------------------------------------
 
 	;Iterate up to the end of the smaller array
-	if eval( ar_Size Enchs ) < eval( ar_Size Selfs )
+	if eval( ar_Size Enchs ) < eval( ar_Size Items )
 
 		Let Count := ar_Size Enchs
 
 	else
 
-		Let Count := ar_Size Selfs
+		Let Count := ar_Size Items
 
 	endif
 
@@ -61,13 +61,13 @@ begin Function { Enchs, Selfs }
 	While ( Idx < Count )
 
 		Let Ench := Enchs[Idx]
-		Let Self := Selfs[Idx]
+		Let Item := Items[Idx]
 
 		;Set enchantment if it actually has any effects
 		if ( GetMagicItemEffectCount Ench > 0 )
 
-			DebugPrint "Assigning enchantment to %n." Self
-			SetEnchantment Ench Self
+			DebugPrint "Assigning enchantment to %n." Item
+			SetEnchantment Ench Item
 
 		endif
 
@@ -77,5 +77,5 @@ begin Function { Enchs, Selfs }
 	
 	Return
 ;-----------------------------------------------------------------------------
-end ;Function { Enchs, Selfs }
+end ;Function { Enchs, Items }
 ;-----------------------------------------------------------------------------

@@ -87,185 +87,193 @@ begin GameMode
 	Let LastXP := aaZefirosXP
 
 	;-----------------------------------------------------------------------------
-	;Determine the divisor
+	if ( XP > 0 )
 	;-----------------------------------------------------------------------------
-	Let Div := 0
-
-	;Fire
-	if ( aaZefirosRLogFire == 1 )
-
-		Let Div += 1
-
-	endif
-
-	;Frost
-	if ( aaZefirosRLogFrost == 1 )
-
-		Let Div += 1
-
-	endif
-
-	;Shock
-	if ( aaZefirosRLogShock == 1 )
-
-		Let Div += 1
-
-	endif
-
-	;Non-Elemental
-	if ( aaZefirosRLogMagic == 1 )
-
-		Let Div += 1
-
-	endif
-
-	;Normal Weapon
-	if ( aaZefirosRLogNormal == 1 )
-
-		Let Div += 1
-
-	endif
-
-	;Non-Normal Weapon
-	if ( aaZefirosRLogPhysical == 1 )
-
-		Let Div += 1
-
-	endif
-
-	;-----------------------------------------------------------------------------
-	;Attribute XP and re-evaluate log flags
-	;-----------------------------------------------------------------------------
-	;If Div > 0 and we have more than just Non-Normal Weapon damage
-	;-----------------------------------------------------------------------------
-	if eval( Div > 0 && !( Div == 1 && aaZefirosRLogPhysical == 1 ) )
-	;-----------------------------------------------------------------------------
-
-		Let XP := XP / Div
-
-		DebugPrint "Detected more than Non-Normal Weapon damage, adding %.2f Resistance XP." XP
-
 
 		;-----------------------------------------------------------------------------
+		;Determine the divisor
+		;-----------------------------------------------------------------------------
+		Let Div := 0
+	
 		;Fire
-		;-----------------------------------------------------------------------------
 		if ( aaZefirosRLogFire == 1 )
-
-			Let aaZefirosRXPFire += XP
-
-			if ( Player.HasMagicEffect FIDG )
-
-				DebugPrint "Still taking Fire damage..."
-
-			else
-
-				DebugPrint "No longer taking Fire damage."
-				Let aaZefirosRLogFire := 0
-
-			endif
-
+	
+			Let Div += 1
+	
 		endif
-
-
-		;-----------------------------------------------------------------------------
+	
 		;Frost
-		;-----------------------------------------------------------------------------
 		if ( aaZefirosRLogFrost == 1 )
-
-			Let aaZefirosRXPFrost += XP
-
-			if ( Player.HasMagicEffect FRDG )
 	
-				DebugPrint "Still taking Frost damage..."
+			Let Div += 1
 	
-			else
-
-				DebugPrint "No longer taking Frost damage."
-				Let aaZefirosRLogFrost := 0
-
-			endif
-
 		endif
-
-
-		;-----------------------------------------------------------------------------
+	
 		;Shock
-		;-----------------------------------------------------------------------------
 		if ( aaZefirosRLogShock == 1 )
-
-			Let aaZefirosRXPShock += XP
-
-			if ( Player.HasMagicEffect SHDG )
-
-				DebugPrint "Still taking Shock damage..."
-
-			else
-
-				DebugPrint "No longer taking Shock damage."
-				Let aaZefirosRLogShock := 0
-
-			endif
-
+	
+			Let Div += 1
+	
 		endif
-
-
-		;-----------------------------------------------------------------------------
+	
 		;Non-Elemental
-		;-----------------------------------------------------------------------------
 		if ( aaZefirosRLogMagic == 1 )
-
-			Let aaZefirosRXPMagic += XP
-
-			if ( Player.HasMagicEffect DGHE )
-
-				DebugPrint "Still taking Health damage..."
-
-			else
-
-				DebugPrint "No longer taking Health damage."
-				Let aaZefirosRLogMagic := 0
-
-			endif
-
+	
+			Let Div += 1
+	
 		endif
-
-
-		;-----------------------------------------------------------------------------
+	
 		;Normal Weapon
-		;-----------------------------------------------------------------------------
 		if ( aaZefirosRLogNormal == 1 )
-
-			Let aaZefirosRXPNormal += XP
-			Let aaZefirosRLogNormal := 0
-
+	
+			Let Div += 1
+	
+		endif
+	
+		;Non-Normal Weapon
+		if ( aaZefirosRLogPhysical == 1 )
+	
+			Let Div += 1
+	
+		endif
+	
+		;-----------------------------------------------------------------------------
+		;Attribute XP and re-evaluate log flags
+		;-----------------------------------------------------------------------------
+		;If Div > 0 and we have more than just Non-Normal Weapon damage
+		;-----------------------------------------------------------------------------
+		if eval( Div > 0 && !( Div == 1 && aaZefirosRLogPhysical == 1 ) )
+		;-----------------------------------------------------------------------------
+	
+			Let XP := XP / Div
+	
+			DebugPrint "Detected more than Non-Normal Weapon damage, adding %.2f Resistance XP." XP
+	
+	
+			;-----------------------------------------------------------------------------
+			;Fire
+			;-----------------------------------------------------------------------------
+			if ( aaZefirosRLogFire == 1 )
+	
+				Let aaZefirosRXPFire += XP
+	
+				if ( Player.HasMagicEffect FIDG )
+	
+					DebugPrint "Still taking Fire damage..."
+	
+				else
+	
+					DebugPrint "No longer taking Fire damage."
+					Let aaZefirosRLogFire := 0
+	
+				endif
+	
+			endif
+	
+	
+			;-----------------------------------------------------------------------------
+			;Frost
+			;-----------------------------------------------------------------------------
+			if ( aaZefirosRLogFrost == 1 )
+	
+				Let aaZefirosRXPFrost += XP
+	
+				if ( Player.HasMagicEffect FRDG )
+		
+					DebugPrint "Still taking Frost damage..."
+		
+				else
+	
+					DebugPrint "No longer taking Frost damage."
+					Let aaZefirosRLogFrost := 0
+	
+				endif
+	
+			endif
+	
+	
+			;-----------------------------------------------------------------------------
+			;Shock
+			;-----------------------------------------------------------------------------
+			if ( aaZefirosRLogShock == 1 )
+	
+				Let aaZefirosRXPShock += XP
+	
+				if ( Player.HasMagicEffect SHDG )
+	
+					DebugPrint "Still taking Shock damage..."
+	
+				else
+	
+					DebugPrint "No longer taking Shock damage."
+					Let aaZefirosRLogShock := 0
+	
+				endif
+	
+			endif
+	
+	
+			;-----------------------------------------------------------------------------
+			;Non-Elemental
+			;-----------------------------------------------------------------------------
+			if ( aaZefirosRLogMagic == 1 )
+	
+				Let aaZefirosRXPMagic += XP
+	
+				if ( Player.HasMagicEffect DGHE )
+	
+					DebugPrint "Still taking Health damage..."
+	
+				else
+	
+					DebugPrint "No longer taking Health damage."
+					Let aaZefirosRLogMagic := 0
+	
+				endif
+	
+			endif
+	
+	
+			;-----------------------------------------------------------------------------
+			;Normal Weapon
+			;-----------------------------------------------------------------------------
+			if ( aaZefirosRLogNormal == 1 )
+	
+				Let aaZefirosRXPNormal += XP
+				Let aaZefirosRLogNormal := 0
+	
+			endif
+	
+	
+		;-----------------------------------------------------------------------------
+		endif ;( Div > 0 && !( Div == 1 && aaZefirosRLogPhysical == 1 ) )
+		;-----------------------------------------------------------------------------
+		Let aaZefirosRLogPhysical := 0
+	
+		;-----------------------------------------------------------------------------
+		;Paralysis
+		;-----------------------------------------------------------------------------
+		if ( aaZefirosRLogParalysis == 1 )
+	
+			;Paralysis is time based instead of damage based
+			Let aaZefirosRXPParalysis += ParaXP
+	
+			if ( Player.HasMagicEffect PARA )
+	
+				DebugPrint "Still Paralyzed..."
+	
+			else
+	
+				DebugPrint "No longer Paralyzed."
+				Let aaZefirosRLogParalysis := 0
+	
+			endif
+	
 		endif
 
-
 	;-----------------------------------------------------------------------------
-	endif ;( Div > 0 && !( Div == 1 && aaZefirosRLogPhysical == 1 ) )
+	endif ;( XP > 0 )
 	;-----------------------------------------------------------------------------
-	Let aaZefirosRLogPhysical := 0
-
-	;-----------------------------------------------------------------------------
-	;Paralysis
-	;-----------------------------------------------------------------------------
-	if ( aaZefirosRLogParalysis == 1 )
-
-		;Paralysis is time based instead of damage based
-		Let aaZefirosRXPParalysis += ParaXP
-
-		if ( Player.HasMagicEffect PARA )
-
-			DebugPrint "Still Paralyzed..."
-
-		else
-
-			DebugPrint "No longer Paralyzed."
-			Let aaZefirosRLogParalysis := 0
-
-		endif
-
-	endif
 
 ;-----------------------------------------------------------------------------
 end ;GameMode
