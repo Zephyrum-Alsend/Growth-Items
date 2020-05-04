@@ -16,13 +16,20 @@ float fQuestDelayTime
 ;-----------------------------------------------------------------------------
 ;aaZefirosDefaultINI
 ;aaZefirosCleanUp
+;aaZefirosGetEnchantData
 ;aaZefirosSetName
+;aaZefirosSetEquipHandlers
 ;aaZefirosGetPCBIP
 ;aaZefirosSetStat
 ;aaZefirosSetWeight
 ;aaZefirosSetXPReq
-;aaZefirosSetEquipHandlers
+;aaZefirosGetEnchantLevels
+;aaZefirosSetEnchant
+;aaZefirosSetResists
+;aaZefirosSetEnchOnItem
+;aaZefirosRefreshEquipped
 ;aaZefirosLogXP
+;aaZefirosSetEffectItem
 ;-----------------------------------------------------------------------------
 
 ;Related scripts
@@ -40,6 +47,19 @@ float fQuestDelayTime
 ;aaZefirosWeightHead
 ;aaZefirosWeightLegs
 ;aaZefirosWeightShld
+;aaZefirosActvEnchBody
+;aaZefirosActvEnchFoot
+;aaZefirosActvEnchHand
+;aaZefirosActvEnchHead
+;aaZefirosActvEnchLegs
+;aaZefirosActvEnchShld
+;aaZefirosRXPFire
+;aaZefirosRXPFrost
+;aaZefirosRXPShock
+;aaZefirosRXPMagic
+;aaZefirosRXPNormal
+;aaZefirosRXPParalysis
+;aaZefirosRXPDisease
 ;aaZefirosXPLog
 ;aaZefirosXP
 ;aaZefirosXPCombat
@@ -55,13 +75,6 @@ float fQuestDelayTime
 ;aaZefirosRLogParalysis
 ;aaZefirosRLogPhysical
 ;aaZefirosRLogShock
-;aaZefirosRXPDisease
-;aaZefirosRXPFire
-;aaZefirosRXPFrost
-;aaZefirosRXPMagic
-;aaZefirosRXPNormal
-;aaZefirosRXPParalysis
-;aaZefirosRXPShock
 ;aaZefirosXPReq
 ;-----------------------------------------------------------------------------
 
@@ -269,7 +282,8 @@ short sShldFix
 short HalfOnce
 short CapOnce
 short BreakOnce
-short EnchOnce
+short SeekOnce
+short RefreshOnce
 
 ;-----------------------------------------------------------------------------
 ;Strings
@@ -390,7 +404,8 @@ begin GameMode
 		Let HalfOnce := 0
 		Let CapOnce := 0
 		Let BreakOnce := 0
-		Let EnchOnce := 0
+		Let SeekOnce := 0
+		Let RefreshOnce := 0
 
 
 		;-----------------------------------------------------------------------------
@@ -548,7 +563,7 @@ begin GameMode
 	;-----------------------------------------------------------------------------
 	;Set script lag
 	;-----------------------------------------------------------------------------
-	if ( fQuestDelayTime != ScriptLag )
+	if ( fQuestDelayTime != ScriptLag && SeekOnce == 0 && RefreshOnce == 0 )
 	
 			Set fQuestDelayTime to ScriptLag
 	
@@ -693,7 +708,190 @@ begin GameMode
 	;-----------------------------------------------------------------------------
 	endif ;( sXPResist > 0 )
 	;-----------------------------------------------------------------------------
+
+	;-----------------------------------------------------------------------------
+	;Enchant Seek
+	;-----------------------------------------------------------------------------
+	if ( SeekOnce > 0 )
+	;-----------------------------------------------------------------------------
+
+		if ( SeekOnce == 1 )
 	
+			;Greatly speed up the script so menus are responsive
+			Let fQuestDelayTime := MenuLag
+			Let Item := ar_Map 0::-1 1::0
+			Let SeekOnce := 2
+			
+		endif
+	
+		;-----------------------------------------------------------------------------
+		;Seek Body enchantment
+		;-----------------------------------------------------------------------------
+		if ( SeekOnce == 2 )
+	
+			Let Item := Call aaZefirosGetEnchChoice str_BodyName 0 Item[0] Item[1]
+	
+			if eval( Item[1] == -1 )
+	
+				Let aaZefirosActvEnchBody := Item[0]
+				Let Stack := Call aaZefirosGetEnchantLevels 0
+				Let Item := Call aaZefirosSetEffectStat EncSt[aaZefirosActvEnchBody][2] EncSt[aaZefirosActvEnchBody][3] EncSt[aaZefirosActvEnchBody][4] EncSt[aaZefirosActvEnchBody][5] EncSt[aaZefirosActvEnchBody][6] EncSt[aaZefirosActvEnchBody][7] Stack[aaZefirosActvEnchBody]
+				Call aaZefirosSetEffectItem Item[0] Item[1] Item[2] EncSt[aaZefirosActvEnchBody][8] EncSt[aaZefirosActvEnchBody][0] EncSt[aaZefirosActvEnchBody][1] EnchBody
+	
+				Let Item := ar_Map 0::-1 1::0
+				Let SeekOnce := 3
+	
+			endif
+	
+		endif
+	
+		;-----------------------------------------------------------------------------
+		;Seek Foot enchantment
+		;-----------------------------------------------------------------------------
+		if ( SeekOnce == 3 )
+	
+			Let Item := Call aaZefirosGetEnchChoice str_FootName 0 Item[0] Item[1]
+	
+			if eval( Item[1] == -1 )
+	
+				Let aaZefirosActvEnchFoot := Item[0]
+				Let Stack := Call aaZefirosGetEnchantLevels 1
+				Let Item := Call aaZefirosSetEffectStat EncSt[aaZefirosActvEnchFoot][2] EncSt[aaZefirosActvEnchFoot][3] EncSt[aaZefirosActvEnchFoot][4] EncSt[aaZefirosActvEnchFoot][5] EncSt[aaZefirosActvEnchFoot][6] EncSt[aaZefirosActvEnchFoot][7] Stack[aaZefirosActvEnchFoot]
+				Call aaZefirosSetEffectItem Item[0] Item[1] Item[2] EncSt[aaZefirosActvEnchFoot][8] EncSt[aaZefirosActvEnchFoot][0] EncSt[aaZefirosActvEnchFoot][1] EnchFoot
+	
+				Let Item := ar_Map 0::-1 1::0
+				Let SeekOnce := 4
+	
+			endif
+	
+		endif
+	
+		;-----------------------------------------------------------------------------
+		;Seek Hand enchantment
+		;-----------------------------------------------------------------------------
+		if ( SeekOnce == 4 )
+	
+			Let Item := Call aaZefirosGetEnchChoice str_HandName 0 Item[0] Item[1]
+	
+			if eval( Item[1] == -1 )
+	
+				Let aaZefirosActvEnchHand := Item[0]
+				Let Stack := Call aaZefirosGetEnchantLevels 2
+				Let Item := Call aaZefirosSetEffectStat EncSt[aaZefirosActvEnchHand][2] EncSt[aaZefirosActvEnchHand][3] EncSt[aaZefirosActvEnchHand][4] EncSt[aaZefirosActvEnchHand][5] EncSt[aaZefirosActvEnchHand][6] EncSt[aaZefirosActvEnchHand][7] Stack[aaZefirosActvEnchHand]
+				Call aaZefirosSetEffectItem Item[0] Item[1] Item[2] EncSt[aaZefirosActvEnchHand][8] EncSt[aaZefirosActvEnchHand][0] EncSt[aaZefirosActvEnchHand][1] EnchHand
+	
+				Let Item := ar_Map 0::-1 1::0
+				Let SeekOnce := 5
+	
+			endif
+	
+		endif
+	
+		;-----------------------------------------------------------------------------
+		;Seek Head enchantment
+		;-----------------------------------------------------------------------------
+		if ( SeekOnce == 5 )
+	
+			Let Item := Call aaZefirosGetEnchChoice str_HeadName 0 Item[0] Item[1]
+	
+			if eval( Item[1] == -1 )
+	
+				Let aaZefirosActvEnchHead := Item[0]
+				Let Stack := Call aaZefirosGetEnchantLevels 3
+				Let Item := Call aaZefirosSetEffectStat EncSt[aaZefirosActvEnchHead][2] EncSt[aaZefirosActvEnchHead][3] EncSt[aaZefirosActvEnchHead][4] EncSt[aaZefirosActvEnchHead][5] EncSt[aaZefirosActvEnchHead][6] EncSt[aaZefirosActvEnchHead][7] Stack[aaZefirosActvEnchHead]
+				Call aaZefirosSetEffectItem Item[0] Item[1] Item[2] EncSt[aaZefirosActvEnchHead][8] EncSt[aaZefirosActvEnchHead][0] EncSt[aaZefirosActvEnchHead][1] EnchHead
+	
+				Let Item := ar_Map 0::-1 1::0
+				Let SeekOnce := 6
+	
+			endif
+	
+		endif
+	
+		;-----------------------------------------------------------------------------
+		;Seek Legs enchantment
+		;-----------------------------------------------------------------------------
+		if ( SeekOnce == 6 )
+	
+			Let Item := Call aaZefirosGetEnchChoice str_LegsName 0 Item[0] Item[1]
+	
+			if eval( Item[1] == -1 )
+	
+				Let aaZefirosActvEnchLegs := Item[0]
+				Let Stack := Call aaZefirosGetEnchantLevels 4
+				Let Item := Call aaZefirosSetEffectStat EncSt[aaZefirosActvEnchLegs][2] EncSt[aaZefirosActvEnchLegs][3] EncSt[aaZefirosActvEnchLegs][4] EncSt[aaZefirosActvEnchLegs][5] EncSt[aaZefirosActvEnchLegs][6] EncSt[aaZefirosActvEnchLegs][7] Stack[aaZefirosActvEnchLegs]
+				Call aaZefirosSetEffectItem Item[0] Item[1] Item[2] EncSt[aaZefirosActvEnchLegs][8] EncSt[aaZefirosActvEnchLegs][0] EncSt[aaZefirosActvEnchLegs][1] EnchLegs
+	
+				Let Item := ar_Map 0::-1 1::0
+				Let SeekOnce := 7
+	
+			endif
+	
+		endif
+	
+		;-----------------------------------------------------------------------------
+		;Seek Shld enchantment
+		;-----------------------------------------------------------------------------
+		if ( SeekOnce == 7 )
+	
+			Let Item := Call aaZefirosGetEnchChoice str_ShldName 1 Item[0] Item[1]
+	
+			if eval( Item[1] == -1 )
+	
+				Let aaZefirosActvEnchShld := Item[0]
+				Let Stack := Call aaZefirosGetEnchantLevels 5
+				Let Item := Call aaZefirosSetEffectStat EncSt[aaZefirosActvEnchShld][2] EncSt[aaZefirosActvEnchShld][3] EncSt[aaZefirosActvEnchShld][4] EncSt[aaZefirosActvEnchShld][5] EncSt[aaZefirosActvEnchShld][6] EncSt[aaZefirosActvEnchShld][7] Stack[aaZefirosActvEnchShld]
+				Call aaZefirosSetEffectItem Item[0] Item[1] Item[2] EncSt[aaZefirosActvEnchShld][8] EncSt[aaZefirosActvEnchShld][0] EncSt[aaZefirosActvEnchShld][1] EnchShld
+	
+				Let Item := ar_Map 0::-1 1::0
+				Let SeekOnce := 8
+	
+			endif
+	
+		endif
+	
+		;-----------------------------------------------------------------------------
+		;Clean up
+		;-----------------------------------------------------------------------------
+		if ( SeekOnce == 8 )
+
+			Call aaZefirosSetEnchOnItem Enchs Selfs
+			Let Item := ar_Null
+			Let Stack := ar_Null
+			Let RefreshOnce := 1
+			Let SeekOnce := 0
+
+		endif
+
+	;-----------------------------------------------------------------------------
+	endif ;( SeekOnce > 0 )
+	;-----------------------------------------------------------------------------
+
+	;-----------------------------------------------------------------------------
+	;Level Up
+	;-----------------------------------------------------------------------------
+
+	;-----------------------------------------------------------------------------
+	;Refresh Equipped Items
+	;-----------------------------------------------------------------------------
+	;2 has to come before 1 so they don't occur on the same frame
+	;If they occur on the same frame, EquipItem fails
+	if ( RefreshOnce == 2 )
+
+		Call aaZefirosRefreshEquip Player Stack
+		Let Stack := ar_Null
+		Let RefreshOnce := 0
+
+	endif
+	
+	if ( RefreshOnce == 1 )
+
+		Let Stack := Call aaZefirosRefreshUnEquip Player Selfs
+		Let fQuestDelayTime := 0.00000000001
+		Let RefreshOnce := 2
+
+	endif
+
 ;-----------------------------------------------------------------------------
 end ;GameMode
 ;-----------------------------------------------------------------------------

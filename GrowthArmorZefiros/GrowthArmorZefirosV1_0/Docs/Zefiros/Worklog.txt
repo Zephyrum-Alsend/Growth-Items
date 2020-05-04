@@ -158,3 +158,28 @@
 -Manager header is still not uptodate
 -Reviewing during documentation process, GetEffectCode may not be necessary... Will keep it around until leveling block(s) are done
 -Added XP > 0 check to DamageAnalysis to save cycles while not in combat
+
+2020.05.03
+-Updated Manager's Used Scripts and Used Globals sections
+-Beginning Enchant Seek code
+-SeekOnce will double as trigger flag for block and storage for button value
+-SeekOnce will not double as trigger flag and button value, because page number and button value are stored in Item
+-Created GetEnchChoice which houses all seek menu code
+-Tested ingame for Shield, Feather, all Restores, some Fortifies - all work as expected
+-Now to test if a while loop emulates the responsiveness of low script lag...
+	-Freezes game
+	-Infinite loop because while loop doesn't give GetButtonePressed enough time to return a value
+-Finished and tested Seek code. Menus work, effects are added, variables cleaned up
+	-Seek code really looks like it could be factored out into a function but... That may fuck up the menus
+-RefreshEquipped is unequipping but not equipping gear after the first initialization
+	-RefreshEquipped during the init phase works
+	-RefreshEquipped after seek phase only unequips
+-Trying adding suit of armor, unequipping armor by equipping newly added armor, then equipping old armor and removing new armor
+	-Still same bug, old armor not re-equipped
+-If I put a pause between the unequip and re-equip, it works
+-Now to find out how short I can make that pause...
+-Looks like as long as they're not done on the same frame the bug won't happen
+-Created RefreshEquip
+-Created RefreshUnEquip
+-Created RefreshOnce flag
+-Added block at bottom of Manager to refresh equipped items in a 2 frame time span, since model change will use it too

@@ -1,4 +1,4 @@
-scn aaZefirosRefreshEquipped
+scn aaZefirosRefreshUnEquip
 
 ;Main script
 ;-----------------------------------------------------------------------------
@@ -11,7 +11,7 @@ scn aaZefirosRefreshEquipped
 
 ;Related scripts
 ;-----------------------------------------------------------------------------
-;aaZefirosRefreshUnEquip
+;aaZefirosRefreshEquipped
 ;aaZefirosRefreshEquip
 ;-----------------------------------------------------------------------------
 
@@ -26,11 +26,7 @@ scn aaZefirosRefreshEquipped
 ;Description
 ;-----------------------------------------------------------------------------
 ;Given an array of Items and an Actor, if the Actor has the item equipped, 
-;re-equip.
-;
-;This function won't work for long after the game starts because of an engine
-;bug. If UnEquipItem and EquipItem are run in the same frame, EquipItem fails.
-;This bug does not happen for a brief time after loading a save.
+;unequip.  Return an array containing all the items successfully unequipped.
 ;-----------------------------------------------------------------------------
 
 ;Parameters
@@ -40,6 +36,7 @@ ref Item
 
 array_var Items
 array_var Iter
+array_var Equip ;Return value
 ;-----------------------------------------------------------------------------
 
 
@@ -48,21 +45,24 @@ array_var Iter
 begin Function { Actor, Items }
 ;-----------------------------------------------------------------------------
 
+	Let Equip := ar_Construct Array
+
 	ForEach Iter <- Items
 
 		Let Item := Iter["value"]
 		
 		if ( Actor.GetEquipped Item )
 
-			DebugPrint "Re-equipping %n on %n." Item Actor
+			DebugPrint "Unequipping %n on %n." Item Actor
 			Actor.UnequipItemSilent Item
-			Actor.EquipItem2NS Item
-
+			ar_Append Equip Item
+			
 		endif
 
 	loop
 
-	
+
+	SetFunctionValue Equip
 	Return
 ;-----------------------------------------------------------------------------
 end ;Function { Actor, Items }

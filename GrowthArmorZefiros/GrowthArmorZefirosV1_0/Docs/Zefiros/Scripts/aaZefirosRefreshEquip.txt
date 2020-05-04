@@ -1,4 +1,4 @@
-scn aaZefirosRefreshEquipped
+scn aaZefirosRefreshEquip
 
 ;Main script
 ;-----------------------------------------------------------------------------
@@ -11,8 +11,8 @@ scn aaZefirosRefreshEquipped
 
 ;Related scripts
 ;-----------------------------------------------------------------------------
+;aaZefirosRefreshEquipped
 ;aaZefirosRefreshUnEquip
-;aaZefirosRefreshEquip
 ;-----------------------------------------------------------------------------
 
 ;Used globals
@@ -25,12 +25,8 @@ scn aaZefirosRefreshEquipped
 
 ;Description
 ;-----------------------------------------------------------------------------
-;Given an array of Items and an Actor, if the Actor has the item equipped, 
-;re-equip.
-;
-;This function won't work for long after the game starts because of an engine
-;bug. If UnEquipItem and EquipItem are run in the same frame, EquipItem fails.
-;This bug does not happen for a brief time after loading a save.
+;Given an array of Items and an Actor, equip them on the Actor.
+;Will fail if called on the same frame as UnEquip due to an engine bug.
 ;-----------------------------------------------------------------------------
 
 ;Parameters
@@ -52,17 +48,12 @@ begin Function { Actor, Items }
 
 		Let Item := Iter["value"]
 		
-		if ( Actor.GetEquipped Item )
-
-			DebugPrint "Re-equipping %n on %n." Item Actor
-			Actor.UnequipItemSilent Item
-			Actor.EquipItem2NS Item
-
-		endif
-
+		DebugPrint "Equipping %n on %n." Item Actor
+		Actor.EquipItem2NS Item
+			
 	loop
 
-	
+
 	Return
 ;-----------------------------------------------------------------------------
 end ;Function { Actor, Items }
