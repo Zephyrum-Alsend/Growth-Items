@@ -44,7 +44,7 @@ begin Function { Target, Items }
 
 	ForEach Value <- Items
 
-		Let Item := Value["value"]
+		Let Item := *Value
 
 		;OnActorEquip fires twice for enchanted items, see Object for OnEquip block
 		;SetEventHandler "OnActorEquip" aaZefirosOnEquip first::Target second::Item

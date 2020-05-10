@@ -42,7 +42,7 @@ scn aaZefirosGetEnchantData
 
 ;Parameters
 ;-----------------------------------------------------------------------------
-array_var Data
+array_var Data ;Return value
 array_var Item
 ;-----------------------------------------------------------------------------
 

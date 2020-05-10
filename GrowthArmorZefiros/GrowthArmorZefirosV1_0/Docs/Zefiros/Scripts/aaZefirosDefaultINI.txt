@@ -47,7 +47,7 @@ begin Function { }
 ;Name
 ;-----------------------------------------------------------------------------
 Let aaZefirosInit.str_Prefix := "Zefiros"
-Let aaZefirosInit.str_Postfix := ""
+Let aaZefirosInit.str_Postfix := "of Growth"
 Let aaZefirosInit.str_BodyName := "Cuirass"
 Let aaZefirosInit.str_FootName := "Greaves"
 Let aaZefirosInit.str_HandName := "Gauntlets"
@@ -60,12 +60,12 @@ Let aaZefirosInit.str_ShldName := "Shield"
 ;1 = Omit prefix
 ;2 = Omit postfix
 ;3 = Omit prefix and postfix
-Let aaZefirosInit.sBodyFix := 0
-Let aaZefirosInit.sFootFix := 0
-Let aaZefirosInit.sHandFix := 0
-Let aaZefirosInit.sHeadFix := 0
-Let aaZefirosInit.sLegsFix := 0
-Let aaZefirosInit.sShldFix := 0
+Let aaZefirosInit.sBodyFix := 2
+Let aaZefirosInit.sFootFix := 2
+Let aaZefirosInit.sHandFix := 2
+Let aaZefirosInit.sHeadFix := 2
+Let aaZefirosInit.sLegsFix := 2
+Let aaZefirosInit.sShldFix := 2
 
 
 ;-----------------------------------------------------------------------------
@@ -171,6 +171,12 @@ Let aaZefirosInit.sXPDisease := 250				;250
 ;RXP for non-damaging hostile effects
 Let aaZefirosInit.sXPNoDmg := 3					;3
 
+;Determines if resistances can appear before sEnchStart
+;RXP is gained regardless
+;0 = Wait till sEnchStart
+;1 = Enchant as soon as resistances are gained
+Let aaZefirosInit.sEnchResist := 0				;0
+
 
 ;-----------------------------------------------------------------------------
 ;Enchantment stats
@@ -181,12 +187,12 @@ Let aaZefirosInit.sEnchStart := 11				;11
 Let aaZefirosInit.sEnchSeek := 5				;5
 
 ;Fortify Attribute
-Let aaZefirosInit.sFOATBase := 1				;1
-Let aaZefirosInit.fFOATMult := 0.6				;0.6
+Let aaZefirosInit.sFOATBase := 2				;2
+Let aaZefirosInit.fFOATMult := 1.2				;1.2
 
 ;Fortify Skill
-Let aaZefirosInit.sFOSKBase	:= 1				;1
-Let aaZefirosInit.fFOSKMult := 0.6				;0.6
+Let aaZefirosInit.sFOSKBase	:= 2				;2
+Let aaZefirosInit.fFOSKMult := 1.2				;1.2
 
 ;Fortify Fatigue
 Let aaZefirosInit.sFOFABase	:= 10				;10
@@ -202,19 +208,19 @@ Let aaZefirosInit.fFOSPMult := 6				;6
 
 ;Restore Fatige
 Let aaZefirosInit.sREFABase := 1				;1
-Let aaZefirosInit.fREFAMult := 0.4				;0.4
+Let aaZefirosInit.fREFAMult := 0.5				;0.5
 
 ;Restore Health
-Let aaZefirosInit.sREHEBase := 0				;0
-Let aaZefirosInit.fREHEMult := 0.1				;0.1
+Let aaZefirosInit.sREHEBase := 1				;1
+Let aaZefirosInit.fREHEMult := 0.125			;0.125
 
 ;Restore Magicka
 Let aaZefirosInit.sRESPBase := 1				;1
-Let aaZefirosInit.fRESPMult := 0.2				;0.2
+Let aaZefirosInit.fRESPMult := 0.25				;0.25
 
 ;Shield
-Let aaZefirosInit.sSHLDBase := 1				;1
-Let aaZefirosInit.fSHLDMult := 0.3334			;0.3334
+Let aaZefirosInit.sSHLDBase := 4				;4
+Let aaZefirosInit.fSHLDMult := 1.1				;1.1
 
 ;Feather
 Let aaZefirosInit.sFTHRBase := 10				;10
@@ -222,15 +228,15 @@ Let aaZefirosInit.fFTHRMult := 6				;6
 
 ;Reflect Damage
 Let aaZefirosInit.sREDGBase := 1				;1
-Let aaZefirosInit.fREDGMult := 0.4				;0.4
+Let aaZefirosInit.fREDGMult := 0.6				;0.6
 
 ;Reflect Spell
 Let aaZefirosInit.sRFLCBase := 1				;1
-Let aaZefirosInit.fRFLCMult := 0.4				;0.4
+Let aaZefirosInit.fRFLCMult := 0.6				;0.6
 
 ;Spell Absorption
 Let aaZefirosInit.sSABSBase := 1				;1
-Let aaZefirosInit.fSABSMult := 0.4				;0.4
+Let aaZefirosInit.fSABSMult := 0.6				;0.6
 
 
 ;-----------------------------------------------------------------------------

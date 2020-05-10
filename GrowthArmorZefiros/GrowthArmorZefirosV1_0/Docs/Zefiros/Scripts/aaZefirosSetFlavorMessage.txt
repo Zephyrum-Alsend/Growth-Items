@@ -1,0 +1,204 @@
+scn aaZefirosSetFlavorMessage
+
+;Main script
+;-----------------------------------------------------------------------------
+;aaZefirosManager
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;Based on the Mode set, display a random flavor message with the passed Icon,
+;Sound and Name for the specified amount of Time (seconds).
+;Also prints message to console.
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+string_var Icon
+string_var Sound
+string_var Name
+short Mode
+float Time
+
+float Ran
+string_var Msg
+;-----------------------------------------------------------------------------
+
+;-----------------------------------------------------------------------------
+begin Function { Icon, Sound, Name, Mode, Time }
+;-----------------------------------------------------------------------------
+
+	if ( Time < 0 )
+
+		MessageEX "Time value negative."
+		DebugPrint "Time value negative."
+		Return
+
+	endif
+
+
+	;These functions can handle incorrect data
+	SetMessageIcon $Icon
+	SetMessageSound $Sound
+
+	Let Ran := rand 0 100
+
+
+	;-----------------------------------------------------------------------------
+	;First boot
+	;-----------------------------------------------------------------------------
+	if ( Mode == 0 )
+
+		if ( Ran <= 50 ) ;50%
+
+			Let Msg := "A curious curio takes refuge in your rucksack..."
+
+		elseif ( Ran <= 90 ) ;40%
+
+			Let Msg := "A sudden weight assails you as an arcane artefact asserts itself into your belongings..."
+
+		else ;10%
+
+			Let Msg := "A great weight is heft upon your shoulders..."
+
+		endif
+
+	;-----------------------------------------------------------------------------
+	;Level up
+	;-----------------------------------------------------------------------------
+	elseif ( Mode == 1 )
+
+		if ( Ran <= 25 ) ;25%
+
+			Let Msg := Name + " grows more robust."
+
+		elseif ( Ran <= 50 ) ;25%
+
+			Let Msg := Name + " becomes closer to a second skin."
+
+		elseif ( Ran <= 75 ) ;25%
+
+			Let Msg := Name + "'s weight assures you."
+
+		else ;25%
+
+			Let Msg := Name + " is more comfortable to wear."
+
+		endif
+
+	;-----------------------------------------------------------------------------
+	;Halfway to level up
+	;-----------------------------------------------------------------------------
+	elseif ( Mode == 2 )
+
+		if ( Ran <= 25 ) ;25%
+
+			Let Msg := Name + " creaks a bit less."
+
+		elseif ( Ran <= 50 ) ;25%
+
+			Let Msg := Name + " groans."
+
+		elseif ( Ran <= 75 ) ;25%
+
+			Let Msg := Name + "'s joints are less stiff."
+
+		else ;25%
+
+			Let Msg := Name + " hums faintly."
+
+		endif
+
+	;-----------------------------------------------------------------------------
+	;Armor Eater
+	;-----------------------------------------------------------------------------
+	elseif ( Mode == 3 )
+
+		if ( Ran <= 25 )
+
+			Let Msg := "Test " + Name
+
+		elseif ( Ran <= 50 )
+
+			Let Msg := "Test " + Name
+
+		elseif ( Ran <= 75 )
+
+			Let Msg := "Test " + Name
+
+		else
+
+			Let Msg := "Test " + Name
+
+		endif
+
+	;-----------------------------------------------------------------------------
+	;Form change
+	;-----------------------------------------------------------------------------
+	elseif ( Mode == 4 )
+
+		if ( Ran <= 25 ) ;25%
+
+			Let Msg := Name + " polymorphs."
+
+		elseif ( Ran <= 50 ) ;25%
+
+			Let Msg := Name + " changes form."
+
+		elseif ( Ran <= 75 ) ;25%
+
+			Let Msg := Name + " restructures itself."
+
+		elseif ( Ran <= 99.99 ) ;24.99%
+
+			Let Msg := Name + " alters its shape."
+
+		else ;0.01%
+
+			Let Msg := "New duds. Who dis?"
+
+		endif
+
+	;-----------------------------------------------------------------------------
+	;Test message
+	;-----------------------------------------------------------------------------
+	elseif ( Mode == 100 )
+
+		Let Msg := "Test " + Name
+
+	;-----------------------------------------------------------------------------
+	;Error message
+	;-----------------------------------------------------------------------------
+	else
+
+		Let Msg := "Message Mode out of range."
+
+	endif
+
+
+	DebugPrint "%BIcon:%b %z %BSound:%b %z %BName:%b %z %BMode:%b %.0f %BTime:%b %.1f %BRan:%b %.2f" Icon Sound Name Mode Time Ran
+	MessageEX "%z" Msg Time
+	printc "%z" Msg
+
+
+	sv_Destruct Msg
+	Return
+;-----------------------------------------------------------------------------
+end ;Function { Icon, Sound, Name, Mode, Time }
+;-----------------------------------------------------------------------------

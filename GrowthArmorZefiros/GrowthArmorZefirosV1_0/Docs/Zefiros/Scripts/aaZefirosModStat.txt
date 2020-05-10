@@ -1,4 +1,4 @@
-scn aaZefirosSetStat
+scn aaZefirosModStat
 
 ;Main script
 ;-----------------------------------------------------------------------------
@@ -25,12 +25,14 @@ scn aaZefirosSetStat
 
 ;Description
 ;-----------------------------------------------------------------------------
-;Sets the stats of the passed item according to the passed values and level.
+;Mods the stats of the passed armor according to the other values passed.
+;
 ;-----------------------------------------------------------------------------
 
 ;Parameters
 ;-----------------------------------------------------------------------------
-short Lvl
+short SLvl
+short ELvl
 
 short ARB
 float WgtB
@@ -42,36 +44,70 @@ float WgtM
 float HltM
 float ValM
 
-float Armor
+float HvyAR
+float HvyWgt
+short HvyFlg
+
+short Armor
 float Weight
 long Health
 long Value
 
 ref Armr
+
+array_var Stat
 ;-----------------------------------------------------------------------------
 
 
 
 ;-----------------------------------------------------------------------------
-begin Function { ARB, WgtB, HltB, ValB, ARM, WgtM, HltM, ValM, Lvl, Armr }
+begin Function { Stat, HvyAR, HvyWgt, HvyFlg, SLvl, ELvl, Armr }
 ;-----------------------------------------------------------------------------
 
 	;At Lv1, stat == Base
-	Let Lvl -= 1
+	Let SLvl -= 1
+	Let ELvl -= 1
 
-	Let Armor := ARB + ( ARM * Lvl )
-	Let Weight := WgtB + ( WgtM * Lvl )
-	Let Health := HltB + ( HltM * Lvl )
-	Let Value := ValB + ( ValM * Lvl )
+	Let ARB := Stat[0]
+	Let WgtB := Stat[1]
+	Let HltB := Stat[2]
+	Let ValB := Stat[3]
+	Let ARM := Stat[4]
+	Let WgtM := Stat[5]
+	Let HltM := Stat[6]
+	Let ValM := Stat[7]
 
-	SetArmorAR Armor Armr
-	SetWeight Weight Armr
-	SetObjectHealth Health Armr
+
+	;Store intermediary result to truncate
+	Let Armor := ( ARM * SLvl )
+	Let Weight := ( WgtM * SLvl )
+	Let Health := ( HltM * SLvl )
+
+	Let Armor := ( ARM * ELvl ) - Armor
+	Let Weight := ( WgtM * ELvl ) - Weight
+	Let Health := ( HltM * ELvl ) - Health
+
+	;Multiply result by Heavy Armor modifier if necessary
+	if ( HvyFlg != 0 )
+
+		Let Armor *= HvyAr
+		Let Weight *= HvyWgt
+
+	endif
+
+	;Without ModGoldValue_T, we have to recalculate it instead
+	Let Value := ValB + ( ValM * ELvl )
+
+
+	DebugPrint "Modding %n 	AR by %.0f, 	Weight by %.2f, 	Health by %.0f, 	Value to %.0f." Armr Armor Weight Health Value
+	ModArmorAR Armor Armr
+	ModWeight Weight Armr
+	ModObjectHealth Health Armr
 	SetGoldValue_T Value Armr
 	;_T makes Value not be stored in the save, like all other stats
 
 
 	Return
 ;-----------------------------------------------------------------------------
-end ;Function { ARB, WgtB, HltB, ValB, ARM, WgtM, HltM, ValM, Lvl, Armr }
+end ;Function { Stat, HvyAR, HvyWgt, HvyFlg, SLvl, ELvl, Armr }
 ;-----------------------------------------------------------------------------

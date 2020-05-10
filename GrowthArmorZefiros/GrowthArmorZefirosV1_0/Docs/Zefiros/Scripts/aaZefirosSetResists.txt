@@ -58,7 +58,7 @@ begin Function { Fire, Frst, Shck, Magc, Nrml, Para, Dise, Enchs }
 
 	ForEach Item <- Enchs
 
-		Let Ench := Item["value"]
+		Let Ench := *Item
 
 		if ( Fire > 0 )
 			

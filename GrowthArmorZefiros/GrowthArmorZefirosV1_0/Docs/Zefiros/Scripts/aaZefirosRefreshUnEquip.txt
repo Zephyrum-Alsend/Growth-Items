@@ -49,7 +49,7 @@ begin Function { Actor, Items }
 
 	ForEach Iter <- Items
 
-		Let Item := Iter["value"]
+		Let Item := *Iter
 		
 		if ( Actor.GetEquipped Item )
 

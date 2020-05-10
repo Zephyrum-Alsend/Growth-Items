@@ -46,7 +46,7 @@ begin Function { Actor, Items }
 
 	ForEach Iter <- Items
 
-		Let Item := Iter["value"]
+		Let Item := *Iter
 		
 		DebugPrint "Equipping %n on %n." Item Actor
 		Actor.EquipItem2NS Item

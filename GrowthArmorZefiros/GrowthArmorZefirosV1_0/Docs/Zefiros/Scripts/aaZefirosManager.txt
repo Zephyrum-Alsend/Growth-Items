@@ -63,6 +63,7 @@ float fQuestDelayTime
 ;aaZefirosXPLog
 ;aaZefirosXP
 ;aaZefirosXPCombat
+;aaZefirosXPReq
 ;-----------------------------------------------------------------------------
 
 ;Related globals
@@ -197,12 +198,14 @@ float fAbsorption
 
 short CombatXP
 long XPReqHalf
+short Level
 
 ;-----------------------------------------------------------------------------
 ;Enchantment variables
 ;-----------------------------------------------------------------------------
 short sEnchStart
 short sEnchSeek
+short sEnchResist
 
 short sFOATBase
 float fFOATMult
@@ -286,6 +289,11 @@ short SeekOnce
 short RefreshOnce
 
 ;-----------------------------------------------------------------------------
+;Shorts
+;-----------------------------------------------------------------------------
+short Num
+
+;-----------------------------------------------------------------------------
 ;Strings
 ;-----------------------------------------------------------------------------
 string_var str_Prefix
@@ -296,7 +304,7 @@ string_var str_HandName
 string_var str_HeadName
 string_var str_LegsName
 string_var str_ShldName
-string_var Icon
+string_var MsgName
 
 ;-----------------------------------------------------------------------------
 ;Arrays
@@ -304,6 +312,7 @@ string_var Icon
 array_var Selfs
 array_var Enchs
 array_var EncSt
+array_var ArmSt
 array_var Stack
 array_var Item
 
@@ -377,6 +386,14 @@ begin GameMode
 
 		Let EncSt := Call aaZefirosGetEnchantData
 
+		Let ArmSt := ar_Construct Array
+		Let ArmSt[0] := ar_Map 0::sBodyARBase 1::fBodyWeightBase 2::sBodyHealthBase 3::lBodyValueBase 4::sBodyARMult 5::fBodyWeightMult 6::fBodyHealthMult 7::fBodyValueMult
+		Let ArmSt[1] := ar_Map 0::sFootARBase 1::fFootWeightBase 2::sFootHealthBase 3::lFootValueBase 4::sFootARMult 5::fFootWeightMult 6::fFootHealthMult 7::fFootValueMult
+		Let ArmSt[2] := ar_Map 0::sHandARBase 1::fHandWeightBase 2::sHandHealthBase 3::lHandValueBase 4::sHandARMult 5::fHandWeightMult 6::fHandHealthMult 7::fHandValueMult
+		Let ArmSt[3] := ar_Map 0::sHeadARBase 1::fHeadWeightBase 2::sHeadHealthBase 3::lHeadValueBase 4::sHeadARMult 5::fHeadWeightMult 6::fHeadHealthMult 7::fHeadValueMult
+		Let ArmSt[4] := ar_Map 0::sLegsARBase 1::fLegsWeightBase 2::sLegsHealthBase 3::lLegsValueBase 4::sLegsARMult 5::fLegsWeightMult 6::fLegsHealthMult 7::fLegsValueMult
+		Let ArmSt[5] := ar_Map 0::sShldARBase 1::fShldWeightBase 2::sShldHealthBase 3::lShldValueBase 4::sShldARMult 5::fShldWeightMult 6::fShldHealthMult 7::fShldValueMult
+
 		;Set names
 		Let str_BodyName := Call aaZefirosSetname str_Prefix str_Postfix sBodyFix str_BodyName
 		Let str_FootName := Call aaZefirosSetname str_Prefix str_Postfix sFootFix str_FootName
@@ -391,6 +408,19 @@ begin GameMode
 		SetName $str_HeadName SelfHead
 		SetName $str_LegsName SelfLegs
 		SetName $str_ShldName SelfShld
+
+		;Set collective name that appears in messages
+		if ( 0 == sv_Length str_Prefix )
+
+			DebugPrint "str_Prefix is empty, using str_Postfix."
+			Let MsgName := "Armor " + str_Postfix
+
+		else
+
+			DebugPrint "Using str_Prefix."
+			Let MsgName := str_Prefix
+
+		endif
 
 		;Set latency during GameMode/MenuMode
 		Let ScriptLag := 0.5
@@ -436,9 +466,7 @@ begin GameMode
 			
 			Let aaZefirosLevel := 1
 
-			Let Icon := "Icons\" + Call aaZefirosGetPCBIP SelfBody
-			SetMessageIcon $Icon
-			MessageEX "A great weight is heft upon your shoulders..." 10
+			Call aaZefirosSetFlavorMessage ( "Icons\" + Call aaZefirosGetPCBIP SelfBody ) "" MsgName 0 12
 
 		endif
 
@@ -446,33 +474,38 @@ begin GameMode
 		;-----------------------------------------------------------------------------
 		;Set armor stats
 		;-----------------------------------------------------------------------------
-		;Set stats of each armor piece
-		Call aaZefirosSetStat sBodyARBase fBodyWeightBase sBodyHealthBase lBodyValueBase sBodyARMult fBodyWeightMult fBodyHealthMult fBodyValueMult aaZefirosLevel SelfBody
-		Call aaZefirosSetStat sFootARBase fFootWeightBase sFootHealthBase lFootValueBase sFootARMult fFootWeightMult fFootHealthMult fFootValueMult aaZefirosLevel SelfFoot
-		Call aaZefirosSetStat sHandARBase fHandWeightBase sHandHealthBase lHandValueBase sHandARMult fHandWeightMult fHandHealthMult fHandValueMult aaZefirosLevel SelfHand
-		Call aaZefirosSetStat sHeadARBase fHeadWeightBase sHeadHealthBase lHeadValueBase sHeadARMult fHeadWeightMult fHeadHealthMult fHeadValueMult aaZefirosLevel SelfHead
-		Call aaZefirosSetStat sLegsARBase fLegsWeightBase sLegsHealthBase lLegsValueBase sLegsARMult fLegsWeightMult fLegsHealthMult fLegsValueMult aaZefirosLevel SelfLegs
-		Call aaZefirosSetStat sShldARBase fShldWeightBase sShldHealthBase lShldValueBase sShldARMult fShldWeightMult fShldHealthMult fShldValueMult aaZefirosLevel SelfShld
+		ForEach Item <- Selfs
 
-		;Set weight of each armor piece
-		Call aaZefirosSetWeight fHeavyAR fHeavyWeight aaZefirosWeightBody SelfBody
-		Call aaZefirosSetWeight fHeavyAR fHeavyWeight aaZefirosWeightFoot SelfFoot
-		Call aaZefirosSetWeight fHeavyAR fHeavyWeight aaZefirosWeightHand SelfHand
-		Call aaZefirosSetWeight fHeavyAR fHeavyWeight aaZefirosWeightHead SelfHead
-		Call aaZefirosSetWeight fHeavyAR fHeavyWeight aaZefirosWeightLegs SelfLegs
-		Call aaZefirosSetWeight fHeavyAR fHeavyWeight aaZefirosWeightShld SelfShld
+			Let Val := *Item
+			SetArmorType 0 Val
 
+		loop
+
+		Let Stack := ar_Map 0::aaZefirosWeightBody 1::aaZefirosWeightFoot 2::aaZefirosWeightHand 3::aaZefirosWeightHead 4::aaZefirosWeightLegs 5::aaZefirosWeightShld
+
+		Let Num := 0
+		while ( Num < 6 )
+
+			Call aaZefirosSetStat ArmSt[Num][0] ArmSt[Num][1] ArmSt[Num][2] ArmSt[Num][3] ArmSt[Num][4] ArmSt[Num][5] ArmSt[Num][6] ArmSt[Num][7] aaZefirosLevel Selfs[Num]
+			Call aaZefirosSetWeight fHeavyAR fHeavyWeight Stack[Num] Selfs[Num]
+
+			Let Num += 1
+		loop
+		
+		Let Num := 0
+		Let Stack := ar_Null
 
 		;-----------------------------------------------------------------------------
-		;Set XPReq
+		;Set Level and XP
 		;-----------------------------------------------------------------------------
 		;XPReq is modified within the function, halfway point returned
 		Let XPReqHalf := Call aaZefirosSetXPReq sXPReqBase sXPReqMult aaZefirosLevel
 
-		;Set levelcap and halfway flags
+		Let Level := aaZefirosLevel
+
+		;Set levelcap flag
 		if ( aaZefirosLevel >= sLevelCap )
 
-			Let HalfOnce := 1
 			Let CapOnce := 1
 
 		endif
@@ -484,7 +517,7 @@ begin GameMode
 		;Reset enchantments
 		ForEach Item <- Enchs
 
-			Let Val := Item["value"]
+			Let Val := *Item
 			RemoveAllEffectItems Val
 
 		loop
@@ -492,7 +525,7 @@ begin GameMode
 		;Purge from armor
 		ForEach Item <- Selfs
 
-			Let Val := Item["value"]
+			Let Val := *Item
 			RemoveEnchantment Val
 
 		loop
@@ -519,6 +552,7 @@ begin GameMode
 			Call aaZefirosSetEnchant EncSt Stack aaZefirosActvEnchShld EnchShld
 			
 			Let Stack := ar_Null
+			Let sEnchResist := 1
 
 		endif
 	
@@ -539,17 +573,21 @@ begin GameMode
 			Call aaZefirosSetResists ResistFI ResistFR ResistSH ResistMA ResistNW ResistPA ResistDI Enchs[0:4]
 
 		endif
-		
-		Call aaZefirosSetEnchOnItem Enchs Selfs
 
-		;Enchantment effects and model changes do not apply until the item is re-equipped
+		if ( sEnchResist != 0 )
+
+			Call aaZefirosSetEnchOnItem Enchs Selfs
+
+		endif
+
+		;All changes will not be applied until the items are re-equipped
 		Call aaZefirosRefreshEquipped Player Selfs
 
 
 		;-----------------------------------------------------------------------------
-		printc "%z%B initialized!%b" str_Prefix
+		printc "%z%B initialized!%b" MsgName
 		;-----------------------------------------------------------------------------
-		
+
 
 	;-----------------------------------------------------------------------------
 	endif ;( GetGameLoaded )
@@ -734,8 +772,8 @@ begin GameMode
 			if eval( Item[1] == -1 )
 	
 				Let aaZefirosActvEnchBody := Item[0]
-				Let Stack := Call aaZefirosGetEnchantLevels 0
-				Let Item := Call aaZefirosSetEffectStat EncSt[aaZefirosActvEnchBody][2] EncSt[aaZefirosActvEnchBody][3] EncSt[aaZefirosActvEnchBody][4] EncSt[aaZefirosActvEnchBody][5] EncSt[aaZefirosActvEnchBody][6] EncSt[aaZefirosActvEnchBody][7] Stack[aaZefirosActvEnchBody]
+				Let Num := Call aaZefirosSetEnchLevel 0 0 aaZefirosActvEnchBody
+				Let Item := Call aaZefirosSetEffectStat EncSt[aaZefirosActvEnchBody][2] EncSt[aaZefirosActvEnchBody][3] EncSt[aaZefirosActvEnchBody][4] EncSt[aaZefirosActvEnchBody][5] EncSt[aaZefirosActvEnchBody][6] EncSt[aaZefirosActvEnchBody][7] Num
 				Call aaZefirosSetEffectItem Item[0] Item[1] Item[2] EncSt[aaZefirosActvEnchBody][8] EncSt[aaZefirosActvEnchBody][0] EncSt[aaZefirosActvEnchBody][1] EnchBody
 	
 				Let Item := ar_Map 0::-1 1::0
@@ -755,8 +793,8 @@ begin GameMode
 			if eval( Item[1] == -1 )
 	
 				Let aaZefirosActvEnchFoot := Item[0]
-				Let Stack := Call aaZefirosGetEnchantLevels 1
-				Let Item := Call aaZefirosSetEffectStat EncSt[aaZefirosActvEnchFoot][2] EncSt[aaZefirosActvEnchFoot][3] EncSt[aaZefirosActvEnchFoot][4] EncSt[aaZefirosActvEnchFoot][5] EncSt[aaZefirosActvEnchFoot][6] EncSt[aaZefirosActvEnchFoot][7] Stack[aaZefirosActvEnchFoot]
+				Let Num := Call aaZefirosSetEnchLevel 1 0 aaZefirosActvEnchFoot
+				Let Item := Call aaZefirosSetEffectStat EncSt[aaZefirosActvEnchFoot][2] EncSt[aaZefirosActvEnchFoot][3] EncSt[aaZefirosActvEnchFoot][4] EncSt[aaZefirosActvEnchFoot][5] EncSt[aaZefirosActvEnchFoot][6] EncSt[aaZefirosActvEnchFoot][7] Num
 				Call aaZefirosSetEffectItem Item[0] Item[1] Item[2] EncSt[aaZefirosActvEnchFoot][8] EncSt[aaZefirosActvEnchFoot][0] EncSt[aaZefirosActvEnchFoot][1] EnchFoot
 	
 				Let Item := ar_Map 0::-1 1::0
@@ -776,8 +814,8 @@ begin GameMode
 			if eval( Item[1] == -1 )
 	
 				Let aaZefirosActvEnchHand := Item[0]
-				Let Stack := Call aaZefirosGetEnchantLevels 2
-				Let Item := Call aaZefirosSetEffectStat EncSt[aaZefirosActvEnchHand][2] EncSt[aaZefirosActvEnchHand][3] EncSt[aaZefirosActvEnchHand][4] EncSt[aaZefirosActvEnchHand][5] EncSt[aaZefirosActvEnchHand][6] EncSt[aaZefirosActvEnchHand][7] Stack[aaZefirosActvEnchHand]
+				Let Num := Call aaZefirosSetEnchLevel 2 0 aaZefirosActvEnchHand
+				Let Item := Call aaZefirosSetEffectStat EncSt[aaZefirosActvEnchHand][2] EncSt[aaZefirosActvEnchHand][3] EncSt[aaZefirosActvEnchHand][4] EncSt[aaZefirosActvEnchHand][5] EncSt[aaZefirosActvEnchHand][6] EncSt[aaZefirosActvEnchHand][7] Num
 				Call aaZefirosSetEffectItem Item[0] Item[1] Item[2] EncSt[aaZefirosActvEnchHand][8] EncSt[aaZefirosActvEnchHand][0] EncSt[aaZefirosActvEnchHand][1] EnchHand
 	
 				Let Item := ar_Map 0::-1 1::0
@@ -797,8 +835,8 @@ begin GameMode
 			if eval( Item[1] == -1 )
 	
 				Let aaZefirosActvEnchHead := Item[0]
-				Let Stack := Call aaZefirosGetEnchantLevels 3
-				Let Item := Call aaZefirosSetEffectStat EncSt[aaZefirosActvEnchHead][2] EncSt[aaZefirosActvEnchHead][3] EncSt[aaZefirosActvEnchHead][4] EncSt[aaZefirosActvEnchHead][5] EncSt[aaZefirosActvEnchHead][6] EncSt[aaZefirosActvEnchHead][7] Stack[aaZefirosActvEnchHead]
+				Let Num := Call aaZefirosSetEnchLevel 3 0 aaZefirosActvEnchHead
+				Let Item := Call aaZefirosSetEffectStat EncSt[aaZefirosActvEnchHead][2] EncSt[aaZefirosActvEnchHead][3] EncSt[aaZefirosActvEnchHead][4] EncSt[aaZefirosActvEnchHead][5] EncSt[aaZefirosActvEnchHead][6] EncSt[aaZefirosActvEnchHead][7] Num
 				Call aaZefirosSetEffectItem Item[0] Item[1] Item[2] EncSt[aaZefirosActvEnchHead][8] EncSt[aaZefirosActvEnchHead][0] EncSt[aaZefirosActvEnchHead][1] EnchHead
 	
 				Let Item := ar_Map 0::-1 1::0
@@ -818,8 +856,8 @@ begin GameMode
 			if eval( Item[1] == -1 )
 	
 				Let aaZefirosActvEnchLegs := Item[0]
-				Let Stack := Call aaZefirosGetEnchantLevels 4
-				Let Item := Call aaZefirosSetEffectStat EncSt[aaZefirosActvEnchLegs][2] EncSt[aaZefirosActvEnchLegs][3] EncSt[aaZefirosActvEnchLegs][4] EncSt[aaZefirosActvEnchLegs][5] EncSt[aaZefirosActvEnchLegs][6] EncSt[aaZefirosActvEnchLegs][7] Stack[aaZefirosActvEnchLegs]
+				Let Num := Call aaZefirosSetEnchLevel 4 0 aaZefirosActvEnchLegs
+				Let Item := Call aaZefirosSetEffectStat EncSt[aaZefirosActvEnchLegs][2] EncSt[aaZefirosActvEnchLegs][3] EncSt[aaZefirosActvEnchLegs][4] EncSt[aaZefirosActvEnchLegs][5] EncSt[aaZefirosActvEnchLegs][6] EncSt[aaZefirosActvEnchLegs][7] Num
 				Call aaZefirosSetEffectItem Item[0] Item[1] Item[2] EncSt[aaZefirosActvEnchLegs][8] EncSt[aaZefirosActvEnchLegs][0] EncSt[aaZefirosActvEnchLegs][1] EnchLegs
 	
 				Let Item := ar_Map 0::-1 1::0
@@ -839,8 +877,8 @@ begin GameMode
 			if eval( Item[1] == -1 )
 	
 				Let aaZefirosActvEnchShld := Item[0]
-				Let Stack := Call aaZefirosGetEnchantLevels 5
-				Let Item := Call aaZefirosSetEffectStat EncSt[aaZefirosActvEnchShld][2] EncSt[aaZefirosActvEnchShld][3] EncSt[aaZefirosActvEnchShld][4] EncSt[aaZefirosActvEnchShld][5] EncSt[aaZefirosActvEnchShld][6] EncSt[aaZefirosActvEnchShld][7] Stack[aaZefirosActvEnchShld]
+				Let Num := Call aaZefirosSetEnchLevel 5 0 aaZefirosActvEnchShld
+				Let Item := Call aaZefirosSetEffectStat EncSt[aaZefirosActvEnchShld][2] EncSt[aaZefirosActvEnchShld][3] EncSt[aaZefirosActvEnchShld][4] EncSt[aaZefirosActvEnchShld][5] EncSt[aaZefirosActvEnchShld][6] EncSt[aaZefirosActvEnchShld][7] Num
 				Call aaZefirosSetEffectItem Item[0] Item[1] Item[2] EncSt[aaZefirosActvEnchShld][8] EncSt[aaZefirosActvEnchShld][0] EncSt[aaZefirosActvEnchShld][1] EnchShld
 	
 				Let Item := ar_Map 0::-1 1::0
@@ -857,7 +895,7 @@ begin GameMode
 
 			Call aaZefirosSetEnchOnItem Enchs Selfs
 			Let Item := ar_Null
-			Let Stack := ar_Null
+			Let Num := 0
 			Let RefreshOnce := 1
 			Let SeekOnce := 0
 
@@ -870,7 +908,148 @@ begin GameMode
 	;-----------------------------------------------------------------------------
 	;Level Up
 	;-----------------------------------------------------------------------------
+	while ( CapOnce == 0 && aaZefirosXP >= aaZefirosXPReq && SeekOnce == 0 )
 
+		Let aaZefirosLevel += 1
+
+		;Set SeekOnce flag every sEnchSeek levels after sEnchStart
+		if ( aaZefirosLevel >= sEnchStart && ( aaZefirosLevel - sEnchStart ) % sEnchSeek == 0 )
+
+			Let SeekOnce := 1
+
+		endif
+
+		;Set XPReq
+		Let XPReqHalf := Call aaZefirosSetXPReq sXPReqBase sXPReqMult aaZefirosLevel
+		Let HalfOnce := 0
+
+		;Check for level cap
+		if ( aaZefirosLevel >= sLevelCap )
+
+			Let CapOnce := 1
+	
+		endif
+
+	loop
+
+	;-----------------------------------------------------------------------------
+	;Apply level changes
+	;-----------------------------------------------------------------------------
+	if ( Level != aaZefirosLevel )
+	;-----------------------------------------------------------------------------
+	;Includes some redundant flag checks with Level up block so flags are set properly if XP is circumvented
+
+		;Set SeekOnce
+		if ( aaZefirosLevel >= sEnchStart && ( aaZefirosLevel - sEnchStart ) % sEnchSeek == 0 )
+
+			Let SeekOnce := 1
+
+		endif
+
+		;-----------------------------------------------------------------------------
+		;Mod active enchantments
+		;-----------------------------------------------------------------------------
+		;Skip increment if no enchantments exist already
+		if ( aaZefirosLevel >= sEnchStart && aaZefirosLevel != sEnchStart )
+			
+			Let Num := Call aaZefirosSetEnchLevel 0 ( aaZefirosLevel - Level ) aaZefirosActvEnchBody
+			Let Item := Call aaZefirosSetEffectStat EncSt[aaZefirosActvEnchBody][2] EncSt[aaZefirosActvEnchBody][3] EncSt[aaZefirosActvEnchBody][4] EncSt[aaZefirosActvEnchBody][5] EncSt[aaZefirosActvEnchBody][6] EncSt[aaZefirosActvEnchBody][7] Num
+			Call aaZefirosSetEffectItem Item[0] Item[1] Item[2] EncSt[aaZefirosActvEnchBody][8] EncSt[aaZefirosActvEnchBody][0] EncSt[aaZefirosActvEnchBody][1] EnchBody
+	
+			Let Num := Call aaZefirosSetEnchLevel 1 ( aaZefirosLevel - Level ) aaZefirosActvEnchFoot
+			Let Item := Call aaZefirosSetEffectStat EncSt[aaZefirosActvEnchFoot][2] EncSt[aaZefirosActvEnchFoot][3] EncSt[aaZefirosActvEnchFoot][4] EncSt[aaZefirosActvEnchFoot][5] EncSt[aaZefirosActvEnchFoot][6] EncSt[aaZefirosActvEnchFoot][7] Num
+			Call aaZefirosSetEffectItem Item[0] Item[1] Item[2] EncSt[aaZefirosActvEnchFoot][8] EncSt[aaZefirosActvEnchFoot][0] EncSt[aaZefirosActvEnchFoot][1] EnchFoot
+	
+			Let Num := Call aaZefirosSetEnchLevel 2 ( aaZefirosLevel - Level ) aaZefirosActvEnchHand
+			Let Item := Call aaZefirosSetEffectStat EncSt[aaZefirosActvEnchHand][2] EncSt[aaZefirosActvEnchHand][3] EncSt[aaZefirosActvEnchHand][4] EncSt[aaZefirosActvEnchHand][5] EncSt[aaZefirosActvEnchHand][6] EncSt[aaZefirosActvEnchHand][7] Num
+			Call aaZefirosSetEffectItem Item[0] Item[1] Item[2] EncSt[aaZefirosActvEnchHand][8] EncSt[aaZefirosActvEnchHand][0] EncSt[aaZefirosActvEnchHand][1] EnchHand
+	
+			Let Num := Call aaZefirosSetEnchLevel 3 ( aaZefirosLevel - Level ) aaZefirosActvEnchHead
+			Let Item := Call aaZefirosSetEffectStat EncSt[aaZefirosActvEnchHead][2] EncSt[aaZefirosActvEnchHead][3] EncSt[aaZefirosActvEnchHead][4] EncSt[aaZefirosActvEnchHead][5] EncSt[aaZefirosActvEnchHead][6] EncSt[aaZefirosActvEnchHead][7] Num
+			Call aaZefirosSetEffectItem Item[0] Item[1] Item[2] EncSt[aaZefirosActvEnchHead][8] EncSt[aaZefirosActvEnchHead][0] EncSt[aaZefirosActvEnchHead][1] EnchHead
+	
+			Let Num := Call aaZefirosSetEnchLevel 4 ( aaZefirosLevel - Level ) aaZefirosActvEnchLegs
+			Let Item := Call aaZefirosSetEffectStat EncSt[aaZefirosActvEnchLegs][2] EncSt[aaZefirosActvEnchLegs][3] EncSt[aaZefirosActvEnchLegs][4] EncSt[aaZefirosActvEnchLegs][5] EncSt[aaZefirosActvEnchLegs][6] EncSt[aaZefirosActvEnchLegs][7] Num
+			Call aaZefirosSetEffectItem Item[0] Item[1] Item[2] EncSt[aaZefirosActvEnchLegs][8] EncSt[aaZefirosActvEnchLegs][0] EncSt[aaZefirosActvEnchLegs][1] EnchLegs
+
+			Let Num := Call aaZefirosSetEnchLevel 5 ( aaZefirosLevel - Level ) aaZefirosActvEnchShld
+			Let Item := Call aaZefirosSetEffectStat EncSt[aaZefirosActvEnchShld][2] EncSt[aaZefirosActvEnchShld][3] EncSt[aaZefirosActvEnchShld][4] EncSt[aaZefirosActvEnchShld][5] EncSt[aaZefirosActvEnchShld][6] EncSt[aaZefirosActvEnchShld][7] Num
+			Call aaZefirosSetEffectItem Item[0] Item[1] Item[2] EncSt[aaZefirosActvEnchShld][8] EncSt[aaZefirosActvEnchShld][0] EncSt[aaZefirosActvEnchShld][1] EnchShld
+
+			Let Num := 0
+			Let Item := ar_Null
+
+		;-----------------------------------------------------------------------------
+		endif ;( aaZefirosLevel >= sEnchStart )
+		;-----------------------------------------------------------------------------
+
+		;-----------------------------------------------------------------------------
+		;Mod armor stats
+		;-----------------------------------------------------------------------------
+		Let Stack := ar_Map 0::aaZefirosWeightBody 1::aaZefirosWeightFoot 2::aaZefirosWeightHand 3::aaZefirosWeightHead 4::aaZefirosWeightLegs 5::aaZefirosWeightShld
+
+		Let Num := 0
+		while ( Num < 6 )
+
+			Call aaZefirosModStat ArmSt[Num] fHeavyAR fHeavyWeight Stack[Num] Level aaZefirosLevel Selfs[Num]
+
+			Let Num += 1
+		loop
+
+		Let Num := 0
+		Let Stack := ar_Null
+		
+		;-----------------------------------------------------------------------------
+		;Log level change
+		;-----------------------------------------------------------------------------
+		;De-level to 1
+		if ( aaZefirosLevel == 1 )
+
+			Call aaZefirosSetFlavorBox MsgName 1
+
+		;Level up
+		elseif ( aaZefirosLevel - Level > 0 )
+
+			Call aaZefirosSetFlavorMessage ( "Icons\" + Call aaZefirosGetPCBIP SelfBody ) "" MsgName 1 8
+
+		;Level cap - set CapOnce
+		elseif ( aaZefirosLevel >= sLevelCap )
+
+			Let CapOnce := 1
+			Call aaZefirosSetFlavorBox MsgName 0
+
+		;Level down
+		else
+
+			Call aaZefirosSetFlavorBox MsgName 2
+
+		endif
+		
+		Call aaZefirosLogLevel MsgName aaZefirosLevel
+		Let Level := aaZefirosLevel
+
+		;Stat changes won't apply until re-equipped
+		;Seek code also sets RefreshOnce
+		if ( SeekOnce == 0 )
+
+			Let RefreshOnce := 1
+
+		endif
+		
+	;-----------------------------------------------------------------------------
+	endif ;( Level != aaZefirosLevel )
+	;-----------------------------------------------------------------------------
+
+	;-----------------------------------------------------------------------------
+	;Halfway message
+	;-----------------------------------------------------------------------------
+	if ( CapOnce == 0 && HalfOnce == 0 && aaZefirosXP >= XPReqHalf )
+
+		Call aaZefirosSetFlavorMessage ( "Icons\" + Call aaZefirosGetPCBIP SelfBody ) "" MsgName 2 4
+		Let HalfOnce := 1
+
+	endif
+	
 	;-----------------------------------------------------------------------------
 	;Refresh Equipped Items
 	;-----------------------------------------------------------------------------

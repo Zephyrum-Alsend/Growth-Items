@@ -42,7 +42,7 @@ long Magnitude
 long Area
 long Duration
 
-array_var Stats
+array_var Stats ;Return value
 ;-----------------------------------------------------------------------------
 
 

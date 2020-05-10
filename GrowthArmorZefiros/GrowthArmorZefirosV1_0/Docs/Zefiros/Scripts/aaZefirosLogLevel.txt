@@ -1,8 +1,8 @@
-scn aaZefirosSetStat
+scn aaZefirosLogLevel
 
 ;Main script
 ;-----------------------------------------------------------------------------
-;aaZefirosManager
+;aaZefirosManger
 ;-----------------------------------------------------------------------------
 
 ;Used scripts
@@ -11,7 +11,6 @@ scn aaZefirosSetStat
 
 ;Related scripts
 ;-----------------------------------------------------------------------------
-;aaZefirosDefaultINI
 ;-----------------------------------------------------------------------------
 
 ;Used globals
@@ -20,58 +19,28 @@ scn aaZefirosSetStat
 
 ;Related globals
 ;-----------------------------------------------------------------------------
-;aaZefirosLevel
 ;-----------------------------------------------------------------------------
 
 ;Description
 ;-----------------------------------------------------------------------------
-;Sets the stats of the passed item according to the passed values and level.
+;Logs the new level to console.
 ;-----------------------------------------------------------------------------
 
 ;Parameters
 ;-----------------------------------------------------------------------------
 short Lvl
-
-short ARB
-float WgtB
-short HltB
-long ValB
-
-short ARM
-float WgtM
-float HltM
-float ValM
-
-float Armor
-float Weight
-long Health
-long Value
-
-ref Armr
+string_var Name
 ;-----------------------------------------------------------------------------
 
 
 
 ;-----------------------------------------------------------------------------
-begin Function { ARB, WgtB, HltB, ValB, ARM, WgtM, HltM, ValM, Lvl, Armr }
+begin Function { Name, Lvl }
 ;-----------------------------------------------------------------------------
 
-	;At Lv1, stat == Base
-	Let Lvl -= 1
-
-	Let Armor := ARB + ( ARM * Lvl )
-	Let Weight := WgtB + ( WgtM * Lvl )
-	Let Health := HltB + ( HltM * Lvl )
-	Let Value := ValB + ( ValM * Lvl )
-
-	SetArmorAR Armor Armr
-	SetWeight Weight Armr
-	SetObjectHealth Health Armr
-	SetGoldValue_T Value Armr
-	;_T makes Value not be stored in the save, like all other stats
-
+	printc "%B%z became level %b%.0f%B!%b" Name Lvl
 
 	Return
 ;-----------------------------------------------------------------------------
-end ;Function { ARB, WgtB, HltB, ValB, ARM, WgtM, HltM, ValM, Lvl, Armr }
+end ;Function { Name, Lvl }
 ;-----------------------------------------------------------------------------
