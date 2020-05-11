@@ -81,19 +81,19 @@ begin Function { Name, Mode }
 
 		if ( Ran <= 25 )
 
-			Let Msg := Name + " grows more robust."
+			Let Msg := "Test " + Name
 
 		elseif ( Ran <= 50 )
 
-			Let Msg := Name + " becomes closer to a second skin."
+			Let Msg := "Test " + Name
 
 		elseif ( Ran <= 75 )
 
-			Let Msg := Name + "'s weight assures you."
+			Let Msg := "Test " + Name
 
 		else
 
-			Let Msg := Name + " is more comfortable to wear."
+			Let Msg := "Test " + Name
 
 		endif
 

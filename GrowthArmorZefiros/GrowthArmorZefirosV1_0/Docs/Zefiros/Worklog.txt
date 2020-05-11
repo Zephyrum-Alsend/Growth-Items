@@ -226,3 +226,38 @@
 -Consolidated ModStat DebugPrints into 1 line to reduce console clog on level up
 -Cannot reduce DebugPrint lines further without reducing their usefulness as diagnostics
 	-If wearing half set, can still see command to change aaZefirosLevel in log after level up
+
+2020.05.11
+-begun prepping level change block to handle break changes
+	-stats need no new code
+	-added branches to enchant increment for disenchant
+	-adapting SetEnchLevel to handle resetting everything to 0
+		-Found it didn't keep globals from going negative, so fixing that too
+	-RemoveAllEffectItems is causing CTD
+		-Removed ForEach loop, tried just RemoveAllEffectItems EnchBody
+			-Works
+		-Individually called RemoveAllEffectItems on all enchants
+			-CTD
+		-Comment out 1 call, for Shld
+			-Works
+		-Uncomment Shld, comment out Legs, still 5/6 active
+			-Works
+		-Try all 6 to be sure
+			-Works...?
+		-Try ForEach loop again, b/c fuck it
+			-Works???
+-Changed SeekOnce check to handle its level getting skipped
+-Removed SeekOnce check from Level up block, as its purpose was to prevent Level change block from skipping Seek levels
+-Created Equip array so RefreshOnce can use that instead of Stack
+	-Nothing uses Stack while RefreshOnce > 0 right now, but can't guarantee that in the future
+-Added extra stage to RefreshOnce so you don't appear naked during message boxes
+-Having Level change block stop every Seek level is requiring a number of new, complex if statements
+-Level change block now properly handles leveling up past multiple Seek levels, or just one, including from below sEnchStart
+-Moved SetXPReq from Level Up to Level Change so XP behaves normally without an extra console command
+-Moved SetXPReq back because XP is kept at 0 without the Set XP to XPReq console command, making first genuine level up take forever
+-Level Change still has to handle enchant level down while staying above sEnchStart
+	-Round robin reduce each by sEnchSeek like Dusfergon?
+	-Could track each Seek choice with array_var, but array_var goes poof on QuitGame
+	-string_vars are saved with save file
+	-What if player changes Seek frequency? Will have to track the enchant increment for each level
+-Created ActvBody/Foot/Hand/Head/Legs/Shld string_vars for above purpose
