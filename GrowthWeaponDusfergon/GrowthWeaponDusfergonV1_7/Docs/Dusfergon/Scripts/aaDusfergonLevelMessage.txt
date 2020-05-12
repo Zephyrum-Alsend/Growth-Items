@@ -1,0 +1,111 @@
+scn aaDusfergonLevelMessage
+
+;Main script
+;-----------------------------------------------------------------------------
+;aaDusfergonManager
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;Displays either a random half-way message or a random level up message,
+;depending on whether Mode is 0 or 1 respectively.
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+short Mode
+float Rando
+string_var Icon
+string_var Name
+;-----------------------------------------------------------------------------
+
+
+
+;-----------------------------------------------------------------------------
+begin Function { Mode, Icon, Name }
+;-----------------------------------------------------------------------------
+
+	Set Rando to rand 0 100
+
+	SetMessageIcon $Icon
+	
+	;Half-way messages
+	if ( Mode == 0 )
+
+		if ( Rando <= 18 )
+
+			MessageEX "%z itches..." Name 4
+	
+		elseif ( Rando <= 36 )
+	
+			MessageEX "%z stirs..." Name 4
+	
+		elseif ( Rando <= 54 )
+	
+			MessageEX "%z quivers..." Name 4
+	
+		elseif ( Rando <= 72 )
+	
+			MessageEX "%z sips magicka..." Name 4
+	
+		elseif ( Rando <= 90 )
+	
+			MessageEX "%z sheens..." Name 4
+
+		elseif ( Rando <= 100 )
+
+			MessageEX "%z seethes..." Name 4
+	
+		endif
+
+
+	;Level Up messages
+	else
+
+		if ( Rando <= 18 )
+
+			MessageEX "%z seems a little cleaner." Name 8
+
+		elseif ( Rando <= 36 )
+
+			MessageEX "%z gleams satisfactorily." Name 8
+
+		elseif ( Rando <= 54 )
+
+			MessageEX "%z rests comfortably in the hand." Name 8
+
+		elseif ( Rando <= 72 )
+
+			MessageEX "%z feels a little heftier." Name 8
+
+		elseif ( Rando <= 90 )
+
+			MessageEX "%z radiates ambient magicka." Name 8
+
+		elseif ( Rando <= 100 )
+
+			MessageEX "%z grasps latent power." Name 8
+
+		endif
+
+	endif
+
+;-----------------------------------------------------------------------------
+end ;Function { Mode, Icon, Name }
+;-----------------------------------------------------------------------------

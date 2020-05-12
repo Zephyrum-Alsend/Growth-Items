@@ -1,0 +1,76 @@
+scn aaDusfergonSetLevelCap
+
+;Main script
+;-----------------------------------------------------------------------------
+;aaDusfergonManager
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;aaDusfergonDefaultINI
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;Based on the passed Mode flag, returns the new value for sLevelCap.
+;1 = PC Level
+;2 = PC Blade/Blunt/Marksman total sum
+;3 = PC Blade/Blunt/Marksman average
+;4 = PC Fame
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+short Mode
+short LvlCap ;Return value
+;-----------------------------------------------------------------------------
+
+;-----------------------------------------------------------------------------
+begin Function { Mode }
+;-----------------------------------------------------------------------------
+
+	;Level
+	if ( Mode == 1 )
+
+		Let LvlCap := Player.GetLevel
+
+	;Skill total
+	elseif ( Mode == 2 )
+
+		Let LvlCap := ( Player.GetActorValue Blade ) + ( Player.GetActorValue Blunt ) + ( Player.GetActorValue Marksman )
+
+	;Skill average
+	elseif ( Mode == 3 )
+
+		Let LvlCap := ( ( Player.GetActorValue Blade ) + ( Player.GetActorValue Blunt ) + ( Player.GetActorValue Marksman ) ) / 3
+
+	;Fame
+	elseif ( Mode == 4 )
+
+		Let LvlCap := GetPCFame
+
+	;Failsafe incase user sets Mode out of bounds
+	else
+
+		Let LvlCap := aaDusfergonInit.sLevelCap
+		
+	endif
+		
+	
+	SetFunctionValue LvlCap
+	Return
+;-----------------------------------------------------------------------------
+end ;Function { Mode }
+;-----------------------------------------------------------------------------

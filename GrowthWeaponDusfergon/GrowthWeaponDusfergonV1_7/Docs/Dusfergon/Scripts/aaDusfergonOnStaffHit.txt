@@ -1,0 +1,67 @@
+scn aaDusfergonOnStaffHit
+
+;Main script
+;-----------------------------------------------------------------------------
+;aaDusfergonManager
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;aaDusfergonDefaultINI
+;aaDusfergonOnHit
+;aaDusfergonOnBowHit
+;aaDusfergonOnArrowHit
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
+;aaDusfergonCombatXPLog
+;aaDusfergonCombatXPStart
+;aaDusfergonXP
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;Awards XP when a valid target is hit by DLScalar3SEnch and starts logger.
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+ref Target
+;-----------------------------------------------------------------------------
+
+
+
+;-----------------------------------------------------------------------------
+begin ScriptEffectStart
+;-----------------------------------------------------------------------------
+	;Magic effect scripts are called/run by the one(s) hit by them
+	Set Target to GetSelf
+
+	;Check if Target is a living NPC at time of impact
+	if ( Target.IsActor == 1 && Target.GetDead == 0 )
+		
+		;Start combat logger
+		if ( aaDusfergonCombatXPLog == 0 )
+
+			Set aaDusfergonCombatXPStart to aaDusfergonXP
+			Set aaDusfergonCombatXPLog to 1
+
+		endif
+
+		;Add XP
+		Set aaDusfergonXP to ( aaDusfergonXP + aaDusfergonInit.sXPStaff )
+
+	endif
+	
+;-----------------------------------------------------------------------------
+end ;ScriptEffectStart
+;-----------------------------------------------------------------------------

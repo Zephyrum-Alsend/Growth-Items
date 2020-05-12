@@ -1,0 +1,141 @@
+scn aaDusfergonKeyBinds
+
+;The quest this is attached to, 
+;and therefore this script, 
+;run every this second(s).
+float fQuestDelayTime
+
+;Main script
+;-----------------------------------------------------------------------------
+;aaDusfergonManager
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;aaDusfergonRandomModel
+;aaDusfergonExchange
+;aaDusfergonShowModelName
+;aaDusfergonEnchDisplay
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;aaDusfergonDefaultINI
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
+;aaDusfergonModelLast
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;Handles hot keys during GameMode so as to not risk overloading the engine
+;with other checks happening just as frequently.
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+;Latency
+float fKeyLag
+
+;GameMode
+short sGMainKey
+short sGEnchKey
+short sGNameKey
+short sGRandKey
+
+short sGMainBut
+short sGEnchBut
+short sGNameBut
+short sGRandBut
+
+;Misc
+short StaffIdx
+string_var Icon
+ref self
+;-----------------------------------------------------------------------------
+
+
+
+;-----------------------------------------------------------------------------
+begin GameMode
+;-----------------------------------------------------------------------------
+
+	;-----------------------------------------------------------------------------
+	;Initializer sub-block
+	;-----------------------------------------------------------------------------
+	if GetGameLoaded
+	;-----------------------------------------------------------------------------
+
+		;Copy static values from Manager
+		Let fQuestDelayTime := aaDusfergonInit.fKeyLag
+		Let sGMainKey := aaDusfergonInit.sGMainKey
+		Let sGEnchKey := aaDusfergonInit.sGEnchKey
+		Let sGNameKey := aaDusfergonInit.sGNameKey
+		Let sGRandKey := aaDusfergonInit.sGRandKey
+		Let sGMainBut := aaDusfergoninit.sGMainBut
+		Let sGEnchBut := aaDusfergoninit.sGEnchBut
+		Let sGNameBut := aaDusfergoninit.sGNameBut
+		Let sGRandBut := aaDusfergoninit.sGRandBut
+		Let StaffIdx := aaDusfergonInit.StaffIdx
+
+	endif
+
+	;Update self
+	Let self := aaDusfergonInit.self
+		
+	;-----------------------------------------------------------------------------
+	;Shows enchantment effects if Player hits GEnchKey
+	;-----------------------------------------------------------------------------
+	if ( IsKeyPressed2 sGEnchKey ) || ( IsControlPressed sGEnchBut )
+	;-----------------------------------------------------------------------------
+
+		;Blade/Blunt/Bow enchantment
+		if ( aaDusfergonModel < StaffIdx )
+
+			Call aaDusfergonEnchDisplay aaDusfergonInit.ench
+
+		;Staff enchantment
+		else
+
+			Call aaDusfergonEnchDisplay aaDusfergonInit.ench2
+
+		endif
+		
+	;-----------------------------------------------------------------------------
+	;Shows current model's name if Player hits GNameKey
+	;-----------------------------------------------------------------------------
+	elseif ( IsKeyPressed2 sGNameKey ) || ( IsControlPressed sGNameBut )
+	;-----------------------------------------------------------------------------
+
+		Let Icon := "Icons\" + ( GetIconPath self )
+		Call aaDusfergonShowModelName Icon aaDusfergonInit.str_Name
+	
+	;-----------------------------------------------------------------------------
+	;Quick swap back to last form if Player hits GMainKey
+	;-----------------------------------------------------------------------------
+	elseif ( ( OnKeyDown sGMainKey || OnControlDown sGMainBut ) && Player.GetItemCount self > 0 )
+	;-----------------------------------------------------------------------------
+
+		Set aaDusfergonInit.self to Call aaDusfergonExchange self aaDusfergonInit.ench aaDusfergonModelLast aaDusfergonInit.sDamageBase aaDusfergonInit.fDamageMult aaDusfergonInit.fSpeedBase aaDusfergonInit.fSpeedMult aaDusfergonInit.fReachBase aaDusfergonInit.fReachMult
+		
+	;-----------------------------------------------------------------------------
+	;Swap to a random form if Player hits GRandKey
+	;-----------------------------------------------------------------------------
+	elseif ( ( OnKeyDown sGRandKey || OnControlDown sGRandBut ) && Player.GetItemCount self > 0 )
+	;-----------------------------------------------------------------------------
+
+		Set aaDusfergonInit.self to Call aaDusfergonExchange self aaDusfergonInit.ench ( Call aaDusfergonRandomModel ) aaDusfergonInit.sDamageBase aaDusfergonInit.fDamageMult aaDusfergonInit.fSpeedBase aaDusfergonInit.fSpeedMult aaDusfergonInit.fReachBase aaDusfergonInit.fReachMult
+				
+	;-----------------------------------------------------------------------------
+	endif ;( OnKeyDown ( sGRandKey || sGMainKey ) || IsKeyPressed2 ( sGNameKey || sGEnchKey ) )
+	;-----------------------------------------------------------------------------
+	
+;-----------------------------------------------------------------------------
+end ;GameMode
+;-----------------------------------------------------------------------------

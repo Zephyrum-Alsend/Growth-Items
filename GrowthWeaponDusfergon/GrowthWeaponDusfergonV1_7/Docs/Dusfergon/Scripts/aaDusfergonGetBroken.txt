@@ -1,0 +1,80 @@
+scn aaDusfergonGetBroken
+
+;Main script
+;-----------------------------------------------------------------------------
+;aaDusfergonManager
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;Checks if the passed item is broken on the passed N/PC, returns 1 if true.
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+array_var Stack
+ref Item
+short Broke ;Return value
+short Slot
+
+ref Object
+ref Actor
+;-----------------------------------------------------------------------------
+
+
+
+;-----------------------------------------------------------------------------
+begin Function { Actor, Object, Slot }
+;-----------------------------------------------------------------------------
+	Let Broke := 0
+
+	;If Object is equipped, can short circuit search
+	if ( Object == Actor.GetEquippedObject Slot && 0 >= Actor.GetEquippedCurrentHealth Slot )
+
+		Let Broke := 1
+
+	;Search Actor's inventory
+	else
+
+		;Get inventory references
+		Let Stack := Actor.GetInvRefsForItem Object
+
+		;Check if Object is actually in the Actor's inventory
+		if eval( 0 < ar_Size Stack )
+
+			;Pull out the first instance of Object
+			Let Item := Stack[0]
+
+			;Check health
+			if ( Item.GetCurrentHealth <= 0 )
+
+				Let Broke := 1
+
+			endif
+		
+		endif
+
+	endif
+	
+
+	SetFunctionValue Broke
+	Return
+;-----------------------------------------------------------------------------
+end ;Function { Actor, Object, Slot }
+;-----------------------------------------------------------------------------

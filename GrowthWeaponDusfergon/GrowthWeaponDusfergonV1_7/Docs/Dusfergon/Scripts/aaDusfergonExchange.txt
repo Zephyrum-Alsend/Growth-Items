@@ -1,0 +1,132 @@
+scn aaDusfergonExchange
+
+;Main script
+;-----------------------------------------------------------------------------
+;aaDusfergonManager
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;aaDusfergonAdj
+;aaDusfergonStatSet
+;aaDusfergonSwap
+;aaDusfergonSetModel
+;aaDusfergonSetModel2
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
+;aaDusfergonModel
+;aaDusfergonModelLast
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;Handles exchanging the current Model for the passed Model, changing 
+;appropriate stats and storing the previous selection for Quickswap.
+;Returns new self RefID.
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+short Model
+
+short DmgB
+float DmgM
+float SpdB
+float SpdM
+float RchB
+float RchM
+
+string_var Icon
+
+ref Weap ;Return value
+ref Ench
+;-----------------------------------------------------------------------------
+
+
+
+;-----------------------------------------------------------------------------
+begin Function { Weap, Ench, Model, DmgB, DmgM, SpdB, SpdM, RchB, RchM }
+;-----------------------------------------------------------------------------
+
+	;Skip all the stat updates if we aren't actually changing model
+	;-----------------------------------------------------------------------------
+	if ( Model != aaDusfergonModel )
+	;-----------------------------------------------------------------------------
+
+		;MimicID defaults to Bastard (Claymore), so we look for the properties of MimicID rather than it directly
+		if ( aaDusfergonModel % 1000 != 999 || Model % 1000 != 999 )
+
+			;Store current model ID
+			Set aaDusfergonModelLast to aaDusfergonModel
+
+		endif
+	
+		;Set new model ID
+		Set aaDusfergonModel to Model
+
+		;Swap copies stats between weapons not specifically changed here
+		;Swap to Blade/Blunt
+		if ( aaDusfergonModel < aaDusfergonInit.BowIdx )
+
+			Set Weap to Call aaDusfergonSwap Weap DLScalar3 Ench
+
+		;Swap to Bow
+		elseif ( aaDusfergonModel < aaDusfergonInit.StaffIdx )
+
+			Set Weap to Call aaDusfergonSwap Weap DLScalar3B Ench
+
+		;Swap to Staff
+		else
+
+			Set Weap to Call aaDusfergonSwap Weap DLScalar3S Ench
+				
+		endif
+
+
+		;Adjust Damage, Speed, Reach if not a Staff
+		if ( aaDusfergonModel < aaDusfergonInit.StaffIdx )
+			
+			;Set stats
+			Call aaDusfergonStatAdj
+			Call aaDusfergonStatSet Weap  ( DmgB + aaDusfergonInit.AdjDamageBase ) ( DmgM + aaDusfergonInit.AdjDamageMult ) ( SpdB + aaDusfergonInit.AdjSpeedBase ) ( SpdM + aaDusfergonInit.AdjSpeedMult ) ( RchB + aaDusfergonInit.AdjReachBase ) ( RchM + aaDusfergonInit.AdjReachMult )
+
+		endif
+		
+	;-----------------------------------------------------------------------------
+	endif ;( Model != aaDusfergonModel )
+	;-----------------------------------------------------------------------------
+
+	;Change model
+	if ( aaDusfergonModel < aaDusfergonInit.SetModel2Idx )
+
+		Call aaDusfergonSetModel Weap
+
+	else
+
+		Call aaDusfergonSetModel2 Weap
+
+	endif
+		
+
+	;Notify Player Exchange was successful
+	Let Icon := "Icons\" + ( GetIconPath Weap )
+	SetMessageIcon $Icon
+	MessageEX "%n has changed form." Weap 5
+
+		
+	sv_Destruct Icon
+	SetFunctionValue Weap
+	Return
+;-----------------------------------------------------------------------------
+end ;Function { Weap, Ench, Model, DmgB, DmgM, SpdB, SpdM, RchB, RchM }
+;-----------------------------------------------------------------------------

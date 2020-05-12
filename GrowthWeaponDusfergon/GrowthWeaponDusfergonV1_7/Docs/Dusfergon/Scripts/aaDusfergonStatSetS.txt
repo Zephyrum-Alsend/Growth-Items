@@ -1,0 +1,71 @@
+scn aaDusfergonStatSetS
+
+;Main script
+;-----------------------------------------------------------------------------
+;aaDusfergonManager
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;aaDusfergonStatLvlS
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
+;aaDusfergonLevel
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;Sets the Staff's basic effects according the passed values and Level.
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+short DmgB
+short AreB
+short DurB
+float CosB
+
+float DmgM
+float AreM
+float DurM
+float CosM
+
+long Damage
+long Area
+long Duration
+float Cost ;Return value
+
+ref Ench
+;-----------------------------------------------------------------------------
+
+
+
+;-----------------------------------------------------------------------------
+begin Function { Ench, DmgB, DmgM, AreB, AreM, DurB, DurM, CosB, CosM }
+;-----------------------------------------------------------------------------
+	Set Damage to ( DmgB ) + ( ( DmgM ) * ( aaDusfergonLevel - 1 ) )
+	Set Area to ( AreB ) + ( ( AreM ) * ( aaDusfergonLevel - 1 ) )
+	Set Duration to ( DurB ) + ( ( DurM ) * ( aaDusfergonLevel - 1 ) )
+	Set Cost to ( CosB ) + ( ( CosM ) * ( aaDusfergonLevel - 1 ) )
+
+	;This assumes the scripted effect is always first
+	SetNthEffectItemArea Area Ench 0
+	AddFullEffectItem DGHE Damage Area Duration 2 Ench
+
+	SetEnchantmentCost Cost Ench
+
+	SetFunctionValue Cost	
+	Return
+;-----------------------------------------------------------------------------
+end ;Function { Ench, DmgB, DmgM, AreB, AreM, DurB, DurM, CosB, CosM }
+;-----------------------------------------------------------------------------

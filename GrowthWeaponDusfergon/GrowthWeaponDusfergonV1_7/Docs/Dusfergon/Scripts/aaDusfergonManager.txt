@@ -1,0 +1,1442 @@
+scn aaDusfergonManager
+
+;The quest this is attached to, 
+;and therefore this script, 
+;run every this second(s).
+float fQuestDelayTime
+
+float ScriptLag
+float MenuLag
+
+
+
+;Main script
+;-----------------------------------------------------------------------------
+;aaDusfergonManager
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;aaDusfergonDefaultINI
+;aaDusfergonBreak
+;aaDusfergonStatAdj
+;aaDusfergonStatSet
+;aaDusfergonStatSet2
+;aaDusfergonStatSetS
+;aaDusfergonStatLvl
+;aaDusfergonStatLvlS
+;aaDusfergonRemoveUnScriptedEffects
+;aaDusfergonEnchInit
+;aaDusfergonEnchSlct
+;aaDusfergonEnchLvl
+;aaDusfergonEnchDisplay
+;aaDusfergonModelChange
+;aaDusfergonModelToC
+;aaDusfergonModelPage
+;aaDusfergonExchange
+;aaDusfergonSwap
+;aaDusfergonSetModel
+;aaDusfergonSetModel2
+;aaDusfergonRandomModel
+;aaDusfergonShowModelName
+;aaDusfergonCalcXPReq
+;aaDusfergonLevelMessage
+;aaDusfergonOnEnchant
+;aaDusfergonOnSigilStone
+;aaDusfergonWeaponEat
+;aaDusfergonXPReport
+;aaDusfergonLevelLog
+;aaDusfergonForcePurge
+;aaDusfergonGetBroken
+;aaDusfergonMimic
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;aaDusfergonObject
+;aaDusfergonObjectB
+;aaDusfergonObjectS
+;aaDusfergonOnHit
+;aaDusfergonOnBowHit
+;aaDusfergonOnBowRelease
+;aaDusfergonOnArrowHit
+;aaDusfergonOnStaffHit
+;aaDusfergonIncrVal
+;aaDusfergonRefreshInv
+;aaDusfergonKeyBinds
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
+;aaDusfergonBroken
+;aaDusfergonCombatXPLog
+;aaDusfergonCombatXPStart
+;aaDusfergonEquip
+;aaDusfergonLevel
+;aaDusfergonModel
+;aaDusfergonModelLast
+;aaDusfergonXP
+;aaDusfergonXPReq
+;aaDusfergonMimicID
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;aaDusfergonEnch
+;aaDusfergonEnch1
+;aaDusfergonEnch2
+;aaDusfergonEnch3
+;aaDusfergonEnch4
+;aaDusfergonEnch5
+;aaDusfergonEnch6
+;aaDusfergonEnch7
+;aaDusfergonEnch8
+;aaDusfergonEnch9
+;aaDusfergonEnch10
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;Main script of Dusfergon.
+;
+;When a save is loaded, initialize variables then to set weapon's model, type,
+;stats, enchantment, event handler and XPReq.  Both a console message and 
+;weapon equip sound (if already equipped) will happen when everything is 
+;initialized.
+;
+;Upon combat end, log XP gained from said combat to console.
+;
+;When halfway to the next level, display a flavor message in the upper left
+;of the screen.  If level is capped, display a message box stating so.
+;
+;When XP >= XPReq, execute level up.  Level up increments all stats by the 
+;values contained in %Mult variables.  If the level is past the EnchStart 
+;level, prompt the player to choose an enchant option and apply it. Every 
+;EnchLevel after EnchStart, ask the player to choose an option again. The 
+;player can choose to keep growing their current enchantment, start growing a 
+;new one, or continue growing an old one.  Set new XPReq.  A message will 
+;appear in the upper left of the screen whenever a level up happens.
+;
+;Checks if weapon is broken, continually if equipped and only once if not.
+;
+;If the weapon breaks, decrease level by the amount specified in sBreakLevel
+;and reinitialize with new stats.
+;
+;When the .ini defined key is pressed during gameplay, either show form name
+;in a message, show full enchantment in a message box, swap to the last form
+;the weapon held, or swap to a random form.
+;
+;When the .ini defined key(s) is pressed within the inventory menu while the
+;weapon is highlighted, either display the form name in a message, show full
+;enchantment in a message box, or begin the form change menus.
+;
+;Form change sub-type menus are capped at 5 pages due to navigation time; a
+;II category can be made to hold additional pages, allowing for up to 10 pages
+;total of each sub-type.
+;
+;When the .ini defined key is pressed within the inventory menu while another
+;weapon is highlighted, ask the player if they want to offer it to the weapon.
+;
+;When the .ini defined keys are pressed within the inventory menu while 
+;another weapon is highlighted, mimic it's form.
+;-----------------------------------------------------------------------------
+
+;Engine objects
+;-----------------------------------------------------------------------------
+;Items	>	Clothing >		DLMisc
+;			Weapons >		DLScalar3
+;							DLScalar3B
+;							DLScalar3S
+;Magic >	Enchantment >	DLScalar3Ench
+;							DLScalar3SEnch
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+;Weapon variables
+;-----------------------------------------------------------------------------
+string_var str_Name
+string_var Icon
+
+short sDamageBase
+float fSpeedBase
+float fReachBase
+float fWeightBase
+short sHealthBase
+long lValueBase
+
+float fDamageMult
+float fSpeedMult
+float fReachMult
+float fWeightMult
+float fHealthMult
+float fValueMult
+
+;-----------------------------------------------------------------------------
+;Sub-type adjustment variables
+;-----------------------------------------------------------------------------
+short sClaymoreDamageBase
+float fClaymoreSpeedBase
+float fClaymoreReachBase
+
+float fClaymoreDamageMult
+float fClaymoreSpeedMult
+float fClaymoreReachMult
+
+short sBastard2HDamageBase
+float fBastard2HSpeedBase
+float fBastard2HReachBase
+
+float fBastard2HDamageMult
+float fBastard2HSpeedMult
+float fBastard2HReachMult
+
+short sBastard1HDamageBase
+float fBastard1HSpeedBase
+float fBastard1HReachBase
+
+float fBastard1HDamageMult
+float fBastard1HSpeedMult
+float fBastard1HReachMult
+
+short sLongswordDamageBase
+float fLongswordSpeedBase
+float fLongswordReachBase
+
+float fLongswordDamageMult
+float fLongswordSpeedMult
+float fLongswordReachMult
+
+short sShortswordDamageBase
+float fShortswordSpeedBase
+float fShortswordReachBase
+
+float fShortswordDamageMult
+float fShortswordSpeedMult
+float fShortswordReachMult
+
+short sDaggerDamageBase
+float fDaggerSpeedBase
+float fDaggerReachBase
+
+float fDaggerDamageMult
+float fDaggerSpeedMult
+float fDaggerReachMult
+
+short sWarhammerDamageBase
+float fWarhammerSpeedBase
+float fWarhammerReachBase
+
+float fWarhammerDamageMult
+float fWarhammerSpeedMult
+float fWarhammerReachMult
+
+short sBattleaxeDamageBase
+float fBattleaxeSpeedBase
+float fBattleaxeReachBase
+
+float fBattleaxeDamageMult
+float fBattleaxeSpeedMult
+float fBattleaxeReachMult
+
+short sMaceDamageBase
+float fMaceSpeedBase
+float fMaceReachBase
+
+float fMaceDamageMult
+float fMaceSpeedMult
+float fMaceReachMult
+
+short sWaraxeDamageBase
+float fWaraxeSpeedBase
+float fWaraxeReachBase
+
+float fWaraxeDamageMult
+float fWaraxeSpeedMult
+float fWaraxeReachMult
+
+short sBowDamageBase
+float fBowSpeedBase
+
+float fBowDamageMult
+float fBowSpeedMult
+
+short sStaffAreaBase
+
+float fStaffAreaMult
+
+
+short AdjDamageBase
+float AdjSpeedBase
+float AdjReachBase
+
+float AdjDamageMult
+float AdjSpeedMult
+float AdjReachMult
+
+;-----------------------------------------------------------------------------
+;Enchantment variables
+;-----------------------------------------------------------------------------		
+short sEnchStart
+short sEnchLevel
+
+short sDGHEMagnBase
+short sDGHEAreaBase
+short sDGHEDuraBase
+float fDGHECostBase
+
+float fDGHEMagnMult
+float fDGHEAreaMult
+float fDGHEDuraMult
+float fDGHECostMult
+
+short sELDGMagnBase
+short sELDGAreaBase
+short sELDGDuraBase
+float fELDGCostBase
+
+float fELDGMagnMult
+float fELDGAreaMult
+float fELDGDuraMult
+float fELDGCostMult
+
+short sWKELMagnBase
+short sWKELAreaBase
+short sWKELDuraBase
+float fWKELCostBase
+
+float fWKELMagnMult
+float fWKELAreaMult
+float fWKELDuraMult
+float fWKELCostMult
+
+short sWKMAMagnBase
+short sWKMAAreaBase
+short sWKMADuraBase
+float fWKMACostBase
+
+float fWKMAMagnMult
+float fWKMAAreaMult
+float fWKMADuraMult
+float fWKMACostMult
+
+short sDGFAMagnBase
+short sDGFAAreaBase
+short sDGFADuraBase
+float fDGFACostBase
+
+float fDGFAMagnMult
+float fDGFAAreaMult
+float fDGFADuraMult
+float fDGFACostMult
+
+short sDIWEMagnBase
+short sDIWEAreaBase
+short sDIWEDuraBase
+float fDIWECostBase
+
+float fDIWEMagnMult
+float fDIWEAreaMult
+float fDIWEDuraMult
+float fDIWECostMult
+
+short sDIARMagnBase
+short sDIARAreaBase
+short sDIARDuraBase
+float fDIARCostBase
+
+float fDIARMagnMult
+float fDIARAreaMult
+float fDIARDuraMult
+float fDIARCostMult
+
+short sDGSPMagnBase
+short sDGSPAreaBase
+short sDGSPDuraBase
+float fDGSPCostBase
+
+float fDGSPMagnMult
+float fDGSPAreaMult
+float fDGSPDuraMult
+float fDGSPCostMult
+
+short sDSPLMagnBase
+short sDSPLAreaBase
+float fDSPLCostBase
+
+float fDSPLMagnMult
+float fDSPLAreaMult
+float fDSPLCostMult
+
+short sSLNCAreaBase
+short sSLNCDuraBase
+float fSLNCCostBase
+
+float fSLNCAreaMult
+float fSLNCDuraMult
+float fSLNCCostMult
+
+short sBRDNMagnBase
+short sBRDNAreaBase
+short sBRDNDuraBase
+float fBRDNCostBase
+
+float fBRDNMagnMult
+float fBRDNAreaMult
+float fBRDNDuraMult
+float fBRDNCostMult
+
+short sDRATMagnBase
+short sDRATAreaBase
+short sDRATDuraBase
+float fDRATCostBase
+
+float fDRATMagnMult
+float fDRATAreaMult
+float fDRATDuraMult
+float fDRATCostMult
+
+short sCOMMMagnBase
+short sCOMMAreaBase
+short sCOMMDuraBase
+float fCOMMCostBase
+
+float fCOMMMagnMult
+float fCOMMAreaMult
+float fCOMMDuraMult
+float fCOMMCostMult
+
+short sRALYMagnBase
+short sRALYAreaBase
+short sRALYDuraBase
+float fRALYCostBase
+
+float fRALYMagnMult
+float fRALYAreaMult
+float fRALYDuraMult
+float fRALYCostMult
+
+short sFRNZMagnBase
+short sFRNZAreaBase
+short sFRNZDuraBase
+float fFRNZCostBase
+
+float fFRNZMagnMult
+float fFRNZAreaMult
+float fFRNZDuraMult
+float fFRNZCostMult
+
+short sLGHTMagnBase
+short sLGHTAreaBase
+short sLGHTDuraBase
+float fLGHTCostBase
+
+float fLGHTMagnMult
+float fLGHTAreaMult
+float fLGHTDuraMult
+float fLGHTCostMult
+
+short sSTRPAreaBase
+short sSTRPDuraBase
+float fSTRPCostBase
+
+float fSTRPAreaMult
+float fSTRPDuraMult
+float fSTRPCostMult
+
+short sABFAMagnBase
+short sABFAAreaBase
+short sABFADuraBase
+float fABFACostBase
+
+float fABFAMagnMult
+float fABFAAreaMult
+float fABFADuraMult
+float fABFACostMult
+
+short sABHEMagnBase
+short sABHEAreaBase
+short sABHEDuraBase
+float fABHECostBase
+
+float fABHEMagnMult
+float fABHEAreaMult
+float fABHEDuraMult
+float fABHECostMult
+
+short sABSPMagnBase
+short sABSPAreaBase
+short sABSPDuraBase
+float fABSPCostBase
+
+float fABSPMagnMult
+float fABSPAreaMult
+float fABSPDuraMult
+float fABSPCostMult
+
+long lChargeBase
+float fChargeMult
+
+
+float Cost
+float Cost2
+long Charge
+
+short EnchSelect
+short WarnOnce
+short SoulLevel
+
+array_var Stack
+
+ref SoulGem
+ref Item
+
+;-----------------------------------------------------------------------------
+;Level Up variables
+;-----------------------------------------------------------------------------
+short sXPReqBase
+short sXPReqMult
+short sXPNormal
+short sXPPower
+short sXPBow
+short sXPStaff
+short sLevelMode
+short sLevelCap
+float fAbsorption
+short sBreakLevel
+
+short CombatXP
+short XPReqHalf
+short HalfOnce
+short CapOnce
+short BreakOnce
+
+;-----------------------------------------------------------------------------
+;Form Change variables
+;-----------------------------------------------------------------------------
+short ModelChange
+short Eater
+short Mimic
+short Button
+short IndexOffset
+
+ref Selection
+
+short ClaymoreIdx
+short Bastard2hIdx
+short Bastard1hIdx
+short LongswordIdx
+short ShortswordIdx
+short DaggerIdx
+short WarhammerIdx
+short BattleaxeIdx
+short MaceIdx
+short WaraxeIdx
+short BowIdx
+short StaffIdx
+
+short SetModel2Idx
+
+string_var MimicModel
+string_var MimicIcon
+string_var MimicName
+
+float fMimicClaymore
+float fMimicBastard
+float fMimicLongsword
+float fMimicShortsword
+float fMimicWarhammer
+float fMimicMace
+
+;-----------------------------------------------------------------------------
+;Keybindings
+;-----------------------------------------------------------------------------
+;Latency
+float fKeyLag
+
+;GameMode
+short sGMainKey
+short sGEnchKey
+short sGNameKey
+short sGRandKey
+
+short sGMainBut
+short sGEnchBut
+short sGNameBut
+short sGRandBut
+
+;Inventory
+short sMMainKey
+short sMEnchKey
+short sMEnchKey2
+short sMNameKey
+short sMNameKey2
+
+short sMMainBut
+short sMEnchBut
+short sMNameBut
+
+;-----------------------------------------------------------------------------
+;Garbage collection
+;-----------------------------------------------------------------------------
+array_var ArrowsUp
+array_var Arrow
+short sLifeTime
+ref Ammo
+
+;-----------------------------------------------------------------------------
+;References to WeaponID and EnchantID
+;-----------------------------------------------------------------------------
+ref self
+ref ench
+ref ench2
+
+
+
+
+
+
+
+;-----------------------------------------------------------------------------
+begin GameMode
+;-----------------------------------------------------------------------------
+
+	;-----------------------------------------------------------------------------
+	;Initializer sub-block
+	;-----------------------------------------------------------------------------
+	if GetGameLoaded
+	;-----------------------------------------------------------------------------
+
+		;-----------------------------------------------------------------------------
+		;Initialize variables
+		;-----------------------------------------------------------------------------
+		Set ClaymoreIdx to 0
+		Set Bastard2hIdx to 1000
+		Set Bastard1hIdx to 2000
+		Set LongswordIdx to 3000
+		Set ShortswordIdx to 4000
+		Set DaggerIdx to 5000
+		Set WarhammerIdx to 6000
+		Set BattleaxeIdx to 7000
+		Set MaceIdx to 8000
+		Set WaraxeIdx to 9000
+		Set BowIdx to 10000
+		Set StaffIdx to 11000
+
+		Set SetModel2Idx to DaggerIdx
+
+		;Blade/Blunt
+		if ( aaDusfergonModel < BowIdx )
+
+			Set self to DLScalar3
+
+		;Bow
+		elseif ( aaDusfergonModel < StaffIdx )
+
+			Set self to DLScalar3B
+
+		;Staff
+		else
+
+			Set self to DLScalar3S
+			
+		endif
+
+		;Blade/Blunt/Bow enchantment
+		Set ench to DLScalar3Ench
+		Set Cost to 0
+
+		;Staff enchantment
+		Set ench2 to DLScalar3SEnch
+		Set Cost2 to 0
+
+
+		;DoOnce vars
+		Set EnchSelect to 0
+		Set ModelChange to 0
+		Set Eater to 0
+		Set Mimic to 0
+		Set WarnOnce to 0
+		Set HalfOnce to 0
+		Set CapOnce to 0
+		Set BreakOnce to 0
+
+		;Set script latencies
+		Set ScriptLag to 0.5
+		Set MenuLag to 0.01
+
+		;Initialize with default values
+		Call aaDusfergonDefaultINI
+
+		;Initialize with user defined values
+		RunBatchScript "Data\ini\Dusfergon.ini"
+
+		SetNameEx "%z" str_Name self
+
+		;Ensure key binds are operational
+		Set aaDusfergonHotKeys.fQuestDelayTime to fKeyLag
+
+		
+		;-----------------------------------------------------------------------------
+		;Validate Mimicry data
+		;-----------------------------------------------------------------------------
+		;Only check if Mimicry is not default
+		if ( aaDusfergonMimicID != 0 )
+
+			;Paths will be corrected by SetModel
+			SetModelPath $MimicModel self
+			SetIconPath $MimicIcon self
+
+			if ( aaDusfergonMimicID % 1000 != 999 || IsModelPathValid self != 1 || IsIconPathValid self != 1 )
+
+				printc "Mimicry data is bad, resetting."
+
+				if ( aaDusfergonModel == aaDusfergonMimicID )
+
+					Set aaDusfergonModel to 0
+
+				endif
+
+				Let aaDusfergonMimicID := 0
+				sv_Destruct MimicModel
+				sv_Destruct MimicIcon
+				sv_Destruct MimicName
+
+			endif
+			
+		endif
+
+		
+		;-----------------------------------------------------------------------------
+		;Add to Player on first start up
+		;-----------------------------------------------------------------------------
+		if ( aaDusfergonLevel == 0 )
+
+			Player.AddItemNS self 1
+			Set aaDusfergonLevel to 1
+
+			Let Icon := "Icons\" + ( GetIconPath self )
+			SetMessageIcon $Icon
+			MessageEX "An artifact of unknown affiliation appears in your belongings..." 10
+
+		endif
+
+		
+		;-----------------------------------------------------------------------------
+		;Set weapon stats
+		;-----------------------------------------------------------------------------
+		if ( aaDusfergonModel < StaffIdx )
+
+			;Set sub-type adjustments, directly modified inside function due to param limit
+			Call aaDusfergonStatAdj
+
+			;Set Damage, Speed, Reach
+			Call aaDusfergonStatSet self ( sDamageBase + AdjDamageBase ) ( fDamageMult + AdjDamageMult ) ( fSpeedBase + AdjSpeedBase ) ( fSpeedMult + AdjSpeedMult ) ( fReachBase + AdjReachBase ) ( fReachMult + AdjReachMult )
+
+		endif
+
+		;Set Weight, Health, Value
+		Call aaDusfergonStatSet2 self fWeightBase fWeightMult sHealthBase fHealthMult lValueBase fValueMult
+
+		
+		;-----------------------------------------------------------------------------
+		;Set enchantment
+		;-----------------------------------------------------------------------------
+		;Purge effects from previous load game
+		RemoveAllEffectItems ench
+		Call aaDusfergonRemoveUnScriptedEffects ench2
+		RemoveEnchantment self
+
+		;Set enchantment stats, return total Cost
+		Set Cost to Call aaDusfergonEnchInit ench 1 Cost
+		Set Cost2 to Call aaDusfergonStatSetS ench2 sDGHEMagnBase fDGHEMagnMult ( sDGHEAreaBase + sStaffAreaBase ) ( fDGHEAreaMult + fStaffAreaMult ) sDGHEDuraBase fDGHEDuraMult fDGHECostBase fDGHECostMult
+		Set Cost2 to Call aaDusfergonEnchInit ench2 2 Cost2
+
+		;Set Charge
+		if ( aaDusfergonLevel < sEnchStart )
+
+			Set Charge to lChargeBase
+
+		else
+
+			Set Charge to lChargeBase + ( fChargeMult * ( aaDusfergonLevel - sEnchStart ) )
+
+		endif
+		
+		SetObjectCharge Charge self
+		
+		;If there is an enchantment, apply it
+		if ( aaDusfergonModel < StaffIdx && GetMagicItemEffectCount ench > 0 )
+			
+			SetEnchantment ench self
+
+		;Staves must always be enchanted, or else they're just fancy sticks
+		elseif ( aaDusfergonModel >= StaffIdx )
+
+			SetEnchantment ench2 self
+
+		endif
+
+		
+		;-----------------------------------------------------------------------------
+		;Set XPReq
+		;-----------------------------------------------------------------------------
+		;Update level cap
+		Set sLevelCap to Call aaDusfergonSetLevelCap sLevelMode
+
+		;Set XPReq in function, return halfway point
+		Set XPReqHalf to Call aaDusfergonCalcXPReq aaDusfergonLevel sXPReqBase sXPReqMult XPReqHalf
+
+		;Set halfway and level cap DoOnce
+		if ( aaDusfergonLevel >= sLevelCap )
+
+			Set HalfOnce to 1
+			Set CapOnce to 1
+
+		endif
+
+
+		;-----------------------------------------------------------------------------
+		;Garbage collection
+		;-----------------------------------------------------------------------------
+		;Ensure garbage collection is always working
+		if ( sLifeTime < 1 )
+
+			Set sLifeTime to 1
+
+		endif
+
+		;Reconstruct arrays
+		Let ArrowsUp := ar_Null
+		Let ArrowsUp := ar_Construct Array
+		Let Arrow := ar_Null
+
+		;Removes handlers from previous load game
+		Call aaDusfergonForcePurge
+
+
+		;-----------------------------------------------------------------------------
+		;Set model and weapon type
+		;-----------------------------------------------------------------------------
+		;Set model, also resets handlers if equipped because function force re-equips to refresh model
+		if ( aaDusfergonModel < SetModel2Idx )
+			
+			Call aaDusfergonSetModel self
+
+		else
+
+			Call aaDusfergonSetModel2 self
+
+		endif
+		
+		
+		
+		;-----------------------------------------------------------------------------
+		printc "%z%B initialized!%b" str_Name
+		;-----------------------------------------------------------------------------
+
+	;-----------------------------------------------------------------------------
+	endif ;GetGameLoaded
+	;-----------------------------------------------------------------------------
+
+	;-----------------------------------------------------------------------------
+	;Set script lag
+	;-----------------------------------------------------------------------------
+	if ( fQuestDelayTime != ScriptLag )
+	
+			Set fQuestDelayTime to ScriptLag
+	
+	endif
+	
+
+
+
+
+	
+	;-----------------------------------------------------------------------------
+	;Remove arrow listeners that never fired
+	;-----------------------------------------------------------------------------
+	;ArrowsUp is populated by OnBowRelease
+	ForEach ( Arrow <- ArrowsUp )
+
+		Let Ammo := Arrow["value"]
+		
+		;If the arrow is picked up, its reference will be deleted by the game
+		if ( IsRefDeleted Ammo || Ammo.GetProjectileLifetime > sLifeTime )
+
+			RemoveEventHandler "OnArrowHit" aaDusfergonOnArrowHit "object"::Ammo
+			ar_Erase ArrowsUp Arrow["key"]
+
+		endif
+
+	loop
+
+
+
+
+
+
+
+
+
+	;-----------------------------------------------------------------------------
+	;Log XP gained from most recent combat encounter to console
+	;-----------------------------------------------------------------------------
+	if ( Player.IsInCombat == 0 && aaDusfergonCombatXPLog == 1 )
+
+		Set CombatXP to aaDusfergonXP - aaDusfergonCombatXPStart
+		Call aaDusfergonXPReport CombatXP "Combat log."
+		Set aaDusfergonCombatXPLog to 0
+
+	endif
+
+
+
+
+
+	
+	;-----------------------------------------------------------------------------
+	;Level up sub-blocks
+	;-----------------------------------------------------------------------------
+
+	;-----------------------------------------------------------------------------
+	;Get choice from enchant option menu
+	;-----------------------------------------------------------------------------	
+	if ( EnchSelect == 2 )
+
+		Set Button to GetButtonPressed
+
+	endif
+
+	
+	;-----------------------------------------------------------------------------
+	;Open enchant option menu when not in combat
+	;-----------------------------------------------------------------------------	
+	if ( Player.IsInCombat == 0 && EnchSelect == 1 )
+
+		Let Icon := str_Name + " seeks an enchantment:"
+		MessageBox $Icon "Fire" "Ice" "Volt" "Knight-Slayer" "Mage-Slayer" "Weaken" "Subjugate" "Corruption" "Unbalance" "Siphon" str_Name
+
+		Set Button to -1
+		Set EnchSelect to 2
+
+	endif
+
+	
+	;-----------------------------------------------------------------------------
+	;Set enchant option
+	;-----------------------------------------------------------------------------	
+	if ( EnchSelect == 2 && Button > -1 )
+
+		Set aaDusfergonEnch to ( Button + 1 )
+
+		;Function initializes enchant option if necessary
+		Set Cost to Call aaDusfergonEnchSlct ench 1 Cost
+		Set Cost2 to Call aaDusfergonEnchSlct ench2 2 Cost2
+
+		if ( aaDusfergonModel < StaffIdx )
+
+			SetEnchantment ench self
+
+		endif
+		
+		Set EnchSelect to 0
+
+	endif
+	
+
+	
+	;-----------------------------------------------------------------------------
+	;Half way message
+	;-----------------------------------------------------------------------------
+	if ( HalfOnce == 0 && EnchSelect < 2 && aaDusfergonXP >= XPReqHalf && aaDusfergonEquip == 1 )
+
+		Let Icon := "Icons\" + ( GetIconPath self )
+		Call aaDusfergonLevelMessage HalfOnce Icon str_Name
+		Set HalfOnce to 1
+
+	endif
+
+	;-----------------------------------------------------------------------------
+	;Level cap message
+	;-----------------------------------------------------------------------------
+	if ( CapOnce == 0 && EnchSelect < 2 && aaDusfergonLevel >= sLevelCap )
+
+		Let Icon := str_Name + " has reached its apex."
+		MessageBox $Icon
+
+		Set HalfOnce to 1
+		Set CapOnce to 1
+
+	endif
+
+	;-----------------------------------------------------------------------------
+	;Update level cap
+	;-----------------------------------------------------------------------------	
+	if ( sLevelMode != 0 )
+
+		Set sLevelCap to Call aaDusfergonSetLevelCap sLevelMode
+
+	endif
+
+	
+	
+	;-----------------------------------------------------------------------------
+	;Level up weapon and enchantment
+	;-----------------------------------------------------------------------------
+	while ( aaDusfergonLevel < sLevelCap && aaDusfergonXP >= aaDusfergonXPReq && EnchSelect == 0 )
+	;-----------------------------------------------------------------------------
+		Set aaDusfergonLevel to aaDusfergonLevel + 1
+
+		;Update weapon stats
+		if ( aaDusfergonModel < StaffIdx )
+			
+			Call aaDusfergonStatLvl self ( fDamageMult + AdjDamageMult ) ( fSpeedMult + AdjSpeedMult ) ( fReachMult + AdjReachMult ) fWeightMult fHealthMult lValueBase fValueMult
+
+		else
+
+			Call aaDusfergonStatLvl self 0 0 0 fWeightMult fHealthMult lValueBase fValueMult
+
+		endif
+
+		;Update Staff basic effects
+		Set Cost2 to Call aaDusfergonStatLvlS ench2 fDGHEMagnMult fDGHEAreaMult fDGHEDuraMult fDGHECostMult fStaffAreaMult Cost2
+		
+		;Update enchantment stats
+		if ( aaDusfergonLevel >= sEnchStart )
+
+			;Set flag for enchantment option menu if necessary
+			if ( ( ( aaDusfergonLevel - sEnchStart ) %  sEnchLevel ) == 0 )
+
+				Set EnchSelect to 1
+
+			endif
+
+			;Increment active enchantment stats
+			Set Cost to Call aaDusfergonEnchLvl ench Cost 1
+			Set Cost2 to Call aaDusfergonEnchLvl ench2 Cost2 2
+
+			;Increment Charge
+			Set Charge to lChargeBase + ( fChargeMult * ( aaDusfergonLevel - sEnchStart ) )
+			SetObjectCharge Charge self
+
+		endif
+		
+		;Set XPReq and XPReqHalf
+		Set XPReqHalf to Call aaDusfergonCalcXPReq aaDusfergonLevel sXPReqBase sXPReqMult XPReqHalf
+		
+		
+		;-----------------------------------------------------------------------------
+		;Level up message
+		;-----------------------------------------------------------------------------
+		Call aaDusfergonLevelLog str_Name
+
+		Let Icon := "Icons\" + ( GetIconPath self )
+		Call aaDusfergonLevelMessage HalfOnce Icon str_Name
+		Set HalfOnce to 0
+
+	;-----------------------------------------------------------------------------
+	loop ;( aaDusfergonLevel < sLevelCap && aaDusfergonXP >= aaDusfergonXPReq && EnchSelect == 0 )
+	;-----------------------------------------------------------------------------
+
+	;-----------------------------------------------------------------------------
+	;Level cap update message
+	;-----------------------------------------------------------------------------	
+	;Finish leveling up after raising the cap before checking
+	if ( CapOnce == 1 && EnchSelect < 1 && aaDusfergonLevel < sLevelCap )
+			
+			Let Icon := str_Name + "'s limits have expanded."
+			MessageBox $Icon
+
+			Set HalfOnce to 0
+			Set CapOnce to 0
+
+	endif
+	
+
+
+
+
+	
+	;-----------------------------------------------------------------------------
+	;Check if broken
+	;-----------------------------------------------------------------------------
+	if ( BreakOnce == 0 )
+	
+		Set aaDusfergonBroken to Call aaDusfergonGetBroken Player self 16
+		Set BreakOnce to 1
+
+	endif
+
+	;Only check once if unequipped or still broken		
+	if ( aaDusfergonEquip == 1 && 0 < Player.GetEquippedCurrentHealth 16 )
+	
+		Set BreakOnce to 0
+
+	endif
+
+
+	
+	;-----------------------------------------------------------------------------
+	;De-level if broken
+	;-----------------------------------------------------------------------------
+	if ( aaDusfergonBroken == 1 )
+	;-----------------------------------------------------------------------------
+	
+		;Function decrements stat and ench related globals
+		Call aaDusfergonBreak sBreakLevel str_Name
+
+		;-----------------------------------------------------------------------------
+		;Reinitialize
+		;-----------------------------------------------------------------------------
+		if ( aaDusfergonModel < StaffIdx )
+
+			Call aaDusfergonStatAdj
+			Call aaDusfergonStatSet self ( sDamageBase + AdjDamageBase ) ( fDamageMult + AdjDamageMult ) ( fSpeedBase + AdjSpeedBase ) ( fSpeedMult + AdjSpeedMult ) ( fReachBase + AdjReachBase ) ( fReachMult + AdjReachMult )
+
+		endif
+
+		Call aaDusfergonStatSet2 self fWeightBase fWeightMult sHealthBase fHealthMult lValueBase fValueMult
+
+		Set Cost to 0
+		Set Cost2 to 0
+		
+		RemoveAllEffectItems ench
+		Call aaDusfergonRemoveUnScriptedEffects ench2
+		RemoveEnchantment self
+
+		Set Cost to Call aaDusfergonEnchInit ench 1 Cost
+		Set Cost2 to Call aaDusfergonStatSetS ench2 sDGHEMagnBase fDGHEMagnMult ( sDGHEAreaBase + sStaffAreaBase ) ( fDGHEAreaMult + fStaffAreaMult ) sDGHEDuraBase fDGHEDuraMult fDGHECostBase fDGHECostMult
+		Set Cost2 to Call aaDusfergonEnchInit ench2 2 Cost2
+
+		if ( aaDusfergonLevel < sEnchStart )
+
+			Set Charge to lChargeBase
+
+		else
+
+			Set Charge to lChargeBase + ( fChargeMult * ( aaDusfergonLevel - sEnchStart ) )
+
+		endif
+		
+		SetObjectCharge Charge self
+		
+		if ( aaDusfergonModel < StaffIdx && GetMagicItemEffectCount ench > 0 )
+			
+			SetEnchantment ench self
+
+		elseif ( aaDusfergonModel >= StaffIdx )
+
+			SetEnchantment ench2 self
+
+		endif
+		
+		Set XPReqHalf to Call aaDusfergonCalcXPReq aaDusfergonLevel sXPReqBase sXPReqMult XPReqHalf
+		Set HalfOnce to 0
+
+		Set aaDusfergonBroken to 0
+
+	;-----------------------------------------------------------------------------
+	endif ;( aaDusfergonBroken == 1 )
+	;-----------------------------------------------------------------------------
+	
+
+
+
+
+	;-----------------------------------------------------------------------------
+	;Reset menus if force exited from Inventory somehow
+	;-----------------------------------------------------------------------------
+	if ( ModelChange > 0 )
+
+		Set ModelChange to 0
+
+	endif
+
+	if ( Mimic > 0 )
+
+		Set Mimic to 0
+
+	endif
+
+	if ( Eater > 0 )
+
+		Set Eater to 0
+
+	endif
+
+
+
+
+
+
+	
+	;-----------------------------------------------------------------------------
+	;Undo enchantment if weapon was enchanted by player
+	;-----------------------------------------------------------------------------
+	if ( WarnOnce == 1 )
+
+		;Handler would have fired by now
+		Set WarnOnce to 0
+
+	elseif ( WarnOnce == 2 )
+
+		Call aaDusfergonOnSigilStone self
+		Set WarnOnce to 0
+		
+	endif
+
+	
+;-----------------------------------------------------------------------------
+end ;GameMode
+;-----------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+;-----------------------------------------------------------------------------
+begin MenuMode 1002 ;Inventory
+;-----------------------------------------------------------------------------
+
+	;-----------------------------------------------------------------------------
+	;Set script lag
+	;-----------------------------------------------------------------------------
+	if ( fQuestDelayTime != MenuLag )
+	
+		Set fQuestDelayTime to MenuLag
+
+	endif
+
+
+
+
+	
+	;-----------------------------------------------------------------------------
+	;Update highlighted item
+	;-----------------------------------------------------------------------------
+	if ( Eater == 0 )
+		
+		Set Selection to GetActiveMenuSelection
+
+	endif
+
+	
+	;-----------------------------------------------------------------------------
+	;Shows enchantment effects if Player highlights weapon and hits sMMainKey + sMEnchKey
+	;-----------------------------------------------------------------------------
+	if ( Selection == self && ( IsKeyPressed2 sMEnchKey || IsControlPressed sMEnchBut || IsKeyPressed2 sMEnchKey2 ) && ( IsKeyPressed2 sMMainKey || IsControlPressed sMMainBut ) )
+	;-----------------------------------------------------------------------------
+
+		;Blade/Blunt/Bow enchantment
+		if ( aaDusfergonModel < StaffIdx )
+
+			Call aaDusfergonEnchDisplay ench
+
+		;Staff enchantment
+		else
+
+			Call aaDusfergonEnchDisplay ench2
+
+		endif
+		
+	;-----------------------------------------------------------------------------
+	;Shows current model's name if Player highlights weapon and hits sMMainKey + sMNameKey
+	;-----------------------------------------------------------------------------
+	elseif ( Selection == self && ( IsKeyPressed2 sMNameKey || IsControlPressed sMNameBut || IsKeyPressed2 sMNameKey2 ) && ( IsKeyPressed2 sMMainKey || IsControlPressed sMMainBut ) )
+	;-----------------------------------------------------------------------------
+
+		Let Icon := "Icons\" + ( GetIconPath self )
+		Call aaDusfergonShowModelName Icon str_Name
+	
+	;-----------------------------------------------------------------------------
+	;Start ModelChange menus if Player highlights weapon and hits sMMainKey
+	;-----------------------------------------------------------------------------
+	elseif ( Selection == self && ModelChange == 0 && ( IsKeyPressed2 sMMainKey || IsControlPressed sMMainBut ) )
+	;-----------------------------------------------------------------------------
+	
+		Set Button to -1
+		Set ModelChange to 1
+		
+	;-----------------------------------------------------------------------------
+	;Mimic if Player highlights another weapon and hits sMMainKey + sMNameKey, won't activate if weapon is not in inventory
+	;-----------------------------------------------------------------------------
+	elseif ( ( IsWeapon Selection ) && Eater == 0 && ( IsKeyPressed2 sMNameKey || IsControlPressed sMNameBut || IsKeyPressed2 sMNameKey2 ) && ( IsKeyPressed2 sMMainKey || IsControlPressed sMMainBut ) && Player.GetItemCount self > 0 )
+	;-----------------------------------------------------------------------------
+	
+		Set Button to -1
+		Set Mimic to 1
+		
+	;-----------------------------------------------------------------------------
+	;Start WeaponEater menu if Player highlights another weapon and hits sMMainKey, won't activate if weapon is not in inventory or fAbsorption <= 0.0
+	;-----------------------------------------------------------------------------
+	elseif ( ( IsWeapon Selection ) && Eater == 0 && ( IsKeyPressed2 sMMainKey || IsControlPressed sMMainBut ) && Player.GetItemCount self > 0 && fAbsorption > 0.0 )
+	;-----------------------------------------------------------------------------
+	
+		Set Button to -1
+		Set Eater to 1
+		
+	;-----------------------------------------------------------------------------
+	endif ;( IsKeyPressed2 ( sMMainKey && ( sMNameKey || sMEnchKey ) ) )
+	;-----------------------------------------------------------------------------
+	
+
+	
+	
+
+	;-----------------------------------------------------------------------------
+	;Call ModelChange menus
+	;-----------------------------------------------------------------------------
+	if ( ModelChange > 0 && ModelChange != 100 )
+
+		Set ModelChange to Call aaDusfergonModelChange ModelChange
+		
+	endif
+
+
+	;-----------------------------------------------------------------------------
+	;Set new model and stats
+	;-----------------------------------------------------------------------------
+	if ( ModelChange == 100 && Button > -1 )
+
+		Set self to Call aaDusfergonExchange self ench ( IndexOffset + Button - 2 ) sDamageBase fDamageMult fSpeedBase fSpeedMult fReachBase fReachMult
+		Set ModelChange to 0
+
+	endif
+
+
+	;-----------------------------------------------------------------------------
+	;Call Mimic
+	;-----------------------------------------------------------------------------
+	if ( Mimic > 0 )
+
+		Set self to Call aaDusfergonMimic Selection self ench sDamageBase fDamageMult fSpeedBase fSpeedMult fReachBase fReachMult
+		Set Mimic to 0
+		
+	endif
+
+
+	;-----------------------------------------------------------------------------
+	;Call WeaponEater menu
+	;-----------------------------------------------------------------------------
+	if ( Eater > 0 )
+
+		Set Eater to Call aaDusfergonWeaponEat sLevelCap Eater Selection self fAbsorption
+		
+	endif
+
+	
+	
+
+	
+	;-----------------------------------------------------------------------------
+	;Undo enchantment if weapon was enchanted by player
+	;-----------------------------------------------------------------------------
+	if ( WarnOnce == 1 )
+
+		;Handler would have fired by now
+		Set WarnOnce to 0
+
+	elseif ( WarnOnce == 2 )
+
+		Call aaDusfergonOnSigilStone self
+		Set WarnOnce to 0
+		
+	endif
+
+;-----------------------------------------------------------------------------
+end ;Inventory
+;-----------------------------------------------------------------------------
+
+
+
+
+
+
+;-----------------------------------------------------------------------------
+begin MenuMode 1042 ;Enchanting
+;-----------------------------------------------------------------------------
+
+	;-----------------------------------------------------------------------------
+	;Set script lag
+	;-----------------------------------------------------------------------------
+	if ( fQuestDelayTime != MenuLag )
+	
+		Set fQuestDelayTime to MenuLag
+
+	endif
+	
+	;-----------------------------------------------------------------------------
+	;Warn the player against enchanting	
+	;-----------------------------------------------------------------------------
+	if ( GetEnchMenuBaseItem == self )
+		
+		if ( WarnOnce == 0 )
+
+			Let Icon := str_Name + " rattles as if to resist enchantment."
+			MessageBox $Icon
+
+			;Handler will undo enchantment if Player goes through with it
+			SetEventHandler "OnEnchant" aaDusfergonOnEnchant
+			Set WarnOnce to 1
+			
+		endif
+
+		;Keep used soul gem updated so handler restores the right one
+		Set SoulGem to GetEnchMenuSoulgem
+
+		;We need soul level for Azura's Star, since we can't add another
+		if ( SoulGem == AzurasStar )
+
+			Let Stack := Player.GetInvRefsForItem SoulGem
+			Let Item := Stack[0]
+			Let SoulLevel := Item.GetCurrentSoulLevel
+
+		endif
+
+	elseif ( GetEnchMenuBaseItem != self )
+
+		RemoveEventHandler "OnEnchant" aaDusfergonOnEnchant
+		Set WarnOnce to 0
+		
+	endif
+	
+;-----------------------------------------------------------------------------
+end ;Enchanting
+;-----------------------------------------------------------------------------
+
+;-----------------------------------------------------------------------------
+begin MenuMode 1048 ;SigilStone
+;-----------------------------------------------------------------------------
+
+	;-----------------------------------------------------------------------------
+	;Set script lag
+	;-----------------------------------------------------------------------------
+	if ( fQuestDelayTime != MenuLag )
+	
+		Set fQuestDelayTime to MenuLag
+
+	endif
+	
+	;-----------------------------------------------------------------------------
+	;Warn the player against enchanting	
+	;-----------------------------------------------------------------------------
+	;No such equivalent function as GetEnchMenuBaseItem so throw the warning if it's possible to enchant self
+	if ( GetEnchantment self == 0 && WarnOnce == 0 )
+
+		Let Icon := str_Name + " rattles in response to chaotic creatia."
+		MessageBox $Icon
+
+		;No such equivalent handler type as "OnEnchant" so OnSigilStone is called from Inventory or GameMode
+		Set WarnOnce to 2
+
+	endif
+	
+;-----------------------------------------------------------------------------
+end ;SigilStone
+;-----------------------------------------------------------------------------

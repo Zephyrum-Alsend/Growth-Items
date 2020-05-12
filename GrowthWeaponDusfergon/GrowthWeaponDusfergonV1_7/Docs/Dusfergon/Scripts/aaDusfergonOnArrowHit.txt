@@ -1,0 +1,75 @@
+scn aaDusfergonOnArrowHit
+
+;Main script
+;-----------------------------------------------------------------------------
+;aaDusfergonManager
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;aaDusfergonDefaultINI
+;aaDusfergonForcePurge
+;aaDusfergonObjectB
+;aaDusfergonOnHit
+;aaDusfergonOnBowHit
+;aaDusfergonOnBowRelease
+;aaDusfergonOnStaffHit
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
+;aaDusfergonCombatXPLog
+;aaDusfergonCombatXPStart
+;aaDusfergonXP
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;When any valid target is hit with an arrow fired from DLScalar3B:
+;Start recording the XP gained in this combat encounter for post combat report
+;Award XP
+;Clean up
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+ref Target
+ref Weapon
+;-----------------------------------------------------------------------------
+
+
+
+;This won't fire if the arrow hits the ground or water, causing a memory leak which is handled in Manager
+;-----------------------------------------------------------------------------
+begin Function { Target, Weapon }
+;-----------------------------------------------------------------------------
+	;if Target is a living NPC at time of impact
+	if ( Target.IsActor == 1 && Target.GetDead == 0 )
+		
+		;Start combat logger
+		if ( aaDusfergonCombatXPLog == 0 )
+
+			Set aaDusfergonCombatXPStart to aaDusfergonXP
+			Set aaDusfergonCombatXPLog to 1
+
+		endif
+
+		;Add XP
+		Set aaDusfergonXP to ( aaDusfergonXP + aaDusfergonInit.sXPBow )
+
+	endif
+
+	;Remove self
+	RemoveEventHandler "OnHitWith" aaDusfergonOnArrowHit "object"::Weapon
+
+;-----------------------------------------------------------------------------
+end ;Function { Target, Weapon }
+;-----------------------------------------------------------------------------

@@ -1,0 +1,85 @@
+scn aaDusfergonOnEnchant
+
+;Main script
+;-----------------------------------------------------------------------------
+;aaDusfergonManager
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;aaDusfergonForcePurge
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
+;aaDusfergonEquip
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;Undoes the last enchantment if it was DLScalar3/B/S and unsets handlers and 
+;flags, incase enchantment doesn't run OnUnEquip blocks. Refunds used soul 
+;gem.
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+string_var Prompt
+
+array_var Stack
+
+ref Item
+ref enchantedItem
+;-----------------------------------------------------------------------------
+
+
+
+;-----------------------------------------------------------------------------
+begin Function { enchantedItem }
+;-----------------------------------------------------------------------------
+
+	;New enchanted item may not be added yet, so wait
+	while ( 1 > Player.GetItemCount enchantedItem )
+		;This is bad practice, but I can't think of another way to do this here
+	loop
+	
+	Let Prompt := aaDusfergonInit.str_Name + " defies enchantment."	
+	MessageBox $Prompt
+
+	;Refund soul gem
+	Set Item to aaDusfergonInit.SoulGem
+	if ( Item == AzurasStar )
+
+		Let Stack := Player.GetInvRefsForItem AzurasStar
+		Let Item := Stack[0]
+		SetSoulLevel aaDusfergonInit.SoulLevel Item
+
+	else
+		
+		Player.AddItem Item 1
+
+	endif
+
+	;Remove new enchanted item
+	Player.RemoveItemNS enchantedItem 1
+
+	;Add base weapon back
+	Let Item := aaDusfergonInit.self
+	Player.AddItemNS Item 1
+
+	
+	;Clean up
+	sv_Destruct Prompt
+	Set aaDusfergonEquip to 0
+	Call aaDusfergonForcePurge
+;-----------------------------------------------------------------------------
+end ;Function { enchantedItem }
+;-----------------------------------------------------------------------------

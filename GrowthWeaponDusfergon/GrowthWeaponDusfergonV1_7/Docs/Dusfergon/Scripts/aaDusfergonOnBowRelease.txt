@@ -1,0 +1,69 @@
+scn aaDusfergonOnBowRelease
+
+;Main script
+;-----------------------------------------------------------------------------
+;aaDusfergonManager
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;aaDusfergonOnArrowHit
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;aaDusfergonForcePurge
+;aaDusfergonObjectB
+;aaDusfergonOnHit
+;aaDusfergonOnBowHit
+;aaDusfergonOnStaffHit
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;When any arrow is shot from DLScalar3B, set a listener for when that arrow
+;lands.
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+ref Ammo
+ref Actor
+;-----------------------------------------------------------------------------
+
+
+
+;This is triggered by both spell and arrow, so we remove when done
+;-----------------------------------------------------------------------------
+begin Function { Actor }
+;-----------------------------------------------------------------------------
+
+	;Get the arrow just fired
+	Let Ammo := Actor.GetProjectile 1 2
+	
+	;This handler type is triggered by any attack animation finishing, 
+	;so we check we actually got an arrow reference
+	if ( Ammo )
+
+		;Create a listener for the arrow
+		SetEventHandler "OnHitWith" aaDusfergonOnArrowHit "object"::Ammo
+
+		;Add to garbage collection, incase handler never fires
+		ar_Append aaDusfergonInit.ArrowsUp Ammo
+
+	endif
+
+	;Remove self
+	RemoveEventHandler "OnRelease" aaDusfergonOnBowRelease
+	
+;-----------------------------------------------------------------------------
+end ;Function { Target }
+;-----------------------------------------------------------------------------

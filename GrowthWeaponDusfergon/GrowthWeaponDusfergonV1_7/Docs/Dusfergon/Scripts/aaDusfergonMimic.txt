@@ -1,0 +1,189 @@
+scn aaDusfergonMimic
+
+;Main script
+;-----------------------------------------------------------------------------
+;aaDusfergonManger
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;aaDusfergonExchange
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;aaDusfergonDefaultINI
+;aaDusfergonSetModel
+;aaDusfergonSetModel2
+;aaDusfergonRandomModel
+;aaDusfergonShowModelName
+;aaDusfergonModelChange
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
+;aaDusfergonModel
+;aaDusfergonMimicID
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;Copies the model and icon from the passed Weap to Self, then sets Self's
+;sub-type based on Weap's Speed or Reach stat.  Finally, updates MimicID and
+;returns what Main's Self should be.
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+short Type
+float Stat
+
+short DmgB
+float DmgM
+float SpdB
+float SpdM
+float RchB
+float RchM
+
+ref Weap
+ref Self ;Return value
+ref Ench
+;-----------------------------------------------------------------------------
+
+
+
+;-----------------------------------------------------------------------------
+begin Function { Weap, Self, Ench, DmgB, DmgM, SpdB, SpdM, RchB, RchM }
+;-----------------------------------------------------------------------------
+
+	;Store string data of Weap
+	Let aaDusfergonInit.MimicModel := GetModelPath Weap
+	Let aaDusfergonInit.MimicIcon := GetTexturePath Weap
+	Let aaDusfergonInit.MimicName := $Weap
+
+	Let Type := GetWeaponType Weap
+		
+
+	;-----------------------------------------------------------------------------
+	;Blade1H
+	;-----------------------------------------------------------------------------
+	if ( Type == 0 )
+	;-----------------------------------------------------------------------------
+
+		;For Blade we divide sub-type by Reach
+		Let Stat := GetWeaponReach Weap
+
+
+		if ( Stat > aaDusfergonInit.fMimicBastard )
+
+			Let Type := aaDusfergonInit.Bastard1hIdx + 999
+			
+		elseif ( Stat > aaDusfergonInit.fMimicLongsword )
+
+			Let Type := aaDusfergonInit.LongswordIdx + 999
+			
+		elseif ( Stat > aaDusfergonInit.fMimicShortsword )
+
+			Let Type := aaDusfergonInit.ShortswordIdx + 999
+			
+		else
+
+			Let Type := aaDusfergonInit.DaggerIdx + 999
+			
+		endif
+
+	;-----------------------------------------------------------------------------
+	;Blade2H
+	;-----------------------------------------------------------------------------
+	elseif ( Type == 1 )
+	;-----------------------------------------------------------------------------
+
+		;For Blade we divide sub-type by Reach
+		Let Stat := GetWeaponReach Weap
+
+
+		if ( Stat > aaDusfergonInit.fMimicClaymore )
+
+			Let Type := aaDusfergonInit.ClaymoreIdx + 999
+			
+		else
+
+			Let Type := aaDusfergonInit.Bastard2hIdx + 999
+			
+		endif
+	
+	;-----------------------------------------------------------------------------
+	;Blunt1H
+	;-----------------------------------------------------------------------------
+	elseif ( Type == 2 )
+	;-----------------------------------------------------------------------------
+	
+		;For Blunt we divide sub-type by Speed
+		Let Stat := GetWeaponSpeed Weap
+
+
+		if ( Stat < aaDusfergonInit.fMimicMace )
+
+			Let Type := aaDusfergonInit.MaceIdx + 999
+			
+		else
+
+			Let Type := aaDusfergonInit.WaraxeIdx + 999
+			
+		endif
+	
+	;-----------------------------------------------------------------------------
+	;Blunt2H
+	;-----------------------------------------------------------------------------
+	elseif ( Type == 3 )
+	;-----------------------------------------------------------------------------
+	
+		;For Blunt we divide sub-type by Speed
+		Let Stat := GetWeaponSpeed Weap
+
+
+		if ( Stat < aaDusfergonInit.fMimicWarhammer )
+
+			Let Type := aaDusfergonInit.WarhammerIdx + 999
+			
+		else
+
+			Let Type := aaDusfergonInit.BattleaxeIdx + 999
+			
+		endif
+	
+	;-----------------------------------------------------------------------------
+	;Staff
+	;-----------------------------------------------------------------------------
+	elseif ( Type == 4 )
+	;-----------------------------------------------------------------------------
+	
+		Let Type := aaDusfergonInit.StaffIdx + 999
+			
+	;-----------------------------------------------------------------------------
+	;Bow
+	;-----------------------------------------------------------------------------
+	elseif ( Type == 5 )
+	;-----------------------------------------------------------------------------
+	
+		Let Type := aaDusfergonInit.BowIdx + 999
+			
+	;-----------------------------------------------------------------------------
+	endif ;( 0 <= Type <= 5 )
+	;-----------------------------------------------------------------------------
+
+	;-----------------------------------------------------------------------------
+	Let Self := Call aaDusfergonExchange Self Ench Type DmgB DmgM SpdB SpdM RchB RchM
+	Let aaDusfergonMimicID := aaDusfergonModel
+	;-----------------------------------------------------------------------------
+
+
+	SetFunctionValue Self
+	Return
+;-----------------------------------------------------------------------------
+end ;Function { Weap, Self, Ench, DmgB, DmgM, SpdB, SpdM, RchB, RchM }
+;-----------------------------------------------------------------------------

@@ -1,0 +1,69 @@
+scn aaDusfergonOnSigilStone
+
+;Main script
+;-----------------------------------------------------------------------------
+;aaDusfergonManager
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;aaDusfergonForcePurge
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
+;aaDusfergonEquip
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;Undoes the last Sigil Stone enchantment if the passed item was used.
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+string_var Prompt
+
+ref Sigil
+ref Enchanted
+ref Weap
+;-----------------------------------------------------------------------------
+
+
+
+;-----------------------------------------------------------------------------
+begin Function { Weap }
+;-----------------------------------------------------------------------------
+
+	if ( GetLastSigilStoneEnchantedItem == Weap )
+
+		Let Prompt := $Weap + " rejects the Sigil Stone used on it."
+		MessageBox $Prompt
+
+		;Get items used/created in the enchantment
+		Set Sigil to GetLastUsedSigilStone
+		Set Enchanted to GetLastSigilStoneCreatedItem
+
+		;Remove new item, add old item, refund sigil stone
+		Player.RemoveItemNS Enchanted 1
+		Player.AddItemNS Weap 1
+		Player.AddItem Sigil 1
+
+		;Clean up
+		Set aaDusfergonEquip to 0
+		Call aaDusfergonForcePurge
+
+	endif
+
+	Return
+;-----------------------------------------------------------------------------
+end ;Function { Weap }
+;-----------------------------------------------------------------------------

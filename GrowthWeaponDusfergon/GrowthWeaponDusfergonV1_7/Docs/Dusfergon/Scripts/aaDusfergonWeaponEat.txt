@@ -1,0 +1,211 @@
+scn aaDusfergonWeaponEat
+
+;Main script
+;-----------------------------------------------------------------------------
+;aaDusfergonManger
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;aaDusfergonRefreshInv
+;aaDUsfergonXPReport
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
+;aaDusfergonLevel
+;aaDusfergonXP
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+short LvlCap
+short Eater ;Return value
+float Absor
+short XPGain
+float Health
+long Charge
+float SelfHealth
+long SelfCharge
+short Count
+
+string_var Prompt
+string_var Icon
+
+array_var Stack
+
+ref Weap
+ref Self
+ref Item
+;-----------------------------------------------------------------------------
+
+
+
+;-----------------------------------------------------------------------------
+begin Function { LvlCap, Eater, Weap, Self, Absor }
+;-----------------------------------------------------------------------------
+
+	;-----------------------------------------------------------------------------
+	;Get the Player's response
+	;-----------------------------------------------------------------------------
+	if ( aaDusfergonInit.Button < 0 )
+
+		Set aaDusfergonInit.Button to GetButtonPressed
+
+	endif
+
+
+
+	;-----------------------------------------------------------------------------
+	;If at or exceeding sLevelCap, refuse to eat
+	;-----------------------------------------------------------------------------
+	if ( aaDusfergonLevel >= LvlCap )
+	;-----------------------------------------------------------------------------
+	
+		Let Prompt := $Self + " has no need for further offerings."		
+		MessageBox $Prompt
+
+		Set Eater to 0
+		
+	;-----------------------------------------------------------------------------
+	;Confirm with Player if they really want to feed Weap to weapon
+	;-----------------------------------------------------------------------------
+	elseif ( Eater == 1 )
+	;-----------------------------------------------------------------------------
+	
+		Set Prompt to sv_Construct "Do you want to offer %n to %n?" Weap Self
+		MessageBox $Prompt "Yes" "No"
+
+		Set Eater to 2
+
+	;-----------------------------------------------------------------------------
+	;Feed Weap to weapon
+	;-----------------------------------------------------------------------------
+	elseif ( Eater == 2 && aaDusfergonInit.Button > -1 )
+	;-----------------------------------------------------------------------------
+	
+		;-----------------------------------------------------------------------------
+		;Button == Yes
+		;-----------------------------------------------------------------------------
+		if ( aaDusfergonInit.Button == 0 )
+
+			;-----------------------------------------------------------------------------
+			;State item's consumption and play item break SFX
+			;-----------------------------------------------------------------------------
+			Let Icon := "Icons\" + ( GetIconPath self )
+			SetMessageIcon $Icon
+			SetMessageSound UIArmorWeaponRepairBreak
+			MessageEX "%n consumes %n." Self Weap
+
+			;-----------------------------------------------------------------------------
+			;Get inventory references and durability
+			;-----------------------------------------------------------------------------
+			Let Stack := Player.GetInvRefsForItem Weap
+			Let Item := Stack[0]
+			Let Health := Item.GetCurrentHealth
+			Let Count := Item.GetRefCount
+
+			;-----------------------------------------------------------------------------
+			;Get charge if it has an enchantment
+			;-----------------------------------------------------------------------------
+			Let Charge := 0
+			if ( GetEnchantment Weap != 0 )
+
+				Let Charge := Item.GetCurrentCharge
+
+			endif
+
+			;-----------------------------------------------------------------------------
+			;The entire stack Item points to is removed
+			;-----------------------------------------------------------------------------
+			Item.RemoveMeIR
+			
+			
+			;-----------------------------------------------------------------------------
+			;So add back all but 1
+			;-----------------------------------------------------------------------------
+			if ( Count > 1 )
+				Let Count := Count - 1
+
+				;TempRefs only exist for this exact frame
+				Let Item := CreateTempRef Weap
+				Item.SetRefCount Count
+				Item.SetCurrentHealth Health
+				Item.SetCurrentCharge Charge
+				Item.CopyIR PlayerRef
+
+			endif
+
+			
+			;-----------------------------------------------------------------------------
+			;Calculate XPGain
+			;-----------------------------------------------------------------------------
+			Let XPGain := Absor * ( Health + Charge )
+
+			;-----------------------------------------------------------------------------
+			;Add durability and charge
+			;-----------------------------------------------------------------------------
+			Let Stack := Player.GetInvRefsForItem Self
+			Let Item := Stack[0]
+			Let SelfHealth := ( Health * Absor ) + Item.GetCurrentHealth
+			Let SelfCharge := ( Charge * Absor ) + Item.GetCurrentCharge
+			
+			;SetCurrentCharge will refuse any value above max charge
+			if ( SelfCharge > Item.GetObjectCharge )
+			
+				Let SelfCharge := Item.GetObjectCharge
+
+			endif
+			
+			Item.SetCurrentHealth SelfHealth
+			Item.SetCurrentCharge SelfCharge
+
+			
+			;-----------------------------------------------------------------------------
+			;Refresh inventory and update globals
+			;-----------------------------------------------------------------------------
+			Call aaDusfergonRefreshInv
+
+			Let aaDusfergonXP := aaDusfergonXP + XPGain
+
+			;If combat logger is active, make sure we aren't counted
+			if ( aaDusfergonCombatXPLog == 1 )
+
+				Let aaDusfergonCombatXPStart := aaDusfergonCombatXPStart + XPGain
+
+			endif
+
+			;-----------------------------------------------------------------------------
+			Let Prompt := $Weap + " consumed."
+			Call aaDusfergonXPReport XPGain Prompt
+			;-----------------------------------------------------------------------------
+
+		;-----------------------------------------------------------------------------
+		endif ;( Button == Yes )
+		;-----------------------------------------------------------------------------
+	
+		Set Eater to 0
+		
+	;-----------------------------------------------------------------------------
+	endif ;( Level < sLevelCap && Eater > 0 )
+	;-----------------------------------------------------------------------------
+	
+
+	sv_Destruct Prompt
+	SetFunctionValue Eater
+	Return
+;-----------------------------------------------------------------------------
+end ;Function { LvlCap, Eater, Weap, Name, Icon, Absor }
+;-----------------------------------------------------------------------------
