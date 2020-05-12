@@ -261,3 +261,31 @@
 	-string_vars are saved with save file
 	-What if player changes Seek frequency? Will have to track the enchant increment for each level
 -Created ActvBody/Foot/Hand/Head/Legs/Shld string_vars for above purpose
+-Created SetSeekArray to append things to above string_vars
+-Added initializer to Level == 0 sub-block in GetGameLoaded block, all strings should be empty on first boot
+-Created RefreshResistOrder to keep Resist effects at the end of the enchantment
+
+2020.05.12
+-Created UndoEnchant to... undo enchant levels
+-Seems to be in working order
+-Purge enchants is crashing game again... such an inconsistent CTD
+	-I may just make my own RemoveAllEffectItems function to circumvent this
+-Created RemoveAllEffectItems
+-No CTDs while testing, will have to test periodically since the old CTD was erratic
+-When going down to Lv10 then up to Lv11, SeekOnce isn't set
+-When going below sEnchStart then back up to it, SeekOnce fails to get set
+-Added Level < sEnchStart to SeekOnce check
+-Also tested going to Lv16 > Lv15 > lv16 and SeekOnce was properly set both times
+-Added sBreakThreshold to ini
+-Created Broken global to track number of broken items
+-Wrote Break Check block, checks number of broken armor pieces and applies delevel if necessary
+-Global Broken not necessary, but saves cycles on initialization (have to call GetBroken on everything again)
+-There is an exploit where if Broken < sBreakThreshold, then you set sBreakThreshold < Broken, delevel will never occur
+	-This is because sBreakThreshold is loaded on GetGameLoaded and that same block sets BreakOnce so delevel doesn't happen twice if loading a save with broken gear
+	-Decided to leave this exploit in: not much merit to having broken armor and pain in the arse to fix
+-Added IsInCombat check to Seek code, forgot to add it
+-New check will throw off ScriptLag if, say, player opens menu during combat and SeekOnce is set
+	-ScriptLag won't be set back to 0.5 until SeekOnce is unchecked, which won't happen until combat is done
+-Created new flag to fix this, AltLag
+	-Instead of checking SeekOnce == 0 && RefreshOnce == 0, ScriptLag only checks AltLag == 0
+	-Seek code and Refresh block both set and unset AltLag

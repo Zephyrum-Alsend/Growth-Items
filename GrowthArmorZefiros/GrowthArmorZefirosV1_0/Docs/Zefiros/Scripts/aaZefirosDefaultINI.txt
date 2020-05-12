@@ -154,6 +154,8 @@ Let aaZefirosInit.sLevelCap := 201				;201
 
 ;= 0 : reset to Lv1, < 0 : disable, > 0 : delevel by that amount
 Let aaZefirosInit.sBreakLevel := 0				;0
+;The number of items that need to be broken before delevel is triggered
+Let aaZefirosInit.sBreakThreshold := 3			;3
 
 ;Conversion rate of durability for offerings
 Let aaZefirosInit.fAbsorption := 0.01			;0.01

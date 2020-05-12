@@ -1,0 +1,90 @@
+scn aaZefirosRefreshResistOrder
+
+;Main script
+;-----------------------------------------------------------------------------
+;aaZefirosManager
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
+;aaZefirosDebug
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;aaZefirosRXPFire
+;aaZefirosRXPFrost
+;aaZefirosRXPShock
+;aaZefirosRXPMagic
+;aaZefirosRXPNormal
+;aaZefirosRXPParalysis
+;aaZefirosRXPDisease
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;Moves all Resist effect items to the back by deleting and undeleting them.
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+short ResistFI
+short ResistFR
+short ResistSH
+short ResistMA
+short ResistNW
+short ResistPA
+short ResistDI
+
+array_var Enchs
+array_var Ench
+
+short Size
+;-----------------------------------------------------------------------------
+
+;-----------------------------------------------------------------------------
+begin Function { ResistFI, ResistFR, ResistSH, ResistMA, ResistNW, ResistPA, ResistDI, Enchs }
+;-----------------------------------------------------------------------------
+
+	Let Size := ar_Size Enchs
+	DebugPrint "Deleting Resist effects from %.0f enchantments..." Size
+	SetDebugMode 0 ;Disable DebugPrint to prevent console clog
+
+	ForEach Ench <- Enchs
+
+		;Delete each effect item
+		Call aaZefirosSetEffectItem 0 0 0 0 ( GetMagicEffectCode RSFI ) 256 Ench["value"]
+		Call aaZefirosSetEffectItem 0 0 0 0 ( GetMagicEffectCode RSFR ) 256 Ench["value"]
+		Call aaZefirosSetEffectItem 0 0 0 0 ( GetMagicEffectCode RSSH ) 256 Ench["value"]
+		Call aaZefirosSetEffectItem 0 0 0 0 ( GetMagicEffectCode RSMA ) 256 Ench["value"]
+		Call aaZefirosSetEffectItem 0 0 0 0 ( GetMagicEffectCode RSNW ) 256 Ench["value"]
+		Call aaZefirosSetEffectItem 0 0 0 0 ( GetMagicEffectCode RSPA ) 256 Ench["value"]
+		Call aaZefirosSetEffectItem 0 0 0 0 ( GetMagicEffectCode RSDI ) 256 Ench["value"]
+
+		;Re-add
+		Call aaZefirosSetEffectItem ResistFI 0 0 0 ( GetMagicEffectCode RSFI ) 256 Ench["value"]
+		Call aaZefirosSetEffectItem ResistFR 0 0 0 ( GetMagicEffectCode RSFR ) 256 Ench["value"]
+		Call aaZefirosSetEffectItem ResistSH 0 0 0 ( GetMagicEffectCode RSSH ) 256 Ench["value"]
+		Call aaZefirosSetEffectItem ResistMA 0 0 0 ( GetMagicEffectCode RSMA ) 256 Ench["value"]
+		Call aaZefirosSetEffectItem ResistNW 0 0 0 ( GetMagicEffectCode RSNW ) 256 Ench["value"]
+		Call aaZefirosSetEffectItem ResistPA 0 0 0 ( GetMagicEffectCode RSPA ) 256 Ench["value"]
+		Call aaZefirosSetEffectItem ResistDI 0 0 0 ( GetMagicEffectCode RSDI ) 256 Ench["value"]
+
+	loop
+
+	SetDebugMode aaZefirosDebug
+	DebugPrint "Resist effects re-added to %.0f enchantments." Size
+
+
+	Return
+;-----------------------------------------------------------------------------
+end ;Function { }
+;-----------------------------------------------------------------------------

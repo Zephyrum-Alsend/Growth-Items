@@ -1,0 +1,112 @@
+scn aaZefirosUndoEnchant
+
+;Main script
+;-----------------------------------------------------------------------------
+;aaZefirosManager
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
+;aaZefirosDebug
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;Undoes an enchantment, one level at a time.
+;Passed the total Lvl to be reduced by, GetEnchantData array, body part Mode, 
+;history of all level ups, and the enchant itself.
+;Returns what the new active enchant is and the remaining history.
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+array_var Stats
+string_var StrArr
+short Lvl
+short Mode
+ref Ench
+
+array_var ReturnVal ;Return value
+
+short i
+short Actv
+array_var NewLv
+array_var NewSt
+;-----------------------------------------------------------------------------
+
+;-----------------------------------------------------------------------------
+begin Function { Lvl, Stats, Mode, StrArr, Ench }
+;-----------------------------------------------------------------------------
+
+	if ( Lvl < 0 || Mode < 0 || Mode > 5 )
+		DebugPrint "UndoEnchant Error: Lvl or Mode out of bounds."
+		Return
+	endif
+
+
+	;-----------------------------------------------------------------------------
+	DebugPrint "Undoing levels for Mode %.0f enchantment..." Mode
+	;-----------------------------------------------------------------------------
+	Let i := 0
+	while ( i < Lvl )
+
+		Let Actv := #StrArr[0:1]
+		;Decrement levels
+		Call aaZefirosSetEnchLevel Mode ( -1 ) Actv
+		sv_Erase StrArr 0 2
+
+		Let i += 1
+	loop
+
+
+	;-----------------------------------------------------------------------------
+	DebugPrint "Setting new stats for enchantment..."
+	;-----------------------------------------------------------------------------
+	;Reduce console clog
+	SetDebugMode 0
+
+	;Get all levels
+	Let NewLv := Call aaZefirosGetEnchantLevels Mode
+
+	Let i := 0
+	Let Lvl := ar_Size NewLv
+	while ( i < Lvl )
+
+		;If current level == 0 and is not the new Active Enchant, delete effect
+		if eval( NewLv[i] == 0 && Actv != i )
+
+			Call aaZefirosSetEffectItem 0 0 0 0 Stats[i][0] Stats[i][1] Ench
+
+		else ;Set new stats according to new level
+
+			Let NewSt := Call aaZefirosSetEffectStat Stats[i][2] Stats[i][3] Stats[i][4] Stats[i][5] Stats[i][6] Stats[i][7] NewLv[i]
+			Call aaZefirosSetEffectItem NewSt[0] NewSt[1] NewSt[2] Stats[i][8] Stats[i][0] Stats[i][1] Ench
+			
+		endif
+
+		Let i += 1
+	loop
+	SetDebugMode aaZefirosDebug
+
+
+	;-----------------------------------------------------------------------------
+	DebugPrint "New stats set."
+	;-----------------------------------------------------------------------------
+	Let ReturnVal := ar_Map 0::Actv 1::StrArr
+	SetFunctionValue ReturnVal
+	Return
+;-----------------------------------------------------------------------------
+end ;Function { Lvl, Stats, Mode, StrArr, Ench }
+;-----------------------------------------------------------------------------
