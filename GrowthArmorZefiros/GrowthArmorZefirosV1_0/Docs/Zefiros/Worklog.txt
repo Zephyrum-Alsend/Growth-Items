@@ -289,3 +289,138 @@
 -Created new flag to fix this, AltLag
 	-Instead of checking SeekOnce == 0 && RefreshOnce == 0, ScriptLag only checks AltLag == 0
 	-Seek code and Refresh block both set and unset AltLag
+-Added 8 Armor Eater, 6 Level Up, 4 Full Reset, 6 Delevel messages
+-Begun compressing Seek code
+-Code throws a litany of runtime errors, console clogged
+	-What I can make out, it seems an array is not getting initialized, which leads to 8 different things throwing errors too
+-Ctrl+Z until all new work is gone, tested
+	-Same litany of errors - something didn't compile right but Compile All throws no errors
+-With DebugPrint, MessageBox and ;, narrowed down error source to GetEnchChoice
+-Narrowing things down further, seems Item is getting Nulled by something external
+-While nothing does Item := ar_Null, Item is used in several ForEach loops that may still run during Seek
+-Created array_var Seek to replace Item inside Seek code, runtime errors with narrowed code are gone
+-Unnarrowed code throws no runtime errors
+-Re-implemented code compression
+	-Using Stack to store names and values, checked nothing overwrites it but my future code may
+-Compressed Seek code functions as expected
+-Replaced all instances of Stack within Seek block with new array_var Actv
+-Added all new array_vars to CleanUp code
+
+2020.05.13
+-Added 6 halfway messages
+-Created SetLevelCap for dynamic cap type
+-Added checks to unset CapOnce during Flavor Text sub-block
+-Tested Break block ingame, works as expected but forgot to adjust armor durability down
+-Created GetEnchantEffect to display effects
+-MessageBox gets overloaded around Lv101 if selecting a different effect every time
+-MessageBoxEX works, but may have missed a Seek at Lv91 - could have spaced and chose the same, but could also have an error in Seek check
+-Went up to Lv101 again, I spaced out earlier
+-Tweaked ordering of LevelLog and Flavor Text in console, Flavor Text outputs last now
+-Created CapDurability to keep durability at or below 100% (125% if Expert Armorer) when changing level
+-Replaced CapDurability with GetDurability and SetDurability, so now durability % remains consistent across levels
+
+2020.05.18
+-Created RefreshInv, copy&paste of Dusfergon's function
+-Created Offer, akin to Dusfergon's Eat function
+-Two possible ways to about absorbing durability:
+	-Goes to specific item that shares same slot
+	-Equally distribute among all 6 pieces
+-Latter would be easier to code, but leaning towards former
+-Factored stat altering half of Offer into new Sacrifice function
+-Decided on former for durability absorption
+-Created GetSlotShared to tell me which Self shares slot(s) with an item
+-Tested in game with regular armor and what multi-slot armor I have, works as intended
+-After testing on non-armor for tail and ring slots, encountered runtime error as Sacrifice tries to pull from a Null array_var
+-Fixed by adding a size check before the assign and aborting function if == 0
+-What if there's actual armor in the tail or, Nine forbid, ring slots?
+	-It would get aborted as is, but that would be jank from the end user's perspective
+	-Associated Legs with tail slot, Shield with all other slots, so Sacrifice shouldn't fail due to absurd slots
+-Added check to Sacrifice for if corresponding slot's item is in inventory, tells Player if not
+-Sacrifice removes item from inventory, awards XP, but fails to add durability
+	-Is not a UI bug
+	-Is not Ref Self acting as a pointer to Stack[0] which gets overwritten later
+	-Is engine shortcut causing bug
+		-If CurrentHealth == MaxHealth, engine keeps CHealth == MHealth, SetCurrentHealth cannot override
+-Set fAbsorption to 0.03 after testing 0.01-0.05
+-Decided on doing Mimic first over Form Change
+-Going to use multi-dimensional array to store Form data
+	-Mimic will be [0]
+-Created GetFormData to compile array
+-Mimic data requires 7 strings per item and 1 long global, far cry from just 3 for weapons...
+-Created ValidateMimic to validate Mimic data, also resets data if invalid
+-Created ValidateBiped to shorten length of if checks in ValidateMimic
+-Began true work on GetFormData
+-Added Fur and Iron sets, began testing ingame
+-Created SetForm
+-Missing meshes for all parts
+	-string_vars need to be stringified, CS function was reading var name as a char array
+	-unlike in engine, if female path is left blank it does not default to male path
+-Fixed missing meshes, both male and female
+-Tested if RefreshInv could update AR and Active Effects, does not
+-Created SetMimic to activate when menu hotkeys are pressed
+-Created SaveMimic to factor out code transfering array data to strings, will regretfully need to use .notation here
+
+2020.05.20
+-Spent a full 8 hours debugging a CTD when SetMimic is called on a Ring or Tail slot, only to find out it was all because I had called Message with a format string instead of MessageEX
+	-Incorrect Message call only occured if Mimic couldn't take place
+-Adapted SetForm to handle merging and unmerging items
+	-Will look into separating into a separate function in the future
+-When merging items, still need to account for
+	-Max durability
+	-Current durability
+	-Enchantments
+	-Enchantment level up
+	-Enchantment Seek
+	-Equip flag
+	-Weight
+	-AR
+	-Value
+-Also need to update documentation, haven't updated Git in weeks and some function headers were never completed
+-Adjusted when items are removed during merge in SetForm so if it fails, none are left unequipped
+-Copied RefreshOnce block to MenuMode to run after SetForm calls
+-Added Equip command right after adding back unmerged items
+-Tried UnEquip -> Equip in SetForm just incase it works
+-It actually works
+-Removed RefreshOnce block from MenuMode
+-While writing header for SetMimic, noticed I hadn't tested if it works for females (Paths for female can be blank)
+-Female paths that are blank result in no change to affected attribute
+-Added checks to SetMimic that match empty female paths to their male counterparts
+
+2020.05.21
+-Added merging of stats to SetForm, should separate it soon
+-Discovered if merge items then load save without merge, have extra armor parts
+	-Added check for GetItemCount == 0 when adding back merged items, resolved above issue
+-Split off merger code into SetMerge
+-ValidateBiped returning false positives
+	-Could be setup in ValidateMimic
+	-Didn't stringify Path in ValidateMimic
+-Merged stats not right after boot, added missing items on GetGameRestarted to address issue
+	-This will result in multiples of Zefiros if Player had stored/dropped instead of merged them
+
+2020.05.22
+-Created Slot% globals to mark when something is merged
+-Created PrepMerge to replace stopgap solution from yesterday
+-Added checks to Object for merged items using new Slot% globals
+-Added same checks to CleanUp and OnUnEquip
+-OnEquip block not properly incrementing Equip
+	-Both This and GetSelf are failing
+	-Worse comes to worst, I make an Object script for each part
+	-This and GetSelf return 0 when called on an inventory object
+-Created ObjectBody/Foot/Hand/Head/Legs/Shld, obsoleting Object
+-Right before deleting OnEquip script, thought "what if I check Item.IsArmor before running?"
+	-First, IsArmor returns false
+	-IsEquipped returns false
+	-IsPlayable (which can only return true for armor or clothing) returns true
+	-Still fires twice when enchanted with IsPlayable check
+	-Back to the brute force solution!
+-Created SetMergeEnch to merge enchantments when merging items
+-Added RefreshResistOrder call to SetMergeEnch, which needs a redesign to be more flexible
+	-Rewrote RefreshResistOrder
+	-Now takes an array of effect and actor value codes and an array of enchantments
+	-No longer uses SetEffectItem, instead doing all remove/add itself
+	-Renamed to ReorderEffects
+	-All calls to RefreshResistOrder have been corrected
+-RefreshEquip fails on load save after booting, of course
+-Adding extra stage to RefreshOnce to work around this
+-RefreshEquipped is now officially redundant
+-Finally copying code for GitHub, not gonna delete deleted scripts there for posterity

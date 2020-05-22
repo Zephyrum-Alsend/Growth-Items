@@ -1,0 +1,290 @@
+scn aaZefirosSetMerge
+
+;Main script
+;-----------------------------------------------------------------------------
+;aaZefirosManager
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;aaZefirosGetSlotShared
+;aaZefirosSetMergeEnch
+;aaZefirosReorderEffects
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;aaZefirosSetForm
+;aaZefirosSetMimic
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
+;aaZefirosSlotBody
+;aaZefirosSlotFoot
+;aaZefirosSlotHand
+;aaZefirosSlotHead
+;aaZefirosSlotLegs
+;aaZefirosSlotShld
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;Changes the slot(s) of Armr[i] to Slot and checks if any items of Armr need
+;to be un/merged.  Returns False if aborted, True otherwise.
+;If items are to be merged, aborts if not all are present in Player's 
+;inventory.  Handles un/merging stats and enchantments.
+;If no change in Armr[i]'s slot(s), simply returns.
+;
+;Does NOT handle mesh/ground/icon paths, use SetForm.
+;
+;Array:
+;[0]Body
+;[1]Foot
+;[2]Hand
+;[3]Head
+;[4]Legs
+;[5]Shld
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+short i
+ref Item
+array_var Armr
+
+long Slot
+long OldSlot
+array_var Slots
+array_var Stack
+array_var Missing
+array_var Iter
+ref Object
+short Brk
+
+short AR
+float Wgt
+float MHP
+float CHP
+long Val
+ref InvR
+;-----------------------------------------------------------------------------
+
+;-----------------------------------------------------------------------------
+begin Function { Slot, i, Armr }
+;-----------------------------------------------------------------------------
+
+	Let Item := Armr[i]
+
+	DebugPrint "Checking merges with %n..." Item
+
+	
+	;-----------------------------------------------------------------------------
+	;Handle un/merging of items
+	;-----------------------------------------------------------------------------
+	Let OldSlot := GetBipedSlotMask Item
+
+	if ( OldSlot != Slot )
+
+		;-----------------------------------------------------------------------------
+		;Add back merged items
+		;-----------------------------------------------------------------------------
+		DebugPrint "Slot changed, undoing merges..."
+
+		Let Slots := ar_Map 0::Armr[3] 1::Armr[0] 2::Armr[4] 3::Armr[2] 4::Armr[1] 8::Armr[5]
+
+		Let Stack := Call aaZefirosGetSlotShared Item Slots
+		ForEach Iter <- Stack
+
+			Let Object := *Iter
+
+			;Checking ItemCount prevents dupes appearing when loading saves
+			if ( Object != Item && 0 == Player.GetItemCount Object )
+
+				DebugPrint "Returning %n." Object
+				Player.AddItemNS Object 1
+				Player.EquipItem2NS Object
+
+			endif
+			
+		loop
+
+
+		;-----------------------------------------------------------------------------
+		;Remove merged items
+		;-----------------------------------------------------------------------------
+		DebugPrint "Marking for merge..."
+
+		SetBipedSlotMask Slot Item
+
+		Let Stack := Call aaZefirosGetSlotShared Item Slots
+		Let Brk := 0
+		Let Missing := ar_Construct Array ;Track removed items incase of abort
+		ForEach Iter <- Stack
+
+			Let Object := *Iter
+
+			if ( Object != Item )
+
+				;If the item is present, mark for merge
+				if ( 0 < Player.GetItemCount Object )
+
+					DebugPrint "Marked %n." Object
+					ar_Append Missing Object
+
+				else ;Item to be marked is not present
+
+					;Flag abort
+					Let Brk := 1
+					Break
+
+				endif
+
+			endif
+			
+		loop
+
+
+		;-----------------------------------------------------------------------------
+		;Abort if an item needed to merge is not present
+		;-----------------------------------------------------------------------------
+		if ( Brk != 0 )
+
+			DebugPrint "%n missing from inventory, aborting SetMerge." Object
+			MessageEX "Unable to change form without %n." Object
+
+			SetBipedSlotMask OldSlot Item
+
+			SetFunctionValue 0
+			Return
+
+
+		;-----------------------------------------------------------------------------
+		;Merge all items marked
+		;-----------------------------------------------------------------------------
+		else
+
+			ForEach Iter <- Missing
+
+				Let Object := *Iter
+				DebugPrint "Merging %n..." Object
+
+
+				;-----------------------------------------------------------------------------
+				;Merge stats
+				;-----------------------------------------------------------------------------
+				Let AR := GetArmorAR Object
+				Let AR += GetArmorAR Item
+				
+				Let Wgt := GetWeight Object
+				Let Wgt += GetWeight Item
+				
+				Let Val := GetGoldValue Object
+				Let Val += GetGoldValue Item
+				
+				Let MHP := GetObjectHealth Object
+				Let MHP += GetObjectHealth Item
+
+				Let Stack := Player.GetInvRefsForItem Object
+				Let InvR := Stack[0]
+				Let CHP := InvR.GetCurrentHealth
+
+				Let Stack := Player.GetInvRefsForItem Item
+				Let InvR := Stack[0]
+				Let CHP += InvR.GetCurrentHealth
+
+				SetArmorAR AR Item
+				SetWeight Wgt Item
+				SetObjectHealth MHP Item
+				SetGoldValue_T Val Item
+				InvR.SetCurrentHealth CHP
+
+
+				;-----------------------------------------------------------------------------
+				;Merge enchantments
+				;-----------------------------------------------------------------------------
+				;Will return false if either lacks an enchantment
+				if ( GetEnchantment Object && GetEnchantment Item )
+
+					Call aaZefirosSetMergeEnch ( GetEnchantment Object ) ( GetEnchantment Item )
+
+					Let Stack := ar_Construct Array
+					Let Stack[0] := ar_Map 0::( GetMagicEffectCode RSFI ) 1::256
+					Let Stack[1] := ar_Map 0::( GetMagicEffectCode RSFR ) 1::256
+					Let Stack[2] := ar_Map 0::( GetMagicEffectCode RSSH ) 1::256
+					Let Stack[3] := ar_Map 0::( GetMagicEffectCode RSMA ) 1::256
+					Let Stack[4] := ar_Map 0::( GetMagicEffectCode RSNW ) 1::256
+					Let Stack[5] := ar_Map 0::( GetMagicEffectCode RSPA ) 1::256
+					Let Stack[6] := ar_Map 0::( GetMagicEffectCode RSDI ) 1::256
+					Call aaZefirosReorderEffects Stack ( ar_Map 0::Ench2 )
+
+				endif
+
+
+				;-----------------------------------------------------------------------------
+				;Remove Object
+				;-----------------------------------------------------------------------------
+				Player.RemoveItemNS Object 1
+				DebugPrint "Merged."
+			
+			loop
+
+
+			;-----------------------------------------------------------------------------
+			;Update global
+			;-----------------------------------------------------------------------------
+			if ( i == 0 )
+
+				DebugPrint "SlotBody updated."
+				Let aaZefirosSlotBody := Slot
+
+			elseif ( i == 1 )
+
+				DebugPrint "SlotFoot updated."
+				Let aaZefirosSlotFoot := Slot
+
+			elseif ( i == 2 )
+
+				DebugPrint "SlotHand updated."
+				Let aaZefirosSlotHand := Slot
+
+			elseif ( i == 3 )
+
+				DebugPrint "SlotHead updated."
+				Let aaZefirosSlotHead := Slot
+
+			elseif ( i == 4 )
+
+				DebugPrint "SlotLegs updated."
+				Let aaZefirosSlotLegs := Slot
+
+			elseif ( i == 5 )
+
+				DebugPrint "SlotShld updated."
+				Let aaZefirosSlotShld := Slot
+
+			endif
+
+		;-----------------------------------------------------------------------------
+		endif ;( Brk != 0 )
+		;-----------------------------------------------------------------------------
+
+
+	else
+
+		DebugPrint "Slot unchanged."
+
+	;-----------------------------------------------------------------------------
+	endif ;( OldSlot != Slot )
+	;-----------------------------------------------------------------------------
+
+	
+	SetFunctionValue 1
+	Return
+;-----------------------------------------------------------------------------
+end ;Function { Slot, i, Armr }
+;-----------------------------------------------------------------------------

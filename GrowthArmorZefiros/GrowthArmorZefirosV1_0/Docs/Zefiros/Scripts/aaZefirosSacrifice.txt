@@ -1,4 +1,4 @@
-scn aaZefirosSetFlavorBox
+scn aaZefirosSacrifice
 
 ;Main script
 ;-----------------------------------------------------------------------------
@@ -7,14 +7,21 @@ scn aaZefirosSetFlavorBox
 
 ;Used scripts
 ;-----------------------------------------------------------------------------
+;aaZefirosGetSlotShared
+;aaZefirosRefreshInv
+;aaZefirosSetFlavorMessage
 ;-----------------------------------------------------------------------------
 
 ;Related scripts
 ;-----------------------------------------------------------------------------
+;aaZefirosOffer
 ;-----------------------------------------------------------------------------
 
 ;Used globals
 ;-----------------------------------------------------------------------------
+;aaZefirosXP
+;aaZefirosXPLog
+;aaZefirosXPCombat
 ;-----------------------------------------------------------------------------
 
 ;Related globals
@@ -23,131 +30,106 @@ scn aaZefirosSetFlavorBox
 
 ;Description
 ;-----------------------------------------------------------------------------
-;Based on the Mode set, display a random flavor message box.
-;Also prints message to console.
+;Converts Item's durability into XP and health for Armr at a rate of Asbor.
+;One item in Armr gains the converted health, the one which shares a slot with
+;Item.  Because not all slots are covered by Armr, Legs also covers Tail, Shld
+;also covers jewelery.
+;Calls SetFlavorMessage when the deed is done.
 ;-----------------------------------------------------------------------------
 
 ;Parameters
 ;-----------------------------------------------------------------------------
-string_var Name
-short Mode
+ref Item
+array_var Armr
+float Absor
 
-float Ran
+array_var Stack
+ref Self
+ref Temp
 string_var Msg
+float Health
+short Count
+float XP
 ;-----------------------------------------------------------------------------
 
 ;-----------------------------------------------------------------------------
-begin Function { Name, Mode }
+begin Function { Absor, Item, Armr }
 ;-----------------------------------------------------------------------------
 
-	Let Ran := rand 0 100
+	;-----------------------------------------------------------------------------
+	;Get which object in Armr shares a slot with Item
+	;-----------------------------------------------------------------------------
+	Let Stack := ar_Map 0::Armr[3] 1::Armr[0] 2::Armr[4] 3::Armr[2] 4::Armr[1] 5::Armr[5] 6::Armr[5] 7::Armr[5] 8::Armr[5] 9::Armr[5] 10::Armr[4]
+	Let Stack := Call aaZefirosGetSlotShared Item Stack
+	;All slots are accounted for in ar_Map, so Stack cannot return empty
+	Let Self := Stack[0]
 
 
 	;-----------------------------------------------------------------------------
-	;Level Cap
+	;Get first inventory reference to Self
 	;-----------------------------------------------------------------------------
-	if ( Mode == 0 )
+	Let Stack := Player.GetInvRefsForItem Self
+	if eval( 0 == ar_Size Stack )
 
-		if ( Ran <= 17 ) ;17%
+		DebugPrint "%n missing from inventory, aborting Sacrifice." Self
+		Let Msg := "No item present can take " + $Item + "."
+		MessageBox $Msg
+		sv_Destruct Msg
+		Return
 
-			Let Msg := Name + " has become an impenetrable second skin."
+	endif
+	Let Self := Stack[0]
 
-		elseif ( Ran <= 33 ) ;16%
-
-			Let Msg := Name + " reaches the apex of its power."
-
-		elseif ( Ran <= 49 ) ;16%
-
-			Let Msg := Name + " is complete."
-
-		elseif ( Ran <= 66 ) ;17%
-
-			Let Msg := "Snug to your frame, " + Name + " is like a second home."
-
-		elseif ( Ran <= 83 ) ;17%
-
-			Let Msg := Name + " has made you a mobile fortress."
-
-		else ;17%
-
-			Let Msg := "Magic or missile, claw or club, " + Name + " protects you from all."
-
-		endif
 
 	;-----------------------------------------------------------------------------
-	;Full Reset
+	;Record health of first inventory reference to Item and remove one instance
 	;-----------------------------------------------------------------------------
-	elseif ( Mode == 1 )
+	Let Stack := Player.GetInvRefsForItem Item
+	Let Temp := Stack[0]
+	Let Health := Temp.GetCurrentHealth
+	Let Count := Temp.GetRefCount
 
-		if ( Ran <= 25 ) ;25%
+	Temp.RemoveMeIR
+	if ( Count > 1 )
 
-			Let Msg := Name + " loses what once made it magical."
+		Let Count -= 1
 
-		elseif ( Ran <= 50 ) ;25%
-
-			Let Msg := "Rent, bleeding magicka, " + Name + " becomes mundane."
-
-		elseif ( Ran <= 75 ) ;25%
-
-			Let Msg := "Tattered and neglected, " + Name + " crumbles to near dust."
-
-		else ;25%
-
-			Let Msg := "Groaning with you inside it, " + Name + " fades."
-
-		endif
-
-	;-----------------------------------------------------------------------------
-	;Delevel
-	;-----------------------------------------------------------------------------
-	elseif ( Mode == 2 )
-
-		if ( Ran <= 20 ) ;20%
-
-			Let Msg := Name + " grinds against you as it languishes in disrepair."
-
-		elseif ( Ran <= 40 ) ;20%
-
-			Let Msg := "Rough hewn leather accosts your joints as " + Name + " claws for power it no longer holds."
-
-		elseif ( Ran <= 60 ) ;20%
-
-			Let Msg := "A glimmer, a sparkle and then dull, jagged edges as " + Name + " struggles to retain its form."
-
-		elseif ( Ran <= 80 ) ;20%
-
-			Let Msg := "Dancing sparks flicker about the edge of your vision, before realising this is " + Name + "'s magicka, leaking under dilapidation."
-
-		else ;20%
-			
-			Let Msg := "Decay riddles " + Name + " as blow after blow has pocked the armor.  It's a wonder it still protects at all."
-
-		endif
-
-	;-----------------------------------------------------------------------------
-	;Test message
-	;-----------------------------------------------------------------------------
-	elseif ( Mode == 100 )
-
-		Let Msg := "Test " + Name
-
-	;-----------------------------------------------------------------------------
-	;Error message
-	;-----------------------------------------------------------------------------
-	else
-
-		Let Msg := "Message Mode out of range."
+		Let Temp := CreateTempRef Item
+		Temp.SetRefCount Count
+		Temp.SetCurrentHealth Health
+		Temp.CopyIR Player
 
 	endif
 
 
-	DebugPrint "%BName:%b %z %BMode:%b %.0f %BRan:%b %.2f" Name Mode Ran
-	MessageBox $Msg
-	printc "%z" Msg
-
-
+	;-----------------------------------------------------------------------------
+	;Add XP
+	;-----------------------------------------------------------------------------
+	Let XP := Absor * Health
+	Let aaZefirosXP += XP
+	if ( aaZefirosXPLog == 1 )
+		Let aaZefirosXPCombat += XP ;Ensure this XP isn't counted in combat log.
+	endif
+	Let Msg := $Item + " offered."
+	Call aaZefirosLogXP XP Msg
 	sv_Destruct Msg
+
+
+	;-----------------------------------------------------------------------------
+	;Add health to Self
+	;-----------------------------------------------------------------------------
+	Let XP += Self.GetCurrentHealth
+	Self.SetCurrentHealth XP
+
+
+	;-----------------------------------------------------------------------------
+	;Refresh UI and send flavor message
+	;-----------------------------------------------------------------------------
+	Call aaZefirosRefreshInv
+	Call aaZefirosSetFlavorMessage ( "Icons\" + Call aaZefirosGetPCBIP Item ) "UIArmorWeaponRepairBreak" $Self $Item 3 4
+
+
 	Return
 ;-----------------------------------------------------------------------------
-end ;Function { Name, Mode }
+end ;Function { Absor, Item, Armr }
 ;-----------------------------------------------------------------------------

@@ -1,4 +1,4 @@
-scn aaZefirosSetEquipHandlers
+scn aaZefirosOffer
 
 ;Main script
 ;-----------------------------------------------------------------------------
@@ -7,13 +7,11 @@ scn aaZefirosSetEquipHandlers
 
 ;Used scripts
 ;-----------------------------------------------------------------------------
-;aaZefirosOnEquip
-;aaZefirosOnUnEquip
 ;-----------------------------------------------------------------------------
 
 ;Related scripts
 ;-----------------------------------------------------------------------------
-;aaZefirosObject
+;aaZefirosSacrifice
 ;-----------------------------------------------------------------------------
 
 ;Used globals
@@ -26,33 +24,54 @@ scn aaZefirosSetEquipHandlers
 
 ;Description
 ;-----------------------------------------------------------------------------
-;Given an Actor and an array of Items, create OnEquip and OnUnEquip handlers 
-;for them.
+;Menu prompt preceding Sacrifice.  Returns with 0 if Player accepts to Offer
+;item, negative if a response hasn't been gotten yet, and positive if Player
+;declines to Offer or Zefiros is capped and cannot grow anymore.
 ;-----------------------------------------------------------------------------
 
 ;Parameters
 ;-----------------------------------------------------------------------------
-ref Target
 ref Item
-array_var Items
-array_var Value
+short Capped
+string_var Name
+short Button
+
+string_var Msg
 ;-----------------------------------------------------------------------------
 
 ;-----------------------------------------------------------------------------
-begin Function { Target, Items }
+begin Function { Capped, Name, Item, Button }
 ;-----------------------------------------------------------------------------
 
-	ForEach Value <- Items
+	if ( Capped != 0 )
 
-		Let Item := *Value
+		Let Msg := Name + " refuses further offerings."
+		MessageBox $Msg
+		sv_Destruct Msg
 
-		;OnActorEquip fires twice for enchanted items, see Object for OnEquip block
-		SetEventHandler "OnActorUnequip" aaZefirosOnUnEquip first::Target second::Item
+		SetFunctionValue 1 ;Any number greater than 0
+		Return
 
-	loop
+	endif
+
+
+	if ( Button == -2 )
+
+		Let Msg := "Will you offer " + $Item + " to " + Name + "?"
+		MessageBox $Msg "Yes" "No"
+		sv_Destruct Msg
+
+	endif
+
+	if ( Button < 0 )
+
+		Let Button := GetButtonPressed
+
+	endif
 
 	
+	SetFunctionValue Button
 	Return
 ;-----------------------------------------------------------------------------
-end ;Function { Target, Items }
+end ;Function { Capped, Name, Item, Button }
 ;-----------------------------------------------------------------------------

@@ -24,6 +24,13 @@ scn aaZefirosOnUnEquip
 ;Used globals
 ;-----------------------------------------------------------------------------
 ;aaZefirosEquip
+;aaZefirosEquip
+;aaZefirosSlotBody
+;aaZefirosSlotFoot
+;aaZefirosSlotHand
+;aaZefirosSlotHead
+;aaZefirosSlotLegs
+;aaZefirosSlotShld
 ;-----------------------------------------------------------------------------
 
 ;Related globals
@@ -49,7 +56,153 @@ begin Function { Target, Item }
 	DebugPrint "Running OnUnEquip block."
 
 	Let aaZefirosEquip := aaZefirosEquip - 1
+
+	;-----------------------------------------------------------------------------
+	;Compensate for merged parts
+	;-----------------------------------------------------------------------------
+	if ( Item == DLScalar4Body )
+			
+		if eval( aaZefirosSlotBody & 32 )
+			Let aaZefirosEquip -= 1
+		endif
+
+		if eval( aaZefirosSlotBody & 16 )
+			Let aaZefirosEquip -= 1
+		endif
+
+		if eval( aaZefirosSlotBody & 1 || aaZefirosSlotBody & 2 )
+			Let aaZefirosEquip -= 1
+		endif
+
+		if eval( aaZefirosSlotBody & 8 )
+			Let aaZefirosEquip -= 1
+		endif
+
+		if eval( aaZefirosSlotBody & 8192 )
+			Let aaZefirosEquip -= 1
+		endif
+
+
+	elseif ( Item == DLScalar4Foot )
+			
+		if eval( aaZefirosSlotFoot & 4 )
+			Let aaZefirosEquip -= 1
+		endif
+
+		if eval( aaZefirosSlotFoot & 16 )
+			Let aaZefirosEquip -= 1
+		endif
+
+		if eval( aaZefirosSlotFoot & 1 || aaZefirosSlotFoot & 2 )
+			Let aaZefirosEquip -= 1
+		endif
+
+		if eval( aaZefirosSlotFoot & 8 )
+			Let aaZefirosEquip -= 1
+		endif
+
+		if eval( aaZefirosSlotFoot & 8192 )
+			Let aaZefirosEquip -= 1
+		endif
+
+
+	elseif ( Item == DLScalar4Hand )
+			
+		if eval( aaZefirosSlotHand & 4 )
+			Let aaZefirosEquip -= 1
+		endif
+
+		if eval( aaZefirosSlotHand & 32 )
+			Let aaZefirosEquip -= 1
+		endif
+
+		if eval( aaZefirosSlotHand & 1 || aaZefirosSlotHand & 2 )
+			Let aaZefirosEquip -= 1
+		endif
+
+		if eval( aaZefirosSlotHand & 8 )
+			Let aaZefirosEquip -= 1
+		endif
+
+		if eval( aaZefirosSlotHand & 8192 )
+			Let aaZefirosEquip -= 1
+		endif
+
+
+	elseif ( Item == DLScalar4Head )
+			
+		if eval( aaZefirosSlotHead & 4 )
+			Let aaZefirosEquip -= 1
+		endif
+
+		if eval( aaZefirosSlotHead & 32 )
+			Let aaZefirosEquip -= 1
+		endif
+
+		if eval( aaZefirosSlotHead & 16 )
+			Let aaZefirosEquip -= 1
+		endif
+
+		if eval( aaZefirosSlotHead & 8 )
+			Let aaZefirosEquip -= 1
+		endif
+
+		if eval( aaZefirosSlotHead & 8192 )
+			Let aaZefirosEquip -= 1
+		endif
+
+
+	elseif ( Item == DLScalar4Legs )
+			
+		if eval( aaZefirosSlotLegs & 4 )
+			Let aaZefirosEquip -= 1
+		endif
+
+		if eval( aaZefirosSlotLegs & 32 )
+			Let aaZefirosEquip -= 1
+		endif
+
+		if eval( aaZefirosSlotLegs & 16 )
+			Let aaZefirosEquip -= 1
+		endif
+
+		if eval( aaZefirosSlotLegs & 1 || aaZefirosSlotLegs & 2 )
+			Let aaZefirosEquip -= 1
+		endif
+
+		if eval( aaZefirosSlotLegs & 8192 )
+			Let aaZefirosEquip -= 1
+		endif
+
+
+	elseif ( Item == DLScalar4Shld )
+			
+		if eval( aaZefirosSlotShld & 4 )
+			Let aaZefirosEquip -= 1
+		endif
+
+		if eval( aaZefirosSlotShld & 32 )
+			Let aaZefirosEquip -= 1
+		endif
+
+		if eval( aaZefirosSlotShld & 16 )
+			Let aaZefirosEquip -= 1
+		endif
+
+		if eval( aaZefirosSlotShld & 1 || aaZefirosSlotShld & 2 )
+			Let aaZefirosEquip -= 1
+		endif
+
+		if eval( aaZefirosSlotShld & 8 )
+			Let aaZefirosEquip -= 1
+		endif
+
+
+	;-----------------------------------------------------------------------------
+	endif ;( This == DLScalar4 )
+	;-----------------------------------------------------------------------------
 	
+
 	if ( aaZefirosEquip <= 0 )
 
 		DebugPrint "aaZefirosEquip is %.0f, setting to 0 and removing handlers." aaZefirosEquip

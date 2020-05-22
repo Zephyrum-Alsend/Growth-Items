@@ -1,19 +1,17 @@
-scn aaZefirosSetEquipHandlers
+scn aaZefirosRefreshInv
 
 ;Main script
 ;-----------------------------------------------------------------------------
-;aaZefirosManager
+;aaZefirosManger
 ;-----------------------------------------------------------------------------
 
 ;Used scripts
 ;-----------------------------------------------------------------------------
-;aaZefirosOnEquip
-;aaZefirosOnUnEquip
 ;-----------------------------------------------------------------------------
 
 ;Related scripts
 ;-----------------------------------------------------------------------------
-;aaZefirosObject
+;aaZefirosSacrifice
 ;-----------------------------------------------------------------------------
 
 ;Used globals
@@ -26,33 +24,33 @@ scn aaZefirosSetEquipHandlers
 
 ;Description
 ;-----------------------------------------------------------------------------
-;Given an Actor and an array of Items, create OnEquip and OnUnEquip handlers 
-;for them.
+;Forces a refresh of the inventory menu.
+;
+;Silently adds, equips, unequips and removes an empty item to the Player's
+;torch slot, and makes sure an already equipped torch stays equipped.
 ;-----------------------------------------------------------------------------
 
 ;Parameters
 ;-----------------------------------------------------------------------------
-ref Target
-ref Item
-array_var Items
-array_var Value
+ref Torch
 ;-----------------------------------------------------------------------------
 
+
+
 ;-----------------------------------------------------------------------------
-begin Function { Target, Items }
+begin Function { }
 ;-----------------------------------------------------------------------------
 
-	ForEach Value <- Items
-
-		Let Item := *Value
-
-		;OnActorEquip fires twice for enchanted items, see Object for OnEquip block
-		SetEventHandler "OnActorUnequip" aaZefirosOnUnEquip first::Target second::Item
-
-	loop
-
+	Let Torch := Player.GetEquippedObject 14
 	
+	Player.AddItemNS DLRefr 1
+	Player.EquipItemSilent DLRefr
+	Player.UnEquipItemSilent DLRefr
+	Player.RemoveItemNS DLRefr 1
+
+	Player.EquipItem2NS Torch
+
 	Return
 ;-----------------------------------------------------------------------------
-end ;Function { Target, Items }
+end ;Function { }
 ;-----------------------------------------------------------------------------

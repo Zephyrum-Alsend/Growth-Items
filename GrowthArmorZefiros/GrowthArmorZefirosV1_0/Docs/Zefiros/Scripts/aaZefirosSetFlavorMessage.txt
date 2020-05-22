@@ -33,6 +33,7 @@ scn aaZefirosSetFlavorMessage
 string_var Icon
 string_var Sound
 string_var Name
+string_var Name2
 short Mode
 float Time
 
@@ -41,7 +42,7 @@ string_var Msg
 ;-----------------------------------------------------------------------------
 
 ;-----------------------------------------------------------------------------
-begin Function { Icon, Sound, Name, Mode, Time }
+begin Function { Icon, Sound, Name, Name2, Mode, Time }
 ;-----------------------------------------------------------------------------
 
 	if ( Time < 0 )
@@ -61,7 +62,7 @@ begin Function { Icon, Sound, Name, Mode, Time }
 
 
 	;-----------------------------------------------------------------------------
-	;First boot
+	;First Boot
 	;-----------------------------------------------------------------------------
 	if ( Mode == 0 )
 
@@ -80,25 +81,49 @@ begin Function { Icon, Sound, Name, Mode, Time }
 		endif
 
 	;-----------------------------------------------------------------------------
-	;Level up
+	;Level Up
 	;-----------------------------------------------------------------------------
 	elseif ( Mode == 1 )
 
-		if ( Ran <= 25 ) ;25%
+		if ( Ran <= 10 ) ;10%
 
 			Let Msg := Name + " grows more robust."
 
-		elseif ( Ran <= 50 ) ;25%
+		elseif ( Ran <= 20 ) ;10%
 
 			Let Msg := Name + " becomes closer to a second skin."
 
-		elseif ( Ran <= 75 ) ;25%
+		elseif ( Ran <= 30 ) ;10%
 
 			Let Msg := Name + "'s weight assures you."
 
-		else ;25%
+		elseif ( Ran <= 40 ) ;10%
 
 			Let Msg := Name + " is more comfortable to wear."
+
+		elseif ( Ran <= 50 ) ;10%
+
+			Let Msg := Name + " accomodates to your body."
+
+		elseif ( Ran <= 60 ) ;10%
+
+			Let Msg := Name + " hardens."
+
+		elseif ( Ran <= 70 ) ;10%
+
+			Let Msg := Name + " compresses magicka."
+
+		elseif ( Ran <= 80 ) ;10%
+
+			Let Msg := Name + " moves silently as your joints bend."
+
+		elseif ( Ran <= 90 ) ;10%
+
+			Let Msg := Name + " reverberates with... something."
+
+		else ;10%
+
+			Let Msg := Name + " thrums with magicka."
 
 		endif
 
@@ -107,19 +132,43 @@ begin Function { Icon, Sound, Name, Mode, Time }
 	;-----------------------------------------------------------------------------
 	elseif ( Mode == 2 )
 
-		if ( Ran <= 25 ) ;25%
+		if ( Ran <= 10 ) ;10%
 
 			Let Msg := Name + " creaks a bit less."
 
-		elseif ( Ran <= 50 ) ;25%
+		elseif ( Ran <= 20 ) ;10%
 
 			Let Msg := Name + " groans."
 
-		elseif ( Ran <= 75 ) ;25%
+		elseif ( Ran <= 30 ) ;10%
 
 			Let Msg := Name + "'s joints are less stiff."
 
-		else ;25%
+		elseif ( Ran <= 40 ) ;10%
+
+			Let Msg := "Errant magicka sparks from " + Name + "."
+
+		elseif ( Ran <= 50 ) ;10%
+
+			Let Msg := Name + "'s scrapes fade."
+
+		elseif ( Ran <= 60 ) ;10%
+
+			Let Msg := Name + "'s dents smooth out."
+
+		elseif ( Ran <= 70 ) ;10%
+
+			Let Msg := Name + " rustles."
+
+		elseif ( Ran <= 80 ) ;10%
+
+			Let Msg := Name + " sheens as dust vanishes off its surface."
+
+		elseif ( Ran <= 90 ) ;10%
+
+			Let Msg := Name + " prickles."
+
+		else ;10%
 
 			Let Msg := Name + " hums faintly."
 
@@ -130,21 +179,37 @@ begin Function { Icon, Sound, Name, Mode, Time }
 	;-----------------------------------------------------------------------------
 	elseif ( Mode == 3 )
 
-		if ( Ran <= 25 )
+		if ( Ran <= 12.5 ) ;12.5%
 
-			Let Msg := "Test " + Name
+			Let Msg := Name + " consumes " + Name2 + "."
 
-		elseif ( Ran <= 50 )
+		elseif ( Ran <= 25 ) ;12.5%
 
-			Let Msg := "Test " + Name
+			Let Msg := Name + " absorbs " + Name2 + "."
 
-		elseif ( Ran <= 75 )
+		elseif ( Ran <= 37.5 ) ;12.5%
 
-			Let Msg := "Test " + Name
+			Let Msg := Name + " assimilates " + Name2 + "."
 
-		else
+		elseif ( Ran <= 50 ) ;12.5%
 
-			Let Msg := "Test " + Name
+			Let Msg := Name2 + " liquidates as " + Name + " contacts it."
+
+		elseif ( Ran <= 62.5 ) ;12.5%
+
+			Let Msg := Name2 + " enters " + Name + " without resistance."
+
+		elseif ( Ran <= 75 ) ;12.5%
+
+			Let Msg := Name + " digests " + Name2 + "."
+
+		elseif ( Ran <= 87.5 ) ;12.5%
+
+			Let Msg := Name2 + " ceases to be before " + Name + "."
+
+		else ;12.5%
+
+			Let Msg := Name + " unravels " + Name2 + "."
 
 		endif
 
@@ -153,21 +218,25 @@ begin Function { Icon, Sound, Name, Mode, Time }
 	;-----------------------------------------------------------------------------
 	elseif ( Mode == 4 )
 
-		if ( Ran <= 25 ) ;25%
+		if ( Ran <= 20 ) ;20%
 
 			Let Msg := Name + " polymorphs."
 
-		elseif ( Ran <= 50 ) ;25%
+		elseif ( Ran <= 40 ) ;20%
 
 			Let Msg := Name + " changes form."
 
-		elseif ( Ran <= 75 ) ;25%
+		elseif ( Ran <= 60 ) ;20%
 
 			Let Msg := Name + " restructures itself."
 
-		elseif ( Ran <= 99.99 ) ;24.99%
+		elseif ( Ran <= 80 ) ;20%
 
 			Let Msg := Name + " alters its shape."
+
+		elseif ( Ran <= 99.99 ) ;19.99%
+
+			Let Msg := Name + " becomes something other."
 
 		else ;0.01%
 

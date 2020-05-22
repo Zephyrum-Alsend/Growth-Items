@@ -1,0 +1,101 @@
+scn aaZefirosObjectShld
+
+;Main script
+;-----------------------------------------------------------------------------
+;aaZefirosManager
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;aaZefirosOnDamage
+;aaZefirosOnMagicHit
+;aaZefirosOnWeaponHit
+;aaZefirosOnMagicApply
+;aaZefirosCleanUp
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;aaZefirosOnUnEquip
+;aaZefirosObjectBody
+;aaZefirosObjectFoot
+;aaZefirosObjectHand
+;aaZefirosObjectHead
+;aaZefirosObjectLegs
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
+;aaZefirosEquip
+;aaZefirosSlotShld
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;Increments Equip flag when equipped by the Player, sets handlers if needed.
+;Runs CleanUp when dropped by the Player.
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;-----------------------------------------------------------------------------
+begin OnEquip Player
+;-----------------------------------------------------------------------------
+
+	DebugPrint "Running Shld OnEquip block."
+
+	if ( aaZefirosEquip <= 0 )
+
+		DebugPrint "aaZefirosEquip is %.0f, setting to 1 and setting handlers." aaZefirosEquip
+
+		Let aaZefirosEquip := 0
+		SetEventHandler "OnHealthDamage" aaZefirosOnDamage "object"::Player
+		SetEventHandler "OnMagicEffectHit" aaZefirosOnMagicHit first::Player
+		SetEventHandler "OnHitWith" aaZefirosOnWeaponHit first::Player
+		SetEventHandler "OnMagicApply" aaZefirosOnMagicApply second::Player
+
+	endif
+
+	if ( aaZefirosEquip < 6 )
+
+		Let aaZefirosEquip += 1
+
+		;Compensate for merged parts
+		if eval( aaZefirosSlotShld & 4 )
+			Let aaZefirosEquip += 1
+		endif
+		if eval( aaZefirosSlotShld & 32 )
+			Let aaZefirosEquip += 1
+		endif
+		if eval( aaZefirosSlotShld & 16 )
+			Let aaZefirosEquip += 1
+		endif
+		if eval( aaZefirosSlotShld & 1 || aaZefirosSlotShld & 2 )
+			Let aaZefirosEquip += 1
+		endif
+		if eval( aaZefirosSlotShld & 8 )
+			Let aaZefirosEquip += 1
+		endif
+		
+	endif
+
+;-----------------------------------------------------------------------------
+end
+;-----------------------------------------------------------------------------
+
+;-----------------------------------------------------------------------------
+begin OnDrop Player
+;-----------------------------------------------------------------------------
+
+	DebugPrint "Running OnDrop block."
+	Call aaZefirosCleanUp 0
+
+;-----------------------------------------------------------------------------
+end ;OnDrop Player
+;-----------------------------------------------------------------------------

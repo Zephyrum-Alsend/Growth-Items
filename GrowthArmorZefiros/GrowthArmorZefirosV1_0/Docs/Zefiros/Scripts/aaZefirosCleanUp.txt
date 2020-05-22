@@ -7,11 +7,11 @@ scn aaZefirosCleanUp
 
 ;Used scripts
 ;-----------------------------------------------------------------------------
-;aaZefirosOnEquip
 ;aaZefirosOnUnEquip
 ;aaZefirosOnDamage
 ;aaZefirosOnMagicHit
 ;aaZefirosOnWeaponHit
+;aaZefirosOnMagicApply
 ;-----------------------------------------------------------------------------
 
 ;Related scripts
@@ -22,6 +22,12 @@ scn aaZefirosCleanUp
 ;Used globals
 ;-----------------------------------------------------------------------------
 ;aaZefirosEquip
+;aaZefirosSlotBody
+;aaZefirosSlotFoot
+;aaZefirosSlotHand
+;aaZefirosSlotHead
+;aaZefirosSlotLegs
+;aaZefirosSlotShld
 ;-----------------------------------------------------------------------------
 
 ;Related globals
@@ -46,19 +52,21 @@ begin Function { Mode }
 	if ( Mode == 1 )
 
 		;-----------------------------------------------------------------------------
-		DebugPrint "Purging OnActorEquip, OnActorUnequip handlers."
+		DebugPrint "Purging OnActorUnequip handlers."
 		;-----------------------------------------------------------------------------
-		RemoveEventHandler "OnActorEquip" aaZefirosOnEquip
 		RemoveEventHandler "OnActorUnequip" aaZefirosOnUnEquip
 
 		;-----------------------------------------------------------------------------
-		DebugPrint "Nulling Selfs, Enchs, EncSt, ArmSt, Equip, Stack, Item arrays."
+		DebugPrint "Nulling Selfs, Enchs, EncSt, ArmSt, Forms, Equip, Seek, Actv, Stack, Item arrays."
 		;-----------------------------------------------------------------------------
 		Let aaZefirosInit.Selfs := ar_Null
 		Let aaZefirosInit.Enchs := ar_Null
 		Let aaZefirosInit.EncSt := ar_Null
 		Let aaZefirosInit.ArmSt := ar_Null
+		Let aaZefirosInit.Forms := ar_Null
 		Let aaZefirosInit.Equip := ar_Null
+		Let aaZefirosInit.Seek := ar_Null
+		Let aaZefirosInit.Actv := ar_Null
 		Let aaZefirosInit.Stack := ar_Null
 		Let aaZefirosInit.Item := ar_Null
 
@@ -82,30 +90,126 @@ begin Function { Mode }
 
 		Let aaZefirosEquip += 1
 
+		if eval( aaZefirosSlotBody & 32 )
+			Let aaZefirosEquip += 1
+		endif
+		if eval( aaZefirosSlotBody & 16 )
+			Let aaZefirosEquip += 1
+		endif
+		if eval( aaZefirosSlotBody & 1 || aaZefirosSlotBody & 2 )
+			Let aaZefirosEquip += 1
+		endif
+		if eval( aaZefirosSlotBody & 8 )
+			Let aaZefirosEquip += 1
+		endif
+		if eval( aaZefirosSlotBody & 8192 )
+			Let aaZefirosEquip += 1
+		endif
+
 	endif
 	if ( Player.GetEquipped DLScalar4Foot )
 
 		Let aaZefirosEquip += 1
+
+		if eval( aaZefirosSlotFoot & 4 )
+			Let aaZefirosEquip += 1
+		endif
+		if eval( aaZefirosSlotFoot & 16 )
+			Let aaZefirosEquip += 1
+		endif
+		if eval( aaZefirosSlotFoot & 1 || aaZefirosSlotFoot & 2 )
+			Let aaZefirosEquip += 1
+		endif
+		if eval( aaZefirosSlotFoot & 8 )
+			Let aaZefirosEquip += 1
+		endif
+		if eval( aaZefirosSlotFoot & 8192 )
+			Let aaZefirosEquip += 1
+		endif
 
 	endif
 	if ( Player.GetEquipped DLScalar4Hand )
 
 		Let aaZefirosEquip += 1
 
+		if eval( aaZefirosSlotHand & 4 )
+			Let aaZefirosEquip += 1
+		endif
+		if eval( aaZefirosSlotHand & 32 )
+			Let aaZefirosEquip += 1
+		endif
+		if eval( aaZefirosSlotHand & 1 || aaZefirosSlotHand & 2 )
+			Let aaZefirosEquip += 1
+		endif
+		if eval( aaZefirosSlotHand & 8 )
+			Let aaZefirosEquip += 1
+		endif
+		if eval( aaZefirosSlotHand & 8192 )
+			Let aaZefirosEquip += 1
+		endif
+
 	endif
 	if ( Player.GetEquipped DLScalar4Head )
 
 		Let aaZefirosEquip += 1
+
+		if eval( aaZefirosSlotHead & 4 )
+			Let aaZefirosEquip += 1
+		endif
+		if eval( aaZefirosSlotHead & 32 )
+			Let aaZefirosEquip += 1
+		endif
+		if eval( aaZefirosSlotHead & 16 )
+			Let aaZefirosEquip += 1
+		endif
+		if eval( aaZefirosSlotHead & 8 )
+			Let aaZefirosEquip += 1
+		endif
+		if eval( aaZefirosSlotHead & 8192 )
+			Let aaZefirosEquip += 1
+		endif
 
 	endif
 	if ( Player.GetEquipped DLScalar4Legs )
 
 		Let aaZefirosEquip += 1
 
+		if eval( aaZefirosSlotLegs & 4 )
+			Let aaZefirosEquip += 1
+		endif
+		if eval( aaZefirosSlotLegs & 32 )
+			Let aaZefirosEquip += 1
+		endif
+		if eval( aaZefirosSlotLegs & 16 )
+			Let aaZefirosEquip += 1
+		endif
+		if eval( aaZefirosSlotLegs & 1 || aaZefirosSlotLegs & 2 )
+			Let aaZefirosEquip += 1
+		endif
+		if eval( aaZefirosSlotLegs & 8192 )
+			Let aaZefirosEquip += 1
+		endif
+
 	endif
 	if ( Player.GetEquipped DLScalar4Shld )
 
 		Let aaZefirosEquip += 1
+
+		if eval( aaZefirosSlotShld & 4 )
+			Let aaZefirosEquip += 1
+		endif
+		if eval( aaZefirosSlotShld & 32 )
+			Let aaZefirosEquip += 1
+		endif
+		if eval( aaZefirosSlotShld & 16 )
+			Let aaZefirosEquip += 1
+		endif
+		if eval( aaZefirosSlotShld & 1 || aaZefirosSlotShld & 2 )
+			Let aaZefirosEquip += 1
+		endif
+		if eval( aaZefirosSlotShld & 8 )
+			Let aaZefirosEquip += 1
+		endif
 
 	endif
 

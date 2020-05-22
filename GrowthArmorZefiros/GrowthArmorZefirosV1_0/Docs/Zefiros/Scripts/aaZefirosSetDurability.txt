@@ -1,4 +1,4 @@
-scn aaZefirosSetEquipHandlers
+scn aaZefirosSetDurability
 
 ;Main script
 ;-----------------------------------------------------------------------------
@@ -7,13 +7,11 @@ scn aaZefirosSetEquipHandlers
 
 ;Used scripts
 ;-----------------------------------------------------------------------------
-;aaZefirosOnEquip
-;aaZefirosOnUnEquip
 ;-----------------------------------------------------------------------------
 
 ;Related scripts
 ;-----------------------------------------------------------------------------
-;aaZefirosObject
+;aaZefirosGetDurability
 ;-----------------------------------------------------------------------------
 
 ;Used globals
@@ -26,33 +24,63 @@ scn aaZefirosSetEquipHandlers
 
 ;Description
 ;-----------------------------------------------------------------------------
-;Given an Actor and an array of Items, create OnEquip and OnUnEquip handlers 
-;for them.
+;Given an array of Items and the container they belong to, set the 
+;durabilities of each item's stacks according to the percentages contained in 
+;Dura.  Dura can be populated via GetDurability.
 ;-----------------------------------------------------------------------------
 
 ;Parameters
 ;-----------------------------------------------------------------------------
-ref Target
-ref Item
+ref Container
 array_var Items
-array_var Value
+array_var Dura
+
+ref Val
+array_var Stack
+short C1
+short C2
+short i
+short j
+float MaxHP
+float CurHP
 ;-----------------------------------------------------------------------------
 
 ;-----------------------------------------------------------------------------
-begin Function { Target, Items }
+begin Function { Container, Dura, Items }
 ;-----------------------------------------------------------------------------
 
-	ForEach Value <- Items
+	Let C1 := ar_Size Items
+	DebugPrint "Setting durabilities for %.0f items..." C1
 
-		Let Item := *Value
+	Let i := 0
+	while ( i < C1 )
 
-		;OnActorEquip fires twice for enchanted items, see Object for OnEquip block
-		SetEventHandler "OnActorUnequip" aaZefirosOnUnEquip first::Target second::Item
+		Let Val := Items[i]
+		;DebugPrint "Setting durabilities for %n..." Val
 
+		Let Stack := Container.GetInvRefsForItem Val
+		Let MaxHP := GetObjectHealth Val
+
+		Let C2 := ar_Size Stack
+		Let j := 0
+		while ( j < C2 )
+
+			Let CurHP := MaxHP * Dura[i][j]
+			Let Val := Stack[j]
+			Val.SetCurrentHealth CurHP
+
+			Let j += 1
+		loop
+
+		
+		;DebugPrint "Durabilities set."
+
+		Let i += 1
 	loop
 
-	
+
+	DebugPrint "All durabilities set."
 	Return
 ;-----------------------------------------------------------------------------
-end ;Function { Target, Items }
+end ;Function { Container, Dura, Items }
 ;-----------------------------------------------------------------------------

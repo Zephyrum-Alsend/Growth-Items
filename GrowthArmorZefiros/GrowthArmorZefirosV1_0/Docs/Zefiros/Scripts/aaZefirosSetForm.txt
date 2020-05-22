@@ -1,4 +1,4 @@
-scn aaZefirosSetEquipHandlers
+scn aaZefirosSetForm
 
 ;Main script
 ;-----------------------------------------------------------------------------
@@ -7,13 +7,13 @@ scn aaZefirosSetEquipHandlers
 
 ;Used scripts
 ;-----------------------------------------------------------------------------
-;aaZefirosOnEquip
-;aaZefirosOnUnEquip
+;aaZefirosRefreshInv
 ;-----------------------------------------------------------------------------
 
 ;Related scripts
 ;-----------------------------------------------------------------------------
-;aaZefirosObject
+;aaZefirosSetMerge
+;aaZefirosSetMimic
 ;-----------------------------------------------------------------------------
 
 ;Used globals
@@ -22,37 +22,94 @@ scn aaZefirosSetEquipHandlers
 
 ;Related globals
 ;-----------------------------------------------------------------------------
+;aaZefirosFormBody
+;aaZefirosFormFoot
+;aaZefirosFormHand
+;aaZefirosFormHead
+;aaZefirosFormLegs
+;aaZefirosFormShld
 ;-----------------------------------------------------------------------------
 
 ;Description
 ;-----------------------------------------------------------------------------
-;Given an Actor and an array of Items, create OnEquip and OnUnEquip handlers 
-;for them.
+;Changes the mesh and icon paths of the passed Item using information from the
+;multi-dimensional array Data.  Then re-equips Item so the new paths are
+;properly applied, or refreshes the UI if not equipped in the first place.
+;
+;Array0:
+;[0]Body
+;[1]Foot
+;[2]Hand
+;[3]Head
+;[4]Legs
+;[5]Shld
+;
+;Array1:
+;[0]PathDataArray
+;[1]PathDataArray
+;[2]...
+;
+;Array2:
+;[0]MaleModelPath
+;[1]FemaleModelPath
+;[2]MaleGroundPath
+;[3]FemaleGroundPath
+;[4]MaleIconPath
+;[5]FemaleIconPath
+;[6]Name
+;[7]Slot
 ;-----------------------------------------------------------------------------
 
 ;Parameters
 ;-----------------------------------------------------------------------------
-ref Target
+short i
+short j
+array_var Data
 ref Item
-array_var Items
-array_var Value
+
+string_var Path
 ;-----------------------------------------------------------------------------
 
 ;-----------------------------------------------------------------------------
-begin Function { Target, Items }
+begin Function { i, j, Data, Item }
 ;-----------------------------------------------------------------------------
 
-	ForEach Value <- Items
-
-		Let Item := *Value
-
-		;OnActorEquip fires twice for enchanted items, see Object for OnEquip block
-		SetEventHandler "OnActorUnequip" aaZefirosOnUnEquip first::Target second::Item
-
-	loop
-
+	DebugPrint "Changing %n form..." Item
 	
+	Let Path := Data[i][j][0]
+	SetMaleBipedPath $Path Item
+
+	Let Path := Data[i][j][1]
+	SetFemaleBipedPath $Path Item
+
+	Let Path := Data[i][j][2]
+	SetMaleGroundPath $Path Item
+
+	Let Path := Data[i][j][3]
+	SetFemaleGroundPath $Path Item
+
+	Let Path := Data[i][j][4]
+	SetMaleIconPath $Path Item
+
+	Let Path := Data[i][j][5]
+	SetFemaleIconPath $Path Item
+
+	;Despite this not working in GameMode, it works here...?
+	if ( Player.GetEquipped Item )
+
+		Player.UnEquipItemSilent Item
+		Player.EquipItem2NS Item
+
+	else
+
+		Call aaZefirosRefreshInv
+
+	endif
+
+
+	DebugPrint "Form changed."
+	sv_Destruct Path
 	Return
 ;-----------------------------------------------------------------------------
-end ;Function { Target, Items }
+end ;Function { i, j, Data, Item }
 ;-----------------------------------------------------------------------------

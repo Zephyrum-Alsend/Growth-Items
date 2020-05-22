@@ -1,4 +1,4 @@
-scn aaZefirosSetEquipHandlers
+scn aaZefirosGetDurability
 
 ;Main script
 ;-----------------------------------------------------------------------------
@@ -7,13 +7,11 @@ scn aaZefirosSetEquipHandlers
 
 ;Used scripts
 ;-----------------------------------------------------------------------------
-;aaZefirosOnEquip
-;aaZefirosOnUnEquip
 ;-----------------------------------------------------------------------------
 
 ;Related scripts
 ;-----------------------------------------------------------------------------
-;aaZefirosObject
+;aaZefirosSetDurability
 ;-----------------------------------------------------------------------------
 
 ;Used globals
@@ -26,33 +24,64 @@ scn aaZefirosSetEquipHandlers
 
 ;Description
 ;-----------------------------------------------------------------------------
-;Given an Actor and an array of Items, create OnEquip and OnUnEquip handlers 
-;for them.
+;Given an array of items and the container they belong to, return an array
+;containing the percentage durability of every stack of every item.
 ;-----------------------------------------------------------------------------
 
 ;Parameters
 ;-----------------------------------------------------------------------------
-ref Target
-ref Item
+ref Container
 array_var Items
-array_var Value
+
+ref Val
+array_var Item
+array_var Stack
+array_var i
+array_var Prct
+array_var Dura ;Return value
+float MaxHP
+float CurHP
+short Size
 ;-----------------------------------------------------------------------------
 
 ;-----------------------------------------------------------------------------
-begin Function { Target, Items }
+begin Function { Container, Items }
 ;-----------------------------------------------------------------------------
 
-	ForEach Value <- Items
+	Let Dura := ar_Construct Array
+	Let Size := ar_Size Items
+	DebugPrint "Getting durabilities for %.0f items..." Size;( ar_Size Items )
+	
+	ForEach Item <- Items
 
-		Let Item := *Value
+		Let Val := *Item
+		;DebugPrint "Getting durabilities for %n..." Val
 
-		;OnActorEquip fires twice for enchanted items, see Object for OnEquip block
-		SetEventHandler "OnActorUnequip" aaZefirosOnUnEquip first::Target second::Item
+		Let Stack := Container.GetInvRefsForItem Val
+		Let MaxHP := GetObjectHealth Val
+
+		Let Prct := ar_Construct Array
+		ForEach i <- Stack
+
+			Let Val := *i
+			Let CurHP := Val.GetCurrentHealth
+			
+			Let CurHP := CurHP / MaxHP
+			ar_Append Prct CurHP
+	
+		loop
+
+		ar_Append Dura Prct
+		let Prct := ar_Null
+
+		;DebugPrint "Durabilities gotten."
 
 	loop
 
-	
+
+	DebugPrint "All durabilities gotten."
+	SetFunctionValue Dura
 	Return
 ;-----------------------------------------------------------------------------
-end ;Function { Target, Items }
+end ;Function { Container, Items }
 ;-----------------------------------------------------------------------------

@@ -152,13 +152,20 @@ Let aaZefirosInit.sXPReqBase := 200				;200
 Let aaZefirosInit.sXPReqMult := 20				;20
 Let aaZefirosInit.sLevelCap := 201				;201
 
+;0 = sLevelCap
+;1 = PC Level
+;2 = PC Fame
+;3 = Light/Heavy Armor Sum
+;4 = Light/Heavy Armor Average
+Let aaZefirosInit.sCapType := 0					;0
+
 ;= 0 : reset to Lv1, < 0 : disable, > 0 : delevel by that amount
 Let aaZefirosInit.sBreakLevel := 0				;0
 ;The number of items that need to be broken before delevel is triggered
 Let aaZefirosInit.sBreakThreshold := 3			;3
 
 ;Conversion rate of durability for offerings
-Let aaZefirosInit.fAbsorption := 0.01			;0.01
+Let aaZefirosInit.fAbsorption := 0.03			;0.03
 
 
 ;-----------------------------------------------------------------------------
@@ -246,6 +253,183 @@ Let aaZefirosInit.fSABSMult := 0.6				;0.6
 ;-----------------------------------------------------------------------------
 ;Controls how often the mod analyzes damage taken, in seconds
 Let aaZefirosInit.fDamageLag := 0.1				;0.1
+
+
+;-----------------------------------------------------------------------------
+;Keybinds
+;-----------------------------------------------------------------------------
+;Highlight item and press Key1 + ( Key2 or Key3 ) to activate
+
+;Form change menu
+Let aaZefirosInit.sFormKey1 := 257				;257	RMB
+Let aaZefirosInit.sFormKey2 := 257				;257	RMB
+Let aaZefirosInit.sFormKey3 := 257				;257	RMB
+
+;Show enchantment
+Let aaZefirosInit.sEnchKey1 := 257				;257	RMB
+Let aaZefirosInit.sEnchKey2 := 29				;29		Left CTRL
+Let aaZefirosInit.sEnchKey3 := 157				;157	Right CTRL
+
+;Show form name
+Let aaZefirosInit.sNameKey1 := 257				;257	RMB
+Let aaZefirosInit.sNameKey2 := 42				;42		Left SHFT
+Let aaZefirosInit.sNameKey3 := 54				;54		Right SHFT
+
+;Offer armor
+Let aaZefirosInit.sOffrKey1 := 257				;257	RMB
+Let aaZefirosInit.sOffrKey2 := 257				;257	RMB
+Let aaZefirosInit.sOffrKey3 := 257				;257	RMB
+
+;Mimic armor
+Let aaZefirosInit.sCopyKey1 := 257				;257	RMB
+Let aaZefirosInit.sCopyKey2 := 42				;42		Left SHFT
+Let aaZefirosInit.sCopyKey3 := 54				;54		Right SHFT
+
+
+;-----------------------------------------------------------------------------
+;Control codes
+;-----------------------------------------------------------------------------
+;Forward 		0
+;Back 			1
+;Slide Left 	2
+;Slide Right 	3
+;Attack 		4
+;Activate 		5
+;Block 			6
+;Cast 			7
+;Ready Weapon 	8
+;Crouch/Sneak 	9
+;Run 			10
+;Always Run 	11
+;Auto Move 		12
+;Jump 			13
+;Toggle POV 	14
+;Menu Mode 		15
+;Rest 			16
+;Quick Menu 	17
+;Quick1 		18
+;Quick2 		19
+;Quick3 		20
+;Quick4 		21
+;Quick5 		22
+;Quick6 		23
+;Quick7 		24
+;Quick8 		25
+;QuickSave 		26
+;QuickLoad 		27
+;Grab 			28
+;-----------------------------------------------------------------------------
+;Keycodes
+;-----------------------------------------------------------------------------
+;1		Escape
+;2		1
+;3		2
+;4		3
+;5		4
+;6  	5
+;7  	6
+;8  	7
+;9  	8
+;10  	9
+;11  	0
+;12  	Minus
+;13  	Equals
+;14  	Backspace
+;15  	Tab
+;16  	Q
+;17  	W
+;18  	E
+;19  	R
+;20  	T
+;21  	Y
+;22  	U
+;23  	I
+;24  	O
+;25  	P
+;26  	Left Bracket
+;27  	Right Bracket
+;28  	Enter
+;29  	Left Control
+;30  	A
+;31  	S
+;32  	D
+;33  	F
+;34  	G
+;35  	H
+;36  	J
+;37  	K
+;38  	L
+;39  	Semicolon
+;40  	Apostrophe
+;41  	~ (Console)
+;42  	Left Shift
+;43  	Back Slash
+;44  	Z
+;45  	X
+;46  	C
+;47  	V
+;48  	B
+;49  	N
+;50  	M
+;51  	Comma
+;52  	Period
+;53  	Forward Slash  
+;54  	Right Shift
+;55  	NUM*
+;56  	Left Alt
+;57 	Spacebar
+;58  	Caps Lock
+;59  	F1
+;60  	F2
+;61  	F3
+;62  	F4
+;63  	F5
+;64  	F6
+;65  	F7
+;66  	F8
+;67  	F9
+;68  	F10
+;69  	Num Lock
+;70  	Scroll Lock
+;71  	NUM7
+;72  	NUM8
+;73  	NUM9
+;74  	NUM-
+;75  	NUM4
+;76  	NUM5
+;77  	NUM6
+;78  	NUM+
+;79  	NUM1
+;80  	NUM2
+;81  	NUM3
+;82  	NUM0
+;83  	NUM.
+;87  	F11
+;88  	F12
+;156  	NUM Enter
+;157  	Right Control
+;181  	NUM/
+;184  	Right Alt
+;199  	Home
+;200  	Up Arrow
+;201  	PgUp
+;203  	Left Arrow
+;205  	Right Arrow
+;207  	End
+;208  	Down Arrow
+;209  	PgDown
+;210  	Insert
+;211  	Delete
+;256  	Left Mouse Button
+;257  	Right Mouse Button
+;258  	Middle/Wheel Mouse Button
+;259  	Mouse Button 3
+;260  	Mouse Button 4
+;261  	Mouse Button 5
+;262  	Mouse Button 6
+;263  	Mouse Button 7
+;264  	Mouse Wheel Up
+;265  	Mouse Wheel Down
 
 
 ;-----------------------------------------------------------------------------

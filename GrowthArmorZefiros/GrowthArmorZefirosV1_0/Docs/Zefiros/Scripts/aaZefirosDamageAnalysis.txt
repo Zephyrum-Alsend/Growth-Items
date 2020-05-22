@@ -16,6 +16,10 @@ float fQuestDelayTime
 
 ;Related scripts
 ;-----------------------------------------------------------------------------
+;aaZefirosOnDamage
+;aaZefirosOnMagicApply
+;aaZefirosOnMagicHit
+;aaZefirosOnWeaponHit
 ;-----------------------------------------------------------------------------
 
 ;Used globals
