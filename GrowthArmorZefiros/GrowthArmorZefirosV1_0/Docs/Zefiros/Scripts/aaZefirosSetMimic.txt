@@ -7,10 +7,12 @@ scn aaZefirosSetMimic
 
 ;Used scripts
 ;-----------------------------------------------------------------------------
+;aaZefirosGetSlotShared
 ;-----------------------------------------------------------------------------
 
 ;Related scripts
 ;-----------------------------------------------------------------------------
+;aaZefirosGetFormData
 ;-----------------------------------------------------------------------------
 
 ;Used globals
@@ -69,8 +71,12 @@ scn aaZefirosSetMimic
 ;Parameters
 ;-----------------------------------------------------------------------------
 ref Item
+array_var Hvy
+array_var Stat
+array_var EnSt
+array_var Dflt
 array_var Armr
-array_var Data
+array_var Data ;Return value
 
 array_var Stack
 array_var Temp
@@ -88,7 +94,7 @@ long Slot
 ;-----------------------------------------------------------------------------
 
 ;-----------------------------------------------------------------------------
-begin Function { Item, Armr, Data }
+begin Function { Item, Hvy, Stat, EnSt, Dflt, Armr, Data }
 ;-----------------------------------------------------------------------------
 	SetFunctionValue Data
 
@@ -98,7 +104,7 @@ begin Function { Item, Armr, Data }
 
 	Let Self := Stack[0]
 
-	if ( Self == 0 )
+	if ( Self == -1 )
 
 		DebugPrint "%n does not match a slot in Armr, aborting SetMimic." Item
 		MessageEX "%n cannot be mimicked." Item
@@ -176,12 +182,12 @@ begin Function { Item, Armr, Data }
 	Let Data[i][0][3] := FemaleGround
 	Let Data[i][0][4] := MaleIcon
 	Let Data[i][0][5] := FemaleIcon
-	Let Data[i][0][6] := Name
+	Let Data[i][0][6] := Name + " (Mimic)"
 	Let Data[i][0][7] := Slot
 
 
 	;If SetMerge succeeds, update form and global
-	if eval( Call aaZefirosSetMerge Slot i Armr )
+	if eval( Call aaZefirosSetMerge Slot Dflt Hvy Stat EnSt i Armr )
 
 		Call aaZefirosSetForm i 0 Data Self
 
@@ -230,5 +236,5 @@ begin Function { Item, Armr, Data }
 	SetFunctionValue Data
 	Return
 ;-----------------------------------------------------------------------------
-end ;Function { Item, Armr, Data }
+end ;Function { Item, Hvy, Stat, EnSt, Dflt, Armr, Data }
 ;-----------------------------------------------------------------------------

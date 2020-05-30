@@ -11,6 +11,8 @@ scn aaZefirosGetEnchantLevels
 
 ;Related scripts
 ;-----------------------------------------------------------------------------
+;aaZefirosSetMerge
+;aaZefirosUndoEnchant
 ;-----------------------------------------------------------------------------
 
 ;Used globals
@@ -265,6 +267,7 @@ scn aaZefirosGetEnchantLevels
 ;-----------------------------------------------------------------------------
 ;Based on the value passed in Mode, returns an array of all enchantment levels
 ;associated with a specific item.
+;
 ;0 = Body
 ;1 = Foot
 ;2 = Hand

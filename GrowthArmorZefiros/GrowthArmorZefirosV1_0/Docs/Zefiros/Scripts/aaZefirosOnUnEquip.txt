@@ -17,13 +17,16 @@ scn aaZefirosOnUnEquip
 ;-----------------------------------------------------------------------------
 ;aaZefirosCleanUp
 ;aaZefirosSetEquipHandlers
-;aaZefirosOnEquip
-;aaZefirosObject
+;aaZefirosObjectBody
+;aaZefirosObjectFoot
+;aaZefirosObjectHand
+;aaZefirosObjectHead
+;aaZefirosObjectLegs
+;aaZefirosObjectShld
 ;-----------------------------------------------------------------------------
 
 ;Used globals
 ;-----------------------------------------------------------------------------
-;aaZefirosEquip
 ;aaZefirosEquip
 ;aaZefirosSlotBody
 ;aaZefirosSlotFoot
@@ -53,7 +56,7 @@ ref Item
 begin Function { Target, Item }
 ;-----------------------------------------------------------------------------
 
-	DebugPrint "Running OnUnEquip block."
+	DebugPrint "%BRunning %b%n%B OnUnEquip block.%b" Item
 
 	Let aaZefirosEquip := aaZefirosEquip - 1
 
@@ -70,7 +73,7 @@ begin Function { Target, Item }
 			Let aaZefirosEquip -= 1
 		endif
 
-		if eval( aaZefirosSlotBody & 1 || aaZefirosSlotBody & 2 )
+		if eval( aaZefirosSlotBody & 3 )
 			Let aaZefirosEquip -= 1
 		endif
 
@@ -93,7 +96,7 @@ begin Function { Target, Item }
 			Let aaZefirosEquip -= 1
 		endif
 
-		if eval( aaZefirosSlotFoot & 1 || aaZefirosSlotFoot & 2 )
+		if eval( aaZefirosSlotFoot & 3 )
 			Let aaZefirosEquip -= 1
 		endif
 
@@ -116,7 +119,7 @@ begin Function { Target, Item }
 			Let aaZefirosEquip -= 1
 		endif
 
-		if eval( aaZefirosSlotHand & 1 || aaZefirosSlotHand & 2 )
+		if eval( aaZefirosSlotHand & 3 )
 			Let aaZefirosEquip -= 1
 		endif
 
@@ -166,7 +169,7 @@ begin Function { Target, Item }
 			Let aaZefirosEquip -= 1
 		endif
 
-		if eval( aaZefirosSlotLegs & 1 || aaZefirosSlotLegs & 2 )
+		if eval( aaZefirosSlotLegs & 3 )
 			Let aaZefirosEquip -= 1
 		endif
 
@@ -189,7 +192,7 @@ begin Function { Target, Item }
 			Let aaZefirosEquip -= 1
 		endif
 
-		if eval( aaZefirosSlotShld & 1 || aaZefirosSlotShld & 2 )
+		if eval( aaZefirosSlotShld & 3 )
 			Let aaZefirosEquip -= 1
 		endif
 
@@ -205,8 +208,10 @@ begin Function { Target, Item }
 
 	if ( aaZefirosEquip <= 0 )
 
+		;-----------------------------------------------------------------------------
 		DebugPrint "aaZefirosEquip is %.0f, setting to 0 and removing handlers." aaZefirosEquip
-
+		;-----------------------------------------------------------------------------
+	
 		Let aaZefirosEquip := 0
 		RemoveEventHandler "OnHealthDamage" aaZefirosOnDamage
 		RemoveEventHandler "OnMagicEffectHit" aaZefirosOnMagicHit

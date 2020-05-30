@@ -11,7 +11,6 @@ scn aaZefirosRefreshEquip
 
 ;Related scripts
 ;-----------------------------------------------------------------------------
-;aaZefirosRefreshEquipped
 ;aaZefirosRefreshUnEquip
 ;-----------------------------------------------------------------------------
 
@@ -32,10 +31,10 @@ scn aaZefirosRefreshEquip
 ;Parameters
 ;-----------------------------------------------------------------------------
 ref Actor
-ref Item
-
 array_var Items
+
 array_var Iter
+ref Item
 ;-----------------------------------------------------------------------------
 
 

@@ -48,11 +48,13 @@ scn aaZefirosObjectLegs
 begin OnEquip Player
 ;-----------------------------------------------------------------------------
 
-	DebugPrint "Running Legs OnEquip block."
+	DebugPrint "%BRunning %bLegs%B OnEquip block."
 
 	if ( aaZefirosEquip <= 0 )
 
+		;-----------------------------------------------------------------------------
 		DebugPrint "aaZefirosEquip is %.0f, setting to 1 and setting handlers." aaZefirosEquip
+		;-----------------------------------------------------------------------------
 
 		Let aaZefirosEquip := 0
 		SetEventHandler "OnHealthDamage" aaZefirosOnDamage "object"::Player
@@ -76,7 +78,7 @@ begin OnEquip Player
 		if eval( aaZefirosSlotLegs & 16 )
 			Let aaZefirosEquip += 1
 		endif
-		if eval( aaZefirosSlotLegs & 1 || aaZefirosSlotLegs & 2 )
+		if eval( aaZefirosSlotLegs & 3 )
 			Let aaZefirosEquip += 1
 		endif
 		if eval( aaZefirosSlotLegs & 8192 )

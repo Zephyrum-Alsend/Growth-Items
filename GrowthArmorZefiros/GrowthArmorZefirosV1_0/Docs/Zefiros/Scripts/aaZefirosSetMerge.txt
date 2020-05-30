@@ -8,18 +8,40 @@ scn aaZefirosSetMerge
 ;Used scripts
 ;-----------------------------------------------------------------------------
 ;aaZefirosGetSlotShared
+;aaZefirosSetMerge
+;aaZefirosSetStat
+;aaZefirosSetWeight
+;aaZefirosRemoveAllEffectItems
+;aaZefirosGetEnchantLevels
+;aaZefirosSetEnchant
+;aaZefirosSetResistEffects
+;aaZefirosGetResistMatrix
 ;aaZefirosSetMergeEnch
 ;aaZefirosReorderEffects
 ;-----------------------------------------------------------------------------
 
 ;Related scripts
 ;-----------------------------------------------------------------------------
+;aaZefirosSetMerge
 ;aaZefirosSetForm
 ;aaZefirosSetMimic
 ;-----------------------------------------------------------------------------
 
 ;Used globals
 ;-----------------------------------------------------------------------------
+;aaZefrosLevel
+;aaZefirosWeightBody
+;aaZefirosWeightFoot
+;aaZefirosWeightHand
+;aaZefirosWeightHead
+;aaZefirosWeightLegs
+;aaZefirosWeightShld
+;aaZefirosActvEnchBody
+;aaZefirosActvEnchFoot
+;aaZefirosActvEnchHand
+;aaZefirosActvEnchHead
+;aaZefirosActvEnchLegs
+;aaZefirosActvEnchShld
 ;aaZefirosSlotBody
 ;aaZefirosSlotFoot
 ;aaZefirosSlotHand
@@ -42,7 +64,15 @@ scn aaZefirosSetMerge
 ;
 ;Does NOT handle mesh/ground/icon paths, use SetForm.
 ;
-;Array:
+;Hvy:
+;[0]Heavy AR multiplier
+;[1]Heavy Weight multiplier
+;
+;Stat := Call aaZefirosGetArmorStats
+;
+;EnSt := Call aaZefirosGetEnchantData
+;
+;Armr:
 ;[0]Body
 ;[1]Foot
 ;[2]Hand
@@ -53,18 +83,28 @@ scn aaZefirosSetMerge
 
 ;Parameters
 ;-----------------------------------------------------------------------------
+long Slot
+array_var Dflt
+array_var Hvy
+array_var Stat
+array_var EnSt
 short i
-ref Item
 array_var Armr
 
-long Slot
+short Cnt
+short j
+short Brk
+short Eqp
 long OldSlot
 array_var Slots
 array_var Stack
+array_var Added
 array_var Missing
+array_var ReMerg
 array_var Iter
+ref Item
 ref Object
-short Brk
+ref Ench
 
 short AR
 float Wgt
@@ -75,12 +115,12 @@ ref InvR
 ;-----------------------------------------------------------------------------
 
 ;-----------------------------------------------------------------------------
-begin Function { Slot, i, Armr }
+begin Function { Slot, Dflt, Hvy, Stat, EnSt, i, Armr }
 ;-----------------------------------------------------------------------------
 
 	Let Item := Armr[i]
 
-	DebugPrint "Checking merges with %n..." Item
+	DebugPrint "%BChecking merges with %b%n%B...%b" Item
 
 	
 	;-----------------------------------------------------------------------------
@@ -88,16 +128,23 @@ begin Function { Slot, i, Armr }
 	;-----------------------------------------------------------------------------
 	Let OldSlot := GetBipedSlotMask Item
 
-	if ( OldSlot != Slot )
+	if ( OldSlot == Slot )
+	
+		DebugPrint "Slot unchanged."
+		SetFunctionValue 1
+		Return
+
+	else
 
 		;-----------------------------------------------------------------------------
 		;Add back merged items
 		;-----------------------------------------------------------------------------
-		DebugPrint "Slot changed, undoing merges..."
+		DebugPrint "Slot changed..."
 
 		Let Slots := ar_Map 0::Armr[3] 1::Armr[0] 2::Armr[4] 3::Armr[2] 4::Armr[1] 8::Armr[5]
 
 		Let Stack := Call aaZefirosGetSlotShared Item Slots
+		Let Added := ar_Construct Array ;Track added items incase of abort
 		ForEach Iter <- Stack
 
 			Let Object := *Iter
@@ -107,7 +154,7 @@ begin Function { Slot, i, Armr }
 
 				DebugPrint "Returning %n." Object
 				Player.AddItemNS Object 1
-				Player.EquipItem2NS Object
+				ar_Append Added Object
 
 			endif
 			
@@ -119,11 +166,13 @@ begin Function { Slot, i, Armr }
 		;-----------------------------------------------------------------------------
 		DebugPrint "Marking for merge..."
 
+		Let Eqp := Player.GetEquipped Item ;To make sure Item stays equipped at the end
 		SetBipedSlotMask Slot Item
 
 		Let Stack := Call aaZefirosGetSlotShared Item Slots
-		Let Brk := 0
+		Let Brk := 1
 		Let Missing := ar_Construct Array ;Track removed items incase of abort
+		Let ReMerg := ar_Construct Array ;Track recursive calls incase of abort
 		ForEach Iter <- Stack
 
 			Let Object := *Iter
@@ -134,12 +183,28 @@ begin Function { Slot, i, Armr }
 				if ( 0 < Player.GetItemCount Object )
 
 					DebugPrint "Marked %n." Object
+
+					;Have to account for Object also being merged
+					Let Cnt := ar_Size Armr
+					Let j := 0
+					while ( j < Cnt )
+
+						if eval( Object == Armr[j] )
+
+							ar_Append ReMerg ar_Map 0::j 1::GetBipedSlotMask Object
+							Let Brk := Call aaZefirosSetMerge Dflt[j] Dflt Hvy Stat EnSt j Armr
+
+						endif
+
+						Let j += 1
+					loop
+					
 					ar_Append Missing Object
 
 				else ;Item to be marked is not present
 
 					;Flag abort
-					Let Brk := 1
+					Let Brk := 0
 					Break
 
 				endif
@@ -152,27 +217,92 @@ begin Function { Slot, i, Armr }
 		;-----------------------------------------------------------------------------
 		;Abort if an item needed to merge is not present
 		;-----------------------------------------------------------------------------
-		if ( Brk != 0 )
+		if ( Brk == 0 )
 
 			DebugPrint "%n missing from inventory, aborting SetMerge." Object
 			MessageEX "Unable to change form without %n." Object
 
 			SetBipedSlotMask OldSlot Item
 
+			;Remove returned items
+			ForEach Iter <- Added
+
+				Let Object := *Iter
+				Player.RemoveItemNS Object 1
+
+			loop
+
+			;Remerge marked items
+			DebugPrint "%BRemerging unmerged items.%b"
+			ForEach Iter <- ReMerg
+
+				Let j := Iter["value"][0]
+				Let OldSlot := Iter["value"][1]
+
+				Call  aaZefirosSetMerge OldSlot Dflt Hvy Stat EnSt j Armr
+
+			loop
+
 			SetFunctionValue 0
 			Return
 
 
 		;-----------------------------------------------------------------------------
-		;Merge all items marked
+		;Finish merging
 		;-----------------------------------------------------------------------------
 		else
 
+			;-----------------------------------------------------------------------------
+			DebugPrint "Reinitializing %n..." Item
+			;-----------------------------------------------------------------------------
+			SetDebugMode 0 ;Nerf console clog
+
+			;Armor stats
+			SetArmorType 0 Item
+			Call aaZefirosSetStat Stat[i][0] Stat[i][1] Stat[i][2] Stat[i][3] Stat[i][4] Stat[i][5] Stat[i][6] Stat[i][7] aaZefirosLevel Item
+			Let Stack := ar_Map 0::aaZefirosWeightBody 1::aaZefirosWeightFoot 2::aaZefirosWeightHand 3::aaZefirosWeightHead 4::aaZefirosWeightLegs 5::aaZefirosWeightShld
+			Call aaZefirosSetWeight Hvy[0] Hvy[1] Stack[i] Item
+
+			;Enchantment stats
+			Let Ench := GetEnchantment Item
+			if ( Ench )
+
+				Call aaZefirosRemoveAllEffectItems Ench
+				Let Stack := Call aaZefirosGetEnchantLevels i
+				Let Iter := ar_Map 0::aaZefirosActvEnchBody 1::aaZefirosActvEnchFoot 2::aaZefirosActvEnchHand 3::aaZefirosActvEnchHead 4::aaZefirosActvEnchLegs 5::aaZefirosActvEnchShld
+				Call aaZefirosSetEnchant EnSt Stack Iter[i] Ench
+				if ( Ench != aaZefirosInit.EnchShld ) ;Shield shouldn't have resists, no other elegant way
+					Call aaZefirosSetResistEffects ( &1 ) Dflt ( Call aaZefirosGetResistMatrix 0 ) ( &Ench )
+				endif
+				
+			endif
+			SetDebugMode aaZefirosDebug
+
+
+			;-----------------------------------------------------------------------------
+			;Equip returned items if Item is equipped
+			;-----------------------------------------------------------------------------
+			if ( Player.GetEquipped Item )
+
+				ForEach Iter <- Added
+	
+					Let Object := *Iter
+					Player.EquipItem2NS Object
+	
+				loop
+
+			endif
+
+
+			;-----------------------------------------------------------------------------
+			DebugPrint "Merging..."
+			;-----------------------------------------------------------------------------
 			ForEach Iter <- Missing
-
+			;-----------------------------------------------------------------------------
+			
 				Let Object := *Iter
-				DebugPrint "Merging %n..." Object
-
+				DebugPrint "	%n" Object
+				
 
 				;-----------------------------------------------------------------------------
 				;Merge stats
@@ -208,9 +338,9 @@ begin Function { Slot, i, Armr }
 				;Merge enchantments
 				;-----------------------------------------------------------------------------
 				;Will return false if either lacks an enchantment
-				if ( GetEnchantment Object && GetEnchantment Item )
+				if ( GetEnchantment Object && Ench )
 
-					Call aaZefirosSetMergeEnch ( GetEnchantment Object ) ( GetEnchantment Item )
+					Call aaZefirosSetMergeEnch ( GetEnchantment Object ) Ench
 
 					Let Stack := ar_Construct Array
 					Let Stack[0] := ar_Map 0::( GetMagicEffectCode RSFI ) 1::256
@@ -220,7 +350,7 @@ begin Function { Slot, i, Armr }
 					Let Stack[4] := ar_Map 0::( GetMagicEffectCode RSNW ) 1::256
 					Let Stack[5] := ar_Map 0::( GetMagicEffectCode RSPA ) 1::256
 					Let Stack[6] := ar_Map 0::( GetMagicEffectCode RSDI ) 1::256
-					Call aaZefirosReorderEffects Stack ( ar_Map 0::Ench2 )
+					Call aaZefirosReorderEffects Stack ( &Ench )
 
 				endif
 
@@ -229,43 +359,52 @@ begin Function { Slot, i, Armr }
 				;Remove Object
 				;-----------------------------------------------------------------------------
 				Player.RemoveItemNS Object 1
-				DebugPrint "Merged."
+				;OnUnEquip DebugPrint will activate here
 			
-			loop
-
+			;-----------------------------------------------------------------------------
+			loop ;Iter <- Missing
+			;-----------------------------------------------------------------------------
+			
 
 			;-----------------------------------------------------------------------------
 			;Update global
 			;-----------------------------------------------------------------------------
 			if ( i == 0 )
 
-				DebugPrint "SlotBody updated."
+				DebugPrint "%BSlotBody updated."
 				Let aaZefirosSlotBody := Slot
 
 			elseif ( i == 1 )
 
-				DebugPrint "SlotFoot updated."
+				DebugPrint "%BSlotFoot updated."
 				Let aaZefirosSlotFoot := Slot
 
 			elseif ( i == 2 )
 
-				DebugPrint "SlotHand updated."
+				DebugPrint "%BSlotHand updated."
 				Let aaZefirosSlotHand := Slot
 
 			elseif ( i == 3 )
 
-				DebugPrint "SlotHead updated."
+				DebugPrint "%BSlotHead updated."
 				Let aaZefirosSlotHead := Slot
 
 			elseif ( i == 4 )
 
-				DebugPrint "SlotLegs updated."
+				DebugPrint "%BSlotLegs updated."
 				Let aaZefirosSlotLegs := Slot
 
 			elseif ( i == 5 )
 
-				DebugPrint "SlotShld updated."
+				DebugPrint "%BSlotShld updated."
 				Let aaZefirosSlotShld := Slot
+
+			endif
+
+			;Re-equip if necessary
+			if ( Eqp )
+
+				Player.EquipItem2NS Item
 
 			endif
 
@@ -273,18 +412,13 @@ begin Function { Slot, i, Armr }
 		endif ;( Brk != 0 )
 		;-----------------------------------------------------------------------------
 
-
-	else
-
-		DebugPrint "Slot unchanged."
-
 	;-----------------------------------------------------------------------------
-	endif ;( OldSlot != Slot )
+	endif ;( OldSlot == Slot )
 	;-----------------------------------------------------------------------------
 
 	
 	SetFunctionValue 1
 	Return
 ;-----------------------------------------------------------------------------
-end ;Function { Slot, i, Armr }
+end ;Function { Slot, Dflt, Hvy, Stat, EnSt, i, Armr }
 ;-----------------------------------------------------------------------------

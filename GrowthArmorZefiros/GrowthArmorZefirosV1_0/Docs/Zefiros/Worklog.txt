@@ -424,3 +424,202 @@
 -Adding extra stage to RefreshOnce to work around this
 -RefreshEquipped is now officially redundant
 -Finally copying code for GitHub, not gonna delete deleted scripts there for posterity
+
+2020.05.23
+-Created SetResistEffects to handle updating dynamic resistances and handle merged items
+-Updating SetResists to handle merge items, see SetResistEffects makes this function obsolete
+-Could also tweak SetResistEffects to be used on any effects on any item, may help with Seek rewrite
+-Given how often Slot data is called, created Slots array to hold it and GetSlots to populate it
+-Created GetResistMatrix to factor out code initializing Stack for SetResistEffects, shaved 1KB off Manager
+-Created GetArmorStats to be GetResistMatrix for ArmSt array in Manager
+
+2020.05.24
+-Tweaked ModStat to handle multi-slot items, barely any change in parameters
+-ReorderEffects is throwing runtime errors but still behaves as desired, investigating
+	-Let Spl := *Ench is throwing the error
+		-ar_Dump shows Ench is returning what a ForEach iterator should
+		-Ench["value"] throws the error too
+		-Renamed to Item, still error
+	-Despite all this, no actual error in execution
+	-May just throw it under Known (Non-)Issues
+	-Posted a thread on Nexus forums about the issue
+	-Emailed OBSE lead programmer on the issue too
+-Turning the ForEach into a While loop, should avoid (non)error
+-Still throws runtime error
+-Enchs in this instance is a ar_Map created at function call
+-That ar_Map is created using variables that don't exist, explains error
+-Started a Known Issues tab in ReadMe.txt, incase I forget any by the time I write the mod page
+-Changed base model to leather armor
+-Created IncrementEnchant to handle leveling up enchant effects while handling merged items
+-Modified GetSlotShared to take a slot mask instead of an item so it can make IncrementEnchant easier
+-Updated all calls to GetSlotShared
+-Simply casting a ref to a long throws a runtime error
+-Looks like my clever use of GetSlotShared cannot pass if I cannot caste a ref to a long
+-Using a ref and string_var, was able to convert ref to long : ref -> format_string -> long
+-Created RefToNum
+-When multiple different effects are involved, ActvEnchBody overwrites all the other ActvEnch
+	-Might be because of Array1[Array2[X]] notation
+-Looks like what failed was casting long as ref in GetSlotShared call
+-Replaced GetSlotShared call with sequence of if statements that get the desired result
+-Unique ActvEnch preserved
+-Commented out some DebugPrints in SetEffectItem to reduce console clog
+-To Do: Seek code, delevel code, unmerge code
+
+2020.05.25
+-ModStat handles delevels as is
+-Undid change to GetSlotShared, gives more debug information and inability to caste longs to refs makes change moot
+-Reverted all calls to GetSlotShared
+-Addressed a bug in SetMerge where if you went from Body+Hand to Body+Legs but missing Legs, would have spare Hand after abort
+-Also added GetEquipped check so returned items are only equipped if the merged item was
+-Reinitialized Item during unmerge section of SetMerge
+	-Because I keep updating merged items even though they aren't there, I only need to deal with the amalgamation
+-To Do: Seek code, delevel enchant code
+
+2020.05.26
+-Created SetSeek to handle adding new active effects with multi-slot items
+-Rewrote SetSeek multiple times as I discovered simpler approaches
+-Created GetEffectIndex because I keep needing to find these but don't have a function for it yet
+-Updated SetEffectItem to use GetEffectIndex
+-Updated SetMergeEnch to use GetEffectIndex
+-SetSeek works somewhat fine. Adding new effects is good, but cross modding new effects in is bad
+-I also need to check ench lvl up code
+	-18 Shield, 8 Fort Str, 8 Fort Int (Cuirass merged with Gauntlets)
+	-Chose Feather (Cuirass) and Shield (Gauntlets)
+	-18 Shield, 10 Fort Str, 8 Fort Int
+	-10 Shield, 10 Fort Str, 8 Fort Int, 16 Feather (After level up)
+	-Unmerging was fine, b/c reinitializes
+-Problem with SetSeek was I passed EnSt[k][X] when it should have been EnSt[Actv[k]][X]
+-The issue with IncrementEnchant is it doesn't take into account non-active existing effects, overwriting them
+-I can see a quick fix when merged effects are added, but I'd like to rewrite it after understanding the code again
+-Rewrote IncrementEnchant
+	-Combined while loops that weren't dependent on each other
+	-Replaced Sets with Mod
+-Tested ingame with choices that failed last time, succeeds now
+-Expanded debugging information IncrementEnchant provides to include effect name and Enchs index
+-Replaced ar_Append Data with Let Data[X] := in GetEnchantData, more human readable
+
+2020.05.27
+-Begun rewriting UndoEnchantment
+-Added check to SetMerge so Shld never gets resists, had to be dot notation
+-I am writing out if trees to get merged slots pretty often, should make this a function
+	-The function is pretty rigid, since it assumes I'm using Selfs or Enchs from Manager
+-Created GetMerg
+-Realised if
+	-Merge Body+Hand
+	-Merge Legs+Foot
+	-Merge Body+Legs
+	-Hands are returned, Foot are missing
+-Will need to have SetMerge recursively call itself on Missing items to fix this
+-Hardcoded for now but more elegant patch would be to pass default Slots in as extra parameter
+-Patched in more elegant solution, correcting all calls to SetMerge
+-Corrected all calls to SetMerge
+-In the example above, Legs retains its multi-slot look despite being single slot - not sure if gonna fix
+-Created GetDefaultSlot since I need to check merged items so often
+-Added parameter to GetMerg for GetDefaultSlot array, now not hardcoded
+-Added Dflt array_var to Manager b/c keep needing to pass GetDefaultSlot into functions
+-ModStat updated
+-UndoEnchant updated - and finally tested
+-IncrementEnchant updated
+-Object left hardcoded
+-SetResistEffects updated, now need to update functions that call it
+	-UndoEnchant updated
+	-SetMerge updated
+	-Manager updated
+-Added loop to remerge unmerged items in an aborted SetMerge call
+-Tweaked DebugPrint in SetMerge, SetForm, OnUnEquip, GetSlotShared to have eye-catching blue text at parts
+-SetMerge can muck up the Equip flag with all the OnUnEquip blocks firing, added call to CleanUp
+-OnEquip fires after CleanUp, mucking up CleanUp's correction(s)
+-Created CleanOnce flag, since we need to wait 1 frame for OnEquip to fire and FormChange + Mimic will need it
+-Rewrote if tree for menu keybinds, less checks
+-Added form name section/mode to SetFlavorMessage, really don't need to make a new function to GetFormName
+-Rewrote MenuMode block so keybind if tree only sets Menu flag, never calls functions
+-Added variety to Form Name mode of SetFlavorMessage
+-Added key trap to Form Name, don't want 30 seconds of message from one key "press"
+-Added call to CleanOnce at end of initializer block, since it calls SetMerge
+-Added stages to CleanOnce, so OnEquip can run first
+-Added comment explaining why CleanOnce is set at end of initializer block
+
+2020.05.28
+-Created UndoSigilStone to start anti-enchantment measures
+-Added SigilStone section to SetFlavorBox
+-UndoSigilStone has a flagging paradox because I cannot get whether the player hits Create or Exit
+	-Player enters MenuMode SigilStone, DisEnchOnce flag is set
+	-Player enchants Zefiros
+	-UndoSigilStone is called
+	-Enchantment is undone
+	-Player enters MenuMode SigilStone, DisEnchOnce flag is set
+	-Player exits MenuMode SigilStone
+	-UndoSigilStone is called
+	-LastEnchantedItem is still Zefiros
+-This creates a problem:
+	-the function could be called before the new item is added, resulting in dupes
+	-the function could be called after enchantment is undone, but Zefiros is still LastEnchantedItem
+	-new item is no longer present
+-Could have UndoSigilStone return False until new item is removed, but then the flag will be forever set in above scenario
+-Could have UndoSigilStone only run if new item is present, but runs risk of getting run before new item is added, unsetting flag early
+-Less problematic method is have faith new item is added at frame end, before UndoSigilStone is called
+-Created a workaround solution!
+	-Have UndoSigilStone return false (0) if waiting on new item to be added, true (1) otherwise
+	-Store LastCreatedItem
+	-Each time flag is set, check LastCreatedItem != StoredItem
+	-If true, set flag to call UndoSigilStone
+	-Add UndoSigilStone's return value to flag (true will unset it)
+	-If calling flag is unset, unset DisEnchOnce flag
+-Replaced DisEnchOnce with SigilOnce, so waiting on SigilStone return will not stop Enchanting
+-GetActiveMenuMode returns the menu code for what the mouse is hovering over, not the actual active menu
+-Results in console clog of "Unsetting SigilOnce" when opening SigilStone and when mouse goes off the UI
+-Can resolve by moving block to Inventory, but if can call SigilStone from other menus, may delay undo
+-Fuck it, they won't get to see the new item since as soon as they hit GameMode or Inventory it'll fire
+-OnUnEquip is also properly called when Zefiros is enchanted, so no worries about Equip flag fuckery
+-Created OnEnchant
+-Created UndoEnchanting
+-Added Enchanting section to SetFlavorBox
+-Decided to handle undo outside of handler after experiencing it fire before new item was added, creating a dupe
+-Added comments indicating blocks of Manager code that repeat in Menu/GameMode and their general location
+-I'm considering factoring these blocks out into functions, but they're very short as is
+-Leaving them as is
+-Factored out SigilOnce code into SetSigilOnce
+-Factored out CleanOnce code into SetCleanOnce
+-Renamed to Flag%, easier to find in function list
+-Factored out EnchantOnce code into FlagEnchantOnce
+-Rewrote RefreshOnce code to use elseif, idk why I didn't before
+-Factored out MenuMode Enchanting code into OnEnchanting
+-I should give SetFlavorBox another pass, some of these messages are just dull
+-Renamed SetFlavorBox and SetFlavorMessage to FlavorBox and FlavorMessage
+-Updated UndoEnchanting, UndoSigilStone, Manager calls to FlavorBox
+-Updated Sacrifice, Manager calls to FlavorMessage
+
+2020.05.29
+-Rewrote Full Reset section of FlavorBox, added some messages to Level Cap
+-Considering adding a tier 2 break point, for auto reset to Lv1 regardless of sBreakLevel
+-Would have to redo BreakOnce logic to allow for the tier 2 break check, not gonna do that
+-Begun double checking documentation in scripts
+	-Really just postponing working on form change menu code
+-Audited:
+	CleanUp		DamageAnalysis		DefaultINI	FlagCleanOnce		FlagEnchantOnce
+	FlagSigilOnce	FlavorBox		FlavorMessage	GetArmorStats		GetBroken
+	GetDefaultSlot	GetDurability		GetEffectCode	GetEffectIndex		GetEnchantData
+	EnchantBox	GetEnchantLevels	GetEnchChoice	GetFormData		GetMerg
+	GetPCBIP	GetResistMatrix		GetSlots	GetSlotShared		IncrementEnchant
+	LogLevel	LogXP			Manager		ModStat			ObjectBody
+	ObjectFoot	ObjectHand		ObjectHead	ObjectLegs		ObjectShld
+	Offer		OnDamage		OnEnchant	OnEnchanting		OnMagicApply
+	OnMagicHit	OnUnEquip		OnWeaponHit	PrepMerge		RefreshEquip
+	RefreshInv	RefreshUnEquip		RefToNum	RemoveAllEffectItems	ReorderEffects
+	Sacrifice	SaveMimic		SetDurability	SetEffectItem		SetEffectStat
+	SetEnchant	ModEnchLevel
+-Need to add controller support to menu keybinds
+-Added controller support
+-Renamed GetEnchantEffects to EnchantBox
+-Tried getting Charge and Cost out of armor enchantments, values were very inconsistent
+-Renamed SetEnchLevel to ModEnchLevel
+
+2020.05.30
+-Audited:
+	SetEnchOnItem	SetEquipHandlers	SetForm		SetLevelCap		SetMerge
+	SerMergeEnch	SetMimic		SetName		SetResistEffects	SetSeek
+	SetSeekArray	SetStat			SetWeight	GetXPReq		UndoEnchant
+	UndoEnchanting	UndoSigilStone		ValidateBiped	ValidateMimic
+-Renamed SetXPReq to GetXPReq, returns an array instead of directly altering XPReq
+-Altered XPReqHalf formula to be based on XP instead of XPReq of Lvl - 1.
+-With audit finished, time to update GitHub

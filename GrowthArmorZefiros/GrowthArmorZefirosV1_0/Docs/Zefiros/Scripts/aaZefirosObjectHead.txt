@@ -48,11 +48,13 @@ scn aaZefirosObjectHead
 begin OnEquip Player
 ;-----------------------------------------------------------------------------
 
-	DebugPrint "Running Head OnEquip block."
+	DebugPrint "%BRunning %bHead%B OnEquip block."
 
 	if ( aaZefirosEquip <= 0 )
 
+		;-----------------------------------------------------------------------------
 		DebugPrint "aaZefirosEquip is %.0f, setting to 1 and setting handlers." aaZefirosEquip
+		;-----------------------------------------------------------------------------
 
 		Let aaZefirosEquip := 0
 		SetEventHandler "OnHealthDamage" aaZefirosOnDamage "object"::Player

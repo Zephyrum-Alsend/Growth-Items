@@ -11,7 +11,6 @@ scn aaZefirosGetEnchChoice
 
 ;Related scripts
 ;-----------------------------------------------------------------------------
-;aaZefirosGetEffectCode
 ;aaZefirosGetEnchantData
 ;-----------------------------------------------------------------------------
 
@@ -31,18 +30,17 @@ scn aaZefirosGetEnchChoice
 ;and Page Shorts to determine what to display, with Type restricting which 
 ;effects are available.
 ;Page contains -1 when an effect has been chosen, and Button then contains the
-;index the effect's data can be found in GetEnchantData/GetEffectCode.
+;index the effect's data can be found in GetEnchantData.
 ;-----------------------------------------------------------------------------
 
 ;Parameters
 ;-----------------------------------------------------------------------------
+string_var Name
+short Type
 short Button
 short Page
-short Type
 
 array_var Next ;Return value
-
-string_var Name
 string_var Msg
 ;-----------------------------------------------------------------------------
 
@@ -606,5 +604,5 @@ begin Function { Name, Type, Button, Page }
 	SetFunctionValue Next
 	Return
 ;-----------------------------------------------------------------------------
-end ;Function { }
+end ;Function { Name, Type, Button, Page }
 ;-----------------------------------------------------------------------------

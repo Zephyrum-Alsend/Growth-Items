@@ -12,6 +12,7 @@ scn aaZefirosRefreshInv
 ;Related scripts
 ;-----------------------------------------------------------------------------
 ;aaZefirosSacrifice
+;aaZefirosSetForm
 ;-----------------------------------------------------------------------------
 
 ;Used globals

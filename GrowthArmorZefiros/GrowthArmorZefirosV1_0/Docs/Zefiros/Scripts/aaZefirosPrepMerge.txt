@@ -83,7 +83,7 @@ begin Function { Mask, Armr }
 	endif
 
 	;Add Head
-	if eval( Mask[1] & 2 || Mask[2] & 2 || Mask[0] & 2 || Mask[4] & 2 || Mask[5] & 2 || Mask[1] & 1 || Mask[2] & 1 || Mask[0] & 1 || Mask[4] & 1 || Mask[5] & 1 )
+	if eval( Mask[1] & 3 || Mask[2] & 3 || Mask[0] & 3 || Mask[4] & 3 || Mask[5] & 3 )
 
 		Let Item := Armr[3]
 		Player.AddItemNS Item 1

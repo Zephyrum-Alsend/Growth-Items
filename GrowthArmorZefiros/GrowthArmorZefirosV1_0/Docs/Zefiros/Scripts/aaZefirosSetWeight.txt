@@ -11,7 +11,7 @@ scn aaZefirosSetWeight
 
 ;Related scripts
 ;-----------------------------------------------------------------------------
-;aaZefirosDefaultINI
+;aaZefirosSetMerge
 ;-----------------------------------------------------------------------------
 
 ;Used globals
@@ -36,14 +36,13 @@ scn aaZefirosSetWeight
 
 ;Parameters
 ;-----------------------------------------------------------------------------
+float ARMult
+float WgtMult
 short Type
+ref Armr
 
 short AR
 float Wgt
-float ARMult
-float WgtMult
-
-ref Armr
 ;-----------------------------------------------------------------------------
 
 
@@ -53,7 +52,11 @@ begin Function { ARMult, WgtMult, Type, Armr }
 ;-----------------------------------------------------------------------------
 
 	;If the armor type already matches the flag, do nothing
-	if ( GetArmorType Armr != Type )
+	if ( GetArmorType Armr == Type )
+
+		Return
+
+	else
 
 		Let AR := GetArmorAR Armr
 		Let Wgt := GetWeight Armr

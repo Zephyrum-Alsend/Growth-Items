@@ -7,6 +7,14 @@ scn aaZefirosUndoEnchant
 
 ;Used scripts
 ;-----------------------------------------------------------------------------
+;aaZefirosModEnchLevel
+;aaZefirosRemoveAllEffectItems
+;aaZefirosGetEnchantLevels
+;aaZefirosSetEnchant
+;aaZefirosSetResistEffects
+;aaZefirosGetResistMatrix
+;aaZefirosGetMerg
+;aaZefirosSetMergeEnch
 ;-----------------------------------------------------------------------------
 
 ;Related scripts
@@ -24,89 +32,122 @@ scn aaZefirosUndoEnchant
 
 ;Description
 ;-----------------------------------------------------------------------------
-;Undoes an enchantment, one level at a time.
-;Passed the total Lvl to be reduced by, GetEnchantData array, body part Mode, 
-;history of all level ups, and the enchant itself.
-;Returns what the new active enchant is and the remaining history.
+;Undoes enchantments, one level at a time.
+;Passed the total Lvl to be reduced by, GetEnchantData array, biped slot mask, 
+;history of all level ups, and the enchants themselves.
+;Reinitializes the enchants after deleveling them.
+;Returns what the new active enchants are and the remaining history.
 ;-----------------------------------------------------------------------------
 
 ;Parameters
 ;-----------------------------------------------------------------------------
-array_var Stats
-string_var StrArr
+array_var Slots
+array_var Dflt
 short Lvl
-short Mode
-ref Ench
+array_var EnSt
+array_var Hist
+array_var Enchs
 
-array_var ReturnVal ;Return value
-
+short Count
+short h
 short i
 short Actv
-array_var NewLv
-array_var NewSt
+array_var NewActv ;Return value
+array_var NewHist ;Return value
+array_var NewLvl
+string_var StrArr
+array_var Merg
+array_var Iter
+ref Ench
 ;-----------------------------------------------------------------------------
 
 ;-----------------------------------------------------------------------------
-begin Function { Lvl, Stats, Mode, StrArr, Ench }
+begin Function { Slots, Dflt, Lvl, EnSt, Hist, Enchs }
 ;-----------------------------------------------------------------------------
 
-	if ( Lvl < 0 || Mode < 0 || Mode > 5 )
-		DebugPrint "UndoEnchant Error: Lvl or Mode out of bounds."
-		Return
+	;Set Count to smallest array size
+	Let Count := ar_Size Hist
+	if eval( Count > ar_Size Enchs )
+		Let Count := ar_Size Enchs
+	endif
+	if eval( Count > ar_Size Slots )
+		Let Count := ar_Size Slots
 	endif
 
 
-	;-----------------------------------------------------------------------------
-	DebugPrint "Undoing levels for Mode %.0f enchantment..." Mode
-	;-----------------------------------------------------------------------------
-	Let i := 0
-	while ( i < Lvl )
+	Let NewActv := ar_Construct Array
+	Let NewHist := ar_Construct Array
+	Let Merg := ar_Construct Array
+	Let h := 0
+	while ( h < Count )
 
-		Let Actv := #StrArr[0:1]
-		;Decrement levels
-		Call aaZefirosSetEnchLevel Mode ( -1 ) Actv
-		sv_Erase StrArr 0 2
+		Let Ench := Enchs[h]
+		Let StrArr := Hist[h]
+		
 
-		Let i += 1
-	loop
+		;-----------------------------------------------------------------------------
+		DebugPrint "Undoing levels for [%.0f] enchantment..." h
+		;-----------------------------------------------------------------------------
+		Let i := 0
+		while ( i < Lvl )
+	
+			Let Actv := #StrArr[0:1]
+			;Decrement levels
+			Call aaZefirosModEnchLevel h ( -1 ) Actv
+			sv_Erase StrArr 0 2
+	
+			Let i += 1
+		loop
+		ar_Append NewActv Actv
+		ar_Append NewHist StrArr
 
 
-	;-----------------------------------------------------------------------------
-	DebugPrint "Setting new stats for enchantment..."
-	;-----------------------------------------------------------------------------
-	;Reduce console clog
-	SetDebugMode 0
-
-	;Get all levels
-	Let NewLv := Call aaZefirosGetEnchantLevels Mode
-
-	Let i := 0
-	Let Lvl := ar_Size NewLv
-	while ( i < Lvl )
-
-		;If current level == 0 and is not the new Active Enchant, delete effect
-		if eval( NewLv[i] == 0 && Actv != i )
-
-			Call aaZefirosSetEffectItem 0 0 0 0 Stats[i][0] Stats[i][1] Ench
-
-		else ;Set new stats according to new level
-
-			Let NewSt := Call aaZefirosSetEffectStat Stats[i][2] Stats[i][3] Stats[i][4] Stats[i][5] Stats[i][6] Stats[i][7] NewLv[i]
-			Call aaZefirosSetEffectItem NewSt[0] NewSt[1] NewSt[2] Stats[i][8] Stats[i][0] Stats[i][1] Ench
-			
+		;-----------------------------------------------------------------------------
+		DebugPrint "Reinitializing..."
+		;-----------------------------------------------------------------------------
+		SetDebugMode 0 ;Console clog begone!
+		Call aaZefirosRemoveAllEffectItems Ench
+		Let NewLvl := Call aaZefirosGetEnchantLevels h
+		Call aaZefirosSetEnchant EnSt NewLvl Actv Ench
+		if ( Ench != aaZefirosInit.EnchShld ) ;Shield shouldn't have resists, no other elegant way
+			Call aaZefirosSetResistEffects ( &1 ) Dflt ( Call aaZefirosGetResistMatrix 0 ) ( &Ench )
 		endif
+		SetDebugMode aaZefirosDebug
 
-		Let i += 1
+
+		Let Merg[h] := Call aaZefirosGetMerg Slots[h] Dflt
+
+		Let h += 1
 	loop
-	SetDebugMode aaZefirosDebug
 
+
+	;-----------------------------------------------------------------------------
+	DebugPrint "Remerging..."
+	;-----------------------------------------------------------------------------
+	Let h := 0
+	while ( h < Count )
+
+		ForEach Iter <- Merg[h]
+
+			Let i := *Iter
+
+			if eval( Enchs[i] != Enchs[h] )
+				
+				Call aaZefirosSetMergeEnch Enchs[i] Enchs[h]
+
+			endif
+			
+		loop
+
+		Let h += 1
+	loop
+	
 
 	;-----------------------------------------------------------------------------
 	DebugPrint "New stats set."
 	;-----------------------------------------------------------------------------
-	Let ReturnVal := ar_Map 0::Actv 1::StrArr
-	SetFunctionValue ReturnVal
+	SetFunctionValue ar_Map 0::NewActv 1::NewHist
 	Return
 ;-----------------------------------------------------------------------------
-end ;Function { Lvl, Stats, Mode, StrArr, Ench }
+end ;Function { Slots, Dflt, Lvl, EnSt, Hist, Enchs }
 ;-----------------------------------------------------------------------------

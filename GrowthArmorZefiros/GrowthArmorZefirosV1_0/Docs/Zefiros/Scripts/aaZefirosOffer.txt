@@ -31,10 +31,10 @@ scn aaZefirosOffer
 
 ;Parameters
 ;-----------------------------------------------------------------------------
-ref Item
 short Capped
 string_var Name
-short Button
+ref Item
+short Button ;Return value
 
 string_var Msg
 ;-----------------------------------------------------------------------------

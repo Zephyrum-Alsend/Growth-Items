@@ -13,8 +13,9 @@ scn aaZefirosSetEnchant
 
 ;Related scripts
 ;-----------------------------------------------------------------------------
-;aaZefirosDefaultINI
 ;aaZefirosGetEnchantData
+;aaZefirosSetMerge
+;aaZefirosUndoEnchant
 ;-----------------------------------------------------------------------------
 
 ;Used globals
@@ -49,11 +50,13 @@ scn aaZefirosSetEnchant
 
 ;Parameters
 ;-----------------------------------------------------------------------------
+array_var EnchData
+array_var EnchLvls
+short Active
 ref Ench
 
-short Active
-short i
 short Count
+short i
 
 short Lvl
 short MagB
@@ -68,8 +71,6 @@ float MagM
 float AreM
 float DurM
 
-array_var EnchData
-array_var EnchLvls
 array_var Item
 ;-----------------------------------------------------------------------------
 

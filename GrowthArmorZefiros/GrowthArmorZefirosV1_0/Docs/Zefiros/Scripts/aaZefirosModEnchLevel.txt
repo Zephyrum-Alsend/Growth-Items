@@ -1,0 +1,2763 @@
+scn aaZefirosModEnchLevel
+
+;Main script
+;-----------------------------------------------------------------------------
+;aaZefirosManager
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;aaZefirosIncrementEnchant
+;aaZefirosSetSeek
+;aaZefirosUndoEnchant
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
+;aaZefirosEnch00Body
+;aaZefirosEnch01Body
+;aaZefirosEnch02Body
+;aaZefirosEnch03Body
+;aaZefirosEnch04Body
+;aaZefirosEnch05Body
+;aaZefirosEnch06Body
+;aaZefirosEnch07Body
+;aaZefirosEnch08Body
+;aaZefirosEnch09Body
+;aaZefirosEnch10Body
+;aaZefirosEnch11Body
+;aaZefirosEnch12Body
+;aaZefirosEnch13Body
+;aaZefirosEnch14Body
+;aaZefirosEnch15Body
+;aaZefirosEnch16Body
+;aaZefirosEnch17Body
+;aaZefirosEnch18Body
+;aaZefirosEnch19Body
+;aaZefirosEnch20Body
+;aaZefirosEnch21Body
+;aaZefirosEnch22Body
+;aaZefirosEnch23Body
+;aaZefirosEnch24Body
+;aaZefirosEnch25Body
+;aaZefirosEnch26Body
+;aaZefirosEnch27Body
+;aaZefirosEnch28Body
+;aaZefirosEnch29Body
+;aaZefirosEnch30Body
+;aaZefirosEnch31Body
+;aaZefirosEnch32Body
+;aaZefirosEnch33Body
+;aaZefirosEnch34Body
+;aaZefirosEnch35Body
+;aaZefirosEnch36Body
+;aaZefirosEnch37Body
+;aaZefirosEnch38Body
+;aaZefirosEnch39Body
+;aaZefirosEnch00Foot
+;aaZefirosEnch01Foot
+;aaZefirosEnch02Foot
+;aaZefirosEnch03Foot
+;aaZefirosEnch04Foot
+;aaZefirosEnch05Foot
+;aaZefirosEnch06Foot
+;aaZefirosEnch07Foot
+;aaZefirosEnch08Foot
+;aaZefirosEnch09Foot
+;aaZefirosEnch10Foot
+;aaZefirosEnch11Foot
+;aaZefirosEnch12Foot
+;aaZefirosEnch13Foot
+;aaZefirosEnch14Foot
+;aaZefirosEnch15Foot
+;aaZefirosEnch16Foot
+;aaZefirosEnch17Foot
+;aaZefirosEnch18Foot
+;aaZefirosEnch19Foot
+;aaZefirosEnch20Foot
+;aaZefirosEnch21Foot
+;aaZefirosEnch22Foot
+;aaZefirosEnch23Foot
+;aaZefirosEnch24Foot
+;aaZefirosEnch25Foot
+;aaZefirosEnch26Foot
+;aaZefirosEnch27Foot
+;aaZefirosEnch28Foot
+;aaZefirosEnch29Foot
+;aaZefirosEnch30Foot
+;aaZefirosEnch31Foot
+;aaZefirosEnch32Foot
+;aaZefirosEnch33Foot
+;aaZefirosEnch34Foot
+;aaZefirosEnch35Foot
+;aaZefirosEnch36Foot
+;aaZefirosEnch37Foot
+;aaZefirosEnch38Foot
+;aaZefirosEnch39Foot
+;aaZefirosEnch00Hand
+;aaZefirosEnch01Hand
+;aaZefirosEnch02Hand
+;aaZefirosEnch03Hand
+;aaZefirosEnch04Hand
+;aaZefirosEnch05Hand
+;aaZefirosEnch06Hand
+;aaZefirosEnch07Hand
+;aaZefirosEnch08Hand
+;aaZefirosEnch09Hand
+;aaZefirosEnch10Hand
+;aaZefirosEnch11Hand
+;aaZefirosEnch12Hand
+;aaZefirosEnch13Hand
+;aaZefirosEnch14Hand
+;aaZefirosEnch15Hand
+;aaZefirosEnch16Hand
+;aaZefirosEnch17Hand
+;aaZefirosEnch18Hand
+;aaZefirosEnch19Hand
+;aaZefirosEnch20Hand
+;aaZefirosEnch21Hand
+;aaZefirosEnch22Hand
+;aaZefirosEnch23Hand
+;aaZefirosEnch24Hand
+;aaZefirosEnch25Hand
+;aaZefirosEnch26Hand
+;aaZefirosEnch27Hand
+;aaZefirosEnch28Hand
+;aaZefirosEnch29Hand
+;aaZefirosEnch30Hand
+;aaZefirosEnch31Hand
+;aaZefirosEnch32Hand
+;aaZefirosEnch33Hand
+;aaZefirosEnch34Hand
+;aaZefirosEnch35Hand
+;aaZefirosEnch36Hand
+;aaZefirosEnch37Hand
+;aaZefirosEnch38Hand
+;aaZefirosEnch39Hand
+;aaZefirosEnch00Head
+;aaZefirosEnch01Head
+;aaZefirosEnch02Head
+;aaZefirosEnch03Head
+;aaZefirosEnch04Head
+;aaZefirosEnch05Head
+;aaZefirosEnch06Head
+;aaZefirosEnch07Head
+;aaZefirosEnch08Head
+;aaZefirosEnch09Head
+;aaZefirosEnch10Head
+;aaZefirosEnch11Head
+;aaZefirosEnch12Head
+;aaZefirosEnch13Head
+;aaZefirosEnch14Head
+;aaZefirosEnch15Head
+;aaZefirosEnch16Head
+;aaZefirosEnch17Head
+;aaZefirosEnch18Head
+;aaZefirosEnch19Head
+;aaZefirosEnch20Head
+;aaZefirosEnch21Head
+;aaZefirosEnch22Head
+;aaZefirosEnch23Head
+;aaZefirosEnch24Head
+;aaZefirosEnch25Head
+;aaZefirosEnch26Head
+;aaZefirosEnch27Head
+;aaZefirosEnch28Head
+;aaZefirosEnch29Head
+;aaZefirosEnch30Head
+;aaZefirosEnch31Head
+;aaZefirosEnch32Head
+;aaZefirosEnch33Head
+;aaZefirosEnch34Head
+;aaZefirosEnch35Head
+;aaZefirosEnch36Head
+;aaZefirosEnch37Head
+;aaZefirosEnch38Head
+;aaZefirosEnch39Head
+;aaZefirosEnch00Legs
+;aaZefirosEnch01Legs
+;aaZefirosEnch02Legs
+;aaZefirosEnch03Legs
+;aaZefirosEnch04Legs
+;aaZefirosEnch05Legs
+;aaZefirosEnch06Legs
+;aaZefirosEnch07Legs
+;aaZefirosEnch08Legs
+;aaZefirosEnch09Legs
+;aaZefirosEnch10Legs
+;aaZefirosEnch11Legs
+;aaZefirosEnch12Legs
+;aaZefirosEnch13Legs
+;aaZefirosEnch14Legs
+;aaZefirosEnch15Legs
+;aaZefirosEnch16Legs
+;aaZefirosEnch17Legs
+;aaZefirosEnch18Legs
+;aaZefirosEnch19Legs
+;aaZefirosEnch20Legs
+;aaZefirosEnch21Legs
+;aaZefirosEnch22Legs
+;aaZefirosEnch23Legs
+;aaZefirosEnch24Legs
+;aaZefirosEnch25Legs
+;aaZefirosEnch26Legs
+;aaZefirosEnch27Legs
+;aaZefirosEnch28Legs
+;aaZefirosEnch29Legs
+;aaZefirosEnch30Legs
+;aaZefirosEnch31Legs
+;aaZefirosEnch32Legs
+;aaZefirosEnch33Legs
+;aaZefirosEnch34Legs
+;aaZefirosEnch35Legs
+;aaZefirosEnch36Legs
+;aaZefirosEnch37Legs
+;aaZefirosEnch38Legs
+;aaZefirosEnch39Legs
+;aaZefirosEnch00Shld
+;aaZefirosEnch01Shld
+;aaZefirosEnch02Shld
+;aaZefirosEnch03Shld
+;aaZefirosEnch04Shld
+;aaZefirosEnch05Shld
+;aaZefirosEnch06Shld
+;aaZefirosEnch07Shld
+;aaZefirosEnch08Shld
+;aaZefirosEnch09Shld
+;aaZefirosEnch10Shld
+;aaZefirosEnch11Shld
+;aaZefirosEnch12Shld
+;aaZefirosEnch13Shld
+;aaZefirosEnch14Shld
+;aaZefirosEnch15Shld
+;aaZefirosEnch16Shld
+;aaZefirosEnch17Shld
+;aaZefirosEnch18Shld
+;aaZefirosEnch19Shld
+;aaZefirosEnch20Shld
+;aaZefirosEnch21Shld
+;aaZefirosEnch22Shld
+;aaZefirosEnch23Shld
+;aaZefirosEnch24Shld
+;aaZefirosEnch25Shld
+;aaZefirosEnch26Shld
+;aaZefirosEnch27Shld
+;aaZefirosEnch28Shld
+;aaZefirosEnch29Shld
+;aaZefirosEnch30Shld
+;aaZefirosEnch31Shld
+;aaZefirosEnch32Shld
+;aaZefirosEnch33Shld
+;aaZefirosEnch34Shld
+;aaZefirosEnch35Shld
+;aaZefirosEnch36Shld
+;aaZefirosEnch37Shld
+;aaZefirosEnch38Shld
+;aaZefirosEnch39Shld
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;aaZefirosActvEnchBody
+;aaZefirosActvEnchFoot
+;aaZefirosActvEnchHand
+;aaZefirosActvEnchHead
+;aaZefirosActvEnchLegs
+;aaZefirosActvEnchShld
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;Using Mode to indicate which item, mod the i-th enchant level by Lvl, then
+;return the new value.  Bounds levels to >= 0.
+;-1 = Reset
+;0 = Body
+;1 = Foot
+;2 = Hand
+;3 = Head
+;4 = Legs
+;5 = Shld
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+short Mode
+short Lvl ;Return value
+short i
+;-----------------------------------------------------------------------------
+
+;-----------------------------------------------------------------------------
+begin Function { Mode, Lvl, i }
+;-----------------------------------------------------------------------------
+
+	;-----------------------------------------------------------------------------
+	;Reset
+	;-----------------------------------------------------------------------------
+	if ( Mode == -1 )
+	;-----------------------------------------------------------------------------
+
+		DebugPrint "Resetting all enchant levels to 0."
+		Let Lvl := 0
+		Let aaZefirosEnch00Body := 0
+		Let aaZefirosEnch01Body := 0
+		Let aaZefirosEnch02Body := 0
+		Let aaZefirosEnch03Body := 0
+		Let aaZefirosEnch04Body := 0
+		Let aaZefirosEnch05Body := 0
+		Let aaZefirosEnch06Body := 0
+		Let aaZefirosEnch07Body := 0
+		Let aaZefirosEnch08Body := 0
+		Let aaZefirosEnch09Body := 0
+		Let aaZefirosEnch10Body := 0
+		Let aaZefirosEnch11Body := 0
+		Let aaZefirosEnch12Body := 0
+		Let aaZefirosEnch13Body := 0
+		Let aaZefirosEnch14Body := 0
+		Let aaZefirosEnch15Body := 0
+		Let aaZefirosEnch16Body := 0
+		Let aaZefirosEnch17Body := 0
+		Let aaZefirosEnch18Body := 0
+		Let aaZefirosEnch19Body := 0
+		Let aaZefirosEnch20Body := 0
+		Let aaZefirosEnch21Body := 0
+		Let aaZefirosEnch22Body := 0
+		Let aaZefirosEnch23Body := 0
+		Let aaZefirosEnch24Body := 0
+		Let aaZefirosEnch25Body := 0
+		Let aaZefirosEnch26Body := 0
+		Let aaZefirosEnch27Body := 0
+		Let aaZefirosEnch28Body := 0
+		Let aaZefirosEnch29Body := 0
+		Let aaZefirosEnch30Body := 0
+		Let aaZefirosEnch31Body := 0
+		Let aaZefirosEnch32Body := 0
+		Let aaZefirosEnch33Body := 0
+		Let aaZefirosEnch34Body := 0
+		Let aaZefirosEnch35Body := 0
+		Let aaZefirosEnch36Body := 0
+		Let aaZefirosEnch37Body := 0
+		Let aaZefirosEnch38Body := 0
+		Let aaZefirosEnch39Body := 0
+		Let aaZefirosEnch00Foot := 0
+		Let aaZefirosEnch01Foot := 0
+		Let aaZefirosEnch02Foot := 0
+		Let aaZefirosEnch03Foot := 0
+		Let aaZefirosEnch04Foot := 0
+		Let aaZefirosEnch05Foot := 0
+		Let aaZefirosEnch06Foot := 0
+		Let aaZefirosEnch07Foot := 0
+		Let aaZefirosEnch08Foot := 0
+		Let aaZefirosEnch09Foot := 0
+		Let aaZefirosEnch10Foot := 0
+		Let aaZefirosEnch11Foot := 0
+		Let aaZefirosEnch12Foot := 0
+		Let aaZefirosEnch13Foot := 0
+		Let aaZefirosEnch14Foot := 0
+		Let aaZefirosEnch15Foot := 0
+		Let aaZefirosEnch16Foot := 0
+		Let aaZefirosEnch17Foot := 0
+		Let aaZefirosEnch18Foot := 0
+		Let aaZefirosEnch19Foot := 0
+		Let aaZefirosEnch20Foot := 0
+		Let aaZefirosEnch21Foot := 0
+		Let aaZefirosEnch22Foot := 0
+		Let aaZefirosEnch23Foot := 0
+		Let aaZefirosEnch24Foot := 0
+		Let aaZefirosEnch25Foot := 0
+		Let aaZefirosEnch26Foot := 0
+		Let aaZefirosEnch27Foot := 0
+		Let aaZefirosEnch28Foot := 0
+		Let aaZefirosEnch29Foot := 0
+		Let aaZefirosEnch30Foot := 0
+		Let aaZefirosEnch31Foot := 0
+		Let aaZefirosEnch32Foot := 0
+		Let aaZefirosEnch33Foot := 0
+		Let aaZefirosEnch34Foot := 0
+		Let aaZefirosEnch35Foot := 0
+		Let aaZefirosEnch36Foot := 0
+		Let aaZefirosEnch37Foot := 0
+		Let aaZefirosEnch38Foot := 0
+		Let aaZefirosEnch39Foot := 0
+		Let aaZefirosEnch00Hand := 0
+		Let aaZefirosEnch01Hand := 0
+		Let aaZefirosEnch02Hand := 0
+		Let aaZefirosEnch03Hand := 0
+		Let aaZefirosEnch04Hand := 0
+		Let aaZefirosEnch05Hand := 0
+		Let aaZefirosEnch06Hand := 0
+		Let aaZefirosEnch07Hand := 0
+		Let aaZefirosEnch08Hand := 0
+		Let aaZefirosEnch09Hand := 0
+		Let aaZefirosEnch10Hand := 0
+		Let aaZefirosEnch11Hand := 0
+		Let aaZefirosEnch12Hand := 0
+		Let aaZefirosEnch13Hand := 0
+		Let aaZefirosEnch14Hand := 0
+		Let aaZefirosEnch15Hand := 0
+		Let aaZefirosEnch16Hand := 0
+		Let aaZefirosEnch17Hand := 0
+		Let aaZefirosEnch18Hand := 0
+		Let aaZefirosEnch19Hand := 0
+		Let aaZefirosEnch20Hand := 0
+		Let aaZefirosEnch21Hand := 0
+		Let aaZefirosEnch22Hand := 0
+		Let aaZefirosEnch23Hand := 0
+		Let aaZefirosEnch24Hand := 0
+		Let aaZefirosEnch25Hand := 0
+		Let aaZefirosEnch26Hand := 0
+		Let aaZefirosEnch27Hand := 0
+		Let aaZefirosEnch28Hand := 0
+		Let aaZefirosEnch29Hand := 0
+		Let aaZefirosEnch30Hand := 0
+		Let aaZefirosEnch31Hand := 0
+		Let aaZefirosEnch32Hand := 0
+		Let aaZefirosEnch33Hand := 0
+		Let aaZefirosEnch34Hand := 0
+		Let aaZefirosEnch35Hand := 0
+		Let aaZefirosEnch36Hand := 0
+		Let aaZefirosEnch37Hand := 0
+		Let aaZefirosEnch38Hand := 0
+		Let aaZefirosEnch39Hand := 0
+		Let aaZefirosEnch00Head := 0
+		Let aaZefirosEnch01Head := 0
+		Let aaZefirosEnch02Head := 0
+		Let aaZefirosEnch03Head := 0
+		Let aaZefirosEnch04Head := 0
+		Let aaZefirosEnch05Head := 0
+		Let aaZefirosEnch06Head := 0
+		Let aaZefirosEnch07Head := 0
+		Let aaZefirosEnch08Head := 0
+		Let aaZefirosEnch09Head := 0
+		Let aaZefirosEnch10Head := 0
+		Let aaZefirosEnch11Head := 0
+		Let aaZefirosEnch12Head := 0
+		Let aaZefirosEnch13Head := 0
+		Let aaZefirosEnch14Head := 0
+		Let aaZefirosEnch15Head := 0
+		Let aaZefirosEnch16Head := 0
+		Let aaZefirosEnch17Head := 0
+		Let aaZefirosEnch18Head := 0
+		Let aaZefirosEnch19Head := 0
+		Let aaZefirosEnch20Head := 0
+		Let aaZefirosEnch21Head := 0
+		Let aaZefirosEnch22Head := 0
+		Let aaZefirosEnch23Head := 0
+		Let aaZefirosEnch24Head := 0
+		Let aaZefirosEnch25Head := 0
+		Let aaZefirosEnch26Head := 0
+		Let aaZefirosEnch27Head := 0
+		Let aaZefirosEnch28Head := 0
+		Let aaZefirosEnch29Head := 0
+		Let aaZefirosEnch30Head := 0
+		Let aaZefirosEnch31Head := 0
+		Let aaZefirosEnch32Head := 0
+		Let aaZefirosEnch33Head := 0
+		Let aaZefirosEnch34Head := 0
+		Let aaZefirosEnch35Head := 0
+		Let aaZefirosEnch36Head := 0
+		Let aaZefirosEnch37Head := 0
+		Let aaZefirosEnch38Head := 0
+		Let aaZefirosEnch39Head := 0
+		Let aaZefirosEnch00Legs := 0
+		Let aaZefirosEnch01Legs := 0
+		Let aaZefirosEnch02Legs := 0
+		Let aaZefirosEnch03Legs := 0
+		Let aaZefirosEnch04Legs := 0
+		Let aaZefirosEnch05Legs := 0
+		Let aaZefirosEnch06Legs := 0
+		Let aaZefirosEnch07Legs := 0
+		Let aaZefirosEnch08Legs := 0
+		Let aaZefirosEnch09Legs := 0
+		Let aaZefirosEnch10Legs := 0
+		Let aaZefirosEnch11Legs := 0
+		Let aaZefirosEnch12Legs := 0
+		Let aaZefirosEnch13Legs := 0
+		Let aaZefirosEnch14Legs := 0
+		Let aaZefirosEnch15Legs := 0
+		Let aaZefirosEnch16Legs := 0
+		Let aaZefirosEnch17Legs := 0
+		Let aaZefirosEnch18Legs := 0
+		Let aaZefirosEnch19Legs := 0
+		Let aaZefirosEnch20Legs := 0
+		Let aaZefirosEnch21Legs := 0
+		Let aaZefirosEnch22Legs := 0
+		Let aaZefirosEnch23Legs := 0
+		Let aaZefirosEnch24Legs := 0
+		Let aaZefirosEnch25Legs := 0
+		Let aaZefirosEnch26Legs := 0
+		Let aaZefirosEnch27Legs := 0
+		Let aaZefirosEnch28Legs := 0
+		Let aaZefirosEnch29Legs := 0
+		Let aaZefirosEnch30Legs := 0
+		Let aaZefirosEnch31Legs := 0
+		Let aaZefirosEnch32Legs := 0
+		Let aaZefirosEnch33Legs := 0
+		Let aaZefirosEnch34Legs := 0
+		Let aaZefirosEnch35Legs := 0
+		Let aaZefirosEnch36Legs := 0
+		Let aaZefirosEnch37Legs := 0
+		Let aaZefirosEnch38Legs := 0
+		Let aaZefirosEnch39Legs := 0
+		Let aaZefirosEnch00Shld := 0
+		Let aaZefirosEnch01Shld := 0
+		Let aaZefirosEnch02Shld := 0
+		Let aaZefirosEnch03Shld := 0
+		Let aaZefirosEnch04Shld := 0
+		Let aaZefirosEnch05Shld := 0
+		Let aaZefirosEnch06Shld := 0
+		Let aaZefirosEnch07Shld := 0
+		Let aaZefirosEnch08Shld := 0
+		Let aaZefirosEnch09Shld := 0
+		Let aaZefirosEnch10Shld := 0
+		Let aaZefirosEnch11Shld := 0
+		Let aaZefirosEnch12Shld := 0
+		Let aaZefirosEnch13Shld := 0
+		Let aaZefirosEnch14Shld := 0
+		Let aaZefirosEnch15Shld := 0
+		Let aaZefirosEnch16Shld := 0
+		Let aaZefirosEnch17Shld := 0
+		Let aaZefirosEnch18Shld := 0
+		Let aaZefirosEnch19Shld := 0
+		Let aaZefirosEnch20Shld := 0
+		Let aaZefirosEnch21Shld := 0
+		Let aaZefirosEnch22Shld := 0
+		Let aaZefirosEnch23Shld := 0
+		Let aaZefirosEnch24Shld := 0
+		Let aaZefirosEnch25Shld := 0
+		Let aaZefirosEnch26Shld := 0
+		Let aaZefirosEnch27Shld := 0
+		Let aaZefirosEnch28Shld := 0
+		Let aaZefirosEnch29Shld := 0
+		Let aaZefirosEnch30Shld := 0
+		Let aaZefirosEnch31Shld := 0
+		Let aaZefirosEnch32Shld := 0
+		Let aaZefirosEnch33Shld := 0
+		Let aaZefirosEnch34Shld := 0
+		Let aaZefirosEnch35Shld := 0
+		Let aaZefirosEnch36Shld := 0
+		Let aaZefirosEnch37Shld := 0
+		Let aaZefirosEnch38Shld := 0
+		Let aaZefirosEnch39Shld := 0
+
+	;-----------------------------------------------------------------------------
+	;Body
+	;-----------------------------------------------------------------------------
+	elseif ( Mode == 0 )
+	;-----------------------------------------------------------------------------
+	
+		if ( i == 0 )
+
+			if ( aaZefirosEnch00Body > -Lvl )
+				Let aaZefirosEnch00Body += Lvl
+			else
+				Let aaZefirosEnch00Body := 0
+			endif
+			Let Lvl := aaZefirosEnch00Body
+
+		elseif ( i == 1 )
+
+			if ( aaZefirosEnch01Body > -Lvl )
+				Let aaZefirosEnch01Body += Lvl
+			else
+				Let aaZefirosEnch01Body := 0
+			endif
+			Let Lvl := aaZefirosEnch01Body
+
+		elseif ( i == 2 )
+
+			if ( aaZefirosEnch02Body > -Lvl )
+				Let aaZefirosEnch02Body += Lvl
+			else
+				Let aaZefirosEnch02Body := 0
+			endif
+			Let Lvl := aaZefirosEnch02Body
+
+		elseif ( i == 3 )
+
+			if ( aaZefirosEnch03Body > -Lvl )
+				Let aaZefirosEnch03Body += Lvl
+			else
+				Let aaZefirosEnch03Body := 0
+			endif
+			Let Lvl := aaZefirosEnch03Body
+
+		elseif ( i == 4 )
+
+			if ( aaZefirosEnch04Body > -Lvl )
+				Let aaZefirosEnch04Body += Lvl
+			else
+				Let aaZefirosEnch04Body := 0
+			endif
+			Let Lvl := aaZefirosEnch04Body
+
+		elseif ( i == 5 )
+
+			if ( aaZefirosEnch05Body > -Lvl )
+				Let aaZefirosEnch05Body += Lvl
+			else
+				Let aaZefirosEnch05Body := 0
+			endif
+			Let Lvl := aaZefirosEnch05Body
+
+		elseif ( i == 6 )
+
+			if ( aaZefirosEnch06Body > -Lvl )
+				Let aaZefirosEnch06Body += Lvl
+			else
+				Let aaZefirosEnch06Body := 0
+			endif
+			Let Lvl := aaZefirosEnch06Body
+
+		elseif ( i == 7 )
+
+			if ( aaZefirosEnch07Body > -Lvl )
+				Let aaZefirosEnch07Body += Lvl
+			else
+				Let aaZefirosEnch07Body := 0
+			endif
+			Let Lvl := aaZefirosEnch07Body
+
+		elseif ( i == 8 )
+
+			if ( aaZefirosEnch08Body > -Lvl )
+				Let aaZefirosEnch08Body += Lvl
+			else
+				Let aaZefirosEnch08Body := 0
+			endif
+			Let Lvl := aaZefirosEnch08Body
+
+		elseif ( i == 9 )
+
+			if ( aaZefirosEnch09Body > -Lvl )
+				Let aaZefirosEnch09Body += Lvl
+			else
+				Let aaZefirosEnch09Body := 0
+			endif
+			Let Lvl := aaZefirosEnch09Body
+
+		elseif ( i == 10 )
+
+			if ( aaZefirosEnch10Body > -Lvl )
+				Let aaZefirosEnch10Body += Lvl
+			else
+				Let aaZefirosEnch10Body := 0
+			endif
+			Let Lvl := aaZefirosEnch10Body
+
+		elseif ( i == 11 )
+
+			if ( aaZefirosEnch11Body > -Lvl )
+				Let aaZefirosEnch11Body += Lvl
+			else
+				Let aaZefirosEnch11Body := 0
+			endif
+			Let Lvl := aaZefirosEnch11Body
+
+		elseif ( i == 12 )
+
+			if ( aaZefirosEnch12Body > -Lvl )
+				Let aaZefirosEnch12Body += Lvl
+			else
+				Let aaZefirosEnch12Body := 0
+			endif
+			Let Lvl := aaZefirosEnch12Body
+
+		elseif ( i == 13 )
+
+			if ( aaZefirosEnch13Body > -Lvl )
+				Let aaZefirosEnch13Body += Lvl
+			else
+				Let aaZefirosEnch13Body := 0
+			endif
+			Let Lvl := aaZefirosEnch13Body
+
+		elseif ( i == 14 )
+
+			if ( aaZefirosEnch14Body > -Lvl )
+				Let aaZefirosEnch14Body += Lvl
+			else
+				Let aaZefirosEnch14Body := 0
+			endif
+			Let Lvl := aaZefirosEnch14Body
+
+		elseif ( i == 15 )
+
+			if ( aaZefirosEnch15Body > -Lvl )
+				Let aaZefirosEnch15Body += Lvl
+			else
+				Let aaZefirosEnch15Body := 0
+			endif
+			Let Lvl := aaZefirosEnch15Body
+
+		elseif ( i == 16 )
+
+			if ( aaZefirosEnch16Body > -Lvl )
+				Let aaZefirosEnch16Body += Lvl
+			else
+				Let aaZefirosEnch16Body := 0
+			endif
+			Let Lvl := aaZefirosEnch16Body
+
+		elseif ( i == 17 )
+
+			if ( aaZefirosEnch17Body > -Lvl )
+				Let aaZefirosEnch17Body += Lvl
+			else
+				Let aaZefirosEnch17Body := 0
+			endif
+			Let Lvl := aaZefirosEnch17Body
+
+		elseif ( i == 18 )
+
+			if ( aaZefirosEnch18Body > -Lvl )
+				Let aaZefirosEnch18Body += Lvl
+			else
+				Let aaZefirosEnch18Body := 0
+			endif
+			Let Lvl := aaZefirosEnch18Body
+
+		elseif ( i == 19 )
+
+			if ( aaZefirosEnch19Body > -Lvl )
+				Let aaZefirosEnch19Body += Lvl
+			else
+				Let aaZefirosEnch19Body := 0
+			endif
+			Let Lvl := aaZefirosEnch19Body
+
+		elseif ( i == 20 )
+
+			if ( aaZefirosEnch20Body > -Lvl )
+				Let aaZefirosEnch20Body += Lvl
+			else
+				Let aaZefirosEnch20Body := 0
+			endif
+			Let Lvl := aaZefirosEnch20Body
+
+		elseif ( i == 21 )
+
+			if ( aaZefirosEnch21Body > -Lvl )
+				Let aaZefirosEnch21Body += Lvl
+			else
+				Let aaZefirosEnch21Body := 0
+			endif
+			Let Lvl := aaZefirosEnch21Body
+
+		elseif ( i == 22 )
+
+			if ( aaZefirosEnch22Body > -Lvl )
+				Let aaZefirosEnch22Body += Lvl
+			else
+				Let aaZefirosEnch22Body := 0
+			endif
+			Let Lvl := aaZefirosEnch22Body
+
+		elseif ( i == 23 )
+
+			if ( aaZefirosEnch23Body > -Lvl )
+				Let aaZefirosEnch23Body += Lvl
+			else
+				Let aaZefirosEnch23Body := 0
+			endif
+			Let Lvl := aaZefirosEnch23Body
+
+		elseif ( i == 24 )
+
+			if ( aaZefirosEnch24Body > -Lvl )
+				Let aaZefirosEnch24Body += Lvl
+			else
+				Let aaZefirosEnch24Body := 0
+			endif
+			Let Lvl := aaZefirosEnch24Body
+
+		elseif ( i == 25 )
+
+			if ( aaZefirosEnch25Body > -Lvl )
+				Let aaZefirosEnch25Body += Lvl
+			else
+				Let aaZefirosEnch25Body := 0
+			endif
+			Let Lvl := aaZefirosEnch25Body
+
+		elseif ( i == 26 )
+
+			if ( aaZefirosEnch26Body > -Lvl )
+				Let aaZefirosEnch26Body += Lvl
+			else
+				Let aaZefirosEnch26Body := 0
+			endif
+			Let Lvl := aaZefirosEnch26Body
+
+		elseif ( i == 27 )
+
+			if ( aaZefirosEnch27Body > -Lvl )
+				Let aaZefirosEnch27Body += Lvl
+			else
+				Let aaZefirosEnch27Body := 0
+			endif
+			Let Lvl := aaZefirosEnch27Body
+
+		elseif ( i == 28 )
+
+			if ( aaZefirosEnch28Body > -Lvl )
+				Let aaZefirosEnch28Body += Lvl
+			else
+				Let aaZefirosEnch28Body := 0
+			endif
+			Let Lvl := aaZefirosEnch28Body
+
+		elseif ( i == 29 )
+
+			if ( aaZefirosEnch29Body > -Lvl )
+				Let aaZefirosEnch29Body += Lvl
+			else
+				Let aaZefirosEnch29Body := 0
+			endif
+			Let Lvl := aaZefirosEnch29Body
+
+		elseif ( i == 30 )
+
+			if ( aaZefirosEnch30Body > -Lvl )
+				Let aaZefirosEnch30Body += Lvl
+			else
+				Let aaZefirosEnch30Body := 0
+			endif
+			Let Lvl := aaZefirosEnch30Body
+
+		elseif ( i == 31 )
+
+			if ( aaZefirosEnch31Body > -Lvl )
+				Let aaZefirosEnch31Body += Lvl
+			else
+				Let aaZefirosEnch31Body := 0
+			endif
+			Let Lvl := aaZefirosEnch31Body
+
+		elseif ( i == 32 )
+
+			if ( aaZefirosEnch32Body > -Lvl )
+				Let aaZefirosEnch32Body += Lvl
+			else
+				Let aaZefirosEnch32Body := 0
+			endif
+			Let Lvl := aaZefirosEnch32Body
+
+		elseif ( i == 33 )
+
+			if ( aaZefirosEnch33Body > -Lvl )
+				Let aaZefirosEnch33Body += Lvl
+			else
+				Let aaZefirosEnch33Body := 0
+			endif
+			Let Lvl := aaZefirosEnch33Body
+
+		elseif ( i == 34 )
+
+			if ( aaZefirosEnch34Body > -Lvl )
+				Let aaZefirosEnch34Body += Lvl
+			else
+				Let aaZefirosEnch34Body := 0
+			endif
+			Let Lvl := aaZefirosEnch34Body
+
+		elseif ( i == 35 )
+
+			if ( aaZefirosEnch35Body > -Lvl )
+				Let aaZefirosEnch35Body += Lvl
+			else
+				Let aaZefirosEnch35Body := 0
+			endif
+			Let Lvl := aaZefirosEnch35Body
+
+		elseif ( i == 36 )
+
+			if ( aaZefirosEnch36Body > -Lvl )
+				Let aaZefirosEnch36Body += Lvl
+			else
+				Let aaZefirosEnch36Body := 0
+			endif
+			Let Lvl := aaZefirosEnch36Body
+
+		elseif ( i == 37 )
+
+			if ( aaZefirosEnch37Body > -Lvl )
+				Let aaZefirosEnch37Body += Lvl
+			else
+				Let aaZefirosEnch37Body := 0
+			endif
+			Let Lvl := aaZefirosEnch37Body
+
+		elseif ( i == 38 )
+
+			if ( aaZefirosEnch38Body > -Lvl )
+				Let aaZefirosEnch38Body += Lvl
+			else
+				Let aaZefirosEnch38Body := 0
+			endif
+			Let Lvl := aaZefirosEnch38Body
+
+		elseif ( i == 39 )
+
+			if ( aaZefirosEnch39Body > -Lvl )
+				Let aaZefirosEnch39Body += Lvl
+			else
+				Let aaZefirosEnch39Body := 0
+			endif
+			Let Lvl := aaZefirosEnch39Body
+
+		endif
+
+	;-----------------------------------------------------------------------------
+	;Foot
+	;-----------------------------------------------------------------------------
+	elseif ( Mode == 1 )
+	;-----------------------------------------------------------------------------
+	
+		if ( i == 0 )
+
+			if ( aaZefirosEnch00Foot > -Lvl )
+				Let aaZefirosEnch00Foot += Lvl
+			else
+				Let aaZefirosEnch00Foot := 0
+			endif
+			Let Lvl := aaZefirosEnch00Foot
+
+		elseif ( i == 1 )
+
+			if ( aaZefirosEnch01Foot > -Lvl )
+				Let aaZefirosEnch01Foot += Lvl
+			else
+				Let aaZefirosEnch01Foot := 0
+			endif
+			Let Lvl := aaZefirosEnch01Foot
+
+		elseif ( i == 2 )
+
+			if ( aaZefirosEnch02Foot > -Lvl )
+				Let aaZefirosEnch02Foot += Lvl
+			else
+				Let aaZefirosEnch02Foot := 0
+			endif
+			Let Lvl := aaZefirosEnch02Foot
+
+		elseif ( i == 3 )
+
+			if ( aaZefirosEnch03Foot > -Lvl )
+				Let aaZefirosEnch03Foot += Lvl
+			else
+				Let aaZefirosEnch03Foot := 0
+			endif
+			Let Lvl := aaZefirosEnch03Foot
+
+		elseif ( i == 4 )
+
+			if ( aaZefirosEnch04Foot > -Lvl )
+				Let aaZefirosEnch04Foot += Lvl
+			else
+				Let aaZefirosEnch04Foot := 0
+			endif
+			Let Lvl := aaZefirosEnch04Foot
+
+		elseif ( i == 5 )
+
+			if ( aaZefirosEnch05Foot > -Lvl )
+				Let aaZefirosEnch05Foot += Lvl
+			else
+				Let aaZefirosEnch05Foot := 0
+			endif
+			Let Lvl := aaZefirosEnch05Foot
+
+		elseif ( i == 6 )
+
+			if ( aaZefirosEnch06Foot > -Lvl )
+				Let aaZefirosEnch06Foot += Lvl
+			else
+				Let aaZefirosEnch06Foot := 0
+			endif
+			Let Lvl := aaZefirosEnch06Foot
+
+		elseif ( i == 7 )
+
+			if ( aaZefirosEnch07Foot > -Lvl )
+				Let aaZefirosEnch07Foot += Lvl
+			else
+				Let aaZefirosEnch07Foot := 0
+			endif
+			Let Lvl := aaZefirosEnch07Foot
+
+		elseif ( i == 8 )
+
+			if ( aaZefirosEnch08Foot > -Lvl )
+				Let aaZefirosEnch08Foot += Lvl
+			else
+				Let aaZefirosEnch08Foot := 0
+			endif
+			Let Lvl := aaZefirosEnch08Foot
+
+		elseif ( i == 9 )
+
+			if ( aaZefirosEnch09Foot > -Lvl )
+				Let aaZefirosEnch09Foot += Lvl
+			else
+				Let aaZefirosEnch09Foot := 0
+			endif
+			Let Lvl := aaZefirosEnch09Foot
+
+		elseif ( i == 10 )
+
+			if ( aaZefirosEnch10Foot > -Lvl )
+				Let aaZefirosEnch10Foot += Lvl
+			else
+				Let aaZefirosEnch10Foot := 0
+			endif
+			Let Lvl := aaZefirosEnch10Foot
+
+		elseif ( i == 11 )
+
+			if ( aaZefirosEnch11Foot > -Lvl )
+				Let aaZefirosEnch11Foot += Lvl
+			else
+				Let aaZefirosEnch11Foot := 0
+			endif
+			Let Lvl := aaZefirosEnch11Foot
+
+		elseif ( i == 12 )
+
+			if ( aaZefirosEnch12Foot > -Lvl )
+				Let aaZefirosEnch12Foot += Lvl
+			else
+				Let aaZefirosEnch12Foot := 0
+			endif
+			Let Lvl := aaZefirosEnch12Foot
+
+		elseif ( i == 13 )
+
+			if ( aaZefirosEnch13Foot > -Lvl )
+				Let aaZefirosEnch13Foot += Lvl
+			else
+				Let aaZefirosEnch13Foot := 0
+			endif
+			Let Lvl := aaZefirosEnch13Foot
+
+		elseif ( i == 14 )
+
+			if ( aaZefirosEnch14Foot > -Lvl )
+				Let aaZefirosEnch14Foot += Lvl
+			else
+				Let aaZefirosEnch14Foot := 0
+			endif
+			Let Lvl := aaZefirosEnch14Foot
+
+		elseif ( i == 15 )
+
+			if ( aaZefirosEnch15Foot > -Lvl )
+				Let aaZefirosEnch15Foot += Lvl
+			else
+				Let aaZefirosEnch15Foot := 0
+			endif
+			Let Lvl := aaZefirosEnch15Foot
+
+		elseif ( i == 16 )
+
+			if ( aaZefirosEnch16Foot > -Lvl )
+				Let aaZefirosEnch16Foot += Lvl
+			else
+				Let aaZefirosEnch16Foot := 0
+			endif
+			Let Lvl := aaZefirosEnch16Foot
+
+		elseif ( i == 17 )
+
+			if ( aaZefirosEnch17Foot > -Lvl )
+				Let aaZefirosEnch17Foot += Lvl
+			else
+				Let aaZefirosEnch17Foot := 0
+			endif
+			Let Lvl := aaZefirosEnch17Foot
+
+		elseif ( i == 18 )
+
+			if ( aaZefirosEnch18Foot > -Lvl )
+				Let aaZefirosEnch18Foot += Lvl
+			else
+				Let aaZefirosEnch18Foot := 0
+			endif
+			Let Lvl := aaZefirosEnch18Foot
+
+		elseif ( i == 19 )
+
+			if ( aaZefirosEnch19Foot > -Lvl )
+				Let aaZefirosEnch19Foot += Lvl
+			else
+				Let aaZefirosEnch19Foot := 0
+			endif
+			Let Lvl := aaZefirosEnch19Foot
+
+		elseif ( i == 20 )
+
+			if ( aaZefirosEnch20Foot > -Lvl )
+				Let aaZefirosEnch20Foot += Lvl
+			else
+				Let aaZefirosEnch20Foot := 0
+			endif
+			Let Lvl := aaZefirosEnch20Foot
+
+		elseif ( i == 21 )
+
+			if ( aaZefirosEnch21Foot > -Lvl )
+				Let aaZefirosEnch21Foot += Lvl
+			else
+				Let aaZefirosEnch21Foot := 0
+			endif
+			Let Lvl := aaZefirosEnch21Foot
+
+		elseif ( i == 22 )
+
+			if ( aaZefirosEnch22Foot > -Lvl )
+				Let aaZefirosEnch22Foot += Lvl
+			else
+				Let aaZefirosEnch22Foot := 0
+			endif
+			Let Lvl := aaZefirosEnch22Foot
+
+		elseif ( i == 23 )
+
+			if ( aaZefirosEnch23Foot > -Lvl )
+				Let aaZefirosEnch23Foot += Lvl
+			else
+				Let aaZefirosEnch23Foot := 0
+			endif
+			Let Lvl := aaZefirosEnch23Foot
+
+		elseif ( i == 24 )
+
+			if ( aaZefirosEnch24Foot > -Lvl )
+				Let aaZefirosEnch24Foot += Lvl
+			else
+				Let aaZefirosEnch24Foot := 0
+			endif
+			Let Lvl := aaZefirosEnch24Foot
+
+		elseif ( i == 25 )
+
+			if ( aaZefirosEnch25Foot > -Lvl )
+				Let aaZefirosEnch25Foot += Lvl
+			else
+				Let aaZefirosEnch25Foot := 0
+			endif
+			Let Lvl := aaZefirosEnch25Foot
+
+		elseif ( i == 26 )
+
+			if ( aaZefirosEnch26Foot > -Lvl )
+				Let aaZefirosEnch26Foot += Lvl
+			else
+				Let aaZefirosEnch26Foot := 0
+			endif
+			Let Lvl := aaZefirosEnch26Foot
+
+		elseif ( i == 27 )
+
+			if ( aaZefirosEnch27Foot > -Lvl )
+				Let aaZefirosEnch27Foot += Lvl
+			else
+				Let aaZefirosEnch27Foot := 0
+			endif
+			Let Lvl := aaZefirosEnch27Foot
+
+		elseif ( i == 28 )
+
+			if ( aaZefirosEnch28Foot > -Lvl )
+				Let aaZefirosEnch28Foot += Lvl
+			else
+				Let aaZefirosEnch28Foot := 0
+			endif
+			Let Lvl := aaZefirosEnch28Foot
+
+		elseif ( i == 29 )
+
+			if ( aaZefirosEnch29Foot > -Lvl )
+				Let aaZefirosEnch29Foot += Lvl
+			else
+				Let aaZefirosEnch29Foot := 0
+			endif
+			Let Lvl := aaZefirosEnch29Foot
+
+		elseif ( i == 30 )
+
+			if ( aaZefirosEnch30Foot > -Lvl )
+				Let aaZefirosEnch30Foot += Lvl
+			else
+				Let aaZefirosEnch30Foot := 0
+			endif
+			Let Lvl := aaZefirosEnch30Foot
+
+		elseif ( i == 31 )
+
+			if ( aaZefirosEnch31Foot > -Lvl )
+				Let aaZefirosEnch31Foot += Lvl
+			else
+				Let aaZefirosEnch31Foot := 0
+			endif
+			Let Lvl := aaZefirosEnch31Foot
+
+		elseif ( i == 32 )
+
+			if ( aaZefirosEnch32Foot > -Lvl )
+				Let aaZefirosEnch32Foot += Lvl
+			else
+				Let aaZefirosEnch32Foot := 0
+			endif
+			Let Lvl := aaZefirosEnch32Foot
+
+		elseif ( i == 33 )
+
+			if ( aaZefirosEnch33Foot > -Lvl )
+				Let aaZefirosEnch33Foot += Lvl
+			else
+				Let aaZefirosEnch33Foot := 0
+			endif
+			Let Lvl := aaZefirosEnch33Foot
+
+		elseif ( i == 34 )
+
+			if ( aaZefirosEnch34Foot > -Lvl )
+				Let aaZefirosEnch34Foot += Lvl
+			else
+				Let aaZefirosEnch34Foot := 0
+			endif
+			Let Lvl := aaZefirosEnch34Foot
+
+		elseif ( i == 35 )
+
+			if ( aaZefirosEnch35Foot > -Lvl )
+				Let aaZefirosEnch35Foot += Lvl
+			else
+				Let aaZefirosEnch35Foot := 0
+			endif
+			Let Lvl := aaZefirosEnch35Foot
+
+		elseif ( i == 36 )
+
+			if ( aaZefirosEnch36Foot > -Lvl )
+				Let aaZefirosEnch36Foot += Lvl
+			else
+				Let aaZefirosEnch36Foot := 0
+			endif
+			Let Lvl := aaZefirosEnch36Foot
+
+		elseif ( i == 37 )
+
+			if ( aaZefirosEnch37Foot > -Lvl )
+				Let aaZefirosEnch37Foot += Lvl
+			else
+				Let aaZefirosEnch37Foot := 0
+			endif
+			Let Lvl := aaZefirosEnch37Foot
+
+		elseif ( i == 38 )
+
+			if ( aaZefirosEnch38Foot > -Lvl )
+				Let aaZefirosEnch38Foot += Lvl
+			else
+				Let aaZefirosEnch38Foot := 0
+			endif
+			Let Lvl := aaZefirosEnch38Foot
+
+		elseif ( i == 39 )
+
+			if ( aaZefirosEnch39Foot > -Lvl )
+				Let aaZefirosEnch39Foot += Lvl
+			else
+				Let aaZefirosEnch39Foot := 0
+			endif
+			Let Lvl := aaZefirosEnch39Foot
+
+		endif
+
+	;-----------------------------------------------------------------------------
+	;Hand
+	;-----------------------------------------------------------------------------
+	elseif ( Mode == 2 )
+	;-----------------------------------------------------------------------------
+	
+		if ( i == 0 )
+
+			if ( aaZefirosEnch00Hand > -Lvl )
+				Let aaZefirosEnch00Hand += Lvl
+			else
+				Let aaZefirosEnch00Hand := 0
+			endif
+			Let Lvl := aaZefirosEnch00Hand
+
+		elseif ( i == 1 )
+
+			if ( aaZefirosEnch01Hand > -Lvl )
+				Let aaZefirosEnch01Hand += Lvl
+			else
+				Let aaZefirosEnch01Hand := 0
+			endif
+			Let Lvl := aaZefirosEnch01Hand
+
+		elseif ( i == 2 )
+
+			if ( aaZefirosEnch02Hand > -Lvl )
+				Let aaZefirosEnch02Hand += Lvl
+			else
+				Let aaZefirosEnch02Hand := 0
+			endif
+			Let Lvl := aaZefirosEnch02Hand
+
+		elseif ( i == 3 )
+
+			if ( aaZefirosEnch03Hand > -Lvl )
+				Let aaZefirosEnch03Hand += Lvl
+			else
+				Let aaZefirosEnch03Hand := 0
+			endif
+			Let Lvl := aaZefirosEnch03Hand
+
+		elseif ( i == 4 )
+
+			if ( aaZefirosEnch04Hand > -Lvl )
+				Let aaZefirosEnch04Hand += Lvl
+			else
+				Let aaZefirosEnch04Hand := 0
+			endif
+			Let Lvl := aaZefirosEnch04Hand
+
+		elseif ( i == 5 )
+
+			if ( aaZefirosEnch05Hand > -Lvl )
+				Let aaZefirosEnch05Hand += Lvl
+			else
+				Let aaZefirosEnch05Hand := 0
+			endif
+			Let Lvl := aaZefirosEnch05Hand
+
+		elseif ( i == 6 )
+
+			if ( aaZefirosEnch06Hand > -Lvl )
+				Let aaZefirosEnch06Hand += Lvl
+			else
+				Let aaZefirosEnch06Hand := 0
+			endif
+			Let Lvl := aaZefirosEnch06Hand
+
+		elseif ( i == 7 )
+
+			if ( aaZefirosEnch07Hand > -Lvl )
+				Let aaZefirosEnch07Hand += Lvl
+			else
+				Let aaZefirosEnch07Hand := 0
+			endif
+			Let Lvl := aaZefirosEnch07Hand
+
+		elseif ( i == 8 )
+
+			if ( aaZefirosEnch08Hand > -Lvl )
+				Let aaZefirosEnch08Hand += Lvl
+			else
+				Let aaZefirosEnch08Hand := 0
+			endif
+			Let Lvl := aaZefirosEnch08Hand
+
+		elseif ( i == 9 )
+
+			if ( aaZefirosEnch09Hand > -Lvl )
+				Let aaZefirosEnch09Hand += Lvl
+			else
+				Let aaZefirosEnch09Hand := 0
+			endif
+			Let Lvl := aaZefirosEnch09Hand
+
+		elseif ( i == 10 )
+
+			if ( aaZefirosEnch10Hand > -Lvl )
+				Let aaZefirosEnch10Hand += Lvl
+			else
+				Let aaZefirosEnch10Hand := 0
+			endif
+			Let Lvl := aaZefirosEnch10Hand
+
+		elseif ( i == 11 )
+
+			if ( aaZefirosEnch11Hand > -Lvl )
+				Let aaZefirosEnch11Hand += Lvl
+			else
+				Let aaZefirosEnch11Hand := 0
+			endif
+			Let Lvl := aaZefirosEnch11Hand
+
+		elseif ( i == 12 )
+
+			if ( aaZefirosEnch12Hand > -Lvl )
+				Let aaZefirosEnch12Hand += Lvl
+			else
+				Let aaZefirosEnch12Hand := 0
+			endif
+			Let Lvl := aaZefirosEnch12Hand
+
+		elseif ( i == 13 )
+
+			if ( aaZefirosEnch13Hand > -Lvl )
+				Let aaZefirosEnch13Hand += Lvl
+			else
+				Let aaZefirosEnch13Hand := 0
+			endif
+			Let Lvl := aaZefirosEnch13Hand
+
+		elseif ( i == 14 )
+
+			if ( aaZefirosEnch14Hand > -Lvl )
+				Let aaZefirosEnch14Hand += Lvl
+			else
+				Let aaZefirosEnch14Hand := 0
+			endif
+			Let Lvl := aaZefirosEnch14Hand
+
+		elseif ( i == 15 )
+
+			if ( aaZefirosEnch15Hand > -Lvl )
+				Let aaZefirosEnch15Hand += Lvl
+			else
+				Let aaZefirosEnch15Hand := 0
+			endif
+			Let Lvl := aaZefirosEnch15Hand
+
+		elseif ( i == 16 )
+
+			if ( aaZefirosEnch16Hand > -Lvl )
+				Let aaZefirosEnch16Hand += Lvl
+			else
+				Let aaZefirosEnch16Hand := 0
+			endif
+			Let Lvl := aaZefirosEnch16Hand
+
+		elseif ( i == 17 )
+
+			if ( aaZefirosEnch17Hand > -Lvl )
+				Let aaZefirosEnch17Hand += Lvl
+			else
+				Let aaZefirosEnch17Hand := 0
+			endif
+			Let Lvl := aaZefirosEnch17Hand
+
+		elseif ( i == 18 )
+
+			if ( aaZefirosEnch18Hand > -Lvl )
+				Let aaZefirosEnch18Hand += Lvl
+			else
+				Let aaZefirosEnch18Hand := 0
+			endif
+			Let Lvl := aaZefirosEnch18Hand
+
+		elseif ( i == 19 )
+
+			if ( aaZefirosEnch19Hand > -Lvl )
+				Let aaZefirosEnch19Hand += Lvl
+			else
+				Let aaZefirosEnch19Hand := 0
+			endif
+			Let Lvl := aaZefirosEnch19Hand
+
+		elseif ( i == 20 )
+
+			if ( aaZefirosEnch20Hand > -Lvl )
+				Let aaZefirosEnch20Hand += Lvl
+			else
+				Let aaZefirosEnch20Hand := 0
+			endif
+			Let Lvl := aaZefirosEnch20Hand
+
+		elseif ( i == 21 )
+
+			if ( aaZefirosEnch21Hand > -Lvl )
+				Let aaZefirosEnch21Hand += Lvl
+			else
+				Let aaZefirosEnch21Hand := 0
+			endif
+			Let Lvl := aaZefirosEnch21Hand
+
+		elseif ( i == 22 )
+
+			if ( aaZefirosEnch22Hand > -Lvl )
+				Let aaZefirosEnch22Hand += Lvl
+			else
+				Let aaZefirosEnch22Hand := 0
+			endif
+			Let Lvl := aaZefirosEnch22Hand
+
+		elseif ( i == 23 )
+
+			if ( aaZefirosEnch23Hand > -Lvl )
+				Let aaZefirosEnch23Hand += Lvl
+			else
+				Let aaZefirosEnch23Hand := 0
+			endif
+			Let Lvl := aaZefirosEnch23Hand
+
+		elseif ( i == 24 )
+
+			if ( aaZefirosEnch24Hand > -Lvl )
+				Let aaZefirosEnch24Hand += Lvl
+			else
+				Let aaZefirosEnch24Hand := 0
+			endif
+			Let Lvl := aaZefirosEnch24Hand
+
+		elseif ( i == 25 )
+
+			if ( aaZefirosEnch25Hand > -Lvl )
+				Let aaZefirosEnch25Hand += Lvl
+			else
+				Let aaZefirosEnch25Hand := 0
+			endif
+			Let Lvl := aaZefirosEnch25Hand
+
+		elseif ( i == 26 )
+
+			if ( aaZefirosEnch26Hand > -Lvl )
+				Let aaZefirosEnch26Hand += Lvl
+			else
+				Let aaZefirosEnch26Hand := 0
+			endif
+			Let Lvl := aaZefirosEnch26Hand
+
+		elseif ( i == 27 )
+
+			if ( aaZefirosEnch27Hand > -Lvl )
+				Let aaZefirosEnch27Hand += Lvl
+			else
+				Let aaZefirosEnch27Hand := 0
+			endif
+			Let Lvl := aaZefirosEnch27Hand
+
+		elseif ( i == 28 )
+
+			if ( aaZefirosEnch28Hand > -Lvl )
+				Let aaZefirosEnch28Hand += Lvl
+			else
+				Let aaZefirosEnch28Hand := 0
+			endif
+			Let Lvl := aaZefirosEnch28Hand
+
+		elseif ( i == 29 )
+
+			if ( aaZefirosEnch29Hand > -Lvl )
+				Let aaZefirosEnch29Hand += Lvl
+			else
+				Let aaZefirosEnch29Hand := 0
+			endif
+			Let Lvl := aaZefirosEnch29Hand
+
+		elseif ( i == 30 )
+
+			if ( aaZefirosEnch30Hand > -Lvl )
+				Let aaZefirosEnch30Hand += Lvl
+			else
+				Let aaZefirosEnch30Hand := 0
+			endif
+			Let Lvl := aaZefirosEnch30Hand
+
+		elseif ( i == 31 )
+
+			if ( aaZefirosEnch31Hand > -Lvl )
+				Let aaZefirosEnch31Hand += Lvl
+			else
+				Let aaZefirosEnch31Hand := 0
+			endif
+			Let Lvl := aaZefirosEnch31Hand
+
+		elseif ( i == 32 )
+
+			if ( aaZefirosEnch32Hand > -Lvl )
+				Let aaZefirosEnch32Hand += Lvl
+			else
+				Let aaZefirosEnch32Hand := 0
+			endif
+			Let Lvl := aaZefirosEnch32Hand
+
+		elseif ( i == 33 )
+
+			if ( aaZefirosEnch33Hand > -Lvl )
+				Let aaZefirosEnch33Hand += Lvl
+			else
+				Let aaZefirosEnch33Hand := 0
+			endif
+			Let Lvl := aaZefirosEnch33Hand
+
+		elseif ( i == 34 )
+
+			if ( aaZefirosEnch34Hand > -Lvl )
+				Let aaZefirosEnch34Hand += Lvl
+			else
+				Let aaZefirosEnch34Hand := 0
+			endif
+			Let Lvl := aaZefirosEnch34Hand
+
+		elseif ( i == 35 )
+
+			if ( aaZefirosEnch35Hand > -Lvl )
+				Let aaZefirosEnch35Hand += Lvl
+			else
+				Let aaZefirosEnch35Hand := 0
+			endif
+			Let Lvl := aaZefirosEnch35Hand
+
+		elseif ( i == 36 )
+
+			if ( aaZefirosEnch36Hand > -Lvl )
+				Let aaZefirosEnch36Hand += Lvl
+			else
+				Let aaZefirosEnch36Hand := 0
+			endif
+			Let Lvl := aaZefirosEnch36Hand
+
+		elseif ( i == 37 )
+
+			if ( aaZefirosEnch37Hand > -Lvl )
+				Let aaZefirosEnch37Hand += Lvl
+			else
+				Let aaZefirosEnch37Hand := 0
+			endif
+			Let Lvl := aaZefirosEnch37Hand
+
+		elseif ( i == 38 )
+
+			if ( aaZefirosEnch38Hand > -Lvl )
+				Let aaZefirosEnch38Hand += Lvl
+			else
+				Let aaZefirosEnch38Hand := 0
+			endif
+			Let Lvl := aaZefirosEnch38Hand
+
+		elseif ( i == 39 )
+
+			if ( aaZefirosEnch39Hand > -Lvl )
+				Let aaZefirosEnch39Hand += Lvl
+			else
+				Let aaZefirosEnch39Hand := 0
+			endif
+			Let Lvl := aaZefirosEnch39Hand
+
+		endif
+
+	;-----------------------------------------------------------------------------
+	;Head
+	;-----------------------------------------------------------------------------
+	elseif ( Mode == 3 )
+	;-----------------------------------------------------------------------------
+	
+		if ( i == 0 )
+
+			if ( aaZefirosEnch00Head > -Lvl )
+				Let aaZefirosEnch00Head += Lvl
+			else
+				Let aaZefirosEnch00Head := 0
+			endif
+			Let Lvl := aaZefirosEnch00Head
+
+		elseif ( i == 1 )
+
+			if ( aaZefirosEnch01Head > -Lvl )
+				Let aaZefirosEnch01Head += Lvl
+			else
+				Let aaZefirosEnch01Head := 0
+			endif
+			Let Lvl := aaZefirosEnch01Head
+
+		elseif ( i == 2 )
+
+			if ( aaZefirosEnch02Head > -Lvl )
+				Let aaZefirosEnch02Head += Lvl
+			else
+				Let aaZefirosEnch02Head := 0
+			endif
+			Let Lvl := aaZefirosEnch02Head
+
+		elseif ( i == 3 )
+
+			if ( aaZefirosEnch03Head > -Lvl )
+				Let aaZefirosEnch03Head += Lvl
+			else
+				Let aaZefirosEnch03Head := 0
+			endif
+			Let Lvl := aaZefirosEnch03Head
+
+		elseif ( i == 4 )
+
+			if ( aaZefirosEnch04Head > -Lvl )
+				Let aaZefirosEnch04Head += Lvl
+			else
+				Let aaZefirosEnch04Head := 0
+			endif
+			Let Lvl := aaZefirosEnch04Head
+
+		elseif ( i == 5 )
+
+			if ( aaZefirosEnch05Head > -Lvl )
+				Let aaZefirosEnch05Head += Lvl
+			else
+				Let aaZefirosEnch05Head := 0
+			endif
+			Let Lvl := aaZefirosEnch05Head
+
+		elseif ( i == 6 )
+
+			if ( aaZefirosEnch06Head > -Lvl )
+				Let aaZefirosEnch06Head += Lvl
+			else
+				Let aaZefirosEnch06Head := 0
+			endif
+			Let Lvl := aaZefirosEnch06Head
+
+		elseif ( i == 7 )
+
+			if ( aaZefirosEnch07Head > -Lvl )
+				Let aaZefirosEnch07Head += Lvl
+			else
+				Let aaZefirosEnch07Head := 0
+			endif
+			Let Lvl := aaZefirosEnch07Head
+
+		elseif ( i == 8 )
+
+			if ( aaZefirosEnch08Head > -Lvl )
+				Let aaZefirosEnch08Head += Lvl
+			else
+				Let aaZefirosEnch08Head := 0
+			endif
+			Let Lvl := aaZefirosEnch08Head
+
+		elseif ( i == 9 )
+
+			if ( aaZefirosEnch09Head > -Lvl )
+				Let aaZefirosEnch09Head += Lvl
+			else
+				Let aaZefirosEnch09Head := 0
+			endif
+			Let Lvl := aaZefirosEnch09Head
+
+		elseif ( i == 10 )
+
+			if ( aaZefirosEnch10Head > -Lvl )
+				Let aaZefirosEnch10Head += Lvl
+			else
+				Let aaZefirosEnch10Head := 0
+			endif
+			Let Lvl := aaZefirosEnch10Head
+
+		elseif ( i == 11 )
+
+			if ( aaZefirosEnch11Head > -Lvl )
+				Let aaZefirosEnch11Head += Lvl
+			else
+				Let aaZefirosEnch11Head := 0
+			endif
+			Let Lvl := aaZefirosEnch11Head
+
+		elseif ( i == 12 )
+
+			if ( aaZefirosEnch12Head > -Lvl )
+				Let aaZefirosEnch12Head += Lvl
+			else
+				Let aaZefirosEnch12Head := 0
+			endif
+			Let Lvl := aaZefirosEnch12Head
+
+		elseif ( i == 13 )
+
+			if ( aaZefirosEnch13Head > -Lvl )
+				Let aaZefirosEnch13Head += Lvl
+			else
+				Let aaZefirosEnch13Head := 0
+			endif
+			Let Lvl := aaZefirosEnch13Head
+
+		elseif ( i == 14 )
+
+			if ( aaZefirosEnch14Head > -Lvl )
+				Let aaZefirosEnch14Head += Lvl
+			else
+				Let aaZefirosEnch14Head := 0
+			endif
+			Let Lvl := aaZefirosEnch14Head
+
+		elseif ( i == 15 )
+
+			if ( aaZefirosEnch15Head > -Lvl )
+				Let aaZefirosEnch15Head += Lvl
+			else
+				Let aaZefirosEnch15Head := 0
+			endif
+			Let Lvl := aaZefirosEnch15Head
+
+		elseif ( i == 16 )
+
+			if ( aaZefirosEnch16Head > -Lvl )
+				Let aaZefirosEnch16Head += Lvl
+			else
+				Let aaZefirosEnch16Head := 0
+			endif
+			Let Lvl := aaZefirosEnch16Head
+
+		elseif ( i == 17 )
+
+			if ( aaZefirosEnch17Head > -Lvl )
+				Let aaZefirosEnch17Head += Lvl
+			else
+				Let aaZefirosEnch17Head := 0
+			endif
+			Let Lvl := aaZefirosEnch17Head
+
+		elseif ( i == 18 )
+
+			if ( aaZefirosEnch18Head > -Lvl )
+				Let aaZefirosEnch18Head += Lvl
+			else
+				Let aaZefirosEnch18Head := 0
+			endif
+			Let Lvl := aaZefirosEnch18Head
+
+		elseif ( i == 19 )
+
+			if ( aaZefirosEnch19Head > -Lvl )
+				Let aaZefirosEnch19Head += Lvl
+			else
+				Let aaZefirosEnch19Head := 0
+			endif
+			Let Lvl := aaZefirosEnch19Head
+
+		elseif ( i == 20 )
+
+			if ( aaZefirosEnch20Head > -Lvl )
+				Let aaZefirosEnch20Head += Lvl
+			else
+				Let aaZefirosEnch20Head := 0
+			endif
+			Let Lvl := aaZefirosEnch20Head
+
+		elseif ( i == 21 )
+
+			if ( aaZefirosEnch21Head > -Lvl )
+				Let aaZefirosEnch21Head += Lvl
+			else
+				Let aaZefirosEnch21Head := 0
+			endif
+			Let Lvl := aaZefirosEnch21Head
+
+		elseif ( i == 22 )
+
+			if ( aaZefirosEnch22Head > -Lvl )
+				Let aaZefirosEnch22Head += Lvl
+			else
+				Let aaZefirosEnch22Head := 0
+			endif
+			Let Lvl := aaZefirosEnch22Head
+
+		elseif ( i == 23 )
+
+			if ( aaZefirosEnch23Head > -Lvl )
+				Let aaZefirosEnch23Head += Lvl
+			else
+				Let aaZefirosEnch23Head := 0
+			endif
+			Let Lvl := aaZefirosEnch23Head
+
+		elseif ( i == 24 )
+
+			if ( aaZefirosEnch24Head > -Lvl )
+				Let aaZefirosEnch24Head += Lvl
+			else
+				Let aaZefirosEnch24Head := 0
+			endif
+			Let Lvl := aaZefirosEnch24Head
+
+		elseif ( i == 25 )
+
+			if ( aaZefirosEnch25Head > -Lvl )
+				Let aaZefirosEnch25Head += Lvl
+			else
+				Let aaZefirosEnch25Head := 0
+			endif
+			Let Lvl := aaZefirosEnch25Head
+
+		elseif ( i == 26 )
+
+			if ( aaZefirosEnch26Head > -Lvl )
+				Let aaZefirosEnch26Head += Lvl
+			else
+				Let aaZefirosEnch26Head := 0
+			endif
+			Let Lvl := aaZefirosEnch26Head
+
+		elseif ( i == 27 )
+
+			if ( aaZefirosEnch27Head > -Lvl )
+				Let aaZefirosEnch27Head += Lvl
+			else
+				Let aaZefirosEnch27Head := 0
+			endif
+			Let Lvl := aaZefirosEnch27Head
+
+		elseif ( i == 28 )
+
+			if ( aaZefirosEnch28Head > -Lvl )
+				Let aaZefirosEnch28Head += Lvl
+			else
+				Let aaZefirosEnch28Head := 0
+			endif
+			Let Lvl := aaZefirosEnch28Head
+
+		elseif ( i == 29 )
+
+			if ( aaZefirosEnch29Head > -Lvl )
+				Let aaZefirosEnch29Head += Lvl
+			else
+				Let aaZefirosEnch29Head := 0
+			endif
+			Let Lvl := aaZefirosEnch29Head
+
+		elseif ( i == 30 )
+
+			if ( aaZefirosEnch30Head > -Lvl )
+				Let aaZefirosEnch30Head += Lvl
+			else
+				Let aaZefirosEnch30Head := 0
+			endif
+			Let Lvl := aaZefirosEnch30Head
+
+		elseif ( i == 31 )
+
+			if ( aaZefirosEnch31Head > -Lvl )
+				Let aaZefirosEnch31Head += Lvl
+			else
+				Let aaZefirosEnch31Head := 0
+			endif
+			Let Lvl := aaZefirosEnch31Head
+
+		elseif ( i == 32 )
+
+			if ( aaZefirosEnch32Head > -Lvl )
+				Let aaZefirosEnch32Head += Lvl
+			else
+				Let aaZefirosEnch32Head := 0
+			endif
+			Let Lvl := aaZefirosEnch32Head
+
+		elseif ( i == 33 )
+
+			if ( aaZefirosEnch33Head > -Lvl )
+				Let aaZefirosEnch33Head += Lvl
+			else
+				Let aaZefirosEnch33Head := 0
+			endif
+			Let Lvl := aaZefirosEnch33Head
+
+		elseif ( i == 34 )
+
+			if ( aaZefirosEnch34Head > -Lvl )
+				Let aaZefirosEnch34Head += Lvl
+			else
+				Let aaZefirosEnch34Head := 0
+			endif
+			Let Lvl := aaZefirosEnch34Head
+
+		elseif ( i == 35 )
+
+			if ( aaZefirosEnch35Head > -Lvl )
+				Let aaZefirosEnch35Head += Lvl
+			else
+				Let aaZefirosEnch35Head := 0
+			endif
+			Let Lvl := aaZefirosEnch35Head
+
+		elseif ( i == 36 )
+
+			if ( aaZefirosEnch36Head > -Lvl )
+				Let aaZefirosEnch36Head += Lvl
+			else
+				Let aaZefirosEnch36Head := 0
+			endif
+			Let Lvl := aaZefirosEnch36Head
+
+		elseif ( i == 37 )
+
+			if ( aaZefirosEnch37Head > -Lvl )
+				Let aaZefirosEnch37Head += Lvl
+			else
+				Let aaZefirosEnch37Head := 0
+			endif
+			Let Lvl := aaZefirosEnch37Head
+
+		elseif ( i == 38 )
+
+			if ( aaZefirosEnch38Head > -Lvl )
+				Let aaZefirosEnch38Head += Lvl
+			else
+				Let aaZefirosEnch38Head := 0
+			endif
+			Let Lvl := aaZefirosEnch38Head
+
+		elseif ( i == 39 )
+
+			if ( aaZefirosEnch39Head > -Lvl )
+				Let aaZefirosEnch39Head += Lvl
+			else
+				Let aaZefirosEnch39Head := 0
+			endif
+			Let Lvl := aaZefirosEnch39Head
+
+		endif
+
+	;-----------------------------------------------------------------------------
+	;Legs
+	;-----------------------------------------------------------------------------
+	elseif ( Mode == 4 )
+	;-----------------------------------------------------------------------------
+	
+		if ( i == 0 )
+
+			if ( aaZefirosEnch00Legs > -Lvl )
+				Let aaZefirosEnch00Legs += Lvl
+			else
+				Let aaZefirosEnch00Legs := 0
+			endif
+			Let Lvl := aaZefirosEnch00Legs
+
+		elseif ( i == 1 )
+
+			if ( aaZefirosEnch01Legs > -Lvl )
+				Let aaZefirosEnch01Legs += Lvl
+			else
+				Let aaZefirosEnch01Legs := 0
+			endif
+			Let Lvl := aaZefirosEnch01Legs
+
+		elseif ( i == 2 )
+
+			if ( aaZefirosEnch02Legs > -Lvl )
+				Let aaZefirosEnch02Legs += Lvl
+			else
+				Let aaZefirosEnch02Legs := 0
+			endif
+			Let Lvl := aaZefirosEnch02Legs
+
+		elseif ( i == 3 )
+
+			if ( aaZefirosEnch03Legs > -Lvl )
+				Let aaZefirosEnch03Legs += Lvl
+			else
+				Let aaZefirosEnch03Legs := 0
+			endif
+			Let Lvl := aaZefirosEnch03Legs
+
+		elseif ( i == 4 )
+
+			if ( aaZefirosEnch04Legs > -Lvl )
+				Let aaZefirosEnch04Legs += Lvl
+			else
+				Let aaZefirosEnch04Legs := 0
+			endif
+			Let Lvl := aaZefirosEnch04Legs
+
+		elseif ( i == 5 )
+
+			if ( aaZefirosEnch05Legs > -Lvl )
+				Let aaZefirosEnch05Legs += Lvl
+			else
+				Let aaZefirosEnch05Legs := 0
+			endif
+			Let Lvl := aaZefirosEnch05Legs
+
+		elseif ( i == 6 )
+
+			if ( aaZefirosEnch06Legs > -Lvl )
+				Let aaZefirosEnch06Legs += Lvl
+			else
+				Let aaZefirosEnch06Legs := 0
+			endif
+			Let Lvl := aaZefirosEnch06Legs
+
+		elseif ( i == 7 )
+
+			if ( aaZefirosEnch07Legs > -Lvl )
+				Let aaZefirosEnch07Legs += Lvl
+			else
+				Let aaZefirosEnch07Legs := 0
+			endif
+			Let Lvl := aaZefirosEnch07Legs
+
+		elseif ( i == 8 )
+
+			if ( aaZefirosEnch08Legs > -Lvl )
+				Let aaZefirosEnch08Legs += Lvl
+			else
+				Let aaZefirosEnch08Legs := 0
+			endif
+			Let Lvl := aaZefirosEnch08Legs
+
+		elseif ( i == 9 )
+
+			if ( aaZefirosEnch09Legs > -Lvl )
+				Let aaZefirosEnch09Legs += Lvl
+			else
+				Let aaZefirosEnch09Legs := 0
+			endif
+			Let Lvl := aaZefirosEnch09Legs
+
+		elseif ( i == 10 )
+
+			if ( aaZefirosEnch10Legs > -Lvl )
+				Let aaZefirosEnch10Legs += Lvl
+			else
+				Let aaZefirosEnch10Legs := 0
+			endif
+			Let Lvl := aaZefirosEnch10Legs
+
+		elseif ( i == 11 )
+
+			if ( aaZefirosEnch11Legs > -Lvl )
+				Let aaZefirosEnch11Legs += Lvl
+			else
+				Let aaZefirosEnch11Legs := 0
+			endif
+			Let Lvl := aaZefirosEnch11Legs
+
+		elseif ( i == 12 )
+
+			if ( aaZefirosEnch12Legs > -Lvl )
+				Let aaZefirosEnch12Legs += Lvl
+			else
+				Let aaZefirosEnch12Legs := 0
+			endif
+			Let Lvl := aaZefirosEnch12Legs
+
+		elseif ( i == 13 )
+
+			if ( aaZefirosEnch13Legs > -Lvl )
+				Let aaZefirosEnch13Legs += Lvl
+			else
+				Let aaZefirosEnch13Legs := 0
+			endif
+			Let Lvl := aaZefirosEnch13Legs
+
+		elseif ( i == 14 )
+
+			if ( aaZefirosEnch14Legs > -Lvl )
+				Let aaZefirosEnch14Legs += Lvl
+			else
+				Let aaZefirosEnch14Legs := 0
+			endif
+			Let Lvl := aaZefirosEnch14Legs
+
+		elseif ( i == 15 )
+
+			if ( aaZefirosEnch15Legs > -Lvl )
+				Let aaZefirosEnch15Legs += Lvl
+			else
+				Let aaZefirosEnch15Legs := 0
+			endif
+			Let Lvl := aaZefirosEnch15Legs
+
+		elseif ( i == 16 )
+
+			if ( aaZefirosEnch16Legs > -Lvl )
+				Let aaZefirosEnch16Legs += Lvl
+			else
+				Let aaZefirosEnch16Legs := 0
+			endif
+			Let Lvl := aaZefirosEnch16Legs
+
+		elseif ( i == 17 )
+
+			if ( aaZefirosEnch17Legs > -Lvl )
+				Let aaZefirosEnch17Legs += Lvl
+			else
+				Let aaZefirosEnch17Legs := 0
+			endif
+			Let Lvl := aaZefirosEnch17Legs
+
+		elseif ( i == 18 )
+
+			if ( aaZefirosEnch18Legs > -Lvl )
+				Let aaZefirosEnch18Legs += Lvl
+			else
+				Let aaZefirosEnch18Legs := 0
+			endif
+			Let Lvl := aaZefirosEnch18Legs
+
+		elseif ( i == 19 )
+
+			if ( aaZefirosEnch19Legs > -Lvl )
+				Let aaZefirosEnch19Legs += Lvl
+			else
+				Let aaZefirosEnch19Legs := 0
+			endif
+			Let Lvl := aaZefirosEnch19Legs
+
+		elseif ( i == 20 )
+
+			if ( aaZefirosEnch20Legs > -Lvl )
+				Let aaZefirosEnch20Legs += Lvl
+			else
+				Let aaZefirosEnch20Legs := 0
+			endif
+			Let Lvl := aaZefirosEnch20Legs
+
+		elseif ( i == 21 )
+
+			if ( aaZefirosEnch21Legs > -Lvl )
+				Let aaZefirosEnch21Legs += Lvl
+			else
+				Let aaZefirosEnch21Legs := 0
+			endif
+			Let Lvl := aaZefirosEnch21Legs
+
+		elseif ( i == 22 )
+
+			if ( aaZefirosEnch22Legs > -Lvl )
+				Let aaZefirosEnch22Legs += Lvl
+			else
+				Let aaZefirosEnch22Legs := 0
+			endif
+			Let Lvl := aaZefirosEnch22Legs
+
+		elseif ( i == 23 )
+
+			if ( aaZefirosEnch23Legs > -Lvl )
+				Let aaZefirosEnch23Legs += Lvl
+			else
+				Let aaZefirosEnch23Legs := 0
+			endif
+			Let Lvl := aaZefirosEnch23Legs
+
+		elseif ( i == 24 )
+
+			if ( aaZefirosEnch24Legs > -Lvl )
+				Let aaZefirosEnch24Legs += Lvl
+			else
+				Let aaZefirosEnch24Legs := 0
+			endif
+			Let Lvl := aaZefirosEnch24Legs
+
+		elseif ( i == 25 )
+
+			if ( aaZefirosEnch25Legs > -Lvl )
+				Let aaZefirosEnch25Legs += Lvl
+			else
+				Let aaZefirosEnch25Legs := 0
+			endif
+			Let Lvl := aaZefirosEnch25Legs
+
+		elseif ( i == 26 )
+
+			if ( aaZefirosEnch26Legs > -Lvl )
+				Let aaZefirosEnch26Legs += Lvl
+			else
+				Let aaZefirosEnch26Legs := 0
+			endif
+			Let Lvl := aaZefirosEnch26Legs
+
+		elseif ( i == 27 )
+
+			if ( aaZefirosEnch27Legs > -Lvl )
+				Let aaZefirosEnch27Legs += Lvl
+			else
+				Let aaZefirosEnch27Legs := 0
+			endif
+			Let Lvl := aaZefirosEnch27Legs
+
+		elseif ( i == 28 )
+
+			if ( aaZefirosEnch28Legs > -Lvl )
+				Let aaZefirosEnch28Legs += Lvl
+			else
+				Let aaZefirosEnch28Legs := 0
+			endif
+			Let Lvl := aaZefirosEnch28Legs
+
+		elseif ( i == 29 )
+
+			if ( aaZefirosEnch29Legs > -Lvl )
+				Let aaZefirosEnch29Legs += Lvl
+			else
+				Let aaZefirosEnch29Legs := 0
+			endif
+			Let Lvl := aaZefirosEnch29Legs
+
+		elseif ( i == 30 )
+
+			if ( aaZefirosEnch30Legs > -Lvl )
+				Let aaZefirosEnch30Legs += Lvl
+			else
+				Let aaZefirosEnch30Legs := 0
+			endif
+			Let Lvl := aaZefirosEnch30Legs
+
+		elseif ( i == 31 )
+
+			if ( aaZefirosEnch31Legs > -Lvl )
+				Let aaZefirosEnch31Legs += Lvl
+			else
+				Let aaZefirosEnch31Legs := 0
+			endif
+			Let Lvl := aaZefirosEnch31Legs
+
+		elseif ( i == 32 )
+
+			if ( aaZefirosEnch32Legs > -Lvl )
+				Let aaZefirosEnch32Legs += Lvl
+			else
+				Let aaZefirosEnch32Legs := 0
+			endif
+			Let Lvl := aaZefirosEnch32Legs
+
+		elseif ( i == 33 )
+
+			if ( aaZefirosEnch33Legs > -Lvl )
+				Let aaZefirosEnch33Legs += Lvl
+			else
+				Let aaZefirosEnch33Legs := 0
+			endif
+			Let Lvl := aaZefirosEnch33Legs
+
+		elseif ( i == 34 )
+
+			if ( aaZefirosEnch34Legs > -Lvl )
+				Let aaZefirosEnch34Legs += Lvl
+			else
+				Let aaZefirosEnch34Legs := 0
+			endif
+			Let Lvl := aaZefirosEnch34Legs
+
+		elseif ( i == 35 )
+
+			if ( aaZefirosEnch35Legs > -Lvl )
+				Let aaZefirosEnch35Legs += Lvl
+			else
+				Let aaZefirosEnch35Legs := 0
+			endif
+			Let Lvl := aaZefirosEnch35Legs
+
+		elseif ( i == 36 )
+
+			if ( aaZefirosEnch36Legs > -Lvl )
+				Let aaZefirosEnch36Legs += Lvl
+			else
+				Let aaZefirosEnch36Legs := 0
+			endif
+			Let Lvl := aaZefirosEnch36Legs
+
+		elseif ( i == 37 )
+
+			if ( aaZefirosEnch37Legs > -Lvl )
+				Let aaZefirosEnch37Legs += Lvl
+			else
+				Let aaZefirosEnch37Legs := 0
+			endif
+			Let Lvl := aaZefirosEnch37Legs
+
+		elseif ( i == 38 )
+
+			if ( aaZefirosEnch38Legs > -Lvl )
+				Let aaZefirosEnch38Legs += Lvl
+			else
+				Let aaZefirosEnch38Legs := 0
+			endif
+			Let Lvl := aaZefirosEnch38Legs
+
+		elseif ( i == 39 )
+
+			if ( aaZefirosEnch39Legs > -Lvl )
+				Let aaZefirosEnch39Legs += Lvl
+			else
+				Let aaZefirosEnch39Legs := 0
+			endif
+			Let Lvl := aaZefirosEnch39Legs
+
+		endif
+
+	;-----------------------------------------------------------------------------
+	;Shld
+	;-----------------------------------------------------------------------------
+	elseif ( Mode == 5 )
+	;-----------------------------------------------------------------------------
+	
+		if ( i == 0 )
+
+			if ( aaZefirosEnch00Shld > -Lvl )
+				Let aaZefirosEnch00Shld += Lvl
+			else
+				Let aaZefirosEnch00Shld := 0
+			endif
+			Let Lvl := aaZefirosEnch00Shld
+
+		elseif ( i == 1 )
+
+			if ( aaZefirosEnch01Shld > -Lvl )
+				Let aaZefirosEnch01Shld += Lvl
+			else
+				Let aaZefirosEnch01Shld := 0
+			endif
+			Let Lvl := aaZefirosEnch01Shld
+
+		elseif ( i == 2 )
+
+			if ( aaZefirosEnch02Shld > -Lvl )
+				Let aaZefirosEnch02Shld += Lvl
+			else
+				Let aaZefirosEnch02Shld := 0
+			endif
+			Let Lvl := aaZefirosEnch02Shld
+
+		elseif ( i == 3 )
+
+			if ( aaZefirosEnch03Shld > -Lvl )
+				Let aaZefirosEnch03Shld += Lvl
+			else
+				Let aaZefirosEnch03Shld := 0
+			endif
+			Let Lvl := aaZefirosEnch03Shld
+
+		elseif ( i == 4 )
+
+			if ( aaZefirosEnch04Shld > -Lvl )
+				Let aaZefirosEnch04Shld += Lvl
+			else
+				Let aaZefirosEnch04Shld := 0
+			endif
+			Let Lvl := aaZefirosEnch04Shld
+
+		elseif ( i == 5 )
+
+			if ( aaZefirosEnch05Shld > -Lvl )
+				Let aaZefirosEnch05Shld += Lvl
+			else
+				Let aaZefirosEnch05Shld := 0
+			endif
+			Let Lvl := aaZefirosEnch05Shld
+
+		elseif ( i == 6 )
+
+			if ( aaZefirosEnch06Shld > -Lvl )
+				Let aaZefirosEnch06Shld += Lvl
+			else
+				Let aaZefirosEnch06Shld := 0
+			endif
+			Let Lvl := aaZefirosEnch06Shld
+
+		elseif ( i == 7 )
+
+			if ( aaZefirosEnch07Shld > -Lvl )
+				Let aaZefirosEnch07Shld += Lvl
+			else
+				Let aaZefirosEnch07Shld := 0
+			endif
+			Let Lvl := aaZefirosEnch07Shld
+
+		elseif ( i == 8 )
+
+			if ( aaZefirosEnch08Shld > -Lvl )
+				Let aaZefirosEnch08Shld += Lvl
+			else
+				Let aaZefirosEnch08Shld := 0
+			endif
+			Let Lvl := aaZefirosEnch08Shld
+
+		elseif ( i == 9 )
+
+			if ( aaZefirosEnch09Shld > -Lvl )
+				Let aaZefirosEnch09Shld += Lvl
+			else
+				Let aaZefirosEnch09Shld := 0
+			endif
+			Let Lvl := aaZefirosEnch09Shld
+
+		elseif ( i == 10 )
+
+			if ( aaZefirosEnch10Shld > -Lvl )
+				Let aaZefirosEnch10Shld += Lvl
+			else
+				Let aaZefirosEnch10Shld := 0
+			endif
+			Let Lvl := aaZefirosEnch10Shld
+
+		elseif ( i == 11 )
+
+			if ( aaZefirosEnch11Shld > -Lvl )
+				Let aaZefirosEnch11Shld += Lvl
+			else
+				Let aaZefirosEnch11Shld := 0
+			endif
+			Let Lvl := aaZefirosEnch11Shld
+
+		elseif ( i == 12 )
+
+			if ( aaZefirosEnch12Shld > -Lvl )
+				Let aaZefirosEnch12Shld += Lvl
+			else
+				Let aaZefirosEnch12Shld := 0
+			endif
+			Let Lvl := aaZefirosEnch12Shld
+
+		elseif ( i == 13 )
+
+			if ( aaZefirosEnch13Shld > -Lvl )
+				Let aaZefirosEnch13Shld += Lvl
+			else
+				Let aaZefirosEnch13Shld := 0
+			endif
+			Let Lvl := aaZefirosEnch13Shld
+
+		elseif ( i == 14 )
+
+			if ( aaZefirosEnch14Shld > -Lvl )
+				Let aaZefirosEnch14Shld += Lvl
+			else
+				Let aaZefirosEnch14Shld := 0
+			endif
+			Let Lvl := aaZefirosEnch14Shld
+
+		elseif ( i == 15 )
+
+			if ( aaZefirosEnch15Shld > -Lvl )
+				Let aaZefirosEnch15Shld += Lvl
+			else
+				Let aaZefirosEnch15Shld := 0
+			endif
+			Let Lvl := aaZefirosEnch15Shld
+
+		elseif ( i == 16 )
+
+			if ( aaZefirosEnch16Shld > -Lvl )
+				Let aaZefirosEnch16Shld += Lvl
+			else
+				Let aaZefirosEnch16Shld := 0
+			endif
+			Let Lvl := aaZefirosEnch16Shld
+
+		elseif ( i == 17 )
+
+			if ( aaZefirosEnch17Shld > -Lvl )
+				Let aaZefirosEnch17Shld += Lvl
+			else
+				Let aaZefirosEnch17Shld := 0
+			endif
+			Let Lvl := aaZefirosEnch17Shld
+
+		elseif ( i == 18 )
+
+			if ( aaZefirosEnch18Shld > -Lvl )
+				Let aaZefirosEnch18Shld += Lvl
+			else
+				Let aaZefirosEnch18Shld := 0
+			endif
+			Let Lvl := aaZefirosEnch18Shld
+
+		elseif ( i == 19 )
+
+			if ( aaZefirosEnch19Shld > -Lvl )
+				Let aaZefirosEnch19Shld += Lvl
+			else
+				Let aaZefirosEnch19Shld := 0
+			endif
+			Let Lvl := aaZefirosEnch19Shld
+
+		elseif ( i == 20 )
+
+			if ( aaZefirosEnch20Shld > -Lvl )
+				Let aaZefirosEnch20Shld += Lvl
+			else
+				Let aaZefirosEnch20Shld := 0
+			endif
+			Let Lvl := aaZefirosEnch20Shld
+
+		elseif ( i == 21 )
+
+			if ( aaZefirosEnch21Shld > -Lvl )
+				Let aaZefirosEnch21Shld += Lvl
+			else
+				Let aaZefirosEnch21Shld := 0
+			endif
+			Let Lvl := aaZefirosEnch21Shld
+
+		elseif ( i == 22 )
+
+			if ( aaZefirosEnch22Shld > -Lvl )
+				Let aaZefirosEnch22Shld += Lvl
+			else
+				Let aaZefirosEnch22Shld := 0
+			endif
+			Let Lvl := aaZefirosEnch22Shld
+
+		elseif ( i == 23 )
+
+			if ( aaZefirosEnch23Shld > -Lvl )
+				Let aaZefirosEnch23Shld += Lvl
+			else
+				Let aaZefirosEnch23Shld := 0
+			endif
+			Let Lvl := aaZefirosEnch23Shld
+
+		elseif ( i == 24 )
+
+			if ( aaZefirosEnch24Shld > -Lvl )
+				Let aaZefirosEnch24Shld += Lvl
+			else
+				Let aaZefirosEnch24Shld := 0
+			endif
+			Let Lvl := aaZefirosEnch24Shld
+
+		elseif ( i == 25 )
+
+			if ( aaZefirosEnch25Shld > -Lvl )
+				Let aaZefirosEnch25Shld += Lvl
+			else
+				Let aaZefirosEnch25Shld := 0
+			endif
+			Let Lvl := aaZefirosEnch25Shld
+
+		elseif ( i == 26 )
+
+			if ( aaZefirosEnch26Shld > -Lvl )
+				Let aaZefirosEnch26Shld += Lvl
+			else
+				Let aaZefirosEnch26Shld := 0
+			endif
+			Let Lvl := aaZefirosEnch26Shld
+
+		elseif ( i == 27 )
+
+			if ( aaZefirosEnch27Shld > -Lvl )
+				Let aaZefirosEnch27Shld += Lvl
+			else
+				Let aaZefirosEnch27Shld := 0
+			endif
+			Let Lvl := aaZefirosEnch27Shld
+
+		elseif ( i == 28 )
+
+			if ( aaZefirosEnch28Shld > -Lvl )
+				Let aaZefirosEnch28Shld += Lvl
+			else
+				Let aaZefirosEnch28Shld := 0
+			endif
+			Let Lvl := aaZefirosEnch28Shld
+
+		elseif ( i == 29 )
+
+			if ( aaZefirosEnch29Shld > -Lvl )
+				Let aaZefirosEnch29Shld += Lvl
+			else
+				Let aaZefirosEnch29Shld := 0
+			endif
+			Let Lvl := aaZefirosEnch29Shld
+
+		elseif ( i == 30 )
+
+			if ( aaZefirosEnch30Shld > -Lvl )
+				Let aaZefirosEnch30Shld += Lvl
+			else
+				Let aaZefirosEnch30Shld := 0
+			endif
+			Let Lvl := aaZefirosEnch30Shld
+
+		elseif ( i == 31 )
+
+			if ( aaZefirosEnch31Shld > -Lvl )
+				Let aaZefirosEnch31Shld += Lvl
+			else
+				Let aaZefirosEnch31Shld := 0
+			endif
+			Let Lvl := aaZefirosEnch31Shld
+
+		elseif ( i == 32 )
+
+			if ( aaZefirosEnch32Shld > -Lvl )
+				Let aaZefirosEnch32Shld += Lvl
+			else
+				Let aaZefirosEnch32Shld := 0
+			endif
+			Let Lvl := aaZefirosEnch32Shld
+
+		elseif ( i == 33 )
+
+			if ( aaZefirosEnch33Shld > -Lvl )
+				Let aaZefirosEnch33Shld += Lvl
+			else
+				Let aaZefirosEnch33Shld := 0
+			endif
+			Let Lvl := aaZefirosEnch33Shld
+
+		elseif ( i == 34 )
+
+			if ( aaZefirosEnch34Shld > -Lvl )
+				Let aaZefirosEnch34Shld += Lvl
+			else
+				Let aaZefirosEnch34Shld := 0
+			endif
+			Let Lvl := aaZefirosEnch34Shld
+
+		elseif ( i == 35 )
+
+			if ( aaZefirosEnch35Shld > -Lvl )
+				Let aaZefirosEnch35Shld += Lvl
+			else
+				Let aaZefirosEnch35Shld := 0
+			endif
+			Let Lvl := aaZefirosEnch35Shld
+
+		elseif ( i == 36 )
+
+			if ( aaZefirosEnch36Shld > -Lvl )
+				Let aaZefirosEnch36Shld += Lvl
+			else
+				Let aaZefirosEnch36Shld := 0
+			endif
+			Let Lvl := aaZefirosEnch36Shld
+
+		elseif ( i == 37 )
+
+			if ( aaZefirosEnch37Shld > -Lvl )
+				Let aaZefirosEnch37Shld += Lvl
+			else
+				Let aaZefirosEnch37Shld := 0
+			endif
+			Let Lvl := aaZefirosEnch37Shld
+
+		elseif ( i == 38 )
+
+			if ( aaZefirosEnch38Shld > -Lvl )
+				Let aaZefirosEnch38Shld += Lvl
+			else
+				Let aaZefirosEnch38Shld := 0
+			endif
+			Let Lvl := aaZefirosEnch38Shld
+
+		elseif ( i == 39 )
+
+			if ( aaZefirosEnch39Shld > -Lvl )
+				Let aaZefirosEnch39Shld += Lvl
+			else
+				Let aaZefirosEnch39Shld := 0
+			endif
+			Let Lvl := aaZefirosEnch39Shld
+
+		endif
+
+	;-----------------------------------------------------------------------------
+	endif ;( -1 <= Mode <= 5 )
+	;-----------------------------------------------------------------------------
+
+
+	SetFunctionValue Lvl
+	Return
+;-----------------------------------------------------------------------------
+end ;Function { Mode, Lvl, i }
+;-----------------------------------------------------------------------------

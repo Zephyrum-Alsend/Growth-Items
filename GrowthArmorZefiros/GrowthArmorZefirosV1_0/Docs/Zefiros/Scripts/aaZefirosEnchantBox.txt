@@ -1,0 +1,142 @@
+scn aaZefirosEnchantBox
+
+;Main script
+;-----------------------------------------------------------------------------
+;aaZefirosManager
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;aaZefirosGetEffectCode
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;aaZefirosActvEnchBody
+;aaZefirosActvEnchFoot
+;aaZefirosActvEnchHand
+;aaZefirosActvEnchHead
+;aaZefirosActvEnchLegs
+;aaZefirosActvEnchShld
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;Given an item and an active enchantment index, display a message box 
+;containing the item's name, active enchantment name, and all effects and
+;their statistics.
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+ref Item
+short Actv
+
+ref Ench
+string_var Msg
+array_var Code
+short Count
+short i
+short Num
+;-----------------------------------------------------------------------------
+
+;-----------------------------------------------------------------------------
+begin Function { Item, Actv }
+;-----------------------------------------------------------------------------
+
+	Let Ench := GetEnchantment Item
+
+	Let Msg := $Item
+	Let Msg += ":%rActive enchantment: "
+
+	;-----------------------------------------------------------------------------
+	;Convert the codes for the active enchantment into a string
+	;-----------------------------------------------------------------------------
+	Let Code := Call aaZefirosGetEffectCode Actv
+	if eval( Code[1] == 256 )
+
+		Let i := Code[0]
+		Let Msg += ( GetMagicEffectNameC i )
+
+	else
+
+		Let i := Code[1]
+		Let Msg += "Fortify " + ( ActorValueToStringC i )
+
+	endif
+
+
+	;-----------------------------------------------------------------------------
+	;Append each effect
+	;-----------------------------------------------------------------------------
+	Let Count := GetMagicItemEffectCount Ench
+	Let i := 0
+	while ( i < Count )
+
+		;Name
+		Let Msg += "%r%r" + ( GetNthEffectItemName Ench i )
+
+		;Range
+		Let Num := GetNthEffectItemRange Ench i
+		if ( Num == 0 )
+
+			Let Msg += " (Self):%r"
+
+		elseif ( Num == 1 )
+
+			Let Msg += " (Touch):%r"
+			
+		elseif ( Num == 2 )
+
+			Let Msg += " (Target):%r"
+			
+		endif
+
+		;Magnitude
+		Let Num := GetNthEffectItemMagnitude Ench i
+		if ( 0 < Num )
+
+			Let Msg += $Num + " pts	"
+
+		endif
+
+		;Area
+		Let Num := GetNthEffectItemArea Ench i
+		if ( 0 < Num )
+
+			Let Msg += $Num + " ft	"
+
+		endif
+
+		;Duration
+		Let Num := GetNthEffectItemDuration Ench i
+		if ( 0 < Num )
+
+			Let Msg += $Num + " sec"
+
+		endif
+
+		Let i += 1
+	loop
+
+
+	;-----------------------------------------------------------------------------
+	;Display
+	;-----------------------------------------------------------------------------
+	;MessageBox cannot handle very large strings
+	MessageBoxEX "%z" Msg
+
+	
+	sv_Destruct Msg
+	Return
+;-----------------------------------------------------------------------------
+end ;Function { Item, Actv }
+;-----------------------------------------------------------------------------

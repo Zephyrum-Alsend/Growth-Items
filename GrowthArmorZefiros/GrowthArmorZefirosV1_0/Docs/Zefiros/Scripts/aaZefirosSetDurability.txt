@@ -32,8 +32,8 @@ scn aaZefirosSetDurability
 ;Parameters
 ;-----------------------------------------------------------------------------
 ref Container
-array_var Items
 array_var Dura
+array_var Items
 
 ref Val
 array_var Stack

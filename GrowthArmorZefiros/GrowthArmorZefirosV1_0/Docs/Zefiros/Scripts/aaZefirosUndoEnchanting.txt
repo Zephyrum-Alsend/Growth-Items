@@ -1,0 +1,86 @@
+scn aaZefirosUndoEnchanting
+
+;Main script
+;-----------------------------------------------------------------------------
+;aaZefirosManager
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;aaZefirosFlavorBox
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;aaZefirosFlagEnchantOnce
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;Given all the objects related to a player enchanting, undo it completely.
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+ref SoulGem
+short SoulLevel
+ref BaseItem
+ref EnchItem
+
+array_var Stack
+ref Item
+;-----------------------------------------------------------------------------
+
+
+
+;-----------------------------------------------------------------------------
+begin Function { SoulGem, SoulLevel, BaseItem, EnchItem }
+;-----------------------------------------------------------------------------
+
+	if ( 1 > Player.GetItemCount EnchItem )
+
+		DebugPrint "Waiting on %n to be added..." EnchItem
+		SetFunctionValue 0
+		Return
+
+	else
+
+		if ( SoulGem == AzurasStar )
+
+			DebugPrint "Refilling Azura's Star."
+			Let Stack := Player.GetInvRefsForItem SoulGem
+			Let Item := Stack[0]
+			SetSoulLevel SoulLevel Item
+
+		else
+
+			DebugPrint "Returning %n." SoulGem
+			Player.AddItem SoulGem 1
+
+		endif
+
+		DebugPrint "Undoing %n enchantment." BaseItem
+		Player.RemoveItemNS EnchItem 1
+		Player.AddItemNS BaseItem 1
+
+		Call aaZefirosFlavorBox $BaseItem 4
+
+		SetFunctionValue 1
+		Return
+
+	endif
+
+
+	SetFunctionValue 1
+	Return
+;-----------------------------------------------------------------------------
+end ;Function { SoulGem, SoulLevel, BaseItem, EnchItem }
+;-----------------------------------------------------------------------------

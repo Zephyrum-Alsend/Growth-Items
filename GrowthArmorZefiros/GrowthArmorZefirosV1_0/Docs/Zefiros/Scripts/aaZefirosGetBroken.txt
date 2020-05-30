@@ -29,8 +29,8 @@ scn aaZefirosGetBroken
 
 ;Parameters
 ;-----------------------------------------------------------------------------
-ref Object
 ref Actor
+ref Object
 
 short Broke ;Return value
 short Count

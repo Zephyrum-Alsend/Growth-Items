@@ -8,8 +8,9 @@ scn aaZefirosSacrifice
 ;Used scripts
 ;-----------------------------------------------------------------------------
 ;aaZefirosGetSlotShared
+;aaZefirosLogXP
 ;aaZefirosRefreshInv
-;aaZefirosSetFlavorMessage
+;aaZefirosFlavorMessage
 ;-----------------------------------------------------------------------------
 
 ;Related scripts
@@ -39,9 +40,9 @@ scn aaZefirosSacrifice
 
 ;Parameters
 ;-----------------------------------------------------------------------------
+float Absor
 ref Item
 array_var Armr
-float Absor
 
 array_var Stack
 ref Self
@@ -126,7 +127,7 @@ begin Function { Absor, Item, Armr }
 	;Refresh UI and send flavor message
 	;-----------------------------------------------------------------------------
 	Call aaZefirosRefreshInv
-	Call aaZefirosSetFlavorMessage ( "Icons\" + Call aaZefirosGetPCBIP Item ) "UIArmorWeaponRepairBreak" $Self $Item 3 4
+	Call aaZefirosFlavorMessage ( "Icons\" + Call aaZefirosGetPCBIP Item ) "UIArmorWeaponRepairBreak" $Self $Item 3 4
 
 
 	Return

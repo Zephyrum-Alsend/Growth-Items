@@ -11,7 +11,7 @@ scn aaZefirosReorderEffects
 
 ;Related scripts
 ;-----------------------------------------------------------------------------
-;aaZefirosSetMergeEnch
+;aaZefirosSetMerge
 ;-----------------------------------------------------------------------------
 
 ;Used globals
@@ -64,12 +64,13 @@ begin Function { Effects, Enchs }
 	DebugPrint "Reorganizing effects on %.0f enchantment(s)..." Size
 	
 
+	Let Data := ar_Construct Array
+
 	Let Size := ar_Size Effects
 	ForEach Ench <- Enchs
 
 		Let Spl := *Ench
-		Let Data := ar_Construct Array
-	
+		
 
 		;-----------------------------------------------------------------------------
 		;Find and remove each effect
@@ -124,7 +125,7 @@ begin Function { Effects, Enchs }
 		loop
 
 		;Reset Data for next loop
-		Let Data := ar_Null
+		ar_Erase Data
 	
 	loop
 

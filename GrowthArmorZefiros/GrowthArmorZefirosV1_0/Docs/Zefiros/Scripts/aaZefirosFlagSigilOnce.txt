@@ -1,0 +1,77 @@
+scn aaZefirosFlagSigilOnce
+
+;Main script
+;-----------------------------------------------------------------------------
+;aaZefirosManager
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;aaZefirosUndoSigilStone
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;Handles warning flag for undoing sigil stone enchantments and related
+;functions.
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+array_var Items
+ref SigilItem ;Return value
+short Flag ;Return value
+;-----------------------------------------------------------------------------
+
+
+
+;-----------------------------------------------------------------------------
+begin Function { Items, SigilItem, Flag }
+;-----------------------------------------------------------------------------
+
+	;We cannot tell if the player hit Create or Exit,
+	;but the ID for the new item should be unique,
+	;so we track that to tell if they hit Create or Exit
+	
+	;Update Flag if SigilItem changed
+	if ( SigilItem != GetLastSigilStoneCreatedItem )
+
+		DebugPrint "New sigil created item!"
+		Let SigilItem := GetLastSigilStoneCreatedItem
+		Let Flag := 2
+
+	endif
+
+	;Attempt to undo sigil stone enchantment
+	if ( Flag == 2 )
+
+		DebugPrint "Calling UndoSigilStone..."
+		Let Flag += Call aaZefirosUndoSigilStone Items
+		;Returns 0 if SigilItem isn't added yet, 1 otherwise
+
+	;Flag is 1 or 3, we're done
+	else
+
+		DebugPrint "Unsetting SigilOnce."
+		Let Flag := 0
+			
+	endif
+
+
+	SetFunctionValue ar_Map 0::SigilItem 1::Flag
+	Return
+;-----------------------------------------------------------------------------
+end ;Function { Items, SigilItem, Flag }
+;-----------------------------------------------------------------------------

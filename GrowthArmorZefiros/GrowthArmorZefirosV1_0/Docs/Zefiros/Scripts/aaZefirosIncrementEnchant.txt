@@ -1,0 +1,164 @@
+scn aaZefirosIncrementEnchant
+
+;Main script
+;-----------------------------------------------------------------------------
+;aaZefirosManager
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;aaZefirosModEnchLevel
+;aaZefirosSetEffectStat
+;aaZefirosGetMerg
+;aaZefirosGetEffectIndex
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;aaZefirosGetEnchantData
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;aaZefirosActvEnchBody
+;aaZefirosActvEnchFoot
+;aaZefirosActvEnchHand
+;aaZefirosActvEnchHead
+;aaZefirosActvEnchLegs
+;aaZefirosActvEnchShld
+;aaZefirosSlotBody
+;aaZefirosSlotFoot
+;aaZefirosSlotHand
+;aaZefirosSlotHead
+;aaZefirosSlotLegs
+;aaZefirosSlotShld
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+array_var Actv
+array_var Slots
+array_var Dflt
+array_var Data
+array_var Enchs
+short Lvl
+
+array_var Stat
+array_var Incr
+array_var Indx
+array_var Item
+array_var FnSt
+short Count
+short i
+short j
+short k
+short x
+ref Ench
+string_var Name
+;-----------------------------------------------------------------------------
+
+
+
+;-----------------------------------------------------------------------------
+begin Function { Slots, Dflt, Data, Lvl, Actv, Enchs }
+;-----------------------------------------------------------------------------
+
+	;Get the smallest array size
+	Let Count := ar_Size Slots
+	if eval( Count > ar_Size Data )
+		Let Count := ar_Size Data
+	endif
+	if eval( Count > ar_Size Actv )
+		Let Count := ar_Size Actv
+	endif
+	if eval( Count > ar_Size Enchs )
+		Let Count := ar_Size Enchs
+	endif
+	
+	
+	;Get stat increases and array of merged items
+	Let Incr := ar_Construct Array
+	Let Stat := ar_Construct Array
+	Let FnSt := ar_Construct Array
+	Let Indx := ar_Construct Array
+	Let i := 0
+	while ( i < Count )
+
+		;Because Ints are increasing by Floats,
+		;we have to store intermediary steps to account for truncation
+
+		;Get stats for starting and ending levels
+		Let j := Actv[i]
+		Let Incr[i] := Call aaZefirosModEnchLevel i Lvl Actv[i]
+		Let Stat[i] := Call aaZefirosSetEffectStat Data[j][2] Data[j][3] Data[j][4] Data[j][5] Data[j][6] Data[j][7] ( Incr[i] - Lvl )
+		Let FnSt[i] := Call aaZefirosSetEffectStat Data[j][2] Data[j][3] Data[j][4] Data[j][5] Data[j][6] Data[j][7] Incr[i]
+		
+		;Find the difference
+		Let FnSt[i][0] -= Stat[i][0]
+		Let FnSt[i][1] -= Stat[i][1]
+		Let FnSt[i][2] -= Stat[i][2]
+
+
+		;Get array of merged indexes
+		Let Indx[i] := Call aaZefirosGetMerg Slots[i] Dflt
+		
+
+		Let i += 1
+	loop
+
+
+	;Mod effects
+	Let i := 0
+	while ( i < Count )
+
+		;Inherit effects from merged enchantments, including your own
+		ForEach Item <- Indx[i]
+
+			Let j := *Item
+			
+			Let k := Call aaZefirosGetEffectIndex Data[Actv[j]][0] Data[Actv[j]][1] Enchs[i]
+			
+			if ( k > -1 )
+
+				Let Ench := Enchs[i]
+
+				Let Name := GetNthEffectItemName Ench k
+				DebugPrint "Incrementing %z on [%.0f] enchantment." Name i
+
+				Let x := FnSt[j][0]
+				ModNthEffectItemMagnitude x Ench k
+
+				Let x := FnSt[j][1]
+				ModNthEffectItemArea x Ench k
+
+				Let x := FnSt[j][2]
+				ModNthEffectItemDuration x Ench k
+
+			else
+
+				Let k := Data[Actv[j]][0]
+				Let x := Data[Actv[j]][1]
+				Let Name := ( GetMENameC k ) + " " + ( ActorValueToStringC x )
+				DebugPrint "Missing %z on [%.0f], cannot increment." Name i
+				
+			endif
+
+		loop
+
+		Let i += 1
+	loop
+
+
+	sv_Destruct Name
+	Return
+;-----------------------------------------------------------------------------
+end ;Function { Slots, Dflt, Data, Lvl, Actv, Enchs }
+;-----------------------------------------------------------------------------

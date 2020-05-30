@@ -29,14 +29,14 @@ scn aaZefirosSetEnchOnItem
 
 ;Parameters
 ;-----------------------------------------------------------------------------
+array_var Items
+array_var Enchs
+
 short Count
 short Idx
 
 ref Item
 ref Ench
-
-array_var Items
-array_var Enchs
 ;-----------------------------------------------------------------------------
 
 

@@ -14,10 +14,16 @@ scn aaZefirosOnMagicHit
 ;aaZefirosDefaultINI
 ;aaZefirosDamageAnalysis
 ;aaZefirosCleanUp
-;aaZefirosObject
-;aaZefirosOnEquip
+;aaZefirosObjectBody
+;aaZefirosObjectFoot
+;aaZefirosObjectHand
+;aaZefirosObjectHead
+;aaZefirosObjectLegs
+;aaZefirosObjectShld
 ;aaZefirosOnUnEquip
 ;aaZefirosOnDamage
+;aaZefirosOnMagicApply
+;aaZefirosOnWeaponHit
 ;-----------------------------------------------------------------------------
 
 ;Used globals
@@ -47,9 +53,10 @@ scn aaZefirosOnMagicHit
 
 ;Parameters
 ;-----------------------------------------------------------------------------
-short BaseXP
-long EffectCode
 ref Target
+long EffectCode
+
+short BaseXP
 string_var EffectName
 ;-----------------------------------------------------------------------------
 

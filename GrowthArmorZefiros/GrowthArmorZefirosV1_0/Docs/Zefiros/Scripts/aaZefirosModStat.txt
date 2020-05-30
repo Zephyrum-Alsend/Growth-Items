@@ -12,6 +12,7 @@ scn aaZefirosModStat
 ;Related scripts
 ;-----------------------------------------------------------------------------
 ;aaZefirosDefaultINI
+;aaZefirosGetArmorStats
 ;-----------------------------------------------------------------------------
 
 ;Used globals
@@ -26,13 +27,18 @@ scn aaZefirosModStat
 ;Description
 ;-----------------------------------------------------------------------------
 ;Mods the stats of the passed armor according to the other values passed.
-;
 ;-----------------------------------------------------------------------------
 
 ;Parameters
 ;-----------------------------------------------------------------------------
+array_var Dflt
+array_var Stat
+float HvyAR
+float HvyWgt
+short HvyFlg
 short SLvl
 short ELvl
+ref Armr
 
 short ARB
 float WgtB
@@ -44,38 +50,49 @@ float WgtM
 float HltM
 float ValM
 
-float HvyAR
-float HvyWgt
-short HvyFlg
-
 short Armor
 float Weight
 long Health
 long Value
 
-ref Armr
+long Slot
 
-array_var Stat
+array_var Merg
+array_var Iter
+short i
 ;-----------------------------------------------------------------------------
 
 
 
 ;-----------------------------------------------------------------------------
-begin Function { Stat, HvyAR, HvyWgt, HvyFlg, SLvl, ELvl, Armr }
+begin Function { Dflt, Stat, HvyAR, HvyWgt, HvyFlg, SLvl, ELvl, Armr }
 ;-----------------------------------------------------------------------------
 
 	;At Lv1, stat == Base
 	Let SLvl -= 1
 	Let ELvl -= 1
 
-	Let ARB := Stat[0]
-	Let WgtB := Stat[1]
-	Let HltB := Stat[2]
-	Let ValB := Stat[3]
-	Let ARM := Stat[4]
-	Let WgtM := Stat[5]
-	Let HltM := Stat[6]
-	Let ValM := Stat[7]
+	;Account for multi-slot items by compounding stats for each slot
+	Let Slot := GetBipedSlotMask Armr
+	
+	Let ARB := WgtB := HltB := ValB := ARM := WgtM := HltM := ValM := 0
+
+	Let Merg := Call aaZefirosGetMerg Slot Dflt
+
+	ForEach Iter <- Merg
+
+		Let i := *Iter
+		
+		Let ARB += Stat[i][0]
+		Let WgtB += Stat[i][1]
+		Let HltB += Stat[i][2]
+		Let ValB += Stat[i][3]
+		Let ARM += Stat[i][4]
+		Let WgtM += Stat[i][5]
+		Let HltM += Stat[i][6]
+		Let ValM += Stat[i][7]
+
+	loop
 
 
 	;Store intermediary result to truncate
@@ -109,5 +126,5 @@ begin Function { Stat, HvyAR, HvyWgt, HvyFlg, SLvl, ELvl, Armr }
 
 	Return
 ;-----------------------------------------------------------------------------
-end ;Function { Stat, HvyAR, HvyWgt, HvyFlg, SLvl, ELvl, Armr }
+end ;Function { Dflt, Stat, HvyAR, HvyWgt, HvyFlg, SLvl, ELvl, Armr }
 ;-----------------------------------------------------------------------------

@@ -7,13 +7,11 @@ scn aaZefirosSetEquipHandlers
 
 ;Used scripts
 ;-----------------------------------------------------------------------------
-;aaZefirosOnEquip
 ;aaZefirosOnUnEquip
 ;-----------------------------------------------------------------------------
 
 ;Related scripts
 ;-----------------------------------------------------------------------------
-;aaZefirosObject
 ;-----------------------------------------------------------------------------
 
 ;Used globals
@@ -26,15 +24,15 @@ scn aaZefirosSetEquipHandlers
 
 ;Description
 ;-----------------------------------------------------------------------------
-;Given an Actor and an array of Items, create OnEquip and OnUnEquip handlers 
-;for them.
+;Given an Actor and an array of Items, create OnUnEquip handlers for them.
 ;-----------------------------------------------------------------------------
 
 ;Parameters
 ;-----------------------------------------------------------------------------
 ref Target
-ref Item
 array_var Items
+
+ref Item
 array_var Value
 ;-----------------------------------------------------------------------------
 

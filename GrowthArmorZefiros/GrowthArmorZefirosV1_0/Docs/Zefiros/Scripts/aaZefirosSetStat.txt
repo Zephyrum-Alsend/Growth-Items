@@ -11,7 +11,7 @@ scn aaZefirosSetStat
 
 ;Related scripts
 ;-----------------------------------------------------------------------------
-;aaZefirosDefaultINI
+;aaZefirosSetMerge
 ;-----------------------------------------------------------------------------
 
 ;Used globals
@@ -30,24 +30,21 @@ scn aaZefirosSetStat
 
 ;Parameters
 ;-----------------------------------------------------------------------------
-short Lvl
-
 short ARB
 float WgtB
 short HltB
 long ValB
-
 short ARM
 float WgtM
 float HltM
 float ValM
+short Lvl
+ref Armr
 
 float Armor
 float Weight
 long Health
 long Value
-
-ref Armr
 ;-----------------------------------------------------------------------------
 
 

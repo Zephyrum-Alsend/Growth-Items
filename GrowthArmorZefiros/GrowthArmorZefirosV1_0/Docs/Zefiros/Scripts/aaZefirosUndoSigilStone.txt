@@ -1,0 +1,95 @@
+scn aaZefirosUndoSigilStone
+
+;Main script
+;-----------------------------------------------------------------------------
+;aaZefirosManager
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;aaZefirosFlavorBox
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;aaZefirosFlagSigilOnce
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;Given an array of items, checks if any have been used in the last Sigil Stone
+;enchantment.  If an item has, check if it's enchanted version is in the
+;Player's inventory; undo enchantment if so, refunding all components.
+;Returns false if enchanted version is not present yet.
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+array_var Items
+
+long i
+ref EnchItem
+ref Sigil
+ref Item
+;-----------------------------------------------------------------------------
+
+
+
+;-----------------------------------------------------------------------------
+begin Function { Items }
+;-----------------------------------------------------------------------------
+
+	Let Item := GetLastSigilStoneEnchantedItem
+	Let EnchItem := GetLastSigilStoneCreatedItem
+		
+	Let i := ar_Find Item Items
+	if eval( ar_BadNumericIndex == i )
+
+		DebugPrint "No Items used in last enchantment."
+		SetFunctionValue 1
+		Return
+
+	else
+		
+		if ( 1 > Player.GetItemCount EnchItem )
+
+			DebugPrint "Waiting on %n to be added..." EnchItem
+			SetFunctionValue 0
+			Return
+
+		else
+
+			DebugPrint "Undoing %n enchantment." Item
+			
+			Let Sigil := GetLastUsedSigilStone
+
+			;Remove new item, add old item, refund sigil stone
+			Player.RemoveItemNS EnchItem 1
+			Player.AddItemNS Item 1
+			Player.AddItem Sigil 1
+
+			Call aaZefirosFlavorBox $Item 3
+
+			SetFunctionValue 1
+			Return
+
+		endif
+
+	endif
+
+
+	;Failsafe
+	DebugPrint "Error: Reached end of UndoSigilStone."
+	SetFunctionValue 1
+	Return
+;-----------------------------------------------------------------------------
+end ;Function { Items }
+;-----------------------------------------------------------------------------

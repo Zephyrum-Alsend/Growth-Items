@@ -48,11 +48,13 @@ scn aaZefirosObjectShld
 begin OnEquip Player
 ;-----------------------------------------------------------------------------
 
-	DebugPrint "Running Shld OnEquip block."
+	DebugPrint "%BRunning %bShld%B OnEquip block."
 
 	if ( aaZefirosEquip <= 0 )
 
+		;-----------------------------------------------------------------------------
 		DebugPrint "aaZefirosEquip is %.0f, setting to 1 and setting handlers." aaZefirosEquip
+		;-----------------------------------------------------------------------------
 
 		Let aaZefirosEquip := 0
 		SetEventHandler "OnHealthDamage" aaZefirosOnDamage "object"::Player
@@ -76,7 +78,7 @@ begin OnEquip Player
 		if eval( aaZefirosSlotShld & 16 )
 			Let aaZefirosEquip += 1
 		endif
-		if eval( aaZefirosSlotShld & 1 || aaZefirosSlotShld & 2 )
+		if eval( aaZefirosSlotShld & 3 )
 			Let aaZefirosEquip += 1
 		endif
 		if eval( aaZefirosSlotShld & 8 )

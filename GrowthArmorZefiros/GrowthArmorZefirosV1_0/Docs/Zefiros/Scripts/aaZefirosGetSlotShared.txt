@@ -29,9 +29,9 @@ scn aaZefirosGetSlotShared
 ;Given a Map containing items corresponding to specific biped slots and 
 ;another Item, returns an array containing all references that share a slot
 ;with Item.
-;If no slots are shared, returns an array containing one element: 0.
+;If no slots are shared, returns an array containing one element: -1.
 ;
-;Slots can be omitted by skipping indexes or filling them with 0.
+;Slots can be omitted by skipping indexes or filling them with -1.
 ;
 ;ar_Map:
 ; 0::Head/Hair
@@ -65,7 +65,7 @@ ref Trch
 ref Tail
 
 long Slot
-array_var Stack
+array_var Stack ;Return value
 ;-----------------------------------------------------------------------------
 
 ;-----------------------------------------------------------------------------
@@ -128,86 +128,86 @@ begin Function { Item, Objects }
 	;-----------------------------------------------------------------------------
 	;Populate array
 	;-----------------------------------------------------------------------------
-	if ( Head != 0 ) && eval( ( 1 & Slot ) || ( 2 & Slot ) )
+	if ( Head != 0 ) && eval( 3 & Slot )
 
-		DebugPrint "%n shares the Head/Hair slot." Item
+		DebugPrint "%n %Bshares the %bHead/Hair%B slot." Item
 		ar_Append Stack Head
 
 	endif
 
 	if ( Body != 0 ) && eval( 4 & Slot )
 
-		DebugPrint "%n shares the UpperBody slot." Item
+		DebugPrint "%n%B shares the %bUpperBody%B slot." Item
 		ar_Append Stack Body
 
 	endif
 
 	if ( Legs != 0 ) && eval( 8 & Slot )
 
-		DebugPrint "%n shares the LowerBody slot." Item
+		DebugPrint "%n%B shares the %bLowerBody%B slot." Item
 		ar_Append Stack Legs
 
 	endif
 
 	if ( Hand != 0 ) && eval( 16 & Slot )
 
-		DebugPrint "%n shares the Hand slot." Item
+		DebugPrint "%n%B shares the %bHand%B slot." Item
 		ar_Append Stack Hand
 
 	endif
 
 	if ( Foot != 0 ) && eval( 32 & Slot )
 
-		DebugPrint "%n shares the Foot slot." Item
+		DebugPrint "%n%B shares the %bFoot%B slot." Item
 		ar_Append Stack Foot
 
 	endif
 
 	if ( RRing != 0 ) && eval( 64 & Slot )
 
-		DebugPrint "%n shares the RightRing slot." Item
+		DebugPrint "%n%B shares the %bRightRing%B slot." Item
 		ar_Append Stack RRing
 
 	endif
 
 	if ( LRing != 0 ) && eval( 128 & Slot )
 
-		DebugPrint "%n shares the LeftRing slot." Item
+		DebugPrint "%n%B shares the %bLeftRing%B slot." Item
 		ar_Append Stack LRing
 
 	endif
 
 	if ( Amul != 0 ) && eval( 256 & Slot )
 
-		DebugPrint "%n shares the Amulet slot." Item
+		DebugPrint "%n%B shares the %bAmulet%B slot." Item
 		ar_Append Stack Amul
 
 	endif
 
 	if ( Shld != 0 ) && eval( 8192 & Slot )
 
-		DebugPrint "%n shares the Shield slot." Item
+		DebugPrint "%n%B shares the %bShield%B slot." Item
 		ar_Append Stack Shld
 
 	endif
 
 	if ( Trch != 0 ) && eval( 16384 & Slot )
 
-		DebugPrint "%n shares the Torch slot." Item
+		DebugPrint "%n%B shares the %bTorch%B slot." Item
 		ar_Append Stack Trch
 
 	endif
 
 	if ( Tail != 0 ) && eval( 32768 & Slot )
 
-		DebugPrint "%n shares the Tail slot." Item
+		DebugPrint "%n%B shares the %bTail%B slot." Item
 		ar_Append Stack Tail
 
 	endif
 
 	if eval( 0 == ar_Size Stack )
 
-		DebugPrint "%n shares 0 slots." Item
+		DebugPrint "%n%B shares %b0%B slots." Item
 		ar_Append Stack 0
 
 	endif

@@ -11,6 +11,7 @@ scn aaZefirosLogXP
 
 ;Related scripts
 ;-----------------------------------------------------------------------------
+;aaZefirosSacrifice
 ;-----------------------------------------------------------------------------
 
 ;Used globals
@@ -27,7 +28,7 @@ scn aaZefirosLogXP
 
 ;Description
 ;-----------------------------------------------------------------------------
-;Outputs XP gained and current amount out of required to console, followed
+;Outputs XP gained and current amount out of required to console followed
 ;by a string containing additional information in blue text.  String can be
 ;empty.  Only outputs if XP gained is greater than 0.
 ;-----------------------------------------------------------------------------

@@ -29,9 +29,10 @@ scn aaZefirosSetSeekArray
 
 ;Parameters
 ;-----------------------------------------------------------------------------
-string_var Arr
 short Num
 short X
+string_var Arr ;Return value
+
 short i
 ;-----------------------------------------------------------------------------
 
@@ -49,6 +50,7 @@ begin Function { Num, X, Arr }
 
 		If ( Num < 10 )
 
+			;Add a leading 0
 			Let Arr := "0" + $Num + Arr
 
 		else

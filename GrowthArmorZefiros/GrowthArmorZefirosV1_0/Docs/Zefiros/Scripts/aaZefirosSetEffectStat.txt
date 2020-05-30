@@ -12,6 +12,8 @@ scn aaZefirosSetEffectStat
 ;Related scripts
 ;-----------------------------------------------------------------------------
 ;aaZefirosSetEnchant
+;aaZefirosIncrementEnchant
+;aaZefirosSetEffectStat
 ;-----------------------------------------------------------------------------
 
 ;Used globals

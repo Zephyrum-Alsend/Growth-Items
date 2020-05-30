@@ -50,7 +50,7 @@ begin Function { Container, Items }
 
 	Let Dura := ar_Construct Array
 	Let Size := ar_Size Items
-	DebugPrint "Getting durabilities for %.0f items..." Size;( ar_Size Items )
+	DebugPrint "Getting durabilities for %.0f items..." Size
 	
 	ForEach Item <- Items
 
@@ -79,7 +79,7 @@ begin Function { Container, Items }
 	loop
 
 
-	DebugPrint "All durabilities gotten."
+	DebugPrint "Returning durabilities."
 	SetFunctionValue Dura
 	Return
 ;-----------------------------------------------------------------------------

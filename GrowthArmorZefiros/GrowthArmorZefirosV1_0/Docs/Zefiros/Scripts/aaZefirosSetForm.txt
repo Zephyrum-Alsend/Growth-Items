@@ -12,8 +12,8 @@ scn aaZefirosSetForm
 
 ;Related scripts
 ;-----------------------------------------------------------------------------
+;aaZefirosGetFormData
 ;aaZefirosSetMerge
-;aaZefirosSetMimic
 ;-----------------------------------------------------------------------------
 
 ;Used globals
@@ -74,7 +74,7 @@ string_var Path
 begin Function { i, j, Data, Item }
 ;-----------------------------------------------------------------------------
 
-	DebugPrint "Changing %n form..." Item
+	DebugPrint "%BChanging %b%n%B form...%b" Item
 	
 	Let Path := Data[i][j][0]
 	SetMaleBipedPath $Path Item
@@ -107,7 +107,7 @@ begin Function { i, j, Data, Item }
 	endif
 
 
-	DebugPrint "Form changed."
+	DebugPrint "%n %Bform changed.%b" Item
 	sv_Destruct Path
 	Return
 ;-----------------------------------------------------------------------------

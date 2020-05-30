@@ -147,7 +147,7 @@ Let aaZefirosInit.fHeavyWeight := 1.5			;1.5
 ;-----------------------------------------------------------------------------
 ;Level up variables
 ;-----------------------------------------------------------------------------
-;XP gained = damage taken
+;XP gained is based on damage taken
 Let aaZefirosInit.sXPReqBase := 200				;200
 Let aaZefirosInit.sXPReqMult := 20				;20
 Let aaZefirosInit.sLevelCap := 201				;201
@@ -159,8 +159,10 @@ Let aaZefirosInit.sLevelCap := 201				;201
 ;4 = Light/Heavy Armor Average
 Let aaZefirosInit.sCapType := 0					;0
 
-;= 0 : reset to Lv1, < 0 : disable, > 0 : delevel by that amount
-Let aaZefirosInit.sBreakLevel := 0				;0
+;0 = delevel to Lv1
+;0 > disable
+;0 < delevel by this amount
+Let aaZefirosInit.sBreakLevel := 10				;10
 ;The number of items that need to be broken before delevel is triggered
 Let aaZefirosInit.sBreakThreshold := 3			;3
 
@@ -171,13 +173,14 @@ Let aaZefirosInit.fAbsorption := 0.03			;0.03
 ;-----------------------------------------------------------------------------
 ;Dynamic Resistances
 ;-----------------------------------------------------------------------------
-;RXP required per 1% resistance gained
+;0 < RXP required per 1% resistance gained
+;0 >= disable
 Let aaZefirosInit.sXPResist := 500				;500
 ;RXP per second paralyzed
 Let aaZefirosInit.sXPPara := 50					;50
 ;RXP per illness contracted
 Let aaZefirosInit.sXPDisease := 250				;250
-;RXP for non-damaging hostile effects
+;RXP per non-damaging hostile effect
 Let aaZefirosInit.sXPNoDmg := 3					;3
 
 ;Determines if resistances can appear before sEnchStart
@@ -265,25 +268,40 @@ Let aaZefirosInit.sFormKey1 := 257				;257	RMB
 Let aaZefirosInit.sFormKey2 := 257				;257	RMB
 Let aaZefirosInit.sFormKey3 := 257				;257	RMB
 
-;Show enchantment
+Let aaZefirosInit.sFormBut1 := 42				;42		Disabled
+Let aaZefirosInit.sFormBut2 := 42				;42		Disabled
+
+;Show enchantment - has priority over Form
 Let aaZefirosInit.sEnchKey1 := 257				;257	RMB
 Let aaZefirosInit.sEnchKey2 := 29				;29		Left CTRL
 Let aaZefirosInit.sEnchKey3 := 157				;157	Right CTRL
 
-;Show form name
+Let aaZefirosInit.sEnchBut1 := 42				;42		Disabled
+Let aaZefirosInit.sEnchBut2 := 42				;42		Disabled
+
+;Show form name - has priority over Ench
 Let aaZefirosInit.sNameKey1 := 257				;257	RMB
 Let aaZefirosInit.sNameKey2 := 42				;42		Left SHFT
 Let aaZefirosInit.sNameKey3 := 54				;54		Right SHFT
+
+Let aaZefirosInit.sNameBut1 := 42				;42		Disabled
+Let aaZefirosInit.sNameBut2 := 42				;42		Disabled
 
 ;Offer armor
 Let aaZefirosInit.sOffrKey1 := 257				;257	RMB
 Let aaZefirosInit.sOffrKey2 := 257				;257	RMB
 Let aaZefirosInit.sOffrKey3 := 257				;257	RMB
 
-;Mimic armor
+Let aaZefirosInit.sOffrBut1 := 42				;42		Disabled
+Let aaZefirosInit.sOffrBut2 := 42				;42		Disabled
+
+;Mimic armor - has priority over Offr
 Let aaZefirosInit.sCopyKey1 := 257				;257	RMB
 Let aaZefirosInit.sCopyKey2 := 42				;42		Left SHFT
 Let aaZefirosInit.sCopyKey3 := 54				;54		Right SHFT
+
+Let aaZefirosInit.sCopyBut1 := 42				;42		Disabled
+Let aaZefirosInit.sCopyBut2 := 42				;42		Disabled
 
 
 ;-----------------------------------------------------------------------------

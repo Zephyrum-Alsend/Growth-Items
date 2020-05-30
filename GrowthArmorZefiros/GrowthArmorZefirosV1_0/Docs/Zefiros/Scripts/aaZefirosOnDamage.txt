@@ -13,10 +13,16 @@ scn aaZefirosOnDamage
 ;-----------------------------------------------------------------------------
 ;aaZefirosDamageAnalysis
 ;aaZefirosCleanUp
-;aaZefirosObject
-;aaZefirosOnEquip
+;aaZefirosObjectBody
+;aaZefirosObjectFoot
+;aaZefirosObjectHand
+;aaZefirosObjectHead
+;aaZefirosObjectLegs
+;aaZefirosObjectShld
 ;aaZefirosOnUnEquip
+;aaZefirosOnMagicApply
 ;aaZefirosOnMagicHit
+;aaZefirosOnWeaponHit
 ;-----------------------------------------------------------------------------
 
 ;Used globals

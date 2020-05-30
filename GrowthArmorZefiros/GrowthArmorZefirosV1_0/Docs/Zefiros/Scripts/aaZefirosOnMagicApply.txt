@@ -13,9 +13,16 @@ scn aaZefirosOnMagicApply
 ;-----------------------------------------------------------------------------
 ;aaZefirosDefaultINI
 ;aaZefirosCleanUp
-;aaZefirosObject
-;aaZefirosOnEquip
+;aaZefirosObjectBody
+;aaZefirosObjectFoot
+;aaZefirosObjectHand
+;aaZefirosObjectHead
+;aaZefirosObjectLegs
+;aaZefirosObjectShld
 ;aaZefirosOnUnEquip
+;aaZefirosOnDamage
+;aaZefirosOnMagicHit
+;aaZefirosOnWeaponHit
 ;-----------------------------------------------------------------------------
 
 ;Used globals

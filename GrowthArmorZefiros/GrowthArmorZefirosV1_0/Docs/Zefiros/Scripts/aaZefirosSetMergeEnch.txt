@@ -7,11 +7,13 @@ scn aaZefirosSetMergeEnch
 
 ;Used scripts
 ;-----------------------------------------------------------------------------
+;aaZefirosGetEffectIndex
 ;-----------------------------------------------------------------------------
 
 ;Related scripts
 ;-----------------------------------------------------------------------------
 ;aaZefirosSetMerge
+;aaZefirosUndoEnchant
 ;-----------------------------------------------------------------------------
 
 ;Used globals
@@ -54,9 +56,7 @@ begin Function { Ench1, Ench2 }
 	Let C2 := GetMagicItemEffectCount Ench2
 
 
-	;-----------------------------------------------------------------------------
 	;For every effect in Ench1...
-	;-----------------------------------------------------------------------------
 	Let i := 0
 	while ( i < C1 )
 
@@ -64,71 +64,27 @@ begin Function { Ench1, Ench2 }
 		Let AuxC := GetNthEffectItemActorValue Ench1 i
 
 
-		;-----------------------------------------------------------------------------
-		;Effect has no Actor Value
-		;-----------------------------------------------------------------------------
-		if ( AuxC == 256 && MagicItemHasEffectCode EffC Ench2 )
+		;Find effect on Ench2
+		Let j := Call aaZefirosGetEffectIndex EffC AuxC Ench2
 
-			;Find the effect on Ench2
-			Let j := 0
-			while ( j < C2 )
-
-				if ( EffC == GetNthEffectItemCode Ench2 j )
-					;Mod Ench2's effect by Ench1's values
-
-					Let Num := GetNthEffectItemMagnitude Ench1 i
-					ModNthEffectItemMagnitude Num Ench2 j
-
-					Let Num := GetNthEffectItemArea Ench1 i
-					ModNthEffectItemArea Num Ench2 j
-
-					Let Num := GetNthEffectItemDuration Ench1 i
-					ModNthEffectItemDuration Num Ench2 j
-					
-					Break
-
-				endif
-
-				Let j += 1
-			loop
-
-
-		;-----------------------------------------------------------------------------
-		;Effect has an Actor Value
-		;-----------------------------------------------------------------------------
-		elseif ( MagicItemHasEffectCode EffC Ench2 AuxC )
-
-			;Find the effect on Ench2
-			Let j := 0
-			while ( j < C2 )
-
-				;Effects with the same code can affect different actor values
-				if ( EffC == GetNthEffectItemCode Ench2 j && AuxC == GetNthEffectItemActorValue Ench2 j )
-					;Mod Ench2's effect by Ench1's values
-					
-					Let Num := GetNthEffectItemMagnitude Ench1 i
-					ModNthEffectItemMagnitude Num Ench2 j
-
-					Let Num := GetNthEffectItemArea Ench1 i
-					ModNthEffectItemArea Num Ench2 j
-
-					Let Num := GetNthEffectItemDuration Ench1 i
-					ModNthEffectItemDuration Num Ench2 j
-					
-					Break
-
-				endif
-
-				Let j += 1
-			loop
-
-
-		;-----------------------------------------------------------------------------
-		;Effect does not exist on Ench2
-		;-----------------------------------------------------------------------------
-		else
+		;If not present, add it
+		if ( j == -1 )
 
 			CopyNthEffectItem Ench1 Ench2 i
+
+
+		;If present, mod it by Ench1's values
+		else
+
+			Let Num := GetNthEffectItemMagnitude Ench1 i
+			ModNthEffectItemMagnitude Num Ench2 j
+
+			Let Num := GetNthEffectItemArea Ench1 i
+			ModNthEffectItemArea Num Ench2 j
+
+			Let Num := GetNthEffectItemDuration Ench1 i
+			ModNthEffectItemDuration Num Ench2 j
+
 
 		endif
 

@@ -16,7 +16,13 @@ scn aaZefirosCleanUp
 
 ;Related scripts
 ;-----------------------------------------------------------------------------
-;aaZefirosObject
+;aaZefirosObjectBody
+;aaZefirosObjectFoot
+;aaZefirosObjectHand
+;aaZefirosObjectHead
+;aaZefirosObjectLegs
+;aaZefirosObjectShld
+;aaZefirosFlagCleanOnce
 ;-----------------------------------------------------------------------------
 
 ;Used globals
@@ -57,7 +63,7 @@ begin Function { Mode }
 		RemoveEventHandler "OnActorUnequip" aaZefirosOnUnEquip
 
 		;-----------------------------------------------------------------------------
-		DebugPrint "Nulling Selfs, Enchs, EncSt, ArmSt, Forms, Equip, Seek, Actv, Stack, Item arrays."
+		DebugPrint "Nulling Selfs, Enchs, EncSt, ArmSt, Forms, Equip, Seek, Actv, Slots, Dflt, Soul, Stack, Item arrays."
 		;-----------------------------------------------------------------------------
 		Let aaZefirosInit.Selfs := ar_Null
 		Let aaZefirosInit.Enchs := ar_Null
@@ -67,6 +73,9 @@ begin Function { Mode }
 		Let aaZefirosInit.Equip := ar_Null
 		Let aaZefirosInit.Seek := ar_Null
 		Let aaZefirosInit.Actv := ar_Null
+		Let aaZefirosInit.Slots := ar_Null
+		Let aaZefirosInit.Dflt := ar_Null
+		Let aaZefirosInit.Soul := ar_Null
 		Let aaZefirosInit.Stack := ar_Null
 		Let aaZefirosInit.Item := ar_Null
 
@@ -96,7 +105,7 @@ begin Function { Mode }
 		if eval( aaZefirosSlotBody & 16 )
 			Let aaZefirosEquip += 1
 		endif
-		if eval( aaZefirosSlotBody & 1 || aaZefirosSlotBody & 2 )
+		if eval( aaZefirosSlotBody & 3 )
 			Let aaZefirosEquip += 1
 		endif
 		if eval( aaZefirosSlotBody & 8 )
@@ -117,7 +126,7 @@ begin Function { Mode }
 		if eval( aaZefirosSlotFoot & 16 )
 			Let aaZefirosEquip += 1
 		endif
-		if eval( aaZefirosSlotFoot & 1 || aaZefirosSlotFoot & 2 )
+		if eval( aaZefirosSlotFoot & 3 )
 			Let aaZefirosEquip += 1
 		endif
 		if eval( aaZefirosSlotFoot & 8 )
@@ -138,7 +147,7 @@ begin Function { Mode }
 		if eval( aaZefirosSlotHand & 32 )
 			Let aaZefirosEquip += 1
 		endif
-		if eval( aaZefirosSlotHand & 1 || aaZefirosSlotHand & 2 )
+		if eval( aaZefirosSlotHand & 3 )
 			Let aaZefirosEquip += 1
 		endif
 		if eval( aaZefirosSlotHand & 8 )
@@ -183,7 +192,7 @@ begin Function { Mode }
 		if eval( aaZefirosSlotLegs & 16 )
 			Let aaZefirosEquip += 1
 		endif
-		if eval( aaZefirosSlotLegs & 1 || aaZefirosSlotLegs & 2 )
+		if eval( aaZefirosSlotLegs & 3 )
 			Let aaZefirosEquip += 1
 		endif
 		if eval( aaZefirosSlotLegs & 8192 )
@@ -204,7 +213,7 @@ begin Function { Mode }
 		if eval( aaZefirosSlotShld & 16 )
 			Let aaZefirosEquip += 1
 		endif
-		if eval( aaZefirosSlotShld & 1 || aaZefirosSlotShld & 2 )
+		if eval( aaZefirosSlotShld & 3 )
 			Let aaZefirosEquip += 1
 		endif
 		if eval( aaZefirosSlotShld & 8 )

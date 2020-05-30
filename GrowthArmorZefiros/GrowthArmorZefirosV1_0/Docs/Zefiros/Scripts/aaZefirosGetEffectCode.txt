@@ -12,6 +12,7 @@ scn aaZefirosGetEffectCode
 ;Related scripts
 ;-----------------------------------------------------------------------------
 ;aaZefirosGetEnchantData
+;aaZefirosEnchantBox
 ;-----------------------------------------------------------------------------
 
 ;Used globals

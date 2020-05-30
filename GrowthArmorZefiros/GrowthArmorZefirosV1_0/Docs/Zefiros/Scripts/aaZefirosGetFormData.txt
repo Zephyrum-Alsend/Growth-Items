@@ -11,10 +11,9 @@ scn aaZefirosGetFormData
 
 ;Related scripts
 ;-----------------------------------------------------------------------------
-;aaZefirosSetForm
-;aaZefirosSetMerge
-;aaZefirosSetMimic
 ;aaZefiorsSaveMimic
+;aaZefirosSetForm
+;aaZefirosSetMimic
 ;-----------------------------------------------------------------------------
 
 ;Used globals
@@ -58,7 +57,8 @@ scn aaZefirosGetFormData
 ;Parameters
 ;-----------------------------------------------------------------------------
 array_var MimicData
-array_var Data
+
+array_var Data ;Return value
 ;-----------------------------------------------------------------------------
 
 ;-----------------------------------------------------------------------------
