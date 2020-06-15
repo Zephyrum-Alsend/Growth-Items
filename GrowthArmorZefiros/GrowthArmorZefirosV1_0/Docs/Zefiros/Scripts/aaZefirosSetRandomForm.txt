@@ -1,0 +1,86 @@
+scn aaZefirosSetRandomForm
+
+;Main script
+;-----------------------------------------------------------------------------
+;aaZefirosManager
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;aaZefirosSetMerge
+;aaZefirosSetForm
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
+;aaZefirosDebug
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;Given all the data SetMerge and SetForm need, assign a random form to the
+;item i points to in Armr.  Brute forces the random assignment if SetMerge
+;fails.
+;Returns if Armr[i] is not present.
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+short i
+array_var Data
+array_var Armr
+array_var Dflt
+array_var Hvy
+array_var Stat
+array_var EnSt
+
+ref Item
+short True
+short Ran
+short Size
+;-----------------------------------------------------------------------------
+
+;-----------------------------------------------------------------------------
+begin Function { Dflt, Hvy, Stat, EnSt, Data, i, Armr }
+;-----------------------------------------------------------------------------
+
+	;Return if Item isn't present
+	Let Item := Armr[i]
+	if ( 0 == Player.GetItemCount Item )
+
+		DebugPrint "%n not present, aborting SetRandomForm." Item
+		Return
+
+	endif
+	
+	Let Size := ar_Size Data[i]
+
+	Let True := 1
+	while ( True )
+
+		Let Ran := rand 0 Size
+
+		if eval( Call aaZefirosSetMerge Data[i][Ran][7] Dflt Data Hvy Stat EnSt i Armr 0 )
+
+			Call aaZefirosSetForm i Ran Data Armr[i]
+			Let True := 0
+
+		endif
+
+		;Keep calling SetMerge with random indexes until one sticks
+	loop
+
+
+	DebugPrint "%n%B set to %b[%.0f]%B.%b" Item Ran
+	Return
+;-----------------------------------------------------------------------------
+end ;Function { Dflt, Hvy, Stat, EnSt, Data, i, Armr }
+;-----------------------------------------------------------------------------

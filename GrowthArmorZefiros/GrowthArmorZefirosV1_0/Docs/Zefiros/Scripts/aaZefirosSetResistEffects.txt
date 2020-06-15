@@ -33,8 +33,8 @@ scn aaZefirosSetResistEffects
 ;OldNewRS contains the effect codes to be updated, along with their new and old
 ;magnitudes.  The function will skip the effect if their values are the same.
 ;
-;Tweaking would have to be done for Actor Values to be supported, as well as 
-;weapons.
+;Currently does not acknowledge Actor Value codes or any stat besides
+;magnitude, so cannot be used for weapons or Fortify/Drain effects.
 ;
 ;OldNewRS:
 ;[0]FireRS
@@ -53,9 +53,9 @@ scn aaZefirosSetResistEffects
 ;Parameters
 ;-----------------------------------------------------------------------------
 array_var Slots
+array_var Dflt
 array_var OldNewRS ;Return value
 array_var Enchs
-array_var Dflt
 
 short C1
 short C2
@@ -73,6 +73,7 @@ string_var Name
 begin Function { Slots, Dflt, OldNewRS, Enchs }
 ;-----------------------------------------------------------------------------
 
+	;Set C2 to the smaller array size
 	Let C1 := ar_Size Slots
 	Let C2 := ar_Size Enchs
 	if ( C1 < C2 )
@@ -99,7 +100,7 @@ begin Function { Slots, Dflt, OldNewRS, Enchs }
 			Let j := 0
 			while ( j < C2 )
 
-				;Multiply by slots taken
+				;Multiply by merged items
 				Let Stack := Call aaZefirosGetMerg Slots[j] Dflt
 				Let X := ar_Size Stack
 				
@@ -119,8 +120,8 @@ begin Function { Slots, Dflt, OldNewRS, Enchs }
 	loop
 	
 
-	SetFunctionValue OldNewRS
 	sv_Destruct Name
+	SetFunctionValue OldNewRS
 	Return
 ;-----------------------------------------------------------------------------
 end ;Function { Slots, Dflt, OldNewRS, Enchs }

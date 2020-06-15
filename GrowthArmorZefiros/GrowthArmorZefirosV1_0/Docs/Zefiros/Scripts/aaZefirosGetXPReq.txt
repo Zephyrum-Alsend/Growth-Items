@@ -15,12 +15,12 @@ scn aaZefirosGetXPReq
 
 ;Used globals
 ;-----------------------------------------------------------------------------
-;aaZefirosXP
 ;-----------------------------------------------------------------------------
 
 ;Related globals
 ;-----------------------------------------------------------------------------
 ;aaZefirosLevel
+;aaZefirosXP
 ;aaZefirosXPReq
 ;-----------------------------------------------------------------------------
 
@@ -31,27 +31,28 @@ scn aaZefirosGetXPReq
 
 ;Parameters
 ;-----------------------------------------------------------------------------
-short Lvl
 short XPB
 short XPM
+float XP
+short Lvl
 
 float XPReq ;Return value
 float XPH ;Return value
 ;-----------------------------------------------------------------------------
 
 ;-----------------------------------------------------------------------------
-begin Function { XPB, XPM, Lvl }
+begin Function { XPB, XPM, XP, Lvl }
 ;-----------------------------------------------------------------------------
 
 	;Calculate new XPReq
 	Let XPReq := ( XPB * Lvl ) + ( XPM * Lvl * ( Lvl - 1 ) / 2 )
 	
 	;Calculate half way point
-	Let XPH := ( aaZefirosXP + XPReq ) / 2
+	Let XPH := ( XP + XPReq ) / 2
 	
 	
 	SetFunctionValue ar_Map 0::XPReq 1::XPH
 	Return
 ;-----------------------------------------------------------------------------
-end ;Function { XPB, XPM, Lvl }
+end ;Function { XPB, XPM, XP, Lvl }
 ;-----------------------------------------------------------------------------

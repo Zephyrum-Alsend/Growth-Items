@@ -1,0 +1,91 @@
+scn aaZefirosFindSet
+
+;Main script
+;-----------------------------------------------------------------------------
+;aaZefirosManager
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;aaZefirosGetFormSetsArray
+;aaZefirosValidateCustom
+;aaZefirosValidateForm
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;Given the Forms array from Manager, List is a Map containing index::string
+;pairs.  Searches Data's name fields for matches with those in List and
+;returns a Map of coordinates to where those matches are found.
+;
+;List (each key is optional):
+;0::"str"
+;1::"str"
+;2::"str"
+;3::"str"
+;4::"str"
+;5::"str"
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+array_var List
+array_var Data
+
+string_var Name
+short i
+array_var Stack ;Return value
+array_var Iter
+array_var Itr2
+array_var Temp
+;-----------------------------------------------------------------------------
+
+;-----------------------------------------------------------------------------
+begin Function { List, Data }
+;-----------------------------------------------------------------------------
+
+	Let Stack := ar_Construct Map
+	
+	ForEach Iter <- List
+
+		;Names are found in Data[i][j][6]
+		;List = ar_Map i::Name
+		Let Name := Iter["value"]
+		Let i := Iter["key"]
+
+		ForEach Itr2 <- Data[i]
+
+			;For every j in Data[i]
+			Let Temp := *Itr2
+
+			if eval( Temp[6] == Name )
+
+				;Stack = ar_Map i::j
+				Let Stack[i] := Itr2["key"]
+				Break
+
+			endif
+
+		;If Name isn't found in Data[i], Stack[i] is missing
+		loop
+		
+	loop
+
+	
+	SetFunctionValue Stack
+	Return
+;-----------------------------------------------------------------------------
+end ;Function { List, Data }
+;-----------------------------------------------------------------------------

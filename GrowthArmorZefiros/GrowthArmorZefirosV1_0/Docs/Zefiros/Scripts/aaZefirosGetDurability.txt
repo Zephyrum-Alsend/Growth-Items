@@ -25,7 +25,7 @@ scn aaZefirosGetDurability
 ;Description
 ;-----------------------------------------------------------------------------
 ;Given an array of items and the container they belong to, return an array
-;containing the percentage durability of every stack of every item.
+;containing the percentage durability of each stack of every item.
 ;-----------------------------------------------------------------------------
 
 ;Parameters
@@ -49,6 +49,7 @@ begin Function { Container, Items }
 ;-----------------------------------------------------------------------------
 
 	Let Dura := ar_Construct Array
+	
 	Let Size := ar_Size Items
 	DebugPrint "Getting durabilities for %.0f items..." Size
 	
@@ -63,7 +64,9 @@ begin Function { Container, Items }
 		Let Prct := ar_Construct Array
 		ForEach i <- Stack
 
+			;ForEach InvRef of Item
 			Let Val := *i
+			
 			Let CurHP := Val.GetCurrentHealth
 			
 			Let CurHP := CurHP / MaxHP
@@ -72,7 +75,7 @@ begin Function { Container, Items }
 		loop
 
 		ar_Append Dura Prct
-		let Prct := ar_Null
+		let Prct := ar_Null ;Clear for next loop
 
 		;DebugPrint "Durabilities gotten."
 

@@ -7,10 +7,7 @@ scn aaZefirosOnUnEquip
 
 ;Used scripts
 ;-----------------------------------------------------------------------------
-;aaZefirosOnDamage
-;aaZefirosOnMagicHit
-;aaZefirosOnWeaponHit
-;aaZefirosOnMagicApply
+;aaZefirosSetHandlers
 ;-----------------------------------------------------------------------------
 
 ;Related scripts
@@ -44,6 +41,9 @@ scn aaZefirosOnUnEquip
 ;-----------------------------------------------------------------------------
 ;Fires whenever the Player unequips one of the armor's pieces.
 ;Decrements Equip then checks if it's at or below 0, unsets handlers if so.
+;
+;Slots are hardcoded instead of dot notation to increase speed, since this
+;script can be run quite often.
 ;-----------------------------------------------------------------------------
 
 ;Parameters
@@ -209,14 +209,11 @@ begin Function { Target, Item }
 	if ( aaZefirosEquip <= 0 )
 
 		;-----------------------------------------------------------------------------
-		DebugPrint "aaZefirosEquip is %.0f, setting to 0 and removing handlers." aaZefirosEquip
+		DebugPrint "aaZefirosEquip is %.0f, setting to 0." aaZefirosEquip
 		;-----------------------------------------------------------------------------
 	
 		Let aaZefirosEquip := 0
-		RemoveEventHandler "OnHealthDamage" aaZefirosOnDamage
-		RemoveEventHandler "OnMagicEffectHit" aaZefirosOnMagicHit
-		RemoveEventHandler "OnHitWith" aaZefirosOnWeaponHit
-		RemoveEventHandler "OnMagicApply" aaZefirosOnMagicApply
+		Call aaZefirosSetHandlers 0
 
 	endif
 

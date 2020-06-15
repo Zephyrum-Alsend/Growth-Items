@@ -11,8 +11,6 @@ scn aaZefirosModStat
 
 ;Related scripts
 ;-----------------------------------------------------------------------------
-;aaZefirosDefaultINI
-;aaZefirosGetArmorStats
 ;-----------------------------------------------------------------------------
 
 ;Used globals
@@ -27,6 +25,11 @@ scn aaZefirosModStat
 ;Description
 ;-----------------------------------------------------------------------------
 ;Mods the stats of the passed armor according to the other values passed.
+;Takes an array of default slot masks, array of growth rates, heavy armor AR
+;and weight multipliers, armor type, start level, end level and the armor to 
+;be modified.
+;Start and end level are required instead of level difference to account for
+;truncation as Ints can be modded by Floats.
 ;-----------------------------------------------------------------------------
 
 ;Parameters
@@ -44,7 +47,6 @@ short ARB
 float WgtB
 short HltB
 long ValB
-
 short ARM
 float WgtM
 float HltM
@@ -56,7 +58,6 @@ long Health
 long Value
 
 long Slot
-
 array_var Merg
 array_var Iter
 short i
@@ -83,11 +84,11 @@ begin Function { Dflt, Stat, HvyAR, HvyWgt, HvyFlg, SLvl, ELvl, Armr }
 
 		Let i := *Iter
 		
-		Let ARB += Stat[i][0]
+		Let ARB  += Stat[i][0]
 		Let WgtB += Stat[i][1]
 		Let HltB += Stat[i][2]
 		Let ValB += Stat[i][3]
-		Let ARM += Stat[i][4]
+		Let ARM  += Stat[i][4]
 		Let WgtM += Stat[i][5]
 		Let HltM += Stat[i][6]
 		Let ValM += Stat[i][7]

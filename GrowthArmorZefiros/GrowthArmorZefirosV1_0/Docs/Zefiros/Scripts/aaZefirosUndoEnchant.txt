@@ -37,6 +37,12 @@ scn aaZefirosUndoEnchant
 ;history of all level ups, and the enchants themselves.
 ;Reinitializes the enchants after deleveling them.
 ;Returns what the new active enchants are and the remaining history.
+;
+;Slots = GetBipedSlotMask
+;Dflt = Default biped slot mask
+;EnSt = Call aaZefirosGetEnchantData
+;Hist = string_var pseudo array, containing two digit shorts
+;Enchs = Enchantment reference
 ;-----------------------------------------------------------------------------
 
 ;Parameters
@@ -78,6 +84,7 @@ begin Function { Slots, Dflt, Lvl, EnSt, Hist, Enchs }
 	Let NewActv := ar_Construct Array
 	Let NewHist := ar_Construct Array
 	Let Merg := ar_Construct Array
+	
 	Let h := 0
 	while ( h < Count )
 
@@ -86,18 +93,24 @@ begin Function { Slots, Dflt, Lvl, EnSt, Hist, Enchs }
 		
 
 		;-----------------------------------------------------------------------------
+		;Enchantments don't have names so the most human readable we can do is array index
 		DebugPrint "Undoing levels for [%.0f] enchantment..." h
 		;-----------------------------------------------------------------------------
 		Let i := 0
-		while ( i < Lvl )
-	
+		while ( i < Lvl && 0 < sv_Length StrArr )
+
+			;Extract the first 2 digits from StrArr
 			Let Actv := #StrArr[0:1]
-			;Decrement levels
+			
+			;Decrement level
 			Call aaZefirosModEnchLevel h ( -1 ) Actv
+
+			;Erase the extracted number
 			sv_Erase StrArr 0 2
 	
 			Let i += 1
 		loop
+		
 		ar_Append NewActv Actv
 		ar_Append NewHist StrArr
 
@@ -106,15 +119,21 @@ begin Function { Slots, Dflt, Lvl, EnSt, Hist, Enchs }
 		DebugPrint "Reinitializing..."
 		;-----------------------------------------------------------------------------
 		SetDebugMode 0 ;Console clog begone!
+		
 		Call aaZefirosRemoveAllEffectItems Ench
 		Let NewLvl := Call aaZefirosGetEnchantLevels h
 		Call aaZefirosSetEnchant EnSt NewLvl Actv Ench
-		if ( Ench != aaZefirosInit.EnchShld ) ;Shield shouldn't have resists, no other elegant way
+		
+		if ( Ench != aaZefirosInit.EnchShld ) ;Shield shouldn't have resists, inelegant
+			
 			Call aaZefirosSetResistEffects ( &1 ) Dflt ( Call aaZefirosGetResistMatrix 0 ) ( &Ench )
+			
 		endif
+		
 		SetDebugMode aaZefirosDebug
 
 
+		;Also get merged items so we can remerge
 		Let Merg[h] := Call aaZefirosGetMerg Slots[h] Dflt
 
 		Let h += 1

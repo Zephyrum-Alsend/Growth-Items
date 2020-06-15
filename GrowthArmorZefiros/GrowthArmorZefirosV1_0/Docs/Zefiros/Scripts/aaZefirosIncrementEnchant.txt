@@ -40,6 +40,11 @@ scn aaZefirosIncrementEnchant
 
 ;Description
 ;-----------------------------------------------------------------------------
+;Increments enchantment effects after level change.
+;Passed the slot masks of the items the enchantments belong to, their default
+;slot masks, the enchantment effect stat array, the level de/increment, active
+;effect indexes and the enchantments themselves.
+;Accounts for merged items and truncated decimals when calculating crements.
 ;-----------------------------------------------------------------------------
 
 ;Parameters
@@ -71,7 +76,7 @@ string_var Name
 begin Function { Slots, Dflt, Data, Lvl, Actv, Enchs }
 ;-----------------------------------------------------------------------------
 
-	;Get the smallest array size
+	;Set Count to the smallest array size
 	Let Count := ar_Size Slots
 	if eval( Count > ar_Size Data )
 		Let Count := ar_Size Data
@@ -84,15 +89,18 @@ begin Function { Slots, Dflt, Data, Lvl, Actv, Enchs }
 	endif
 	
 	
-	;Get stat increases and array of merged items
+	;-----------------------------------------------------------------------------
+	;Get stat changes and find out what's merged
+	;-----------------------------------------------------------------------------
 	Let Incr := ar_Construct Array
 	Let Stat := ar_Construct Array
 	Let FnSt := ar_Construct Array
 	Let Indx := ar_Construct Array
+
 	Let i := 0
 	while ( i < Count )
 
-		;Because Ints are increasing by Floats,
+		;Because Ints are changing by Floats,
 		;we have to store intermediary steps to account for truncation
 
 		;Get stats for starting and ending levels
@@ -107,7 +115,7 @@ begin Function { Slots, Dflt, Data, Lvl, Actv, Enchs }
 		Let FnSt[i][2] -= Stat[i][2]
 
 
-		;Get array of merged indexes
+		;Get merged indexes
 		Let Indx[i] := Call aaZefirosGetMerg Slots[i] Dflt
 		
 
@@ -115,7 +123,9 @@ begin Function { Slots, Dflt, Data, Lvl, Actv, Enchs }
 	loop
 
 
+	;-----------------------------------------------------------------------------
 	;Mod effects
+	;-----------------------------------------------------------------------------
 	Let i := 0
 	while ( i < Count )
 
@@ -126,7 +136,7 @@ begin Function { Slots, Dflt, Data, Lvl, Actv, Enchs }
 			
 			Let k := Call aaZefirosGetEffectIndex Data[Actv[j]][0] Data[Actv[j]][1] Enchs[i]
 			
-			if ( k > -1 )
+			if ( k > -1 ) ;Effect index found
 
 				Let Ench := Enchs[i]
 
@@ -142,7 +152,7 @@ begin Function { Slots, Dflt, Data, Lvl, Actv, Enchs }
 				Let x := FnSt[j][2]
 				ModNthEffectItemDuration x Ench k
 
-			else
+			else ;Effect index not found
 
 				Let k := Data[Actv[j]][0]
 				Let x := Data[Actv[j]][1]

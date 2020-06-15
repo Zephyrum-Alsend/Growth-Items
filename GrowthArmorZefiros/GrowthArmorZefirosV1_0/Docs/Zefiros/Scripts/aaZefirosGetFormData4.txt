@@ -1,0 +1,198 @@
+scn aaZefirosGetFormData4
+
+;Main script
+;-----------------------------------------------------------------------------
+;aaZefirosManager
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;aaZefirosGetFormsArray
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;Extends and returns the array started in GetFormsArray.
+;Contains guard armor and Local Guards Features + Addons.
+;
+;Created to bypass script size limitations.
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+array_var Data ;Return value
+;-----------------------------------------------------------------------------
+
+;-----------------------------------------------------------------------------
+begin Function { Data }
+;-----------------------------------------------------------------------------
+
+	;ar_Append is used so re-ordering this list is just a simple cut&paste
+	
+	;-----------------------------------------------------------------------------
+	;Anvil
+	;-----------------------------------------------------------------------------
+	ar_Append Data[0] ar_Map 0::GetBipedModelPath 0 TownguardCuirassAn 			1::GetBipedModelPath 1 TownguardCuirassAn	 	2::GetBipedModelPath 2 TownguardCuirassAn 		3::GetBipedModelPath 3 TownguardCuirassAn 		4::GetBipedIconPath 0 TownguardCuirassAn 	5::GetBipedIconPath 1 TownguardCuirassAn 	6::"Anvil Standard" 	7::GetBipedSlotMask TownguardCuirassAn
+	ar_Append Data[0] ar_Map 0::"Zefiros\Armor\tbskGuard\Anvil01_old.nif"		1::""											2::GetBipedModelPath 2 TownguardCuirassAn		3::""											4::GetBipedIconPath 0 TownguardCuirassAn	5::""										6::"Anvil Vest"			7::4
+	ar_Append Data[0] ar_Map 0::"Zefiros\Armor\tbskGuard\AnvilJailor01.nif"		1::"Zefiros\Armor\tbskGuard\AnvilJailor01F.nif"	2::GetBipedModelPath 2 TownguardCuirassAn		3::""											4::GetBipedIconPath 0 TownguardCuirassAn	5::""										6::"Anvil Gambeson"		7::4
+	ar_Append Data[0] ar_Map 0::"Zefiros\Armor\tbskGuard\Anvil01.nif"			1::"Zefiros\Armor\tbskGuard\Anvil01F.nif"		2::GetBipedModelPath 2 TownguardCuirassAn		3::""											4::GetBipedIconPath 0 TownguardCuirassAn	5::""										6::"Anvil Cuirass A"	7::4
+	ar_Append Data[0] ar_Map 0::"Zefiros\Armor\tbskGuard\Anvil02.nif"			1::"Zefiros\Armor\tbskGuard\Anvil02F.nif"		2::GetBipedModelPath 2 TownguardCuirassAn		3::""											4::GetBipedIconPath 0 TownguardCuirassAn	5::""										6::"Anvil Cuirass B"	7::4
+	ar_Append Data[0] ar_Map 0::"Zefiros\Armor\tbskGuard\Anvil03.nif"			1::"Zefiros\Armor\tbskGuard\Anvil03F.nif"		2::GetBipedModelPath 2 TownguardCuirassAn		3::""											4::GetBipedIconPath 0 TownguardCuirassAn	5::""										6::"Anvil Cuirass C"	7::4
+	ar_Append Data[0] ar_Map 0::"Zefiros\Armor\tbskGuard\AnvilHeavy01.nif"		1::"Zefiros\Armor\tbskGuard\AnvilHeavy01F.nif"	2::GetBipedModelPath 2 TownguardCuirassAn		3::""											4::GetBipedIconPath 0 TownguardCuirassAn	5::""										6::"Anvil Plate"		7::4
+	ar_Append Data[3] ar_Map 0::"Zefiros\Armor\tbskGuard\AnvilHelm.nif"			1::""											2::GetBipedModelPath 2 TownguardHelmet			3::""											4::GetBipedIconPath 0 TownguardHelmet		5::""										6::"Anvil Helm"			7::2
+	ar_Append Data[3] ar_Map 0::"Zefiros\Armor\tbskGuard\AnvilHelmLight.nif"	1::""											2::GetBipedModelPath 2 TownguardHelmet			3::""											4::GetBipedIconPath 0 TownguardHelmet		5::""										6::"Anvil Arming Cap"	7::2
+	ar_Append Data[3] ar_Map 0::"Zefiros\Armor\tbskGuard\AnvilHood.nif"			1::""											2::GetBipedModelPath 2 TownguardHelmet			3::""											4::GetBipedIconPath 0 TownguardHelmet		5::""										6::"Anvil Cowl"			7::2
+	ar_Append Data[4] ar_Map 0::"Zefiros\Armor\tbskGuard\AnvilPants.nif"		1::""											2::GetBipedModelPath 2 LeatherGreaves			3::""											4::GetBipedIconPath 0 LeatherGreaves		5::""										6::"Anvil"				7::8
+	ar_Append Data[5] ar_Map 0::GetBipedModelPath 0 TownguardAnShield 			1::GetBipedModelPath 1 TownguardAnShield	 	2::GetBipedModelPath 2 TownguardAnShield 		3::GetBipedModelPath 3 TownguardAnShield 		4::GetBipedIconPath 0 TownguardAnShield 	5::GetBipedIconPath 1 TownguardAnShield 	6::"Anvil" 				7::GetBipedSlotMask TownguardAnShield
+		
+	;-----------------------------------------------------------------------------
+	;Bravil
+	;-----------------------------------------------------------------------------
+	ar_Append Data[0] ar_Map 0::GetBipedModelPath 0 TownguardCuirassBra 		1::GetBipedModelPath 1 TownguardCuirassBra	 		2::GetBipedModelPath 2 TownguardCuirassBra 		3::GetBipedModelPath 3 TownguardCuirassBra 		4::GetBipedIconPath 0 TownguardCuirassBra 	5::GetBipedIconPath 1 TownguardCuirassBra 	6::"Bravil Standard" 	7::GetBipedSlotMask TownguardCuirassBra
+	ar_Append Data[0] ar_Map 0::"Zefiros\Armor\tbskGuard\BravilJailor01.nif"	1::"Zefiros\Armor\tbskGuard\BravilJailor01F.nif"	2::GetBipedModelPath 2 TownguardCuirassBra		3::""											4::GetBipedIconPath 0 TownguardCuirassBra	5::""										6::"Bravil Gambeson"	7::4
+	ar_Append Data[0] ar_Map 0::"Zefiros\Armor\tbskGuard\Bravil01.nif"			1::"Zefiros\Armor\tbskGuard\Bravil01F.nif"			2::GetBipedModelPath 2 TownguardCuirassBra		3::""											4::GetBipedIconPath 0 TownguardCuirassBra	5::""										6::"Bravil Cuirass A"	7::4
+	ar_Append Data[0] ar_Map 0::"Zefiros\Armor\tbskGuard\Bravil02.nif"			1::"Zefiros\Armor\tbskGuard\Bravil02F.nif"			2::GetBipedModelPath 2 TownguardCuirassBra		3::""											4::GetBipedIconPath 0 TownguardCuirassBra	5::""										6::"Bravil Cuirass B"	7::4
+	ar_Append Data[0] ar_Map 0::"Zefiros\Armor\tbskGuard\Bravil03.nif"			1::"Zefiros\Armor\tbskGuard\Bravil03F.nif"			2::GetBipedModelPath 2 TownguardCuirassBra		3::""											4::GetBipedIconPath 0 TownguardCuirassBra	5::""										6::"Bravil Cuirass C"	7::4
+	ar_Append Data[0] ar_Map 0::"Zefiros\Armor\tbskGuard\BravilHeavy01.nif"		1::"Zefiros\Armor\tbskGuard\BravilHeavy01F.nif"		2::GetBipedModelPath 2 TownguardCuirassBra		3::""											4::GetBipedIconPath 0 TownguardCuirassBra	5::""										6::"Bravil Plate A"		7::4
+	ar_Append Data[0] ar_Map 0::"Zefiros\Armor\tbskGuard\BravilHeavy02.nif"		1::"Zefiros\Armor\tbskGuard\BravilHeavy02F.nif"		2::GetBipedModelPath 2 TownguardCuirassBra		3::""											4::GetBipedIconPath 0 TownguardCuirassBra	5::""										6::"Bravil Plate B"		7::4
+	ar_Append Data[3] ar_Map 0::"Zefiros\Armor\tbskGuard\BravilHelm01.nif"		1::""												2::GetBipedModelPath 2 TownguardHelmet			3::""											4::GetBipedIconPath 0 TownguardHelmet		5::""										6::"Bravil Helm A"		7::2
+	ar_Append Data[3] ar_Map 0::"Zefiros\Armor\tbskGuard\BravilHelm02.nif"		1::""												2::GetBipedModelPath 2 TownguardHelmet			3::""											4::GetBipedIconPath 0 TownguardHelmet		5::""										6::"Bravil Helm B"		7::2
+	ar_Append Data[3] ar_Map 0::"Zefiros\Armor\tbskGuard\BravilHelm03.nif"		1::""												2::GetBipedModelPath 2 TownguardHelmet			3::""											4::GetBipedIconPath 0 TownguardHelmet		5::""										6::"Bravil Helm C"		7::2
+	ar_Append Data[5] ar_Map 0::GetBipedModelPath 0 TownguardBraShield 			1::GetBipedModelPath 1 TownguardBraShield	 		2::GetBipedModelPath 2 TownguardBraShield 		3::GetBipedModelPath 3 TownguardBraShield 		4::GetBipedIconPath 0 TownguardBraShield 	5::GetBipedIconPath 1 TownguardBraShield 	6::"Bravil" 			7::GetBipedSlotMask TownguardBraShield
+		
+	;-----------------------------------------------------------------------------
+	;Bruma
+	;-----------------------------------------------------------------------------
+	ar_Append Data[0] ar_Map 0::GetBipedModelPath 0 TownguardCuirassBru 		1::GetBipedModelPath 1 TownguardCuirassBru	 		2::GetBipedModelPath 2 TownguardCuirassBru 		3::GetBipedModelPath 3 TownguardCuirassBru 		4::GetBipedIconPath 0 TownguardCuirassBru 	5::GetBipedIconPath 1 TownguardCuirassBru 	6::"Bruma Standard" 	7::GetBipedSlotMask TownguardCuirassBru
+	ar_Append Data[0] ar_Map 0::"Zefiros\Armor\tbskGuard\BrumaJailor01.nif"		1::"Zefiros\Armor\tbskGuard\BrumaJailor01F.nif"		2::GetBipedModelPath 2 TownguardCuirassBru		3::""											4::GetBipedIconPath 0 TownguardCuirassBru	5::""										6::"Bruma Gambeson"		7::4
+	ar_Append Data[0] ar_Map 0::"Zefiros\Armor\tbskGuard\BrumaMilitia01.nif"	1::"Zefiros\Armor\tbskGuard\BrumaMilitia01F.nif"	2::GetBipedModelPath 2 TownguardCuirassBru		3::""											4::GetBipedIconPath 0 TownguardCuirassBru	5::""										6::"Bruma Militia"		7::4
+	ar_Append Data[0] ar_Map 0::"Zefiros\Armor\tbskGuard\Bruma01.nif"			1::"Zefiros\Armor\tbskGuard\Bruma01F.nif"			2::GetBipedModelPath 2 TownguardCuirassBru		3::""											4::GetBipedIconPath 0 TownguardCuirassBru	5::""										6::"Bruma Coat"			7::4
+	ar_Append Data[0] ar_Map 0::"Zefiros\Armor\tbskGuard\Bruma03.nif"			1::"Zefiros\Armor\tbskGuard\Bruma03F.nif"			2::GetBipedModelPath 2 TownguardCuirassBru		3::""											4::GetBipedIconPath 0 TownguardCuirassBru	5::""										6::"Bruma Tabard"		7::4
+	ar_Append Data[0] ar_Map 0::"Zefiros\Armor\tbskGuard\BrumaHeavy01.nif"		1::"Zefiros\Armor\tbskGuard\BrumaHeavy01F.nif"		2::GetBipedModelPath 2 TownguardCuirassBru		3::""											4::GetBipedIconPath 0 TownguardCuirassBru	5::""										6::"Bruma Plate A"		7::4
+	ar_Append Data[0] ar_Map 0::"Zefiros\Armor\tbskGuard\BrumaBurdArmor.nif"	1::"Zefiros\Armor\tbskGuard\BrumaBurdArmorF.nif"	2::GetBipedModelPath 2 TownguardCuirassBru		3::""											4::GetBipedIconPath 0 TownguardCuirassBru	5::""										6::"Bruma Plate B"		7::4
+	ar_Append Data[0] ar_Map 0::"Zefiros\Armor\tbskGuard\BrumaGerichArmor.nif"	1::"Zefiros\Armor\tbskGuard\BrumaGerichArmorF.nif"	2::GetBipedModelPath 2 TownguardCuirassBru		3::""											4::GetBipedIconPath 0 TownguardCuirassBru	5::""										6::"Bruma Plate C"		7::4
+	ar_Append Data[3] ar_Map 0::"Zefiros\Armor\tbskGuard\BrumaHelm01.nif"		1::""												2::GetBipedModelPath 2 TownguardHelmet			3::""											4::GetBipedIconPath 0 TownguardHelmet		5::""										6::"Bruma Helm A"		7::2
+	ar_Append Data[3] ar_Map 0::"Zefiros\Armor\tbskGuard\BrumaHelm02.nif"		1::""												2::GetBipedModelPath 2 TownguardHelmet			3::""											4::GetBipedIconPath 0 TownguardHelmet		5::""										6::"Bruma Helm B"		7::2
+	ar_Append Data[3] ar_Map 0::"Zefiros\Armor\tbskGuard\BrumaHelm03.nif"		1::""												2::GetBipedModelPath 2 TownguardHelmet			3::""											4::GetBipedIconPath 0 TownguardHelmet		5::""										6::"Bruma Helm C"		7::2
+	ar_Append Data[3] ar_Map 0::"Zefiros\Armor\tbskGuard\BrumaHelm04.nif"		1::""												2::GetBipedModelPath 2 TownguardHelmet			3::""											4::GetBipedIconPath 0 TownguardHelmet		5::""										6::"Bruma Helm D"		7::2
+	ar_Append Data[3] ar_Map 0::"Zefiros\Armor\tbskGuard\BrumaHelm05.nif"		1::""												2::GetBipedModelPath 2 TownguardHelmet			3::""											4::GetBipedIconPath 0 TownguardHelmet		5::""										6::"Bruma Helm E"		7::2
+	ar_Append Data[5] ar_Map 0::GetBipedModelPath 0 TownguardBruShield 			1::GetBipedModelPath 1 TownguardBruShield	 		2::GetBipedModelPath 2 TownguardBruShield 		3::GetBipedModelPath 3 TownguardBruShield 		4::GetBipedIconPath 0 TownguardBruShield 	5::GetBipedIconPath 1 TownguardBruShield 	6::"Bruma" 				7::GetBipedSlotMask TownguardBruShield
+		
+	;-----------------------------------------------------------------------------
+	;Cheydinhal
+	;-----------------------------------------------------------------------------
+	ar_Append Data[0] ar_Map 0::GetBipedModelPath 0 TownguardCuirassChe 			1::GetBipedModelPath 1 TownguardCuirassChe	 			2::GetBipedModelPath 2 TownguardCuirassChe 		3::GetBipedModelPath 3 TownguardCuirassChe 		4::GetBipedIconPath 0 TownguardCuirassChe 	5::GetBipedIconPath 1 TownguardCuirassChe 	6::"Cheydinhal Standard"	7::GetBipedSlotMask TownguardCuirassChe
+	ar_Append Data[0] ar_Map 0::"Zefiros\Armor\tbskGuard\CheydinhalJailor01.nif"	1::"Zefiros\Armor\tbskGuard\CheydinhalJailor01F.nif"	2::GetBipedModelPath 2 TownguardCuirassChe		3::""											4::GetBipedIconPath 0 TownguardCuirassChe	5::""										6::"Cheydinhal Gambeson"	7::4
+	ar_Append Data[0] ar_Map 0::"Zefiros\Armor\tbskGuard\Cheydinhal01.nif"			1::"Zefiros\Armor\tbskGuard\Cheydinhal01F.nif"			2::GetBipedModelPath 2 TownguardCuirassChe		3::""											4::GetBipedIconPath 0 TownguardCuirassChe	5::""										6::"Cheydinhal Cuirass"		7::4
+	ar_Append Data[0] ar_Map 0::"Zefiros\Armor\tbskGuard\CheydinhalHeavy01.nif"		1::"Zefiros\Armor\tbskGuard\CheydinhalHeavy01F.nif"		2::GetBipedModelPath 2 TownguardCuirassChe		3::""											4::GetBipedIconPath 0 TownguardCuirassChe	5::""										6::"Cheydinhal Plate"		7::4
+	ar_Append Data[0] ar_Map 0::"Zefiros\Armor\tbskGuard\CheydinhalGarrusArmor.nif"	1::"Zefiros\Armor\tbskGuard\CheydinhalGarrusArmorF.nif"	2::GetBipedModelPath 2 TownguardCuirassChe		3::""											4::GetBipedIconPath 0 TownguardCuirassChe	5::""										6::"Cheydinhal Tabard"		7::4
+	ar_Append Data[0] ar_Map 0::"Zefiros\Armor\tbskGuard\CheydinhalUlrichCoat.nif"	1::""													2::GetBipedModelPath 2 TownguardCuirassChe		3::""											4::GetBipedIconPath 0 TownguardCuirassChe	5::""										6::"Cheydinhal Pomp"		7::4
+	ar_Append Data[3] ar_Map 0::"Zefiros\Armor\tbskGuard\CheydinhalHood01.nif"		1::""													2::GetBipedModelPath 2 TownguardHelmet			3::""											4::GetBipedIconPath 0 TownguardHelmet		5::""										6::"Cheydinhal Cowl A"		7::2
+	ar_Append Data[3] ar_Map 0::"Zefiros\Armor\tbskGuard\CheydinhalHood02.nif"		1::""													2::GetBipedModelPath 2 TownguardHelmet			3::""											4::GetBipedIconPath 0 TownguardHelmet		5::""										6::"Cheydinhal Cowl B"		7::2
+	ar_Append Data[5] ar_Map 0::GetBipedModelPath 0 TownguardCheShield 				1::GetBipedModelPath 1 TownguardCheShield	 			2::GetBipedModelPath 2 TownguardCheShield 		3::GetBipedModelPath 3 TownguardCheShield 		4::GetBipedIconPath 0 TownguardCheShield 	5::GetBipedIconPath 1 TownguardCheShield 	6::"Cheydinhal"				7::GetBipedSlotMask TownguardCheShield
+		
+	;-----------------------------------------------------------------------------
+	;Thorn
+	;-----------------------------------------------------------------------------
+	ar_Append Data[0] ar_Map 0::"Zefiros\Armor\tbskGuard\ThornAddon\ThornCuirass01.nif"			1::"Zefiros\Armor\tbskGuard\ThornAddon\ThornCuirass01F.nif"			2::"Zefiros\Armor\tbskGuard\ThornAddon\ThornCuirass_gnd.nif"	3::""	4::GetBipedIconPath 0 SteelCuirass		5::""	6::"Knight of the Thorn"		7::4
+	ar_Append Data[0] ar_Map 0::"Zefiros\Armor\tbskGuard\ThornAddon\ThornCuirassFarwil01.nif"	1::"Zefiros\Armor\tbskGuard\ThornAddon\ThornCuirassFarwil01F.nif"	2::"Zefiros\Armor\tbskGuard\ThornAddon\ThornCuirass_gnd.nif"	3::""	4::GetBipedIconPath 0 SteelCuirass		5::""	6::"Knight of the Thorn Rimmed"	7::4
+	ar_Append Data[2] ar_Map 0::"Zefiros\Armor\tbskGuard\ThornAddon\ThornGauntlets.nif"			1::""																2::"Zefiros\Armor\tbskGuard\ThornAddon\ThornGauntlets_gnd.nif"	3::""	4::GetBipedIconPath 0 SteelGauntlets	5::""	6::"Knight of the Thorn"		7::16
+	ar_Append Data[3] ar_Map 0::"Zefiros\Armor\tbskGuard\ThornAddon\DRhelm.nif"					1::""																2::"Zefiros\Armor\tbskGuard\ThornAddon\DRhelm_gnd.nif"			3::""	4::GetBipedIconPath 0 BladesHelmet		5::""	6::"Knight of the Thorn"		7::2
+	ar_Append Data[4] ar_Map 0::"Zefiros\Armor\tbskGuard\ThornAddon\ThornGreaves.nif"			1::"Zefiros\Armor\tbskGuard\ThornAddon\ThornGreavesF.nif"			2::"Zefiros\Armor\tbskGuard\ThornAddon\ThornGreaves_gnd.nif"	3::""	4::GetBipedIconPath 0 SteelGreaves		5::""	6::"Knight of the Thorn"		7::8
+	ar_Append Data[5] ar_Map 0::"Zefiros\Armor\tbskGuard\ThornAddon\ThornShield.nif"			1::""																2::"Zefiros\Armor\tbskGuard\ThornAddon\ThornShield.nif"			3::""	4::GetBipedIconPath 0 SteelShield		5::""	6::"Knight of the Thorn"		7::8192
+	
+	;-----------------------------------------------------------------------------
+	;Chorrol
+	;-----------------------------------------------------------------------------
+	ar_Append Data[0] ar_Map 0::GetBipedModelPath 0 TownguardCuirassCho 		1::GetBipedModelPath 1 TownguardCuirassCho	 		2::GetBipedModelPath 2 TownguardCuirassCho 	3::GetBipedModelPath 3 TownguardCuirassCho	4::GetBipedIconPath 0 TownguardCuirassCho 	5::GetBipedIconPath 1 TownguardCuirassCho 	6::"Chorrol Standard" 	7::GetBipedSlotMask TownguardCuirassCho
+	ar_Append Data[0] ar_Map 0::"Zefiros\Armor\tbskGuard\ChorrolJailor01.nif"	1::"Zefiros\Armor\tbskGuard\ChorrolJailor01F.nif"	2::GetBipedModelPath 2 TownguardCuirassCho	3::""										4::GetBipedIconPath 0 TownguardCuirassCho	5::""										6::"Chorrol Gambeson"	7::4
+	ar_Append Data[0] ar_Map 0::"Zefiros\Armor\tbskGuard\ChorrolMilitia01.nif"	1::""												2::GetBipedModelPath 2 TownguardCuirassBru	3::""										4::GetBipedIconPath 0 TownguardCuirassCho	5::""										6::"Chorrol Militia"	7::4
+	ar_Append Data[0] ar_Map 0::"Zefiros\Armor\tbskGuard\Chorrol01.nif"			1::"Zefiros\Armor\tbskGuard\Chorrol01F.nif"			2::GetBipedModelPath 2 TownguardCuirassCho	3::""										4::GetBipedIconPath 0 TownguardCuirassCho	5::""										6::"Chorrol Tabard"		7::4
+	ar_Append Data[0] ar_Map 0::"Zefiros\Armor\tbskGuard\ChorrolHeavy01.nif"	1::"Zefiros\Armor\tbskGuard\ChorrolHeavy01F.nif"	2::GetBipedModelPath 2 TownguardCuirassCho	3::""										4::GetBipedIconPath 0 TownguardCuirassCho	5::""										6::"Chorrol Plate"		7::4
+	ar_Append Data[5] ar_Map 0::GetBipedModelPath 0 TownguardChoShield 			1::GetBipedModelPath 1 TownguardChoShield	 		2::GetBipedModelPath 2 TownguardChoShield 	3::GetBipedModelPath 3 TownguardChoShield 	4::GetBipedIconPath 0 TownguardChoShield 	5::GetBipedIconPath 1 TownguardChoShield 	6::"Chorrol" 			7::GetBipedSlotMask TownguardChoShield
+		
+	;-----------------------------------------------------------------------------
+	;Kvatch
+	;-----------------------------------------------------------------------------
+	ar_Append Data[0] ar_Map 0::GetBipedModelPath 0 TownguardCuirassKv 				1::GetBipedModelPath 1 TownguardCuirassKv			 	2::GetBipedModelPath 2 TownguardCuirassKv 	3::GetBipedModelPath 3 TownguardCuirassKv 	4::GetBipedIconPath 0 TownguardCuirassKv 	5::GetBipedIconPath 1 TownguardCuirassKv 	6::"Kvatch Standard" 	7::GetBipedSlotMask TownguardCuirassKv
+	ar_Append Data[0] ar_Map 0::"Zefiros\Armor\tbskGuard\KvatchAddon\Kvatch01.nif"	1::"Zefiros\Armor\tbskGuard\KvatchAddon\Kvatch01F.nif"	2::GetBipedModelPath 2 TownguardCuirassKv	3::""										4::GetBipedIconPath 0 TownguardCuirassKv	5::""										6::"Kvatch Tabard"		7::4
+	ar_Append Data[0] ar_Map 0::"Zefiros\Armor\tbskGuard\KvatchAddon\Kvatch02.nif"	1::"Zefiros\Armor\tbskGuard\KvatchAddon\Kvatch02F.nif"	2::GetBipedModelPath 2 TownguardCuirassKv	3::""										4::GetBipedIconPath 0 TownguardCuirassKv	5::""										6::"Kvatch Cuirass"		7::4
+	ar_Append Data[5] ar_Map 0::GetBipedModelPath 0 TownguardKvShield 				1::GetBipedModelPath 1 TownguardKvShield	 			2::GetBipedModelPath 2 TownguardKvShield 	3::GetBipedModelPath 3 TownguardKvShield 	4::GetBipedIconPath 0 TownguardKvShield 	5::GetBipedIconPath 1 TownguardKvShield 	6::"Kvatch" 			7::GetBipedSlotMask TownguardKvShield
+		
+	;-----------------------------------------------------------------------------
+	;Leyawiin
+	;-----------------------------------------------------------------------------
+	ar_Append Data[0] ar_Map 0::GetBipedModelPath 0 TownguardCuirassLe 			1::GetBipedModelPath 1 TownguardCuirassLe	 		2::GetBipedModelPath 2 TownguardCuirassLe 		3::GetBipedModelPath 3 TownguardCuirassLe 		4::GetBipedIconPath 0 TownguardCuirassLe 	5::GetBipedIconPath 1 TownguardCuirassLe 	6::"Leyawiin Standard" 		7::GetBipedSlotMask TownguardCuirassLe
+	ar_Append Data[0] ar_Map 0::"Zefiros\Armor\tbskGuard\LeyawiinJailor01.nif"	1::"Zefiros\Armor\tbskGuard\LeyawiinJailor01F.nif"	2::GetBipedModelPath 2 TownguardCuirassLe		3::""											4::GetBipedIconPath 0 TownguardCuirassLe	5::""										6::"Leyawiin Gambeson"		7::4
+	ar_Append Data[0] ar_Map 0::"Zefiros\Armor\tbskGuard\Leyawiin01.nif"		1::"Zefiros\Armor\tbskGuard\Leyawiin01F.nif"		2::GetBipedModelPath 2 TownguardCuirassLe		3::""											4::GetBipedIconPath 0 TownguardCuirassLe	5::""										6::"Leyawiin Cuirass A"		7::4
+	ar_Append Data[0] ar_Map 0::"Zefiros\Armor\tbskGuard\Leyawiin02.nif"		1::"Zefiros\Armor\tbskGuard\Leyawiin02F.nif"		2::GetBipedModelPath 2 TownguardCuirassLe		3::""											4::GetBipedIconPath 0 TownguardCuirassLe	5::""										6::"Leyawiin Cuirass B"		7::4
+	ar_Append Data[0] ar_Map 0::"Zefiros\Armor\tbskGuard\Leyawiin03.nif"		1::"Zefiros\Armor\tbskGuard\Leyawiin03F.nif"		2::GetBipedModelPath 2 TownguardCuirassLe		3::""											4::GetBipedIconPath 0 TownguardCuirassLe	5::""										6::"Leyawiin Cuirass C"		7::4
+	ar_Append Data[3] ar_Map 0::"Zefiros\Armor\tbskGuard\LeyawiinHelm.nif"		1::""												2::GetBipedModelPath 2 TownguardHelmet			3::""											4::GetBipedIconPath 0 TownguardHelmet		5::""										6::"Leyawiin Arming Cap"	7::2
+	ar_Append Data[5] ar_Map 0::GetBipedModelPath 0 TownguardLeShield 			1::GetBipedModelPath 1 TownguardLeShield	 		2::GetBipedModelPath 2 TownguardLeShield 		3::GetBipedModelPath 3 TownguardLeShield 		4::GetBipedIconPath 0 TownguardLeShield 	5::GetBipedIconPath 1 TownguardLeShield 	6::"Leyawiin" 				7::GetBipedSlotMask TownguardLeShield
+		
+	;-----------------------------------------------------------------------------
+	;Skingrad
+	;-----------------------------------------------------------------------------
+	ar_Append Data[0] ar_Map 0::GetBipedModelPath 0 TownguardCuirassSk 			1::GetBipedModelPath 1 TownguardCuirassSk	 		2::GetBipedModelPath 2 TownguardCuirassSk 		3::GetBipedModelPath 3 TownguardCuirassSk 		4::GetBipedIconPath 0 TownguardCuirassSk 	5::GetBipedIconPath 1 TownguardCuirassSk 	6::"Skingrad Standard" 	7::GetBipedSlotMask TownguardCuirassSk
+	ar_Append Data[0] ar_Map 0::"Zefiros\Armor\tbskGuard\SkingradJailor01.nif"	1::"Zefiros\Armor\tbskGuard\SkingradJailor01F.nif"	2::GetBipedModelPath 2 TownguardCuirassSk		3::""											4::GetBipedIconPath 0 TownguardCuirassSk	5::""										6::"Skingrad Gambeson"	7::4
+	ar_Append Data[0] ar_Map 0::"Zefiros\Armor\tbskGuard\Skingrad01.nif"		1::"Zefiros\Armor\tbskGuard\Skingrad01F.nif"		2::GetBipedModelPath 2 TownguardCuirassSk		3::""											4::GetBipedIconPath 0 TownguardCuirassSk	5::""										6::"Skingrad Cuirass A"	7::4
+	ar_Append Data[0] ar_Map 0::"Zefiros\Armor\tbskGuard\Skingrad02.nif"		1::"Zefiros\Armor\tbskGuard\Skingrad02F.nif"		2::GetBipedModelPath 2 TownguardCuirassSk		3::""											4::GetBipedIconPath 0 TownguardCuirassSk	5::""										6::"Skingrad Cuirass B"	7::4
+	ar_Append Data[0] ar_Map 0::"Zefiros\Armor\tbskGuard\Skingrad03.nif"		1::""												2::GetBipedModelPath 2 TownguardCuirassSk		3::""											4::GetBipedIconPath 0 TownguardCuirassSk	5::""										6::"Skingrad Cuirass C"	7::4
+	ar_Append Data[0] ar_Map 0::"Zefiros\Armor\tbskGuard\SkingradHeavy01.nif"	1::"Zefiros\Armor\tbskGuard\SkingradHeavy01F.nif"	2::GetBipedModelPath 2 TownguardCuirassSk		3::""											4::GetBipedIconPath 0 TownguardCuirassSk	5::""										6::"Skingrad Plate A"	7::4
+	ar_Append Data[0] ar_Map 0::"Zefiros\Armor\tbskGuard\SkingradHeavy02.nif"	1::"Zefiros\Armor\tbskGuard\SkingradHeavy02F.nif"	2::GetBipedModelPath 2 TownguardCuirassSk		3::""											4::GetBipedIconPath 0 TownguardCuirassSk	5::""										6::"Skingrad Plate B"	7::4
+	ar_Append Data[0] ar_Map 0::"Zefiros\Armor\tbskGuard\SkingradDionArmor.nif"	1::""												2::GetBipedModelPath 2 TownguardCuirassSk		3::""											4::GetBipedIconPath 0 TownguardCuirassSk	5::""										6::"Skingrad Plate C"	7::4
+	ar_Append Data[3] ar_Map 0::"Zefiros\Armor\tbskGuard\SkingradHood.nif"		1::""												2::GetBipedModelPath 2 TownguardHelmet			3::""											4::GetBipedIconPath 0 TownguardHelmet		5::""										6::"Skingrad Cowl"		7::2
+	ar_Append Data[5] ar_Map 0::GetBipedModelPath 0 TownguardSkShield 			1::GetBipedModelPath 1 TownguardSkShield	 		2::GetBipedModelPath 2 TownguardSkShield 		3::GetBipedModelPath 3 TownguardSkShield 		4::GetBipedIconPath 0 TownguardSkShield 	5::GetBipedIconPath 1 TownguardSkShield 	6::"Skingrad" 			7::GetBipedSlotMask TownguardSkShield
+	
+	;-----------------------------------------------------------------------------
+	;Guard
+	;-----------------------------------------------------------------------------
+	ar_Append Data[3] ar_Map 0::GetBipedModelPath 0 TownguardHelmet 		1::GetBipedModelPath 1 TownguardHelmet	 	2::GetBipedModelPath 2 TownguardHelmet 		3::GetBipedModelPath 3 TownguardHelmet 		4::GetBipedIconPath 0 TownguardHelmet 	5::GetBipedIconPath 1 TownguardHelmet 	6::"Guard Helmet" 	7::GetBipedSlotMask TownguardHelmet
+	ar_Append Data[3] ar_Map 0::"Zefiros\Armor\tbskGuard\GenericHelm01.nif"	1::""	2::GetBipedModelPath 2 TownguardHelmet	3::""	4::GetBipedIconPath 0 TownguardHelmet	5::""	6::"Guard Helm A"	7::2
+	ar_Append Data[3] ar_Map 0::"Zefiros\Armor\tbskGuard\GenericHelm02.nif"	1::""	2::GetBipedModelPath 2 TownguardHelmet	3::""	4::GetBipedIconPath 0 TownguardHelmet	5::""	6::"Guard Helm B"	7::2
+	ar_Append Data[3] ar_Map 0::"Zefiros\Armor\tbskGuard\GenericHelm03.nif"	1::""	2::GetBipedModelPath 2 TownguardHelmet	3::""	4::GetBipedIconPath 0 TownguardHelmet	5::""	6::"Guard Helm C"	7::2
+	ar_Append Data[3] ar_Map 0::"Zefiros\Armor\tbskGuard\GenericHelm04.nif"	1::""	2::GetBipedModelPath 2 TownguardHelmet	3::""	4::GetBipedIconPath 0 TownguardHelmet	5::""	6::"Guard Helm D"	7::2
+	ar_Append Data[3] ar_Map 0::"Zefiros\Armor\tbskGuard\GenericHelm05.nif"	1::""	2::GetBipedModelPath 2 TownguardHelmet	3::""	4::GetBipedIconPath 0 TownguardHelmet	5::""	6::"Guard Helm E"	7::2
+	ar_Append Data[3] ar_Map 0::"Zefiros\Armor\tbskGuard\GenericHelm06.nif"	1::""	2::GetBipedModelPath 2 TownguardHelmet	3::""	4::GetBipedIconPath 0 TownguardHelmet	5::""	6::"Guard Helm F"	7::2
+	ar_Append Data[3] ar_Map 0::"Zefiros\Armor\tbskGuard\GenericHelm07.nif"	1::""	2::GetBipedModelPath 2 TownguardHelmet	3::""	4::GetBipedIconPath 0 TownguardHelmet	5::""	6::"Guard Helm G"	7::2
+	ar_Append Data[3] ar_Map 0::"Zefiros\Armor\tbskGuard\GenericHelm08.nif"	1::""	2::GetBipedModelPath 2 TownguardHelmet	3::""	4::GetBipedIconPath 0 TownguardHelmet	5::""	6::"Guard Helm F"	7::2
+	ar_Append Data[3] ar_Map 0::"Zefiros\Armor\tbskGuard\GenericHelm09.nif"	1::""	2::GetBipedModelPath 2 TownguardHelmet	3::""	4::GetBipedIconPath 0 TownguardHelmet	5::""	6::"Guard Helm H"	7::2
+	ar_Append Data[3] ar_Map 0::"Zefiros\Armor\tbskGuard\GenericHelm10.nif"	1::""	2::GetBipedModelPath 2 TownguardHelmet	3::""	4::GetBipedIconPath 0 TownguardHelmet	5::""	6::"Guard Helm I"	7::2
+	ar_Append Data[3] ar_Map 0::"Zefiros\Armor\tbskGuard\GenericHelm11.nif"	1::""	2::GetBipedModelPath 2 TownguardHelmet	3::""	4::GetBipedIconPath 0 TownguardHelmet	5::""	6::"Guard Helm J"	7::2
+	ar_Append Data[3] ar_Map 0::"Zefiros\Armor\tbskGuard\GenericHelm12.nif"	1::""	2::GetBipedModelPath 2 TownguardHelmet	3::""	4::GetBipedIconPath 0 TownguardHelmet	5::""	6::"Guard Helm K"	7::2
+	ar_Append Data[3] ar_Map 0::"Zefiros\Armor\tbskGuard\GenericHelm13.nif"	1::""	2::GetBipedModelPath 2 TownguardHelmet	3::""	4::GetBipedIconPath 0 TownguardHelmet	5::""	6::"Guard Helm L"	7::2
+	
+	ar_Append Data[0] ar_Map 0::"Zefiros\Armor\tbskGuard\Templar01.nif"			1::"Zefiros\Armor\tbskGuard\Templar01F.nif"			2::GetBipedModelPath 2 TownguardCuirassKv				3::""	4::GetBipedIconPath 0 TownguardCuirassKv	5::""	6::"Templar"			7::4
+	ar_Append Data[1] ar_Map 0::"Zefiros\Armor\tbskGuard\PitBoots.nif"			1::"Zefiros\Armor\tbskGuard\PitBootsF.nif"			2::"Zefiros\Armor\tbskGuard\PitBoots_gnd.nif"			3::""	4::GetBipedIconPath 0 PitBoots				5::""	6::"Guard's Leather"	7::32
+	ar_Append Data[1] ar_Map 0::"Zefiros\Armor\tbskGuard\SteelBoots.nif"		1::"Zefiros\Armor\tbskGuard\SteelBootsF.nif"		2::GetBipedModelPath 2 SteelBoots						3::""	4::GetBipedIconPath 0 SteelBoots			5::""	6::"Guard's Steel"		7::32
+	ar_Append Data[1] ar_Map 0::"Zefiros\Armor\tbskGuard\SteelBootsFine.nif"	1::""												2::GetBipedModelPath 2 SteelBoots						3::""	4::GetBipedIconPath 0 SteelBoots			5::""	6::"Guard's Fine Steel"	7::32
+	ar_Append Data[1] ar_Map 0::"Zefiros\Armor\tbskGuard\LeatherBoots.nif"		1::"Zefiros\Armor\tbskGuard\LeatherBootsF.nif"		2::GetBipedModelPath 2 LeatherBoots						3::""	4::GetBipedIconPath 0 LeatherBoots			5::""	6::"Short Boots"		7::32
+	ar_Append Data[2] ar_Map 0::"Zefiros\Armor\tbskGuard\PitGauntlets.nif"		1::"Zefiros\Armor\tbskGuard\PitGauntletsF.nif"		2::"Zefiros\Armor\tbskGuard\PitGauntlets_gnd.nif"		3::""	4::GetBipedIconPath 0 PitGauntlets			5::""	6::"Guard's Leather"	7::16
+	ar_Append Data[2] ar_Map 0::"Zefiros\Armor\tbskGuard\LeatherGauntlets.nif"	1::"Zefiros\Armor\tbskGuard\LeatherGauntletsF.nif"	2::GetBipedModelPath 2 LeatherGauntlets					3::""	4::GetBipedIconPath 0 LeatherGauntlets		5::""	6::"Fingerless"			7::16
+	ar_Append Data[3] ar_Map 0::"Zefiros\Armor\tbskGuard\PitHelmet.nif"			1::"Zefiros\Armor\tbskGuard\PitHelmetF.nif"			2::"Zefiros\Armor\tbskGuard\PitHelmet_gnd.nif"			3::""	4::GetBipedIconPath 0 PitHelmet				5::""	6::"Guard's Leather"	7::2
+	ar_Append Data[3] ar_Map 0::"Zefiros\Armor\tbskGuard\SteelArmet.nif"		1::""												2::GetBipedModelPath 2 SteelHelmet						3::""	4::GetBipedIconPath 0 SteelHelmet			5::""	6::"Guard Armet"		7::3
+	ar_Append Data[3] ar_Map 0::"Zefiros\Armor\tbskGuard\Topfhelm Silver.nif"	1::""												2::"Zefiros\Armor\tbskGuard\Topfhelm Silver_gnd.nif"	3::""	4::GetBipedIconPath 0 TownguardHelmet		5::""	6::"Templar"			7::3
+	ar_Append Data[3] ar_Map 0::"Zefiros\Armor\tbskGuard\Topfhelm.nif"			1::""												2::"Zefiros\Armor\tbskGuard\Topfhelm_gnd.nif"			3::""	4::GetBipedIconPath 0 TownguardHelmet		5::""	6::"Gilded Templar"		7::3
+	ar_Append Data[4] ar_Map 0::"Zefiros\Armor\tbskGuard\PitGreaves.nif"		1::"Zefiros\Armor\tbskGuard\PitGreavesF.nif"		2::"Zefiros\Armor\tbskGuard\PitGreaves.nif"				3::""	4::GetBipedIconPath 0 PitGreaves			5::""	6::"Guard's Leather"	7::8
+	ar_Append Data[4] ar_Map 0::"Zefiros\Armor\tbskGuard\SteelGreaves.nif"		1::"Zefiros\Armor\tbskGuard\SteelGreavesF.nif"		2::GetBipedModelPath 2 SteelGreaves						3::""	4::GetBipedIconPath 0 SteelGreaves			5::""	6::"Guard's Steel"		7::8
+	ar_Append Data[5] ar_Map 0::"Zefiros\Armor\tbskGuard\PitShield.nif"			1::""												2::"Zefiros\Armor\tbskGuard\PitShield.nif"				3::""	4::GetBipedIconPath 0 LeatherShield			5::""	6::"Guard's Leather"	7::8192
+	ar_Append Data[0] ar_Map 0::"Zefiros\Armor\tbskGuard\Forester01.nif"		1::""												2::GetBipedModelPath 2 LowerShirt13						3::""	4::GetBipedIconPath 0 LowerShirt13			5::""	6::"Forester Satchel"	7::4
+	
+	
+	SetFunctionValue Data
+	Return
+;-----------------------------------------------------------------------------
+end ;Function { Data }
+;-----------------------------------------------------------------------------

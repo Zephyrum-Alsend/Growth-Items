@@ -13,7 +13,6 @@ scn aaZefirosSetEffectStat
 ;-----------------------------------------------------------------------------
 ;aaZefirosSetEnchant
 ;aaZefirosIncrementEnchant
-;aaZefirosSetEffectStat
 ;-----------------------------------------------------------------------------
 
 ;Used globals
@@ -40,11 +39,9 @@ short DurB
 float DurM
 short Lvl
 
-long Magnitude
-long Area
-long Duration
-
-array_var Stats ;Return value
+long Magnitude ;Return value
+long Area ;Return value
+long Duration ;Return value
 ;-----------------------------------------------------------------------------
 
 
@@ -57,10 +54,8 @@ begin Function { MagB, MagM, AreB, AreM, DurB, DurM, Lvl }
 	Let Area := AreB + ( AreM * Lvl )
 	Let Duration := DurB + ( DurM * Lvl )
 
-	Let Stats := ar_Map 0::Magnitude 1::Area 2::Duration
 
-
-	SetFunctionValue Stats
+	SetFunctionValue ar_Map 0::Magnitude 1::Area 2::Duration
 	Return
 ;-----------------------------------------------------------------------------
 end ;Function { MagB, MagM, AreB, AreM, DurB, DurM, Lvl }

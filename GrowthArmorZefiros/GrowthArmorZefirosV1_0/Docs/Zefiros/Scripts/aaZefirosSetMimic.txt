@@ -12,7 +12,6 @@ scn aaZefirosSetMimic
 
 ;Related scripts
 ;-----------------------------------------------------------------------------
-;aaZefirosGetFormData
 ;-----------------------------------------------------------------------------
 
 ;Used globals
@@ -96,21 +95,24 @@ long Slot
 ;-----------------------------------------------------------------------------
 begin Function { Item, Hvy, Stat, EnSt, Dflt, Armr, Data }
 ;-----------------------------------------------------------------------------
-	SetFunctionValue Data
+	SetFunctionValue Data ;Set value early incase of abortion
 
+	
 	;Get what slot Item belongs to
 	Let Stack := ar_Map 0::Armr[3] 1::Armr[0] 2::Armr[4] 3::Armr[2] 4::Armr[1] 8::Armr[5]
 	Let Stack := Call aaZefirosGetSlotShared Item Stack
 
-	Let Self := Stack[0]
-
-	if ( Self == -1 )
+	if eval( 0 == ar_Size Stack )
 
 		DebugPrint "%n does not match a slot in Armr, aborting SetMimic." Item
 		MessageEX "%n cannot be mimicked." Item
 		Return
 
-	elseif ( Player.GetItemCount Self == 0 )
+	endif
+
+	Let Self := Stack[0]
+	
+	if ( Player.GetItemCount Self == 0 )
 
 		DebugPrint "%n not present, aborting SetMimic." Self
 		MessageEX "%n required to mimic %n." Self Item
@@ -119,26 +121,8 @@ begin Function { Item, Hvy, Stat, EnSt, Dflt, Armr, Data }
 
 	endif
 
-	;Determine which sub-array Item's data belongs
-	if eval( Self == Armr[3] )
-		Let i := 3
-
-	elseif eval( Self == Armr[0] )
-		Let i := 0
-
-	elseif eval( Self == Armr[4] )
-		Let i := 4
-
-	elseif eval( Self == Armr[2] )
-		Let i := 2
-
-	elseif eval( Self == Armr[1] )
-		Let i := 1
-
-	elseif eval( Self == Armr[5] )
-		Let i := 5
-
-	endif
+	;Find which sub-array Item's data belongs to
+	Let i := ar_Find Self Armr
 
 
 	;Store old data
@@ -175,6 +159,19 @@ begin Function { Item, Hvy, Stat, EnSt, Dflt, Armr, Data }
 		Let FemaleIcon := MaleIcon
 	endif
 
+	;If male paths are empty, set to female counterparts
+	if eval( 0 == sv_Length MaleMesh )
+		Let MaleMesh := FemaleMesh
+	endif
+
+	if eval( 0 == sv_Length MaleGround )
+		Let MaleGround := FemaleGround
+	endif
+
+	if eval( 0 == sv_Length MaleIcon )
+		Let MaleIcon := FemaleIcon
+	endif
+
 	;Set new data
 	Let Data[i][0][0] := MaleMesh
 	Let Data[i][0][1] := FemaleMesh
@@ -186,30 +183,11 @@ begin Function { Item, Hvy, Stat, EnSt, Dflt, Armr, Data }
 	Let Data[i][0][7] := Slot
 
 
-	;If SetMerge succeeds, update form and global
-	if eval( Call aaZefirosSetMerge Slot Dflt Hvy Stat EnSt i Armr )
+	;If SetMerge succeeds, SetForm
+	if eval( Call aaZefirosSetMerge Slot Dflt Data Hvy Stat EnSt i Armr 1 )
 
 		Call aaZefirosSetForm i 0 Data Self
-
-		if eval( i == 3 )
-			Let aaZefirosFormHead := 0
-	
-		elseif eval( i == 0 )
-			Let aaZefirosFormBody := 0
-	
-		elseif eval( i == 4 )
-			Let aaZefirosFormLegs := 0
-	
-		elseif eval( i == 2 )
-			Let aaZefirosFormHand := 0
-	
-		elseif eval( i == 1 )
-			Let aaZefirosFormFoot := 0
-	
-		elseif eval( i == 5 )
-			Let aaZefirosFormShld := 0
-	
-		endif
+		Call aaZefirosFlavorMessage ( "Icons\" + Call aaZefirosGetPCBIP Self ) "" $Self "" 4 0
 
 	;If SetMerge fails, revert changes to Data
 	else

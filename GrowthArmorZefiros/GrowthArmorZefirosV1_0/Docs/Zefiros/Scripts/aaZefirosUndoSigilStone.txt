@@ -54,14 +54,16 @@ begin Function { Items }
 	if eval( ar_BadNumericIndex == i )
 
 		DebugPrint "No Items used in last enchantment."
+		
 		SetFunctionValue 1
 		Return
 
 	else
 		
-		if ( 1 > Player.GetItemCount EnchItem )
+		if ( 0 == Player.GetItemCount EnchItem )
 
 			DebugPrint "Waiting on %n to be added..." EnchItem
+			
 			SetFunctionValue 0
 			Return
 

@@ -11,16 +11,8 @@ scn aaZefirosOnMagicHit
 
 ;Related scripts
 ;-----------------------------------------------------------------------------
-;aaZefirosDefaultINI
 ;aaZefirosDamageAnalysis
-;aaZefirosCleanUp
-;aaZefirosObjectBody
-;aaZefirosObjectFoot
-;aaZefirosObjectHand
-;aaZefirosObjectHead
-;aaZefirosObjectLegs
-;aaZefirosObjectShld
-;aaZefirosOnUnEquip
+;aaZefirosSetHandlers
 ;aaZefirosOnDamage
 ;aaZefirosOnMagicApply
 ;aaZefirosOnWeaponHit
@@ -56,7 +48,7 @@ scn aaZefirosOnMagicHit
 ref Target
 long EffectCode
 
-short BaseXP
+float BaseXP
 string_var EffectName
 ;-----------------------------------------------------------------------------
 
@@ -70,36 +62,42 @@ begin Function { Target, EffectCode }
 		DebugPrint "Hit with Fire Damage."
 		Let aaZefirosRLogFire := 1
 
+		
 	;Frost
 	elseif ( EffectCode == GetMagicEffectCode FRDG )
 
 		DebugPrint "Hit with Frost Damage."
 		Let aaZefirosRLogFrost := 1
 
+		
 	;Shock
 	elseif ( EffectCode == GetMagicEffectCode SHDG )
 
 		DebugPrint "Hit with Shock Damage."
 		Let aaZefirosRLogShock := 1
 
+		
 	;Damage Health
 	elseif ( EffectCode == GetMagicEffectCode DGHE )
 
 		DebugPrint "Hit with Damage Health."
 		Let aaZefirosRLogMagic := 1
 
+		
 	;Drain Health
 	elseif ( EffectCode == GetMagicEffectCode DRHE )
 
 		DebugPrint "Hit with Drain Health."
 		Let aaZefirosRLogMagic := 1
 
+		
 	;Paralysis
 	elseif ( EffectCode == GetMagicEffectCode PARA )
 
 		DebugPrint "Hit with Paralysis."
 		Let aaZefirosRLogParalysis := 1
 
+		
 	;Hostile other
 	elseif ( IsMagicEffectHostileC EffectCode )
 
@@ -111,15 +109,16 @@ begin Function { Target, EffectCode }
 
 		endif
 		
-		Let BaseXP := aaZefirosInit.sXPNoDmg
+		Let BaseXP := aaZefirosInit.fXPNoDmg
 		
 		Let EffectName := GetMagicEffectNameC EffectCode
-		DebugPrint "Hit with %z, awarding %.0f XP." EffectName BaseXP
+		DebugPrint "Hit with %z, awarding %.2f XP." EffectName BaseXP
 		sv_Destruct EffectName
 
 		Let aaZefirosXP += BaseXP
 		Let aaZefirosRXPMagic += BaseXP
 
+		
 	endif
 
 	

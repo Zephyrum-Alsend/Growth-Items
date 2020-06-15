@@ -1,0 +1,120 @@
+scn aaZefirosValidateForm
+
+;Main script
+;-----------------------------------------------------------------------------
+;aaZefirosManager
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;aaZefirosFindSet
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
+;aaZefirosFormBody
+;aaZefirosFormFoot
+;aaZefirosFormHand
+;aaZefirosFormHead
+;aaZefirosFormLegs
+;aaZefirosFormShld
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;Corrects the indexes for Form globals based on Form strings.  This is only
+;possible because names are unique within each sub-array of Data.
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+array_var Data
+array_var DfIdx
+
+array_var Stack
+;-----------------------------------------------------------------------------
+
+;-----------------------------------------------------------------------------
+begin Function { Data, DfIdx }
+;-----------------------------------------------------------------------------
+
+	;Use stored names to find each actual index
+	Let Stack := ar_Map 0::aaZefirosInit.FormBody 1::aaZefirosInit.FormFoot 2::aaZefirosInit.FormHand 3::aaZefirosInit.FormHead 4::aaZefirosInit.FormLegs 5::aaZefirosInit.FormShld
+	Let Stack := Call aaZefirosFindSet Stack Data
+
+	;Set new indexes
+	if ( aaZefirosFormBody != 0 ) ;Don't change if Mimic
+		
+		;Check if name was found by FindSet
+		if eval( ar_HasKey Stack 0 )
+			Let aaZefirosFormBody := Stack[0]
+		else
+			;If not, reset to default
+			Let aaZefirosFormBody := DfIdx[0]
+		endif
+		
+	endif
+	
+	if ( aaZefirosFormFoot != 0 )
+
+		if eval( ar_HasKey Stack 1 )
+			Let aaZefirosFormFoot := Stack[1]
+		else
+			Let aaZefirosFormFoot := DfIdx[1]
+		endif
+
+	endif
+	
+	if ( aaZefirosFormHand != 0 )
+
+		if eval( ar_HasKey Stack 2 )
+			Let aaZefirosFormHand := Stack[2]
+		else
+			Let aaZefirosFormHand := DfIdx[2]
+		endif
+
+	endif
+	
+	if ( aaZefirosFormHead != 0 )
+
+		if eval( ar_HasKey Stack 3 )
+			Let aaZefirosFormHead := Stack[3]
+		else
+			Let aaZefirosFormHead := DfIdx[3]
+		endif
+
+	endif
+	
+	if ( aaZefirosFormLegs != 0 )
+
+		if eval( ar_HasKey Stack 4 )
+			Let aaZefirosFormLegs := Stack[4]
+		else
+			Let aaZefirosFormLegs := DfIdx[4]
+		endif
+
+	endif
+	
+	if ( aaZefirosFormShld != 0 )
+
+		if eval( ar_HasKey Stack 5 )
+			Let aaZefirosFormShld := Stack[5]
+		else
+			Let aaZefirosFormShld := DfIdx[5]
+		endif
+
+	endif
+
+	
+	Return
+;-----------------------------------------------------------------------------
+end ;Function { Data }
+;-----------------------------------------------------------------------------

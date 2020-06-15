@@ -58,6 +58,8 @@ begin Function { }
 	DebugPrint "Generating enchantment data..."
 	;-----------------------------------------------------------------------------
 
+	;Indexes are hardcoded instead of ar_Append to be more human readable
+
 	;Fortify Strength
 	Let Item := Call aaZefirosGetEffectCode 0
 	Let Data[0] := ar_Map 0::Item[0] 1::Item[1] 2::aaZefirosInit.sFOATBase 3::aaZefirosInit.fFOATMult 4::0 5::0 6::0 7::0 8::0

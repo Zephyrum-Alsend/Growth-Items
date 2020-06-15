@@ -11,6 +11,7 @@ scn aaZefirosGetEffectCode
 
 ;Related scripts
 ;-----------------------------------------------------------------------------
+;aaZefirosGetEffectOrder
 ;aaZefirosGetEnchantData
 ;aaZefirosEnchantBox
 ;-----------------------------------------------------------------------------
@@ -40,10 +41,8 @@ scn aaZefirosGetEffectCode
 ;-----------------------------------------------------------------------------
 short i
 
-long EffC
-long AuxC
-
-array_var Codes ;Return value
+long EffC ;Return value
+long AuxC ;Return value
 ;-----------------------------------------------------------------------------
 
 ;-----------------------------------------------------------------------------
@@ -374,12 +373,8 @@ begin Function { i }
 	endif ;( i >= 0 )
 	;-----------------------------------------------------------------------------
 
-	Let Codes := ar_Construct Array
-	ar_Append Codes EffC
-	ar_Append Codes AuxC
 
-
-	SetFunctionValue Codes
+	SetFunctionValue ar_Map 0::EffC 1::AuxC
 	Return
 ;-----------------------------------------------------------------------------
 end ;Function { i }

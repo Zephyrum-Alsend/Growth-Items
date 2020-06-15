@@ -32,7 +32,7 @@ scn aaZefirosEnchantBox
 ;-----------------------------------------------------------------------------
 ;Given an item and an active enchantment index, display a message box 
 ;containing the item's name, active enchantment name, and all effects and
-;their statistics.
+;their stats.
 ;-----------------------------------------------------------------------------
 
 ;Parameters
@@ -60,19 +60,28 @@ begin Function { Item, Actv }
 	;-----------------------------------------------------------------------------
 	;Convert the codes for the active enchantment into a string
 	;-----------------------------------------------------------------------------
-	Let Code := Call aaZefirosGetEffectCode Actv
-	if eval( Code[1] == 256 )
+	;If Item has an enchantment
+	if ( Ench )
 
-		Let i := Code[0]
-		Let Msg += ( GetMagicEffectNameC i )
+		Let Code := Call aaZefirosGetEffectCode Actv
+		if eval( Code[1] == 256 )
+	
+			Let i := Code[0]
+			Let Msg += ( GetMagicEffectNameC i )
+	
+		else
+	
+			Let i := Code[1]
+			Let Msg += "Fortify " + ( ActorValueToStringC i )
+	
+		endif
 
 	else
 
-		Let i := Code[1]
-		Let Msg += "Fortify " + ( ActorValueToStringC i )
-
+		;If no enchantment, no active effect
+		Let Msg += "N/A"
+		
 	endif
-
 
 	;-----------------------------------------------------------------------------
 	;Append each effect
@@ -81,24 +90,33 @@ begin Function { Item, Actv }
 	Let i := 0
 	while ( i < Count )
 
+		;Final entry looks like:
+		;
+		;Fortify Health (Target):
+		;50 pts 	5 ft	30 sec
+
 		;Name
 		Let Msg += "%r%r" + ( GetNthEffectItemName Ench i )
 
 		;Range
+		Let Msg += " ("
+		
 		Let Num := GetNthEffectItemRange Ench i
 		if ( Num == 0 )
 
-			Let Msg += " (Self):%r"
+			Let Msg += "Self"
 
 		elseif ( Num == 1 )
 
-			Let Msg += " (Touch):%r"
+			Let Msg += "Touch"
 			
 		elseif ( Num == 2 )
 
-			Let Msg += " (Target):%r"
+			Let Msg += "Target"
 			
 		endif
+
+		Let Msg += "):%r"
 
 		;Magnitude
 		Let Num := GetNthEffectItemMagnitude Ench i
@@ -131,7 +149,7 @@ begin Function { Item, Actv }
 	;-----------------------------------------------------------------------------
 	;Display
 	;-----------------------------------------------------------------------------
-	;MessageBox cannot handle very large strings
+	;MessageBox cannot handle very large string_vars
 	MessageBoxEX "%z" Msg
 
 	

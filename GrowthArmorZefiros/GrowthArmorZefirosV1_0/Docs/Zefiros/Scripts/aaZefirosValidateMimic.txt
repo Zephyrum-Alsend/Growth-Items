@@ -59,6 +59,7 @@ array_var MimicData ;Return value
 
 string_var Path
 ref Item
+array_var Iter
 ;-----------------------------------------------------------------------------
 
 ;-----------------------------------------------------------------------------
@@ -70,6 +71,7 @@ begin Function { Armr, MimicData }
 	;-----------------------------------------------------------------------------
 	;Body
 	;-----------------------------------------------------------------------------
+	;Set the paths on the object because we can only call IsPathValid on an object
 	Let Item := Armr[0]
 	Let Path := MimicData[0][0]
 	SetMaleBipedPath $Path Item
@@ -257,6 +259,23 @@ begin Function { Armr, MimicData }
 		Let MimicData[5][7] := 8192
 
 	endif
+
+
+	;-----------------------------------------------------------------------------
+	;Correct names
+	;-----------------------------------------------------------------------------
+	;Incase everything checks out but the name is fucked
+	ForEach Iter <- MimicData
+
+		Let Path := Iter["value"][6]
+
+		if ( 0 > sv_Find " (Mimic)" Path )
+
+			Let MimicData[Iter["key"]][6] += " (Mimic)"
+
+		endif
+
+	loop
 	
 
 	DebugPrint "MimicData validated."

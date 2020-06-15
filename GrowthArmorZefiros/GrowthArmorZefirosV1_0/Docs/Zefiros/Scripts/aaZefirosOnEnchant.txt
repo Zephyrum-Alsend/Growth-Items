@@ -25,7 +25,7 @@ scn aaZefirosOnEnchant
 
 ;Description
 ;-----------------------------------------------------------------------------
-;Stores the newly created enchanted item in Manager's SoulItem.
+;Stores the newly created enchanted item in Manager's Soul array.
 ;
 ;This would do more, but enchantedItem can be added to the Player's inventory
 ;AFTER this fires.

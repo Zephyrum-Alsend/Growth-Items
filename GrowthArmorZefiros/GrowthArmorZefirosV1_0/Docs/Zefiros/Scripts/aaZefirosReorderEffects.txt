@@ -11,6 +11,7 @@ scn aaZefirosReorderEffects
 
 ;Related scripts
 ;-----------------------------------------------------------------------------
+;aaZefirosGetEffectOrder
 ;aaZefirosSetMerge
 ;-----------------------------------------------------------------------------
 
@@ -53,6 +54,7 @@ short AuxC
 ref Spl
 
 array_var Ench
+array_var Efct
 array_var Data
 ;-----------------------------------------------------------------------------
 
@@ -76,25 +78,18 @@ begin Function { Effects, Enchs }
 		;Find and remove each effect
 		;-----------------------------------------------------------------------------
 		Let Count := GetMagicItemEffectCount Spl
-		Let i := Count
-		while ( i > 0 )
-			Let i -= 1
 
-			;Check if this effect is on the list
-			Let j := 0
-			while ( j < Size )
+		ForEach Efct <- Effects
 
-				;If it is...
-				if eval( Effects[j][0] == GetNthEffectItemCode Spl i && Effects[j][1] == GetNthEffectItemActorValue Spl i )
+			Let i := Call aaZefirosGetEffectIndex Efct["value"][0] Efct["value"][1] Spl
 
-					;Remove effect and store its values
-					ar_Append Data GetNthEffectItem Spl i
-					RemoveNthEffectItem Spl i
+			if ( i != -1 )
 
-				endif
+				;Remove effect and store its values
+				ar_Append Data GetNthEffectItem Spl i
+				RemoveNthEffectItem Spl i
 
-				Let j += 1
-			loop
+			endif
 
 		loop
 
@@ -103,25 +98,26 @@ begin Function { Effects, Enchs }
 		;Add each removed effect back
 		;-----------------------------------------------------------------------------
 		Let Count := ar_Size Data
-		Let j := 0
-		while ( j < Count )
+		
+		Let i := 0
+		while ( i < Count )
 
-			Let EffC := Data[j]["effectCode"]
-			Let Magn := Data[j]["magnitude"]
-			Let Area := Data[j]["area"]
-			Let Dura := Data[j]["duration"]
-			Let Rang := Data[j]["range"]
+			Let EffC := Data[i]["effectCode"]
+			Let Magn := Data[i]["magnitude"]
+			Let Area := Data[i]["area"]
+			Let Dura := Data[i]["duration"]
+			Let Rang := Data[i]["range"]
 
-			Let i := AddFullEffectItemC EffC Magn Area Dura Rang Spl
+			Let j := AddFullEffectItemC EffC Magn Area Dura Rang Spl
 
-			if eval( ar_HasKey Data[j] "actorValue" )
+			if eval( ar_HasKey Data[i] "actorValue" )
 
-				Let AuxC := Data[j]["actorValue"]
-				SetNthEffectItemActorValueC AuxC Spl i
+				Let AuxC := Data[i]["actorValue"]
+				SetNthEffectItemActorValueC AuxC Spl j
 
 			endif
 
-			Let j += 1
+			Let i += 1
 		loop
 
 		;Reset Data for next loop

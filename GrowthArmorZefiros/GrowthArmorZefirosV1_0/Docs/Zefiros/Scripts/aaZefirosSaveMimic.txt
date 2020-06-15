@@ -11,7 +11,6 @@ scn aaZefirosSaveMimic
 
 ;Related scripts
 ;-----------------------------------------------------------------------------
-;aaZefirosGetFormData
 ;-----------------------------------------------------------------------------
 
 ;Used globals
@@ -37,95 +36,95 @@ scn aaZefirosSaveMimic
 
 ;Parameters
 ;-----------------------------------------------------------------------------
-array_var Stack
+array_var Data
 
 long X
 ;-----------------------------------------------------------------------------
 
 ;-----------------------------------------------------------------------------
-begin Function { Stack }
+begin Function { Data }
 ;-----------------------------------------------------------------------------
 	
 	;-----------------------------------------------------------------------------
 	;Body
 	;-----------------------------------------------------------------------------
-	Let aaZefirosInit.MimicBodyMaleModel 	:= Stack[0][0]
-	Let aaZefirosInit.MimicBodyFemaleModel 	:= Stack[0][1]
-	Let aaZefirosInit.MimicBodyMaleGround 	:= Stack[0][2]
-	Let aaZefirosInit.MimicBodyFemaleGround := Stack[0][3]
-	Let aaZefirosInit.MimicBodyMaleIcon 	:= Stack[0][4]
-	Let aaZefirosInit.MimicBodyFemaleIcon 	:= Stack[0][5]
-	Let aaZefirosInit.MimicBodyName 		:= Stack[0][6]
-	Let X := Stack[0][7] ;Error if pass-through var isn't used
+	Let aaZefirosInit.MimicBodyMaleModel 	:= Data[0][0][0]
+	Let aaZefirosInit.MimicBodyFemaleModel 	:= Data[0][0][1]
+	Let aaZefirosInit.MimicBodyMaleGround 	:= Data[0][0][2]
+	Let aaZefirosInit.MimicBodyFemaleGround := Data[0][0][3]
+	Let aaZefirosInit.MimicBodyMaleIcon 	:= Data[0][0][4]
+	Let aaZefirosInit.MimicBodyFemaleIcon 	:= Data[0][0][5]
+	Let aaZefirosInit.MimicBodyName 		:= Data[0][0][6]
+	Let X := Data[0][0][7] ;Error if pass-through var isn't used
 	Let aaZefirosMimicBodySlot 				:= X
 
 	;-----------------------------------------------------------------------------
 	;Foot
 	;-----------------------------------------------------------------------------
-	Let aaZefirosInit.MimicFootMaleModel 	:= Stack[1][0]
-	Let aaZefirosInit.MimicFootFemaleModel 	:= Stack[1][1]
-	Let aaZefirosInit.MimicFootMaleGround 	:= Stack[1][2]
-	Let aaZefirosInit.MimicFootFemaleGround := Stack[1][3]
-	Let aaZefirosInit.MimicFootMaleIcon 	:= Stack[1][4]
-	Let aaZefirosInit.MimicFootFemaleIcon 	:= Stack[1][5]
-	Let aaZefirosInit.MimicFootName 		:= Stack[1][6]
-	Let X := Stack[1][7]
+	Let aaZefirosInit.MimicFootMaleModel 	:= Data[1][0][0]
+	Let aaZefirosInit.MimicFootFemaleModel 	:= Data[1][0][1]
+	Let aaZefirosInit.MimicFootMaleGround 	:= Data[1][0][2]
+	Let aaZefirosInit.MimicFootFemaleGround := Data[1][0][3]
+	Let aaZefirosInit.MimicFootMaleIcon 	:= Data[1][0][4]
+	Let aaZefirosInit.MimicFootFemaleIcon 	:= Data[1][0][5]
+	Let aaZefirosInit.MimicFootName 		:= Data[1][0][6]
+	Let X := Data[1][0][7]
 	Let aaZefirosMimicFootSlot 				:= X
 
 	;-----------------------------------------------------------------------------
 	;Hand
 	;-----------------------------------------------------------------------------
-	Let aaZefirosInit.MimicHandMaleModel 	:= Stack[2][0]
-	Let aaZefirosInit.MimicHandFemaleModel 	:= Stack[2][1]
-	Let aaZefirosInit.MimicHandMaleGround 	:= Stack[2][2]
-	Let aaZefirosInit.MimicHandFemaleGround := Stack[2][3]
-	Let aaZefirosInit.MimicHandMaleIcon 	:= Stack[2][4]
-	Let aaZefirosInit.MimicHandFemaleIcon 	:= Stack[2][5]
-	Let aaZefirosInit.MimicHandName 		:= Stack[2][6]
-	Let X := Stack[2][7]
+	Let aaZefirosInit.MimicHandMaleModel 	:= Data[2][0][0]
+	Let aaZefirosInit.MimicHandFemaleModel 	:= Data[2][0][1]
+	Let aaZefirosInit.MimicHandMaleGround 	:= Data[2][0][2]
+	Let aaZefirosInit.MimicHandFemaleGround := Data[2][0][3]
+	Let aaZefirosInit.MimicHandMaleIcon 	:= Data[2][0][4]
+	Let aaZefirosInit.MimicHandFemaleIcon 	:= Data[2][0][5]
+	Let aaZefirosInit.MimicHandName 		:= Data[2][0][6]
+	Let X := Data[2][0][7]
 	Let aaZefirosMimicHandSlot 				:= X
 
 	;-----------------------------------------------------------------------------
 	;Head
 	;-----------------------------------------------------------------------------
-	Let aaZefirosInit.MimicHeadMaleModel 	:= Stack[3][0]
-	Let aaZefirosInit.MimicHeadFemaleModel 	:= Stack[3][1]
-	Let aaZefirosInit.MimicHeadMaleGround 	:= Stack[3][2]
-	Let aaZefirosInit.MimicHeadFemaleGround := Stack[3][3]
-	Let aaZefirosInit.MimicHeadMaleIcon 	:= Stack[3][4]
-	Let aaZefirosInit.MimicHeadFemaleIcon 	:= Stack[3][5]
-	Let aaZefirosInit.MimicHeadName 		:= Stack[3][6]
-	Let X := Stack[3][7]
+	Let aaZefirosInit.MimicHeadMaleModel 	:= Data[3][0][0]
+	Let aaZefirosInit.MimicHeadFemaleModel 	:= Data[3][0][1]
+	Let aaZefirosInit.MimicHeadMaleGround 	:= Data[3][0][2]
+	Let aaZefirosInit.MimicHeadFemaleGround := Data[3][0][3]
+	Let aaZefirosInit.MimicHeadMaleIcon 	:= Data[3][0][4]
+	Let aaZefirosInit.MimicHeadFemaleIcon 	:= Data[3][0][5]
+	Let aaZefirosInit.MimicHeadName 		:= Data[3][0][6]
+	Let X := Data[3][0][7]
 	Let aaZefirosMimicHeadSlot 				:= X
 
 	;-----------------------------------------------------------------------------
 	;Legs
 	;-----------------------------------------------------------------------------
-	Let aaZefirosInit.MimicLegsMaleModel 	:= Stack[4][0]
-	Let aaZefirosInit.MimicLegsFemaleModel 	:= Stack[4][1]
-	Let aaZefirosInit.MimicLegsMaleGround 	:= Stack[4][2]
-	Let aaZefirosInit.MimicLegsFemaleGround := Stack[4][3]
-	Let aaZefirosInit.MimicLegsMaleIcon 	:= Stack[4][4]
-	Let aaZefirosInit.MimicLegsFemaleIcon 	:= Stack[4][5]
-	Let aaZefirosInit.MimicLegsName 		:= Stack[4][6]
-	Let X := Stack[4][7]
+	Let aaZefirosInit.MimicLegsMaleModel 	:= Data[4][0][0]
+	Let aaZefirosInit.MimicLegsFemaleModel 	:= Data[4][0][1]
+	Let aaZefirosInit.MimicLegsMaleGround 	:= Data[4][0][2]
+	Let aaZefirosInit.MimicLegsFemaleGround := Data[4][0][3]
+	Let aaZefirosInit.MimicLegsMaleIcon 	:= Data[4][0][4]
+	Let aaZefirosInit.MimicLegsFemaleIcon 	:= Data[4][0][5]
+	Let aaZefirosInit.MimicLegsName 		:= Data[4][0][6]
+	Let X := Data[4][0][7]
 	Let aaZefirosMimicLegsSlot 				:= X
 
 	;-----------------------------------------------------------------------------
 	;Shld
 	;-----------------------------------------------------------------------------
-	Let aaZefirosInit.MimicShldMaleModel 	:= Stack[5][0]
-	Let aaZefirosInit.MimicShldFemaleModel 	:= Stack[5][1]
-	Let aaZefirosInit.MimicShldMaleGround 	:= Stack[5][2]
-	Let aaZefirosInit.MimicShldFemaleGround := Stack[5][3]
-	Let aaZefirosInit.MimicShldMaleIcon 	:= Stack[5][4]
-	Let aaZefirosInit.MimicShldFemaleIcon 	:= Stack[5][5]
-	Let aaZefirosInit.MimicShldName 		:= Stack[5][6]
-	Let X := Stack[5][7]
+	Let aaZefirosInit.MimicShldMaleModel 	:= Data[5][0][0]
+	Let aaZefirosInit.MimicShldFemaleModel 	:= Data[5][0][1]
+	Let aaZefirosInit.MimicShldMaleGround 	:= Data[5][0][2]
+	Let aaZefirosInit.MimicShldFemaleGround := Data[5][0][3]
+	Let aaZefirosInit.MimicShldMaleIcon 	:= Data[5][0][4]
+	Let aaZefirosInit.MimicShldFemaleIcon 	:= Data[5][0][5]
+	Let aaZefirosInit.MimicShldName 		:= Data[5][0][6]
+	Let X := Data[5][0][7]
 	Let aaZefirosMimicShldSlot 				:= X
 	
 
 	Return
 ;-----------------------------------------------------------------------------
-end ;Function { Stack }
+end ;Function { Data }
 ;-----------------------------------------------------------------------------

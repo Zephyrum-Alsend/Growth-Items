@@ -11,15 +11,7 @@ scn aaZefirosOnMagicApply
 
 ;Related scripts
 ;-----------------------------------------------------------------------------
-;aaZefirosDefaultINI
-;aaZefirosCleanUp
-;aaZefirosObjectBody
-;aaZefirosObjectFoot
-;aaZefirosObjectHand
-;aaZefirosObjectHead
-;aaZefirosObjectLegs
-;aaZefirosObjectShld
-;aaZefirosOnUnEquip
+;aaZefirosSetHandlers
 ;aaZefirosOnDamage
 ;aaZefirosOnMagicHit
 ;aaZefirosOnWeaponHit
@@ -39,7 +31,8 @@ scn aaZefirosOnMagicApply
 ;Fires when a Player casted spell hits a target.
 ;Checks if the spell is a disease, then awards XP.
 ;
-;Diseases are spells cast by the victim on themselves.
+;Diseases are spells cast by the victim on themselves.  Even though diseases
+;are acquired by getting hit by infected.
 ;-----------------------------------------------------------------------------
 
 ;Parameters
@@ -55,11 +48,11 @@ begin Function { MagicItem, Caster }
 	if ( 1 == GetSpellType MagicItem )
 
 		DebugPrint "%n contracted %n." Caster MagicItem
-		Let aaZefirosRXPDisease += aaZefirosInit.sXPDisease
+		Let aaZefirosRXPDisease += aaZefirosInit.fXPDisease
 
 	endif
 
 
 ;-----------------------------------------------------------------------------
-end
+end ;Function { MagicItem, Caster }
 ;-----------------------------------------------------------------------------

@@ -65,7 +65,9 @@ begin Function { Container, Dura, Items }
 		Let j := 0
 		while ( j < C2 )
 
+			;Convert percentage to absolute value
 			Let CurHP := MaxHP * Dura[i][j]
+			
 			Let Val := Stack[j]
 			Val.SetCurrentHealth CurHP
 

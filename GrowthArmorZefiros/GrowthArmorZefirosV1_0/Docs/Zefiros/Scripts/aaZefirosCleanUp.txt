@@ -8,14 +8,11 @@ scn aaZefirosCleanUp
 ;Used scripts
 ;-----------------------------------------------------------------------------
 ;aaZefirosOnUnEquip
-;aaZefirosOnDamage
-;aaZefirosOnMagicHit
-;aaZefirosOnWeaponHit
-;aaZefirosOnMagicApply
 ;-----------------------------------------------------------------------------
 
 ;Related scripts
 ;-----------------------------------------------------------------------------
+;aaZefirosDefaultINI
 ;aaZefirosObjectBody
 ;aaZefirosObjectFoot
 ;aaZefirosObjectHand
@@ -43,7 +40,8 @@ scn aaZefirosCleanUp
 ;Description
 ;-----------------------------------------------------------------------------
 ;Purges non-permanent handlers and re-evaluates conditions for setting them.
-;If Mode = 1, also purge permanent handlers and Manager arrays.
+;If Mode = 1, also purge permanent handlers and Manager arrays and bounds
+;ini exposed variables that could cause problems.
 ;-----------------------------------------------------------------------------
 
 ;Parameters
@@ -57,37 +55,82 @@ begin Function { Mode }
 
 	if ( Mode == 1 )
 
+		;When loading a save, some data is changed, some data is lost, the rest lingers
+		;This section exists to clear that lingering data
+
 		;-----------------------------------------------------------------------------
 		DebugPrint "Purging OnActorUnequip handlers."
 		;-----------------------------------------------------------------------------
 		RemoveEventHandler "OnActorUnequip" aaZefirosOnUnEquip
 
 		;-----------------------------------------------------------------------------
-		DebugPrint "Nulling Selfs, Enchs, EncSt, ArmSt, Forms, Equip, Seek, Actv, Slots, Dflt, Soul, Stack, Item arrays."
+		DebugPrint "Nulling Selfs, Enchs, EncSt, ArmSt, Forms, FSets, DfIdx, Equip, Seek, Actv, Dura, Slots, Dflt, Soul, Menu, Stack, Item arrays."
 		;-----------------------------------------------------------------------------
 		Let aaZefirosInit.Selfs := ar_Null
 		Let aaZefirosInit.Enchs := ar_Null
 		Let aaZefirosInit.EncSt := ar_Null
 		Let aaZefirosInit.ArmSt := ar_Null
 		Let aaZefirosInit.Forms := ar_Null
+		Let aaZefirosInit.FSets := ar_Null
+		Let aaZefirosInit.DfIdx := ar_Null
 		Let aaZefirosInit.Equip := ar_Null
 		Let aaZefirosInit.Seek := ar_Null
 		Let aaZefirosInit.Actv := ar_Null
+		Let aaZefirosInit.Dura := ar_Null
 		Let aaZefirosInit.Slots := ar_Null
 		Let aaZefirosInit.Dflt := ar_Null
 		Let aaZefirosInit.Soul := ar_Null
+		Let aaZefirosInit.Menu := ar_Null
 		Let aaZefirosInit.Stack := ar_Null
 		Let aaZefirosInit.Item := ar_Null
+
+		
+		;-----------------------------------------------------------------------------
+		DebugPrint "Bounding ini exposed variables."
+		;-----------------------------------------------------------------------------
+		if ( aaZefirosInit.fXPReqBase < 1 )
+			Let aaZefirosInit.fXPReqBase := 1
+		endif
+		if ( aaZefirosInit.fXPReqMult < 0 )
+			Let aaZefirosInit.fXPReqMult := 0
+		endif
+		if ( aaZefirosInit.sLevelCap < 1 )
+			Let aaZefirosInit.sLevelCap := 1
+		endif
+		if ( aaZefirosInit.fEnchantAbs < 0 )
+			Let aaZefirosInit.fEnchantAbs := 0
+		endif
+		if ( aaZefirosInit.fXPPara < 0 )
+			Let aaZefirosInit.fXPPara := 0
+		endif
+		if ( aaZefirosInit.fXPDisease < 0 )
+			Let aaZefirosInit.fXPDisease := 0
+		endif
+		if ( aaZefirosInit.fXPNoDmg < 0 )
+			Let aaZefirosInit.fXPNoDmg := 0
+		endif
+		if ( aaZefirosInit.fHeavyAR <= 0 )
+			Let aaZefirosInit.fHeavyAR := 1.5
+		endif
+		if ( aaZefirosInit.fHeavyWeight <= 0 )
+			Let aaZefirosInit.fHeavyWeight := 2
+		endif
+		if ( aaZefirosInit.sEnchStart < 2 )
+			Let aaZefirosInit.sEnchStart := 2
+		endif
+		if ( aaZefirosInit.sEnchSeek < 1 )
+			Let aaZefirosInit.sEnchSeek := 1
+		endif
+		if ( aaZefirosInit.fDamageLag <= 0 )
+			Let aaZefirosInit.fDamageLag := 0.1
+		endif
 
 	endif
 
 	;-----------------------------------------------------------------------------
-	DebugPrint "Purging OnHealthDamage, OnMagicEffectHit, OnHitWith, OnMagicApply handlers."
+	;Purge handlers
 	;-----------------------------------------------------------------------------
-	RemoveEventHandler "OnHealthDamage" aaZefirosOnDamage
-	RemoveEventHandler "OnMagicEffectHit" aaZefirosOnMagicHit
-	RemoveEventHandler "OnHitWith" aaZefirosOnWeaponHit
-	RemoveEventHandler "OnMagicApply" aaZefirosOnMagicApply
+	Call aaZefirosSetHandlers 0
 
 	;-----------------------------------------------------------------------------
 	DebugPrint "Re-evaluating Equip flag..."
@@ -99,19 +142,21 @@ begin Function { Mode }
 
 		Let aaZefirosEquip += 1
 
-		if eval( aaZefirosSlotBody & 32 )
+		;Check if merged with other items
+		;Compares bit masks returned by GetBipedSlotMask
+		if eval( aaZefirosSlotBody & 32 ) ;Feet
 			Let aaZefirosEquip += 1
 		endif
-		if eval( aaZefirosSlotBody & 16 )
+		if eval( aaZefirosSlotBody & 16 ) ;Hands
 			Let aaZefirosEquip += 1
 		endif
-		if eval( aaZefirosSlotBody & 3 )
+		if eval( aaZefirosSlotBody & 3 ) ;Head/Hair
 			Let aaZefirosEquip += 1
 		endif
-		if eval( aaZefirosSlotBody & 8 )
+		if eval( aaZefirosSlotBody & 8 ) ;LowerBody
 			Let aaZefirosEquip += 1
 		endif
-		if eval( aaZefirosSlotBody & 8192 )
+		if eval( aaZefirosSlotBody & 8192 ) ;Shield
 			Let aaZefirosEquip += 1
 		endif
 
@@ -120,7 +165,7 @@ begin Function { Mode }
 
 		Let aaZefirosEquip += 1
 
-		if eval( aaZefirosSlotFoot & 4 )
+		if eval( aaZefirosSlotFoot & 4 ) ;UpperBody
 			Let aaZefirosEquip += 1
 		endif
 		if eval( aaZefirosSlotFoot & 16 )
@@ -229,12 +274,7 @@ begin Function { Mode }
 	;-----------------------------------------------------------------------------
 	if ( aaZefirosEquip > 0 )
 
-		DebugPrint "Resetting OnHealthDamage, OnMagicEffectHit, OnHitWith, OnMagicApply handlers."
-		
-		SetEventHandler "OnHealthDamage" aaZefirosOnDamage "object"::Player
-		SetEventHandler "OnMagicEffectHit" aaZefirosOnMagicHit first::Player
-		SetEventHandler "OnHitWith" aaZefirosOnWeaponHit first::Player
-		SetEventHandler "OnMagicApply" aaZefirosOnMagicApply second::Player
+		Call aaZefirosSetHandlers 1
 
 	endif
 

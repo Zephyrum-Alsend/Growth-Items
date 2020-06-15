@@ -1,0 +1,136 @@
+scn aaZefirosFormMenu
+
+;Main script
+;-----------------------------------------------------------------------------
+;aaZefirosManager
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;Options menu.
+;All choices here redirect to other menus and/or functions.  Sets up Menu 
+;values in preparation for said menus.
+;
+;Called when Menu[0] = 1.
+;
+;Menu:
+;0::MenuIndex
+;1::Button
+;2::Page
+;3::SubMenu
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+string_var Name
+array_var Menu ;Return value
+;-----------------------------------------------------------------------------
+
+;-----------------------------------------------------------------------------
+begin Function { Name, Menu }
+;-----------------------------------------------------------------------------
+
+	if eval( Menu[1] == -2 )
+
+		Let Name += " options:"
+		MessageBox $Name "[Cancel]" "Save Set" "Load Set" "Form" "Form ALL" "Random" "Random ALL" "Weight" "Weight ALL"
+		Let Menu[1] := -1
+		
+	elseif eval( Menu[1] < 0 )
+
+		Let Menu[1] := GetButtonPressed
+
+	elseif eval( Menu[1] == 1 )
+
+		;Save Set
+		Let Menu[0] := 2
+		Let Menu[1] := -2
+		Let Menu[2] := 0
+		Let Menu[3] := 0
+
+	elseif eval( Menu[1] == 2 )
+
+		;Load Set
+		Let Menu[0] := 3
+		Let Menu[1] := -2
+		Let Menu[2] := 0
+		Let Menu[3] := 0
+
+	elseif eval( Menu[1] == 3 )
+
+		;Form
+		Let Menu[0] := 4
+		Let Menu[1] := -2
+		Let Menu[2] := 0
+		Let Menu[3] := 0
+
+	elseif eval( Menu[1] == 4 )
+
+		;Form ALL
+		Let Menu[0] := 5
+		Let Menu[1] := -2
+		Let Menu[2] := 0
+		Let Menu[3] := 0
+
+	elseif eval( Menu[1] == 5 )
+
+		;Random
+		Let Menu[0] := 6
+		Let Menu[1] := 0
+		Let Menu[2] := 0
+		Let Menu[3] := 0
+			
+	elseif eval( Menu[1] == 6 )
+
+		;Random ALL
+		Let Menu[0] := 7
+		Let Menu[1] := 0
+		Let Menu[2] := 0
+		Let Menu[3] := 0
+			
+	elseif eval( Menu[1] == 7 )
+
+		;Weight
+		Let Menu[0] := 8
+		Let Menu[1] := -2
+		Let Menu[2] := 0
+		Let Menu[3] := 0
+
+	elseif eval( Menu[1] == 8 )
+
+		;Weight ALL
+		Let Menu[0] := 9
+		Let Menu[1] := -2
+		Let Menu[2] := 0
+		Let Menu[3] := 0
+
+	else
+
+		;Cancel
+		DebugPrint "Cancelling FormMenu."
+		Let Menu[0] := 0
+
+	endif
+
+	
+	SetFunctionValue Menu
+	Return
+;-----------------------------------------------------------------------------
+end ;Function { Name, Menu }
+;-----------------------------------------------------------------------------

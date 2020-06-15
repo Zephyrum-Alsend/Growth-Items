@@ -13,6 +13,7 @@ scn aaZefirosFlavorMessage
 ;-----------------------------------------------------------------------------
 ;aaZefirosGetPCBIP
 ;aaZefirosSacrifice
+;aaZefirosSetMimic
 ;-----------------------------------------------------------------------------
 
 ;Used globals
@@ -25,8 +26,8 @@ scn aaZefirosFlavorMessage
 
 ;Description
 ;-----------------------------------------------------------------------------
-;Based on the Mode set, display a random flavor message with the passed Icon,
-;Sound and Name(s) for the specified amount of Time (seconds).
+;Based on the Mode given, display a random flavor message with the passed 
+;Icon, Sound and Name(s) for the specified amount of Time (seconds).
 ;Also prints message to console.
 ;-----------------------------------------------------------------------------
 
@@ -46,16 +47,6 @@ string_var Msg
 ;-----------------------------------------------------------------------------
 begin Function { Icon, Sound, Name, Name2, Mode, Time }
 ;-----------------------------------------------------------------------------
-
-	;No idea if MessageEX handles negative values so return for safety
-	if ( Time < 0 )
-
-		MessageEX "FlavorMessage: Time value negative."
-		DebugPrint "FlavorMessage: Time value negative."
-		Return
-
-	endif
-
 
 	;These functions can handle incorrect data
 	SetMessageIcon $Icon
@@ -82,6 +73,7 @@ begin Function { Icon, Sound, Name, Name2, Mode, Time }
 			Let Msg := "A great weight is heft upon your shoulders..."
 
 		endif
+
 
 	;-----------------------------------------------------------------------------
 	;Level Up
@@ -130,6 +122,7 @@ begin Function { Icon, Sound, Name, Name2, Mode, Time }
 
 		endif
 
+		
 	;-----------------------------------------------------------------------------
 	;Halfway to level up
 	;-----------------------------------------------------------------------------
@@ -177,6 +170,7 @@ begin Function { Icon, Sound, Name, Name2, Mode, Time }
 
 		endif
 
+		
 	;-----------------------------------------------------------------------------
 	;Armor Eater
 	;-----------------------------------------------------------------------------
@@ -184,38 +178,39 @@ begin Function { Icon, Sound, Name, Name2, Mode, Time }
 
 		if ( Ran <= 12.5 ) ;12.5%
 
-			Let Msg := Name + " consumes " + Name2 + "."
+			Let Msg := Name + " consume(s) " + Name2 + "."
 
 		elseif ( Ran <= 25 ) ;12.5%
 
-			Let Msg := Name + " absorbs " + Name2 + "."
+			Let Msg := Name + " absorb(s) " + Name2 + "."
 
 		elseif ( Ran <= 37.5 ) ;12.5%
 
-			Let Msg := Name + " assimilates " + Name2 + "."
+			Let Msg := Name + " assimilate(s) " + Name2 + "."
 
 		elseif ( Ran <= 50 ) ;12.5%
 
-			Let Msg := Name2 + " liquidates as " + Name + " contacts it."
+			Let Msg := Name2 + " liquidate(s) as " + Name + " contact(s) it."
 
 		elseif ( Ran <= 62.5 ) ;12.5%
 
-			Let Msg := Name2 + " enters " + Name + " without resistance."
+			Let Msg := Name2 + " enter(s) " + Name + " without resistance."
 
 		elseif ( Ran <= 75 ) ;12.5%
 
-			Let Msg := Name + " digests " + Name2 + "."
+			Let Msg := Name + " digest(s) " + Name2 + "."
 
 		elseif ( Ran <= 87.5 ) ;12.5%
 
-			Let Msg := Name2 + " ceases to be before " + Name + "."
+			Let Msg := Name2 + " cease(s) to be before " + Name + "."
 
 		else ;12.5%
 
-			Let Msg := Name + " unravels " + Name2 + "."
+			Let Msg := Name + " unravel(s) " + Name2 + "."
 
 		endif
 
+		
 	;-----------------------------------------------------------------------------
 	;Form change
 	;-----------------------------------------------------------------------------
@@ -223,23 +218,23 @@ begin Function { Icon, Sound, Name, Name2, Mode, Time }
 
 		if ( Ran <= 20 ) ;20%
 
-			Let Msg := Name + " polymorphs."
+			Let Msg := Name + " polymorph(s)."
 
 		elseif ( Ran <= 40 ) ;20%
 
-			Let Msg := Name + " changes form."
+			Let Msg := Name + " change(s) form."
 
 		elseif ( Ran <= 60 ) ;20%
 
-			Let Msg := Name + " restructures itself."
+			Let Msg := Name + " restructure(s)."
 
 		elseif ( Ran <= 80 ) ;20%
 
-			Let Msg := Name + " alters its shape."
+			Let Msg := Name + " alter(s) shape."
 
 		elseif ( Ran <= 99.99 ) ;19.99%
 
-			Let Msg := Name + " becomes something other."
+			Let Msg := Name + " become(s) something other."
 
 		else ;0.01%
 
@@ -247,6 +242,7 @@ begin Function { Icon, Sound, Name, Name2, Mode, Time }
 
 		endif
 
+		
 	;-----------------------------------------------------------------------------
 	;Form name
 	;-----------------------------------------------------------------------------
@@ -258,49 +254,99 @@ begin Function { Icon, Sound, Name, Name2, Mode, Time }
 		
 		elseif ( Ran <= 20 ) ;10%
 
-			Let Msg := Name + " looks like " + Name2 + "."
+			Let Msg := Name + " look(s) like " + Name2 + "."
 		
 		elseif ( Ran <= 30 ) ;10%
 
-			Let Msg := Name + " appears as " + Name2 + "."
+			Let Msg := Name + " appear(s) as " + Name2 + "."
 		
 		elseif ( Ran <= 40 ) ;10%
 
-			Let Msg := Name + " takes the guise of " + Name2 + "."
+			Let Msg := Name + " take(s) the guise of " + Name2 + "."
 		
 		elseif ( Ran <= 50 ) ;10%
 
-			Let Msg := Name + " mantles " + Name2 + "."
+			Let Msg := Name + " mantle(s) " + Name2 + "."
 		
 		elseif ( Ran <= 60 ) ;10%
 
-			Let Msg := Name + " takes the appearance of " + Name2 + "."
+			Let Msg := Name + " take(s) the appearance of " + Name2 + "."
 		
 		elseif ( Ran <= 70 ) ;10%
 
-			Let Msg := Name + " takes the form of " + Name2 + "."
+			Let Msg := Name + " take(s) the form of " + Name2 + "."
 		
 		elseif ( Ran <= 80 ) ;10%
 
-			Let Msg := Name + " guises as " + Name2 + "."
+			Let Msg := Name + " guise(s) as " + Name2 + "."
 		
 		elseif ( Ran <= 90 ) ;10%
 
-			Let Msg := Name + " looks identical to " + Name2 + "."
+			Let Msg := Name + " look(s) identical to " + Name2 + "."
 		
 		else ;10%
 
-			Let Msg := Name + " masquerades as " + Name2 + "."
+			Let Msg := Name + " masquerade(s) as " + Name2 + "."
 
 		endif
+
 		
 	;-----------------------------------------------------------------------------
-	;Test message
+	;Save Set
 	;-----------------------------------------------------------------------------
-	elseif ( Mode == 100 )
+	elseif ( Mode == 6 )
 
-		Let Msg := "Test " + Name
+		if ( Ran <= 20 ) ;20%
 
+			Let Msg := Name + " memorizes its form as " + Name2 + "."
+			
+		elseif ( Ran <= 40 ) ;20%
+			
+			Let Msg := Name + " marks its form as " + Name2 + "."
+			
+		elseif ( Ran <= 60 ) ;20%
+			
+			Let Msg := Name + " inters its form as " + Name2 + "."
+			
+		elseif ( Ran <= 80 ) ;20%
+			
+			Let Msg := Name + " tags its form as " + Name2 + "."
+			
+		else ;20%
+			
+			Let Msg := Name + " preserves its form as " + Name2 + "."
+
+		endif
+
+		
+	;-----------------------------------------------------------------------------
+	;Load Set
+	;-----------------------------------------------------------------------------
+	elseif ( Mode == 7 )
+
+		if ( Ran <= 20 ) ;20%
+
+			Let Msg := Name + " recalls " + Name2 + "."
+
+		elseif ( Ran <= 40 ) ;20%
+			
+			Let Msg := Name + " remembers " + Name2 + "."
+
+		elseif ( Ran <= 60 ) ;20%
+			
+			Let Msg := Name + " reinstates " + Name2 + "."
+
+		elseif ( Ran <= 80 ) ;20%
+			
+			Let Msg := Name + " polymorphs into " + Name2 + "."
+
+		else ;20%
+			
+			Let Msg := Name + " mantles " + Name2 + "."
+
+		endif
+
+		
 	;-----------------------------------------------------------------------------
 	;Error message
 	;-----------------------------------------------------------------------------
@@ -312,8 +358,12 @@ begin Function { Icon, Sound, Name, Name2, Mode, Time }
 
 
 	DebugPrint "%BIcon:%b %z %BSound:%b %z %BName:%b %z %BMode:%b %.0f %BTime:%b %.1f %BRan:%b %.2f" Icon Sound Name Mode Time Ran
-	MessageEX "%z" Msg Time
 	printc "%z" Msg
+	if ( Time > 0 )
+		MessageEX "%z" Msg Time
+	else
+		MessageEX "%z" Msg
+	endif
 
 
 	sv_Destruct Msg

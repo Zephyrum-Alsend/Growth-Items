@@ -25,7 +25,7 @@ scn aaZefirosFlavorBox
 
 ;Description
 ;-----------------------------------------------------------------------------
-;Based on the Mode set, display a random flavor message box.
+;Based on the Mode given, display a random flavor message box.
 ;Also prints message to console.
 ;-----------------------------------------------------------------------------
 
@@ -142,7 +142,7 @@ begin Function { Name, Mode }
 
 		elseif ( Ran <= 80 ) ;20%
 
-			Let Msg := "Dancing sparks flicker about the edge of your vision, before realising this is " + Name + "'s magicka, leaking under dilapidation."
+			Let Msg := "Dancing sparks flicker about the edge of your vision, before realising this is " + Name + "'s magicka, leaking in dilapidation."
 
 		else ;20%
 			
@@ -161,19 +161,19 @@ begin Function { Name, Mode }
 
 		elseif ( Ran <= 40 ) ;25%
 
-			Let Msg := Name + " rejects the sigil stone."
+			Let Msg := Name + " reject(s) the sigil stone."
 
 		elseif ( Ran <= 60 ) ;25%
 
-			Let Msg := "Sparks fly as " + Name + " spits out the sigil stone, retaining its former self."
+			Let Msg := "Sparks fly as " + Name + " spit(s) out the sigil stone, retaining its former self."
 
 		elseif ( Ran <= 80 ) ;25%
 
-			Let Msg := Name + " asserts its existence."
+			Let Msg := Name + " assert(s) existence."
 
 		elseif ( Ran <= 99.9 ) ;24.9%
 
-			Let Msg := Name + " refuses the influence of another Prince."
+			Let Msg := Name + " refuse(s) the influence of another Ada."
 
 		else ;0.1%
 
@@ -188,7 +188,7 @@ begin Function { Name, Mode }
 
 		if ( Ran <= 12.5 ) ;12.5%
 
-			Let Msg := Name + " rejects enchantment."
+			Let Msg := Name + " reject(s) enchantment."
 		
 		elseif ( Ran <= 25 ) ;12.5%
 
@@ -196,7 +196,7 @@ begin Function { Name, Mode }
 		
 		elseif ( Ran <= 37.5 ) ;12.5%
 
-			Let Msg := "Try as you might, no amount of prodding, probing or pummeling will enforce your enchantment onto " + Name + "."
+			Let Msg := "Try as you might, no amount of prodding, probing or pushing will enforce your enchantment onto " + Name + "."
 		
 		elseif ( Ran <= 50 ) ;12.5%
 
@@ -208,11 +208,11 @@ begin Function { Name, Mode }
 		
 		elseif ( Ran <= 75 ) ;12.5%
 
-			Let Msg := Name + " rejects the soul, as if already filled."
+			Let Msg := Name + " reject(s) the soul, as if already filled."
 		
 		elseif ( Ran <= 87.5 ) ;12.5%
 
-			Let Msg := Name + " refuses both your will and the anima accompanying it."
+			Let Msg := Name + " refuse(s) both your will and the anima accompanying it."
 		
 		elseif ( ran <= 99.9 ) ;12.4%
 
@@ -225,13 +225,6 @@ begin Function { Name, Mode }
 		endif
 
 		
-	;-----------------------------------------------------------------------------
-	;Test message
-	;-----------------------------------------------------------------------------
-	elseif ( Mode == 100 )
-
-		Let Msg := "Test " + Name
-
 	;-----------------------------------------------------------------------------
 	;Error message
 	;-----------------------------------------------------------------------------

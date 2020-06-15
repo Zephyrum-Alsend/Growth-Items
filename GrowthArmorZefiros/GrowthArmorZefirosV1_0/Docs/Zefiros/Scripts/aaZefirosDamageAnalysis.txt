@@ -17,7 +17,6 @@ float fQuestDelayTime
 ;Related scripts
 ;-----------------------------------------------------------------------------
 ;aaZefirosOnDamage
-;aaZefirosOnMagicApply
 ;aaZefirosOnMagicHit
 ;aaZefirosOnWeaponHit
 ;-----------------------------------------------------------------------------
@@ -46,9 +45,10 @@ float fQuestDelayTime
 
 ;Description
 ;-----------------------------------------------------------------------------
-;With flags set by OnMagicHit and OnWeaponHit, attribute damage taken to
-;various damage types and distribute XP to related resistances.  Re-evaluate
-;flag conditions by testing if Player is still affected by said damage types.
+;With flags set by OnMagicHit and OnWeaponHit, attribute damage reported by 
+;OnDamage to various damage types and distribute XP to related resistances.  
+;Re-evaluate flag conditions by testing if Player is still affected by said 
+;damage types.
 ;
 ;XP is evenly distributed between different damage types instead of accurately
 ;awarded based on damage per type.  This is a design decision due to limited
@@ -65,7 +65,7 @@ float fQuestDelayTime
 float XP
 float LastXP
 short Div
-short ParaXP
+float ParaXP
 ;-----------------------------------------------------------------------------
 
 ;-----------------------------------------------------------------------------
@@ -99,42 +99,42 @@ begin GameMode
 		;-----------------------------------------------------------------------------
 		Let Div := 0
 	
-		;Fire
+		;Hit by Fire
 		if ( aaZefirosRLogFire == 1 )
 	
 			Let Div += 1
 	
 		endif
 	
-		;Frost
+		;Hit by Frost
 		if ( aaZefirosRLogFrost == 1 )
 	
 			Let Div += 1
 	
 		endif
 	
-		;Shock
+		;Hit by Shock
 		if ( aaZefirosRLogShock == 1 )
 	
 			Let Div += 1
 	
 		endif
 	
-		;Non-Elemental
+		;Hit by Non-Elemental
 		if ( aaZefirosRLogMagic == 1 )
 	
 			Let Div += 1
 	
 		endif
 	
-		;Normal Weapon
+		;Hit by Normal Weapon
 		if ( aaZefirosRLogNormal == 1 )
 	
 			Let Div += 1
 	
 		endif
 	
-		;Non-Normal Weapon
+		;Hit by Non-Normal Weapon
 		if ( aaZefirosRLogPhysical == 1 )
 	
 			Let Div += 1
@@ -142,7 +142,7 @@ begin GameMode
 		endif
 	
 		;-----------------------------------------------------------------------------
-		;Attribute XP and re-evaluate log flags
+		;Attribute XP and re-evaluate Log flags
 		;-----------------------------------------------------------------------------
 		;If Div > 0 and we have more than just Non-Normal Weapon damage
 		;-----------------------------------------------------------------------------
@@ -151,6 +151,7 @@ begin GameMode
 	
 			Let XP := XP / Div
 	
+			;Non-Normal Weapon damage does not have a corresponding resistance
 			DebugPrint "Detected more than Non-Normal Weapon damage, adding %.2f Resistance XP." XP
 	
 	
@@ -245,6 +246,7 @@ begin GameMode
 	
 				Let aaZefirosRXPNormal += XP
 				Let aaZefirosRLogNormal := 0
+				;Physical damage cannot be over time so no need to check
 	
 			endif
 	
@@ -253,31 +255,32 @@ begin GameMode
 		endif ;( Div > 0 && !( Div == 1 && aaZefirosRLogPhysical == 1 ) )
 		;-----------------------------------------------------------------------------
 		Let aaZefirosRLogPhysical := 0
-	
-		;-----------------------------------------------------------------------------
-		;Paralysis
-		;-----------------------------------------------------------------------------
-		if ( aaZefirosRLogParalysis == 1 )
-	
-			;Paralysis is time based instead of damage based
-			Let aaZefirosRXPParalysis += ParaXP
-	
-			if ( Player.HasMagicEffect PARA )
-	
-				DebugPrint "Still Paralyzed..."
-	
-			else
-	
-				DebugPrint "No longer Paralyzed."
-				Let aaZefirosRLogParalysis := 0
-	
-			endif
-	
-		endif
+		
 
 	;-----------------------------------------------------------------------------
 	endif ;( XP > 0 )
 	;-----------------------------------------------------------------------------
+
+	;Paralysis is time based instead of damage based
+	;-----------------------------------------------------------------------------
+	;Paralysis
+	;-----------------------------------------------------------------------------
+	if ( aaZefirosRLogParalysis == 1 )
+
+		Let aaZefirosRXPParalysis += ParaXP
+
+		if ( Player.HasMagicEffect PARA )
+
+			DebugPrint "Still Paralyzed..."
+
+		else
+
+			DebugPrint "No longer Paralyzed."
+			Let aaZefirosRLogParalysis := 0
+
+		endif
+
+	endif
 
 ;-----------------------------------------------------------------------------
 end ;GameMode

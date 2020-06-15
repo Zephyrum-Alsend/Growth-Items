@@ -58,18 +58,16 @@ ref Ench
 short Count
 short i
 
-short Lvl
-short MagB
-short AreB
-short DurB
-short Rng
-
 long EffC
 long AuxC
-
+short MagB
 float MagM
+short AreB
 float AreM
+short DurB
 float DurM
+short Rng
+short Lvl
 
 array_var Item
 ;-----------------------------------------------------------------------------

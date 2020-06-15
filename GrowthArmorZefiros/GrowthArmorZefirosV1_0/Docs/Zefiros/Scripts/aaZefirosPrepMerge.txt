@@ -30,7 +30,7 @@ scn aaZefirosPrepMerge
 ;Description
 ;-----------------------------------------------------------------------------
 ;Checks if any items are merged according to the slot masks and returns them
-;to the Player in preparation for calling SetMerge.
+;to the Player in preparation for calling SetMerge after game boot.
 ;
 ;Array:
 ;[0]Body
@@ -55,6 +55,7 @@ begin Function { Mask, Armr }
 
 	DebugPrint "Checking for missing items needed for merging..."
 
+	
 	;Add Body
 	if eval( Mask[1] & 4 || Mask[2] & 4 || Mask[3] & 4 || Mask[4] & 4 || Mask[5] & 4 )
 
@@ -64,6 +65,7 @@ begin Function { Mask, Armr }
 
 	endif
 
+	
 	;Add Foot
 	if eval( Mask[0] & 32 || Mask[2] & 32 || Mask[3] & 32 || Mask[4] & 32 || Mask[5] & 32 )
 
@@ -73,6 +75,7 @@ begin Function { Mask, Armr }
 
 	endif
 
+	
 	;Add Hand
 	if eval( Mask[1] & 16 || Mask[0] & 16 || Mask[3] & 16 || Mask[4] & 16 || Mask[5] & 16 )
 
@@ -82,6 +85,7 @@ begin Function { Mask, Armr }
 
 	endif
 
+	
 	;Add Head
 	if eval( Mask[1] & 3 || Mask[2] & 3 || Mask[0] & 3 || Mask[4] & 3 || Mask[5] & 3 )
 
@@ -91,6 +95,7 @@ begin Function { Mask, Armr }
 
 	endif
 
+	
 	;Add Legs
 	if eval( Mask[1] & 8 || Mask[2] & 8 || Mask[3] & 8 || Mask[0] & 8 || Mask[5] & 8 )
 
@@ -100,6 +105,7 @@ begin Function { Mask, Armr }
 
 	endif
 
+	
 	;Add Shld
 	if eval( Mask[1] & 8192 || Mask[2] & 8192 || Mask[3] & 8192 || Mask[4] & 8192 || Mask[0] & 8192 )
 
@@ -113,5 +119,5 @@ begin Function { Mask, Armr }
 	DebugPrint "Missing items returned."
 	Return
 ;-----------------------------------------------------------------------------
-end ;Function { }
+end ;Function { Mask, Armr }
 ;-----------------------------------------------------------------------------

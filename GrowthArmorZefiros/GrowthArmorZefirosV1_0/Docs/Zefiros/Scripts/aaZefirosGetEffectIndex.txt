@@ -47,6 +47,9 @@ short Idx ;Return value
 begin Function { EffC, AuxC, Ench }
 ;-----------------------------------------------------------------------------
 
+	;MagicItemHasEffectCode does not properly handle invalid ActorValue codes,
+	;so we have two separate calls based on the code passed
+	
 	;-----------------------------------------------------------------------------
 	;Effect does not affect an Attribute or Skill
 	;-----------------------------------------------------------------------------

@@ -30,8 +30,6 @@ scn aaZefirosGetSlots
 ;Description
 ;-----------------------------------------------------------------------------
 ;Returns an array containing all Slot globals.
-;
-;Recommend calling this function immediately after SetMerge returns.
 ;-----------------------------------------------------------------------------
 
 ;Parameters

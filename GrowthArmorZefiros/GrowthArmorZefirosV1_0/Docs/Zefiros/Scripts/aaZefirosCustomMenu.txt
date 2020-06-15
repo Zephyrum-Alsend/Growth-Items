@@ -1,0 +1,107 @@
+scn aaZefirosCustomMenu
+
+;Main script
+;-----------------------------------------------------------------------------
+;aaZefirosManager
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;aaZefirosFormMenu
+;aaZefirosSaveCustom
+;aaZefirosLoadCustom
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;Menu for accessing Custom Outfit save slots.
+;
+;Called when Menu[0] = 2 || 3.
+;
+;Menu:
+;0::MenuIndex
+;1::Button
+;2::Page
+;3::SubMenu
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+string_var Name
+array_var Menu ;Return value
+
+string_var But1
+string_var But2
+string_var But3
+string_var But4
+string_var But5
+string_var But6
+string_var But7
+string_var But8
+;-----------------------------------------------------------------------------
+
+;-----------------------------------------------------------------------------
+begin Function { Name, Menu }
+;-----------------------------------------------------------------------------
+
+	if eval( Menu[1] == -2 )
+
+		;Header
+		Let Name += " Custom Sets:"
+
+		;Set buttons
+		Let But1 := "Set 1"
+		Let But2 := "Set 2"
+		Let But3 := "Set 3"
+		Let But4 := "Set 4"
+		Let But5 := "Set 5"
+		Let But6 := "Set 6"
+		Let But7 := "Set 7"
+		Let But8 := "Set 8"
+
+		;Display menu
+		MessageBox $Name "[Cancel]" "[<Back]" $But1 $But2 $But3 $But4 $But5 $But6 $But7 $But8
+		Let Menu[1] := -1
+		
+	elseif eval( Menu[1] < 0 )
+
+		Let Menu[1] := GetButtonPressed
+
+	elseif eval( Menu[1] == 0 )
+
+		;Cancel
+		DebugPrint "Cancelling CustomMenu."
+		Let Menu[0] := 0
+
+	elseif eval( Menu[1] == 1 )
+
+		;Back
+		DebugPrint "Returning to FormMenu."
+		Let Menu[0] := 1
+		Let Menu[1] := -2
+
+	else
+
+		;Set slot chosen
+		Let Menu[3] := 1
+
+	endif
+
+	
+	SetFunctionValue Menu
+	Return
+;-----------------------------------------------------------------------------
+end ;Function { Name, Button }
+;-----------------------------------------------------------------------------

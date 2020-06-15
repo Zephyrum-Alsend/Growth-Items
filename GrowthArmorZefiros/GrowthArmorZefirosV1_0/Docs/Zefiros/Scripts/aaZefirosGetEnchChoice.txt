@@ -11,7 +11,6 @@ scn aaZefirosGetEnchChoice
 
 ;Related scripts
 ;-----------------------------------------------------------------------------
-;aaZefirosGetEnchantData
 ;-----------------------------------------------------------------------------
 
 ;Used globals
@@ -30,17 +29,18 @@ scn aaZefirosGetEnchChoice
 ;and Page Shorts to determine what to display, with Type restricting which 
 ;effects are available.
 ;Page contains -1 when an effect has been chosen, and Button then contains the
-;index the effect's data can be found in GetEnchantData.
+;index the effect's data can be found at in GetEnchantData.
+;
+;This could've been written more human readably but... it works.
 ;-----------------------------------------------------------------------------
 
 ;Parameters
 ;-----------------------------------------------------------------------------
 string_var Name
 short Type
-short Button
-short Page
+short Button ;Return value
+short Page ;Return value
 
-array_var Next ;Return value
 string_var Msg
 ;-----------------------------------------------------------------------------
 
@@ -70,6 +70,7 @@ begin Function { Name, Type, Button, Page }
 		;Shield options
 		elseif ( Type == 1 )
 
+			;Simply append new options so we can reuse the same backend code
 			MessageBox $Msg "Fortify..." "Restore..." "Shield" "Feather" "Reflect Damage" "Reflect Spell" "Spell Absorption"
 			
 		endif
@@ -82,6 +83,7 @@ begin Function { Name, Type, Button, Page }
 	;-----------------------------------------------------------------------------
 	elseif ( Page == 1 && Button >= 0 )
 
+		
 		;-----------------------------------------------------------------------------
 		;Fortify Redirect
 		;-----------------------------------------------------------------------------
@@ -89,9 +91,10 @@ begin Function { Name, Type, Button, Page }
 
 			Let Msg := Name + " seeks a Fortify enchantment:"
 
-			MessageBox $Msg "Back" "Attribute" "Resource" "Skill"
+			MessageBox $Msg "[<Back]" "Attribute" "Resource" "Skill"
 			Let Page := 2
 			Let Button := -1
+
 
 		;-----------------------------------------------------------------------------
 		;Restore Select
@@ -100,10 +103,11 @@ begin Function { Name, Type, Button, Page }
 
 			Let Msg := Name + " seeks a Restore enchantment:"
 
-			MessageBox $Msg "Back" "Fatigue" "Health" "Magicka"
+			MessageBox $Msg "[<Back]" "Fatigue" "Health" "Magicka"
 			Let Page := 3
 			Let Button := -1
 
+			
 		;-----------------------------------------------------------------------------
 		;Shield
 		;-----------------------------------------------------------------------------
@@ -112,6 +116,7 @@ begin Function { Name, Type, Button, Page }
 			Let Page := -1
 			Let Button := 35
 
+			
 		;-----------------------------------------------------------------------------
 		;Feather
 		;-----------------------------------------------------------------------------
@@ -120,6 +125,7 @@ begin Function { Name, Type, Button, Page }
 			Let Page := -1
 			Let Button := 36
 
+			
 		;-----------------------------------------------------------------------------
 		;Reflect Damage
 		;-----------------------------------------------------------------------------
@@ -128,6 +134,7 @@ begin Function { Name, Type, Button, Page }
 			Let Page := -1
 			Let Button := 37
 
+			
 		;-----------------------------------------------------------------------------
 		;Reflect Spell
 		;-----------------------------------------------------------------------------
@@ -136,6 +143,7 @@ begin Function { Name, Type, Button, Page }
 			Let Page := -1
 			Let Button := 38
 
+			
 		;-----------------------------------------------------------------------------
 		;Spell Absorption
 		;-----------------------------------------------------------------------------
@@ -152,6 +160,7 @@ begin Function { Name, Type, Button, Page }
 	;-----------------------------------------------------------------------------
 	elseif ( Page == 2 && Button >= 0 )
 
+		
 		;-----------------------------------------------------------------------------
 		;Back
 		;-----------------------------------------------------------------------------
@@ -160,6 +169,7 @@ begin Function { Name, Type, Button, Page }
 			Let Page := 0
 			Let Button := -1
 
+			
 		;-----------------------------------------------------------------------------
 		;Attribute
 		;-----------------------------------------------------------------------------
@@ -167,10 +177,11 @@ begin Function { Name, Type, Button, Page }
 
 			Let Msg := Name + " seeks a Fortify Attribute enchantment:"
 
-			MessageBox $Msg "Back" "Strength" "Intelligence" "Willpower" "Agility" "Speed" "Endurance" "Personality" "Luck"
+			MessageBox $Msg "[<Back]" "Strength" "Intelligence" "Willpower" "Agility" "Speed" "Endurance" "Personality" "Luck"
 			Let Page := 4
 			Let Button := -1
 
+			
 		;-----------------------------------------------------------------------------
 		;Resource
 		;-----------------------------------------------------------------------------
@@ -178,10 +189,11 @@ begin Function { Name, Type, Button, Page }
 
 			Let Msg := Name + " seeks a Fortify Resource enchantment:"
 
-			MessageBox $Msg "Back" "Fatigue" "Health" "Magicka"
+			MessageBox $Msg "[<Back]" "Fatigue" "Health" "Magicka"
 			Let Page := 5
 			Let Button := -1
 
+			
 		;-----------------------------------------------------------------------------
 		;Skill
 		;-----------------------------------------------------------------------------
@@ -189,7 +201,7 @@ begin Function { Name, Type, Button, Page }
 
 			Let Msg := Name + " seeks a Fortify Skill enchantment:"
 
-			MessageBox $Msg "Back" "Armorer" "Athletics" "Blade" "Block" "Blunt" "Hand To Hand" "Heavy Armor" "Alchemy" "Next"
+			MessageBox $Msg "[<Back]" "Armorer" "Athletics" "Blade" "Block" "Blunt" "Hand To Hand" "Heavy Armor" "Alchemy" "[Next>]"
 			Let Page := 6
 			Let Button := -1
 
@@ -201,6 +213,7 @@ begin Function { Name, Type, Button, Page }
 	;-----------------------------------------------------------------------------
 	elseif ( Page == 3 && Button >= 0 )
 
+		
 		;-----------------------------------------------------------------------------
 		;Back
 		;-----------------------------------------------------------------------------
@@ -209,6 +222,7 @@ begin Function { Name, Type, Button, Page }
 			Let Page := 0
 			Let Button := -1
 
+			
 		;-----------------------------------------------------------------------------
 		;Restore Fatigue
 		;-----------------------------------------------------------------------------
@@ -217,6 +231,7 @@ begin Function { Name, Type, Button, Page }
 			Let Page := -1
 			Let Button := 32
 
+			
 		;-----------------------------------------------------------------------------
 		;Restore Health
 		;-----------------------------------------------------------------------------
@@ -225,6 +240,7 @@ begin Function { Name, Type, Button, Page }
 			Let Page := -1
 			Let Button := 33
 
+			
 		;-----------------------------------------------------------------------------
 		;Restore Magicka
 		;-----------------------------------------------------------------------------
@@ -241,6 +257,7 @@ begin Function { Name, Type, Button, Page }
 	;-----------------------------------------------------------------------------
 	elseif ( Page == 4 && Button >= 0 )
 
+		
 		;-----------------------------------------------------------------------------
 		;Back
 		;-----------------------------------------------------------------------------
@@ -248,7 +265,8 @@ begin Function { Name, Type, Button, Page }
 
 			Let Page := 1
 			Let Button := 0
-		
+
+			
 		;-----------------------------------------------------------------------------
 		;Fortify Strength
 		;-----------------------------------------------------------------------------
@@ -256,7 +274,8 @@ begin Function { Name, Type, Button, Page }
 
 			Let Page := -1
 			Let Button := 0
-		
+
+			
 		;-----------------------------------------------------------------------------
 		;Fortify Intelligence
 		;-----------------------------------------------------------------------------
@@ -264,7 +283,8 @@ begin Function { Name, Type, Button, Page }
 
 			Let Page := -1
 			Let Button := 1
-		
+
+			
 		;-----------------------------------------------------------------------------
 		;Fortify Willpower
 		;-----------------------------------------------------------------------------
@@ -272,7 +292,8 @@ begin Function { Name, Type, Button, Page }
 
 			Let Page := -1
 			Let Button := 2
-		
+
+			
 		;-----------------------------------------------------------------------------
 		;Fortify Agility
 		;-----------------------------------------------------------------------------
@@ -280,7 +301,8 @@ begin Function { Name, Type, Button, Page }
 
 			Let Page := -1
 			Let Button := 3
-		
+
+			
 		;-----------------------------------------------------------------------------
 		;Fortify Speed
 		;-----------------------------------------------------------------------------
@@ -288,7 +310,8 @@ begin Function { Name, Type, Button, Page }
 
 			Let Page := -1
 			Let Button := 4
-		
+
+			
 		;-----------------------------------------------------------------------------
 		;Fortify Endurance
 		;-----------------------------------------------------------------------------
@@ -296,7 +319,8 @@ begin Function { Name, Type, Button, Page }
 
 			Let Page := -1
 			Let Button := 5
-		
+
+			
 		;-----------------------------------------------------------------------------
 		;Fortify Personality
 		;-----------------------------------------------------------------------------
@@ -304,7 +328,8 @@ begin Function { Name, Type, Button, Page }
 
 			Let Page := -1
 			Let Button := 6
-		
+
+			
 		;-----------------------------------------------------------------------------
 		;Fortify Luck
 		;-----------------------------------------------------------------------------
@@ -321,6 +346,7 @@ begin Function { Name, Type, Button, Page }
 	;-----------------------------------------------------------------------------
 	elseif ( Page == 5 && Button >= 0 )
 
+		
 		;-----------------------------------------------------------------------------
 		;Back
 		;-----------------------------------------------------------------------------
@@ -328,7 +354,8 @@ begin Function { Name, Type, Button, Page }
 
 			Let Page := 1
 			Let Button := 0
-		
+
+			
 		;-----------------------------------------------------------------------------
 		;Fortify Fatigue
 		;-----------------------------------------------------------------------------
@@ -337,6 +364,7 @@ begin Function { Name, Type, Button, Page }
 			Let Page := -1
 			Let Button := 29
 
+			
 		;-----------------------------------------------------------------------------
 		;Fortify Health
 		;-----------------------------------------------------------------------------
@@ -344,7 +372,8 @@ begin Function { Name, Type, Button, Page }
 
 			Let Page := -1
 			Let Button := 30
-		
+
+			
 		;-----------------------------------------------------------------------------
 		;Fortify Magicka
 		;-----------------------------------------------------------------------------
@@ -361,6 +390,7 @@ begin Function { Name, Type, Button, Page }
 	;-----------------------------------------------------------------------------
 	elseif ( Page == 6 && Button >= 0 )
 
+		
 		;-----------------------------------------------------------------------------
 		;Back
 		;-----------------------------------------------------------------------------
@@ -368,7 +398,8 @@ begin Function { Name, Type, Button, Page }
 
 			Let Page := 1
 			Let Button := 0
-		
+
+			
 		;-----------------------------------------------------------------------------
 		;Fortify Armorer
 		;-----------------------------------------------------------------------------
@@ -376,7 +407,8 @@ begin Function { Name, Type, Button, Page }
 
 			Let Page := -1
 			Let Button := 8
-		
+
+			
 		;-----------------------------------------------------------------------------
 		;Fortify Athletics
 		;-----------------------------------------------------------------------------
@@ -384,7 +416,8 @@ begin Function { Name, Type, Button, Page }
 
 			Let Page := -1
 			Let Button := 9
-		
+
+			
 		;-----------------------------------------------------------------------------
 		;Fortify Blade
 		;-----------------------------------------------------------------------------
@@ -392,7 +425,8 @@ begin Function { Name, Type, Button, Page }
 
 			Let Page := -1
 			Let Button := 10
-		
+
+			
 		;-----------------------------------------------------------------------------
 		;Fortify Block
 		;-----------------------------------------------------------------------------
@@ -400,7 +434,8 @@ begin Function { Name, Type, Button, Page }
 
 			Let Page := -1
 			Let Button := 11
-		
+
+			
 		;-----------------------------------------------------------------------------
 		;Fortify Blunt
 		;-----------------------------------------------------------------------------
@@ -408,7 +443,8 @@ begin Function { Name, Type, Button, Page }
 
 			Let Page := -1
 			Let Button := 12
-		
+
+			
 		;-----------------------------------------------------------------------------
 		;Fortify Hand To Hand
 		;-----------------------------------------------------------------------------
@@ -416,7 +452,8 @@ begin Function { Name, Type, Button, Page }
 
 			Let Page := -1
 			Let Button := 13
-		
+
+			
 		;-----------------------------------------------------------------------------
 		;Fortify Heavy Armor
 		;-----------------------------------------------------------------------------
@@ -424,7 +461,8 @@ begin Function { Name, Type, Button, Page }
 
 			Let Page := -1
 			Let Button := 14
-		
+
+			
 		;-----------------------------------------------------------------------------
 		;Fortify Alchemy
 		;-----------------------------------------------------------------------------
@@ -433,6 +471,7 @@ begin Function { Name, Type, Button, Page }
 			Let Page := -1
 			Let Button := 15
 
+			
 		;-----------------------------------------------------------------------------
 		;Next
 		;-----------------------------------------------------------------------------
@@ -440,10 +479,11 @@ begin Function { Name, Type, Button, Page }
 
 			Let Msg := Name + " seeks a Fortify Skill enchantment:"
 
-			MessageBox $Msg "Prev" "Alteration" "Conjuration" "Destruction" "Illusion" "Mysticism" "Restoration" "Acrobatics" "Light Armor" "Next"
+			MessageBox $Msg "[<Prev]" "Alteration" "Conjuration" "Destruction" "Illusion" "Mysticism" "Restoration" "Acrobatics" "Light Armor" "[Next>]"
 			Let Page := 7
 			Let Button := -1
 
+			
 		endif
 
 		
@@ -452,6 +492,7 @@ begin Function { Name, Type, Button, Page }
 	;-----------------------------------------------------------------------------
 	elseif ( Page == 7 && Button >= 0 )
 
+		
 		;-----------------------------------------------------------------------------
 		;Back
 		;-----------------------------------------------------------------------------
@@ -459,7 +500,8 @@ begin Function { Name, Type, Button, Page }
 
 			Let Page := 2
 			Let Button := 3
-		
+
+			
 		;-----------------------------------------------------------------------------
 		;Fortify Alteration
 		;-----------------------------------------------------------------------------
@@ -467,7 +509,8 @@ begin Function { Name, Type, Button, Page }
 
 			Let Page := -1
 			Let Button := 16
-		
+
+			
 		;-----------------------------------------------------------------------------
 		;Fortify Conjuration
 		;-----------------------------------------------------------------------------
@@ -475,7 +518,8 @@ begin Function { Name, Type, Button, Page }
 
 			Let Page := -1
 			Let Button := 17
-		
+
+			
 		;-----------------------------------------------------------------------------
 		;Fortify Destruction
 		;-----------------------------------------------------------------------------
@@ -483,7 +527,8 @@ begin Function { Name, Type, Button, Page }
 
 			Let Page := -1
 			Let Button := 18
-		
+
+			
 		;-----------------------------------------------------------------------------
 		;Fortify Illusion
 		;-----------------------------------------------------------------------------
@@ -491,7 +536,8 @@ begin Function { Name, Type, Button, Page }
 
 			Let Page := -1
 			Let Button := 19
-		
+
+			
 		;-----------------------------------------------------------------------------
 		;Fortify Mysticism
 		;-----------------------------------------------------------------------------
@@ -499,7 +545,8 @@ begin Function { Name, Type, Button, Page }
 
 			Let Page := -1
 			Let Button := 20
-		
+
+			
 		;-----------------------------------------------------------------------------
 		;Fortify Restoration
 		;-----------------------------------------------------------------------------
@@ -507,7 +554,8 @@ begin Function { Name, Type, Button, Page }
 
 			Let Page := -1
 			Let Button := 21
-		
+
+			
 		;-----------------------------------------------------------------------------
 		;Fortify Acrobatics
 		;-----------------------------------------------------------------------------
@@ -515,7 +563,8 @@ begin Function { Name, Type, Button, Page }
 
 			Let Page := -1
 			Let Button := 22
-		
+
+			
 		;-----------------------------------------------------------------------------
 		;Fortify Light Armor
 		;-----------------------------------------------------------------------------
@@ -524,6 +573,7 @@ begin Function { Name, Type, Button, Page }
 			Let Page := -1
 			Let Button := 23
 
+			
 		;-----------------------------------------------------------------------------
 		;Next
 		;-----------------------------------------------------------------------------
@@ -531,10 +581,11 @@ begin Function { Name, Type, Button, Page }
 
 			Let Msg := Name + " seeks a Fortify Skill enchantment:"
 
-			MessageBox $Msg "Prev" "Marksman" "Mercantile" "Security" "Sneak" "Speechcraft"
+			MessageBox $Msg "[<Prev]" "Marksman" "Mercantile" "Security" "Sneak" "Speechcraft"
 			Let Page := 8
 			Let Button := -1
 
+			
 		endif
 
 		
@@ -543,6 +594,7 @@ begin Function { Name, Type, Button, Page }
 	;-----------------------------------------------------------------------------
 	elseif ( Page == 8 && Button >= 0 )
 
+		
 		;-----------------------------------------------------------------------------
 		;Back
 		;-----------------------------------------------------------------------------
@@ -550,7 +602,8 @@ begin Function { Name, Type, Button, Page }
 
 			Let Page := 6
 			Let Button := 9
-		
+
+			
 		;-----------------------------------------------------------------------------
 		;Fortify Marksman
 		;-----------------------------------------------------------------------------
@@ -558,7 +611,8 @@ begin Function { Name, Type, Button, Page }
 
 			Let Page := -1
 			Let Button := 24
-		
+
+			
 		;-----------------------------------------------------------------------------
 		;Fortify Mercantile
 		;-----------------------------------------------------------------------------
@@ -566,7 +620,8 @@ begin Function { Name, Type, Button, Page }
 
 			Let Page := -1
 			Let Button := 25
-		
+
+			
 		;-----------------------------------------------------------------------------
 		;Fortify Security
 		;-----------------------------------------------------------------------------
@@ -574,7 +629,8 @@ begin Function { Name, Type, Button, Page }
 
 			Let Page := -1
 			Let Button := 26
-		
+
+			
 		;-----------------------------------------------------------------------------
 		;Fortify Sneak
 		;-----------------------------------------------------------------------------
@@ -582,7 +638,8 @@ begin Function { Name, Type, Button, Page }
 
 			Let Page := -1
 			Let Button := 27
-		
+
+			
 		;-----------------------------------------------------------------------------
 		;Fortify Speechcraft
 		;-----------------------------------------------------------------------------
@@ -590,7 +647,8 @@ begin Function { Name, Type, Button, Page }
 
 			Let Page := -1
 			Let Button := 28
-		
+
+			
 		endif
 
 
@@ -600,8 +658,7 @@ begin Function { Name, Type, Button, Page }
 
 
 	sv_Destruct Msg
-	Let Next := ar_Map 0::Button 1::Page
-	SetFunctionValue Next
+	SetFunctionValue ar_Map 0::Button 1::Page
 	Return
 ;-----------------------------------------------------------------------------
 end ;Function { Name, Type, Button, Page }

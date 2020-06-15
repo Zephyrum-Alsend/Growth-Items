@@ -7,10 +7,7 @@ scn aaZefirosObjectBody
 
 ;Used scripts
 ;-----------------------------------------------------------------------------
-;aaZefirosOnDamage
-;aaZefirosOnMagicHit
-;aaZefirosOnWeaponHit
-;aaZefirosOnMagicApply
+;aaZefirosSetHandlers
 ;aaZefirosCleanUp
 ;-----------------------------------------------------------------------------
 
@@ -38,6 +35,12 @@ scn aaZefirosObjectBody
 ;-----------------------------------------------------------------------------
 ;Increments Equip flag when equipped by the Player, sets handlers if needed.
 ;Runs CleanUp when dropped by the Player.
+;
+;Slots are hardcoded instead of dot notation to increase speed, since this
+;script can be run quite often.
+;
+;There are scripts for each body part because OnActorEquip handler fires twice 
+;for enchanted items and GetSelf very rarely returns the wrong ID.
 ;-----------------------------------------------------------------------------
 
 ;Parameters
@@ -53,14 +56,11 @@ begin OnEquip Player
 	if ( aaZefirosEquip <= 0 )
 
 		;-----------------------------------------------------------------------------
-		DebugPrint "aaZefirosEquip is %.0f, setting to 1 and setting handlers." aaZefirosEquip
+		DebugPrint "aaZefirosEquip is %.0f, setting to 1." aaZefirosEquip
 		;-----------------------------------------------------------------------------
 
 		Let aaZefirosEquip := 0
-		SetEventHandler "OnHealthDamage" aaZefirosOnDamage "object"::Player
-		SetEventHandler "OnMagicEffectHit" aaZefirosOnMagicHit first::Player
-		SetEventHandler "OnHitWith" aaZefirosOnWeaponHit first::Player
-		SetEventHandler "OnMagicApply" aaZefirosOnMagicApply second::Player
+		Call aaZefirosSetHandlers 1
 
 	endif
 

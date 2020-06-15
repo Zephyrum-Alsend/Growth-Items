@@ -26,12 +26,12 @@ scn aaZefirosGetDefaultSlot
 ;Returns an array of default biped slot masks for Selfs in Manager.
 ;
 ;Array:
-;[0]Body
-;[1]Foot
-;[2]Hand
-;[3]Head
-;[4]Legs
-;[5]Shld
+;[0]UpperBody
+;[1]Feet
+;[2]Hands
+;[3]Head/Hair
+;[4]LowerBody
+;[5]Shield
 ;-----------------------------------------------------------------------------
 
 ;Parameters

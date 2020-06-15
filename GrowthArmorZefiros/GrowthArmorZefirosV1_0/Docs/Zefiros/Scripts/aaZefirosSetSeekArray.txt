@@ -25,6 +25,8 @@ scn aaZefirosSetSeekArray
 ;-----------------------------------------------------------------------------
 ;Prepends X copies of Num to Arr.  Arr acts as a pseudo array and Num is a two
 ;digit number (00, 01, 02, ..., 38 39).  Returns the new version of Arr.
+;
+;array_var is not saved with the game, but string_var is.
 ;-----------------------------------------------------------------------------
 
 ;Parameters
@@ -40,6 +42,7 @@ short i
 begin Function { Num, X, Arr }
 ;-----------------------------------------------------------------------------
 
+	;Active Effect Index cannot be negative
 	if ( Num < 0 )
 		Return
 	endif
@@ -51,6 +54,7 @@ begin Function { Num, X, Arr }
 		If ( Num < 10 )
 
 			;Add a leading 0
+			;01 gets stringified to "1"
 			Let Arr := "0" + $Num + Arr
 
 		else

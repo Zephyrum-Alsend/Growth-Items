@@ -16,38 +16,40 @@ scn aaZefirosLogXP
 
 ;Used globals
 ;-----------------------------------------------------------------------------
-;aaZefirosXP
-;aaZefirosXPReq
 ;-----------------------------------------------------------------------------
 
 ;Related globals
 ;-----------------------------------------------------------------------------
+;aaZefirosXP
 ;aaZefirosXPCombat
 ;aaZefirosXPLog
+;aaZefirosXPReq
 ;-----------------------------------------------------------------------------
 
 ;Description
 ;-----------------------------------------------------------------------------
 ;Outputs XP gained and current amount out of required to console followed
 ;by a string containing additional information in blue text.  String can be
-;empty.  Only outputs if XP gained is greater than 0.
+;empty.  Only outputs if XP gained is non 0.
 ;-----------------------------------------------------------------------------
 
 ;Parameters
 ;-----------------------------------------------------------------------------
 float XP
+float XPReq
+float XPGain
 string_var Verbose
 ;-----------------------------------------------------------------------------
 
 
 
 ;-----------------------------------------------------------------------------
-begin Function { XP, Verbose }
+begin Function { XP, XPReq, XPGain, Verbose }
 ;-----------------------------------------------------------------------------
 
-	if ( XP > 0 )
+	if ( XPGain != 0 )
 
-		printc "%8.2f/%8.2f	+%6.2fXP	%B%z%b" aaZefirosXP aaZefirosXPReq XP Verbose
+		printc "%8.2f/%8.2f	+%6.2fXP	%B%z%b" XP XPReq XPGain Verbose
 
 	endif
 

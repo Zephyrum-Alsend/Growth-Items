@@ -2,7 +2,6 @@ scn aaZefirosRefToNum
 
 ;Main script
 ;-----------------------------------------------------------------------------
-;aaZefirosManager
 ;-----------------------------------------------------------------------------
 
 ;Used scripts
@@ -26,6 +25,8 @@ scn aaZefirosRefToNum
 ;Castes a Ref to a Long.
 ;Not supported directly by OBSE, but indirectly by converting Ref to 
 ;String_Var, then String_Var to Long.
+;
+;Unused but keeping it here because someone may need this somewhere, sometime.
 ;-----------------------------------------------------------------------------
 
 ;Parameters
@@ -45,8 +46,8 @@ begin Function { R }
 	Let L := #Str
 
 	
-	SetFunctionValue L
 	sv_Destruct Str
+	SetFunctionValue L
 	Return
 ;-----------------------------------------------------------------------------
 end ;Function { R }

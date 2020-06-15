@@ -53,18 +53,13 @@ begin Function { PreFix, PostFix, Flag, Name }
 
 		Let Name := PreFix + " " + Name
 
-	;Omit PreFix and PostFix
-	elseif ( Flag == 3 )
-
-		;Let Name := Name
-
 	;Omit neither
-	else
+	elseif ( Flag != 3 )
 
 		Let Name := Prefix + " " + Name + " " + PostFix
 
 	endif
-
+	
 
 	SetFunctionValue Name
 	Return

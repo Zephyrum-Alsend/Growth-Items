@@ -11,8 +11,6 @@ scn aaZefirosGetArmorStats
 
 ;Related scripts
 ;-----------------------------------------------------------------------------
-;aaZefirosDefualtINI
-;aaZefirosModStat
 ;-----------------------------------------------------------------------------
 
 ;Used globals

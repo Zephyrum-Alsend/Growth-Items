@@ -24,7 +24,13 @@ scn aaZefirosFlagCleanOnce
 
 ;Description
 ;-----------------------------------------------------------------------------
-;Handles staged CleanUp call.
+;When calling SetMerge, OnActorUnEquip runs instantly while OnEquip runs at
+;the end of the frame.  This allows that frame to pass before correcting the
+;fucked up Equip flag this incongruity creates.
+;
+;OnUnEquip runs at the end of the frame, but fails to trigger if a shield is
+;swapped instead of just unequipped.
+;OnActorEquip runs instantly but always runs twice for enchanted armor.
 ;-----------------------------------------------------------------------------
 
 ;Parameters

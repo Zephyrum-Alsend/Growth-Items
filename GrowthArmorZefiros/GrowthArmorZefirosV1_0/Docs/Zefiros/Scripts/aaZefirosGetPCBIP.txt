@@ -1,4 +1,5 @@
 scn aaZefirosGetPCBIP
+;GetPlayerCharacterBipedIconPath
 
 ;Main script
 ;-----------------------------------------------------------------------------
@@ -24,7 +25,6 @@ scn aaZefirosGetPCBIP
 
 ;Description
 ;-----------------------------------------------------------------------------
-;GetPCBipedIconPath
 ;Given a biped item (i.e. armor) returns a string containing the icon path of
 ;the same sex as the PC.
 ;-----------------------------------------------------------------------------

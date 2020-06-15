@@ -24,8 +24,11 @@ scn aaZefirosFlagSigilOnce
 
 ;Description
 ;-----------------------------------------------------------------------------
-;Handles warning flag for undoing sigil stone enchantments and related
-;functions.
+;Called whenever the player leaves the sigil stone menu.
+;Checks if a new item was created and undoes the process that created it if
+;so.
+;Returns the ID of the new item in addition to the flag, as this menu lacks
+;the same tools as enchanting.
 ;-----------------------------------------------------------------------------
 
 ;Parameters

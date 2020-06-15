@@ -25,7 +25,9 @@ scn aaZefirosRefreshEquip
 ;Description
 ;-----------------------------------------------------------------------------
 ;Given an array of Items and an Actor, equip them on the Actor.
-;Will fail if called on the same frame as UnEquip due to an engine bug.
+;
+;Will fail if called on armor on the same frame as UnEquip in GameMode due to 
+;an engine bug.
 ;-----------------------------------------------------------------------------
 
 ;Parameters

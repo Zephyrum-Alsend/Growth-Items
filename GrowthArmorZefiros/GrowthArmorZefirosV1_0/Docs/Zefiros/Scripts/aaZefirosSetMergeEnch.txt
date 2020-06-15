@@ -39,10 +39,8 @@ short C1
 short C2
 short i
 short j
-
 long EffC
 long AuxC
-
 long Num
 ;-----------------------------------------------------------------------------
 

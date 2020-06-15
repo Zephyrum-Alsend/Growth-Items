@@ -7,12 +7,12 @@ scn aaZefirosSetForm
 
 ;Used scripts
 ;-----------------------------------------------------------------------------
+;aaZefirosSetFormGlobal
 ;aaZefirosRefreshInv
 ;-----------------------------------------------------------------------------
 
 ;Related scripts
 ;-----------------------------------------------------------------------------
-;aaZefirosGetFormData
 ;aaZefirosSetMerge
 ;-----------------------------------------------------------------------------
 
@@ -94,21 +94,26 @@ begin Function { i, j, Data, Item }
 	Let Path := Data[i][j][5]
 	SetFemaleIconPath $Path Item
 
-	;Despite this not working in GameMode, it works here...?
+	;Update relevant global
+	Call aaZefirosSetFormGlobal i j Data[i][j][6]
+
+	;Changes won't apply until Item is re-equipped
 	if ( Player.GetEquipped Item )
 
+		;Despite this not working in GameMode, it works here...?
 		Player.UnEquipItemSilent Item
 		Player.EquipItem2NS Item
 
 	else
 
+		;Refresh UI if not equipped
 		Call aaZefirosRefreshInv
 
 	endif
 
 
-	DebugPrint "%n %Bform changed.%b" Item
 	sv_Destruct Path
+	DebugPrint "%n %Bform changed.%b" Item
 	Return
 ;-----------------------------------------------------------------------------
 end ;Function { i, j, Data, Item }

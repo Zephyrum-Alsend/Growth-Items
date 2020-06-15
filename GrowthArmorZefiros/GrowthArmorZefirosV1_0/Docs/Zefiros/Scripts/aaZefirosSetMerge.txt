@@ -18,12 +18,14 @@ scn aaZefirosSetMerge
 ;aaZefirosGetResistMatrix
 ;aaZefirosSetMergeEnch
 ;aaZefirosReorderEffects
+;aaZefirosGetEffectOrder
+;aaZefirosSetWeightGlobals
+;aaZefirosSetForm
 ;-----------------------------------------------------------------------------
 
 ;Related scripts
 ;-----------------------------------------------------------------------------
 ;aaZefirosSetMerge
-;aaZefirosSetForm
 ;aaZefirosSetMimic
 ;-----------------------------------------------------------------------------
 
@@ -83,19 +85,21 @@ scn aaZefirosSetMerge
 
 ;Parameters
 ;-----------------------------------------------------------------------------
-long Slot
 array_var Dflt
 array_var Hvy
 array_var Stat
 array_var EnSt
+array_var Data
 short i
 array_var Armr
+short Debug ;Toggles if MessageEX and DebugPrint are called
 
-short Cnt
 short j
 short Brk
 short Eqp
+long Slot
 long OldSlot
+array_var FormIdx
 array_var Slots
 array_var Stack
 array_var Added
@@ -115,25 +119,36 @@ ref InvR
 ;-----------------------------------------------------------------------------
 
 ;-----------------------------------------------------------------------------
-begin Function { Slot, Dflt, Hvy, Stat, EnSt, i, Armr }
+begin Function { Slot, Dflt, Data, Hvy, Stat, EnSt, i, Armr, Debug }
 ;-----------------------------------------------------------------------------
+
+	;Toggle DebugPrint messages
+	if ( aaZefirosDebug == 0 )
+		Let Debug := 0
+	endif
+	SetDebugMode Debug
+	
 
 	Let Item := Armr[i]
 
 	DebugPrint "%BChecking merges with %b%n%B...%b" Item
 
 	
-	;-----------------------------------------------------------------------------
-	;Handle un/merging of items
-	;-----------------------------------------------------------------------------
 	Let OldSlot := GetBipedSlotMask Item
 
+	;No slot change, nothing to do
 	if ( OldSlot == Slot )
 	
 		DebugPrint "Slot unchanged."
+		
+		SetDebugMode aaZefirosDebug
 		SetFunctionValue 1
 		Return
 
+		
+	;-----------------------------------------------------------------------------
+	;Handle un/merging of items
+	;-----------------------------------------------------------------------------
 	else
 
 		;-----------------------------------------------------------------------------
@@ -145,6 +160,7 @@ begin Function { Slot, Dflt, Hvy, Stat, EnSt, i, Armr }
 
 		Let Stack := Call aaZefirosGetSlotShared Item Slots
 		Let Added := ar_Construct Array ;Track added items incase of abort
+		
 		ForEach Iter <- Stack
 
 			Let Object := *Iter
@@ -162,7 +178,7 @@ begin Function { Slot, Dflt, Hvy, Stat, EnSt, i, Armr }
 
 
 		;-----------------------------------------------------------------------------
-		;Remove merged items
+		;Mark items to be removed later
 		;-----------------------------------------------------------------------------
 		DebugPrint "Marking for merge..."
 
@@ -170,9 +186,10 @@ begin Function { Slot, Dflt, Hvy, Stat, EnSt, i, Armr }
 		SetBipedSlotMask Slot Item
 
 		Let Stack := Call aaZefirosGetSlotShared Item Slots
-		Let Brk := 1
 		Let Missing := ar_Construct Array ;Track removed items incase of abort
 		Let ReMerg := ar_Construct Array ;Track recursive calls incase of abort
+		
+		Let Brk := 1 ;Abort flag
 		ForEach Iter <- Stack
 
 			Let Object := *Iter
@@ -184,21 +201,15 @@ begin Function { Slot, Dflt, Hvy, Stat, EnSt, i, Armr }
 
 					DebugPrint "Marked %n." Object
 
-					;Have to account for Object also being merged
-					Let Cnt := ar_Size Armr
-					Let j := 0
-					while ( j < Cnt )
+					;Have to account for Object also being merged itself
+					Let j := ar_Find Object Armr
+					if eval( ar_BadNumericIndex != j )
 
-						if eval( Object == Armr[j] )
+						ar_Append ReMerg ar_Map 0::j 1::GetBipedSlotMask Object
+						Let Brk := Call aaZefirosSetMerge Dflt[j] Dflt Data Hvy Stat EnSt j Armr Debug
 
-							ar_Append ReMerg ar_Map 0::j 1::GetBipedSlotMask Object
-							Let Brk := Call aaZefirosSetMerge Dflt[j] Dflt Hvy Stat EnSt j Armr
+					endif
 
-						endif
-
-						Let j += 1
-					loop
-					
 					ar_Append Missing Object
 
 				else ;Item to be marked is not present
@@ -220,8 +231,11 @@ begin Function { Slot, Dflt, Hvy, Stat, EnSt, i, Armr }
 		if ( Brk == 0 )
 
 			DebugPrint "%n missing from inventory, aborting SetMerge." Object
-			MessageEX "Unable to change form without %n." Object
+			if ( Debug )
+				MessageEX "Unable to change form without %n." Object
+			endif
 
+			;Revert change to slot
 			SetBipedSlotMask OldSlot Item
 
 			;Remove returned items
@@ -239,16 +253,17 @@ begin Function { Slot, Dflt, Hvy, Stat, EnSt, i, Armr }
 				Let j := Iter["value"][0]
 				Let OldSlot := Iter["value"][1]
 
-				Call  aaZefirosSetMerge OldSlot Dflt Hvy Stat EnSt j Armr
+				Call aaZefirosSetMerge OldSlot Dflt Data Hvy Stat EnSt j Armr Debug
 
 			loop
 
+			SetDebugMode aaZefirosDebug
 			SetFunctionValue 0
 			Return
 
 
 		;-----------------------------------------------------------------------------
-		;Finish merging
+		;Everything needed present, start merging
 		;-----------------------------------------------------------------------------
 		else
 
@@ -261,7 +276,8 @@ begin Function { Slot, Dflt, Hvy, Stat, EnSt, i, Armr }
 			SetArmorType 0 Item
 			Call aaZefirosSetStat Stat[i][0] Stat[i][1] Stat[i][2] Stat[i][3] Stat[i][4] Stat[i][5] Stat[i][6] Stat[i][7] aaZefirosLevel Item
 			Let Stack := ar_Map 0::aaZefirosWeightBody 1::aaZefirosWeightFoot 2::aaZefirosWeightHand 3::aaZefirosWeightHead 4::aaZefirosWeightLegs 5::aaZefirosWeightShld
-			Call aaZefirosSetWeight Hvy[0] Hvy[1] Stack[i] Item
+			Let j := Stack[i] ;Will use this later
+			Call aaZefirosSetWeight Hvy[0] Hvy[1] j Item
 
 			;Enchantment stats
 			Let Ench := GetEnchantment Item
@@ -271,18 +287,19 @@ begin Function { Slot, Dflt, Hvy, Stat, EnSt, i, Armr }
 				Let Stack := Call aaZefirosGetEnchantLevels i
 				Let Iter := ar_Map 0::aaZefirosActvEnchBody 1::aaZefirosActvEnchFoot 2::aaZefirosActvEnchHand 3::aaZefirosActvEnchHead 4::aaZefirosActvEnchLegs 5::aaZefirosActvEnchShld
 				Call aaZefirosSetEnchant EnSt Stack Iter[i] Ench
-				if ( Ench != aaZefirosInit.EnchShld ) ;Shield shouldn't have resists, no other elegant way
+				if ( Ench != aaZefirosInit.EnchShld ) ;Shield shouldn't have resists, inelegant
 					Call aaZefirosSetResistEffects ( &1 ) Dflt ( Call aaZefirosGetResistMatrix 0 ) ( &Ench )
 				endif
 				
 			endif
-			SetDebugMode aaZefirosDebug
+			
+			SetDebugMode Debug
 
 
 			;-----------------------------------------------------------------------------
 			;Equip returned items if Item is equipped
 			;-----------------------------------------------------------------------------
-			if ( Player.GetEquipped Item )
+			if ( Eqp )
 
 				ForEach Iter <- Added
 	
@@ -307,6 +324,9 @@ begin Function { Slot, Dflt, Hvy, Stat, EnSt, i, Armr }
 				;-----------------------------------------------------------------------------
 				;Merge stats
 				;-----------------------------------------------------------------------------
+				;Match Object's weight to Item's, preventing mixed type armor
+				Call aaZefirosSetWeight Hvy[0] Hvy[1] j Object ;j was set above in the reinitialization
+				
 				Let AR := GetArmorAR Object
 				Let AR += GetArmorAR Item
 				
@@ -337,20 +357,10 @@ begin Function { Slot, Dflt, Hvy, Stat, EnSt, i, Armr }
 				;-----------------------------------------------------------------------------
 				;Merge enchantments
 				;-----------------------------------------------------------------------------
-				;Will return false if either lacks an enchantment
+				;Will evaluate to false if either lacks an enchantment
 				if ( GetEnchantment Object && Ench )
 
 					Call aaZefirosSetMergeEnch ( GetEnchantment Object ) Ench
-
-					Let Stack := ar_Construct Array
-					Let Stack[0] := ar_Map 0::( GetMagicEffectCode RSFI ) 1::256
-					Let Stack[1] := ar_Map 0::( GetMagicEffectCode RSFR ) 1::256
-					Let Stack[2] := ar_Map 0::( GetMagicEffectCode RSSH ) 1::256
-					Let Stack[3] := ar_Map 0::( GetMagicEffectCode RSMA ) 1::256
-					Let Stack[4] := ar_Map 0::( GetMagicEffectCode RSNW ) 1::256
-					Let Stack[5] := ar_Map 0::( GetMagicEffectCode RSPA ) 1::256
-					Let Stack[6] := ar_Map 0::( GetMagicEffectCode RSDI ) 1::256
-					Call aaZefirosReorderEffects Stack ( &Ench )
 
 				endif
 
@@ -358,17 +368,47 @@ begin Function { Slot, Dflt, Hvy, Stat, EnSt, i, Armr }
 				;-----------------------------------------------------------------------------
 				;Remove Object
 				;-----------------------------------------------------------------------------
-				Player.RemoveItemNS Object 1
-				;OnUnEquip DebugPrint will activate here
-			
+				Player.RemoveItemNS Object 1 ;OnUnEquip DebugPrint will activate
+
+				
 			;-----------------------------------------------------------------------------
 			loop ;Iter <- Missing
 			;-----------------------------------------------------------------------------
+
+			if ( Ench )
+
+				Call aaZefirosReorderEffects ( Call aaZefirosGetEffectOrder ) ( &Ench )
+
+			endif
+
+
+			;-----------------------------------------------------------------------------
+			;Remerge leftover Added
+			;-----------------------------------------------------------------------------
+			Let FormIdx := ar_Map 0::aaZefirosFormBody 1::aaZefirosFormFoot 2::aaZefirosFormHand 3::aaZefirosFormHead 4::aaZefirosFormLegs 5::aaZefirosFormShld
+			ForEach Iter <- Added
+
+				Let Object := *Iter
+				if ( 0 < Player.GetItemCount Object )
+
+					Let j := ar_Find Object Armr
+					if eval( 0 == Call aaZefirosSetMerge Data[j][FormIdx[j]][7] Dflt Data Hvy Stat EnSt j Armr Debug )
+
+						;If remerge fails, default mesh to iron
+						Call aaZefirosSetForm j aaZefirosInit.DfIdx[j] Data Object
+
+					endif
+
+				endif
+
+			loop
 			
 
 			;-----------------------------------------------------------------------------
 			;Update global
 			;-----------------------------------------------------------------------------
+			Call aaZefirosSetWeightGlobals
+			
 			if ( i == 0 )
 
 				DebugPrint "%BSlotBody updated."
@@ -416,7 +456,8 @@ begin Function { Slot, Dflt, Hvy, Stat, EnSt, i, Armr }
 	endif ;( OldSlot == Slot )
 	;-----------------------------------------------------------------------------
 
-	
+
+	SetDebugMode aaZefirosDebug
 	SetFunctionValue 1
 	Return
 ;-----------------------------------------------------------------------------

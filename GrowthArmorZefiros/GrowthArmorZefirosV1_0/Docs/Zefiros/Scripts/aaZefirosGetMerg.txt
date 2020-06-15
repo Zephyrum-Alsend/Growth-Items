@@ -35,8 +35,8 @@ scn aaZefirosGetMerg
 long Slot
 array_var Dflt
 
-array_var Iter
 array_var Merg ;Return value
+array_var Iter
 long i
 ;-----------------------------------------------------------------------------
 
@@ -50,8 +50,10 @@ begin Function { Slot, Dflt }
 
 		Let i := *Iter
 
+		;If i shares 1 bit with Slot
 		if eval( Slot & i )
 
+			;Save the current key
 			ar_Append Merg Iter["key"]
 
 		endif

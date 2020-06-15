@@ -32,6 +32,9 @@ scn aaZefirosSetWeight
 ;-----------------------------------------------------------------------------
 ;Sets the weight of the armor passed according to the passed flag and adjusts
 ;the item's stats accordingly.
+;
+;Separate from the weight stat, armor has a weight class that determines which
+;skill it benefits from.
 ;-----------------------------------------------------------------------------
 
 ;Parameters
@@ -44,8 +47,6 @@ ref Armr
 short AR
 float Wgt
 ;-----------------------------------------------------------------------------
-
-
 
 ;-----------------------------------------------------------------------------
 begin Function { ARMult, WgtMult, Type, Armr }

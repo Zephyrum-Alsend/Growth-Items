@@ -43,6 +43,7 @@ begin Function { Ench }
 ;-----------------------------------------------------------------------------
 
 	Let Count := GetMagicItemEffectCount Ench
+	
 	Let i := Count
 	while ( i > 0 )
 		Let i -= 1

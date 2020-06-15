@@ -11,6 +11,7 @@ scn aaZefirosDefaultINI
 
 ;Related scripts
 ;-----------------------------------------------------------------------------
+;aaZefirosCleanUp
 ;-----------------------------------------------------------------------------
 
 ;Used globals
@@ -25,7 +26,9 @@ scn aaZefirosDefaultINI
 ;Description
 ;-----------------------------------------------------------------------------
 ;A carbon copy of Zefiros.ini with default settings.  Used to initialize
-;incase Zefiros.ini fails to run.
+;before reading Zefors.ini incase it fails for some reason.
+;
+;Tab values are different in NotePad vs CSE.
 ;-----------------------------------------------------------------------------
 
 ;Parameters
@@ -42,7 +45,7 @@ begin Function { }
 ;sShort = Up to 65535
 ;lLong  = Up to 4294967295
 ;fFloat = Short but can have up to 4 decimal places
-												;Default values
+								;Default values
 ;-----------------------------------------------------------------------------
 ;Name
 ;-----------------------------------------------------------------------------
@@ -69,87 +72,20 @@ Let aaZefirosInit.sShldFix := 2
 
 
 ;-----------------------------------------------------------------------------
-;Base stats
+;Menu
 ;-----------------------------------------------------------------------------
-;AR/100 is what the ingame UI uses
-Let aaZefirosInit.sBodyARBase := 700			;700
-Let aaZefirosInit.fBodyWeightBase := 20			;20
-Let aaZefirosInit.sBodyHealthBase := 200		;200
-Let aaZefirosInit.lBodyValueBase := 50			;50
-
-Let aaZefirosInit.sFootARBase := 300			;300
-Let aaZefirosInit.fFootWeightBase := 6			;6
-Let aaZefirosInit.sFootHealthBase := 100		;100
-Let aaZefirosInit.lFootValueBase := 15			;15
-
-Let aaZefirosInit.sHandARBase := 300			;300
-Let aaZefirosInit.fHandWeightBase := 4			;4
-Let aaZefirosInit.sHandHealthBase := 100		;100
-Let aaZefirosInit.lHandValueBase := 15			;15
-
-Let aaZefirosInit.sHeadARBase := 300			;300
-Let aaZefirosInit.fHeadWeightBase := 4			;4
-Let aaZefirosInit.sHeadHealthBase := 100		;100
-Let aaZefirosInit.lHeadValueBase := 15			;15
-
-Let aaZefirosInit.sLegsARBase := 400			;400
-Let aaZefirosInit.fLegsWeightBase := 12			;12
-Let aaZefirosInit.sLegsHealthBase := 150		;150
-Let aaZefirosInit.lLegsValueBase := 30			;30
-
-Let aaZefirosInit.sShldARBase := 800			;800
-Let aaZefirosInit.fShldWeightBase := 8			;8
-Let aaZefirosInit.sShldHealthBase := 150		;150
-Let aaZefirosInit.lShldValueBase := 30			;30
-
-
-;-----------------------------------------------------------------------------
-;Growth rates
-;-----------------------------------------------------------------------------
-Let aaZefirosInit.sBodyARMult := 022			;22
-Let aaZefirosInit.fBodyWeightMult := 0.8		;0.8
-Let aaZefirosInit.fBodyHealthMult := 72			;72
-Let aaZefirosInit.fBodyValueMult := 50			;50
-
-Let aaZefirosInit.sFootARMult := 008			;8
-Let aaZefirosInit.fFootWeightMult := 0.24		;0.24
-Let aaZefirosInit.fFootHealthMult := 36			;36
-Let aaZefirosInit.fFootValueMult := 15			;15
-
-Let aaZefirosInit.sHandARMult := 008			;8
-Let aaZefirosInit.fHandWeightMult := 0.16		;0.16
-Let aaZefirosInit.fHandHealthMult := 36			;36
-Let aaZefirosInit.fHandValueMult := 15			;15
-
-Let aaZefirosInit.sHeadARMult := 008			;8
-Let aaZefirosInit.fHeadWeightMult := 0.16		;0.16
-Let aaZefirosInit.fHeadHealthMult := 36			;36
-Let aaZefirosInit.fHeadValueMult := 15			;15
-
-Let aaZefirosInit.sLegsARMult := 014			;14
-Let aaZefirosInit.fLegsWeightMult := 0.48		;0.48
-Let aaZefirosInit.fLegsHealthMult := 54			;54
-Let aaZefirosInit.fLegsValueMult := 30			;30
-
-Let aaZefirosInit.sShldARMult := 028			;28
-Let aaZefirosInit.fShldWeightMult := 0.32		;0.32
-Let aaZefirosInit.fShldHealthMult := 54			;54
-Let aaZefirosInit.fShldValueMult := 30			;30
-
-
-;-----------------------------------------------------------------------------
-;Heavy armor multipliers
-;-----------------------------------------------------------------------------
-Let aaZefirosInit.fHeavyAR := 1.5				;1.5
-Let aaZefirosInit.fHeavyWeight := 1.5			;1.5
+;Form menu has a table of contents with page ranges of this size
+;0 >= disable ToC
+;20 < disable ToC
+Let aaZefirosInit.sPageGroupSize := 3				;3
 
 
 ;-----------------------------------------------------------------------------
 ;Level up variables
 ;-----------------------------------------------------------------------------
 ;XP gained is based on damage taken
-Let aaZefirosInit.sXPReqBase := 200				;200
-Let aaZefirosInit.sXPReqMult := 20				;20
+Let aaZefirosInit.fXPReqBase := 200				;200
+Let aaZefirosInit.fXPReqMult := 20				;20
 Let aaZefirosInit.sLevelCap := 201				;201
 
 ;0 = sLevelCap
@@ -163,31 +99,97 @@ Let aaZefirosInit.sCapType := 0					;0
 ;0 > disable
 ;0 < delevel by this amount
 Let aaZefirosInit.sBreakLevel := 10				;10
+
 ;The number of items that need to be broken before delevel is triggered
-Let aaZefirosInit.sBreakThreshold := 3			;3
+Let aaZefirosInit.sBreakThreshold := 3				;3
 
 ;Conversion rate of durability for offerings
-Let aaZefirosInit.fAbsorption := 0.03			;0.03
-
-
-;-----------------------------------------------------------------------------
-;Dynamic Resistances
-;-----------------------------------------------------------------------------
-;0 < RXP required per 1% resistance gained
 ;0 >= disable
-Let aaZefirosInit.sXPResist := 500				;500
-;RXP per second paralyzed
-Let aaZefirosInit.sXPPara := 50					;50
-;RXP per illness contracted
-Let aaZefirosInit.sXPDisease := 250				;250
-;RXP per non-damaging hostile effect
-Let aaZefirosInit.sXPNoDmg := 3					;3
+Let aaZefirosInit.fAbsorption := 0.02				;0.02
 
-;Determines if resistances can appear before sEnchStart
-;RXP is gained regardless
-;0 = Wait till sEnchStart
-;1 = Enchant as soon as resistances are gained
-Let aaZefirosInit.sEnchResist := 0				;0
+;Bonus per effect on enchantments
+Let aaZefirosInit.fEnchantAbs := 20				;20
+
+;Toggles whether environmental and self inflicted damage count towards XP
+;0 = disable
+;1 = enable
+Let aaZefirosInit.sInvalidAttacker := 0				;0
+
+
+;-----------------------------------------------------------------------------
+;Base stats
+;-----------------------------------------------------------------------------
+;AR/100 is what the ingame UI uses
+Let aaZefirosInit.sBodyARBase := 700				;700
+Let aaZefirosInit.fBodyWeightBase := 15				;15
+Let aaZefirosInit.sBodyHealthBase := 200			;200
+Let aaZefirosInit.lBodyValueBase := 50				;50
+
+Let aaZefirosInit.sFootARBase := 300				;300
+Let aaZefirosInit.fFootWeightBase := 4.5			;4.5
+Let aaZefirosInit.sFootHealthBase := 100			;100
+Let aaZefirosInit.lFootValueBase := 15				;15
+
+Let aaZefirosInit.sHandARBase := 300				;300
+Let aaZefirosInit.fHandWeightBase := 3				;3
+Let aaZefirosInit.sHandHealthBase := 100			;100
+Let aaZefirosInit.lHandValueBase := 15				;15
+
+Let aaZefirosInit.sHeadARBase := 300				;300
+Let aaZefirosInit.fHeadWeightBase := 3				;3
+Let aaZefirosInit.sHeadHealthBase := 100			;100
+Let aaZefirosInit.lHeadValueBase := 15				;15
+
+Let aaZefirosInit.sLegsARBase := 400				;400
+Let aaZefirosInit.fLegsWeightBase := 9				;9
+Let aaZefirosInit.sLegsHealthBase := 150			;150
+Let aaZefirosInit.lLegsValueBase := 30				;30
+
+Let aaZefirosInit.sShldARBase := 800				;800
+Let aaZefirosInit.fShldWeightBase := 6				;6
+Let aaZefirosInit.sShldHealthBase := 150			;150
+Let aaZefirosInit.lShldValueBase := 30				;30
+
+
+;-----------------------------------------------------------------------------
+;Growth rates
+;-----------------------------------------------------------------------------
+Let aaZefirosInit.sBodyARMult := 022				;22
+Let aaZefirosInit.fBodyWeightMult := 0.6			;0.6
+Let aaZefirosInit.fBodyHealthMult := 72				;72
+Let aaZefirosInit.fBodyValueMult := 50				;50
+
+Let aaZefirosInit.sFootARMult := 008				;8
+Let aaZefirosInit.fFootWeightMult := 0.18			;0.18
+Let aaZefirosInit.fFootHealthMult := 36				;36
+Let aaZefirosInit.fFootValueMult := 15				;15
+
+Let aaZefirosInit.sHandARMult := 008				;8
+Let aaZefirosInit.fHandWeightMult := 0.12			;0.12
+Let aaZefirosInit.fHandHealthMult := 36				;36
+Let aaZefirosInit.fHandValueMult := 15				;15
+
+Let aaZefirosInit.sHeadARMult := 008				;8
+Let aaZefirosInit.fHeadWeightMult := 0.12			;0.12
+Let aaZefirosInit.fHeadHealthMult := 36				;36
+Let aaZefirosInit.fHeadValueMult := 15				;15
+
+Let aaZefirosInit.sLegsARMult := 014				;14
+Let aaZefirosInit.fLegsWeightMult := 0.36			;0.36
+Let aaZefirosInit.fLegsHealthMult := 54				;54
+Let aaZefirosInit.fLegsValueMult := 30				;30
+
+Let aaZefirosInit.sShldARMult := 028				;28
+Let aaZefirosInit.fShldWeightMult := 0.24			;0.24
+Let aaZefirosInit.fShldHealthMult := 54				;54
+Let aaZefirosInit.fShldValueMult := 30				;30
+
+
+;-----------------------------------------------------------------------------
+;Heavy armor multipliers
+;-----------------------------------------------------------------------------
+Let aaZefirosInit.fHeavyAR := 1.5				;1.5
+Let aaZefirosInit.fHeavyWeight := 2				;2
 
 
 ;-----------------------------------------------------------------------------
@@ -195,6 +197,7 @@ Let aaZefirosInit.sEnchResist := 0				;0
 ;-----------------------------------------------------------------------------
 ;First level the items become enchanted
 Let aaZefirosInit.sEnchStart := 11				;11
+
 ;Items reseek enchantment every this level(s)
 Let aaZefirosInit.sEnchSeek := 5				;5
 
@@ -224,7 +227,7 @@ Let aaZefirosInit.fREFAMult := 0.5				;0.5
 
 ;Restore Health
 Let aaZefirosInit.sREHEBase := 1				;1
-Let aaZefirosInit.fREHEMult := 0.125			;0.125
+Let aaZefirosInit.fREHEMult := 0.125				;0.125
 
 ;Restore Magicka
 Let aaZefirosInit.sRESPBase := 1				;1
@@ -252,6 +255,29 @@ Let aaZefirosInit.fSABSMult := 0.6				;0.6
 
 
 ;-----------------------------------------------------------------------------
+;Dynamic Resistances
+;-----------------------------------------------------------------------------
+;0 < RXP required per 1% resistance gained
+;0 >= disable
+Let aaZefirosInit.fXPResist := 100				;100
+
+;RXP per second paralyzed
+Let aaZefirosInit.fXPPara := 10					;10
+
+;RXP per illness contracted
+Let aaZefirosInit.fXPDisease := 50				;50
+
+;RXP per non-damaging hostile effect
+Let aaZefirosInit.fXPNoDmg := 0.6				;0.6
+
+;Determines if resistances can appear before sEnchStart
+;RXP is gained regardless
+;0 = Wait till sEnchStart
+;1 = Enchant as soon as resistances are gained
+Let aaZefirosInit.sEnchResist := 0				;0
+
+
+;-----------------------------------------------------------------------------
 ;Latency
 ;-----------------------------------------------------------------------------
 ;Controls how often the mod analyzes damage taken, in seconds
@@ -268,82 +294,82 @@ Let aaZefirosInit.sFormKey1 := 257				;257	RMB
 Let aaZefirosInit.sFormKey2 := 257				;257	RMB
 Let aaZefirosInit.sFormKey3 := 257				;257	RMB
 
-Let aaZefirosInit.sFormBut1 := 42				;42		Disabled
-Let aaZefirosInit.sFormBut2 := 42				;42		Disabled
+Let aaZefirosInit.sFormBut1 := 42				;42	Disabled
+Let aaZefirosInit.sFormBut2 := 42				;42	Disabled
 
 ;Show enchantment - has priority over Form
 Let aaZefirosInit.sEnchKey1 := 257				;257	RMB
-Let aaZefirosInit.sEnchKey2 := 29				;29		Left CTRL
+Let aaZefirosInit.sEnchKey2 := 29				;29	Left CTRL
 Let aaZefirosInit.sEnchKey3 := 157				;157	Right CTRL
 
-Let aaZefirosInit.sEnchBut1 := 42				;42		Disabled
-Let aaZefirosInit.sEnchBut2 := 42				;42		Disabled
+Let aaZefirosInit.sEnchBut1 := 42				;42	Disabled
+Let aaZefirosInit.sEnchBut2 := 42				;42	Disabled
 
 ;Show form name - has priority over Ench
 Let aaZefirosInit.sNameKey1 := 257				;257	RMB
-Let aaZefirosInit.sNameKey2 := 42				;42		Left SHFT
-Let aaZefirosInit.sNameKey3 := 54				;54		Right SHFT
+Let aaZefirosInit.sNameKey2 := 42				;42	Left SHFT
+Let aaZefirosInit.sNameKey3 := 54				;54	Right SHFT
 
-Let aaZefirosInit.sNameBut1 := 42				;42		Disabled
-Let aaZefirosInit.sNameBut2 := 42				;42		Disabled
+Let aaZefirosInit.sNameBut1 := 42				;42	Disabled
+Let aaZefirosInit.sNameBut2 := 42				;42	Disabled
 
 ;Offer armor
 Let aaZefirosInit.sOffrKey1 := 257				;257	RMB
 Let aaZefirosInit.sOffrKey2 := 257				;257	RMB
 Let aaZefirosInit.sOffrKey3 := 257				;257	RMB
 
-Let aaZefirosInit.sOffrBut1 := 42				;42		Disabled
-Let aaZefirosInit.sOffrBut2 := 42				;42		Disabled
+Let aaZefirosInit.sOffrBut1 := 42				;42	Disabled
+Let aaZefirosInit.sOffrBut2 := 42				;42	Disabled
 
 ;Mimic armor - has priority over Offr
 Let aaZefirosInit.sCopyKey1 := 257				;257	RMB
-Let aaZefirosInit.sCopyKey2 := 42				;42		Left SHFT
-Let aaZefirosInit.sCopyKey3 := 54				;54		Right SHFT
+Let aaZefirosInit.sCopyKey2 := 42				;42	Left SHFT
+Let aaZefirosInit.sCopyKey3 := 54				;54	Right SHFT
 
-Let aaZefirosInit.sCopyBut1 := 42				;42		Disabled
-Let aaZefirosInit.sCopyBut2 := 42				;42		Disabled
+Let aaZefirosInit.sCopyBut1 := 42				;42	Disabled
+Let aaZefirosInit.sCopyBut2 := 42				;42	Disabled
 
 
 ;-----------------------------------------------------------------------------
 ;Control codes
 ;-----------------------------------------------------------------------------
-;Forward 		0
-;Back 			1
+;Forward 	0
+;Back 		1
 ;Slide Left 	2
 ;Slide Right 	3
-;Attack 		4
-;Activate 		5
-;Block 			6
-;Cast 			7
+;Attack 	4
+;Activate 	5
+;Block 		6
+;Cast 		7
 ;Ready Weapon 	8
 ;Crouch/Sneak 	9
-;Run 			10
+;Run 		10
 ;Always Run 	11
-;Auto Move 		12
-;Jump 			13
+;Auto Move 	12
+;Jump 		13
 ;Toggle POV 	14
-;Menu Mode 		15
-;Rest 			16
+;Menu Mode 	15
+;Rest 		16
 ;Quick Menu 	17
-;Quick1 		18
-;Quick2 		19
-;Quick3 		20
-;Quick4 		21
-;Quick5 		22
-;Quick6 		23
-;Quick7 		24
-;Quick8 		25
-;QuickSave 		26
-;QuickLoad 		27
-;Grab 			28
+;Quick1 	18
+;Quick2 	19
+;Quick3 	20
+;Quick4 	21
+;Quick5 	22
+;Quick6 	23
+;Quick7 	24
+;Quick8 	25
+;QuickSave 	26
+;QuickLoad 	27
+;Grab 		28
 ;-----------------------------------------------------------------------------
 ;Keycodes
 ;-----------------------------------------------------------------------------
-;1		Escape
-;2		1
-;3		2
-;4		3
-;5		4
+;1	Escape
+;2	1
+;3	2
+;4	3
+;5	4
 ;6  	5
 ;7  	6
 ;8  	7
@@ -454,7 +480,7 @@ Let aaZefirosInit.sCopyBut2 := 42				;42		Disabled
 ;Debug flag
 ;-----------------------------------------------------------------------------
 ;Toggles appearance of debug messages in console
-Let aaZefirosDebug := 1							;0
+Let aaZefirosDebug := 0						;0
 
 ;-----------------------------------------------------------------------------
 end ;Function { }

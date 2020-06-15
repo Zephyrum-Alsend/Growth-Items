@@ -26,8 +26,13 @@ scn aaZefirosFlagEnchantOnce
 
 ;Description
 ;-----------------------------------------------------------------------------
-;Handles the warning flag for undoing player enchantments and related
-;functions.
+;Called everytime the player leaves the enchanting menu.
+;Checks if the player created a new item and undoes the enchanting process if
+;so.
+;
+;Would be handled inside of the OnEnchant handler, except it occasionally
+;fires before the new item is added to the player's inventory, resulting in
+;an incomplete undo.
 ;-----------------------------------------------------------------------------
 
 ;Parameters
@@ -47,6 +52,7 @@ begin Function { SoulGem, SoulLevel, BaseItem, SoulItem, Flag }
 
 	RemoveEventHandler "OnEnchant" aaZefirosOnEnchant
 
+	;SoulItem != 0 if OnEnchant fired, which only fires if the player hits Create
 	if ( SoulItem == 0 )
 
 		DebugPrint "Exited enchanting menu."
@@ -56,6 +62,7 @@ begin Function { SoulGem, SoulLevel, BaseItem, SoulItem, Flag }
 
 		DebugPrint "Calling UndoEnchanting..."
 		Let Flag -= Call aaZefirosUndoEnchanting SoulGem SoulLevel BaseItem SoulItem
+		;This function returns 0 while waiting for the new item to be added
 
 	endif
 

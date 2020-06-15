@@ -623,3 +623,312 @@
 -Renamed SetXPReq to GetXPReq, returns an array instead of directly altering XPReq
 -Altered XPReqHalf formula to be based on XP instead of XPReq of Lvl - 1.
 -With audit finished, time to update GitHub
+
+2020.05.31
+-Created FormMenu
+-Created WeightMenu
+-I can probably factor out all the menu if trees into a function when I'm done
+-Weight change code is done, both single item and full set
+-Created MeshMenu
+-First test of dynamic menu
+	-Buttons work alright
+	-Paging fails
+-Was because of separation of Button and Page if trees, so Page tree would overwrite Button before GetButtonPressed returned
+-After integrating Page tree into Button tree, paging works
+-Added dummy entries to GetFormData for MeshMenu testing, all contain Iron paths, but have different names
+-MeshMenu works for multiple pages, but may need to investigate methods to shorten navigation time depending on number of armor sets
+-Added Leather, Steel, Chainmail, Dwarven, Mithril paths
+
+2020.06.01
+-Made the tough decision of scrapping my current hardcoded GetFormData for a programatically written one
+-Replacing all paths with GetBipedModePath calls, then verifying and correcting female paths at the end
+-ar_Append would make indexes sort themselves out, but I'll manually do them b/c more human readable
+-Much faster adding paths with help of VisualCode to replace things
+-Paths ingame work, no missing meshes, but Dwarven and Glass helmets change weight along with form?
+	-Stats show SetWeight was called, not just an armor type change
+	-But it's only these two helmets, no other parts get this erroneous call
+-I do not believe I update the weight globals at all
+-That has resolved my issue
+-All full armor sets are in place, considering switching to ar_Append so reordering is not a hassle
+-Pathed Fur, Iron, Leather, Steel, Chainmail, Dwarven, Mithril, Orcish, Elven, Ebony, Glass, Daedric, Amber, Madness, Amelion, Blackwood, Blades, Legion, Imperial Watch
+-I think I will switch to ar_Append, and have the array of sets compile itself based on Names instead of hardcoded indexes
+-GetFormData now uses ar_Append
+-If armors are of varying weights when merged, end up with a mixed type in terms of stats
+-ModStat does not account for this
+-Will call SetWeight on all merged items, so mixed type doesn't occur
+-Created SetWeightGlobals to handle updating those, hardcoded it
+-Updated Manager to use SetWeightGlobals
+-Mixed type problem addressed
+-Armor no longer hides rings or amulet
+-Added Arena Heavy, Arena Champion Heavy, Arena Yellow Heavy, Arena Light, Arena Champion Light, Arena Yellow Light, Ruined Akaviri, Shrouded, Imperial Dragon, Bracer, Imperial Horseman, Emperor, Pit, Dark Seducer, Golden Saint
+-Added all town guard, re-ordered list
+-Created GetFormData2, guess why
+-Modified Sacrifice to handle enchanted gear
+	-Decided to multiply number of effects by fEnchantAbs
+	-fEnchantAbs default 10 XP
+-After looking closely at vanilla weights, reduced armor weight by 25%, increased fHeavyWeight to 2.0
+
+2020.06.02
+-Reorganized ini file sections, added line breaks after looking at it in monochrome
+-Added all lower class clothing
+-Added all robes, save some special ones like Black Hand and Worm King
+-Added all middle class clothing
+-Added all upper class clothing
+-Added FlavorMessage call to SetForm
+
+2020.06.03
+-Removed FlavorMessage call in SetForm b/c message spam at game load, instead called in SetMimic and Menu block
+-Added Shivering Isles clothing
+-To do: Form ALL, Random, Random ALL, Custom Set?, KotN armor, improved menu code
+-KotN armor added
+-Changed fXPResist to 100 from 500
+-Started copying armor mod files into local repository
+-Removed KotN armor because they were crashing the array!
+-Expanded ReadMe.txt
+	-Known Issues
+	-FAQ
+	-Requirements
+	-Recommended Mods
+	-Conflicts
+	-Credits
+	-Features
+	-Default Controls
+-Most of this is temporary, prep for nexus mod page
+
+2020.06.04
+-Continued adding armor mods
+-Created GetFormData3
+-Created GetFormsArray
+-Since Concealing Hoods is just a bunch of texture swaps on 3 meshes, I made my own colors
+	-Red Silk
+	-Aqua Silk
+	-Mage(Blue)
+	-Tattered
+
+2020.06.05
+-Decided to add ability to save/load custom sets
+-Modified FormMenu to include Save Set, Load Set, Random and Random ALL
+-Moved around the buttons A LOT to find what feels/looks best
+-Rearranged backend code so buttons do what they say
+-Changed Cancel, Back, Prev, Next to [Cancel], [<Back], [<Prev], [Next>]
+-Finished adding current modded armors to FormData
+	-Will add armors from Local Guard Features at a later date
+-Had to look at Mordhau and google search to properly name the Witcher 2 resources
+-Created SetRandomForm
+	-For now will just call SetMerge until a value sticks, will cause false error messages
+-Created SetFormGlobal
+-Turns out every time I'd want to call SetFormGlobal is when SetForm is called, so SetFormGlobal is only called inside SetForm now
+-Rather than pre-determine if SetMerge will succeed before calling it in SetRandomForm to avoid non-user caused error messages, I just added a Debug flag to SetMerge to determine the showing of those messages
+-Expanded SetMerge's Debug flag to influence DebugPrint, with 0 for Debug or aaZefirosDebug taking priority
+-To Do:
+	-Local Guard Feature armor
+	-Form ALL
+	-Save/Load Set
+-I'll give Stavroguin a week to respond about Imperial Dragon Armor Reforged
+	-Scratch that, he hasn't been on the Nexus for 2 years - I'll give him this weekend
+-Created GetFormSetsArray
+-Created FindSet to do the dirty work of finding indexes in Forms with only strings to go on
+-Form ALL works, now to actually populate the array
+-Made sets for data in GetFormData, GetFormData2
+-Shifting to factoring out menu code from Manager
+	-What's there is 5KB
+
+2020.06.06
+-Reluctant to factor out Menu section into its own function because of all the variables that'll be passed
+-Can't quite think of an elegant, isolated way to factor out the Menu code while leaving all the function calls behind
+-For now leaving Menu code in Manager
+-Created CustomMenu
+-Created SaveCustom
+-Created LoadCustom
+-Experimented with TextInput functions, didn't get them to work as desired
+-Created Cstm0X globals for 8 save slots
+-To Do:
+	-Local Guards Features armor
+	-Better menu code
+	-Order modded armors
+-Ordered modded armors
+-Should make Save/LoadCustom index agnostic, using functions for FormSets
+-Created Cstm0X string_vars
+-Modified SaveCustom to get names from Forms and store them in Cstm0X strings
+	-dot notation to reduce code in Manager
+-Created ValidateCustom
+-Tested basic functionality
+-Have not tested what would happen if stuff got renamed/deleted, but code should handle it
+-Tested, and works as expected
+-Created ValidateForm, to make Form index agnostic too
+-NO MORE "form may be incorrect after updating" PATCH NOTES FUCK YES
+
+2020.06.07
+-Can move button/menu/page changing code into their respective menus, return values back as arrays
+	-Created MenNm as a persistent array for these
+		-Stack is probably safe, but won't take any bets
+	-Shifted Menu to array_var b/c obsolete with MenNm, MenNm deleted/renamed
+-Modified Offer, FormMenu, MeshMenu, CustomMenu, WeightMenu to handle new Menu array
+-Moved all page and button handling to %Menu functions, freeing up Manager space
+-Manager still handles calling appropriate functions at the end of Menu calls
+-Modded armor sorted and sets made
+-All that's left:
+	-Local Guards Features
+	-Better menu code
+	-GitHub update
+-Since Stavroguin hasn't responded within the time limit, I'm adding his work to the pile
+
+2020.06.08
+-Implemented better menu code
+	-MeshMenu now has a Table of Contents with user specified page ranges
+	-ToC will skip if only 1 button on it or page range size < 1
+	-ToC will adjust page range size if user specified will result in more than 8 buttons
+-Renamed Offer to OfferMenu
+-Added checks to CleanUp that bound variables exposed to the .ini which aren't handled by their functions
+-Created Zefiros.ini
+-Began work on mod page
+-Mod description is done, doing ReadMe.txt extended description
+-To fix the known issue of multi-slot mesh on single-slot item I have to integrate SetForm into SetMerge
+	-It puts so much shit into one function I didn't want to do it, but can't avoid it now
+-Actually, avoided completely merging the two
+-SetMerge now calls SetForm, but conditionally
+	-SetMerge now, at the end, compares Added's Forms slots to their current slots and remerges as needed
+	-If remerge fails, changes mesh to Iron, which is single slot
+	-Checks if item is in inventory before calling, since Added entry may also be in Missing
+-Added SFX to Save/Load Set
+
+2020.06.09
+-Tweaked some stuff on the mod page, cropped gifs, removed some info, hid other info, rephrased things
+-Updated Known Issues to remove fixed bug
+-Began thoroughly auditing code, properly reading and understanding each script instead of skimming
+-Turns out the missing Foot (mimic) name wasn't a bug caused by me working with code in progress
+	-The name legitimately is not being saved to the save file
+	-I DON'T KNOW WHY
+	-It's a string_var, the calls are correct, Forms gets the name updated...
+	-Can be SaveMimic, ValidateMimic or some weird engine quirk
+	-ValidateMimic looks right, call to it in Manager looks right
+	-SaveMimic looks right too, as does ar_Map creation preceding it
+	-Tried renaming MimicFootName to MimicFeetName
+	-Tried removing the formatting tabs for that specific line in SaveMimic
+	-ar_Map might be the cause so... replacing Stack pass with entire Forms array
+	-Had to move SaveMimic call down to after Forms was created
+	-It works and I don't know what fixed it
+	-I traced back my steps till it was just the reindexing that happened as a byproduct of renaming
+	-It worked
+	-I thought it was the reindexing, until it didn't work anymore
+	-I've redone everything but the renaming and unformatting, it works
+	-I still don't know why, but it was probably the ar_Map call at this point
+-I've added string correction to ValidateMimic so at least this bug won't leave empty strings if it happens again
+	-empty strings royally fuck up menus
+-I retested for the bug and it's gone. Hopefully for good.
+
+2020.06.10
+-Added more variety to save/load messages
+-Created GetMimicData, even if it'll only be called once
+-Updated Back, Prev, Next buttons in GetEnchChoice to new style
+-Made GetXPReq take XP as a parameter instead of reading it directly
+
+2020.06.11
+-Made LogXP take XP and XPReq as parameters instead of reading them directly
+-Made LogXP able to output negative XPGain
+-List of functions to edit if I make default FormID soft coded:
+	-Manager	-SetMerge	-ValidateCustom	-ValidateForm	-ValidateMimic?
+-Created DfIdx array to hold default form indexes
+-Updated Manager, SetMerge, ValidateCustom, ValidateForm
+-I could rewrite ValidateMimic to be less hardcoded now, but don't wanna delay release further
+	-If release gets delayed a day anyway by something else, I'll rewrite it
+
+2020.06.12
+-Removing and replacing Broken global with local
+-Created GetEffectOrder to create array to pass into ReorderEffects
+-Expanded GetEffectOrder to encompass all effects
+-Rewrote ReorderEffects so it uses the order of Effects
+-Now effect order will be consistent across sessions
+-Manager Used/Related header finally up-to-date
+-Manager header is done
+-To Do:
+	-ReadMe.txt EXTENDED DESCRIPTION
+	-Local Guards Features
+	-Test if there's a way to make trap damage count w/o also counting self harm
+-ID is 0000000 for both self inflicted and environmental damage
+-What if I set an OnHealthDamage handler with Player as the attacker?
+-And Player also as the attacked...?
+-Editing Object% to use this test handler has resulted in:
+-Created SetHandlers to un/set handlers
+-Attacker::Player Attacked::Player
+	-Triggers for self harm (yay)
+	-Triggers for traps (fuck)
+-So its either I count self harm and traps or I count neither
+-Neither it shall stay
+-Added sInvalidAttacker to .ini for toggling above question, default is off
+-For some reason when blasting goblins with AoE spells it fires the OnDamage handler with Attacker as me
+	-Not taking any damage
+	-Self inflicted and trap damage still undefined Attacker
+-Added Attacker != PlayerRef check, fixed the issue
+-Tested with InvalidAttacker on and no issues
+-Also triggers OnMagicEffectHit but no way to stop that
+-There's a lot more armor in Local Guards Features than the screenshots suggest
+
+(multi-day, started 2020.06.09)
+-Audited:
+	CleanUp	CustomMenu	LoadCustom	SaveCustom DamageAnalysis	DefaultINI
+	EnchantBox	FindSet	FlagCleanOnce	FlagEnchantOnce	FlagSigilOnce	FlavorBox
+	FlavorMessage
+
+	FormMenu	GetArmorStats	GetMimicData	GetBroken	GetDefaultSlot
+	GetDurability	SetDurability	GetEffectCode	GetEffectIndex	GetEnchantData
+	GetEnchantLevels	GetEnchChoice	GetFormData	GetFormData2
+	GetFormData3	GetFormsArray	GetFormSetsArray	GetMerg	GetPCBIP
+	GetResistMatrix	GetSlots	GetSlotShared	GetXPReq
+	
+	IncrementEnchant	LogLevel	LogXP	MeshMenu	ModEnchLevel	ModStat
+	ObjectBody	ObjectFoot	ObjectHand	ObjectHead	ObjectLegs	ObjectShld
+	OfferMenu	OfferMenu	OnDamage	OnEnchant	OnEnchanting	OnMagicApply
+	OnMagicHit	OnUnEquip	OnWeaponHit	PrepMerge	RefreshEquip	RefreshInv
+	RefreshUnEquip	RefToNum	RemoveAllEffectItems	ReorderEffects	Sacrifice
+	SaveMimic	SetEffectItem	SetEffectStat	SetEnchant	SetEnchOnItem	SetEquipHandlers
+	SetForm	SetFormGlobals	SetLevelCap	SetMerge	SetMergeEnch	SetMimic	SetName
+	SetRandomForm	SetResistEffects	SetSeek	SetSeekArray	SetStat	SetWeight
+	SetWeightGlobals	UndoEnchant	UndoEnchanting	UndoSigilStone	ValidateBiped
+	ValidateCustom	ValidateForm	ValidateMimic	WeightMenu
+
+	GetEffectOrder	Manager	SetHandlers
+
+2020.06.13
+-Looking at Local Guards .esp, very few of these have unique names, I'll be calling them A/B/C... then
+-GetFormData3 is almost full, will have to segregate mod to Data4, probably move vanilla guard armor in with it
+-Created GetFormData4
+-Moved vanilla guard meshes to Data4
+-Problem is there's multiple Legion tiers that don't all have mod counterparts
+	-It's an ordering problem, since I'd like related stuff to stay together in descending tiers
+-Shifted Legion, Blades, Blackwood to back of Data1, so when Data4 follows all the guard stuff is there
+-Also have space in Data1 for modded Legion gear
+-Finished adding Local Guards Features, now to properly name everything
+-Everything is named and ordered
+-Mod comes with a very nice hood/cowl mesh and one of them uses a vanilla hood texture
+-I can do what I did for Concealing Hoods and make retextures for every vanilla color
+-To Do:
+	-LGF Addons
+	-LGF hood retextures
+	-ReadMe.txt EXTENDED DESCRIPTION
+	-Doc/Git update
+	-Release
+
+2020.06.14
+-LGF Kvatch + Thorn Addons added, Sutch and Stirk require additional dependencies so no
+-LGF sets made and sorted
+-Retextured Cowls made and implemented
+-Sorted to Cowls into Data2 to be with other hoods
+-Will make Arch Mage versions too, see it so left out
+-Made Arch Mage and Necromancer retextures
+-Writing the extended description
+-A little if statement optimization made it so Offer branch was never reached, reversed
+-Tinkering with fAbsorption again, 0.02 is fine for 1 set, but you tend to get like 6 per dungeon
+-After greatly deliberating with myself
+	-durability lost per fight
+	-XP gained per fight
+	-armor found per fight
+	-durability gained per armor
+-I have decided to leave it at 0.02
+-Extended description complete
+-Copying scripts into .txts...
+	-96 scripts
+	-fuck
+	-this is why I stopped updating Git daily
+-Scripts copied
+-GitHub updated

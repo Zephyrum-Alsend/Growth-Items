@@ -29,9 +29,9 @@ scn aaZefirosGetSlotShared
 ;Given a Map containing items corresponding to specific biped slots and 
 ;another Item, returns an array containing all references that share a slot
 ;with Item.
-;If no slots are shared, returns an array containing one element: -1.
+;If no slots are shared, returns an empty array.
 ;
-;Slots can be omitted by skipping indexes or filling them with -1.
+;Slots can be omitted by skipping indexes or filling them with 0.
 ;
 ;ar_Map:
 ; 0::Head/Hair
@@ -63,7 +63,6 @@ ref LRing
 ref Amul
 ref Trch
 ref Tail
-
 long Slot
 array_var Stack ;Return value
 ;-----------------------------------------------------------------------------
@@ -208,7 +207,6 @@ begin Function { Item, Objects }
 	if eval( 0 == ar_Size Stack )
 
 		DebugPrint "%n%B shares %b0%B slots." Item
-		ar_Append Stack 0
 
 	endif
 	

@@ -12,14 +12,7 @@ scn aaZefirosOnDamage
 ;Related scripts
 ;-----------------------------------------------------------------------------
 ;aaZefirosDamageAnalysis
-;aaZefirosCleanUp
-;aaZefirosObjectBody
-;aaZefirosObjectFoot
-;aaZefirosObjectHand
-;aaZefirosObjectHead
-;aaZefirosObjectLegs
-;aaZefirosObjectShld
-;aaZefirosOnUnEquip
+;aaZefirosSetHandlers
 ;aaZefirosOnMagicApply
 ;aaZefirosOnMagicHit
 ;aaZefirosOnWeaponHit
@@ -42,9 +35,13 @@ scn aaZefirosOnDamage
 ;Fires whenever Player's Health is damaged.
 ;If Attacker is valid, starts Combat Log and awards XP based on Damage and 
 ;number of pieces worn.  Attacker is invalid if self harm or environmental.
+;If sInvalidAttacker is set in INI, also count invalid Attackers.
 ;
 ;Damage over time effects tick every frame, so it is recommended to comment
 ;out DebugPrint when dealing with them.
+;
+;For some reason AoE Target spells fired by the Player trigger this, so filter
+;out Attacker == Player to fix that.
 ;-----------------------------------------------------------------------------
 
 ;Parameters
@@ -57,8 +54,11 @@ ref Attacker
 begin Function { Damage, Attacker }
 ;-----------------------------------------------------------------------------
 
+	Let Damage := -Damage ;Damage is a negative value
+	
 	;Only add XP if the damage was external
-	if ( Attacker )
+	;or environmental/self w/ InvalidAttacker flag set
+	if ( Attacker != PlayerRef && ( aaZefirosInit.sInvalidAttacker || Attacker ) )
 
 		DebugPrint "Took %.4f damage from %n." Damage Attacker
 
@@ -71,11 +71,11 @@ begin Function { Damage, Attacker }
 		endif
 
 		;Add XP
-		Let aaZefirosXP -= ( Damage * aaZefirosEquip / 6 ) ;Damage is a negative value
+		Let aaZefirosXP += ( Damage * aaZefirosEquip / 6 )
 
 	else
 
-		DebugPrint "Took %.4f unsourced damage." Damage
+		DebugPrint "Took %.4f invalid damage." Damage
 
 	endif
 

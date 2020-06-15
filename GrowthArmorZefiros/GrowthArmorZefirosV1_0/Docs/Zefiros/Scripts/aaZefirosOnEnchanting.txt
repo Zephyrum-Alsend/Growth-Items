@@ -13,6 +13,7 @@ scn aaZefirosOnEnchanting
 ;Related scripts
 ;-----------------------------------------------------------------------------
 ;aaZefirosFlagEnchantOnce
+;aaZefirosUndoEnchanting
 ;-----------------------------------------------------------------------------
 
 ;Used globals
@@ -25,8 +26,12 @@ scn aaZefirosOnEnchanting
 
 ;Description
 ;-----------------------------------------------------------------------------
-;Retrieves relevant data from the Enchanting menu and sets the appropriate
-;flag and handler.
+;Checks if the item selected for enchanting is in Items, sets the Flag to
+;trigger UndoEnchanting and sets OnEnchant handler if so.  Continuously tracks
+;the selected soul gem and its soul level while Flag is set so UndoEnchanting
+;has the information it needs.
+;If the item is not in Items, unsets Flag and removes handler.
+;Returns information scraped from the menu alongside the Flag.
 ;-----------------------------------------------------------------------------
 
 ;Parameters
@@ -36,9 +41,9 @@ ref SoulGem
 short SoulLevel
 ref BaseItem
 ref SoulItem
-short Flag
+short Flag ;Return value
 
-array_var Stack
+array_var Stack ;Return value
 long j
 ref Item
 ;-----------------------------------------------------------------------------
@@ -101,5 +106,5 @@ begin Function { Items, SoulGem, SoulLevel, BaseItem, SoulItem, Flag }
 	SetFunctionValue ar_Map 0::Stack 1::Flag
 	Return
 ;-----------------------------------------------------------------------------
-end ;Function { SoulGem, SoulLevel, BaseItem, SoulItem, Flag }
+end ;Function { Items, SoulGem, SoulLevel, BaseItem, SoulItem, Flag }
 ;-----------------------------------------------------------------------------

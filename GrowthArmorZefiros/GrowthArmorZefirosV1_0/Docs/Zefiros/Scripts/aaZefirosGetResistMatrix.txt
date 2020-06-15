@@ -47,6 +47,7 @@ begin Function { Mode }
 
 	if ( Mode == 0 )
 
+		;This is for initializing resist effects
 		Let Stack[0] := ar_Map 0::GetMagicEffectCode RSFI 1::0 2::aaZefirosInit.NewFI
 		Let Stack[1] := ar_Map 0::GetMagicEffectCode RSFR 1::0 2::aaZefirosInit.NewFR
 		Let Stack[2] := ar_Map 0::GetMagicEffectCode RSSH 1::0 2::aaZefirosInit.NewSH
@@ -57,6 +58,7 @@ begin Function { Mode }
 
 	elseif ( Mode == 1 )
 
+		;This is for updating resist effects
 		Let Stack[0] := ar_Map 0::GetMagicEffectCode RSFI 1::aaZefirosInit.ResistFI 2::aaZefirosInit.NewFI
 		Let Stack[1] := ar_Map 0::GetMagicEffectCode RSFR 1::aaZefirosInit.ResistFR 2::aaZefirosInit.NewFR
 		Let Stack[2] := ar_Map 0::GetMagicEffectCode RSSH 1::aaZefirosInit.ResistSH 2::aaZefirosInit.NewSH

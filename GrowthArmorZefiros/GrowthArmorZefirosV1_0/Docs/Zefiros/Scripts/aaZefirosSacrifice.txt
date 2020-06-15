@@ -21,8 +21,10 @@ scn aaZefirosSacrifice
 ;Used globals
 ;-----------------------------------------------------------------------------
 ;aaZefirosXP
+;aaZefirosRXPMagic
 ;aaZefirosXPLog
 ;aaZefirosXPCombat
+;aaZefirosXPReq
 ;-----------------------------------------------------------------------------
 
 ;Related globals
@@ -41,6 +43,7 @@ scn aaZefirosSacrifice
 ;Parameters
 ;-----------------------------------------------------------------------------
 float Absor
+float MaAbs
 ref Item
 array_var Armr
 
@@ -51,10 +54,11 @@ string_var Msg
 float Health
 short Count
 float XP
+float MXP
 ;-----------------------------------------------------------------------------
 
 ;-----------------------------------------------------------------------------
-begin Function { Absor, Item, Armr }
+begin Function { Absor, MaAbs, Item, Armr }
 ;-----------------------------------------------------------------------------
 
 	;-----------------------------------------------------------------------------
@@ -62,7 +66,17 @@ begin Function { Absor, Item, Armr }
 	;-----------------------------------------------------------------------------
 	Let Stack := ar_Map 0::Armr[3] 1::Armr[0] 2::Armr[4] 3::Armr[2] 4::Armr[1] 5::Armr[5] 6::Armr[5] 7::Armr[5] 8::Armr[5] 9::Armr[5] 10::Armr[4]
 	Let Stack := Call aaZefirosGetSlotShared Item Stack
-	;All slots are accounted for in ar_Map, so Stack cannot return empty
+
+	if eval( 0 == ar_Size Stack )
+
+		DebugPrint "%n has no slots, aborting Sacrifice." Item
+		Let Msg := $Item + " is incorporeal."
+		MessageBox $Msg
+		sv_Destruct Msg
+		Return
+
+	endif
+	
 	Let Self := Stack[0]
 
 
@@ -70,6 +84,7 @@ begin Function { Absor, Item, Armr }
 	;Get first inventory reference to Self
 	;-----------------------------------------------------------------------------
 	Let Stack := Player.GetInvRefsForItem Self
+
 	if eval( 0 == ar_Size Stack )
 
 		DebugPrint "%n missing from inventory, aborting Sacrifice." Self
@@ -79,6 +94,7 @@ begin Function { Absor, Item, Armr }
 		Return
 
 	endif
+	
 	Let Self := Stack[0]
 
 
@@ -90,9 +106,10 @@ begin Function { Absor, Item, Armr }
 	Let Health := Temp.GetCurrentHealth
 	Let Count := Temp.GetRefCount
 
-	Temp.RemoveMeIR
+	Temp.RemoveMeIR ;Removes the entire stack
 	if ( Count > 1 )
 
+		;Add back stack -1
 		Let Count -= 1
 
 		Let Temp := CreateTempRef Item
@@ -106,18 +123,31 @@ begin Function { Absor, Item, Armr }
 	;-----------------------------------------------------------------------------
 	;Add XP
 	;-----------------------------------------------------------------------------
-	Let XP := Absor * Health
-	Let aaZefirosXP += XP
-	if ( aaZefirosXPLog == 1 )
-		Let aaZefirosXPCombat += XP ;Ensure this XP isn't counted in combat log.
+	;Add MagicXP based on enchantment's number of effects
+	Let Temp := GetEnchantment Item
+	if ( Temp )
+		Let MXP := MaAbs * ( GetMagicItemEffectCount Temp )
+		Let aaZefirosRXPMagic += MXP
+	else
+		Let MXP := 0
 	endif
+
+	;Convert durability to XP
+	Let XP := Absor * Health
+
+	Let aaZefirosXP += XP + MXP
+
+	if ( aaZefirosXPLog == 1 )
+		Let aaZefirosXPCombat += XP + MXP ;Ensure XP isn't counted in combat log
+	endif
+
 	Let Msg := $Item + " offered."
-	Call aaZefirosLogXP XP Msg
+	Call aaZefirosLogXP aaZefirosXP aaZefirosXPReq ( XP + MXP ) Msg
 	sv_Destruct Msg
 
 
 	;-----------------------------------------------------------------------------
-	;Add health to Self
+	;Add XP as durability to Self
 	;-----------------------------------------------------------------------------
 	Let XP += Self.GetCurrentHealth
 	Self.SetCurrentHealth XP
@@ -127,10 +157,10 @@ begin Function { Absor, Item, Armr }
 	;Refresh UI and send flavor message
 	;-----------------------------------------------------------------------------
 	Call aaZefirosRefreshInv
-	Call aaZefirosFlavorMessage ( "Icons\" + Call aaZefirosGetPCBIP Item ) "UIArmorWeaponRepairBreak" $Self $Item 3 4
+	Call aaZefirosFlavorMessage ( "Icons\" + Call aaZefirosGetPCBIP Item ) "UIArmorWeaponRepairBreak" $Self $Item 3 0
 
 
 	Return
 ;-----------------------------------------------------------------------------
-end ;Function { Absor, Item, Armr }
+end ;Function { Absor, MaAbs, Item, Armr }
 ;-----------------------------------------------------------------------------
