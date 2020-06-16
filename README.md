@@ -33,4 +33,6 @@ Agremon: https://www.nexusmods.com/oblivion/mods/49899
 
 Dusfergon: https://www.nexusmods.com/oblivion/mods/49915
 
+Zefiros: https://www.nexusmods.com/oblivion/mods/50173
+
 Why are all scripts named "aa[Name]%"?  That's because the Construction Set sorts scripts alphabetically and does NOT denote which .esp or .esm a script originates from.  With this prefix, scripts will appear towards the top of the list and it will be clear which mod they hail from.
