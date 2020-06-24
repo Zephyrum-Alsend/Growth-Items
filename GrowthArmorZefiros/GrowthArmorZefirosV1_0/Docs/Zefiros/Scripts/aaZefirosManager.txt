@@ -1106,104 +1106,9 @@ begin GameMode
 		;-----------------------------------------------------------------------------
 		if ( aaZefirosLevel == 0 )
 
-			Player.AddItemNS SelfBody 1
-			Player.AddItemNS SelfFoot 1
-			Player.AddItemNS SelfHand 1
-			Player.AddItemNS SelfHead 1
-			Player.AddItemNS SelfLegs 1
-			Player.AddItemNS SelfShld 1
-
-			;1 is heavy, 0 is light
-			Let aaZefirosWeightBody := 1
-			Let aaZefirosWeightFoot := 1
-			Let aaZefirosWeightHand := 1
-			Let aaZefirosWeightHead := 1
-			Let aaZefirosWeightLegs := 1
-			Let aaZefirosWeightShld := 1
-
-			;Form index
-			Let aaZefirosFormBody := DfIdx[0]
-			Let aaZefirosFormFoot := DfIdx[1]
-			Let aaZefirosFormHand := DfIdx[2]
-			Let aaZefirosFormHead := DfIdx[3]
-			Let aaZefirosFormLegs := DfIdx[4]
-			Let aaZefirosFormShld := DfIdx[5]
-
-			Let FormBody := Forms[0][DfIdx[0]][6]
-			Let FormFoot := Forms[1][DfIdx[1]][6]
-			Let FormHand := Forms[2][DfIdx[2]][6]
-			Let FormHead := Forms[3][DfIdx[3]][6]
-			Let FormLegs := Forms[4][DfIdx[4]][6]
-			Let FormShld := Forms[5][DfIdx[5]][6]
-
-			;Bit masks
-			;Pass through variable needed, throws error otherwise
-			Let j := Forms[0][DfIdx[0]][7]
-			Let aaZefirosSlotBody := j
-			Let j := Forms[1][DfIdx[1]][7]
-			Let aaZefirosSlotFoot := j
-			Let j := Forms[2][DfIdx[2]][7]
-			Let aaZefirosSlotHand := j
-			Let j := Forms[3][DfIdx[3]][7]
-			Let aaZefirosSlotHead := j
-			Let j := Forms[4][DfIdx[4]][7]
-			Let aaZefirosSlotLegs := j
-			Let j := Forms[5][DfIdx[5]][7]
-			Let aaZefirosSlotShld := j
-			Let j := 0
-
-			;Saved set names
-			Let Cstm01Body := "Iron"
-			Let Cstm01Foot := "Iron"
-			Let Cstm01Hand := "Iron"
-			Let Cstm01Head := "Iron"
-			Let Cstm01Legs := "Iron"
-			Let Cstm01Shld := "Iron"
-			Let Cstm02Body := "Iron"
-			Let Cstm02Foot := "Iron"
-			Let Cstm02Hand := "Iron"
-			Let Cstm02Head := "Iron"
-			Let Cstm02Legs := "Iron"
-			Let Cstm02Shld := "Iron"
-			Let Cstm03Body := "Iron"
-			Let Cstm03Foot := "Iron"
-			Let Cstm03Hand := "Iron"
-			Let Cstm03Head := "Iron"
-			Let Cstm03Legs := "Iron"
-			Let Cstm03Shld := "Iron"
-			Let Cstm04Body := "Iron"
-			Let Cstm04Foot := "Iron"
-			Let Cstm04Hand := "Iron"
-			Let Cstm04Head := "Iron"
-			Let Cstm04Legs := "Iron"
-			Let Cstm04Shld := "Iron"
-			Let Cstm05Body := "Iron"
-			Let Cstm05Foot := "Iron"
-			Let Cstm05Hand := "Iron"
-			Let Cstm05Head := "Iron"
-			Let Cstm05Legs := "Iron"
-			Let Cstm05Shld := "Iron"
-			Let Cstm06Body := "Iron"
-			Let Cstm06Foot := "Iron"
-			Let Cstm06Hand := "Iron"
-			Let Cstm06Head := "Iron"
-			Let Cstm06Legs := "Iron"
-			Let Cstm06Shld := "Iron"
-			Let Cstm07Body := "Iron"
-			Let Cstm07Foot := "Iron"
-			Let Cstm07Hand := "Iron"
-			Let Cstm07Head := "Iron"
-			Let Cstm07Legs := "Iron"
-			Let Cstm07Shld := "Iron"
-			Let Cstm08Body := "Iron"
-			Let Cstm08Foot := "Iron"
-			Let Cstm08Hand := "Iron"
-			Let Cstm08Head := "Iron"
-			Let Cstm08Legs := "Iron"
-			Let Cstm08Shld := "Iron"
-			
+			Call aaZefirosFirstBoot Selfs DfIdx Forms
 			Let aaZefirosLevel := 1
-
+			
 			Call aaZefirosFlavorMessage ( "Icons\" + Call aaZefirosGetPCBIP SelfBody ) "" MsgName "" 0 12
 
 		endif
@@ -1309,21 +1214,9 @@ begin GameMode
 
 		else
 
-			;Can change sEnchStart < Level to sEnchStart > Level with ini, which will result in lingering data
-
-			;Reset history
-			Let ActvBody := ""
-			Let ActvFoot := ""
-			Let ActvHand := ""
-			Let ActvHead := ""
-			Let ActvLegs := ""
-			Let ActvShld := ""
-			
-			;Reset globals
-			Call aaZefirosModEnchLevel -1 0 0
-			Let aaZefirosActvEnchBody := aaZefirosActvEnchFoot := 0
-			Let aaZefirosActvEnchHand := aaZefirosActvEnchHead := 0
-			Let aaZefirosActvEnchLegs := aaZefirosActvEnchShld := 0
+			;Can change sEnchStart < Level to sEnchStart > Level with ini,
+			;which will result in lingering data
+			Call aaZefirosResetEnchHistory
 			
 		endif
 	
@@ -1781,19 +1674,8 @@ begin GameMode
 
 			endif
 
-			;Reset history
-			Let ActvBody := ""
-			Let ActvFoot := ""
-			Let ActvHand := ""
-			Let ActvHead := ""
-			Let ActvLegs := ""
-			Let ActvShld := ""
-			
-			;Reset globals
-			Call aaZefirosModEnchLevel -1 0 0
-			Let aaZefirosActvEnchBody := aaZefirosActvEnchFoot := 0
-			Let aaZefirosActvEnchHand := aaZefirosActvEnchHead := 0
-			Let aaZefirosActvEnchLegs := aaZefirosActvEnchShld := 0
+			;Reset history and levels
+			Call aaZefirosResetEnchHistory
 
 			;Reset enchantments if resistances are present
 			if ( sEnchResist != 0 )

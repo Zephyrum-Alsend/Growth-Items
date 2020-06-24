@@ -1,0 +1,187 @@
+scn aaZefirosFirstBoot
+
+;Main script
+;-----------------------------------------------------------------------------
+;aaZefirosManager
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
+;aaZefirosWeightBody
+;aaZefirosWeightFoot
+;aaZefirosWeightHand
+;aaZefirosWeightHead
+;aaZefirosWeightLegs
+;aaZefirosWeightShld
+;aaZefirosFormBody
+;aaZefirosFormFoot
+;aaZefirosFormHand
+;aaZefirosFormHead
+;aaZefirosFormLegs
+;aaZefirosFormShld
+;aaZefirosSlotBody
+;aaZefirosSlotFoot
+;aaZefirosSlotHand
+;aaZefirosSlotHead
+;aaZefirosSlotLegs
+;aaZefirosSlotShld
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;Adds armor to player and initializes globals and string_vars.
+;
+;Factored from Manager to decrease boot time, as Oblivion reads the contents
+;of If statements even if the code isn't run.
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+array_var Items
+array_var DfIdx
+array_var Data
+
+array_var Item
+ref Obj
+long i
+string_var BodyName
+string_var FootName
+string_var HandName
+string_var HeadName
+string_var LegsName
+string_var ShldName
+;-----------------------------------------------------------------------------
+
+;-----------------------------------------------------------------------------
+begin Function { Items, DfIdx, Data }
+;-----------------------------------------------------------------------------
+
+	;Add items to player
+	ForEach Item <- Items
+
+		Let Obj := *Item
+		Player.AddItemNS Obj 1
+
+	loop
+
+	;Armor types
+	;1 is heavy, 0 is light
+	Let aaZefirosWeightBody := 1
+	Let aaZefirosWeightFoot := 1
+	Let aaZefirosWeightHand := 1
+	Let aaZefirosWeightHead := 1
+	Let aaZefirosWeightLegs := 1
+	Let aaZefirosWeightShld := 1
+
+	;Form indexes
+	Let aaZefirosFormBody := DfIdx[0]
+	Let aaZefirosFormFoot := DfIdx[1]
+	Let aaZefirosFormHand := DfIdx[2]
+	Let aaZefirosFormHead := DfIdx[3]
+	Let aaZefirosFormLegs := DfIdx[4]
+	Let aaZefirosFormShld := DfIdx[5]
+
+	;Slot masks
+	;Pass through variable needed, throws error otherwise
+	Let i := Data[0][DfIdx[0]][7]
+	Let aaZefirosSlotBody := i
+	Let i := Data[1][DfIdx[1]][7]
+	Let aaZefirosSlotFoot := i
+	Let i := Data[2][DfIdx[2]][7]
+	Let aaZefirosSlotHand := i
+	Let i := Data[3][DfIdx[3]][7]
+	Let aaZefirosSlotHead := i
+	Let i := Data[4][DfIdx[4]][7]
+	Let aaZefirosSlotLegs := i
+	Let i := Data[5][DfIdx[5]][7]
+	Let aaZefirosSlotShld := i
+
+	;Validation strings
+	Let BodyName := Data[0][DfIdx[0]][6]
+	Let FootName := Data[1][DfIdx[1]][6]
+	Let HandName := Data[2][DfIdx[2]][6]
+	Let HeadName := Data[3][DfIdx[3]][6]
+	Let LegsName := Data[4][DfIdx[4]][6]
+	Let ShldName := Data[5][DfIdx[5]][6]
+
+	;Form names
+	Let aaZefirosInit.FormBody := BodyName
+	Let aaZefirosInit.FormFoot := FootName
+	Let aaZefirosInit.FormHand := HandName
+	Let aaZefirosInit.FormHead := HeadName
+	Let aaZefirosInit.FormLegs := LegsName
+	Let aaZefirosInit.FormShld := ShldName
+
+	;Saved set names
+	Let aaZefirosInit.Cstm01Body := BodyName
+	Let aaZefirosInit.Cstm01Foot := FootName
+	Let aaZefirosInit.Cstm01Hand := HandName
+	Let aaZefirosInit.Cstm01Head := HeadName
+	Let aaZefirosInit.Cstm01Legs := LegsName
+	Let aaZefirosInit.Cstm01Shld := ShldName
+	Let aaZefirosInit.Cstm02Body := BodyName
+	Let aaZefirosInit.Cstm02Foot := FootName
+	Let aaZefirosInit.Cstm02Hand := HandName
+	Let aaZefirosInit.Cstm02Head := HeadName
+	Let aaZefirosInit.Cstm02Legs := LegsName
+	Let aaZefirosInit.Cstm02Shld := ShldName
+	Let aaZefirosInit.Cstm03Body := BodyName
+	Let aaZefirosInit.Cstm03Foot := FootName
+	Let aaZefirosInit.Cstm03Hand := HandName
+	Let aaZefirosInit.Cstm03Head := HeadName
+	Let aaZefirosInit.Cstm03Legs := LegsName
+	Let aaZefirosInit.Cstm03Shld := ShldName
+	Let aaZefirosInit.Cstm04Body := BodyName
+	Let aaZefirosInit.Cstm04Foot := FootName
+	Let aaZefirosInit.Cstm04Hand := HandName
+	Let aaZefirosInit.Cstm04Head := HeadName
+	Let aaZefirosInit.Cstm04Legs := LegsName
+	Let aaZefirosInit.Cstm04Shld := ShldName
+	Let aaZefirosInit.Cstm05Body := BodyName
+	Let aaZefirosInit.Cstm05Foot := FootName
+	Let aaZefirosInit.Cstm05Hand := HandName
+	Let aaZefirosInit.Cstm05Head := HeadName
+	Let aaZefirosInit.Cstm05Legs := LegsName
+	Let aaZefirosInit.Cstm05Shld := ShldName
+	Let aaZefirosInit.Cstm06Body := BodyName
+	Let aaZefirosInit.Cstm06Foot := FootName
+	Let aaZefirosInit.Cstm06Hand := HandName
+	Let aaZefirosInit.Cstm06Head := HeadName
+	Let aaZefirosInit.Cstm06Legs := LegsName
+	Let aaZefirosInit.Cstm06Shld := ShldName
+	Let aaZefirosInit.Cstm07Body := BodyName
+	Let aaZefirosInit.Cstm07Foot := FootName
+	Let aaZefirosInit.Cstm07Hand := HandName
+	Let aaZefirosInit.Cstm07Head := HeadName
+	Let aaZefirosInit.Cstm07Legs := LegsName
+	Let aaZefirosInit.Cstm07Shld := ShldName
+	Let aaZefirosInit.Cstm08Body := BodyName
+	Let aaZefirosInit.Cstm08Foot := FootName
+	Let aaZefirosInit.Cstm08Hand := HandName
+	Let aaZefirosInit.Cstm08Head := HeadName
+	Let aaZefirosInit.Cstm08Legs := LegsName
+	Let aaZefirosInit.Cstm08Shld := ShldName
+	
+
+	sv_Destruct BodyName
+	sv_Destruct FootName
+	sv_Destruct HandName
+	sv_Destruct HeadName
+	sv_Destruct LegsName
+	sv_Destruct ShldName
+	Return
+;-----------------------------------------------------------------------------
+end ;Function { Items, DfIdx, Data }
+;-----------------------------------------------------------------------------

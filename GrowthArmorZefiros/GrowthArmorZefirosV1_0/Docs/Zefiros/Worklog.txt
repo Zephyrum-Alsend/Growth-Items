@@ -932,3 +932,19 @@
 	-this is why I stopped updating Git daily
 -Scripts copied
 -GitHub updated
+
+2020.06.19
+-Loaded up Oblivion to double-check a comment about female armor "not working", needed to be sure it was the "don't like it" meaning and not "missing mesh"
+	-Meshes work
+-Tried out Daedrim F b/c was curious, turns out I botched the file paths, all point to M
+-Looks like we got 1.1 in the works
+-Moved Barbute in front of Black Barbute, like Plate/Black Plate
+
+2020.06.23
+-Added explanation of MsgName to ReadMe.txt
+
+2020.06.24
+-Factored first boot code into FirstBoot function
+	-read on CSwiki that Oblivion reads all code in if statements even if not run, should speed up initialization
+-Factored reset history code into ResetEnchHistory
+-Updated GitHub

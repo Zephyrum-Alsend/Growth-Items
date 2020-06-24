@@ -1,2 +1,8 @@
 v1.0
  - Initial release
+
+v1.0.1
+ - ElderScrollsFan001 updated Ebony Kite mesh
+ - Movomo helped with .nif files crashing NifSkope, textures now relocated
+ - "(Black) Plate w/ Cops" forms added
+ - Fixed Daedrim F paths pointing to Daedrim M files

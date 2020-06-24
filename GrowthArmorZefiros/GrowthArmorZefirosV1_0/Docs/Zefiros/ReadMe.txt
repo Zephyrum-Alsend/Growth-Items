@@ -43,7 +43,7 @@ Regardless, notify me so I can check out the final product!
 
 
 CREDITS
-??? - Witcher 2 Plate Armor
+Pike9 - Witcher 2 Plate Armor
 IKirostI - Daedricious Armor Replacer﻿
 Movomo - Movomo's Armor Replacer - The Very Daedric Armor﻿
 McMuffin - Daedric Lord Armor﻿
@@ -118,6 +118,8 @@ initialization within 0.5 seconds.
 During initialization Zefiros rebuilds all data arrays and recalculates stats before
 finally setting the appearance.  Once the appearance is set, the items are re-equipped to
 apply all changes, inventory UI refreshed and "Zefiros initialized!" output to console.
+The collective name used in messages is either str_Prefix or "Armor " + str_Postfix if
+str_Prefix is empty.
 
 There are insufficient tools for equipping items silently so you will hear the armor equip
 SFX each time a re-equip happens.  Additionally, re-equips during GameMode leave the 

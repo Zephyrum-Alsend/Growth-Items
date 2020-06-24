@@ -1,0 +1,66 @@
+scn aaZefirosResetEnchHistory
+
+;Main script
+;-----------------------------------------------------------------------------
+;aaZefirosManager
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;aaZefirosModEnchLevel
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
+;aaZefirosActvEnchBody
+;aaZefirosActvEnchFoot
+;aaZefirosActvEnchHand
+;aaZefirosActvEnchHead
+;aaZefirosActvEnchLegs
+;aaZefirosActvEnchShld
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;Clears stored enchantment history and zeroes all enchantment levels.
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;-----------------------------------------------------------------------------
+begin Function { }
+;-----------------------------------------------------------------------------
+
+	;Reset history
+	Let aaZefirosInit.ActvBody := ""
+	Let aaZefirosInit.ActvFoot := ""
+	Let aaZefirosInit.ActvHand := ""
+	Let aaZefirosInit.ActvHead := ""
+	Let aaZefirosInit.ActvLegs := ""
+	Let aaZefirosInit.ActvShld := ""
+			
+	;Reset globals
+	Call aaZefirosModEnchLevel -1 0 0
+	Let aaZefirosActvEnchBody := 0
+	Let aaZefirosActvEnchFoot := 0
+	Let aaZefirosActvEnchHand := 0
+	Let aaZefirosActvEnchHead := 0
+	Let aaZefirosActvEnchLegs := 0
+	Let aaZefirosActvEnchShld := 0
+
+
+	DebugPrint "Enchant history reset."
+	Return
+;-----------------------------------------------------------------------------
+end ;Function { }
+;-----------------------------------------------------------------------------
