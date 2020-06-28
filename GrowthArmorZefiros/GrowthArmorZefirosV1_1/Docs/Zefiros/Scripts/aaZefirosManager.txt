@@ -1,0 +1,2364 @@
+scn aaZefirosManager
+
+;The quest this is attached to, 
+;and therefore this script, 
+;run every this second(s).
+float fQuestDelayTime
+
+
+
+;Main script
+;-----------------------------------------------------------------------------
+;aaZefirosManager
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;aaZefirosCleanUp
+;aaZefirosCustomMenu
+;aaZefirosDefaultINI
+;aaZefirosEnchantBox
+;aaZefirosFindSet
+;aaZefirosFlagCleanOnce
+;aaZefirosFlagEnchantOnce
+;aaZefirosFlagSigilOnce
+;aaZefirosFlavorBox
+;aaZefirosFlavorMessage
+;aaZefirosFormMenu
+;aaZefirosGetArmorStats
+;aaZefirosGetBroken
+;aaZefirosGetDefaultSlot
+;aaZefirosGetDurability
+;aaZefirosGetEffectOrder
+;aaZefirosGetEnchantData
+;aaZefirosGetEnchantLevels
+;aaZefirosGetEnchChoice
+;aaZefirosGetFormsArray
+;aaZefirosGetFormSetsArray
+;aaZefirosGetMimicData
+;aaZefirosGetPCBIP
+;aaZefirosGetResistMatrix
+;aaZefirosGetSlots
+;aaZefirosGetXPReq
+;aaZefirosIncrementEnchant
+;aaZefirosInitGlobals
+;aaZefirosLoadCustom
+;aaZefirosLogLevel
+;aaZefirosLogXP
+;aaZefirosMeshMenu
+;aaZefirosModEnchLevel
+;aaZefirosModStat
+;aaZefirosOfferMenu
+;aaZefirosOnEnchant
+;aaZefirosOnEnchanting
+;aaZefirosPrepMerge
+;aaZefirosRefreshEquip
+;aaZefirosRefreshInv
+;aaZefirosRefreshUnEquip
+;aaZefirosRemoveAllEffectItems
+;aaZefirosReorderEffects
+;aaZefirosResetEnchHistory
+;aaZefirosSacrifice
+;aaZefirosSaveCustom
+;aaZefirosSaveMimic
+;aaZefirosSetDurability
+;aaZefirosSetEnchant
+;aaZefirosSetEnchOnItem
+;aaZefirosSetEquipHandlers
+;aaZefirosSetForm
+;aaZefirosSetLevelCap
+;aaZefirosSetMerge
+;aaZefirosSetMimic
+;aaZefirosSetName
+;aaZefirosSetRandomForm
+;aaZefirosSetResistEffects
+;aaZefirosSetSeek
+;aaZefirosSetSeekArray
+;aaZefirosSetStat
+;aaZefirosSetWeight
+;aaZefirosSetWeightGlobals
+;aaZefirosUndoEnchant
+;aaZefirosValidateCustom
+;aaZefirosValidateForm
+;aaZefirosValidateMimic
+;aaZefirosWeightMenu
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;aaZefirosDamageAnalysis
+;aaZefirosGetEffectCode
+;aaZefirosGetEffectIndex
+;aaZefirosGetFormData1
+;aaZefirosGetFormData2
+;aaZefirosGetFormData3
+;aaZefirosGetFormData4
+;aaZefirosGetMerg
+;aaZefirosGetSlotShared
+;aaZefirosObjectBody
+;aaZefirosObjectFoot
+;aaZefirosObjectHand
+;aaZefirosObjectHead
+;aaZefirosObjectLegs
+;aaZefirosObjectShld
+;aaZefirosOnDamage
+;aaZefirosOnMagicApply
+;aaZefirosOnMagicHit
+;aaZefirosOnUnEquip
+;aaZefirosOnWeaponHit
+;aaZefirosRefToNum
+;aaZefirosSetEffectItem
+;aaZefirosSetEffectStat
+;aaZefirosSetFormGlobal
+;aaZefirosSetHandlers
+;aaZefirosSetMergeEnch
+;aaZefirosUndoEnchanting
+;aaZefirosUndoSigilStone
+;aaZefirosValidateBiped
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
+;aaZefirosActvEnchBody
+;aaZefirosActvEnchFoot
+;aaZefirosActvEnchHand
+;aaZefirosActvEnchHead
+;aaZefirosActvEnchLegs
+;aaZefirosActvEnchShld
+;aaZefirosDebug
+;aaZefirosFormBody
+;aaZefirosFormFoot
+;aaZefirosFormHand
+;aaZefirosFormHead
+;aaZefirosFormLegs
+;aaZefirosFormShld
+;aaZefirosLevel
+;aaZefirosRXPDisease
+;aaZefirosRXPFire
+;aaZefirosRXPFrost
+;aaZefirosRXPMagic
+;aaZefirosRXPNormal
+;aaZefirosRXPParalysis
+;aaZefirosRXPShock
+;aaZefirosSlotBody
+;aaZefirosSlotFoot
+;aaZefirosSlotHand
+;aaZefirosSlotHead
+;aaZefirosSlotLegs
+;aaZefirosSlotShld
+;aaZefirosWeightBody
+;aaZefirosWeightFoot
+;aaZefirosWeightHand
+;aaZefirosWeightHead
+;aaZefirosWeightLegs
+;aaZefirosWeightShld
+;aaZefirosXP
+;aaZefirosXPCombat
+;aaZefirosXPLog
+;aaZefirosXPReq
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;aaZefirosCstm01Body
+;aaZefirosCstm01Foot
+;aaZefirosCstm01Hand
+;aaZefirosCstm01Head
+;aaZefirosCstm01Legs
+;aaZefirosCstm01Shld
+;aaZefirosCstm02Body
+;aaZefirosCstm02Foot
+;aaZefirosCstm02Hand
+;aaZefirosCstm02Head
+;aaZefirosCstm02Legs
+;aaZefirosCstm02Shld
+;aaZefirosCstm03Body
+;aaZefirosCstm03Foot
+;aaZefirosCstm03Hand
+;aaZefirosCstm03Head
+;aaZefirosCstm03Legs
+;aaZefirosCstm03Shld
+;aaZefirosCstm04Body
+;aaZefirosCstm04Foot
+;aaZefirosCstm04Hand
+;aaZefirosCstm04Head
+;aaZefirosCstm04Legs
+;aaZefirosCstm04Shld
+;aaZefirosCstm05Body
+;aaZefirosCstm05Foot
+;aaZefirosCstm05Hand
+;aaZefirosCstm05Head
+;aaZefirosCstm05Legs
+;aaZefirosCstm05Shld
+;aaZefirosCstm06Body
+;aaZefirosCstm06Foot
+;aaZefirosCstm06Hand
+;aaZefirosCstm06Head
+;aaZefirosCstm06Legs
+;aaZefirosCstm06Shld
+;aaZefirosCstm07Body
+;aaZefirosCstm07Foot
+;aaZefirosCstm07Hand
+;aaZefirosCstm07Head
+;aaZefirosCstm07Legs
+;aaZefirosCstm07Shld
+;aaZefirosCstm08Body
+;aaZefirosCstm08Foot
+;aaZefirosCstm08Hand
+;aaZefirosCstm08Head
+;aaZefirosCstm08Legs
+;aaZefirosCstm08Shld
+;aaZefirosEnch00Body
+;aaZefirosEnch00Foot
+;aaZefirosEnch00Hand
+;aaZefirosEnch00Head
+;aaZefirosEnch00Legs
+;aaZefirosEnch00Shld
+;aaZefirosEnch01Body
+;aaZefirosEnch01Foot
+;aaZefirosEnch01Hand
+;aaZefirosEnch01Head
+;aaZefirosEnch01Legs
+;aaZefirosEnch01Shld
+;aaZefirosEnch02Body
+;aaZefirosEnch02Foot
+;aaZefirosEnch02Hand
+;aaZefirosEnch02Head
+;aaZefirosEnch02Legs
+;aaZefirosEnch02Shld
+;aaZefirosEnch03Body
+;aaZefirosEnch03Foot
+;aaZefirosEnch03Hand
+;aaZefirosEnch03Head
+;aaZefirosEnch03Legs
+;aaZefirosEnch03Shld
+;aaZefirosEnch04Body
+;aaZefirosEnch04Foot
+;aaZefirosEnch04Hand
+;aaZefirosEnch04Head
+;aaZefirosEnch04Legs
+;aaZefirosEnch04Shld
+;aaZefirosEnch05Body
+;aaZefirosEnch05Foot
+;aaZefirosEnch05Hand
+;aaZefirosEnch05Head
+;aaZefirosEnch05Legs
+;aaZefirosEnch05Shld
+;aaZefirosEnch06Body
+;aaZefirosEnch06Foot
+;aaZefirosEnch06Hand
+;aaZefirosEnch06Head
+;aaZefirosEnch06Legs
+;aaZefirosEnch06Shld
+;aaZefirosEnch07Body
+;aaZefirosEnch07Foot
+;aaZefirosEnch07Hand
+;aaZefirosEnch07Head
+;aaZefirosEnch07Legs
+;aaZefirosEnch07Shld
+;aaZefirosEnch08Body
+;aaZefirosEnch08Foot
+;aaZefirosEnch08Hand
+;aaZefirosEnch08Head
+;aaZefirosEnch08Legs
+;aaZefirosEnch08Shld
+;aaZefirosEnch09Body
+;aaZefirosEnch09Foot
+;aaZefirosEnch09Hand
+;aaZefirosEnch09Head
+;aaZefirosEnch09Legs
+;aaZefirosEnch09Shld
+;aaZefirosEnch10Body
+;aaZefirosEnch10Foot
+;aaZefirosEnch10Hand
+;aaZefirosEnch10Head
+;aaZefirosEnch10Legs
+;aaZefirosEnch10Shld
+;aaZefirosEnch11Body
+;aaZefirosEnch11Foot
+;aaZefirosEnch11Hand
+;aaZefirosEnch11Head
+;aaZefirosEnch11Legs
+;aaZefirosEnch11Shld
+;aaZefirosEnch12Body
+;aaZefirosEnch12Foot
+;aaZefirosEnch12Hand
+;aaZefirosEnch12Head
+;aaZefirosEnch12Legs
+;aaZefirosEnch12Shld
+;aaZefirosEnch13Body
+;aaZefirosEnch13Foot
+;aaZefirosEnch13Hand
+;aaZefirosEnch13Head
+;aaZefirosEnch13Legs
+;aaZefirosEnch13Shld
+;aaZefirosEnch14Body
+;aaZefirosEnch14Foot
+;aaZefirosEnch14Hand
+;aaZefirosEnch14Head
+;aaZefirosEnch14Legs
+;aaZefirosEnch14Shld
+;aaZefirosEnch15Body
+;aaZefirosEnch15Foot
+;aaZefirosEnch15Hand
+;aaZefirosEnch15Head
+;aaZefirosEnch15Legs
+;aaZefirosEnch15Shld
+;aaZefirosEnch16Body
+;aaZefirosEnch16Foot
+;aaZefirosEnch16Hand
+;aaZefirosEnch16Head
+;aaZefirosEnch16Legs
+;aaZefirosEnch16Shld
+;aaZefirosEnch17Body
+;aaZefirosEnch17Foot
+;aaZefirosEnch17Hand
+;aaZefirosEnch17Head
+;aaZefirosEnch17Legs
+;aaZefirosEnch17Shld
+;aaZefirosEnch18Body
+;aaZefirosEnch18Foot
+;aaZefirosEnch18Hand
+;aaZefirosEnch18Head
+;aaZefirosEnch18Legs
+;aaZefirosEnch18Shld
+;aaZefirosEnch19Body
+;aaZefirosEnch19Foot
+;aaZefirosEnch19Hand
+;aaZefirosEnch19Head
+;aaZefirosEnch19Legs
+;aaZefirosEnch19Shld
+;aaZefirosEnch20Body
+;aaZefirosEnch20Foot
+;aaZefirosEnch20Hand
+;aaZefirosEnch20Head
+;aaZefirosEnch20Legs
+;aaZefirosEnch20Shld
+;aaZefirosEnch21Body
+;aaZefirosEnch21Foot
+;aaZefirosEnch21Hand
+;aaZefirosEnch21Head
+;aaZefirosEnch21Legs
+;aaZefirosEnch21Shld
+;aaZefirosEnch22Body
+;aaZefirosEnch22Foot
+;aaZefirosEnch22Hand
+;aaZefirosEnch22Head
+;aaZefirosEnch22Legs
+;aaZefirosEnch22Shld
+;aaZefirosEnch23Body
+;aaZefirosEnch23Foot
+;aaZefirosEnch23Hand
+;aaZefirosEnch23Head
+;aaZefirosEnch23Legs
+;aaZefirosEnch23Shld
+;aaZefirosEnch24Body
+;aaZefirosEnch24Foot
+;aaZefirosEnch24Hand
+;aaZefirosEnch24Head
+;aaZefirosEnch24Legs
+;aaZefirosEnch24Shld
+;aaZefirosEnch25Body
+;aaZefirosEnch25Foot
+;aaZefirosEnch25Hand
+;aaZefirosEnch25Head
+;aaZefirosEnch25Legs
+;aaZefirosEnch25Shld
+;aaZefirosEnch26Body
+;aaZefirosEnch26Foot
+;aaZefirosEnch26Hand
+;aaZefirosEnch26Head
+;aaZefirosEnch26Legs
+;aaZefirosEnch26Shld
+;aaZefirosEnch27Body
+;aaZefirosEnch27Foot
+;aaZefirosEnch27Hand
+;aaZefirosEnch27Head
+;aaZefirosEnch27Legs
+;aaZefirosEnch27Shld
+;aaZefirosEnch28Body
+;aaZefirosEnch28Foot
+;aaZefirosEnch28Hand
+;aaZefirosEnch28Head
+;aaZefirosEnch28Legs
+;aaZefirosEnch28Shld
+;aaZefirosEnch29Body
+;aaZefirosEnch29Foot
+;aaZefirosEnch29Hand
+;aaZefirosEnch29Head
+;aaZefirosEnch29Legs
+;aaZefirosEnch29Shld
+;aaZefirosEnch30Body
+;aaZefirosEnch30Foot
+;aaZefirosEnch30Hand
+;aaZefirosEnch30Head
+;aaZefirosEnch30Legs
+;aaZefirosEnch30Shld
+;aaZefirosEnch31Body
+;aaZefirosEnch31Foot
+;aaZefirosEnch31Hand
+;aaZefirosEnch31Head
+;aaZefirosEnch31Legs
+;aaZefirosEnch31Shld
+;aaZefirosEnch32Body
+;aaZefirosEnch32Foot
+;aaZefirosEnch32Hand
+;aaZefirosEnch32Head
+;aaZefirosEnch32Legs
+;aaZefirosEnch32Shld
+;aaZefirosEnch33Body
+;aaZefirosEnch33Foot
+;aaZefirosEnch33Hand
+;aaZefirosEnch33Head
+;aaZefirosEnch33Legs
+;aaZefirosEnch33Shld
+;aaZefirosEnch34Body
+;aaZefirosEnch34Foot
+;aaZefirosEnch34Hand
+;aaZefirosEnch34Head
+;aaZefirosEnch34Legs
+;aaZefirosEnch34Shld
+;aaZefirosEnch35Body
+;aaZefirosEnch35Foot
+;aaZefirosEnch35Hand
+;aaZefirosEnch35Head
+;aaZefirosEnch35Legs
+;aaZefirosEnch35Shld
+;aaZefirosEnch36Body
+;aaZefirosEnch36Foot
+;aaZefirosEnch36Hand
+;aaZefirosEnch36Head
+;aaZefirosEnch36Legs
+;aaZefirosEnch36Shld
+;aaZefirosEnch37Body
+;aaZefirosEnch37Foot
+;aaZefirosEnch37Hand
+;aaZefirosEnch37Head
+;aaZefirosEnch37Legs
+;aaZefirosEnch37Shld
+;aaZefirosEnch38Body
+;aaZefirosEnch38Foot
+;aaZefirosEnch38Hand
+;aaZefirosEnch38Head
+;aaZefirosEnch38Legs
+;aaZefirosEnch38Shld
+;aaZefirosEnch39Body
+;aaZefirosEnch39Foot
+;aaZefirosEnch39Hand
+;aaZefirosEnch39Head
+;aaZefirosEnch39Legs
+;aaZefirosEnch39Shld
+;aaZefirosEquip
+;aaZefirosMimicBodySlot
+;aaZefirosMimicFootSlot
+;aaZefirosMimicHandSlot
+;aaZefirosMimicHeadSlot
+;aaZefirosMimicLegsSlot
+;aaZefirosMimicShldSlot
+;aaZefirosRLogFire
+;aaZefirosRLogFrost
+;aaZefirosRLogMagic
+;aaZefirosRLogNormal
+;aaZefirosRLogParalysis
+;aaZefirosRLogPhysical
+;aaZefirosRLogShock
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;Main script of Zefiros.
+;
+;aaZefirosDebug can be used to toggle DebugPrint messages in the console.
+;SetDebugMode is regularly run so setting in-game via console commands will 
+;work. Initialization DebugPrints can only be viewed by setting it in the INI.
+;
+;Initializes data upon loading a save. Loads INI settings and scrubs variables
+;clean. Then creates all persistent arrays, modifies object names, resets
+;flags, initializes DmgAnal variables, sets script latencies and persistent
+;handlers. If Level = 0, add objects to Player and initialize persistent data,
+;set Level to 1 and message Player. Validates all variable Form indexes.
+;Sets level up/down related data, then armor stats, then rebuilds 
+;enchantments, resets resistances, and failsafes SetMerge/Form calls. Finally
+;changes object meshes and cleans globals (again).
+;
+;Sets fQuestDelayTime to 0.5 during GameMode, 0.01 during MenuMode and a very
+;small number aptly called OneFrame while AltLag flag is set.
+;
+;Cleans global flags whenever CleanOnce flag is set, regardless of GameMode or
+;MenuMode.
+;
+;Outputs report of XP gained in combat to console upon combat finish, but only
+;if XP gained != 0.
+;
+;Regularly checks if dynamic resistances need updating, and does so when 
+;needed.
+;
+;Regularly re-evaluates the LevelCap and unsets CapOnce if necessary.
+;
+;Checks if XP >= XPReq to initiate level up.
+;
+;Checks if enough objects are broken to initiate level down and does so.
+;
+;At fixed intervals set in the INI, prompts the Player once out of combat for
+;which enchantment effect should grown/be added to each object. Level change
+;blocks are paused while this block is pending.
+;
+;Checks if local Level != global Level and updates stats if so. Designed so
+;console command "Set aaZefirosLevel to X" will have an immediate effect.
+;Block does not update XP and XPReq. Block will check if Seek level and sets
+;flag, always increments current active effects afterwards. Keeps track of all
+;effect level ups so when there's a level down it can hit undo. If leveling
+;down to an unenchanted state, just resets all relevant data. After 
+;enchantments are sorted, mods object stats and preserves durability 
+;percentage across changes. Finally logs new level to console, messages the
+;Player with randomized flavor text and flags for re-equipping.
+;
+;Outputs flavor text at the halfway point to next level up.
+;
+;If re-equip flag is set, re-equips equipped objects over multiple frames.
+;Engine bug causes process to fail if all done on the same frame during 
+;GameMode.
+;
+;Resets MenuMode's Menu array if all menus were forcefully closed.
+;
+;Undoes Player enchantment of objects.
+;
+;When Player is in Inventory, checks if apparel is highlighted and INI defined
+;keybinds are pressed. Performs 1 of 5 actions depending on whether 
+;highlighted item is one of this mod's objects or not.
+;If an object:
+;-Options menu; redirects to mesh changing, mesh randomizing, outfit 
+;save/load, armor type changing.
+;-Enchantment display; output messagebox containing all enchantment effects
+;and their stats for the highlighted object. Oblivion's UI only shows up to 8.
+;-Mesh name display; send message to Player stating stored name of currently
+;highlighted object's Form.
+;If not an object:
+;-Offer; prompts Player to offer item to object, converting it into XP and
+;durability on accept.
+;-Mimic; copy mesh of item to matching object and store data as a Form index.
+;
+;Scrape data from Enchanting menu so Player enchantment of objects can be 
+;undone.
+;
+;Flag for undoing of SigilStone enchantment by Player. Tools are insufficient
+;but alternate method accomplishes same result.
+;-----------------------------------------------------------------------------
+
+;Engine objects
+;-----------------------------------------------------------------------------
+;Items	>	Armor >			DLScalar4Body
+;							DLScalar4Foot
+;							DLScalar4Hand
+;							DLScalar4Head
+;							DLScarar4Legs
+;							DLScalar4Shld
+;Items >	Clothing >		DLRefr
+;Magic >	Enchantment >	DLScalar4BodyEnch
+;							DLScalar4FootEnch
+;							DLScalar4HandEnch
+;							DLScalar4HeadEnch
+;							DLScarar4LegsEnch
+;							DLScalar4ShldEnch
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+;References to ArmorID and EnchantID
+;-----------------------------------------------------------------------------
+ref SelfBody
+ref SelfFoot
+ref SelfHand
+ref SelfHead
+ref SelfLegs
+ref SelfShld
+
+ref EnchBody
+ref EnchFoot
+ref EnchHand
+ref EnchHead
+ref EnchLegs
+ref EnchShld
+
+;-----------------------------------------------------------------------------
+;Armor variables
+;-----------------------------------------------------------------------------
+short sBodyARBase
+short sFootARBase
+short sHandARBase
+short sHeadARBase
+short sLegsARBase
+short sShldARBase
+
+float fBodyWeightBase
+float fFootWeightBase
+float fHandWeightBase
+float fHeadWeightBase
+float fLegsWeightBase
+float fShldWeightBase
+
+short sBodyHealthBase
+short sFootHealthBase
+short sHandHealthBase
+short sHeadHealthBase
+short sLegsHealthBase
+short sShldHealthBase
+
+long lBodyValueBase
+long lFootValueBase
+long lHandValueBase
+long lHeadValueBase
+long lLegsValueBase
+long lShldValueBase
+
+short sBodyARMult
+short sFootARMult
+short sHandARMult
+short sHeadARMult
+short sLegsARMult
+short sShldARMult
+
+float fBodyWeightMult
+float fFootWeightMult
+float fHandWeightMult
+float fHeadWeightMult
+float fLegsWeightMult
+float fShldWeightMult
+
+float fBodyHealthMult
+float fFootHealthMult
+float fHandHealthMult
+float fHeadHealthMult
+float fLegsHealthMult
+float fShldHealthMult
+
+float fBodyValueMult
+float fFootValueMult
+float fHandValueMult
+float fHeadValueMult
+float fLegsValueMult
+float fShldValueMult
+
+;-----------------------------------------------------------------------------
+;Weight adjustment variables
+;-----------------------------------------------------------------------------
+float fHeavyAR
+float fHeavyWeight
+
+;-----------------------------------------------------------------------------
+;Level up variables
+;-----------------------------------------------------------------------------
+float fXPReqBase
+float fXPReqMult
+float fXPResistFire
+float fXPResistFrost
+float fXPResistShock
+float fXPResistMagic
+float fXPResistNormalWeapon
+float fXPResistParalysis
+float fXPResistDisease
+float fXPPara
+float fXPDisease
+float fXPNoDmg
+short sInvalidAttacker
+short sLevelCap
+short sCapType
+short sBreakLevel
+short sBreakThreshold
+float fAbsorption
+float fEnchantAbs
+
+short CombatXP
+float XPReqHalf
+short Level
+short Cap
+
+;-----------------------------------------------------------------------------
+;Enchantment variables
+;-----------------------------------------------------------------------------
+short sEnchStart
+short sEnchSeek
+short sEnchResist
+
+short sFOATBase
+float fFOATMult
+
+short sFOSKBase
+float fFOSKMult
+
+short sFOFABase
+float fFOFAMult
+
+short sFOHEBase
+float fFOHEMult
+
+short sFOSPBase
+float fFOSPMult
+
+short sREFABase
+float fREFAMult
+
+short sREHEBase
+float fREHEMult
+
+short sRESPBase
+float fRESPMult
+
+short sSHLDBase
+float fSHLDMult
+
+short sFTHRBase
+float fFTHRMult
+
+short sREDGBase
+float fREDGMult
+
+short sRFLCBase
+float fRFLCMult
+
+short sSABSBase
+float fSABSMult
+
+;-----------------------------------------------------------------------------
+;Keybinds
+;-----------------------------------------------------------------------------
+short sFormKey1
+short sFormKey2
+short sFormKey3
+short sEnchKey1
+short sEnchKey2
+short sEnchKey3
+short sNameKey1
+short sNameKey2
+short sNameKey3
+short sOffrKey1
+short sOffrKey2
+short sOffrKey3
+short sCopyKey1
+short sCopyKey2
+short sCopyKey3
+
+short sFormBut1
+short sFormBut2
+short sEnchBut1
+short sEnchBut2
+short sNameBut1
+short sNameBut2
+short sOffrBut1
+short sOffrBut2
+short sCopyBut1
+short sCopyBut2
+
+;-----------------------------------------------------------------------------
+;Mimic variables
+;-----------------------------------------------------------------------------
+string_var MimicBodyMaleModel
+string_var MimicBodyFemaleModel
+string_var MimicBodyMaleGround
+string_var MimicBodyFemaleGround
+string_var MimicBodyMaleIcon
+string_var MimicBodyFemaleIcon
+string_var MimicBodyName
+
+string_var MimicFootMaleModel
+string_var MimicFootFemaleModel
+string_var MimicFootMaleGround
+string_var MimicFootFemaleGround
+string_var MimicFootMaleIcon
+string_var MimicFootFemaleIcon
+string_var MimicFootName
+
+string_var MimicHandMaleModel
+string_var MimicHandFemaleModel
+string_var MimicHandMaleGround
+string_var MimicHandFemaleGround
+string_var MimicHandMaleIcon
+string_var MimicHandFemaleIcon
+string_var MimicHandName
+
+string_var MimicHeadMaleModel
+string_var MimicHeadFemaleModel
+string_var MimicHeadMaleGround
+string_var MimicHeadFemaleGround
+string_var MimicHeadMaleIcon
+string_var MimicHeadFemaleIcon
+string_var MimicHeadName
+
+string_var MimicLegsMaleModel
+string_var MimicLegsFemaleModel
+string_var MimicLegsMaleGround
+string_var MimicLegsFemaleGround
+string_var MimicLegsMaleIcon
+string_var MimicLegsFemaleIcon
+string_var MimicLegsName
+
+string_var MimicShldMaleModel
+string_var MimicShldFemaleModel
+string_var MimicShldMaleGround
+string_var MimicShldFemaleGround
+string_var MimicShldMaleIcon
+string_var MimicShldFemaleIcon
+string_var MimicShldName
+
+;-----------------------------------------------------------------------------
+;Resistance variables
+;-----------------------------------------------------------------------------
+short ResistFI
+short ResistFR
+short ResistSH
+short ResistMA
+short ResistNW
+short ResistPA
+short ResistDI
+
+short NewFI
+short NewFR
+short NewSH
+short NewMA
+short NewNW
+short NewPA
+short NewDI
+
+;-----------------------------------------------------------------------------
+;Latency variables
+;-----------------------------------------------------------------------------
+float ScriptLag
+float MenuLag
+float fDamageLag
+float OneFrame
+
+;-----------------------------------------------------------------------------
+;Index Validation variables
+;-----------------------------------------------------------------------------
+string_var FormBody
+string_var FormFoot
+string_var FormHand
+string_var FormHead
+string_var FormLegs
+string_var FormShld
+
+string_var Cstm01Body
+string_var Cstm01Foot
+string_var Cstm01Hand
+string_var Cstm01Head
+string_var Cstm01Legs
+string_var Cstm01Shld
+string_var Cstm02Body
+string_var Cstm02Foot
+string_var Cstm02Hand
+string_var Cstm02Head
+string_var Cstm02Legs
+string_var Cstm02Shld
+string_var Cstm03Body
+string_var Cstm03Foot
+string_var Cstm03Hand
+string_var Cstm03Head
+string_var Cstm03Legs
+string_var Cstm03Shld
+string_var Cstm04Body
+string_var Cstm04Foot
+string_var Cstm04Hand
+string_var Cstm04Head
+string_var Cstm04Legs
+string_var Cstm04Shld
+string_var Cstm05Body
+string_var Cstm05Foot
+string_var Cstm05Hand
+string_var Cstm05Head
+string_var Cstm05Legs
+string_var Cstm05Shld
+string_var Cstm06Body
+string_var Cstm06Foot
+string_var Cstm06Hand
+string_var Cstm06Head
+string_var Cstm06Legs
+string_var Cstm06Shld
+string_var Cstm07Body
+string_var Cstm07Foot
+string_var Cstm07Hand
+string_var Cstm07Head
+string_var Cstm07Legs
+string_var Cstm07Shld
+string_var Cstm08Body
+string_var Cstm08Foot
+string_var Cstm08Hand
+string_var Cstm08Head
+string_var Cstm08Legs
+string_var Cstm08Shld
+
+;-----------------------------------------------------------------------------
+;Flags
+;-----------------------------------------------------------------------------
+short sBodyFix
+short sFootFix
+short sHandFix
+short sHeadFix
+short sLegsFix
+short sShldFix
+
+short HalfOnce
+short CapOnce
+short Broken
+short BreakOnce
+short SeekOnce
+short RefreshOnce
+short CleanOnce
+short SigilOnce
+short EnchantOnce
+
+short AltLag
+
+;-----------------------------------------------------------------------------
+;Shorts
+;-----------------------------------------------------------------------------
+short sPageGroupSize
+short Num
+short Nmb
+short i
+
+;-----------------------------------------------------------------------------
+;Longs
+;-----------------------------------------------------------------------------
+long j
+
+;-----------------------------------------------------------------------------
+;Strings
+;-----------------------------------------------------------------------------
+string_var str_Prefix
+string_var str_Postfix
+string_var str_BodyName
+string_var str_FootName
+string_var str_HandName
+string_var str_HeadName
+string_var str_LegsName
+string_var str_ShldName
+string_var MsgName
+string_var ActvBody
+string_var ActvFoot
+string_var ActvHand
+string_var ActvHead
+string_var ActvLegs
+string_var ActvShld
+
+;-----------------------------------------------------------------------------
+;Arrays
+;-----------------------------------------------------------------------------
+array_var Selfs
+array_var Enchs
+array_var EncSt
+array_var ArmSt
+array_var Forms
+array_var FSets
+array_var DfIdx
+array_var Equip
+array_var Seek
+array_var Actv
+array_var Dura
+array_var Slots
+array_var Dflt
+array_var Menu
+array_var Soul
+array_var Stack
+array_var Item
+
+;-----------------------------------------------------------------------------
+;References
+;-----------------------------------------------------------------------------
+ref Val
+ref SigilItem
+;-----------------------------------------------------------------------------
+
+
+
+
+
+;-----------------------------------------------------------------------------
+begin GameMode
+;-----------------------------------------------------------------------------
+
+	;-----------------------------------------------------------------------------
+	;Initializer sub-block
+	;-----------------------------------------------------------------------------
+	if ( GetGameLoaded )
+	;-----------------------------------------------------------------------------
+
+		;-----------------------------------------------------------------------------
+		;Initialize variables and arrays
+		;-----------------------------------------------------------------------------
+		;Armor refs
+		Let SelfBody := DLScalar4Body
+		Let SelfFoot := DLScalar4Foot
+		Let SelfHand := DLScalar4Hand
+		Let SelfHead := DLScalar4Head
+		Let SelfLegs := DLScalar4Legs
+		Let SelfShld := DLScalar4Shld
+
+		;Enchantment refs
+		Let EnchBody := DLScalar4BodyEnch
+		Let EnchFoot := DLScalar4FootEnch
+		Let EnchHand := DLScalar4HandEnch
+		Let EnchHead := DLScalar4HeadEnch
+		Let EnchLegs := DLScalar4LegsEnch
+		Let EnchShld := DLScalar4ShldEnch
+
+		;Initialize with default values
+		Call aaZefirosDefaultINI
+
+		;Initialize with user defined values
+		RunBatchScript "Data\ini\Zefiros.ini"
+
+		;Toggle DebugPrint output
+		SetDebugMode aaZefirosDebug
+
+		;Clean up lingering data from last load
+		Call aaZefirosCleanUp 1
+
+		;Create arrays
+		Let Selfs := ar_Construct Array
+		ar_Append Selfs SelfBody
+		ar_Append Selfs SelfFoot
+		ar_Append Selfs SelfHand
+		ar_Append Selfs SelfHead
+		ar_Append Selfs SelfLegs
+		ar_Append Selfs SelfShld
+
+		Let Enchs := ar_Construct Array
+		ar_Append Enchs EnchBody
+		ar_Append Enchs EnchFoot
+		ar_Append Enchs EnchHand
+		ar_Append Enchs EnchHead
+		ar_Append Enchs EnchLegs
+		ar_Append Enchs EnchShld
+
+		Let ArmSt := Call aaZefirosGetArmorStats
+		Let EncSt := Call aaZefirosGetEnchantData
+		Let Slots := Call aaZefirosGetSlots
+		Let Dflt := Call aaZefirosGetDefaultSlot
+		Let Soul := ar_Map 0::0 1::0 2::0 3::0
+		Let Menu := ar_Map 0::0 1::0 2::0 3::0
+
+		Let Stack := Call aaZefirosGetMimicData
+		Let Stack := Call aaZefirosValidateMimic Selfs Stack
+		Let Forms := Call aaZefirosGetFormsArray Stack
+		Call aaZefirosSaveMimic Forms
+		Let FSets := Call aaZefirosGetFormSetsArray Forms
+		Let Stack := ar_Null
+		
+		Let DfIdx := ar_Map 0::"Iron" 1::"Iron" 2::"Iron" 3::"Iron" 4::"Iron" 5::"Iron"
+		Let DfIdx := Call aaZefirosFindSet DfIdx Forms
+		
+		;Set names
+		Let str_BodyName := Call aaZefirosSetName str_Prefix str_Postfix sBodyFix str_BodyName
+		Let str_FootName := Call aaZefirosSetName str_Prefix str_Postfix sFootFix str_FootName
+		Let str_HandName := Call aaZefirosSetName str_Prefix str_Postfix sHandFix str_HandName
+		Let str_HeadName := Call aaZefirosSetName str_Prefix str_Postfix sHeadFix str_HeadName
+		Let str_LegsName := Call aaZefirosSetName str_Prefix str_Postfix sLegsFix str_LegsName
+		Let str_ShldName := Call aaZefirosSetName str_Prefix str_Postfix sShldFix str_ShldName
+		
+		SetName $str_BodyName SelfBody
+		SetName $str_FootName SelfFoot
+		SetName $str_HandName SelfHand
+		SetName $str_HeadName SelfHead
+		SetName $str_LegsName SelfLegs
+		SetName $str_ShldName SelfShld
+
+		;Set collective name that appears in messages
+		if ( 0 == sv_Length str_Prefix )
+
+			DebugPrint "str_Prefix is empty, using str_Postfix as MsgName."
+			Let MsgName := "Armor " + str_Postfix
+
+		else
+
+			DebugPrint "Using str_Prefix as MsgName."
+			Let MsgName := str_Prefix
+
+		endif
+
+		;Not used after this point
+		sv_Destruct str_Prefix
+		sv_Destruct str_Postfix
+
+		;Set latency values
+		Let ScriptLag := 0.5
+		Let MenuLag := 0.01
+		Let OneFrame := 0.00000000001
+
+		;Set DamageAnalysis variables
+		;Because we can't guarantee these two quests run in a set order,
+		;this dot notation ensures DmgAnal's variables are properly initialized
+		Let aaZefirosDmgAnal.fQuestDelayTime := fDamageLag
+		Let aaZefirosDmgAnal.ParaXP := fXPPara * fDamageLag
+
+		;Flags
+		Let HalfOnce := 0
+		Let CapOnce := 0
+		Let Broken := 0
+		Let BreakOnce := 0
+		Let SeekOnce := 0
+		Let RefreshOnce := 0
+		Let CleanOnce := 0
+		Let SigilOnce := 0
+		Let EnchantOnce := 0
+		Let AltLag := 0
+
+
+		;-----------------------------------------------------------------------------
+		;Set permanent handlers
+		;-----------------------------------------------------------------------------
+		Call aaZefirosSetEquipHandlers Player Selfs
+
+		
+		;-----------------------------------------------------------------------------
+		;Add to Player on first start up
+		;-----------------------------------------------------------------------------
+		if ( aaZefirosLevel == 0 )
+
+			Player.AddItemNS SelfBody 1
+			Player.AddItemNS SelfFoot 1
+			Player.AddItemNS SelfHand 1
+			Player.AddItemNS SelfHead 1
+			Player.AddItemNS SelfLegs 1
+			Player.AddItemNS SelfShld 1
+
+			Call aaZefirosInitGlobals DfIdx Forms
+			
+			Let aaZefirosLevel := 1
+			
+			Call aaZefirosFlavorMessage ( "Icons\" + Call aaZefirosGetPCBIP SelfBody ) "" MsgName "" 0 12
+
+		endif
+
+		;-----------------------------------------------------------------------------
+		;Correct indexes for Cstm Sets and Form
+		;-----------------------------------------------------------------------------
+		;Uses dot notation to read relevant string_vars from here
+		Call aaZefirosValidateCustom Forms DfIdx
+		Call aaZefirosValidateForm Forms DfIdx
+
+		;-----------------------------------------------------------------------------
+		;Set Level, XP and related flags
+		;-----------------------------------------------------------------------------
+		Let Level := aaZefirosLevel
+
+		;Set levelcap
+		Let Cap := Call aaZefirosSetLevelCap sCapType sLevelCap
+
+		;Set levelcap flag
+		if ( Level >= Cap )
+
+			Let CapOnce := 1
+
+		endif
+
+		;Set Break flag
+		ForEach Item <- Selfs
+
+			Let Val := *Item
+			Let Broken += Call aaZefirosGetBroken Player Val
+
+		loop
+		
+		if ( Broken >= sBreakThreshold )
+
+			Let BreakOnce := 1
+
+		endif
+
+		;Calculate XPReq and halfway point
+		Let Stack := Call aaZefirosGetXPReq fXPReqBase fXPReqMult aaZefirosXP aaZefirosLevel
+		Let aaZefirosXPReq := Stack[0]
+		Let XPReqHalf := Stack[1]
+		Let Stack := ar_Null
+
+
+		;-----------------------------------------------------------------------------
+		;Set armor stats
+		;-----------------------------------------------------------------------------
+		Let Stack := ar_Map 0::aaZefirosWeightBody 1::aaZefirosWeightFoot 2::aaZefirosWeightHand 3::aaZefirosWeightHead 4::aaZefirosWeightLegs 5::aaZefirosWeightShld
+
+		ForEach Item <- Selfs
+
+			Let Val := Item["value"]
+			SetArmorType 0 Val
+
+			Let Num := Item["key"]
+			Call aaZefirosSetStat ArmSt[Num][0] ArmSt[Num][1] ArmSt[Num][2] ArmSt[Num][3] ArmSt[Num][4] ArmSt[Num][5] ArmSt[Num][6] ArmSt[Num][7] Level Val
+			Call aaZefirosSetWeight fHeavyAR fHeavyWeight Stack[Num] Val
+
+		loop
+		
+		Let Num := 0
+		Let Stack := ar_Null
+
+
+		;-----------------------------------------------------------------------------
+		;Rebuild Enchantments
+		;-----------------------------------------------------------------------------
+		;Reset enchantments
+		ForEach Item <- Enchs
+
+			Let Val := *Item
+			Call aaZefirosRemoveAllEffectItems Val
+
+		loop
+
+		;Purge from armor
+		ForEach Item <- Selfs
+
+			Let Val := *Item
+			RemoveEnchantment Val
+
+		loop
+
+		;Build enchantments
+		if ( Level >= sEnchStart )
+
+			Let Stack := ar_Map 0::aaZefirosActvEnchBody 1::aaZefirosActvEnchFoot 2::aaZefirosActvEnchHand 3::aaZefirosActvEnchHead 4::aaZefirosActvEnchLegs 5::aaZefirosActvEnchShld
+
+			ForEach Item <- Enchs
+
+				Let Val := *Item
+				Let Num := Item["key"]
+
+				Call aaZefirosSetEnchant EncSt ( Call aaZefirosGetEnchantLevels Num ) Stack[Num] Val
+
+			loop
+
+			Let Num := 0
+			Let Stack := ar_Null
+
+		else
+
+			;Can change sEnchStart < Level to sEnchStart > Level with ini, which will result in lingering data
+			Call aaZefirosResetEnchHistory
+			
+		endif
+	
+
+		;-----------------------------------------------------------------------------
+		;Set Resistances
+		;-----------------------------------------------------------------------------
+		if ( fXPResistFire > 0 )
+			Let ResistFI := NewFI := aaZefirosRXPFire / fXPResistFire
+		else
+			Let ResistFI := NewFI := 0
+		endif
+		
+		if ( fXPResistFrost > 0 )	
+			Let ResistFR := NewFR := aaZefirosRXPFrost / fXPResistFrost
+		else
+			Let ResistFR := NewFR := 0
+		endif
+		
+		if ( fXPResistShock > 0 )
+			Let ResistSH := NewSH := aaZefirosRXPShock / fXPResistShock
+		else
+			Let ResistSH := NewSH := 0
+		endif
+		
+		if ( fXPResistMagic > 0 )
+			Let ResistMA := NewMa := aaZefirosRXPMagic / fXPResistMagic
+		else
+			Let ResistMA := NewMA := 0
+		endif
+		
+		if ( fXPResistNormalWeapon > 0 )
+			Let ResistNW := NewNW := aaZefirosRXPNormal / fXPResistNormalWeapon
+		else
+			Let ResistNW := NewNW := 0
+		endif
+		
+		if ( fXPResistParalysis > 0 )
+			Let ResistPA := NewPA := aaZefirosRXPParalysis / fXPResistParalysis
+		else
+			Let ResistPA := NewPA := 0
+		endif
+		
+		if ( fXPResistDisease > 0 )
+			Let ResistDI := NewDI := aaZefirosRXPDisease / fXPResistDisease
+		else
+			Let ResistDI := NewDI := 0
+		endif
+	
+		Call aaZefirosSetResistEffects Slots Dflt ( Call aaZefirosGetResistMatrix 0 ) Enchs[0:4]
+
+	
+		;-----------------------------------------------------------------------------
+		;Apply enchantments
+		;-----------------------------------------------------------------------------
+		if ( sEnchResist != 0 || Level >= sEnchStart )
+
+			Call aaZefirosSetEnchOnItem Enchs Selfs
+
+		endif
+
+
+		;-----------------------------------------------------------------------------
+		;Merge and SetForm
+		;-----------------------------------------------------------------------------
+		;Item slots are reset by reboot and some may still be merged, causing SetMerge to fail
+		if ( GetGameRestarted )
+
+			;Add back all missing items so SetMerge won't fail
+			Call aaZefirosPrepMerge Slots Selfs
+
+		;Refreshing equipped armor fails in GameMode unless right after a reboot
+		else
+
+			;Call a special stage of RefreshOnce for just this occasion
+			Let Equip := Call aaZefirosRefreshUnEquip Player Selfs
+			Let RefreshOnce := 4
+
+		endif
+
+
+		;All changes in GetGameLoaded will not be applied until the items are re-equipped
+		Let Stack := ar_Map 0::aaZefirosFormBody 1::aaZefirosFormFoot 2::aaZefirosFormHand 3::aaZefirosFormHead 4::aaZefirosFormLegs 5::aaZefirosFormShld
+		
+		ForEach Item <- Stack
+
+			Call aaZefirosSetMerge Forms[Item["key"]][Item["value"]][7] Dflt Forms (ar_Map 0::fHeavyAR 1::fHeavyWeight) ArmSt EncSt Item["key"] Selfs 0
+			Call aaZefirosSetForm Item["key"] Item["value"] Forms Selfs[Item["key"]]
+			;SetForm re-equips items
+			
+		loop
+		
+		Let Slots := Call aaZefirosGetSlots
+		Let Stack := ar_Null
+		
+		Call aaZefirosRefreshInv ;Incase nothing was equipped, force UI update
+			
+
+		;Because OnUnEquip and OnEquip run at different times,
+		;Equip flag can get really fucked up after SetMerge
+		;(handler runs instantly, block runs at end of frame)
+		Let CleanOnce := 1
+		
+
+		;-----------------------------------------------------------------------------
+		printc "%z%B initialized!%b" MsgName
+		;-----------------------------------------------------------------------------
+
+	;-----------------------------------------------------------------------------
+	endif ;( GetGameLoaded )
+	;-----------------------------------------------------------------------------
+
+	;Repeats in MenuMode
+	;-----------------------------------------------------------------------------
+	;Set debug mode
+	;-----------------------------------------------------------------------------
+	SetDebugMode aaZefirosDebug
+
+	;-----------------------------------------------------------------------------
+	;Set script lag
+	;-----------------------------------------------------------------------------
+	if ( fQuestDelayTime != ScriptLag && AltLag == 0 )
+	
+		Let fQuestDelayTime := ScriptLag
+	
+	endif
+
+	;Repeats in MenuMode
+	;-----------------------------------------------------------------------------
+	;Reassess Equip flag and handlers
+	;-----------------------------------------------------------------------------
+	if ( CleanOnce > 0 )
+	
+		Let CleanOnce := Call aaZefirosFlagCleanOnce CleanOnce
+	
+	endif
+
+	;-----------------------------------------------------------------------------
+	;Log XP from combat
+	;-----------------------------------------------------------------------------
+	if ( aaZefirosXPLog == 1 && Player.IsInCombat == 0 )
+
+		Call aaZefirosLogXP aaZefirosXP aaZefirosXPReq ( aaZefirosXP - aaZefirosXPCombat ) "Damage taken."
+		Let aaZefirosXPLog := 0
+
+	endif
+
+	;-----------------------------------------------------------------------------
+	;Update resistances
+	;-----------------------------------------------------------------------------
+	if ( fXPResistFire > 0 )
+		
+		Let NewFI := aaZefirosRXPFire / fXPResistFire
+		
+	endif
+	
+	if ( fXPResistFrost > 0 )
+		
+		Let NewFR := aaZefirosRXPFrost / fXPResistFrost
+		
+	endif
+	
+	if ( fXPResistShock > 0 )
+		
+		Let NewSH := aaZefirosRXPShock / fXPResistShock
+		
+	endif
+	
+	if ( fXPResistMagic > 0 )
+		
+		Let NewMa := aaZefirosRXPMagic / fXPResistMagic
+		
+	endif
+	
+	if ( fXPResistNormalWeapon > 0 )
+		
+		Let NewNW := aaZefirosRXPNormal / fXPResistNormalWeapon
+		
+	endif
+	
+	if ( fXPResistParalysis > 0 )
+		
+		Let NewPA := aaZefirosRXPParalysis / fXPResistParalysis
+		
+	endif
+	
+	if ( fXPResistDisease > 0 )
+		
+		Let NewDI := aaZefirosRXPDisease / fXPResistDisease
+		
+	endif
+
+	;If New != Old, update enchantments
+	Let Stack := Call aaZefirosSetResistEffects Slots Dflt ( Call aaZefirosGetResistMatrix 1 ) Enchs[0:4]
+
+	Let ResistFI := Stack[0][1]
+	Let ResistFR := Stack[1][1]
+	Let ResistSH := Stack[2][1]
+	Let ResistMA := Stack[3][1]
+	Let ResistNW := Stack[4][1]
+	Let ResistPA := Stack[5][1]
+	Let ResistDI := Stack[6][1]
+
+	Let Stack := ar_Null
+		
+	;-----------------------------------------------------------------------------
+	;Level Cap
+	;-----------------------------------------------------------------------------
+	Let Cap := Call aaZefirosSetLevelCap sCapType sLevelCap
+
+	if ( Level < Cap )
+
+		Let CapOnce := 0
+
+	endif
+
+	;-----------------------------------------------------------------------------
+	;Level Up
+	;-----------------------------------------------------------------------------
+	while ( aaZefirosLevel < Cap && aaZefirosXP >= aaZefirosXPReq )
+
+		Let aaZefirosLevel += 1
+
+		;Set XPReq
+		Let Stack := Call aaZefirosGetXPReq fXPReqBase fXPReqMult aaZefirosXP aaZefirosLevel
+		Let aaZefirosXPReq := Stack[0]
+		Let XPReqHalf := Stack[1]
+		Let Stack := ar_Null
+		
+		Let HalfOnce := 0
+
+	loop
+
+	;-----------------------------------------------------------------------------
+	;Level Down on Break
+	;-----------------------------------------------------------------------------
+	;Won't be run if user disabled or set parameters that are impossible to fulfill
+	if eval( sBreakLevel >= 0 && sBreakThreshold > 0 && sBreakThreshold <= ar_Size Selfs )
+
+		;Check the number of broken items
+		Let Broken := 0
+		ForEach Item <- Selfs
+
+			Let Val := *Item
+			Let Broken += Call aaZefirosGetBroken Player Val
+
+		loop
+
+		;If exceeding the theshold, delevel
+		if ( Broken >= sBreakThreshold && BreakOnce == 0 )
+
+			;If end level > 1
+			if ( sBreakLevel > 0 && sBreakLevel < aaZefirosLevel )
+
+				Let aaZefirosLevel -= sBreakLevel
+
+				;Reduce XP or else Level Up will undo this block
+				Let Stack := Call aaZefirosGetXPReq fXPReqBase fXPReqMult 0 ( aaZefirosLevel - 1 )
+				Let aaZefirosXP := Stack[0]
+				
+			else
+
+				Let aaZefirosLevel := 1
+				Let aaZefirosXP := 0
+
+			endif
+
+			;Set XPReq
+			Let Stack := Call aaZefirosGetXPReq fXPReqBase fXPReqMult aaZefirosXP aaZefirosLevel
+			Let aaZefirosXPReq := Stack[0]
+			Let XPReqHalf := Stack[1]
+			Let Stack := ar_Null
+			
+			Let HalfOnce := 0
+
+			Let BreakOnce := 1
+
+		elseif ( Broken < sBreakThreshold )
+
+			;Don't delevel again until the items are repaired
+			Let BreakOnce := 0
+
+		endif
+
+	endif
+	
+	;-----------------------------------------------------------------------------
+	;Enchant Seek
+	;-----------------------------------------------------------------------------
+	if ( SeekOnce > 0 && Player.IsInCombat == 0 )
+	;-----------------------------------------------------------------------------
+
+		;-----------------------------------------------------------------------------
+		;Prep Seek block
+		;-----------------------------------------------------------------------------
+		if ( SeekOnce == 1 )
+	
+			;Greatly speed up the script so menus are responsive
+			Let fQuestDelayTime := MenuLag
+			Let AltLag := 1
+			
+			Let Seek := ar_Map 0::-1 1::0
+			Let Actv := ar_Map 0::str_BodyName 1::str_FootName 2::str_HandName 3::str_HeadName 4::str_LegsName 5::str_ShldName
+
+			Let SeekOnce := 2
+			Let i := 0
+			
+
+		;-----------------------------------------------------------------------------
+		;Seek Enchantment
+		;-----------------------------------------------------------------------------
+		elseif ( SeekOnce == 2 )
+
+			;While loop gives GetButtonPressed in GetEnchChoice no time, freezing game
+			if eval( i < ar_Size Enchs )
+
+				;Prompt player to choose an enchantment
+				if ( i == 5 )
+
+					;Shield has alternate choices
+					Let Seek := Call aaZefirosGetEnchChoice Actv[i] 1 Seek[0] Seek[1]
+
+				else
+
+					Let Seek := Call aaZefirosGetEnchChoice Actv[i] 0 Seek[0] Seek[1]
+
+				endif
+				
+				;Store enchant choice
+				if eval( Seek[1] == -1 )
+
+					Let Actv[i] := Seek[0] ;Overwrite name with new global value
+					Let Seek := ar_Map 0::-1 1::0
+					Let i += 1
+		
+				endif
+				
+			else
+
+				Let SeekOnce := 3
+
+			endif
+	
+
+		;-----------------------------------------------------------------------------
+		;Clean Up
+		;-----------------------------------------------------------------------------
+		elseif ( SeekOnce == 3 )
+
+			;Add new effects
+			Call aaZefirosSetSeek Slots Dflt EncSt Actv Enchs
+
+			;Update globals
+			Let aaZefirosActvEnchBody := Actv[0]
+			Let aaZefirosActvEnchFoot := Actv[1]
+			Let aaZefirosActvEnchHand := Actv[2]
+			Let aaZefirosActvEnchHead := Actv[3]
+			Let aaZefirosActvEnchLegs := Actv[4]
+			Let aaZefirosActvEnchShld := Actv[5]
+
+			;Set enchantments if not set already
+			if ( Level == sEnchStart )
+				Call aaZefirosSetEnchOnItem Enchs Selfs
+			endif
+
+			Call aaZefirosReorderEffects ( Call aaZefirosGetEffectOrder ) Enchs
+
+			Let Seek := ar_Null
+			Let Actv := ar_Null
+			Let SeekOnce := AltLag := i := 0
+			
+			if ( Level == aaZefirosLevel )
+
+				Let RefreshOnce := 1
+
+			endif
+
+		endif
+
+	;-----------------------------------------------------------------------------
+	endif ;( SeekOnce > 0 && Player.IsInCombat == 0 )
+	;-----------------------------------------------------------------------------
+
+	;-----------------------------------------------------------------------------
+	;Apply level changes
+	;-----------------------------------------------------------------------------
+	if ( Level != aaZefirosLevel && SeekOnce == 0 )
+	;-----------------------------------------------------------------------------
+	
+		;The value Level will become
+		Let Nmb := aaZefirosLevel
+
+
+		;-----------------------------------------------------------------------------
+		;Mod active enchantments
+		;-----------------------------------------------------------------------------
+		if ( Nmb >= sEnchStart )
+		;-----------------------------------------------------------------------------
+			
+
+			;Increase Level
+			;-----------------------------------------------------------------------------
+			if ( Nmb - Level > 0 )
+			;-----------------------------------------------------------------------------
+		
+				;Check if at or passed a Seek level
+				if ( Level < sEnchStart || Level + sEnchSeek - ( ( Level - sEnchStart ) % sEnchSeek ) <= Nmb )
+	
+					Let SeekOnce := 1
+	
+					if ( Level < sEnchStart )
+	
+						Let Nmb := sEnchStart
+	
+					else
+	
+						Let Nmb := Level + sEnchSeek - ( ( Level - sEnchStart ) % sEnchSeek )
+	
+					endif
+	
+				endif
+	
+
+				;Skip increment if no enchantments exist already
+				if ( Level >= sEnchStart )
+
+					Let Stack := ar_Map 0::aaZefirosActvEnchBody 1::aaZefirosActvEnchFoot 2::aaZefirosActvEnchHand 3::aaZefirosActvEnchHead 4::aaZefirosActvEnchLegs 5::aaZefirosActvEnchShld
+					Call aaZefirosIncrementEnchant Slots Dflt EncSt ( Nmb - Level ) Stack Enchs
+					Let Stack := ar_Null
+	
+					Let ActvBody := Call aaZefirosSetSeekArray aaZefirosActvEnchBody ( Nmb - Level ) ActvBody
+					Let ActvFoot := Call aaZefirosSetSeekArray aaZefirosActvEnchFoot ( Nmb - Level ) ActvFoot
+					Let ActvHand := Call aaZefirosSetSeekArray aaZefirosActvEnchHand ( Nmb - Level ) ActvHand
+					Let ActvHead := Call aaZefirosSetSeekArray aaZefirosActvEnchHead ( Nmb - Level ) ActvHead
+					Let ActvLegs := Call aaZefirosSetSeekArray aaZefirosActvEnchLegs ( Nmb - Level ) ActvLegs
+					Let ActvShld := Call aaZefirosSetSeekArray aaZefirosActvEnchShld ( Nmb - Level ) ActvShld
+					
+					DebugPrint "%BActvBody:%b %z" ActvBody
+					DebugPrint "%BActvFoot:%b %z" ActvFoot
+					DebugPrint "%BActvHand:%b %z" ActvHand
+					DebugPrint "%BActvHead:%b %z" ActvHead
+					DebugPrint "%BActvLegs:%b %z" ActvLegs
+					DebugPrint "%BActvShld:%b %z" ActvShld
+			
+				endif
+
+
+			;Decrease Level
+			;-----------------------------------------------------------------------------
+			else ;( Nmb - Level < 0 )
+			;-----------------------------------------------------------------------------
+
+				Let Item := ar_Map 0::ActvBody 1::ActvFoot 2::ActvHand 3::ActvHead 4::ActvLegs 5::ActvShld
+				Let Item := Call aaZefirosUndoEnchant Slots Dflt ( Level - Nmb ) EncSt Item Enchs
+
+				;Compiler throws a fit if a passthrough isn't used
+				Let Num := Item[0][0]
+				Let aaZefirosActvEnchBody := Num
+				Let Num := Item[0][1]
+				Let aaZefirosActvEnchFoot := Num
+				Let Num := Item[0][2]
+				Let aaZefirosActvEnchHand := Num
+				Let Num := Item[0][3]
+				Let aaZefirosActvEnchHead := Num
+				Let Num := Item[0][4]
+				Let aaZefirosActvEnchLegs := Num
+				Let Num := Item[0][5]
+				Let aaZefirosActvEnchShld := Num
+				Let Num := 0
+
+				Let ActvBody := Item[1][0]
+				Let ActvFoot := Item[1][1]
+				Let ActvHand := Item[1][2]
+				Let ActvHead := Item[1][3]
+				Let ActvLegs := Item[1][4]
+				Let ActvShld := Item[1][5]
+
+				DebugPrint "%BActvEnchBody:%b %.0f %BActvBody:%b %z" aaZefirosActvEnchBody ActvBody
+				DebugPrint "%BActvEnchFoot:%b %.0f %BActvFoot:%b %z" aaZefirosActvEnchFoot ActvFoot
+				DebugPrint "%BActvEnchHand:%b %.0f %BActvHand:%b %z" aaZefirosActvEnchHand ActvHand
+				DebugPrint "%BActvEnchHead:%b %.0f %BActvHead:%b %z" aaZefirosActvEnchHead ActvHead
+				DebugPrint "%BActvEnchLegs:%b %.0f %BActvLegs:%b %z" aaZefirosActvEnchLegs ActvLegs
+				DebugPrint "%BActvEnchShld:%b %.0f %BActvShld:%b %z" aaZefirosActvEnchShld ActvShld
+
+				Let Item := ar_Null
+
+			;-----------------------------------------------------------------------------
+			endif ;( Nmb - Level > 0 )
+			;-----------------------------------------------------------------------------
+			
+
+		;-----------------------------------------------------------------------------
+		;If regressing to below sEnchStart, purge enchantments
+		;-----------------------------------------------------------------------------
+		elseif ( sEnchStart <= Level )
+		;-----------------------------------------------------------------------------
+		
+			ForEach Item <- Enchs
+
+				Let Val := *Item
+				Call aaZefirosRemoveAllEffectItems Val
+
+			loop
+
+			ForEach Item <- Selfs
+
+				Let Val := *Item
+				RemoveEnchantment Val
+
+			loop
+			Let Val := 0
+
+			;Reinstate dynamic resistances
+			Call aaZefirosSetResistEffects Slots Dflt ( Call aaZefirosGetResistMatrix 0 ) Enchs[0:4]
+
+			;Reset history
+			Call aaZefirosResetEnchHistory
+
+			;Reset enchantments if resistances are present
+			if ( sEnchResist != 0 )
+
+				Call aaZefirosSetEnchOnItem Enchs Selfs
+
+			endif
+
+		;-----------------------------------------------------------------------------
+		endif ;( Nmb >= sEnchStart )
+		;-----------------------------------------------------------------------------
+		
+		
+		;-----------------------------------------------------------------------------
+		;Mod armor stats
+		;-----------------------------------------------------------------------------
+		Let Stack := ar_Map 0::aaZefirosWeightBody 1::aaZefirosWeightFoot 2::aaZefirosWeightHand 3::aaZefirosWeightHead 4::aaZefirosWeightLegs 5::aaZefirosWeightShld
+
+		Let Dura := Call aaZefirosGetDurability Player Selfs
+
+		ForEach Item <- Selfs
+			
+			Call aaZefirosModStat Dflt ArmSt fHeavyAR fHeavyWeight Stack[Item["key"]] Level Nmb Item["value"]
+
+		loop
+
+		Call aaZefirosSetDurability Player Dura Selfs
+
+		Let Stack := ar_Null
+		Let Dura := ar_Null
+
+		
+		;-----------------------------------------------------------------------------
+		;Flavor text
+		;-----------------------------------------------------------------------------
+		Call aaZefirosLogLevel MsgName Nmb
+
+		;Only output text once Level has caught up to aaZefirosLevel
+		if ( aaZefirosLevel == Nmb )
+
+			if ( Nmb == 1 )
+
+				;De-level to 1
+				Call aaZefirosFlavorBox MsgName 1
+
+			elseif ( Nmb >= Cap && CapOnce == 0 )
+	
+				;Level cap
+				Let CapOnce := 1
+				Call aaZefirosFlavorBox MsgName 0
+	
+			elseif ( Nmb - Level > 0 )
+
+				;Level up
+				Call aaZefirosFlavorMessage ( "Icons\" + Call aaZefirosGetPCBIP SelfBody ) "" MsgName "" 1 8
+	
+			else
+	
+				;Level down
+				Call aaZefirosFlavorBox MsgName 2
+	
+			endif
+
+		endif
+
+		
+		Let Level := Nmb
+		Let Nmb := 0
+		
+		if ( SeekOnce == 0 )
+
+			Let RefreshOnce := 1 ;Flag is otherwise set by Seek code
+
+		endif
+
+
+	;-----------------------------------------------------------------------------
+	endif ;( Level != aaZefirosLevel && SeekOnce == 0 )
+	;-----------------------------------------------------------------------------
+
+	;-----------------------------------------------------------------------------
+	;Halfway message
+	;-----------------------------------------------------------------------------
+	if ( CapOnce == 0 && HalfOnce == 0 && aaZefirosXP >= XPReqHalf )
+
+		Call aaZefirosFlavorMessage ( "Icons\" + Call aaZefirosGetPCBIP SelfBody ) "" MsgName "" 2 4
+		Let HalfOnce := 1
+
+	endif
+	
+	;-----------------------------------------------------------------------------
+	;Refresh Equipped Items
+	;-----------------------------------------------------------------------------
+	;If EquipItem and UnEquipItem occur on the same frame, EquipItem fails
+	if ( RefreshOnce == 1 )
+
+		Let fQuestDelayTime := OneFrame
+		Let AltLag := 1
+		Let RefreshOnce := 2
+		;Wait one frame so you don't appear naked during a message box popup
+
+	elseif ( RefreshOnce == 2 )
+
+		Let Equip := Call aaZefirosRefreshUnEquip Player Selfs
+		Let RefreshOnce := 3
+
+	elseif ( RefreshOnce == 3 )
+
+		Call aaZefirosRefreshEquip Player Equip
+		Let Equip := ar_Null
+		Let RefreshOnce := 0
+		Let AltLag := 0
+
+	;This stage exists to bypass the bug on GetGameLoaded
+	elseif ( RefreshOnce == 4 )
+
+		Let fQuestDelayTime := OneFrame
+		Let AltLag := 1
+		Let RefreshOnce := 3
+
+	endif
+
+	;-----------------------------------------------------------------------------
+	;Reset Menu if MenuMode force exited
+	;-----------------------------------------------------------------------------
+	if eval( Menu[0] > 0 )
+
+		Let Menu[0] := 0
+
+	endif
+
+	;Repeats at start of MenuMode Inventory
+	;-----------------------------------------------------------------------------
+	;Undo player enchantment
+	;-----------------------------------------------------------------------------
+	if ( EnchantOnce > 0 )
+
+		Let EnchantOnce := Call aaZefirosFlagEnchantOnce Soul[0] Soul[1] Soul[2] Soul[3] EnchantOnce
+
+	endif
+
+	if ( SigilOnce > 0 )
+
+		Let Stack := Call aaZefirosFlagSigilOnce Selfs SigilItem SigilOnce
+
+		Let SigilItem := Stack[0]
+		Let SigilOnce := Stack[1]
+
+		Let Stack := ar_Null
+		
+	endif
+
+;-----------------------------------------------------------------------------
+end ;GameMode
+;-----------------------------------------------------------------------------
+
+;-----------------------------------------------------------------------------
+begin MenuMode
+;-----------------------------------------------------------------------------
+
+	;-----------------------------------------------------------------------------
+	;Set script lag
+	;-----------------------------------------------------------------------------
+	if ( fQuestDelayTime != MenuLag && AltLag == 0 )
+	
+		Let fQuestDelayTime := MenuLag
+	
+	endif
+
+	;Repeats at start of GameMode
+	;-----------------------------------------------------------------------------
+	;Set debug mode
+	;-----------------------------------------------------------------------------
+	SetDebugMode aaZefirosDebug
+
+	;Repeats at start of GameMode
+	;-----------------------------------------------------------------------------
+	;Reassess Equip flag and handlers
+	;-----------------------------------------------------------------------------
+	if ( CleanOnce > 0 )
+	
+		Let CleanOnce := Call aaZefirosFlagCleanOnce CleanOnce
+	
+	endif
+
+;-----------------------------------------------------------------------------
+end ;MenuMode
+;-----------------------------------------------------------------------------
+
+;-----------------------------------------------------------------------------
+begin MenuMode 1002 ;Inventory
+;-----------------------------------------------------------------------------
+
+	;Repeats at end of GameMode
+	;-----------------------------------------------------------------------------
+	;Undo player enchantment
+	;-----------------------------------------------------------------------------
+	if ( EnchantOnce > 0 )
+
+		Let EnchantOnce := Call aaZefirosFlagEnchantOnce Soul[0] Soul[1] Soul[2] Soul[3] EnchantOnce
+
+	endif
+
+	if ( SigilOnce > 0 )
+
+		Let Stack := Call aaZefirosFlagSigilOnce Selfs SigilItem SigilOnce
+
+		Let SigilItem := Stack[0]
+		Let SigilOnce := Stack[1]
+
+		Let Stack := ar_Null
+		
+	endif
+
+	;-----------------------------------------------------------------------------
+	;When in Armor/Clothing tab and not in a Zefiros menu
+	;-----------------------------------------------------------------------------
+	if eval( Menu[0] == 0 && ( GetActiveMenuFilter == 2 || GetActiveMenuFilter == 31 ) )
+	;-----------------------------------------------------------------------------
+	
+		Let Val := GetActiveMenuSelection
+		Let j := ar_Find Val Selfs
+		Let Menu := ar_Map 0::0 1::0 2::0 3::0
+
+		;-----------------------------------------------------------------------------
+		if eval( ar_BadNumericIndex != j )
+		;-----------------------------------------------------------------------------
+		
+			;-----------------------------------------------------------------------------
+			;Form name
+			;-----------------------------------------------------------------------------
+			if ( ( IsKeyPressed2 sNameKey1 || IsControlPressed sNameBut1 ) && ( IsKeyPressed2 sNameKey2 || IsKeyPressed2 sNameKey3 || IsControlPressed sNameBut2 ) )
+		
+				Let Menu[0] := 11
+	
+			;-----------------------------------------------------------------------------
+			;Enchantment effects
+			;-----------------------------------------------------------------------------
+			elseif ( ( IsKeyPressed2 sEnchKey1 || IsControlPressed sEnchBut1 ) && ( IsKeyPressed2 sEnchKey2 || IsKeyPressed2 sEnchKey3 || IsControlPressed sEnchBut2 ) )
+	
+				Let Menu[0] := 10
+		
+			;-----------------------------------------------------------------------------
+			;Form menu
+			;-----------------------------------------------------------------------------
+			elseif ( ( IsKeyPressed2 sFormKey1 || IsControlPressed sFormBut1 ) && ( IsKeyPressed2 sFormKey2 || IsKeyPressed2 sFormKey3 || IsControlPressed sFormBut2 ) )
+		
+				Let Menu[0] := 1
+				Let Menu[1] := -2
+	
+			endif
+		
+	
+		;-----------------------------------------------------------------------------
+		else ;( ar_BadNumericIndex == j )
+		;-----------------------------------------------------------------------------
+		
+			;-----------------------------------------------------------------------------
+			;Mimic item
+			;-----------------------------------------------------------------------------
+			if ( ( IsKeyPressed2 sCopyKey1 || IsControlPressed sCopyBut1 ) && ( IsKeyPressed2 sCopyKey2 || IsKeyPressed2 sCopyKey3 || IsControlPressed sCopyBut2 ) )
+		
+				if ( IsArmor Val || IsClothing Val )
+		
+					Let Menu[0] := 13
+		
+				endif
+		
+			;-----------------------------------------------------------------------------
+			;Offer item
+			;-----------------------------------------------------------------------------
+			elseif ( ( IsKeyPressed2 sOffrKey1 || IsControlPressed sOffrBut1 ) && ( IsKeyPressed2 sOffrKey2 || IsKeyPressed2 sOffrKey3 || IsControlPressed sOffrBut2 ) )
+		
+				if ( fAbsorption > 0 && IsArmor Val )
+		
+					Let Menu[0] := 12
+					Let Menu[1] := -2
+		
+				endif
+	
+			endif
+
+		;-----------------------------------------------------------------------------
+		endif ;( ar_BadNumericIndex != j )
+		;-----------------------------------------------------------------------------
+	
+	;-----------------------------------------------------------------------------
+	endif ;( Menu[0] == 0 && ( GetActiveMenuFilter == 2 || GetActiveMenuFilter == 31 ) )
+	;-----------------------------------------------------------------------------
+
+	;-----------------------------------------------------------------------------
+	;Form Change
+	;-----------------------------------------------------------------------------
+	if eval( Menu[0] == 1 )
+
+		DebugPrint "Calling FormMenu..."
+		Let Menu := Call aaZefirosFormMenu $Val Menu
+
+	;-----------------------------------------------------------------------------
+	;Save Set
+	;-----------------------------------------------------------------------------
+	elseif eval( Menu[0] == 2 )
+
+		if eval( Menu[3] == 0 )
+
+			DebugPrint "Calling CustomMenu..."
+			Let Menu := Call aaZefirosCustomMenu MsgName Menu
+
+		else
+
+			Let Menu[1] -= 1
+			Call aaZefirosSaveCustom Menu[1] Forms
+			Call aaZefirosFlavorMessage ( "Icons\" + Call aaZefirosGetPCBIP Val ) "ITMScrollOpen" MsgName "Set "+$(Menu[1]) 6 2
+
+			Let Menu[0] := 0
+			
+		endif
+		
+	;-----------------------------------------------------------------------------
+	;Load Set
+	;-----------------------------------------------------------------------------
+	elseif eval( Menu[0] == 3 )
+
+		if eval( Menu[3] == 0 )
+
+			DebugPrint "Calling CustomMenu..."
+			Let Menu := Call aaZefirosCustomMenu MsgName Menu
+
+		else
+
+			Let Menu[1] -= 1
+			Call aaZefirosLoadCustom Menu[1]
+
+			Let Stack := ar_Map 0::aaZefirosFormBody 1::aaZefirosFormFoot 2::aaZefirosFormHand 3::aaZefirosFormHead 4::aaZefirosFormLegs 5::aaZefirosFormShld
+
+			ForEach Item <- Stack
+
+				if eval( Call aaZefirosSetMerge Forms[Item["key"]][Item["value"]][7] Dflt Forms (ar_Map 0::fHeavyAR 1::fHeavyWeight) ArmSt EncSt Item["key"] Selfs 0 )
+
+					Call aaZefirosSetForm Item["key"] Item["value"] Forms Selfs[Item["key"]]
+					
+				endif
+
+			loop
+			
+			Let Slots := Call aaZefirosGetSlots
+			Let Stack := ar_Null
+
+			Call aaZefirosFlavorMessage ( "Icons\" + Call aaZefirosGetPCBIP Val ) "ITMScrollClose" MsgName "Set "+$(Menu[1]) 7 2
+
+			Let Menu[0] := 0
+			Let CleanOnce := 1
+			
+		endif
+		
+	;-----------------------------------------------------------------------------
+	;Mesh Change
+	;-----------------------------------------------------------------------------
+	elseif eval( Menu[0] == 4 )
+
+		if eval( Menu[3] < 2 )
+
+			DebugPrint "Calling MeshMenu..."
+			Let Menu := Call aaZefirosMeshMenu sPageGroupSize $Val Forms[j] Menu
+
+		else
+
+			DebugPrint "Setting %n mesh." Val
+
+			Let Num := Menu[1] - 2 + ( Menu[2] * 7 )
+			if eval( Call aaZefirosSetMerge Forms[j][Num][7] Dflt Forms (ar_Map 0::fHeavyAR 1::fHeavyWeight) ArmSt EncSt j Selfs 1 )
+
+				Call aaZefirosSetForm j Num Forms Val
+				Let Slots := Call aaZefirosGetSlots
+				
+				Call aaZefirosFlavorMessage ( "Icons\" + Call aaZefirosGetPCBIP Val ) "" $Val "" 4 0
+				
+			endif
+
+			Let Num := 0
+			Let Menu[0] := 0
+			Let CleanOnce := 1
+			
+		endif
+		
+	;-----------------------------------------------------------------------------
+	;Mesh Change ALL
+	;-----------------------------------------------------------------------------
+	elseif eval( Menu[0] == 5 )
+
+		if eval( Menu[3] < 2 )
+
+			DebugPrint "Calling MeshMenu..."
+			Let Menu := Call aaZefirosMeshMenu sPageGroupSize MsgName FSets Menu
+
+		else
+
+			DebugPrint "Setting %z meshes." MsgName
+
+			Let Num := Menu[1] - 2 + ( Menu[2] * 7 )
+			
+			ForEach Item <- FSets[Num][0]
+
+				if eval( Call aaZefirosSetMerge Forms[Item["key"]][Item["value"]][7] Dflt Forms (ar_Map 0::fHeavyAR 1::fHeavyWeight) ArmSt EncSt Item["key"] Selfs 1 )
+
+					Call aaZefirosSetForm Item["key"] Item["value"] Forms Selfs[Item["key"]]
+					
+				endif
+
+			loop
+			
+			Let Slots := Call aaZefirosGetSlots
+			Let Num := 0
+
+			Call aaZefirosFlavorMessage ( "Icons\" + Call aaZefirosGetPCBIP Val ) "" MsgName "" 4 0
+				
+			Let Menu[0] := 0
+			Let CleanOnce := 1
+			
+		endif
+		
+	;-----------------------------------------------------------------------------
+	;Random
+	;-----------------------------------------------------------------------------
+	elseif eval( Menu[0] == 6 )
+
+		DebugPrint "Calling SetRandomForm..."
+		Call aaZefirosSetRandomForm Dflt (ar_Map 0::fHeavyAR 1::fHeavyWeight) ArmSt EncSt Forms j Selfs
+		Let Slots := Call aaZefirosGetSlots
+
+		Call aaZefirosFlavorMessage ( "Icons\" + Call aaZefirosGetPCBIP Val ) "" $Val "" 4 0
+
+		Let Menu[0] := 0
+		Let CleanOnce := 1
+		
+	;-----------------------------------------------------------------------------
+	;Random ALL
+	;-----------------------------------------------------------------------------
+	elseif eval( Menu[0] == 7 )
+
+		DebugPrint "Calling SetRandomForm..."
+
+		ForEach Item <- Selfs
+			
+			Call aaZefirosSetRandomForm Dflt (ar_Map 0::fHeavyAR 1::fHeavyWeight) ArmSt EncSt Forms Item["key"] Selfs
+
+		loop
+
+		Let Slots := Call aaZefirosGetSlots
+		
+		Call aaZefirosFlavorMessage ( "Icons\" + Call aaZefirosGetPCBIP Val ) "" MsgName "" 4 0
+
+		Let Menu[0] := 0
+		Let CleanOnce := 1
+		
+	;-----------------------------------------------------------------------------
+	;Weight Change
+	;-----------------------------------------------------------------------------
+	elseif eval( Menu[0] == 8 )
+
+		if eval( Menu[3] == 0 )
+
+			DebugPrint "Calling WeightMenu..."
+			Let Menu := Call aaZefirosWeightMenu $Val Menu
+
+		else
+	
+			DebugPrint "Setting %n weight." Val
+			Call aaZefirosSetWeight fHeavyAR fHeavyWeight Menu[1] Val
+			Call aaZefirosSetWeightGlobals
+
+			;This only works because we're not in GameMode
+			Call aaZefirosRefreshEquip Player ( Call aaZefirosRefreshUnEquip Player (&Val) )
+			Call aaZefirosRefreshInv
+			
+			Let Menu[0] := 0
+			
+		endif
+		
+	;-----------------------------------------------------------------------------
+	;Weight ALL Change
+	;-----------------------------------------------------------------------------
+	elseif eval( Menu[0] == 9 )
+
+		if eval( Menu[3] == 0 )
+
+			DebugPrint "Calling WeightMenu..."
+			Let Menu := Call aaZefirosWeightMenu MsgName Menu
+
+		else
+				
+			DebugPrint "Setting %z weight." MsgName
+
+			ForEach Item <- Selfs
+	
+				Call aaZefirosSetWeight fHeavyAR fHeavyWeight Menu[1] (*Item)
+	
+			loop
+
+			Call aaZefirosSetWeightGlobals
+			
+			Call aaZefirosRefreshEquip Player ( Call aaZefirosRefreshUnEquip Player Selfs )
+			Call aaZefirosRefreshInv
+		
+			Let Menu[0] := 0
+
+		endif
+		
+	;-----------------------------------------------------------------------------
+	;Enchantment
+	;-----------------------------------------------------------------------------
+	elseif eval( Menu[0] == 10 )
+
+		Let Stack := ar_Map 0::aaZefirosActvEnchBody 1::aaZefirosActvEnchFoot 2::aaZefirosActvEnchHand 3::aaZefirosActvEnchHead 4::aaZefirosActvEnchLegs 5::aaZefirosActvEnchShld
+
+		Call aaZefirosEnchantBox Val Stack[j]
+
+		Let Stack := ar_Null
+
+		Let Menu[0] := 0
+
+	;-----------------------------------------------------------------------------
+	;Form Name
+	;-----------------------------------------------------------------------------
+	elseif eval( Menu[0] == 11 )
+
+		Let Stack := ar_Map 0::aaZefirosFormBody 1::aaZefirosFormFoot 2::aaZefirosFormHand 3::aaZefirosFormHead 4::aaZefirosFormLegs 5::aaZefirosFormShld
+
+		Call aaZefirosFlavorMessage ( "Icons\" + Call aaZefirosGetPCBIP Selfs[j] ) "" $Selfs[j] Forms[j][Stack[j]][6] 5 4
+
+		Let Stack := ar_Null
+
+		Let Menu[0] := 110
+
+	;-----------------------------------------------------------------------------
+	;Form Name key trap
+	;-----------------------------------------------------------------------------
+	elseif eval( Menu[0] == 110 ) && eval( !( IsKeyPressed2 sNameKey1 && ( IsKeyPressed2 sNameKey2 || IsKeyPressed2 sNameKey3 ) ) )
+
+		;This prevents Form Name from being called again until the keys are released
+		Let Menu[0] := 0
+		
+	;-----------------------------------------------------------------------------
+	;Offer
+	;-----------------------------------------------------------------------------
+	elseif eval( Menu[0] == 12 )
+
+		if eval( Menu[3] == 0 )
+
+			DebugPrint "%BCalling Offer...%b"
+			Let Menu := Call aaZefirosOfferMenu CapOnce MsgName $Val Menu
+
+		else
+
+			Call aaZefirosSacrifice fAbsorption fEnchantAbs Dflt Val Selfs
+			Let Menu[0] := 0
+
+		endif
+
+	;-----------------------------------------------------------------------------
+	;Mimic
+	;-----------------------------------------------------------------------------
+	elseif eval( Menu[0] == 13 )
+
+		DebugPrint "%BCalling SetMimic...%b"
+		Let Forms := Call aaZefirosSetMimic Val (ar_Map 0::fHeavyAR 1::fHeavyWeight) ArmSt EncSt Dflt Selfs Forms
+		Let Slots := Call aaZefirosGetSlots
+		Call aaZefirosSaveMimic Forms
+
+		Let Menu[0] := 130
+		Let CleanOnce := 1
+
+	;-----------------------------------------------------------------------------
+	;Mimic key trap
+	;-----------------------------------------------------------------------------
+	elseif eval( Menu[0] == 130 ) && eval( !( IsKeyPressed2 sCopyKey1 && ( IsKeyPressed2 sCopyKey2 || IsKeyPressed2 sCopyKey3 ) ) )
+
+		;This prevents Mimic from being called again until the keys are released
+		Let Menu[0] := 0
+		
+	;-----------------------------------------------------------------------------
+	endif ;( Menu != 0 )
+	;-----------------------------------------------------------------------------
+
+;-----------------------------------------------------------------------------
+end ;MenuMode Inventory
+;-----------------------------------------------------------------------------
+
+;-----------------------------------------------------------------------------
+begin MenuMode 1042 ;Enchanting
+;-----------------------------------------------------------------------------
+
+	Let Stack := Call aaZefirosOnEnchanting Selfs Soul[0] Soul[1] Soul[2] Soul[3] EnchantOnce
+
+	Let Soul := Stack[0]
+	Let EnchantOnce := Stack[1]
+
+	Let Stack := ar_Null
+	
+;-----------------------------------------------------------------------------
+end ;MenuMode Enchanting
+;-----------------------------------------------------------------------------
+
+;-----------------------------------------------------------------------------
+begin MenuMode 1048 ;SigilStone
+;-----------------------------------------------------------------------------
+
+	;No such robust tools for SigilStone :(
+	Let SigilOnce := 1
+	
+;-----------------------------------------------------------------------------
+end ;MenuMode SigilStone
+;-----------------------------------------------------------------------------

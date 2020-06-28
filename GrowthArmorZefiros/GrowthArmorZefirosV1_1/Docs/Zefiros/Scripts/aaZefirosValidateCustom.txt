@@ -1,0 +1,635 @@
+scn aaZefirosValidateCustom
+
+;Main script
+;-----------------------------------------------------------------------------
+;aaZefirosManager
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;aaZefirosFindSet
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
+;aaZefirosCstm01Body
+;aaZefirosCstm01Foot
+;aaZefirosCstm01Hand
+;aaZefirosCstm01Head
+;aaZefirosCstm01Legs
+;aaZefirosCstm01Shld
+;aaZefirosCstm02Body
+;aaZefirosCstm02Foot
+;aaZefirosCstm02Hand
+;aaZefirosCstm02Head
+;aaZefirosCstm02Legs
+;aaZefirosCstm02Shld
+;aaZefirosCstm03Body
+;aaZefirosCstm03Foot
+;aaZefirosCstm03Hand
+;aaZefirosCstm03Head
+;aaZefirosCstm03Legs
+;aaZefirosCstm03Shld
+;aaZefirosCstm04Body
+;aaZefirosCstm04Foot
+;aaZefirosCstm04Hand
+;aaZefirosCstm04Head
+;aaZefirosCstm04Legs
+;aaZefirosCstm04Shld
+;aaZefirosCstm05Body
+;aaZefirosCstm05Foot
+;aaZefirosCstm05Hand
+;aaZefirosCstm05Head
+;aaZefirosCstm05Legs
+;aaZefirosCstm05Shld
+;aaZefirosCstm06Body
+;aaZefirosCstm06Foot
+;aaZefirosCstm06Hand
+;aaZefirosCstm06Head
+;aaZefirosCstm06Legs
+;aaZefirosCstm06Shld
+;aaZefirosCstm07Body
+;aaZefirosCstm07Foot
+;aaZefirosCstm07Hand
+;aaZefirosCstm07Head
+;aaZefirosCstm07Legs
+;aaZefirosCstm07Shld
+;aaZefirosCstm08Body
+;aaZefirosCstm08Foot
+;aaZefirosCstm08Hand
+;aaZefirosCstm08Head
+;aaZefirosCstm08Legs
+;aaZefirosCstm08Shld
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;Corrects the indexes stored in Cstm globals using the names stored in Cstm
+;strings.  This is only possible because names are unique within each 
+;sub-array of Manager's Forms array.
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+array_var Data
+array_var DfIdx
+
+array_var Stack
+;-----------------------------------------------------------------------------
+
+;-----------------------------------------------------------------------------
+begin Function { Data, DfIdx }
+;-----------------------------------------------------------------------------
+
+	;-----------------------------------------------------------------------------
+	;Cstm01
+	;-----------------------------------------------------------------------------
+	;Use the stored names to find the indexes of each form
+	Let Stack := ar_Map 0::aaZefirosInit.Cstm01Body 1::aaZefirosInit.Cstm01Foot 2::aaZefirosInit.Cstm01Hand 3::aaZefirosInit.Cstm01Head 4::aaZefirosInit.Cstm01Legs 5::aaZefirosInit.Cstm01Shld
+	Let Stack := Call aaZefirosFindSet Stack Data
+
+	;Set new indexes
+	if ( aaZefirosCstm01Body != 0 ) ;Don't change if Mimic
+		
+		;Check if name was found by FindSet
+		if eval( ar_HasKey Stack 0 )
+			Let aaZefirosCstm01Body := Stack[0]
+		else
+			;If not, reset to default
+			Let aaZefirosCstm01Body := DfIdx[0]	
+		endif
+		
+	endif
+	
+	if ( aaZefirosCstm01Foot != 0 )
+
+		if eval( ar_HasKey Stack 1 )
+			Let aaZefirosCstm01Foot := Stack[1]
+		else
+			Let aaZefirosCstm01Foot := DfIdx[1]
+		endif
+
+	endif
+	
+	if ( aaZefirosCstm01Hand != 0 )
+
+		if eval( ar_HasKey Stack 2 )
+			Let aaZefirosCstm01Hand := Stack[2]
+		else
+			Let aaZefirosCstm01Hand := DfIdx[2]
+		endif
+
+	endif
+	
+	if ( aaZefirosCstm01Head != 0 )
+
+		if eval( ar_HasKey Stack 3 )
+			Let aaZefirosCstm01Head := Stack[3]
+		else
+			Let aaZefirosCstm01Head := DfIdx[3]
+		endif
+
+	endif
+	
+	if ( aaZefirosCstm01Legs != 0 )
+
+		if eval( ar_HasKey Stack 4 )
+			Let aaZefirosCstm01Legs := Stack[4]
+		else
+			Let aaZefirosCstm01Legs := DfIdx[4]
+		endif
+
+	endif
+	
+	if ( aaZefirosCstm01Shld != 0 )
+
+		if eval( ar_HasKey Stack 5 )
+			Let aaZefirosCstm01Shld := Stack[5]
+		else
+			Let aaZefirosCstm01Shld := DfIdx[5]
+		endif
+
+	endif
+	
+
+	;-----------------------------------------------------------------------------
+	;Cstm02
+	;-----------------------------------------------------------------------------
+	Let Stack := ar_Map 0::aaZefirosInit.Cstm02Body 1::aaZefirosInit.Cstm02Foot 2::aaZefirosInit.Cstm02Hand 3::aaZefirosInit.Cstm02Head 4::aaZefirosInit.Cstm02Legs 5::aaZefirosInit.Cstm02Shld
+	Let Stack := Call aaZefirosFindSet Stack Data
+	
+	if ( aaZefirosCstm02Body != 0 )
+		
+		if eval( ar_HasKey Stack 0 )
+			Let aaZefirosCstm02Body := Stack[0]
+		else
+			Let aaZefirosCstm02Body := DfIdx[0]	
+		endif
+		
+	endif
+	
+	if ( aaZefirosCstm02Foot != 0 )
+
+		if eval( ar_HasKey Stack 1 )
+			Let aaZefirosCstm02Foot := Stack[1]
+		else
+			Let aaZefirosCstm02Foot := DfIdx[1]
+		endif
+
+	endif
+	
+	if ( aaZefirosCstm02Hand != 0 )
+
+		if eval( ar_HasKey Stack 2 )
+			Let aaZefirosCstm02Hand := Stack[2]
+		else
+			Let aaZefirosCstm02Hand := DfIdx[2]
+		endif
+
+	endif
+	
+	if ( aaZefirosCstm02Head != 0 )
+
+		if eval( ar_HasKey Stack 3 )
+			Let aaZefirosCstm02Head := Stack[3]
+		else
+			Let aaZefirosCstm02Head := DfIdx[3]
+		endif
+
+	endif
+	
+	if ( aaZefirosCstm02Legs != 0 )
+
+		if eval( ar_HasKey Stack 4 )
+			Let aaZefirosCstm02Legs := Stack[4]
+		else
+			Let aaZefirosCstm02Legs := DfIdx[4]
+		endif
+
+	endif
+	
+	if ( aaZefirosCstm02Shld != 0 )
+
+		if eval( ar_HasKey Stack 5 )
+			Let aaZefirosCstm02Shld := Stack[5]
+		else
+			Let aaZefirosCstm02Shld := DfIdx[5]
+		endif
+
+	endif
+	
+
+	;-----------------------------------------------------------------------------
+	;Cstm03
+	;-----------------------------------------------------------------------------
+	Let Stack := ar_Map 0::aaZefirosInit.Cstm03Body 1::aaZefirosInit.Cstm03Foot 2::aaZefirosInit.Cstm03Hand 3::aaZefirosInit.Cstm03Head 4::aaZefirosInit.Cstm03Legs 5::aaZefirosInit.Cstm03Shld
+	Let Stack := Call aaZefirosFindSet Stack Data
+		
+	if ( aaZefirosCstm03Body != 0 )
+		
+		if eval( ar_HasKey Stack 0 )
+			Let aaZefirosCstm03Body := Stack[0]
+		else
+			Let aaZefirosCstm03Body := DfIdx[0]	
+		endif
+		
+	endif
+	
+	if ( aaZefirosCstm03Foot != 0 )
+
+		if eval( ar_HasKey Stack 1 )
+			Let aaZefirosCstm03Foot := Stack[1]
+		else
+			Let aaZefirosCstm03Foot := DfIdx[1]
+		endif
+
+	endif
+	
+	if ( aaZefirosCstm03Hand != 0 )
+
+		if eval( ar_HasKey Stack 2 )
+			Let aaZefirosCstm03Hand := Stack[2]
+		else
+			Let aaZefirosCstm03Hand := DfIdx[2]
+		endif
+
+	endif
+	
+	if ( aaZefirosCstm03Head != 0 )
+
+		if eval( ar_HasKey Stack 3 )
+			Let aaZefirosCstm03Head := Stack[3]
+		else
+			Let aaZefirosCstm03Head := DfIdx[3]
+		endif
+
+	endif
+	
+	if ( aaZefirosCstm03Legs != 0 )
+
+		if eval( ar_HasKey Stack 4 )
+			Let aaZefirosCstm03Legs := Stack[4]
+		else
+			Let aaZefirosCstm03Legs := DfIdx[4]
+		endif
+
+	endif
+	
+	if ( aaZefirosCstm03Shld != 0 )
+
+		if eval( ar_HasKey Stack 5 )
+			Let aaZefirosCstm03Shld := Stack[5]
+		else
+			Let aaZefirosCstm03Shld := DfIdx[5]
+		endif
+
+	endif
+	
+
+	;-----------------------------------------------------------------------------
+	;Cstm04
+	;-----------------------------------------------------------------------------
+	Let Stack := ar_Map 0::aaZefirosInit.Cstm04Body 1::aaZefirosInit.Cstm04Foot 2::aaZefirosInit.Cstm04Hand 3::aaZefirosInit.Cstm04Head 4::aaZefirosInit.Cstm04Legs 5::aaZefirosInit.Cstm04Shld
+	Let Stack := Call aaZefirosFindSet Stack Data
+		
+	if ( aaZefirosCstm04Body != 0 )
+		
+		if eval( ar_HasKey Stack 0 )
+			Let aaZefirosCstm04Body := Stack[0]
+		else
+			Let aaZefirosCstm04Body := DfIdx[0]	
+		endif
+		
+	endif
+	
+	if ( aaZefirosCstm04Foot != 0 )
+
+		if eval( ar_HasKey Stack 1 )
+			Let aaZefirosCstm04Foot := Stack[1]
+		else
+			Let aaZefirosCstm04Foot := DfIdx[1]
+		endif
+
+	endif
+	
+	if ( aaZefirosCstm04Hand != 0 )
+
+		if eval( ar_HasKey Stack 2 )
+			Let aaZefirosCstm04Hand := Stack[2]
+		else
+			Let aaZefirosCstm04Hand := DfIdx[2]
+		endif
+
+	endif
+	
+	if ( aaZefirosCstm04Head != 0 )
+
+		if eval( ar_HasKey Stack 3 )
+			Let aaZefirosCstm04Head := Stack[3]
+		else
+			Let aaZefirosCstm04Head := DfIdx[3]
+		endif
+
+	endif
+	
+	if ( aaZefirosCstm04Legs != 0 )
+
+		if eval( ar_HasKey Stack 4 )
+			Let aaZefirosCstm04Legs := Stack[4]
+		else
+			Let aaZefirosCstm04Legs := DfIdx[4]
+		endif
+
+	endif
+	
+	if ( aaZefirosCstm04Shld != 0 )
+
+		if eval( ar_HasKey Stack 5 )
+			Let aaZefirosCstm04Shld := Stack[5]
+		else
+			Let aaZefirosCstm04Shld := DfIdx[5]
+		endif
+
+	endif
+	
+
+	;-----------------------------------------------------------------------------
+	;Cstm05
+	;-----------------------------------------------------------------------------
+	Let Stack := ar_Map 0::aaZefirosInit.Cstm05Body 1::aaZefirosInit.Cstm05Foot 2::aaZefirosInit.Cstm05Hand 3::aaZefirosInit.Cstm05Head 4::aaZefirosInit.Cstm05Legs 5::aaZefirosInit.Cstm05Shld
+	Let Stack := Call aaZefirosFindSet Stack Data
+		
+	if ( aaZefirosCstm05Body != 0 )
+		
+		if eval( ar_HasKey Stack 0 )
+			Let aaZefirosCstm05Body := Stack[0]
+		else
+			Let aaZefirosCstm05Body := DfIdx[0]	
+		endif
+		
+	endif
+	
+	if ( aaZefirosCstm05Foot != 0 )
+
+		if eval( ar_HasKey Stack 1 )
+			Let aaZefirosCstm05Foot := Stack[1]
+		else
+			Let aaZefirosCstm05Foot := DfIdx[1]
+		endif
+
+	endif
+	
+	if ( aaZefirosCstm05Hand != 0 )
+
+		if eval( ar_HasKey Stack 2 )
+			Let aaZefirosCstm05Hand := Stack[2]
+		else
+			Let aaZefirosCstm05Hand := DfIdx[2]
+		endif
+
+	endif
+	
+	if ( aaZefirosCstm05Head != 0 )
+
+		if eval( ar_HasKey Stack 3 )
+			Let aaZefirosCstm05Head := Stack[3]
+		else
+			Let aaZefirosCstm05Head := DfIdx[3]
+		endif
+
+	endif
+	
+	if ( aaZefirosCstm05Legs != 0 )
+
+		if eval( ar_HasKey Stack 4 )
+			Let aaZefirosCstm05Legs := Stack[4]
+		else
+			Let aaZefirosCstm05Legs := DfIdx[4]
+		endif
+
+	endif
+	
+	if ( aaZefirosCstm05Shld != 0 )
+
+		if eval( ar_HasKey Stack 5 )
+			Let aaZefirosCstm05Shld := Stack[5]
+		else
+			Let aaZefirosCstm05Shld := DfIdx[5]
+		endif
+
+	endif
+	
+
+	;-----------------------------------------------------------------------------
+	;Cstm06
+	;-----------------------------------------------------------------------------
+	Let Stack := ar_Map 0::aaZefirosInit.Cstm06Body 1::aaZefirosInit.Cstm06Foot 2::aaZefirosInit.Cstm06Hand 3::aaZefirosInit.Cstm06Head 4::aaZefirosInit.Cstm06Legs 5::aaZefirosInit.Cstm06Shld
+	Let Stack := Call aaZefirosFindSet Stack Data
+		
+	if ( aaZefirosCstm06Body != 0 )
+		
+		if eval( ar_HasKey Stack 0 )
+			Let aaZefirosCstm06Body := Stack[0]
+		else
+			Let aaZefirosCstm06Body := DfIdx[0]	
+		endif
+		
+	endif
+	
+	if ( aaZefirosCstm06Foot != 0 )
+
+		if eval( ar_HasKey Stack 1 )
+			Let aaZefirosCstm06Foot := Stack[1]
+		else
+			Let aaZefirosCstm06Foot := DfIdx[1]
+		endif
+
+	endif
+	
+	if ( aaZefirosCstm06Hand != 0 )
+
+		if eval( ar_HasKey Stack 2 )
+			Let aaZefirosCstm06Hand := Stack[2]
+		else
+			Let aaZefirosCstm06Hand := DfIdx[2]
+		endif
+
+	endif
+	
+	if ( aaZefirosCstm06Head != 0 )
+
+		if eval( ar_HasKey Stack 3 )
+			Let aaZefirosCstm06Head := Stack[3]
+		else
+			Let aaZefirosCstm06Head := DfIdx[3]
+		endif
+
+	endif
+	
+	if ( aaZefirosCstm06Legs != 0 )
+
+		if eval( ar_HasKey Stack 4 )
+			Let aaZefirosCstm06Legs := Stack[4]
+		else
+			Let aaZefirosCstm06Legs := DfIdx[4]
+		endif
+
+	endif
+	
+	if ( aaZefirosCstm06Shld != 0 )
+
+		if eval( ar_HasKey Stack 5 )
+			Let aaZefirosCstm06Shld := Stack[5]
+		else
+			Let aaZefirosCstm06Shld := DfIdx[5]
+		endif
+
+	endif
+	
+
+	;-----------------------------------------------------------------------------
+	;Cstm07
+	;-----------------------------------------------------------------------------
+	Let Stack := ar_Map 0::aaZefirosInit.Cstm07Body 1::aaZefirosInit.Cstm07Foot 2::aaZefirosInit.Cstm07Hand 3::aaZefirosInit.Cstm07Head 4::aaZefirosInit.Cstm07Legs 5::aaZefirosInit.Cstm07Shld
+	Let Stack := Call aaZefirosFindSet Stack Data
+		
+	if ( aaZefirosCstm07Body != 0 )
+		
+		if eval( ar_HasKey Stack 0 )
+			Let aaZefirosCstm07Body := Stack[0]
+		else
+			Let aaZefirosCstm07Body := DfIdx[0]	
+		endif
+		
+	endif
+	
+	if ( aaZefirosCstm07Foot != 0 )
+
+		if eval( ar_HasKey Stack 1 )
+			Let aaZefirosCstm07Foot := Stack[1]
+		else
+			Let aaZefirosCstm07Foot := DfIdx[1]
+		endif
+
+	endif
+	
+	if ( aaZefirosCstm07Hand != 0 )
+
+		if eval( ar_HasKey Stack 2 )
+			Let aaZefirosCstm07Hand := Stack[2]
+		else
+			Let aaZefirosCstm07Hand := DfIdx[2]
+		endif
+
+	endif
+	
+	if ( aaZefirosCstm07Head != 0 )
+
+		if eval( ar_HasKey Stack 3 )
+			Let aaZefirosCstm07Head := Stack[3]
+		else
+			Let aaZefirosCstm07Head := DfIdx[3]
+		endif
+
+	endif
+	
+	if ( aaZefirosCstm07Legs != 0 )
+
+		if eval( ar_HasKey Stack 4 )
+			Let aaZefirosCstm07Legs := Stack[4]
+		else
+			Let aaZefirosCstm07Legs := DfIdx[4]
+		endif
+
+	endif
+	
+	if ( aaZefirosCstm07Shld != 0 )
+
+		if eval( ar_HasKey Stack 5 )
+			Let aaZefirosCstm07Shld := Stack[5]
+		else
+			Let aaZefirosCstm07Shld := DfIdx[5]
+		endif
+
+	endif
+	
+
+	;-----------------------------------------------------------------------------
+	;Cstm08
+	;-----------------------------------------------------------------------------
+	Let Stack := ar_Map 0::aaZefirosInit.Cstm08Body 1::aaZefirosInit.Cstm08Foot 2::aaZefirosInit.Cstm08Hand 3::aaZefirosInit.Cstm08Head 4::aaZefirosInit.Cstm08Legs 5::aaZefirosInit.Cstm08Shld
+	Let Stack := Call aaZefirosFindSet Stack Data
+		
+	if ( aaZefirosCstm08Body != 0 )
+		
+		if eval( ar_HasKey Stack 0 )
+			Let aaZefirosCstm08Body := Stack[0]
+		else
+			Let aaZefirosCstm08Body := DfIdx[0]	
+		endif
+		
+	endif
+	
+	if ( aaZefirosCstm08Foot != 0 )
+
+		if eval( ar_HasKey Stack 1 )
+			Let aaZefirosCstm08Foot := Stack[1]
+		else
+			Let aaZefirosCstm08Foot := DfIdx[1]
+		endif
+
+	endif
+	
+	if ( aaZefirosCstm08Hand != 0 )
+
+		if eval( ar_HasKey Stack 2 )
+			Let aaZefirosCstm08Hand := Stack[2]
+		else
+			Let aaZefirosCstm08Hand := DfIdx[2]
+		endif
+
+	endif
+	
+	if ( aaZefirosCstm08Head != 0 )
+
+		if eval( ar_HasKey Stack 3 )
+			Let aaZefirosCstm08Head := Stack[3]
+		else
+			Let aaZefirosCstm08Head := DfIdx[3]
+		endif
+
+	endif
+	
+	if ( aaZefirosCstm08Legs != 0 )
+
+		if eval( ar_HasKey Stack 4 )
+			Let aaZefirosCstm08Legs := Stack[4]
+		else
+			Let aaZefirosCstm08Legs := DfIdx[4]
+		endif
+
+	endif
+	
+	if ( aaZefirosCstm08Shld != 0 )
+
+		if eval( ar_HasKey Stack 5 )
+			Let aaZefirosCstm08Shld := Stack[5]
+		else
+			Let aaZefirosCstm08Shld := DfIdx[5]
+		endif
+
+	endif
+	
+
+	Return
+;-----------------------------------------------------------------------------
+end ;Function { Data, DfIdx }
+;-----------------------------------------------------------------------------

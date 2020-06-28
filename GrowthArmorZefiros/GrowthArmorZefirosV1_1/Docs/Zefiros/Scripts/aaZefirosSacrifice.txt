@@ -1,0 +1,199 @@
+scn aaZefirosSacrifice
+
+;Main script
+;-----------------------------------------------------------------------------
+;aaZefirosManager
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;aaZefirosGetMerg
+;aaZefirosGetSlotShared
+;aaZefirosLogXP
+;aaZefirosRefreshInv
+;aaZefirosFlavorMessage
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;aaZefirosOffer
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
+;aaZefirosXP
+;aaZefirosRXPMagic
+;aaZefirosXPLog
+;aaZefirosXPCombat
+;aaZefirosXPReq
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;Converts Item's durability into XP and health for Armr at a rate of Asbor.
+;One item in Armr gains the converted health, the one which shares a slot with
+;Item.  Because not all slots are covered by Armr, Legs also covers Tail, Shld
+;also covers jewelery.
+;Calls SetFlavorMessage when the deed is done.
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+float Absor
+float MaAbs
+array_var Dflt
+ref Item
+array_var Armr
+
+array_var Stack
+array_var Iter
+array_var Iter2
+array_var Merg
+ref Self
+ref Temp
+string_var Msg
+float Health
+short Count
+float XP
+float MXP
+;-----------------------------------------------------------------------------
+
+;-----------------------------------------------------------------------------
+begin Function { Absor, MaAbs, Dflt, Item, Armr }
+;-----------------------------------------------------------------------------
+
+	;-----------------------------------------------------------------------------
+	;Get what objects in Armr are merged
+	;-----------------------------------------------------------------------------
+	Let Merg := ar_Construct Map
+
+	ForEach Iter <- Armr
+
+		if eval( ar_HasKey Merg Iter["key"] )
+
+			Continue
+
+		else
+
+			Let Temp := *Iter
+			
+			Let Stack := Call aaZefirosGetMerg (GetBipedSlotMask Temp) Dflt
+
+			ForEach Iter2 <- Stack
+
+				Let Merg[Iter2["value"]] := Temp
+
+			loop
+
+		endif
+		
+	loop
+
+	
+	;-----------------------------------------------------------------------------
+	;Get which object in Armr shares a slot with Item
+	;-----------------------------------------------------------------------------
+	Let Stack := ar_Map 0::Merg[3] 1::Merg[0] 2::Merg[4] 3::Merg[2] 4::Merg[1] 5::Merg[5] 6::Merg[5] 7::Merg[5] 8::Merg[5] 9::Merg[5] 10::Merg[4]
+	Let Stack := Call aaZefirosGetSlotShared Item Stack
+
+	if eval( 0 == ar_Size Stack )
+
+		DebugPrint "%n has no slots, aborting Sacrifice." Item
+		Let Msg := $Item + " is incorporeal."
+		MessageBox $Msg
+		sv_Destruct Msg
+		Return
+
+	endif
+	
+	Let Self := Stack[0]
+
+
+	;-----------------------------------------------------------------------------
+	;Get first inventory reference to Self
+	;-----------------------------------------------------------------------------
+	Let Stack := Player.GetInvRefsForItem Self
+
+	if eval( 0 == ar_Size Stack )
+
+		DebugPrint "%n missing from inventory, aborting Sacrifice." Self
+		Let Msg := "No item present can take " + $Item + "."
+		MessageBox $Msg
+		sv_Destruct Msg
+		Return
+
+	endif
+	
+	Let Self := Stack[0]
+
+
+	;-----------------------------------------------------------------------------
+	;Record health of first inventory reference to Item and remove one instance
+	;-----------------------------------------------------------------------------
+	Let Stack := Player.GetInvRefsForItem Item
+	Let Temp := Stack[0]
+	Let Health := Temp.GetCurrentHealth
+	Let Count := Temp.GetRefCount
+
+	Temp.RemoveMeIR ;Removes the entire stack
+	if ( Count > 1 )
+
+		;Add back stack -1
+		Let Count -= 1
+
+		Let Temp := CreateTempRef Item
+		Temp.SetRefCount Count
+		Temp.SetCurrentHealth Health
+		Temp.CopyIR Player
+
+	endif
+
+
+	;-----------------------------------------------------------------------------
+	;Add XP
+	;-----------------------------------------------------------------------------
+	;Add MagicXP based on enchantment's number of effects
+	Let Temp := GetEnchantment Item
+	if ( Temp )
+		Let MXP := MaAbs * ( GetMagicItemEffectCount Temp )
+		Let aaZefirosRXPMagic += MXP
+	else
+		Let MXP := 0
+	endif
+
+	;Convert durability to XP
+	Let XP := Absor * Health
+
+	Let aaZefirosXP += XP + MXP
+
+	if ( aaZefirosXPLog == 1 )
+		Let aaZefirosXPCombat += XP + MXP ;Ensure XP isn't counted in combat log
+	endif
+
+	Let Msg := $Item + " offered."
+	Call aaZefirosLogXP aaZefirosXP aaZefirosXPReq ( XP + MXP ) Msg
+	sv_Destruct Msg
+
+
+	;-----------------------------------------------------------------------------
+	;Add XP as durability to Self
+	;-----------------------------------------------------------------------------
+	Let XP += Self.GetCurrentHealth
+	Self.SetCurrentHealth XP
+
+
+	;-----------------------------------------------------------------------------
+	;Refresh UI and send flavor message
+	;-----------------------------------------------------------------------------
+	Call aaZefirosRefreshInv
+	Call aaZefirosFlavorMessage ( "Icons\" + Call aaZefirosGetPCBIP Item ) "UIArmorWeaponRepairBreak" $Self $Item 3 0
+
+
+	Return
+;-----------------------------------------------------------------------------
+end ;Function { Absor, MaAbs, Item, Armr }
+;-----------------------------------------------------------------------------

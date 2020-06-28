@@ -1,0 +1,91 @@
+scn aaZefirosGetDurability
+
+;Main script
+;-----------------------------------------------------------------------------
+;aaZefirosManager
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;aaZefirosSetDurability
+;aaZefirosSetMerge
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;Given an array of items and the container they belong to, return an array
+;containing the percentage durability of each stack of every item.
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+ref Container
+array_var Items
+
+ref Val
+array_var Item
+array_var Stack
+array_var i
+array_var Prct
+array_var Dura ;Return value
+float MaxHP
+float CurHP
+short Size
+;-----------------------------------------------------------------------------
+
+;-----------------------------------------------------------------------------
+begin Function { Container, Items }
+;-----------------------------------------------------------------------------
+
+	Let Dura := ar_Construct Array
+	
+	Let Size := ar_Size Items
+	DebugPrint "Getting durabilities for %.0f items..." Size
+	
+	ForEach Item <- Items
+
+		Let Val := *Item
+		;DebugPrint "Getting durabilities for %n..." Val
+
+		Let Stack := Container.GetInvRefsForItem Val
+		Let MaxHP := GetObjectHealth Val
+
+		Let Prct := ar_Construct Array
+		ForEach i <- Stack
+
+			;ForEach InvRef of Item
+			Let Val := *i
+			
+			Let CurHP := Val.GetCurrentHealth
+			
+			Let CurHP := CurHP / MaxHP
+			ar_Append Prct CurHP
+	
+		loop
+
+		ar_Append Dura Prct
+		let Prct := ar_Null ;Clear for next loop
+
+		;DebugPrint "Durabilities gotten."
+
+	loop
+
+
+	DebugPrint "Returning durabilities."
+	SetFunctionValue Dura
+	Return
+;-----------------------------------------------------------------------------
+end ;Function { Container, Items }
+;-----------------------------------------------------------------------------

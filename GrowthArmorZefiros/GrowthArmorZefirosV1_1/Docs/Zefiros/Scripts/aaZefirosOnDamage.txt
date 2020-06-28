@@ -1,0 +1,86 @@
+scn aaZefirosOnDamage
+
+;Main script
+;-----------------------------------------------------------------------------
+;aaZefirosManager
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;aaZefirosDamageAnalysis
+;aaZefirosSetHandlers
+;aaZefirosOnMagicApply
+;aaZefirosOnMagicHit
+;aaZefirosOnWeaponHit
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
+;aaZefirosXPLog
+;aaZefirosXPCombat
+;aaZefirosXP
+;aaZefirosEquip
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;Fires whenever Player's Health is damaged.
+;If Attacker is valid, starts Combat Log and awards XP based on Damage and 
+;number of pieces worn.  Attacker is invalid if self harm or environmental.
+;If sInvalidAttacker is set in INI, also count invalid Attackers.
+;
+;Damage over time effects tick every frame, so it is recommended to comment
+;out DebugPrint when dealing with them.
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+float Damage
+ref Attacker
+
+ref Self
+;-----------------------------------------------------------------------------
+
+;-----------------------------------------------------------------------------
+begin Function { Damage, Attacker }
+;-----------------------------------------------------------------------------
+
+	Let Damage := -Damage ;Damage is a negative value
+
+	Let Self := GetSelf
+
+	;Only add XP if the damage was external
+	;or environmental/self w/ InvalidAttacker flag set
+	if ( aaZefirosInit.sInvalidAttacker || Attacker )
+
+		DebugPrint "%n took %.4f damage from %n." Self Damage Attacker
+
+		;Start XP logger
+		if ( aaZefirosXPLog == 0 )
+
+			Let aaZefirosXPLog := 1
+			Let aaZefirosXPCombat := aaZefirosXP
+
+		endif
+
+		;Add XP
+		Let aaZefirosXP += ( Damage * aaZefirosEquip / 6 )
+
+	else
+
+		DebugPrint "%n took %.4f invalid damage." Self Damage
+
+	endif
+
+	
+;-----------------------------------------------------------------------------
+end ;Function { Damage, Attacker }
+;-----------------------------------------------------------------------------

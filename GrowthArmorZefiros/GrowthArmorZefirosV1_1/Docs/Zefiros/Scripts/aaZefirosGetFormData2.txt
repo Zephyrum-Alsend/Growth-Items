@@ -1,0 +1,413 @@
+scn aaZefirosGetFormData2
+
+;Main script
+;-----------------------------------------------------------------------------
+;aaZefirosManager
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;aaZefirosGetFormsArray
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;Extends and returns the array started in GetFormsArray.
+;Contains vanilla clothing, Concealing Hoods, Local Guards Features' 
+;retextures.
+;
+;Created to bypass script size limitations.
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+array_var Data ;Return value
+;-----------------------------------------------------------------------------
+
+;-----------------------------------------------------------------------------
+begin Function { Data }
+;-----------------------------------------------------------------------------
+
+	;ar_Append is used so re-ordering this list is just a simple cut&paste
+
+	;-----------------------------------------------------------------------------
+	;Prisoner
+	;-----------------------------------------------------------------------------
+	ar_Append Data[0] ar_Map 0::GetBipedModelPath 0 JailShirt 		1::GetBipedModelPath 1 JailShirt	 	2::GetBipedModelPath 2 JailShirt 		3::GetBipedModelPath 3 JailShirt 		4::GetBipedIconPath 0 JailShirt 	5::GetBipedIconPath 1 JailShirt 	6::"Prisoner" 	7::GetBipedSlotMask JailShirt
+	ar_Append Data[1] ar_Map 0::GetBipedModelPath 0 JailShoes 		1::GetBipedModelPath 1 JailShoes	 	2::GetBipedModelPath 2 JailShoes 		3::GetBipedModelPath 3 JailShoes 		4::GetBipedIconPath 0 JailShoes 	5::GetBipedIconPath 1 JailShoes 	6::"Prisoner" 	7::GetBipedSlotMask JailShoes
+	ar_Append Data[2] ar_Map 0::GetBipedModelPath 0 WristIrons 		1::GetBipedModelPath 1 WristIrons	 	2::GetBipedModelPath 2 WristIrons 		3::GetBipedModelPath 3 WristIrons 		4::GetBipedIconPath 0 WristIrons 	5::GetBipedIconPath 1 WristIrons 	6::"Prisoner" 	7::GetBipedSlotMask WristIrons
+	ar_Append Data[4] ar_Map 0::GetBipedModelPath 0 JailPants 		1::GetBipedModelPath 1 JailPants	 	2::GetBipedModelPath 2 JailPants 		3::GetBipedModelPath 3 JailPants 		4::GetBipedIconPath 0 JailPants 	5::GetBipedIconPath 1 JailPants 	6::"Prisoner" 	7::GetBipedSlotMask JailPants
+	
+	;-----------------------------------------------------------------------------
+	;Lower01
+	;-----------------------------------------------------------------------------
+	ar_Append Data[0] ar_Map 0::GetBipedModelPath 0 LowerShirt01 		1::GetBipedModelPath 1 LowerShirt01	 	2::GetBipedModelPath 2 LowerShirt01 		3::GetBipedModelPath 3 LowerShirt01 		4::GetBipedIconPath 0 LowerShirt01 	5::GetBipedIconPath 1 LowerShirt01 	6::"Blacksmith" 	7::GetBipedSlotMask LowerShirt01
+	ar_Append Data[1] ar_Map 0::GetBipedModelPath 0 LowerShoes01 		1::GetBipedModelPath 1 LowerShoes01	 	2::GetBipedModelPath 2 LowerShoes01 		3::GetBipedModelPath 3 LowerShoes01 		4::GetBipedIconPath 0 LowerShoes01 	5::GetBipedIconPath 1 LowerShoes01 	6::"Rough Leather" 	7::GetBipedSlotMask LowerShoes01
+	ar_Append Data[4] ar_Map 0::GetBipedModelPath 0 LowerPants01 		1::GetBipedModelPath 1 LowerPants01	 	2::GetBipedModelPath 2 LowerPants01 		3::GetBipedModelPath 3 LowerPants01 		4::GetBipedIconPath 0 LowerPants01 	5::GetBipedIconPath 1 LowerPants01 	6::"Blacksmith" 	7::GetBipedSlotMask LowerPants01
+	
+	;-----------------------------------------------------------------------------
+	;Lower02
+	;-----------------------------------------------------------------------------
+	ar_Append Data[0] ar_Map 0::GetBipedModelPath 0 LowerShirt02 		1::GetBipedModelPath 1 LowerShirt02	 	2::GetBipedModelPath 2 LowerShirt02 		3::GetBipedModelPath 3 LowerShirt02 		4::GetBipedIconPath 0 LowerShirt02 	5::GetBipedIconPath 1 LowerShirt02 	6::"Dark Green" 		7::GetBipedSlotMask LowerShirt02
+	ar_Append Data[1] ar_Map 0::GetBipedModelPath 0 LowerShoes02 		1::GetBipedModelPath 1 LowerShoes02	 	2::GetBipedModelPath 2 LowerShoes02 		3::GetBipedModelPath 3 LowerShoes02 		4::GetBipedIconPath 0 LowerShoes02 	5::GetBipedIconPath 1 LowerShoes02 	6::"Stitched Leather" 	7::GetBipedSlotMask LowerShoes02
+	ar_Append Data[4] ar_Map 0::GetBipedModelPath 0 LowerPants02 		1::GetBipedModelPath 1 LowerPants02	 	2::GetBipedModelPath 2 LowerPants02 		3::GetBipedModelPath 3 LowerPants02 		4::GetBipedIconPath 0 LowerPants02 	5::GetBipedIconPath 1 LowerPants02 	6::"Laced Leather" 		7::GetBipedSlotMask LowerPants02
+	
+	;-----------------------------------------------------------------------------
+	;Lower03
+	;-----------------------------------------------------------------------------
+	ar_Append Data[0] ar_Map 0::GetBipedModelPath 0 LowerShirt03 		1::GetBipedModelPath 1 LowerShirt03	 	2::GetBipedModelPath 2 LowerShirt03 		3::GetBipedModelPath 3 LowerShirt03 		4::GetBipedIconPath 0 LowerShirt03 	5::GetBipedIconPath 1 LowerShirt03 	6::"Huntsman" 	7::GetBipedSlotMask LowerShirt03
+	ar_Append Data[1] ar_Map 0::GetBipedModelPath 0 LowerShoes03 		1::GetBipedModelPath 1 LowerShoes03	 	2::GetBipedModelPath 2 LowerShoes03 		3::GetBipedModelPath 3 LowerShoes03 		4::GetBipedIconPath 0 LowerShoes03 	5::GetBipedIconPath 1 LowerShoes03 	6::"Huntsman" 	7::GetBipedSlotMask LowerShoes03
+	ar_Append Data[4] ar_Map 0::GetBipedModelPath 0 LowerPants03 		1::GetBipedModelPath 1 LowerPants03	 	2::GetBipedModelPath 2 LowerPants03 		3::GetBipedModelPath 3 LowerPants03 		4::GetBipedIconPath 0 LowerPants03 	5::GetBipedIconPath 1 LowerPants03 	6::"Huntsman" 	7::GetBipedSlotMask LowerPants03
+	
+	;-----------------------------------------------------------------------------
+	;Lower04
+	;-----------------------------------------------------------------------------
+	ar_Append Data[0] ar_Map 0::GetBipedModelPath 0 LowerShirt04 		1::GetBipedModelPath 1 LowerShirt04	 	2::GetBipedModelPath 2 LowerShirt04 		3::GetBipedModelPath 3 LowerShirt04 		4::GetBipedIconPath 0 LowerShirt04 	5::GetBipedIconPath 1 LowerShirt04 	6::"Coarse Linen" 	7::GetBipedSlotMask LowerShirt04
+	ar_Append Data[1] ar_Map 0::GetBipedModelPath 0 LowerShoes04 		1::GetBipedModelPath 1 LowerShoes04	 	2::GetBipedModelPath 2 LowerShoes04 		3::GetBipedModelPath 3 LowerShoes04 		4::GetBipedIconPath 0 LowerShoes04 	5::GetBipedIconPath 1 LowerShoes04 	6::"Oiled Linen" 	7::GetBipedSlotMask LowerShoes04
+	ar_Append Data[4] ar_Map 0::GetBipedModelPath 0 LowerPants04 		1::GetBipedModelPath 1 LowerPants04	 	2::GetBipedModelPath 2 LowerPants04 		3::GetBipedModelPath 3 LowerPants04 		4::GetBipedIconPath 0 LowerPants04 	5::GetBipedIconPath 1 LowerPants04 	6::"Coarse Linen" 	7::GetBipedSlotMask LowerPants04
+	
+	;-----------------------------------------------------------------------------
+	;Lower06
+	;-----------------------------------------------------------------------------
+	ar_Append Data[0] ar_Map 0::GetBipedModelPath 0 LowerShirt06 		1::GetBipedModelPath 1 LowerShirt06	 	2::GetBipedModelPath 2 LowerShirt06 		3::GetBipedModelPath 3 LowerShirt06 		4::GetBipedIconPath 0 LowerShirt06 	5::GetBipedIconPath 1 LowerShirt06 	6::"Collared" 	7::GetBipedSlotMask LowerShirt06
+	ar_Append Data[1] ar_Map 0::GetBipedModelPath 0 LowerShoes06 		1::GetBipedModelPath 1 LowerShoes06	 	2::GetBipedModelPath 2 LowerShoes06 		3::GetBipedModelPath 3 LowerShoes06 		4::GetBipedIconPath 0 LowerShoes06 	5::GetBipedIconPath 1 LowerShoes06 	6::"Buckled" 	7::GetBipedSlotMask LowerShoes06
+	ar_Append Data[4] ar_Map 0::GetBipedModelPath 0 LowerPants06 		1::GetBipedModelPath 1 LowerPants06	 	2::GetBipedModelPath 2 LowerPants06 		3::GetBipedModelPath 3 LowerPants06 		4::GetBipedIconPath 0 LowerPants06 	5::GetBipedIconPath 1 LowerPants06 	6::"Green Felt"	7::GetBipedSlotMask LowerPants06
+	
+	;-----------------------------------------------------------------------------
+	;Lower07
+	;-----------------------------------------------------------------------------
+	ar_Append Data[0] ar_Map 0::GetBipedModelPath 0 LowerShirt07 		1::GetBipedModelPath 1 LowerShirt07	 	2::GetBipedModelPath 2 LowerShirt07 		3::GetBipedModelPath 3 LowerShirt07 		4::GetBipedIconPath 0 LowerShirt07 	5::GetBipedIconPath 1 LowerShirt07 	6::"Suspenders"	7::GetBipedSlotMask LowerShirt07
+	ar_Append Data[1] ar_Map 0::GetBipedModelPath 0 LowerShoes07 		1::GetBipedModelPath 1 LowerShoes07	 	2::GetBipedModelPath 2 LowerShoes07 		3::GetBipedModelPath 3 LowerShoes07 		4::GetBipedIconPath 0 LowerShoes07 	5::GetBipedIconPath 1 LowerShoes07 	6::"Clogs" 		7::GetBipedSlotMask LowerShoes07
+	ar_Append Data[4] ar_Map 0::GetBipedModelPath 0 LowerPants07 		1::GetBipedModelPath 1 LowerPants07	 	2::GetBipedModelPath 2 LowerPants07 		3::GetBipedModelPath 3 LowerPants07 		4::GetBipedIconPath 0 LowerPants07 	5::GetBipedIconPath 1 LowerPants07 	6::"Breeches" 	7::GetBipedSlotMask LowerPants07
+	
+	;-----------------------------------------------------------------------------
+	;Lower08
+	;-----------------------------------------------------------------------------
+	ar_Append Data[0] ar_Map 0::GetBipedModelPath 0 LowerShirt08 		1::GetBipedModelPath 1 LowerShirt08	 	2::GetBipedModelPath 2 LowerShirt08 		3::GetBipedModelPath 3 LowerShirt08 		4::GetBipedIconPath 0 LowerShirt08 	5::GetBipedIconPath 1 LowerShirt08 	6::"Belted Vest" 		7::GetBipedSlotMask LowerShirt08
+	ar_Append Data[1] ar_Map 0::GetBipedModelPath 0 LowerShoes08 		1::GetBipedModelPath 1 LowerShoes08	 	2::GetBipedModelPath 2 LowerShoes08 		3::GetBipedModelPath 3 LowerShoes08 		4::GetBipedIconPath 0 LowerShoes08 	5::GetBipedIconPath 1 LowerShoes08 	6::"Braided Sandals"	7::GetBipedSlotMask LowerShoes08
+	ar_Append Data[4] ar_Map 0::GetBipedModelPath 0 LowerPants08 		1::GetBipedModelPath 1 LowerPants08	 	2::GetBipedModelPath 2 LowerPants08 		3::GetBipedModelPath 3 LowerPants08 		4::GetBipedIconPath 0 LowerPants08 	5::GetBipedIconPath 1 LowerPants08 	6::"Belted Braies" 		7::GetBipedSlotMask LowerPants08
+	
+	;-----------------------------------------------------------------------------
+	;LowerShirt
+	;-----------------------------------------------------------------------------
+	ar_Append Data[0] ar_Map 0::GetBipedModelPath 0 LowerShirt09 		1::GetBipedModelPath 1 LowerShirt09	 	2::GetBipedModelPath 2 LowerShirt09 		3::GetBipedModelPath 3 LowerShirt09 		4::GetBipedIconPath 0 LowerShirt09 	5::GetBipedIconPath 1 LowerShirt09 	6::"Fishing Waders"	7::GetBipedSlotMask LowerShirt09
+	ar_Append Data[0] ar_Map 0::GetBipedModelPath 0 LowerShirt10 		1::GetBipedModelPath 1 LowerShirt10	 	2::GetBipedModelPath 2 LowerShirt10 		3::GetBipedModelPath 3 LowerShirt10 		4::GetBipedIconPath 0 LowerShirt10 	5::GetBipedIconPath 1 LowerShirt10 	6::"Patched Vest" 	7::GetBipedSlotMask LowerShirt10
+	ar_Append Data[0] ar_Map 0::GetBipedModelPath 0 LowerShirt11 		1::GetBipedModelPath 1 LowerShirt11	 	2::GetBipedModelPath 2 LowerShirt11 		3::GetBipedModelPath 3 LowerShirt11 		4::GetBipedIconPath 0 LowerShirt11 	5::GetBipedIconPath 1 LowerShirt11 	6::"Green Wool" 	7::GetBipedSlotMask LowerShirt11
+	ar_Append Data[0] ar_Map 0::GetBipedModelPath 0 LowerShirt12 		1::GetBipedModelPath 1 LowerShirt12	 	2::GetBipedModelPath 2 LowerShirt12 		3::GetBipedModelPath 3 LowerShirt12 		4::GetBipedIconPath 0 LowerShirt12 	5::GetBipedIconPath 1 LowerShirt12 	6::"Olive Vest" 	7::GetBipedSlotMask LowerShirt12
+	ar_Append Data[0] ar_Map 0::GetBipedModelPath 0 LowerShirt13 		1::GetBipedModelPath 1 LowerShirt13	 	2::GetBipedModelPath 2 LowerShirt13 		3::GetBipedModelPath 3 LowerShirt13 		4::GetBipedIconPath 0 LowerShirt13 	5::GetBipedIconPath 1 LowerShirt13 	6::"Stitched Green"	7::GetBipedSlotMask LowerShirt13
+	ar_Append Data[0] ar_Map 0::GetBipedModelPath 0 LowerShirt14 		1::GetBipedModelPath 1 LowerShirt14	 	2::GetBipedModelPath 2 LowerShirt14 		3::GetBipedModelPath 3 LowerShirt14 		4::GetBipedIconPath 0 LowerShirt14 	5::GetBipedIconPath 1 LowerShirt14 	6::"Burlap Vest" 	7::GetBipedSlotMask LowerShirt14
+	ar_Append Data[0] ar_Map 0::GetBipedModelPath 0 LowerShirt15 		1::GetBipedModelPath 1 LowerShirt15	 	2::GetBipedModelPath 2 LowerShirt15 		3::GetBipedModelPath 3 LowerShirt15 		4::GetBipedIconPath 0 LowerShirt15 	5::GetBipedIconPath 1 LowerShirt15 	6::"Flax" 			7::GetBipedSlotMask LowerShirt15
+	ar_Append Data[0] ar_Map 0::GetBipedModelPath 0 LowerShirt16 		1::GetBipedModelPath 1 LowerShirt16	 	2::GetBipedModelPath 2 LowerShirt16 		3::GetBipedModelPath 3 LowerShirt16 		4::GetBipedIconPath 0 LowerShirt16 	5::GetBipedIconPath 1 LowerShirt16 	6::"Beggar" 		7::GetBipedSlotMask LowerShirt16
+	
+	;-----------------------------------------------------------------------------
+	;Middle01
+	;-----------------------------------------------------------------------------
+	ar_Append Data[0] ar_Map 0::GetBipedModelPath 0 MiddleShirt01 		1::GetBipedModelPath 1 MiddleShirt01	 	2::GetBipedModelPath 2 MiddleShirt01 		3::GetBipedModelPath 3 MiddleShirt01 		4::GetBipedIconPath 0 MiddleShirt01 	5::GetBipedIconPath 1 MiddleShirt01 	6::"Brown" 				7::GetBipedSlotMask MiddleShirt01
+	ar_Append Data[1] ar_Map 0::GetBipedModelPath 0 MiddleShoes01 		1::GetBipedModelPath 1 MiddleShoes01	 	2::GetBipedModelPath 2 MiddleShoes01 		3::GetBipedModelPath 3 MiddleShoes01 		4::GetBipedIconPath 0 MiddleShoes01 	5::GetBipedIconPath 1 MiddleShoes01 	6::"Pigskin" 			7::GetBipedSlotMask MiddleShoes01
+	ar_Append Data[4] ar_Map 0::GetBipedModelPath 0 MiddlePants01 		1::GetBipedModelPath 1 MiddlePants01	 	2::GetBipedModelPath 2 MiddlePants01 		3::GetBipedModelPath 3 MiddlePants01 		4::GetBipedIconPath 0 MiddlePants01 	5::GetBipedIconPath 1 MiddlePants01 	6::"Light Brown Linens" 7::GetBipedSlotMask MiddlePants01
+
+	;-----------------------------------------------------------------------------
+	;Middle02
+	;-----------------------------------------------------------------------------
+	ar_Append Data[0] ar_Map 0::GetBipedModelPath 0 MiddleShirt02 		1::GetBipedModelPath 1 MiddleShirt02	 	2::GetBipedModelPath 2 MiddleShirt02 		3::GetBipedModelPath 3 MiddleShirt02 		4::GetBipedIconPath 0 MiddleShirt02 	5::GetBipedIconPath 1 MiddleShirt02 	6::"Quilted"	 	7::GetBipedSlotMask MiddleShirt02
+	ar_Append Data[1] ar_Map 0::GetBipedModelPath 0 MiddleShoes02 		1::GetBipedModelPath 1 MiddleShoes02	 	2::GetBipedModelPath 2 MiddleShoes02 		3::GetBipedModelPath 3 MiddleShoes02 		4::GetBipedIconPath 0 MiddleShoes02 	5::GetBipedIconPath 1 MiddleShoes02 	6::"Doeskin" 		7::GetBipedSlotMask MiddleShoes02
+	ar_Append Data[4] ar_Map 0::GetBipedModelPath 0 MiddlePants02 		1::GetBipedModelPath 1 MiddlePants02	 	2::GetBipedModelPath 2 MiddlePants02 		3::GetBipedModelPath 3 MiddlePants02 		4::GetBipedIconPath 0 MiddlePants02 	5::GetBipedIconPath 1 MiddlePants02 	6::"Tan Linens" 	7::GetBipedSlotMask MiddlePants02
+
+	;-----------------------------------------------------------------------------
+	;Middle03
+	;-----------------------------------------------------------------------------
+	ar_Append Data[0] ar_Map 0::GetBipedModelPath 0 MiddleShirt03 		1::GetBipedModelPath 1 MiddleShirt03	 	2::GetBipedModelPath 2 MiddleShirt03 		3::GetBipedModelPath 3 MiddleShirt03 		4::GetBipedIconPath 0 MiddleShirt03 	5::GetBipedIconPath 1 MiddleShirt03 	6::"Blue & Green" 	7::GetBipedSlotMask MiddleShirt03
+	ar_Append Data[1] ar_Map 0::GetBipedModelPath 0 MiddleShoes03 		1::GetBipedModelPath 1 MiddleShoes03	 	2::GetBipedModelPath 2 MiddleShoes03 		3::GetBipedModelPath 3 MiddleShoes03 		4::GetBipedIconPath 0 MiddleShoes03 	5::GetBipedIconPath 1 MiddleShoes03 	6::"Quilted" 		7::GetBipedSlotMask MiddleShoes03
+
+	;-----------------------------------------------------------------------------
+	;Middle04
+	;-----------------------------------------------------------------------------
+	ar_Append Data[0] ar_Map 0::GetBipedModelPath 0 MiddleShirt04 		1::GetBipedModelPath 1 MiddleShirt04	 	2::GetBipedModelPath 2 MiddleShirt04 		3::GetBipedModelPath 3 MiddleShirt04 		4::GetBipedIconPath 0 MiddleShirt04 	5::GetBipedIconPath 1 MiddleShirt04 	6::"Burgundy Linen"		7::GetBipedSlotMask MiddleShirt04
+	ar_Append Data[1] ar_Map 0::GetBipedModelPath 0 MiddleShoes04 		1::GetBipedModelPath 1 MiddleShoes04	 	2::GetBipedModelPath 2 MiddleShoes04 		3::GetBipedModelPath 3 MiddleShoes04 		4::GetBipedIconPath 0 MiddleShoes04 	5::GetBipedIconPath 1 MiddleShoes04 	6::"Thick Cowhide" 		7::GetBipedSlotMask MiddleShoes04
+	ar_Append Data[4] ar_Map 0::GetBipedModelPath 0 MiddlePants04 		1::GetBipedModelPath 1 MiddlePants04	 	2::GetBipedModelPath 2 MiddlePants04 		3::GetBipedModelPath 3 MiddlePants04 		4::GetBipedIconPath 0 MiddlePants04 	5::GetBipedIconPath 1 MiddlePants04 	6::"Burgundy Linens" 	7::GetBipedSlotMask MiddlePants04
+
+	;-----------------------------------------------------------------------------
+	;Middle05
+	;-----------------------------------------------------------------------------
+	ar_Append Data[0] ar_Map 0::GetBipedModelPath 0 MiddleShirt05 		1::GetBipedModelPath 1 MiddleShirt05	 	2::GetBipedModelPath 2 MiddleShirt05 		3::GetBipedModelPath 3 MiddleShirt05 		4::GetBipedIconPath 0 MiddleShirt05 	5::GetBipedIconPath 1 MiddleShirt05 	6::"Russet Felt" 	7::GetBipedSlotMask MiddleShirt05
+	ar_Append Data[1] ar_Map 0::GetBipedModelPath 0 MiddleShoes05 		1::GetBipedModelPath 1 MiddleShoes05	 	2::GetBipedModelPath 2 MiddleShoes05 		3::GetBipedModelPath 3 MiddleShoes05 		4::GetBipedIconPath 0 MiddleShoes05 	5::GetBipedIconPath 1 MiddleShoes05 	6::"Russet Felt" 	7::GetBipedSlotMask MiddleShoes05
+	
+	;-----------------------------------------------------------------------------
+	;Middle06
+	;-----------------------------------------------------------------------------
+	ar_Append Data[0] ar_Map 0::GetBipedModelPath 0 MiddleShirt06 		1::GetBipedModelPath 1 MiddleShirt06	 	2::GetBipedModelPath 2 MiddleShirt06 		3::GetBipedModelPath 3 MiddleShirt06 		4::GetBipedIconPath 0 MiddleShirt06 	5::GetBipedIconPath 1 MiddleShirt06 	6::"Dark" 			7::GetBipedSlotMask MiddleShirt06
+	ar_Append Data[4] ar_Map 0::GetBipedModelPath 0 MiddlePants06 		1::GetBipedModelPath 1 MiddlePants06	 	2::GetBipedModelPath 2 MiddlePants06 		3::GetBipedModelPath 3 MiddlePants06 		4::GetBipedIconPath 0 MiddlePants06 	5::GetBipedIconPath 1 MiddlePants06 	6::"Black Wide" 	7::GetBipedSlotMask MiddlePants06
+
+	;-----------------------------------------------------------------------------
+	;Middle07
+	;-----------------------------------------------------------------------------
+	ar_Append Data[0] ar_Map 0::GetBipedModelPath 0 MiddleShirt07 		1::GetBipedModelPath 1 MiddleShirt07	 	2::GetBipedModelPath 2 MiddleShirt07 		3::GetBipedModelPath 3 MiddleShirt07 		4::GetBipedIconPath 0 MiddleShirt07 	5::GetBipedIconPath 1 MiddleShirt07 	6::"Blue Collar" 	7::GetBipedSlotMask MiddleShirt07
+	ar_Append Data[4] ar_Map 0::GetBipedModelPath 0 MiddlePants07 		1::GetBipedModelPath 1 MiddlePants07	 	2::GetBipedModelPath 2 MiddlePants07 		3::GetBipedModelPath 3 MiddlePants07 		4::GetBipedIconPath 0 MiddlePants07 	5::GetBipedIconPath 1 MiddlePants07 	6::"Short Britches" 7::GetBipedSlotMask MiddlePants07
+
+	;-----------------------------------------------------------------------------
+	;Middle08
+	;-----------------------------------------------------------------------------
+	ar_Append Data[0] ar_Map 0::GetBipedModelPath 0 MiddleShirt08 		1::GetBipedModelPath 1 MiddleShirt08	 	2::GetBipedModelPath 2 MiddleShirt08 		3::GetBipedModelPath 3 MiddleShirt08 		4::GetBipedIconPath 0 MiddleShirt08 	5::GetBipedIconPath 1 MiddleShirt08 	6::"Suspenders" 	7::GetBipedSlotMask MiddleShirt08
+	ar_Append Data[4] ar_Map 0::GetBipedModelPath 0 MiddlePants05 		1::GetBipedModelPath 1 MiddlePants05	 	2::GetBipedModelPath 2 MiddlePants05 		3::GetBipedModelPath 3 MiddlePants05 		4::GetBipedIconPath 0 MiddlePants05 	5::GetBipedIconPath 1 MiddlePants05 	6::"Rugged"			7::GetBipedSlotMask MiddlePants05
+
+	;-----------------------------------------------------------------------------
+	;MiddleShirt
+	;-----------------------------------------------------------------------------
+	ar_Append Data[0] ar_Map 0::GetBipedModelPath 0 MiddleShirt09 		1::GetBipedModelPath 1 MiddleShirt09	 	2::GetBipedModelPath 2 MiddleShirt09 		3::GetBipedModelPath 3 MiddleShirt09 		4::GetBipedIconPath 0 MiddleShirt09 	5::GetBipedIconPath 1 MiddleShirt09 	6::"Plaid" 			7::GetBipedSlotMask MiddleShirt09
+	ar_Append Data[0] ar_Map 0::GetBipedModelPath 0 MiddleShirt10 		1::GetBipedModelPath 1 MiddleShirt10	 	2::GetBipedModelPath 2 MiddleShirt10 		3::GetBipedModelPath 3 MiddleShirt10 		4::GetBipedIconPath 0 MiddleShirt10 	5::GetBipedIconPath 1 MiddleShirt10 	6::"Forester" 		7::GetBipedSlotMask MiddleShirt10
+	
+	;-----------------------------------------------------------------------------
+	;Upper01
+	;-----------------------------------------------------------------------------
+	ar_Append Data[0] ar_Map 0::GetBipedModelPath 0 UpperShirt01 		1::GetBipedModelPath 1 UpperShirt01	 	2::GetBipedModelPath 2 UpperShirt01 		3::GetBipedModelPath 3 UpperShirt01 		4::GetBipedIconPath 0 UpperShirt01 	5::GetBipedIconPath 1 UpperShirt01 	6::"Green Brocade" 	7::GetBipedSlotMask UpperShirt01
+	ar_Append Data[1] ar_Map 0::GetBipedModelPath 0 UpperShoes01 		1::GetBipedModelPath 1 UpperShoes01	 	2::GetBipedModelPath 2 UpperShoes01 		3::GetBipedModelPath 3 UpperShoes01 		4::GetBipedIconPath 0 UpperShoes01 	5::GetBipedIconPath 1 UpperShoes01 	6::"Green Velvet" 	7::GetBipedSlotMask UpperShoes01
+	ar_Append Data[4] ar_Map 0::GetBipedModelPath 0 UpperPants01 		1::GetBipedModelPath 1 UpperPants01	 	2::GetBipedModelPath 2 UpperPants01 		3::GetBipedModelPath 3 UpperPants01 		4::GetBipedIconPath 0 UpperPants01 	5::GetBipedIconPath 1 UpperPants01 	6::"Green Silk" 	7::GetBipedSlotMask UpperPants01
+
+	;-----------------------------------------------------------------------------
+	;Upper02
+	;-----------------------------------------------------------------------------
+	ar_Append Data[0] ar_Map 0::GetBipedModelPath 0 UpperShirt02 		1::GetBipedModelPath 1 UpperShirt02	 	2::GetBipedModelPath 2 UpperShirt02 		3::GetBipedModelPath 3 UpperShirt02 		4::GetBipedIconPath 0 UpperShirt02 	5::GetBipedIconPath 1 UpperShirt02 	6::"Black & Burgundy" 	7::GetBipedSlotMask UpperShirt02
+	ar_Append Data[1] ar_Map 0::GetBipedModelPath 0 UpperShoes02 		1::GetBipedModelPath 1 UpperShoes02	 	2::GetBipedModelPath 2 UpperShoes02 		3::GetBipedModelPath 3 UpperShoes02 		4::GetBipedIconPath 0 UpperShoes02 	5::GetBipedIconPath 1 UpperShoes02 	6::"Gold Trimmed" 	7::GetBipedSlotMask UpperShoes02
+
+	;-----------------------------------------------------------------------------
+	;Upper03
+	;-----------------------------------------------------------------------------
+	ar_Append Data[0] ar_Map 0::GetBipedModelPath 0 UpperShirt03 		1::GetBipedModelPath 1 UpperShirt03	 	2::GetBipedModelPath 2 UpperShirt03 		3::GetBipedModelPath 3 UpperShirt03 		4::GetBipedIconPath 0 UpperShirt03 	5::GetBipedIconPath 1 UpperShirt03 	6::"Blue Velvet" 	7::GetBipedSlotMask UpperShirt03
+	ar_Append Data[1] ar_Map 0::GetBipedModelPath 0 UpperShoes03 		1::GetBipedModelPath 1 UpperShoes03	 	2::GetBipedModelPath 2 UpperShoes03 		3::GetBipedModelPath 3 UpperShoes03 		4::GetBipedIconPath 0 UpperShoes03 	5::GetBipedIconPath 1 UpperShoes03 	6::"Blue Suede" 	7::GetBipedSlotMask UpperShoes03
+
+	;-----------------------------------------------------------------------------
+	;Upper04
+	;-----------------------------------------------------------------------------
+	ar_Append Data[0] ar_Map 0::GetBipedModelPath 0 UpperShirt04 		1::GetBipedModelPath 1 UpperShirt04	 	2::GetBipedModelPath 2 UpperShirt04 		3::GetBipedModelPath 3 UpperShirt04 		4::GetBipedIconPath 0 UpperShirt04 	5::GetBipedIconPath 1 UpperShirt04 	6::"Red Velvet Blouse" 	7::GetBipedSlotMask UpperShirt04
+	ar_Append Data[4] ar_Map 0::GetBipedModelPath 0 UpperPants04 		1::GetBipedModelPath 1 UpperPants04	 	2::GetBipedModelPath 2 UpperPants04 		3::GetBipedModelPath 3 UpperPants04 		4::GetBipedIconPath 0 UpperPants04 	5::GetBipedIconPath 1 UpperPants04 	6::"Red Velvet" 		7::GetBipedSlotMask UpperPants04
+
+	;-----------------------------------------------------------------------------
+	;Upper06
+	;-----------------------------------------------------------------------------
+	ar_Append Data[0] ar_Map 0::GetBipedModelPath 0 UpperShirt06 		1::GetBipedModelPath 1 UpperShirt06	 	2::GetBipedModelPath 2 UpperShirt06 		3::GetBipedModelPath 3 UpperShirt06 		4::GetBipedIconPath 0 UpperShirt06 	5::GetBipedIconPath 1 UpperShirt06 	6::"Blue Silk" 	7::GetBipedSlotMask UpperShirt06
+	ar_Append Data[4] ar_Map 0::GetBipedModelPath 0 UpperPants06 		1::GetBipedModelPath 1 UpperPants06	 	2::GetBipedModelPath 2 UpperPants06 		3::GetBipedModelPath 3 UpperPants06 		4::GetBipedIconPath 0 UpperPants06 	5::GetBipedIconPath 1 UpperPants06 	6::"Blue Silks"	7::GetBipedSlotMask UpperPants06
+
+	;-----------------------------------------------------------------------------
+	;UpperShirts
+	;-----------------------------------------------------------------------------
+	ar_Append Data[0] ar_Map 0::GetBipedModelPath 0 UpperShirt05 		1::GetBipedModelPath 1 UpperShirt05	 	2::GetBipedModelPath 2 UpperShirt05 		3::GetBipedModelPath 3 UpperShirt05 		4::GetBipedIconPath 0 UpperShirt05 	5::GetBipedIconPath 1 UpperShirt05 	6::"Red Velvet" 	7::GetBipedSlotMask UpperShirt05
+	ar_Append Data[0] ar_Map 0::GetBipedModelPath 0 UpperShirt07 		1::GetBipedModelPath 1 UpperShirt07	 	2::GetBipedModelPath 2 UpperShirt07 		3::GetBipedModelPath 3 UpperShirt07 		4::GetBipedIconPath 0 UpperShirt07 	5::GetBipedIconPath 1 UpperShirt07 	6::"Highwayman" 	7::GetBipedSlotMask UpperShirt07
+
+	;-----------------------------------------------------------------------------
+	;DementiaLower01
+	;-----------------------------------------------------------------------------
+	ar_Append Data[0] ar_Map 0::GetBipedModelPath 0 SEDementiaLowerShirt01 		1::GetBipedModelPath 1 SEDementiaLowerShirt01	2::GetBipedModelPath 2 SEDementiaLowerShirt01 	3::GetBipedModelPath 3 SEDementiaLowerShirt01 	4::GetBipedIconPath 0 SEDementiaLowerShirt01 	5::GetBipedIconPath 1 SEDementiaLowerShirt01 	6::"Patchwork" 				7::GetBipedSlotMask SEDementiaLowerShirt01
+	ar_Append Data[1] ar_Map 0::GetBipedModelPath 0 SEDementiaLowerShoes01 		1::GetBipedModelPath 1 SEDementiaLowerShoes01	2::GetBipedModelPath 2 SEDementiaLowerShoes01 	3::GetBipedModelPath 3 SEDementiaLowerShoes01 	4::GetBipedIconPath 0 SEDementiaLowerShoes01 	5::GetBipedIconPath 1 SEDementiaLowerShoes01 	6::"Scruffy" 				7::GetBipedSlotMask SEDementiaLowerShoes01
+	ar_Append Data[4] ar_Map 0::GetBipedModelPath 0 SEDementiaLowerPants01 		1::GetBipedModelPath 1 SEDementiaLowerPants01	2::GetBipedModelPath 2 SEDementiaLowerPants01 	3::GetBipedModelPath 3 SEDementiaLowerPants01 	4::GetBipedIconPath 0 SEDementiaLowerPants01 	5::GetBipedIconPath 1 SEDementiaLowerPants01 	6::"Patchwork" 				7::GetBipedSlotMask SEDementiaLowerPants01
+
+	;-----------------------------------------------------------------------------
+	;DementiaLower02
+	;-----------------------------------------------------------------------------
+	ar_Append Data[0] ar_Map 0::GetBipedModelPath 0 SEDementiaLowerShirt02 		1::GetBipedModelPath 1 SEDementiaLowerShirt02	2::GetBipedModelPath 2 SEDementiaLowerShirt02 	3::GetBipedModelPath 3 SEDementiaLowerShirt02 	4::GetBipedIconPath 0 SEDementiaLowerShirt02 	5::GetBipedIconPath 1 SEDementiaLowerShirt02 	6::"Dark Patchwork" 		7::GetBipedSlotMask SEDementiaLowerShirt02
+	ar_Append Data[1] ar_Map 0::GetBipedModelPath 0 SEDementiaLowerShoes02 		1::GetBipedModelPath 1 SEDementiaLowerShoes02	2::GetBipedModelPath 2 SEDementiaLowerShoes02 	3::GetBipedModelPath 3 SEDementiaLowerShoes02 	4::GetBipedIconPath 0 SEDementiaLowerShoes02 	5::GetBipedIconPath 1 SEDementiaLowerShoes02 	6::"Dark Scruffy" 			7::GetBipedSlotMask SEDementiaLowerShoes02
+	ar_Append Data[4] ar_Map 0::GetBipedModelPath 0 SEDementiaLowerPants02 		1::GetBipedModelPath 1 SEDementiaLowerPants02	2::GetBipedModelPath 2 SEDementiaLowerPants02 	3::GetBipedModelPath 3 SEDementiaLowerPants02 	4::GetBipedIconPath 0 SEDementiaLowerPants02 	5::GetBipedIconPath 1 SEDementiaLowerPants02 	6::"Dark Patchwork" 		7::GetBipedSlotMask SEDementiaLowerPants02
+
+	;-----------------------------------------------------------------------------
+	;ManiaLower01
+	;-----------------------------------------------------------------------------
+	ar_Append Data[0] ar_Map 0::GetBipedModelPath 0 SEManiaLowerShirt01 		1::GetBipedModelPath 1 SEManiaLowerShirt01	 	2::GetBipedModelPath 2 SEManiaLowerShirt01 		3::GetBipedModelPath 3 SEManiaLowerShirt01 		4::GetBipedIconPath 0 SEManiaLowerShirt01 		5::GetBipedIconPath 1 SEManiaLowerShirt01 		6::"Fancy Grey" 					7::GetBipedSlotMask SEManiaLowerShirt01
+	ar_Append Data[1] ar_Map 0::GetBipedModelPath 0 SEManiaLowerShoes01 		1::GetBipedModelPath 1 SEManiaLowerShoes01	 	2::GetBipedModelPath 2 SEManiaLowerShoes01 		3::GetBipedModelPath 3 SEManiaLowerShoes01 		4::GetBipedIconPath 0 SEManiaLowerShoes01 		5::GetBipedIconPath 1 SEManiaLowerShoes01 		6::"Fancy Brown" 					7::GetBipedSlotMask SEManiaLowerShoes01
+	ar_Append Data[4] ar_Map 0::GetBipedModelPath 0 SEManiaLowerPants01 		1::GetBipedModelPath 1 SEManiaLowerPants01	 	2::GetBipedModelPath 2 SEManiaLowerPants01 		3::GetBipedModelPath 3 SEManiaLowerPants01 		4::GetBipedIconPath 0 SEManiaLowerPants01 		5::GetBipedIconPath 1 SEManiaLowerPants01 		6::"Fancy Grey" 					7::GetBipedSlotMask SEManiaLowerPants01
+
+	;-----------------------------------------------------------------------------
+	;ManiaLower02
+	;-----------------------------------------------------------------------------
+	ar_Append Data[0] ar_Map 0::GetBipedModelPath 0 SEManiaLowerShirt02 		1::GetBipedModelPath 1 SEManiaLowerShirt02	 	2::GetBipedModelPath 2 SEManiaLowerShirt02 		3::GetBipedModelPath 3 SEManiaLowerShirt02 		4::GetBipedIconPath 0 SEManiaLowerShirt02 		5::GetBipedIconPath 1 SEManiaLowerShirt02 		6::"Fancy Brown" 					7::GetBipedSlotMask SEManiaLowerShirt02
+	ar_Append Data[1] ar_Map 0::GetBipedModelPath 0 SEManiaLowerShoes02 		1::GetBipedModelPath 1 SEManiaLowerShoes02	 	2::GetBipedModelPath 2 SEManiaLowerShoes02 		3::GetBipedModelPath 3 SEManiaLowerShoes02 		4::GetBipedIconPath 0 SEManiaLowerShoes02 		5::GetBipedIconPath 1 SEManiaLowerShoes02 		6::"Fancy Orange" 				7::GetBipedSlotMask SEManiaLowerShoes02
+	ar_Append Data[4] ar_Map 0::GetBipedModelPath 0 SEManiaLowerPants02 		1::GetBipedModelPath 1 SEManiaLowerPants02	 	2::GetBipedModelPath 2 SEManiaLowerPants02 		3::GetBipedModelPath 3 SEManiaLowerPants02 		4::GetBipedIconPath 0 SEManiaLowerPants02 		5::GetBipedIconPath 1 SEManiaLowerPants02 		6::"Fancy Brown" 					7::GetBipedSlotMask SEManiaLowerPants02
+	
+	;-----------------------------------------------------------------------------
+	;DementiaUpperFinery
+	;-----------------------------------------------------------------------------
+	ar_Append Data[0] ar_Map 0::GetBipedModelPath 0 SEDementiaUpperFinery01 	1::GetBipedModelPath 1 SEDementiaUpperFinery01	2::GetBipedModelPath 2 SEDementiaUpperFinery01 	3::GetBipedModelPath 3 SEDementiaUpperFinery01 	4::GetBipedIconPath 0 SEDementiaUpperFinery01 	5::GetBipedIconPath 1 SEDementiaUpperFinery01 	6::"Black Finery" 			7::GetBipedSlotMask SEDementiaUpperFinery01
+	ar_Append Data[0] ar_Map 0::GetBipedModelPath 0 SEDementiaUpperFinery03 	1::GetBipedModelPath 1 SEDementiaUpperFinery03	2::GetBipedModelPath 2 SEDementiaUpperFinery03 	3::GetBipedModelPath 3 SEDementiaUpperFinery03 	4::GetBipedIconPath 0 SEDementiaUpperFinery03 	5::GetBipedIconPath 1 SEDementiaUpperFinery03 	6::"Purple Finery" 			7::GetBipedSlotMask SEDementiaUpperFinery03
+	ar_Append Data[0] ar_Map 0::GetBipedModelPath 0 SEDementiaUpperFinery04 	1::GetBipedModelPath 1 SEDementiaUpperFinery04	2::GetBipedModelPath 2 SEDementiaUpperFinery04 	3::GetBipedModelPath 3 SEDementiaUpperFinery04 	4::GetBipedIconPath 0 SEDementiaUpperFinery04 	5::GetBipedIconPath 1 SEDementiaUpperFinery04 	6::"Red Finery" 			7::GetBipedSlotMask SEDementiaUpperFinery04
+
+	;-----------------------------------------------------------------------------
+	;ManiaUpperFinery
+	;-----------------------------------------------------------------------------
+	ar_Append Data[0] ar_Map 0::GetBipedModelPath 0 SEManiaUpperFinery01 		1::GetBipedModelPath 1 SEManiaUpperFinery01	 	2::GetBipedModelPath 2 SEManiaUpperFinery01 	3::GetBipedModelPath 3 SEManiaUpperFinery01 	4::GetBipedIconPath 0 SEManiaUpperFinery01 		5::GetBipedIconPath 1 SEManiaUpperFinery01 		6::"Light Blue Finery" 		7::GetBipedSlotMask SEManiaUpperFinery01
+	ar_Append Data[0] ar_Map 0::GetBipedModelPath 0 SEManiaUpperFinery02 		1::GetBipedModelPath 1 SEManiaUpperFinery02	 	2::GetBipedModelPath 2 SEManiaUpperFinery02 	3::GetBipedModelPath 3 SEManiaUpperFinery02 	4::GetBipedIconPath 0 SEManiaUpperFinery02 		5::GetBipedIconPath 1 SEManiaUpperFinery02 		6::"Light Green Finery" 	7::GetBipedSlotMask SEManiaUpperFinery02
+	ar_Append Data[0] ar_Map 0::GetBipedModelPath 0 SEManiaUpperFinery03 		1::GetBipedModelPath 1 SEManiaUpperFinery03	 	2::GetBipedModelPath 2 SEManiaUpperFinery03 	3::GetBipedModelPath 3 SEManiaUpperFinery03 	4::GetBipedIconPath 0 SEManiaUpperFinery03 		5::GetBipedIconPath 1 SEManiaUpperFinery03 		6::"Light Purple Finery" 	7::GetBipedSlotMask SEManiaUpperFinery03
+
+	;-----------------------------------------------------------------------------
+	;Grey
+	;-----------------------------------------------------------------------------
+	ar_Append Data[0] ar_Map 0::GetBipedModelPath 0 LowerRobe02 				1::GetBipedModelPath 1 LowerRobe02	 	2::GetBipedModelPath 2 LowerRobe02 		3::GetBipedModelPath 3 LowerRobe02 		4::GetBipedIconPath 0 LowerRobe02 		5::GetBipedIconPath 1 LowerRobe02 		6::"Grey" 				7::GetBipedSlotMask LowerRobe02
+	ar_Append Data[3] ar_Map 0::GetBipedModelPath 0 LowerRobe02hood 			1::GetBipedModelPath 1 LowerRobe02hood	2::GetBipedModelPath 2 LowerRobe02hood 	3::GetBipedModelPath 3 LowerRobe02hood 	4::GetBipedIconPath 0 LowerRobe02hood 	5::GetBipedIconPath 1 LowerRobe02hood 	6::"Grey" 				7::GetBipedSlotMask LowerRobe02hood
+	ar_Append Data[3] ar_Map 0::"Zefiros\renz\clothes\greylonghood.nif" 		1::""	 								2::GetBipedModelPath 2 LowerRobe02hood 	3::GetBipedModelPath 3 LowerRobe02hood 	4::GetBipedIconPath 0 LowerRobe02hood 	5::GetBipedIconPath 1 LowerRobe02hood 	6::"Grey Long" 			7::GetBipedSlotMask LowerRobe02hood
+	ar_Append Data[3] ar_Map 0::"Zefiros\renz\clothes\greyconcealinghood.nif" 	1::""	 								2::GetBipedModelPath 2 LowerRobe02hood 	3::GetBipedModelPath 3 LowerRobe02hood 	4::GetBipedIconPath 0 LowerRobe02hood 	5::GetBipedIconPath 1 LowerRobe02hood 	6::"Grey Concealing" 	7::GetBipedSlotMask LowerRobe02hood
+	ar_Append Data[3] ar_Map 0::"Zefiros\renz\clothes\greygreathood.nif" 		1::""	 								2::GetBipedModelPath 2 LowerRobe02hood 	3::GetBipedModelPath 3 LowerRobe02hood 	4::GetBipedIconPath 0 LowerRobe02hood 	5::GetBipedIconPath 1 LowerRobe02hood 	6::"Grey Great" 		7::GetBipedSlotMask LowerRobe02hood
+	ar_Append Data[3] ar_Map 0::"Zefiros\Armor\tbskGuard\GreyCowl.nif"			1::""									2::GetBipedModelPath 2 LowerRobe02hood	3::""									4::GetBipedIconPath 0 LowerRobe02hood	5::""									6::"Grey Cowl"			7::2
+	
+	;-----------------------------------------------------------------------------
+	;Tan
+	;-----------------------------------------------------------------------------
+	ar_Append Data[0] ar_Map 0::GetBipedModelPath 0 LowerRobe03 				1::GetBipedModelPath 1 LowerRobe03	 	2::GetBipedModelPath 2 LowerRobe03 		3::GetBipedModelPath 3 LowerRobe03 		4::GetBipedIconPath 0 LowerRobe03 		5::GetBipedIconPath 1 LowerRobe03 		6::"Tan" 			7::GetBipedSlotMask LowerRobe03
+	ar_Append Data[3] ar_Map 0::GetBipedModelPath 0 LowerRobe03hood 			1::GetBipedModelPath 1 LowerRobe03hood	2::GetBipedModelPath 2 LowerRobe03hood 	3::GetBipedModelPath 3 LowerRobe03hood 	4::GetBipedIconPath 0 LowerRobe03hood 	5::GetBipedIconPath 1 LowerRobe03hood 	6::"Tan" 			7::GetBipedSlotMask LowerRobe03hood
+	ar_Append Data[3] ar_Map 0::"Zefiros\renz\clothes\tanlonghood.nif" 			1::""	 								2::GetBipedModelPath 2 LowerRobe03hood 	3::GetBipedModelPath 3 LowerRobe03hood 	4::GetBipedIconPath 0 LowerRobe03hood 	5::GetBipedIconPath 1 LowerRobe03hood 	6::"Tan Long" 		7::GetBipedSlotMask LowerRobe03hood
+	ar_Append Data[3] ar_Map 0::"Zefiros\renz\clothes\tanconcealinghood.nif" 	1::""	 								2::GetBipedModelPath 2 LowerRobe03hood 	3::GetBipedModelPath 3 LowerRobe03hood 	4::GetBipedIconPath 0 LowerRobe03hood 	5::GetBipedIconPath 1 LowerRobe03hood 	6::"Tan Concealing" 7::GetBipedSlotMask LowerRobe03hood
+	ar_Append Data[3] ar_Map 0::"Zefiros\renz\clothes\tangreathood.nif" 		1::""	 								2::GetBipedModelPath 2 LowerRobe03hood 	3::GetBipedModelPath 3 LowerRobe03hood 	4::GetBipedIconPath 0 LowerRobe03hood 	5::GetBipedIconPath 1 LowerRobe03hood 	6::"Tan Great" 		7::GetBipedSlotMask LowerRobe03hood
+	ar_Append Data[3] ar_Map 0::"Zefiros\Armor\tbskGuard\TanCowl.nif"			1::""									2::GetBipedModelPath 2 LowerRobe03hood	3::""									4::GetBipedIconPath 0 LowerRobe03hood	5::""									6::"Tan Cowl"		7::2
+	
+	;-----------------------------------------------------------------------------
+	;Green
+	;-----------------------------------------------------------------------------
+	ar_Append Data[0] ar_Map 0::GetBipedModelPath 0 LowerRobe04 				1::GetBipedModelPath 1 LowerRobe04	 	2::GetBipedModelPath 2 LowerRobe04 		3::GetBipedModelPath 3 LowerRobe04 		4::GetBipedIconPath 0 LowerRobe04 		5::GetBipedIconPath 1 LowerRobe04 		6::"Green" 				7::GetBipedSlotMask LowerRobe04
+	ar_Append Data[3] ar_Map 0::GetBipedModelPath 0 LowerRobe04hood 			1::GetBipedModelPath 1 LowerRobe04hood	2::GetBipedModelPath 2 LowerRobe04hood 	3::GetBipedModelPath 3 LowerRobe04hood 	4::GetBipedIconPath 0 LowerRobe04hood 	5::GetBipedIconPath 1 LowerRobe04hood 	6::"Green" 				7::GetBipedSlotMask LowerRobe04hood
+	ar_Append Data[3] ar_Map 0::"Zefiros\renz\clothes\greenlonghood.nif" 		1::""	 								2::GetBipedModelPath 2 LowerRobe04hood 	3::GetBipedModelPath 3 LowerRobe04hood 	4::GetBipedIconPath 0 LowerRobe04hood 	5::GetBipedIconPath 1 LowerRobe04hood 	6::"Green Long" 		7::GetBipedSlotMask LowerRobe04hood
+	ar_Append Data[3] ar_Map 0::"Zefiros\renz\clothes\greenconcealinghood.nif" 	1::""	 								2::GetBipedModelPath 2 LowerRobe04hood 	3::GetBipedModelPath 3 LowerRobe04hood 	4::GetBipedIconPath 0 LowerRobe04hood 	5::GetBipedIconPath 1 LowerRobe04hood 	6::"Green Concealing" 	7::GetBipedSlotMask LowerRobe04hood
+	ar_Append Data[3] ar_Map 0::"Zefiros\renz\clothes\greengreathood.nif" 		1::""	 								2::GetBipedModelPath 2 LowerRobe04hood 	3::GetBipedModelPath 3 LowerRobe04hood 	4::GetBipedIconPath 0 LowerRobe04hood 	5::GetBipedIconPath 1 LowerRobe04hood 	6::"Green Great" 		7::GetBipedSlotMask LowerRobe04hood
+	ar_Append Data[3] ar_Map 0::"Zefiros\Armor\tbskGuard\GreenCowl.nif"			1::""									2::GetBipedModelPath 2 LowerRobe05hood	3::""									4::GetBipedIconPath 0 LowerRobe05hood	5::""									6::"Green Cowl"			7::2
+	
+	;-----------------------------------------------------------------------------
+	;Tattered
+	;-----------------------------------------------------------------------------
+	ar_Append Data[0] ar_Map 0::GetBipedModelPath 0 LowerRobe05 					1::GetBipedModelPath 1 LowerRobe05	 	2::GetBipedModelPath 2 LowerRobe05 		3::GetBipedModelPath 3 LowerRobe05 		4::GetBipedIconPath 0 LowerRobe05 		5::GetBipedIconPath 1 LowerRobe05 		6::"Tattered" 				7::GetBipedSlotMask LowerRobe05
+	ar_Append Data[3] ar_Map 0::GetBipedModelPath 0 LowerRobe05hood 				1::GetBipedModelPath 1 LowerRobe05hood	2::GetBipedModelPath 2 LowerRobe05hood 	3::GetBipedModelPath 3 LowerRobe05hood 	4::GetBipedIconPath 0 LowerRobe05hood 	5::GetBipedIconPath 1 LowerRobe05hood 	6::"Tattered" 				7::GetBipedSlotMask LowerRobe05hood
+	ar_Append Data[3] ar_Map 0::"Zefiros\renz\clothes\Tatteredlonghood.nif" 		1::""	 								2::GetBipedModelPath 2 LowerRobe05hood 	3::GetBipedModelPath 3 LowerRobe05hood 	4::GetBipedIconPath 0 LowerRobe05hood 	5::GetBipedIconPath 1 LowerRobe05hood 	6::"Tattered Long" 			7::GetBipedSlotMask LowerRobe05hood
+	ar_Append Data[3] ar_Map 0::"Zefiros\renz\clothes\Tatteredconcealinghood.nif" 	1::""	 								2::GetBipedModelPath 2 LowerRobe05hood 	3::GetBipedModelPath 3 LowerRobe05hood 	4::GetBipedIconPath 0 LowerRobe05hood 	5::GetBipedIconPath 1 LowerRobe05hood 	6::"Tattered Concealing" 	7::GetBipedSlotMask LowerRobe05hood
+	ar_Append Data[3] ar_Map 0::"Zefiros\renz\clothes\Tatteredgreathood.nif" 		1::""	 								2::GetBipedModelPath 2 LowerRobe05hood 	3::GetBipedModelPath 3 LowerRobe05hood 	4::GetBipedIconPath 0 LowerRobe05hood 	5::GetBipedIconPath 1 LowerRobe05hood 	6::"Tattered Great" 		7::GetBipedSlotMask LowerRobe05hood
+	ar_Append Data[3] ar_Map 0::"Zefiros\Armor\tbskGuard\TatteredCowl.nif"			1::""									2::GetBipedModelPath 2 LowerRobe05hood	3::""									4::GetBipedIconPath 0 LowerRobe05hood	5::""									6::"Tattered Cowl"			7::2
+	
+	;-----------------------------------------------------------------------------
+	;Black
+	;-----------------------------------------------------------------------------
+	ar_Append Data[0] ar_Map 0::GetBipedModelPath 0 BlackRobe 					1::GetBipedModelPath 1 BlackRobe	 	2::GetBipedModelPath 2 BlackRobe 		3::GetBipedModelPath 3 BlackRobe 		4::GetBipedIconPath 0 BlackRobe 	5::GetBipedIconPath 1 BlackRobe 	6::"Black" 				7::GetBipedSlotMask BlackRobe
+	ar_Append Data[3] ar_Map 0::GetBipedModelPath 0 BlackHood 					1::GetBipedModelPath 1 BlackHood	 	2::GetBipedModelPath 2 BlackHood 		3::GetBipedModelPath 3 BlackHood 		4::GetBipedIconPath 0 BlackHood 	5::GetBipedIconPath 1 BlackHood 	6::"Black" 				7::GetBipedSlotMask BlackHood
+	ar_Append Data[3] ar_Map 0::"Zefiros\renz\clothes\blacklonghood.nif" 		1::""	 								2::GetBipedModelPath 2 BlackHood 		3::GetBipedModelPath 3 BlackHood 		4::GetBipedIconPath 0 BlackHood 	5::GetBipedIconPath 1 BlackHood 	6::"Black Long" 		7::GetBipedSlotMask BlackHood
+	ar_Append Data[3] ar_Map 0::"Zefiros\renz\clothes\blackconcealinghood.nif" 	1::""	 								2::GetBipedModelPath 2 BlackHood 		3::GetBipedModelPath 3 BlackHood 		4::GetBipedIconPath 0 BlackHood 	5::GetBipedIconPath 1 BlackHood 	6::"Black Concealing" 	7::GetBipedSlotMask BlackHood
+	ar_Append Data[3] ar_Map 0::"Zefiros\renz\clothes\blackgreathood.nif" 		1::""	 								2::GetBipedModelPath 2 BlackHood 		3::GetBipedModelPath 3 BlackHood 		4::GetBipedIconPath 0 BlackHood 	5::GetBipedIconPath 1 BlackHood 	6::"Black Great" 		7::GetBipedSlotMask BlackHood
+	ar_Append Data[3] ar_Map 0::"Zefiros\Armor\tbskGuard\BlackCowl.nif"			1::""									2::GetBipedModelPath 2 BlackHood		3::""									4::GetBipedIconPath 0 BlackHood			5::""							6::"Black Cowl"			7::2
+	
+	;-----------------------------------------------------------------------------
+	;Red Silk
+	;-----------------------------------------------------------------------------
+	ar_Append Data[0] ar_Map 0::GetBipedModelPath 0 UpperRobe02 				1::GetBipedModelPath 1 UpperRobe02	 	2::GetBipedModelPath 2 UpperRobe02 		3::GetBipedModelPath 3 UpperRobe02 		4::GetBipedIconPath 0 UpperRobe02 			5::GetBipedIconPath 1 UpperRobe02 			6::"Red Silk" 		7::GetBipedSlotMask UpperRobe02
+	ar_Append Data[3] ar_Map 0::GetBipedModelPath 0 UpperRobe02hood 			1::GetBipedModelPath 1 UpperRobe02hood	2::GetBipedModelPath 2 UpperRobe02hood 	3::GetBipedModelPath 3 UpperRobe02hood 	4::GetBipedIconPath 0 UpperRobe02hood 		5::GetBipedIconPath 1 UpperRobe02hood 		6::"Red Silk" 		7::GetBipedSlotMask UpperRobe02hood
+	ar_Append Data[3] ar_Map 0::"Zefiros\renz\clothes\Redlonghood.nif" 			1::""	 								2::GetBipedModelPath 2 UpperRobe02hood 	3::GetBipedModelPath 3 UpperRobe02hood 	4::GetBipedIconPath 0 UpperRobe02hood 		5::GetBipedIconPath 1 UpperRobe02hood 		6::"Red Long" 		7::GetBipedSlotMask UpperRobe02hood
+	ar_Append Data[3] ar_Map 0::"Zefiros\renz\clothes\Redconcealinghood.nif" 	1::""	 								2::GetBipedModelPath 2 UpperRobe02hood 	3::GetBipedModelPath 3 UpperRobe02hood 	4::GetBipedIconPath 0 UpperRobe02hood 		5::GetBipedIconPath 1 UpperRobe02hood 		6::"Red Concealing"	7::GetBipedSlotMask UpperRobe02hood
+	ar_Append Data[3] ar_Map 0::"Zefiros\renz\clothes\Redgreathood.nif" 		1::""	 								2::GetBipedModelPath 2 UpperRobe02hood 	3::GetBipedModelPath 3 UpperRobe02hood 	4::GetBipedIconPath 0 UpperRobe02hood 		5::GetBipedIconPath 1 UpperRobe02hood 		6::"Red Great" 		7::GetBipedSlotMask UpperRobe02hood
+	ar_Append Data[3] ar_Map 0::"Zefiros\Armor\tbskGuard\UC02Hood.nif"			1::""									2::GetBipedModelPath 2 UpperRobe02hood	3::""									4::GetBipedIconPath 0 UpperRobe02hood		5::""										6::"Red Silk Cowl"	7::2
+	
+	;-----------------------------------------------------------------------------
+	;Aqua Silk
+	;-----------------------------------------------------------------------------
+	ar_Append Data[0] ar_Map 0::GetBipedModelPath 0 UpperRobe03 				1::GetBipedModelPath 1 UpperRobe03	 	2::GetBipedModelPath 2 UpperRobe03 			3::GetBipedModelPath 3 UpperRobe03 			4::GetBipedIconPath 0 UpperRobe03 		5::GetBipedIconPath 1 UpperRobe03 		6::"Aqua Silk" 			7::GetBipedSlotMask UpperRobe03
+	ar_Append Data[3] ar_Map 0::GetBipedModelPath 0 UpperRobe03hood 			1::GetBipedModelPath 1 UpperRobe03hood	2::GetBipedModelPath 2 UpperRobe03hood 		3::GetBipedModelPath 3 UpperRobe03hood 		4::GetBipedIconPath 0 UpperRobe03hood 	5::GetBipedIconPath 1 UpperRobe03hood 	6::"Aqua Silk" 			7::GetBipedSlotMask UpperRobe03hood
+	ar_Append Data[3] ar_Map 0::"Zefiros\renz\clothes\Aqualonghood.nif" 		1::""	 								2::GetBipedModelPath 2 UpperRobe03Hood 		3::GetBipedModelPath 3 UpperRobe03Hood 		4::GetBipedIconPath 0 UpperRobe03Hood 	5::GetBipedIconPath 1 UpperRobe03Hood 	6::"Aqua Long" 			7::GetBipedSlotMask UpperRobe03Hood
+	ar_Append Data[3] ar_Map 0::"Zefiros\renz\clothes\Aquaconcealinghood.nif" 	1::""	 								2::GetBipedModelPath 2 UpperRobe03Hood 		3::GetBipedModelPath 3 UpperRobe03Hood 		4::GetBipedIconPath 0 UpperRobe03Hood 	5::GetBipedIconPath 1 UpperRobe03Hood 	6::"Aqua Concealing" 	7::GetBipedSlotMask UpperRobe03Hood
+	ar_Append Data[3] ar_Map 0::"Zefiros\renz\clothes\Aquagreathood.nif" 		1::""	 								2::GetBipedModelPath 2 UpperRobe03Hood 		3::GetBipedModelPath 3 UpperRobe03Hood 		4::GetBipedIconPath 0 UpperRobe03Hood 	5::GetBipedIconPath 1 UpperRobe03Hood 	6::"Aqua Great" 		7::GetBipedSlotMask UpperRobe03Hood
+	ar_Append Data[3] ar_Map 0::"Zefiros\Armor\tbskGuard\AquaCowl.nif"			1::""									2::GetBipedModelPath 2 UpperRobe03hood		3::""										4::GetBipedIconPath 0 UpperRobe03hood	5::""									6::"Aqua Silk Cowl"		7::2
+	
+	;-----------------------------------------------------------------------------
+	;Mage
+	;-----------------------------------------------------------------------------
+	ar_Append Data[0] ar_Map 0::GetBipedModelPath 0 MageRobe 					1::GetBipedModelPath 1 MageRobe	 	2::GetBipedModelPath 2 MageRobe 	3::GetBipedModelPath 3 MageRobe 	4::GetBipedIconPath 0 MageRobe 	5::GetBipedIconPath 1 MageRobe 	6::"Mage" 				7::GetBipedSlotMask MageRobe
+	ar_Append Data[3] ar_Map 0::GetBipedModelPath 0 MageHood 					1::GetBipedModelPath 1 MageHood	 	2::GetBipedModelPath 2 MageHood 	3::GetBipedModelPath 3 MageHood 	4::GetBipedIconPath 0 MageHood 	5::GetBipedIconPath 1 MageHood 	6::"Mage" 				7::GetBipedSlotMask MageHood
+	ar_Append Data[3] ar_Map 0::"Zefiros\renz\clothes\magelonghood.nif" 		1::""	 							2::GetBipedModelPath 2 MageHood 	3::GetBipedModelPath 3 MageHood 	4::GetBipedIconPath 0 MageHood 	5::GetBipedIconPath 1 MageHood 	6::"Mage Long" 			7::GetBipedSlotMask MageHood
+	ar_Append Data[3] ar_Map 0::"Zefiros\renz\clothes\mageconcealinghood.nif" 	1::""	 							2::GetBipedModelPath 2 MageHood 	3::GetBipedModelPath 3 MageHood 	4::GetBipedIconPath 0 MageHood 	5::GetBipedIconPath 1 MageHood 	6::"Mage Concealing" 	7::GetBipedSlotMask MageHood
+	ar_Append Data[3] ar_Map 0::"Zefiros\renz\clothes\magegreathood.nif" 		1::""	 							2::GetBipedModelPath 2 MageHood 	3::GetBipedModelPath 3 MageHood 	4::GetBipedIconPath 0 MageHood 	5::GetBipedIconPath 1 MageHood 	6::"Mage Great" 		7::GetBipedSlotMask MageHood
+	ar_Append Data[3] ar_Map 0::"Zefiros\Armor\tbskGuard\MageCowl.nif"			1::""								2::GetBipedModelPath 2 MageHood		3::""								4::GetBipedIconPath 0 MageHood	5::""							6::"Mage Cowl"			7::2
+	
+	;-----------------------------------------------------------------------------
+	;Arch Mage
+	;-----------------------------------------------------------------------------
+	ar_Append Data[0] ar_Map 0::GetBipedModelPath 0 ArchMageRobe 				1::GetBipedModelPath 1 ArchMageRobe	 	2::GetBipedModelPath 2 ArchMageRobe 		3::GetBipedModelPath 3 ArchMageRobe 		4::GetBipedIconPath 0 ArchMageRobe 	5::GetBipedIconPath 1 ArchMageRobe 	6::"Arch Mage" 			7::GetBipedSlotMask ArchMageRobe
+	ar_Append Data[3] ar_Map 0::GetBipedModelPath 0 ArchMageHood 				1::GetBipedModelPath 1 ArchMageHood	 	2::GetBipedModelPath 2 ArchMageHood 		3::GetBipedModelPath 3 ArchMageHood 		4::GetBipedIconPath 0 ArchMageHood 	5::GetBipedIconPath 1 ArchMageHood 	6::"Arch Mage" 			7::GetBipedSlotMask ArchMageHood
+	ar_Append Data[3] ar_Map 0::"Zefiros\renz\clothes\Archlonghood.nif" 		1::""	 								2::GetBipedModelPath 2 ArchMageHood 		3::GetBipedModelPath 3 ArchMageHood 		4::GetBipedIconPath 0 ArchMageHood 	5::GetBipedIconPath 1 ArchMageHood 	6::"Arch Long" 			7::GetBipedSlotMask ArchMageHood
+	ar_Append Data[3] ar_Map 0::"Zefiros\renz\clothes\Archconcealinghood.nif" 	1::""	 								2::GetBipedModelPath 2 ArchMageHood 		3::GetBipedModelPath 3 ArchMageHood 		4::GetBipedIconPath 0 ArchMageHood 	5::GetBipedIconPath 1 ArchMageHood 	6::"Arch Concealing" 	7::GetBipedSlotMask ArchMageHood
+	ar_Append Data[3] ar_Map 0::"Zefiros\renz\clothes\Archgreathood.nif" 		1::""	 								2::GetBipedModelPath 2 ArchMageHood 		3::GetBipedModelPath 3 ArchMageHood 		4::GetBipedIconPath 0 ArchMageHood 	5::GetBipedIconPath 1 ArchMageHood 	6::"Arch Great" 		7::GetBipedSlotMask ArchMageHood
+	ar_Append Data[3] ar_Map 0::"Zefiros\Armor\tbskGuard\ArchCowl.nif"			1::""									2::GetBipedModelPath 2 ArchMageHood			3::""										4::GetBipedIconPath 0 ArchMageHood	5::""								6::"Arch Cowl"			7::2
+		
+	;-----------------------------------------------------------------------------
+	;Necromancer
+	;-----------------------------------------------------------------------------
+	ar_Append Data[0] ar_Map 0::GetBipedModelPath 0 NecromancerRobe 			1::GetBipedModelPath 1 NecromancerRobe	 	2::GetBipedModelPath 2 NecromancerRobe 		3::GetBipedModelPath 3 NecromancerRobe 		4::GetBipedIconPath 0 NecromancerRobe 	5::GetBipedIconPath 1 NecromancerRobe 	6::"Necromancer" 				7::GetBipedSlotMask NecromancerRobe
+	ar_Append Data[3] ar_Map 0::GetBipedModelPath 0 NecromancerHood 			1::GetBipedModelPath 1 NecromancerHood	 	2::GetBipedModelPath 2 NecromancerHood 		3::GetBipedModelPath 3 NecromancerHood 		4::GetBipedIconPath 0 NecromancerHood 	5::GetBipedIconPath 1 NecromancerHood 	6::"Necromancer" 				7::GetBipedSlotMask NecromancerHood
+	ar_Append Data[3] ar_Map 0::"Zefiros\renz\clothes\Necrlonghood.nif" 		1::""	 									2::GetBipedModelPath 2 NecromancerHood 		3::GetBipedModelPath 3 NecromancerHood 		4::GetBipedIconPath 0 NecromancerHood 	5::GetBipedIconPath 1 NecromancerHood 	6::"Necromancer Long" 			7::GetBipedSlotMask NecromancerHood
+	ar_Append Data[3] ar_Map 0::"Zefiros\renz\clothes\Necrconcealinghood.nif" 	1::""	 									2::GetBipedModelPath 2 NecromancerHood 		3::GetBipedModelPath 3 NecromancerHood 		4::GetBipedIconPath 0 NecromancerHood 	5::GetBipedIconPath 1 NecromancerHood 	6::"Necromancer Concealing" 	7::GetBipedSlotMask NecromancerHood
+	ar_Append Data[3] ar_Map 0::"Zefiros\renz\clothes\Necrgreathood.nif" 		1::""	 									2::GetBipedModelPath 2 NecromancerHood 		3::GetBipedModelPath 3 NecromancerHood 		4::GetBipedIconPath 0 NecromancerHood 	5::GetBipedIconPath 1 NecromancerHood 	6::"Necromancer Great" 			7::GetBipedSlotMask NecromancerHood
+	ar_Append Data[3] ar_Map 0::"Zefiros\Armor\tbskGuard\NecrCowl.nif"			1::""										2::GetBipedModelPath 2 NecromancerHood		3::""										4::GetBipedIconPath 0 NecromancerHood	5::""									6::"Necromancer Cowl"			7::2
+	
+	;-----------------------------------------------------------------------------
+	;Mythic Dawn
+	;-----------------------------------------------------------------------------
+	ar_Append Data[0] ar_Map 0::GetBipedModelPath 0 MythicDawnRobe 				1::GetBipedModelPath 1 MythicDawnRobe	 	2::GetBipedModelPath 2 MythicDawnRobe 		3::GetBipedModelPath 3 MythicDawnRobe 		4::GetBipedIconPath 0 MythicDawnRobe 		5::GetBipedIconPath 1 MythicDawnRobe 		6::"Mythic Dawn" 		7::GetBipedSlotMask MythicDawnRobe
+	ar_Append Data[3] ar_Map 0::GetBipedModelPath 0 MythicDawnRobeHood			1::GetBipedModelPath 1 MythicDawnRobeHood	2::GetBipedModelPath 2 MythicDawnRobeHood 	3::GetBipedModelPath 3 MythicDawnRobeHood 	4::GetBipedIconPath 0 MythicDawnRobeHood 	5::GetBipedIconPath 1 MythicDawnRobeHood 	6::"Mythic Dawn" 		7::GetBipedSlotMask MythicDawnRobeHood
+	ar_Append Data[3] ar_Map 0::"Zefiros\renz\clothes\Mythiclonghood.nif" 		1::""	 									2::GetBipedModelPath 2 MythicDawnRobeHood 	3::GetBipedModelPath 3 MythicDawnRobeHood 	4::GetBipedIconPath 0 MythicDawnRobeHood 	5::GetBipedIconPath 1 MythicDawnRobeHood 	6::"Mythic Long" 		7::GetBipedSlotMask MythicDawnRobeHood
+	ar_Append Data[3] ar_Map 0::"Zefiros\renz\clothes\Mythicconcealinghood.nif" 1::""	 									2::GetBipedModelPath 2 MythicDawnRobeHood 	3::GetBipedModelPath 3 MythicDawnRobeHood 	4::GetBipedIconPath 0 MythicDawnRobeHood 	5::GetBipedIconPath 1 MythicDawnRobeHood 	6::"Mythic Concealing" 	7::GetBipedSlotMask MythicDawnRobeHood
+	ar_Append Data[3] ar_Map 0::"Zefiros\renz\clothes\Mythicgreathood.nif" 		1::""	 									2::GetBipedModelPath 2 MythicDawnRobeHood 	3::GetBipedModelPath 3 MythicDawnRobeHood 	4::GetBipedIconPath 0 MythicDawnRobeHood 	5::GetBipedIconPath 1 MythicDawnRobeHood 	6::"Mythic Great" 		7::GetBipedSlotMask MythicDawnRobeHood
+	ar_Append Data[3] ar_Map 0::"Zefiros\Armor\tbskGuard\MythicCowl.nif"		1::""										2::GetBipedModelPath 2 MythicDawnRobeHood	3::""										4::GetBipedIconPath 0 MythicDawnRobeHood	5::""										6::"Mythic Cowl"		7::2
+
+	;-----------------------------------------------------------------------------
+	;Chainmail Cowl
+	;-----------------------------------------------------------------------------
+	ar_Append Data[3] ar_Map 0::"Zefiros\Armor\tbskGuard\GenericHood.nif"	1::""	2::GetBipedModelPath 2 TownguardHelmet	3::""	4::GetBipedIconPath 0 TownguardHelmet	5::""	6::"Chainmail Cowl"	7::2
+	
+	;-----------------------------------------------------------------------------
+	;White Mage
+	;-----------------------------------------------------------------------------
+	ar_Append Data[0] ar_Map 0::GetBipedModelPath 0 UpperRobe01 		1::GetBipedModelPath 1 UpperRobe01	 	2::GetBipedModelPath 2 UpperRobe01 		3::GetBipedModelPath 3 UpperRobe01 		4::GetBipedIconPath 0 UpperRobe01 	5::GetBipedIconPath 1 UpperRobe01 	6::"White Mage" 	7::GetBipedSlotMask UpperRobe01
+	ar_Append Data[1] ar_Map 0::GetBipedModelPath 0 UpperShoes04 		1::GetBipedModelPath 1 UpperShoes04	 	2::GetBipedModelPath 2 UpperShoes04 	3::GetBipedModelPath 3 UpperShoes04 	4::GetBipedIconPath 0 UpperShoes04 	5::GetBipedIconPath 1 UpperShoes04 	6::"White Mage" 	7::GetBipedSlotMask UpperShoes04
+	
+	;-----------------------------------------------------------------------------
+	;Monk
+	;-----------------------------------------------------------------------------
+	ar_Append Data[0] ar_Map 0::GetBipedModelPath 0 LowerRobe01 		1::GetBipedModelPath 1 LowerRobe01	 	2::GetBipedModelPath 2 LowerRobe01 		3::GetBipedModelPath 3 LowerRobe01 		4::GetBipedIconPath 0 LowerRobe01 	5::GetBipedIconPath 1 LowerRobe01 	6::"Monk" 	7::GetBipedSlotMask LowerRobe01
+	
+	;-----------------------------------------------------------------------------
+	;White Monk
+	;-----------------------------------------------------------------------------
+	ar_Append Data[0] ar_Map 0::GetBipedModelPath 0 LowerRobe01white 		1::GetBipedModelPath 1 LowerRobe01white	 	2::GetBipedModelPath 2 LowerRobe01white 		3::GetBipedModelPath 3 LowerRobe01white 		4::GetBipedIconPath 0 LowerRobe01white 	5::GetBipedIconPath 1 LowerRobe01white 	6::"White Monk" 	7::GetBipedSlotMask LowerRobe01white
+	
+	;-----------------------------------------------------------------------------
+	;Apostle
+	;-----------------------------------------------------------------------------
+	ar_Append Data[0] ar_Map 0::GetBipedModelPath 0 ApostleRobe 		1::GetBipedModelPath 1 ApostleRobe	 	2::GetBipedModelPath 2 ApostleRobe 		3::GetBipedModelPath 3 ApostleRobe 		4::GetBipedIconPath 0 ApostleRobe 	5::GetBipedIconPath 1 ApostleRobe 	6::"Apostle" 	7::GetBipedSlotMask ApostleRobe
+		
+	;-----------------------------------------------------------------------------
+	;Luminary
+	;-----------------------------------------------------------------------------
+	ar_Append Data[0] ar_Map 0::GetBipedModelPath 0 SE11LuminaryRobe 		1::GetBipedModelPath 1 SE11LuminaryRobe	 	2::GetBipedModelPath 2 SE11LuminaryRobe 		3::GetBipedModelPath 3 SE11LuminaryRobe 		4::GetBipedIconPath 0 SE11LuminaryRobe 	5::GetBipedIconPath 1 SE11LuminaryRobe 	6::"Luminary" 	7::GetBipedSlotMask SE11LuminaryRobe
+
+	;-----------------------------------------------------------------------------
+	;Zealot
+	;-----------------------------------------------------------------------------
+	ar_Append Data[0] ar_Map 0::GetBipedModelPath 0 SEZealotRobe 				1::GetBipedModelPath 1 SEZealotRobe	 			2::GetBipedModelPath 2 SEZealotRobe 			3::GetBipedModelPath 3 SEZealotRobe 			4::GetBipedIconPath 0 SEZealotRobe 				5::GetBipedIconPath 1 SEZealotRobe 				6::"Zealot" 				7::GetBipedSlotMask SEZealotRobe
+	ar_Append Data[3] ar_Map 0::GetBipedModelPath 0 SEZealotHood 				1::GetBipedModelPath 1 SEZealotHood	 			2::GetBipedModelPath 2 SEZealotHood 			3::GetBipedModelPath 3 SEZealotHood 			4::GetBipedIconPath 0 SEZealotHood 				5::GetBipedIconPath 1 SEZealotHood 				6::"Zealot" 				7::GetBipedSlotMask SEZealotHood
+	
+	;-----------------------------------------------------------------------------
+	;Regalia
+	;-----------------------------------------------------------------------------
+	ar_Append Data[0] ar_Map 0::GetBipedModelPath 0 SEShegorathsRegalia 		1::GetBipedModelPath 1 SEShegorathsRegalia	 	2::GetBipedModelPath 2 SEShegorathsRegalia 		3::GetBipedModelPath 3 SEShegorathsRegalia 		4::GetBipedIconPath 0 SEShegorathsRegalia 		5::GetBipedIconPath 1 SEShegorathsRegalia 		6::"Regalia" 				7::GetBipedSlotMask SEShegorathsRegalia
+
+	;-----------------------------------------------------------------------------
+	;Emperor
+	;-----------------------------------------------------------------------------
+	ar_Append Data[0] ar_Map 0::GetBipedModelPath 0 MQEmperorRobeArmor		1::GetBipedModelPath 1 MQEmperorRobeArmor 		2::GetBipedModelPath 2 MQEmperorRobeArmor 		3::GetBipedModelPath 3 MQEmperorRobeArmor 		4::GetBipedIconPath 0 MQEmperorRobeArmor 	5::GetBipedIconPath 1 MQEmperorRobeArmor 	6::"Emperor" 	7::GetBipedSlotMask MQEmperorRobeArmor
+	ar_Append Data[1] ar_Map 0::GetBipedModelPath 0 MQUpperEmperorShoes		1::GetBipedModelPath 1 MQUpperEmperorShoes 		2::GetBipedModelPath 2 MQUpperEmperorShoes 		3::GetBipedModelPath 3 MQUpperEmperorShoes 		4::GetBipedIconPath 0 MQUpperEmperorShoes 	5::GetBipedIconPath 1 MQUpperEmperorShoes 	6::"Emperor" 	7::GetBipedSlotMask MQUpperEmperorShoes
+
+
+	SetFunctionValue Data
+	Return
+;-----------------------------------------------------------------------------
+end ;Function { Data }
+;-----------------------------------------------------------------------------

@@ -1,0 +1,120 @@
+scn aaZefirosSetForm
+
+;Main script
+;-----------------------------------------------------------------------------
+;aaZefirosManager
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;aaZefirosSetFormGlobal
+;aaZefirosRefreshInv
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;aaZefirosSetMerge
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;aaZefirosFormBody
+;aaZefirosFormFoot
+;aaZefirosFormHand
+;aaZefirosFormHead
+;aaZefirosFormLegs
+;aaZefirosFormShld
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;Changes the mesh and icon paths of the passed Item using information from the
+;multi-dimensional array Data.  Then re-equips Item so the new paths are
+;properly applied, or refreshes the UI if not equipped in the first place.
+;
+;Array0:
+;[0]Body
+;[1]Foot
+;[2]Hand
+;[3]Head
+;[4]Legs
+;[5]Shld
+;
+;Array1:
+;[0]PathDataArray
+;[1]PathDataArray
+;[2]...
+;
+;Array2:
+;[0]MaleModelPath
+;[1]FemaleModelPath
+;[2]MaleGroundPath
+;[3]FemaleGroundPath
+;[4]MaleIconPath
+;[5]FemaleIconPath
+;[6]Name
+;[7]Slot
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+short i
+short j
+array_var Data
+ref Item
+
+string_var Path
+;-----------------------------------------------------------------------------
+
+;-----------------------------------------------------------------------------
+begin Function { i, j, Data, Item }
+;-----------------------------------------------------------------------------
+
+	DebugPrint "%BChanging %b%n%B form...%b" Item
+	
+	Let Path := Data[i][j][0]
+	SetMaleBipedPath $Path Item
+
+	Let Path := Data[i][j][1]
+	SetFemaleBipedPath $Path Item
+
+	Let Path := Data[i][j][2]
+	SetMaleGroundPath $Path Item
+
+	Let Path := Data[i][j][3]
+	SetFemaleGroundPath $Path Item
+
+	Let Path := Data[i][j][4]
+	SetMaleIconPath $Path Item
+
+	Let Path := Data[i][j][5]
+	SetFemaleIconPath $Path Item
+
+	;Update relevant global
+	Call aaZefirosSetFormGlobal i j Data[i][j][6]
+
+	;Changes won't apply until Item is re-equipped
+	if ( Player.GetEquipped Item )
+
+		;Despite this not working in GameMode, it works here...?
+		Player.UnEquipItemSilent Item
+		Player.EquipItem2NS Item
+
+	else
+
+		;Refresh UI if not equipped
+		Call aaZefirosRefreshInv
+
+	endif
+
+
+	sv_Destruct Path
+	DebugPrint "%n %Bform changed.%b" Item
+	Return
+;-----------------------------------------------------------------------------
+end ;Function { i, j, Data, Item }
+;-----------------------------------------------------------------------------

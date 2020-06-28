@@ -1,0 +1,144 @@
+scn aaZefirosSetSeek
+
+;Main script
+;-----------------------------------------------------------------------------
+;aaZefirosManager
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;aaZefirosGetMerg
+;aaZefirosModEnchLevel
+;aaZefirosSetEffectStat
+;aaZefirosGetEffectIndex
+;aaZefirosSetEffectItem
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
+;aaZefirosActvEnchBody
+;aaZefirosActvEnchFoot
+;aaZefirosActvEnchHand
+;aaZefirosActvEnchHead
+;aaZefirosActvEnchLegs
+;aaZefirosActvEnchShld
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;aaZefirosSlotBody
+;aaZefirosSlotFoot
+;aaZefirosSlotHand
+;aaZefirosSlotHead
+;aaZefirosSlotLegs
+;aaZefirosSlotShld
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;Adds newly chosen effects to enchantments.
+;Accounts for merged items.
+;If the chosen effect(s) are Lv0, add their base values, otherwise do nothing.
+;
+;Slots, Dflt, Actv, and Enchs need to have parity between them.
+;BipedItem[i] has SlotMask[i], DfltSlot[i], ActvEfct[i] and Ench[i].
+;EnSt = Call aaZefirosGetEnchantData
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+array_var Slots
+array_var Dflt
+array_var EnSt
+array_var Actv
+array_var Enchs
+
+short Count
+short Cnt
+short i
+short j
+short k
+short Lvl
+short Idx
+array_var Merg
+array_var Base
+ref Ench
+;-----------------------------------------------------------------------------
+
+;-----------------------------------------------------------------------------
+begin Function { Slots, Dflt, EnSt, Actv, Enchs }
+;-----------------------------------------------------------------------------
+
+	;Set Count to smallest size
+	Let Count := ar_Size Slots
+	if eval( Count > ar_Size Actv )
+		Let Count := ar_Size Actv
+	endif
+	if eval( Count > ar_Size Enchs )
+		Let Count := ar_Size Enchs
+	endif
+
+
+	;For each enchantment
+	Let i := 0
+	while ( i < Count )
+	
+		Let Ench := Enchs[i]
+
+		;Get what Enchs[i] is merged with, including itself
+		Let Merg := Call aaZefirosGetMerg Slots[i] Dflt
+
+
+		;For every merged item
+		Let Cnt := ar_Size Merg
+		
+		Let j := 0
+		while ( j < Cnt )
+
+			;Check if new Actv effect is Lv0
+			Let k := Merg[j]
+			Let Lvl := Call aaZefirosModEnchLevel k 0 Actv[k]
+			
+			if ( 0 == Lvl )
+			
+				;Get the base stats and index on Ench
+				Let Base := Call aaZefirosSetEffectStat EnSt[Actv[k]][2] EnSt[Actv[k]][3] EnSt[Actv[k]][4] EnSt[Actv[k]][5] EnSt[Actv[k]][6] EnSt[Actv[k]][7] 0
+				Let Idx := Call aaZefirosGetEffectIndex EnSt[Actv[k]][0] EnSt[Actv[k]][1] Ench
+
+				
+				;Add effect if not present
+				if ( Idx == -1 )
+				
+					Call aaZefirosSetEffectItem Base[0] Base[1] Base[2] EnSt[Actv[k]][8] EnSt[Actv[k]][0] EnSt[Actv[k]][1] Ench
+
+					
+				;Mod effect by base stats
+				else
+				
+					Let Lvl := Base[0]
+					ModNthEffectItemMagnitude Lvl Ench Idx
+					Let Lvl := Base[1]
+					ModNthEffectItemArea Lvl Ench Idx
+					Let Lvl := Base[2]
+					ModNthEffectItemDuration Lvl Ench Idx
+
+					
+				endif
+				
+			endif
+			
+			Let j += 1
+		loop
+
+		Let i += 1
+	loop
+	
+	
+	Return
+;-----------------------------------------------------------------------------
+end ;Function { Slots, Dflt, EnSt, Actv, Enchs }
+;-----------------------------------------------------------------------------

@@ -1,0 +1,27 @@
+v1.0
+ - Initial release
+
+v1.1
+ - ElderScrollsFan001 updated the Ebony Kite mesh
+ - Movomo helped with .nif files crashing NifSkope, most textures now relocated
+ - Added Cuirass form "Black Plate w/ Cops"
+ - Added Cuirass form "Plate w/ Cops"
+ - Fixed Daedrim F paths pointing to Daedrim M files
+ - Fixed Plate and Black Plate textures having the wrong folder name
+ - Fixed XP trackers counting damage dealt to other NPCs
+ - Fixed Offerings being rejected while parts are merged
+ - Fixed durabilities getting whack after unmerging
+ - Fixed INI settings not being read
+ - Split fXPResist into settings for each resistance type
+ - INI adjustments:
+ - - Renamed pieces by vanilla standards
+ - - Removed fXPResist
+ - - Added fXPResistFire
+ - - Added fXPResistFrost
+ - - Added fXPResistShock
+ - - Added fXPResistMagic
+ - - Added fXPResistNormalWeapon
+ - - Added fXPResistParalysis
+ - - Added fXPResistDisease
+ - - Increased fXPResistMagic to 120 from 100
+ - - Increased fXPResistNormalWeapon to 400 from 100

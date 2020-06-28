@@ -1,0 +1,133 @@
+scn aaZefirosReorderEffects
+
+;Main script
+;-----------------------------------------------------------------------------
+;aaZefirosManager
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;aaZefirosGetEffectOrder
+;aaZefirosSetMerge
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;Given a table containing MagicEffect and ActorValue codes and an array of
+;enchantments, moves all listed effect items to the back of each enchantment
+;by deleting and undeleting them.
+;
+;Effects:
+;[0]EffectCode
+;[1]ActorValueCode
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+array_var Effects
+array_var Enchs
+
+short Size
+short Count
+short i
+short j
+
+long EffC
+long Magn
+long Area
+long Dura
+short Rang
+short AuxC
+
+ref Spl
+
+array_var Ench
+array_var Efct
+array_var Data
+;-----------------------------------------------------------------------------
+
+;-----------------------------------------------------------------------------
+begin Function { Effects, Enchs }
+;-----------------------------------------------------------------------------
+	
+	Let Size := ar_Size Enchs
+	DebugPrint "Reorganizing effects on %.0f enchantment(s)..." Size
+	
+
+	Let Data := ar_Construct Array
+
+	Let Size := ar_Size Effects
+	ForEach Ench <- Enchs
+
+		Let Spl := *Ench
+		
+
+		;-----------------------------------------------------------------------------
+		;Find and remove each effect
+		;-----------------------------------------------------------------------------
+		Let Count := GetMagicItemEffectCount Spl
+
+		ForEach Efct <- Effects
+
+			Let i := Call aaZefirosGetEffectIndex Efct["value"][0] Efct["value"][1] Spl
+
+			if ( i != -1 )
+
+				;Remove effect and store its values
+				ar_Append Data GetNthEffectItem Spl i
+				RemoveNthEffectItem Spl i
+
+			endif
+
+		loop
+
+
+		;-----------------------------------------------------------------------------
+		;Add each removed effect back
+		;-----------------------------------------------------------------------------
+		Let Count := ar_Size Data
+		
+		Let i := 0
+		while ( i < Count )
+
+			Let EffC := Data[i]["effectCode"]
+			Let Magn := Data[i]["magnitude"]
+			Let Area := Data[i]["area"]
+			Let Dura := Data[i]["duration"]
+			Let Rang := Data[i]["range"]
+
+			Let j := AddFullEffectItemC EffC Magn Area Dura Rang Spl
+
+			if eval( ar_HasKey Data[i] "actorValue" )
+
+				Let AuxC := Data[i]["actorValue"]
+				SetNthEffectItemActorValueC AuxC Spl j
+
+			endif
+
+			Let i += 1
+		loop
+
+		;Reset Data for next loop
+		ar_Erase Data
+	
+	loop
+
+
+	DebugPrint "Reorganized effects."
+	Return
+;-----------------------------------------------------------------------------
+end ;Function { Effects, Enchs }
+;-----------------------------------------------------------------------------

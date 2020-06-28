@@ -1,0 +1,130 @@
+scn aaZefirosSaveMimic
+
+;Main script
+;-----------------------------------------------------------------------------
+;aaZefirosManager
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
+;aaZefirosMimicBodySlot
+;aaZefirosMimicFootSlot
+;aaZefirosMimicHandSlot
+;aaZefirosMimicHeadSlot
+;aaZefirosMimicLegsSlot
+;aaZefirosMimicShldSlot
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;Stores data from an array into Manager's string_vars.
+;Dot notation is a necessary evil here, else this exact code will be repeated
+;in Manager to extract the data.
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+array_var Data
+
+long X
+;-----------------------------------------------------------------------------
+
+;-----------------------------------------------------------------------------
+begin Function { Data }
+;-----------------------------------------------------------------------------
+	
+	;-----------------------------------------------------------------------------
+	;Body
+	;-----------------------------------------------------------------------------
+	Let aaZefirosInit.MimicBodyMaleModel 	:= Data[0][0][0]
+	Let aaZefirosInit.MimicBodyFemaleModel 	:= Data[0][0][1]
+	Let aaZefirosInit.MimicBodyMaleGround 	:= Data[0][0][2]
+	Let aaZefirosInit.MimicBodyFemaleGround := Data[0][0][3]
+	Let aaZefirosInit.MimicBodyMaleIcon 	:= Data[0][0][4]
+	Let aaZefirosInit.MimicBodyFemaleIcon 	:= Data[0][0][5]
+	Let aaZefirosInit.MimicBodyName 		:= Data[0][0][6]
+	Let X := Data[0][0][7] ;Error if pass-through var isn't used
+	Let aaZefirosMimicBodySlot 				:= X
+
+	;-----------------------------------------------------------------------------
+	;Foot
+	;-----------------------------------------------------------------------------
+	Let aaZefirosInit.MimicFootMaleModel 	:= Data[1][0][0]
+	Let aaZefirosInit.MimicFootFemaleModel 	:= Data[1][0][1]
+	Let aaZefirosInit.MimicFootMaleGround 	:= Data[1][0][2]
+	Let aaZefirosInit.MimicFootFemaleGround := Data[1][0][3]
+	Let aaZefirosInit.MimicFootMaleIcon 	:= Data[1][0][4]
+	Let aaZefirosInit.MimicFootFemaleIcon 	:= Data[1][0][5]
+	Let aaZefirosInit.MimicFootName 		:= Data[1][0][6]
+	Let X := Data[1][0][7]
+	Let aaZefirosMimicFootSlot 				:= X
+
+	;-----------------------------------------------------------------------------
+	;Hand
+	;-----------------------------------------------------------------------------
+	Let aaZefirosInit.MimicHandMaleModel 	:= Data[2][0][0]
+	Let aaZefirosInit.MimicHandFemaleModel 	:= Data[2][0][1]
+	Let aaZefirosInit.MimicHandMaleGround 	:= Data[2][0][2]
+	Let aaZefirosInit.MimicHandFemaleGround := Data[2][0][3]
+	Let aaZefirosInit.MimicHandMaleIcon 	:= Data[2][0][4]
+	Let aaZefirosInit.MimicHandFemaleIcon 	:= Data[2][0][5]
+	Let aaZefirosInit.MimicHandName 		:= Data[2][0][6]
+	Let X := Data[2][0][7]
+	Let aaZefirosMimicHandSlot 				:= X
+
+	;-----------------------------------------------------------------------------
+	;Head
+	;-----------------------------------------------------------------------------
+	Let aaZefirosInit.MimicHeadMaleModel 	:= Data[3][0][0]
+	Let aaZefirosInit.MimicHeadFemaleModel 	:= Data[3][0][1]
+	Let aaZefirosInit.MimicHeadMaleGround 	:= Data[3][0][2]
+	Let aaZefirosInit.MimicHeadFemaleGround := Data[3][0][3]
+	Let aaZefirosInit.MimicHeadMaleIcon 	:= Data[3][0][4]
+	Let aaZefirosInit.MimicHeadFemaleIcon 	:= Data[3][0][5]
+	Let aaZefirosInit.MimicHeadName 		:= Data[3][0][6]
+	Let X := Data[3][0][7]
+	Let aaZefirosMimicHeadSlot 				:= X
+
+	;-----------------------------------------------------------------------------
+	;Legs
+	;-----------------------------------------------------------------------------
+	Let aaZefirosInit.MimicLegsMaleModel 	:= Data[4][0][0]
+	Let aaZefirosInit.MimicLegsFemaleModel 	:= Data[4][0][1]
+	Let aaZefirosInit.MimicLegsMaleGround 	:= Data[4][0][2]
+	Let aaZefirosInit.MimicLegsFemaleGround := Data[4][0][3]
+	Let aaZefirosInit.MimicLegsMaleIcon 	:= Data[4][0][4]
+	Let aaZefirosInit.MimicLegsFemaleIcon 	:= Data[4][0][5]
+	Let aaZefirosInit.MimicLegsName 		:= Data[4][0][6]
+	Let X := Data[4][0][7]
+	Let aaZefirosMimicLegsSlot 				:= X
+
+	;-----------------------------------------------------------------------------
+	;Shld
+	;-----------------------------------------------------------------------------
+	Let aaZefirosInit.MimicShldMaleModel 	:= Data[5][0][0]
+	Let aaZefirosInit.MimicShldFemaleModel 	:= Data[5][0][1]
+	Let aaZefirosInit.MimicShldMaleGround 	:= Data[5][0][2]
+	Let aaZefirosInit.MimicShldFemaleGround := Data[5][0][3]
+	Let aaZefirosInit.MimicShldMaleIcon 	:= Data[5][0][4]
+	Let aaZefirosInit.MimicShldFemaleIcon 	:= Data[5][0][5]
+	Let aaZefirosInit.MimicShldName 		:= Data[5][0][6]
+	Let X := Data[5][0][7]
+	Let aaZefirosMimicShldSlot 				:= X
+	
+
+	Return
+;-----------------------------------------------------------------------------
+end ;Function { Data }
+;-----------------------------------------------------------------------------

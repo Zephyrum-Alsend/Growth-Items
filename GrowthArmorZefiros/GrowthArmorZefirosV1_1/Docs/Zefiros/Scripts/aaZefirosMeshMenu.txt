@@ -1,0 +1,288 @@
+scn aaZefirosMeshMenu
+
+;Main script
+;-----------------------------------------------------------------------------
+;aaZefirosManager
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;Menu for changing meshes.
+;Takes an array containing shorts, whose structure is listed below.
+;Displays a Table of Contents when SubMenu = 0 and lists page ranges of PgHi
+;size.  If there's only one range on the ToC or PgHi <= 0, skips ToC entirely.
+;Uses Page to determine which names to display on the buttons when past ToC.
+;Returns to ToC if Page < PageLowerBound or Page > PageLowerBound + PgHi. This
+;obviously doesn't happen if ToC is skipped.
+;Displays a maximum of 7 names per Page, due to MessageBox's button limit.
+;
+;Makes use of MessageBox's inability to handle empty strings to truncate
+;unneeded buttons.
+;
+;Called when Menu[0] = 4 || 5.
+;
+;Menu:
+;0::MenuIndex
+;1::Button
+;2::Page
+;3::SubMenu
+;4::PageLowerBound	;Added by function
+;5::PageRangeSize	;Added by function
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+string_var Name
+array_var Data
+array_var Menu ;Return value
+
+string_var But0
+string_var But1
+string_var But2
+string_var But3
+string_var But4
+string_var But5
+string_var But6
+string_var But7
+string_var But8
+short Size
+short i
+short j
+float PgCnt
+float Count
+short PgHi
+short PgLo
+array_var Opt
+;-----------------------------------------------------------------------------
+
+;-----------------------------------------------------------------------------
+begin Function { PgHi, Name, Data, Menu }
+;-----------------------------------------------------------------------------
+
+	if eval( Menu[1] == -2 )
+
+		Let Size := ar_Size Data
+		DebugPrint "Number of entries: %.0f" Size
+
+		;Empty strings so MessageBox short circuits
+		Let Opt := ar_Map 0::"" 1::"" 2::"" 3::"" 4::"" 5::"" 6::"" 7::""
+
+		Let But0 := "[<Back]"
+
+		
+		;-----------------------------------------------------------------------------
+		;Table of contents
+		;-----------------------------------------------------------------------------
+		if eval( Menu[3] == 0 )
+
+			;Header
+			Let Name += " Form Table of Contents:"
+
+			;Calcuate the number of buttons for ToC
+			Let PgCnt := Size / 7
+			Let PgCnt := Ceil PgCnt
+
+			if ( PgHi > 0 )
+				Let Count := PgCnt / PgHi
+				Let Count := Ceil Count
+			else
+				Let Count := 1
+			endif
+			
+
+			;If only 1 button, skip this submenu
+			if ( Count == 1 )
+
+				;Page is negative if we're going [<Back]
+				if eval( Menu[2] < 0 )
+					Let Menu[0] := 1
+				;Else we're going forward
+				else
+					Let Menu[3] := 1
+					Let Menu[4] := Menu[5] := 0
+				endif
+
+				;Button is already -2
+				SetFunctionValue Menu
+				Return
+
+				
+			;Adjust PgHi if going over 8 buttons
+			elseif ( Count > 8 )
+
+				Let Count := PgCnt / 8
+				Let PgHi := Ceil Count
+
+				;Recalc Count
+				Let Count := PgCnt / PgHi
+				Let Count := Ceil Count
+	
+			endif
+
+			;Store PgHi incase it was adjusted
+			;Menu[5] will be wiped once Menu[0] = 0
+			Let Menu[5] := PgHi
+			
+
+			;Populate Opt with page ranges
+			Let i := 0
+			while ( i < Count )
+
+				Let PgLo := 1 + ( i * PgHi )
+				
+				Let Opt[i] := "Page " + $(PgLo)
+
+				;Get the end of the button's range
+				Let j := PgLo + PgHi - 1
+				if ( j > PgCnt )
+					Let j := PgCnt
+				endif
+
+				;Only show a range if there is a range
+				if ( j > PgLo )
+					Let Opt[i] += " - " + $(j)
+				endif
+				
+				Let i += 1
+			loop
+
+		;-----------------------------------------------------------------------------
+		;Individual pages
+		;-----------------------------------------------------------------------------
+		elseif eval( Menu[3] == 1 )
+
+			;Header
+			Let Name += " Form (p. " + $(Menu[2]+1) + "):"
+
+			;Change Back to Prev if hitting it will return to another individual page
+			if eval( Menu[2] != Menu[4] )
+				Let But0 := "[<Prev]"
+			endif
+
+			;Until all 7 buttons are filled or reach end of Data
+			Let i := Menu[2] * 7
+			Let j := i + 7
+			while ( i < j && i < Size )
+
+				Let Opt[i%7] := Data[i][6]
+
+				Let i += 1
+			loop
+
+			;Truncate [Next>] if all 7 buttons are filled but there is no next page
+			if ( i < Size )
+
+				;Display [Back>] if hitting it will return to ToC				
+				if eval( Menu[5] > 0 && Menu[2] >= Menu[4] + Menu[5] - 1 )
+					Let Opt[7] := "[Back>]"
+				else
+					Let Opt[7] := "[Next>]"
+				endif
+
+			endif
+
+		endif
+
+
+		;-----------------------------------------------------------------------------
+		;Display menu
+		;-----------------------------------------------------------------------------
+		Let But1 := Opt[0]
+		Let But2 := Opt[1]
+		Let But3 := Opt[2]
+		Let But4 := Opt[3]
+		Let But5 := Opt[4]
+		Let But6 := Opt[5]
+		Let But7 := Opt[6]
+		Let But8 := Opt[7]
+
+		MessageBox $Name "[Cancel]" $But0 $But1 $But2 $But3 $But4 $But5 $But6 $But7 $But8
+		Let Menu[1] := -1
+
+		
+	elseif eval( Menu[1] < 0 )
+	
+		Let Menu[1] := GetButtonPressed
+	
+	elseif eval( Menu[1] == 0 )
+	
+		;Cancel
+		DebugPrint "Cancelling MeshMenu."
+		Let Menu[0] := 0
+	
+	elseif eval( Menu[1] == 1 )
+
+		Let Menu[1] := -2
+
+		if eval( Menu[3] == 0 )
+
+			;Back
+			DebugPrint "Returning to FormMenu."
+			Let Menu[0] := 1
+			
+		elseif eval( Menu[3] == 1 )
+
+			;Prev
+			Let Menu[2] -= 1
+
+			if eval( Menu[2] < Menu[4] )
+
+				;Back
+				DebugPrint "Returning to MeshMenu ToC."
+				Let Menu[3] -= 1
+		
+			endif
+
+		endif
+
+	elseif eval( Menu[3] == 1 && Menu[1] == 9 )
+
+		;Next
+		Let Menu[2] += 1
+		Let Menu[1] := -2
+
+		if eval( Menu[5] > 0 && Menu[2] >= Menu[4] + Menu[5] )
+
+			;Back
+			DebugPrint "Returning to MeshMenu ToC."
+			Let Menu[3] -= 1
+			
+		endif
+
+	else
+
+		;if ToC, adjust Page based on button chosen
+		if eval( Menu[3] == 0 )
+
+			;Menu[4] will be wiped once Menu[0] = 0
+			Let Menu[2] := Menu[4] := Menu[5] * ( Menu[1] - 2 )
+			Let Menu[1] := -2
+			
+		endif
+
+		Let Menu[3] += 1
+	
+	endif
+
+	
+	SetFunctionValue Menu
+	Return
+;-----------------------------------------------------------------------------
+end ;Function { PgHi, Name, Data, Menu }
+;-----------------------------------------------------------------------------

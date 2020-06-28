@@ -1,0 +1,54 @@
+scn aaZefirosGetArmorStats
+
+;Main script
+;-----------------------------------------------------------------------------
+;aaZefirosManager
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;Returns an array containing all armor base and growth rates.
+;Created to cut down on code in Manager.  Dot notation necessary.
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+array_var Stack ;Return value
+;-----------------------------------------------------------------------------
+
+
+
+;-----------------------------------------------------------------------------
+begin Function { }
+;-----------------------------------------------------------------------------
+
+	Let Stack := ar_Construct Array
+	Let Stack[0] := ar_Map 0::aaZefirosInit.sBodyARBase 1::aaZefirosInit.fBodyWeightBase 2::aaZefirosInit.sBodyHealthBase 3::aaZefirosInit.lBodyValueBase 4::aaZefirosInit.sBodyARMult 5::aaZefirosInit.fBodyWeightMult 6::aaZefirosInit.fBodyHealthMult 7::aaZefirosInit.fBodyValueMult
+	Let Stack[1] := ar_Map 0::aaZefirosInit.sFootARBase 1::aaZefirosInit.fFootWeightBase 2::aaZefirosInit.sFootHealthBase 3::aaZefirosInit.lFootValueBase 4::aaZefirosInit.sFootARMult 5::aaZefirosInit.fFootWeightMult 6::aaZefirosInit.fFootHealthMult 7::aaZefirosInit.fFootValueMult
+	Let Stack[2] := ar_Map 0::aaZefirosInit.sHandARBase 1::aaZefirosInit.fHandWeightBase 2::aaZefirosInit.sHandHealthBase 3::aaZefirosInit.lHandValueBase 4::aaZefirosInit.sHandARMult 5::aaZefirosInit.fHandWeightMult 6::aaZefirosInit.fHandHealthMult 7::aaZefirosInit.fHandValueMult
+	Let Stack[3] := ar_Map 0::aaZefirosInit.sHeadARBase 1::aaZefirosInit.fHeadWeightBase 2::aaZefirosInit.sHeadHealthBase 3::aaZefirosInit.lHeadValueBase 4::aaZefirosInit.sHeadARMult 5::aaZefirosInit.fHeadWeightMult 6::aaZefirosInit.fHeadHealthMult 7::aaZefirosInit.fHeadValueMult
+	Let Stack[4] := ar_Map 0::aaZefirosInit.sLegsARBase 1::aaZefirosInit.fLegsWeightBase 2::aaZefirosInit.sLegsHealthBase 3::aaZefirosInit.lLegsValueBase 4::aaZefirosInit.sLegsARMult 5::aaZefirosInit.fLegsWeightMult 6::aaZefirosInit.fLegsHealthMult 7::aaZefirosInit.fLegsValueMult
+	Let Stack[5] := ar_Map 0::aaZefirosInit.sShldARBase 1::aaZefirosInit.fShldWeightBase 2::aaZefirosInit.sShldHealthBase 3::aaZefirosInit.lShldValueBase 4::aaZefirosInit.sShldARMult 5::aaZefirosInit.fShldWeightMult 6::aaZefirosInit.fShldHealthMult 7::aaZefirosInit.fShldValueMult
+
+
+	SetFunctionValue Stack
+	Return
+;-----------------------------------------------------------------------------
+end ;Function { }
+;-----------------------------------------------------------------------------

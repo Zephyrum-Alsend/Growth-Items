@@ -1,0 +1,373 @@
+scn aaZefirosFlavorMessage
+
+;Main script
+;-----------------------------------------------------------------------------
+;aaZefirosManager
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;aaZefirosGetPCBIP
+;aaZefirosSacrifice
+;aaZefirosSetMimic
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;Based on the Mode given, display a random flavor message with the passed 
+;Icon, Sound and Name(s) for the specified amount of Time (seconds).
+;Also prints message to console.
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+string_var Icon
+string_var Sound
+string_var Name
+string_var Name2
+short Mode
+float Time
+
+float Ran
+string_var Msg
+;-----------------------------------------------------------------------------
+
+;-----------------------------------------------------------------------------
+begin Function { Icon, Sound, Name, Name2, Mode, Time }
+;-----------------------------------------------------------------------------
+
+	;These functions can handle incorrect data
+	SetMessageIcon $Icon
+	SetMessageSound $Sound
+
+	Let Ran := rand 0 100
+
+
+	;-----------------------------------------------------------------------------
+	;First Boot
+	;-----------------------------------------------------------------------------
+	if ( Mode == 0 )
+
+		if ( Ran <= 50 ) ;50%
+
+			Let Msg := "A curious curio takes refuge in your rucksack..."
+
+		elseif ( Ran <= 90 ) ;40%
+
+			Let Msg := "A sudden weight assails you as an arcane artefact asserts itself into your belongings..."
+
+		else ;10%
+
+			Let Msg := "A great weight is heft upon your shoulders..."
+
+		endif
+
+
+	;-----------------------------------------------------------------------------
+	;Level Up
+	;-----------------------------------------------------------------------------
+	elseif ( Mode == 1 )
+
+		if ( Ran <= 10 ) ;10%
+
+			Let Msg := Name + " grows more robust."
+
+		elseif ( Ran <= 20 ) ;10%
+
+			Let Msg := Name + " becomes closer to a second skin."
+
+		elseif ( Ran <= 30 ) ;10%
+
+			Let Msg := Name + "'s weight assures you."
+
+		elseif ( Ran <= 40 ) ;10%
+
+			Let Msg := Name + " is more comfortable to wear."
+
+		elseif ( Ran <= 50 ) ;10%
+
+			Let Msg := Name + " accomodates to your body."
+
+		elseif ( Ran <= 60 ) ;10%
+
+			Let Msg := Name + " hardens."
+
+		elseif ( Ran <= 70 ) ;10%
+
+			Let Msg := Name + " compresses magicka."
+
+		elseif ( Ran <= 80 ) ;10%
+
+			Let Msg := Name + " moves silently as your joints bend."
+
+		elseif ( Ran <= 90 ) ;10%
+
+			Let Msg := Name + " reverberates with... something."
+
+		else ;10%
+
+			Let Msg := Name + " thrums with magicka."
+
+		endif
+
+		
+	;-----------------------------------------------------------------------------
+	;Halfway to level up
+	;-----------------------------------------------------------------------------
+	elseif ( Mode == 2 )
+
+		if ( Ran <= 10 ) ;10%
+
+			Let Msg := Name + " creaks a bit less."
+
+		elseif ( Ran <= 20 ) ;10%
+
+			Let Msg := Name + " groans."
+
+		elseif ( Ran <= 30 ) ;10%
+
+			Let Msg := Name + "'s joints are less stiff."
+
+		elseif ( Ran <= 40 ) ;10%
+
+			Let Msg := "Errant magicka sparks from " + Name + "."
+
+		elseif ( Ran <= 50 ) ;10%
+
+			Let Msg := Name + "'s scrapes fade."
+
+		elseif ( Ran <= 60 ) ;10%
+
+			Let Msg := Name + "'s dents smooth out."
+
+		elseif ( Ran <= 70 ) ;10%
+
+			Let Msg := Name + " rustles."
+
+		elseif ( Ran <= 80 ) ;10%
+
+			Let Msg := Name + " sheens as dust vanishes off its surface."
+
+		elseif ( Ran <= 90 ) ;10%
+
+			Let Msg := Name + " prickles."
+
+		else ;10%
+
+			Let Msg := Name + " hums faintly."
+
+		endif
+
+		
+	;-----------------------------------------------------------------------------
+	;Armor Eater
+	;-----------------------------------------------------------------------------
+	elseif ( Mode == 3 )
+
+		if ( Ran <= 12.5 ) ;12.5%
+
+			Let Msg := Name + " consume(s) " + Name2 + "."
+
+		elseif ( Ran <= 25 ) ;12.5%
+
+			Let Msg := Name + " absorb(s) " + Name2 + "."
+
+		elseif ( Ran <= 37.5 ) ;12.5%
+
+			Let Msg := Name + " assimilate(s) " + Name2 + "."
+
+		elseif ( Ran <= 50 ) ;12.5%
+
+			Let Msg := Name2 + " liquidate(s) as " + Name + " contact(s) it."
+
+		elseif ( Ran <= 62.5 ) ;12.5%
+
+			Let Msg := Name2 + " enter(s) " + Name + " without resistance."
+
+		elseif ( Ran <= 75 ) ;12.5%
+
+			Let Msg := Name + " digest(s) " + Name2 + "."
+
+		elseif ( Ran <= 87.5 ) ;12.5%
+
+			Let Msg := Name2 + " cease(s) to be before " + Name + "."
+
+		else ;12.5%
+
+			Let Msg := Name + " unravel(s) " + Name2 + "."
+
+		endif
+
+		
+	;-----------------------------------------------------------------------------
+	;Form change
+	;-----------------------------------------------------------------------------
+	elseif ( Mode == 4 )
+
+		if ( Ran <= 20 ) ;20%
+
+			Let Msg := Name + " polymorph(s)."
+
+		elseif ( Ran <= 40 ) ;20%
+
+			Let Msg := Name + " change(s) form."
+
+		elseif ( Ran <= 60 ) ;20%
+
+			Let Msg := Name + " restructure(s)."
+
+		elseif ( Ran <= 80 ) ;20%
+
+			Let Msg := Name + " alter(s) shape."
+
+		elseif ( Ran <= 99.99 ) ;19.99%
+
+			Let Msg := Name + " become(s) something other."
+
+		else ;0.01%
+
+			Let Msg := "New duds. Who dis?"
+
+		endif
+
+		
+	;-----------------------------------------------------------------------------
+	;Form name
+	;-----------------------------------------------------------------------------
+	elseif ( Mode == 5 )
+
+		if ( Ran <= 10 ) ;10%
+
+			Let Msg := Name + "'s current form is " + Name2 + "."
+		
+		elseif ( Ran <= 20 ) ;10%
+
+			Let Msg := Name + " look(s) like " + Name2 + "."
+		
+		elseif ( Ran <= 30 ) ;10%
+
+			Let Msg := Name + " appear(s) as " + Name2 + "."
+		
+		elseif ( Ran <= 40 ) ;10%
+
+			Let Msg := Name + " take(s) the guise of " + Name2 + "."
+		
+		elseif ( Ran <= 50 ) ;10%
+
+			Let Msg := Name + " mantle(s) " + Name2 + "."
+		
+		elseif ( Ran <= 60 ) ;10%
+
+			Let Msg := Name + " take(s) the appearance of " + Name2 + "."
+		
+		elseif ( Ran <= 70 ) ;10%
+
+			Let Msg := Name + " take(s) the form of " + Name2 + "."
+		
+		elseif ( Ran <= 80 ) ;10%
+
+			Let Msg := Name + " guise(s) as " + Name2 + "."
+		
+		elseif ( Ran <= 90 ) ;10%
+
+			Let Msg := Name + " look(s) identical to " + Name2 + "."
+		
+		else ;10%
+
+			Let Msg := Name + " masquerade(s) as " + Name2 + "."
+
+		endif
+
+		
+	;-----------------------------------------------------------------------------
+	;Save Set
+	;-----------------------------------------------------------------------------
+	elseif ( Mode == 6 )
+
+		if ( Ran <= 20 ) ;20%
+
+			Let Msg := Name + " memorizes its form as " + Name2 + "."
+			
+		elseif ( Ran <= 40 ) ;20%
+			
+			Let Msg := Name + " marks its form as " + Name2 + "."
+			
+		elseif ( Ran <= 60 ) ;20%
+			
+			Let Msg := Name + " inters its form as " + Name2 + "."
+			
+		elseif ( Ran <= 80 ) ;20%
+			
+			Let Msg := Name + " tags its form as " + Name2 + "."
+			
+		else ;20%
+			
+			Let Msg := Name + " preserves its form as " + Name2 + "."
+
+		endif
+
+		
+	;-----------------------------------------------------------------------------
+	;Load Set
+	;-----------------------------------------------------------------------------
+	elseif ( Mode == 7 )
+
+		if ( Ran <= 20 ) ;20%
+
+			Let Msg := Name + " recalls " + Name2 + "."
+
+		elseif ( Ran <= 40 ) ;20%
+			
+			Let Msg := Name + " remembers " + Name2 + "."
+
+		elseif ( Ran <= 60 ) ;20%
+			
+			Let Msg := Name + " reinstates " + Name2 + "."
+
+		elseif ( Ran <= 80 ) ;20%
+			
+			Let Msg := Name + " polymorphs into " + Name2 + "."
+
+		else ;20%
+			
+			Let Msg := Name + " mantles " + Name2 + "."
+
+		endif
+
+		
+	;-----------------------------------------------------------------------------
+	;Error message
+	;-----------------------------------------------------------------------------
+	else
+
+		Let Msg := "FlavorMessage: Mode out of range."
+
+	endif
+
+
+	DebugPrint "%BIcon:%b %z %BSound:%b %z %BName:%b %z %BMode:%b %.0f %BTime:%b %.1f %BRan:%b %.2f" Icon Sound Name Mode Time Ran
+	printc "%z" Msg
+	if ( Time > 0 )
+		MessageEX "%z" Msg Time
+	else
+		MessageEX "%z" Msg
+	endif
+
+
+	sv_Destruct Msg
+	Return
+;-----------------------------------------------------------------------------
+end ;Function { Icon, Sound, Name, Name2, Mode, Time }
+;-----------------------------------------------------------------------------

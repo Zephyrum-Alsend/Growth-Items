@@ -1,0 +1,77 @@
+scn aaZefirosGetResistMatrix
+
+;Main script
+;-----------------------------------------------------------------------------
+;aaZefirosManager
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;aaZefirosSetResistEffects
+;aaZefirosSetMerge
+;aaZefirosUndoEnchant
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;Creates and returns a multi-dimensional array to pass into SetResistEffects.
+;Created to cut down on code in Manager, dot notation necessary.
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+short Mode
+
+array_var Stack ;Return value
+;-----------------------------------------------------------------------------
+
+
+
+;-----------------------------------------------------------------------------
+begin Function { Mode }
+;-----------------------------------------------------------------------------
+
+	Let Stack := ar_Construct Array
+
+	if ( Mode == 0 )
+
+		;This is for initializing resist effects
+		Let Stack[0] := ar_Map 0::GetMagicEffectCode RSFI 1::0 2::aaZefirosInit.NewFI
+		Let Stack[1] := ar_Map 0::GetMagicEffectCode RSFR 1::0 2::aaZefirosInit.NewFR
+		Let Stack[2] := ar_Map 0::GetMagicEffectCode RSSH 1::0 2::aaZefirosInit.NewSH
+		Let Stack[3] := ar_Map 0::GetMagicEffectCode RSMA 1::0 2::aaZefirosInit.NewMA
+		Let Stack[4] := ar_Map 0::GetMagicEffectCode RSNW 1::0 2::aaZefirosInit.NewNW
+		Let Stack[5] := ar_Map 0::GetMagicEffectCode RSPA 1::0 2::aaZefirosInit.NewPA
+		Let Stack[6] := ar_Map 0::GetMagicEffectCode RSDI 1::0 2::aaZefirosInit.NewDI
+
+	elseif ( Mode == 1 )
+
+		;This is for updating resist effects
+		Let Stack[0] := ar_Map 0::GetMagicEffectCode RSFI 1::aaZefirosInit.ResistFI 2::aaZefirosInit.NewFI
+		Let Stack[1] := ar_Map 0::GetMagicEffectCode RSFR 1::aaZefirosInit.ResistFR 2::aaZefirosInit.NewFR
+		Let Stack[2] := ar_Map 0::GetMagicEffectCode RSSH 1::aaZefirosInit.ResistSH 2::aaZefirosInit.NewSH
+		Let Stack[3] := ar_Map 0::GetMagicEffectCode RSMA 1::aaZefirosInit.ResistMA 2::aaZefirosInit.NewMA
+		Let Stack[4] := ar_Map 0::GetMagicEffectCode RSNW 1::aaZefirosInit.ResistNW 2::aaZefirosInit.NewNW
+		Let Stack[5] := ar_Map 0::GetMagicEffectCode RSPA 1::aaZefirosInit.ResistPA 2::aaZefirosInit.NewPA
+		Let Stack[6] := ar_Map 0::GetMagicEffectCode RSDI 1::aaZefirosInit.ResistDI 2::aaZefirosInit.NewDI
+
+	endif
+
+
+	SetFunctionValue Stack
+	Return
+;-----------------------------------------------------------------------------
+end ;Function { Mode }
+;-----------------------------------------------------------------------------

@@ -1,0 +1,218 @@
+scn aaZefirosGetSlotShared
+
+;Main script
+;-----------------------------------------------------------------------------
+;aaZefirosManager
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;aaZefirosSacrifice
+;aaZefirosSetMerge
+;aaZefirosSetMimic
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;Given a Map containing items corresponding to specific biped slots and 
+;another Item, returns an array containing all references that share a slot
+;with Item.
+;If no slots are shared, returns an empty array.
+;
+;Slots can be omitted by skipping indexes or filling them with 0.
+;
+;ar_Map:
+; 0::Head/Hair
+; 1::UpperBody
+; 2::LowerBody
+; 3::Hand
+; 4::Foot
+; 5::RightRing
+; 6::LeftRing
+; 7::Amulet
+; 8::Shield
+; 9::Torch
+;10::Tail
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+ref Item
+array_var Objects
+
+ref Body
+ref Foot
+ref Hand
+ref Head
+ref Legs
+ref Shld
+ref RRing
+ref LRing
+ref Amul
+ref Trch
+ref Tail
+long Slot
+array_var Stack ;Return value
+;-----------------------------------------------------------------------------
+
+;-----------------------------------------------------------------------------
+begin Function { Item, Objects }
+;-----------------------------------------------------------------------------
+
+	;Set all references to 0
+	Let Body := Foot := Hand := Head := Legs := Shld := RRing := LRing := Amul := Trch := Tail := 0
+
+	Let Stack := ar_Construct Array
+	Let Slot := GetBipedSlotMask Item
+
+	;-----------------------------------------------------------------------------
+	;Populate references
+	;-----------------------------------------------------------------------------
+	if eval( ar_HasKey Objects 0 )
+		Let Head := Objects[0]
+	endif
+
+	if eval( ar_HasKey Objects 1 )
+		Let Body := Objects[1]
+	endif
+
+	if eval( ar_HasKey Objects 2 )
+		Let Legs := Objects[2]
+	endif
+
+	if eval( ar_HasKey Objects 3 )
+		Let Hand := Objects[3]
+	endif
+
+	if eval( ar_HasKey Objects 4 )
+		Let Foot := Objects[4]
+	endif
+
+	if eval( ar_HasKey Objects 5 )
+		Let RRing := Objects[5]
+	endif
+
+	if eval( ar_HasKey Objects 6 )
+		Let LRing := Objects[6]
+	endif
+
+	if eval( ar_HasKey Objects 7 )
+		Let Amul := Objects[7]
+	endif
+
+	if eval( ar_HasKey Objects 8 )
+		Let Shld := Objects[8]
+	endif
+
+	if eval( ar_HasKey Objects 9 )
+		Let Trch := Objects[9]
+	endif
+
+	if eval( ar_HasKey Objects 10 )
+		Let Tail := Objects[10]
+	endif
+
+	;-----------------------------------------------------------------------------
+	;Populate array
+	;-----------------------------------------------------------------------------
+	if ( Head != 0 ) && eval( 3 & Slot )
+
+		DebugPrint "%n %Bshares the %bHead/Hair%B slot." Item
+		ar_Append Stack Head
+
+	endif
+
+	if ( Body != 0 ) && eval( 4 & Slot )
+
+		DebugPrint "%n%B shares the %bUpperBody%B slot." Item
+		ar_Append Stack Body
+
+	endif
+
+	if ( Legs != 0 ) && eval( 8 & Slot )
+
+		DebugPrint "%n%B shares the %bLowerBody%B slot." Item
+		ar_Append Stack Legs
+
+	endif
+
+	if ( Hand != 0 ) && eval( 16 & Slot )
+
+		DebugPrint "%n%B shares the %bHand%B slot." Item
+		ar_Append Stack Hand
+
+	endif
+
+	if ( Foot != 0 ) && eval( 32 & Slot )
+
+		DebugPrint "%n%B shares the %bFoot%B slot." Item
+		ar_Append Stack Foot
+
+	endif
+
+	if ( RRing != 0 ) && eval( 64 & Slot )
+
+		DebugPrint "%n%B shares the %bRightRing%B slot." Item
+		ar_Append Stack RRing
+
+	endif
+
+	if ( LRing != 0 ) && eval( 128 & Slot )
+
+		DebugPrint "%n%B shares the %bLeftRing%B slot." Item
+		ar_Append Stack LRing
+
+	endif
+
+	if ( Amul != 0 ) && eval( 256 & Slot )
+
+		DebugPrint "%n%B shares the %bAmulet%B slot." Item
+		ar_Append Stack Amul
+
+	endif
+
+	if ( Shld != 0 ) && eval( 8192 & Slot )
+
+		DebugPrint "%n%B shares the %bShield%B slot." Item
+		ar_Append Stack Shld
+
+	endif
+
+	if ( Trch != 0 ) && eval( 16384 & Slot )
+
+		DebugPrint "%n%B shares the %bTorch%B slot." Item
+		ar_Append Stack Trch
+
+	endif
+
+	if ( Tail != 0 ) && eval( 32768 & Slot )
+
+		DebugPrint "%n%B shares the %bTail%B slot." Item
+		ar_Append Stack Tail
+
+	endif
+
+	if eval( 0 == ar_Size Stack )
+
+		DebugPrint "%n%B shares %b0%B slots." Item
+
+	endif
+	
+
+	SetFunctionValue Stack
+	Return
+;-----------------------------------------------------------------------------
+end ;Function { Item, Objects }
+;-----------------------------------------------------------------------------

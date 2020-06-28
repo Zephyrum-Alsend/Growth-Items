@@ -1,0 +1,78 @@
+scn aaZefirosSetEnchOnItem
+
+;Main script
+;-----------------------------------------------------------------------------
+;aaZefirosManager
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;Given an array of items and enchantments, sets enchantment for each pair.
+;Skips pair if enchantment is empty.
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+array_var Items
+array_var Enchs
+
+short Count
+short i
+
+ref Item
+ref Ench
+;-----------------------------------------------------------------------------
+
+
+
+;-----------------------------------------------------------------------------
+begin Function { Enchs, Items }
+;-----------------------------------------------------------------------------
+
+	;Iterate up to the end of the smaller array
+	if eval( ar_Size Enchs ) < eval( ar_Size Items )
+		Let Count := ar_Size Enchs
+	else
+		Let Count := ar_Size Items
+	endif
+
+	
+	Let i := 0
+	While ( i < Count )
+
+		Let Ench := Enchs[i]
+		Let Item := Items[i]
+
+		;Set enchantment if it actually has any effects
+		if ( GetMagicItemEffectCount Ench > 0 )
+
+			;Enchantments don't have names so we can't get human readable debug info out of them
+			DebugPrint "Assigning enchantment to %n." Item
+			SetEnchantment Ench Item
+
+		endif
+
+		Let i += 1
+	loop
+
+	
+	Return
+;-----------------------------------------------------------------------------
+end ;Function { Enchs, Items }
+;-----------------------------------------------------------------------------

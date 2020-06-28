@@ -1,0 +1,253 @@
+scn aaZefirosGetFormData3
+
+;Main script
+;-----------------------------------------------------------------------------
+;aaZefirosManager
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;aaZefirosGetFormsArray
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;Extends and returns the array started in GetFormsArray.
+;Contains modded apparel.
+;
+;Created to bypass script size limitations.
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+array_var Data ;Return value
+;-----------------------------------------------------------------------------
+
+;-----------------------------------------------------------------------------
+begin Function { Data }
+;-----------------------------------------------------------------------------
+
+	;ar_Append is used so re-ordering this list is just a simple cut&paste
+
+	;-----------------------------------------------------------------------------
+	;Imperial Champion
+	;-----------------------------------------------------------------------------
+	ar_Append Data[0] ar_Map 0::"Zefiros\stav\ImperialDragon\Cuirass.nif"			1::""	2::"Zefiros\stav\ImperialDragon\Cuirass_gnd.nif"	3::""	4::"Zefiros\stav\ImperialDragon\Cuirass.dds"	5::""	6::"Imperial Champion"	7::4
+	ar_Append Data[0] ar_Map 0::"Zefiros\stav\ImperialDragon\Emperor_Cuirass.nif"	1::""	2::"Zefiros\stav\ImperialDragon\Cuirass_gnd.nif"	3::""	4::"Zefiros\stav\ImperialDragon\Cuirass.dds"	5::""	6::"Emperial Champion"	7::4
+	ar_Append Data[1] ar_Map 0::"Zefiros\stav\ImperialDragon\Boots.nif"				1::""	2::"Zefiros\stav\ImperialDragon\Boots_gnd.nif"		3::""	4::"Zefiros\stav\ImperialDragon\Boots.dds"		5::""	6::"Imperial Champion"	7::32
+	ar_Append Data[2] ar_Map 0::"Zefiros\stav\ImperialDragon\Gauntlets.nif"			1::""	2::"Zefiros\stav\ImperialDragon\Gauntlets_gnd.nif"	3::""	4::"Zefiros\stav\ImperialDragon\Gauntlets.dds"	5::""	6::"Imperial Champion"	7::16
+	ar_Append Data[3] ar_Map 0::"Zefiros\stav\ImperialDragon\Helmet.nif"			1::""	2::"Zefiros\stav\ImperialDragon\Helmet_gnd.nif"		3::""	4::"Zefiros\stav\ImperialDragon\Helmet.dds"		5::""	6::"Imperial Champion"	7::3
+	ar_Append Data[4] ar_Map 0::"Zefiros\stav\ImperialDragon\Greaves.nif"			1::""	2::"Zefiros\stav\ImperialDragon\Greaves_gnd.nif"	3::""	4::"Zefiros\stav\ImperialDragon\Greaves.dds"	5::""	6::"Imperial Champion"	7::8
+
+	;-----------------------------------------------------------------------------
+	;Steel Kite
+	;-----------------------------------------------------------------------------
+	ar_Append Data[5] ar_Map 0::"Zefiros\armor\Steel\Shield.nif"	1::""	2::"Zefiros\armor\Steel\Shield.nif"	3::""	4::GetBipedIconPath 0 SteelShield	5::""	6::"Steel Kite"	7::8192
+
+	;-----------------------------------------------------------------------------
+	;Ebony Kite
+	;-----------------------------------------------------------------------------
+	ar_Append Data[5] ar_Map 0::"Zefiros\armor\ebony\Ebony Kite Shield.nif"	1::""	2::"Zefiros\armor\ebony\Ebony Kite Shield.nif"	3::""	4::"Zefiros\Armor\ebony\iconebonykiteshield.dds"	5::""	6::"Ebony Kite"	7::8192
+
+	;-----------------------------------------------------------------------------
+	;Daedrim
+	;-----------------------------------------------------------------------------
+	ar_Append Data[0] ar_Map 0::"Zefiros\Armor\Daedric2\M\cuirass.nif"		1::"Zefiros\Armor\Daedric2\F\cuirass.nif"	2::GetBipedModelPath 2 DaedricCuirass	3::GetBipedModelPath 3 DaedricCuirass	4::GetBipedIconPath 0 DaedricCuirass	5::GetBipedIconPath 0 DaedricCuirass	6::"Daedrim" 7::GetBipedSlotMask DaedricCuirass
+	ar_Append Data[1] ar_Map 0::"Zefiros\Armor\Daedric2\M\boots.nif"		1::"Zefiros\Armor\Daedric2\F\boots.nif"		2::GetBipedModelPath 2 DaedricBoots		3::GetBipedModelPath 3 DaedricBoots		4::GetBipedIconPath 0 DaedricBoots		5::GetBipedIconPath 0 DaedricBoots		6::"Daedrim" 7::GetBipedSlotMask DaedricBoots
+	ar_Append Data[2] ar_Map 0::"Zefiros\Armor\Daedric2\M\gauntlets.nif"	1::"Zefiros\Armor\Daedric2\F\gauntlets.nif"	2::GetBipedModelPath 2 DaedricGauntlets	3::GetBipedModelPath 3 DaedricGauntlets	4::GetBipedIconPath 0 DaedricGauntlets	5::GetBipedIconPath 0 DaedricGauntlets	6::"Daedrim" 7::GetBipedSlotMask DaedricGauntlets
+	ar_Append Data[3] ar_Map 0::"Zefiros\Armor\Daedric2\M\helmet.nif"		1::"Zefiros\Armor\Daedric2\F\helmet.nif"	2::GetBipedModelPath 2 DaedricHelmet	3::GetBipedModelPath 3 DaedricHelmet	4::GetBipedIconPath 0 DaedricHelmet		5::GetBipedIconPath 0 DaedricHelmet		6::"Daedrim" 7::GetBipedSlotMask DaedricHelmet
+	ar_Append Data[4] ar_Map 0::"Zefiros\Armor\Daedric2\M\greaves.nif"		1::"Zefiros\Armor\Daedric2\F\greaves.nif"	2::GetBipedModelPath 2 DaedricGreaves	3::GetBipedModelPath 3 DaedricGreaves	4::GetBipedIconPath 0 DaedricGreaves	5::GetBipedIconPath 0 DaedricGreaves	6::"Daedrim" 7::GetBipedSlotMask DaedricGreaves
+	
+	;-----------------------------------------------------------------------------
+	;Daedric Lord
+	;-----------------------------------------------------------------------------
+	ar_Append Data[0] ar_Map 0::"Zefiros\armor\jy\daedric\daecuir.nif"			1::"Zefiros\armor\jy\daedric\daeFcuir.nif"			2::"Zefiros\armor\jy\daedric\daecuir_gnd.nif"		3::""											4::"Zefiros\jy\daecuir.dds"			5::""							6::"Daedric Lord" 7::4
+	ar_Append Data[1] ar_Map 0::"Zefiros\armor\jy\daedric\daeboots.nif"			1::"Zefiros\armor\jy\daedric\daeFboots.nif"			2::"Zefiros\armor\jy\daedric\daeboots_gnd.nif"		3::""											4::"Zefiros\jy\daeboots.dds"		5::""							6::"Daedric Lord" 7::32
+	ar_Append Data[2] ar_Map 0::"Zefiros\armor\jy\daedric\daegauntlets.nif"		1::"Zefiros\armor\jy\daedric\daeFgauntlets.nif"		2::"Zefiros\armor\jy\daedric\daegauntlets_gnd.nif"	3::""											4::"Zefiros\jy\daegauntlets.dds"	5::""							6::"Daedric Lord" 7::16
+	ar_Append Data[3] ar_Map 0::"Zefiros\armor\jy\daedric\daefacet.nif"			1::"Zefiros\armor\jy\daedric\daefacei.nif"			2::"Zefiros\armor\jy\daedric\daefacet_gnd.nif"		3::"Zefiros\armor\jy\daedric\daefacei_gnd.nif"	4::"Zefiros\jy\daefacet.dds"		5::"Zefiros\jy\daefacei.dds"	6::"Daedric Lord" 7::3
+	ar_Append Data[4] ar_Map 0::"Zefiros\armor\jy\daedric\daegreaves.nif"		1::"Zefiros\armor\jy\daedric\daeFgreaves.nif"		2::"Zefiros\armor\jy\daedric\daegreaves_gnd.nif"	3::""											4::"Zefiros\jy\daegreaves.dds"		5::""							6::"Daedric Lord" 7::8
+	
+	;-----------------------------------------------------------------------------
+	;Plate
+	;-----------------------------------------------------------------------------
+	ar_Append Data[0] ar_Map 0::"Zefiros\armor\SteelPlate\M\Cuirass.nif"		1::"Zefiros\armor\SteelPlate\F\Cuirass.nif"		2::"Zefiros\armor\SteelPlate\M\Cuirass_gnd.nif"		3::""	4::"Zefiros\armor\SteelPlate\Cuirass.dds"	5::""	6::"Plate" 			7::4
+	ar_Append Data[0] ar_Map 0::"Zefiros\armor\SteelPlate\M\Cuirass2.nif"		1::"Zefiros\armor\SteelPlate\F\Cuirass2.nif"	2::"Zefiros\armor\SteelPlate\M\Cuirass_gnd.nif"		3::""	4::"Zefiros\armor\SteelPlate\Cuirass.dds"	5::""	6::"Plate w/ Cops"	7::4
+	ar_Append Data[1] ar_Map 0::"Zefiros\armor\SteelPlate\M\boots.nif"			1::""											2::"Zefiros\armor\SteelPlate\M\boots_gnd.nif"		3::""	4::"Zefiros\armor\SteelPlate\boots.dds"		5::""	6::"Plate" 			7::32
+	ar_Append Data[2] ar_Map 0::"Zefiros\armor\SteelPlate\M\Gauntlets.nif"		1::"Zefiros\armor\SteelPlate\F\Gauntlets.nif"	2::"Zefiros\armor\SteelPlate\M\Gauntlets_gnd.nif"	3::""	4::"Zefiros\armor\SteelPlate\Gauntlets.dds"	5::""	6::"Plate" 			7::16
+	ar_Append Data[3] ar_Map 0::"Zefiros\armor\SteelPlate\M\Helmet.nif"			1::""											2::"Zefiros\armor\SteelPlate\M\Helmet_gnd.nif"		3::""	4::"Zefiros\armor\SteelPlate\Helmet.dds"	5::""	6::"Plate" 			7::2
+	ar_Append Data[4] ar_Map 0::"Zefiros\armor\SteelPlate\M\Greaves.nif"		1::"Zefiros\armor\SteelPlate\F\Greaves.nif"		2::"Zefiros\armor\SteelPlate\M\Greaves_gnd.nif"		3::""	4::"Zefiros\armor\SteelPlate\Greaves.dds"	5::""	6::"Plate" 			7::8
+	
+	;-----------------------------------------------------------------------------
+	;Black Plate
+	;-----------------------------------------------------------------------------
+	ar_Append Data[0] ar_Map 0::"Zefiros\armor\BlackwoodPlate\M\Cuirass.nif"		1::"Zefiros\armor\BlackwoodPlate\F\Cuirass.nif"		2::"Zefiros\armor\BlackwoodPlate\M\Cuirass_gnd.nif"		3::""	4::"Zefiros\armor\BlackwoodPlate\Curiass.dds"	5::""	6::"Black Plate" 			7::4
+	ar_Append Data[0] ar_Map 0::"Zefiros\armor\BlackwoodPlate\M\Cuirass2.nif"		1::"Zefiros\armor\BlackwoodPlate\F\Cuirass2.nif"	2::"Zefiros\armor\BlackwoodPlate\M\Cuirass_gnd.nif"		3::""	4::"Zefiros\armor\BlackwoodPlate\Curiass.dds"	5::""	6::"Black Plate w/ Cops"	7::4
+	ar_Append Data[1] ar_Map 0::"Zefiros\armor\BlackwoodPlate\M\boots.nif"			1::""												2::"Zefiros\armor\BlackwoodPlate\M\boots_gnd.nif"		3::""	4::"Zefiros\armor\BlackwoodPlate\boots.dds"		5::""	6::"Black Plate" 			7::32
+	ar_Append Data[2] ar_Map 0::"Zefiros\armor\BlackwoodPlate\M\Gauntlets.nif"		1::"Zefiros\armor\BlackwoodPlate\F\Gauntlets.nif"	2::"Zefiros\armor\BlackwoodPlate\M\Gauntlets_gnd.nif"	3::""	4::"Zefiros\armor\BlackwoodPlate\Gauntlet.dds"	5::""	6::"Black Plate" 			7::16
+	ar_Append Data[3] ar_Map 0::"Zefiros\armor\BlackwoodPlate\M\Helmet.nif"			1::""												2::"Zefiros\armor\BlackwoodPlate\M\Helmet_gnd.nif"		3::""	4::"Zefiros\armor\BlackwoodPlate\Helmet.dds"	5::""	6::"Black Plate" 			7::2
+	ar_Append Data[4] ar_Map 0::"Zefiros\armor\BlackwoodPlate\M\Greaves.nif"		1::"Zefiros\armor\BlackwoodPlate\F\Greaves.nif"		2::"Zefiros\armor\BlackwoodPlate\M\Greaves_gnd.nif"		3::""	4::"Zefiros\armor\BlackwoodPlate\Greaves.dds"	5::""	6::"Black Plate" 			7::8
+	
+	;-----------------------------------------------------------------------------
+	;Knightly Armory
+	;-----------------------------------------------------------------------------
+	ar_Append Data[0] ar_Map 0::"Zefiros\PlateArmor\CuirassPlate01.nif"			1::""										2::"Zefiros\PlateArmor\CuirassPlate_gnd.nif"		3::""	4::"Zefiros\PlateArmor\IconCuirassPlate01.dds"		5::""	6::"Knight's Steel A" 		7::4
+	ar_Append Data[0] ar_Map 0::"Zefiros\PlateArmor\CuirassPlate02.nif"			1::""										2::"Zefiros\PlateArmor\CuirassPlate_gnd.nif"		3::""	4::"Zefiros\PlateArmor\IconCuirassPlate02.dds"		5::""	6::"Knight's Steel B" 		7::4
+	ar_Append Data[0] ar_Map 0::"Zefiros\PlateArmor\CuirassStudded.nif"			1::"Zefiros\PlateArmor\CuirassStuddedF.nif"	2::"Zefiros\PlateArmor\CuirassStudded_gnd.nif"		3::""	4::"Zefiros\PlateArmor\IconCuirassStudded.dds"		5::""	6::"Lamellar" 				7::4
+	ar_Append Data[0] ar_Map 0::"Zefiros\PlateArmor\CuirassTemplar02.nif"		1::""										2::"Zefiros\PlateArmor\CuirassTemplar02_gnd.nif"	3::""	4::"Zefiros\PlateArmor\IconCuirassTemplar02.dds"	5::""	6::"Dragon Tabard" 			7::4
+	ar_Append Data[0] ar_Map 0::"Zefiros\PlateArmor\CuirassTemplar01.nif"		1::""										2::"Zefiros\PlateArmor\CuirassTemplar01_gnd.nif"	3::""	4::"Zefiros\PlateArmor\IconCuirassTemplar01.dds"	5::""	6::"Gryphon Tabard" 		7::4
+	ar_Append Data[1] ar_Map 0::"Zefiros\PlateArmor\BootsPlate.nif"				1::""										2::"Zefiros\PlateArmor\BootsPlate_gnd.nif"			3::""	4::"Zefiros\PlateArmor\IconBootsPlate.dds"			5::""	6::"Knight's Steel" 		7::32
+	ar_Append Data[2] ar_Map 0::"Zefiros\PlateArmor\GauntletsPlate.nif"			1::""										2::"Zefiros\PlateArmor\GauntletsPlate_gnd.nif"		3::""	4::"Zefiros\PlateArmor\IconGauntletsPlate.dds"		5::""	6::"Knight's Steel" 		7::16
+	ar_Append Data[3] ar_Map 0::"Zefiros\PlateArmor\HelmetArmet.nif"			1::""										2::"Zefiros\PlateArmor\HelmetArmet_gnd.nif"			3::""	4::"Zefiros\PlateArmor\IconArmet.dds"				5::""	6::"Armet" 					7::3
+	ar_Append Data[3] ar_Map 0::"Zefiros\PlateArmor\HelmetGreat01.nif"			1::""										2::"Zefiros\PlateArmor\HelmetGreat01_gnd.nif"		3::""	4::"Zefiros\PlateArmor\IconGreat01.dds"				5::""	6::"Great Helm A" 			7::3
+	ar_Append Data[3] ar_Map 0::"Zefiros\PlateArmor\HelmetGreat02.nif"			1::""										2::"Zefiros\PlateArmor\HelmetGreat02_gnd.nif"		3::""	4::"Zefiros\PlateArmor\IconGreat02.dds"				5::""	6::"Great Helm B" 			7::3
+	ar_Append Data[3] ar_Map 0::"Zefiros\PlateArmor\HelmetGriffin.nif"			1::""										2::"Zefiros\PlateArmor\HelmetGriffin_gnd.nif"		3::""	4::"Zefiros\PlateArmor\IconGreat03.dds"				5::""	6::"Great Helm C" 			7::3
+	ar_Append Data[3] ar_Map 0::"Zefiros\PlateArmor\HelmetCrested.nif"			1::""										2::"Zefiros\PlateArmor\HelmetCrested_gnd.nif"		3::""	4::"Zefiros\PlateArmor\IconCrested.dds"				5::""	6::"Crested Great Helm"		7::3
+	ar_Append Data[3] ar_Map 0::"Zefiros\PlateArmor\HelmetSalletChain.nif"		1::""										2::"Zefiros\PlateArmor\HelmetSalletChain_gnd.nif"	3::""	4::"Zefiros\PlateArmor\IconSallet.dds"				5::""	6::"Sallet & Chain Coif" 	7::2
+	ar_Append Data[3] ar_Map 0::"Zefiros\PlateArmor\HelmetSugarloaf.nif"		1::""										2::"Zefiros\PlateArmor\HelmetSugarloaf_gnd.nif"		3::""	4::"Zefiros\PlateArmor\IconSugarloaf.dds"			5::""	6::"Sugarloaf" 				7::3
+	ar_Append Data[3] ar_Map 0::"Zefiros\PlateArmor\HelmetTeuton.nif"			1::""										2::"Zefiros\PlateArmor\HelmetTeuton_gnd.nif"		3::""	4::"Zefiros\PlateArmor\IconTeuton.dds"				5::""	6::"Teuton" 				7::3
+	ar_Append Data[4] ar_Map 0::"Zefiros\PlateArmor\GreavesChain.nif"			1::""										2::GetBipedModelPath 2 ChainmailGreaves				3::""	4::"Zefiros\PlateArmor\IconGreavesChain.dds"		5::""	6::"Knight's Chain" 		7::8
+	ar_Append Data[4] ar_Map 0::"Zefiros\PlateArmor\GreavesPlate.nif"			1::"Zefiros\PlateArmor\GreavesPlateF.nif"	2::"Zefiros\PlateArmor\GreavesPlate_gnd.nif"		3::""	4::"Zefiros\PlateArmor\IconGreavesPlate.dds"		5::""	6::"Knight's Steel" 		7::8
+	ar_Append Data[5] ar_Map 0::"Zefiros\PlateArmor\ShieldKite01.nif"			1::""										2::"Zefiros\PlateArmor\ShieldKite01.nif"			3::""	4::"Zefiros\PlateArmor\IconKite01.dds"				5::""	6::"Knight's Kite" 			7::8192
+	ar_Append Data[5] ar_Map 0::"Zefiros\PlateArmor\ShieldKite01Dragon.nif"		1::""										2::"Zefiros\PlateArmor\ShieldKite01Dragon.nif"		3::""	4::"Zefiros\PlateArmor\IconKite01C.dds"				5::""	6::"Dragon Kite" 			7::8192
+	ar_Append Data[5] ar_Map 0::"Zefiros\PlateArmor\ShieldKite01Gryphon.nif"	1::""										2::"Zefiros\PlateArmor\ShieldKite01Gryphon.nif"		3::""	4::"Zefiros\PlateArmor\IconKite01B.dds"				5::""	6::"Gryphon Kite" 			7::8192
+	
+	;-----------------------------------------------------------------------------
+	;Gothic
+	;-----------------------------------------------------------------------------
+	ar_Append Data[0] ar_Map 0::"Zefiros\KnightsPlate\G.nif" 			1::"" 2::GetBipedModelPath 2 SteelCuirass 	3::"" 4::GetBipedIconPath 0 SteelCuirass 	5::"" 6::"Gothic" 		7::60
+	ar_Append Data[3] ar_Map 0::"Zefiros\KnightsPlate\Ghelmet.nif" 		1::"" 2::GetBipedModelPath 2 SteelHelmet 	3::"" 4::GetBipedIconPath 0 SteelHelmet 	5::"" 6::"Gothic" 		7::3
+	ar_Append Data[0] ar_Map 0::"Zefiros\KnightsPlate\GDark.nif" 		1::"" 2::GetBipedModelPath 2 SteelCuirass 	3::"" 4::GetBipedIconPath 0 SteelCuirass 	5::"" 6::"Dark Gothic" 	7::60
+	ar_Append Data[3] ar_Map 0::"Zefiros\KnightsPlate\GhelmetDark.nif" 	1::"" 2::GetBipedModelPath 2 SteelHelmet 	3::"" 4::GetBipedIconPath 0 SteelHelmet 	5::"" 6::"Dark Gothic" 	7::3
+
+	;-----------------------------------------------------------------------------
+	;Milanese
+	;-----------------------------------------------------------------------------
+	ar_Append Data[0] ar_Map 0::"Zefiros\KnightsPlate\M.nif" 			1::"" 2::GetBipedModelPath 2 SteelCuirass 	3::"" 4::GetBipedIconPath 0 SteelCuirass 	5::"" 6::"Milanese" 		7::60
+	ar_Append Data[3] ar_Map 0::"Zefiros\KnightsPlate\Mhelmet.nif" 		1::"" 2::GetBipedModelPath 2 SteelHelmet 	3::"" 4::GetBipedIconPath 0 SteelHelmet 	5::"" 6::"Milanese" 		7::3
+	ar_Append Data[0] ar_Map 0::"Zefiros\KnightsPlate\MGold.nif" 		1::"" 2::GetBipedModelPath 2 SteelCuirass 	3::"" 4::GetBipedIconPath 0 SteelCuirass 	5::"" 6::"Gold Milanese" 	7::60
+	ar_Append Data[3] ar_Map 0::"Zefiros\KnightsPlate\MhelmetGold.nif" 	1::"" 2::GetBipedModelPath 2 SteelHelmet 	3::"" 4::GetBipedIconPath 0 SteelHelmet 	5::"" 6::"Gold Milanese" 	7::3
+	
+	;-----------------------------------------------------------------------------
+	;Dragonknight
+	;-----------------------------------------------------------------------------
+	ar_Append Data[0] ar_Map 0::"Zefiros\Dragonknight\dkarmor.nif" 	1::"" 2::GetBipedModelPath 2 ImperialDragonCuirassHeavy 	3::"" 4::"Zefiros\Dragonknight\dkam.dds" 	5::"" 6::"Dragonknight" 7::60
+	ar_Append Data[3] ar_Map 0::"Zefiros\Dragonknight\dkhelm.nif" 	1::"" 2::GetBipedModelPath 2 ImperialDragonHelmetHeavy 		3::"" 4::"Zefiros\Dragonknight\dkh.dds" 	5::"" 6::"Dragonknight" 7::2
+
+	;-----------------------------------------------------------------------------
+	;Shadow
+	;-----------------------------------------------------------------------------
+	ar_Append Data[0] ar_Map 0::"Zefiros\VBMOD\Plate of the Shadow Coat.nif" 	1::"" 2::"Zefiros\VBMOD\Shadow_gnd.nif" 	3::"" 4::"Zefiros\VBMOD\Armors\Plate of the Shadow Coat.dds" 	5::"" 6::"Shadow Dress" 		7::60
+	ar_Append Data[0] ar_Map 0::"Zefiros\VBMOD\Plate of the Shadow.nif" 		1::"" 2::"Zefiros\VBMOD\Shadow_gnd.nif" 	3::"" 4::"Zefiros\VBMOD\Armors\Plate of the Shadow.dds" 		5::"" 6::"Shadow Midriff" 		7::60
+	ar_Append Data[0] ar_Map 0::"Zefiros\VBMOD\Shadow Male Cape.nif" 			1::"" 2::"Zefiros\VBMOD\Shadow_gnd.nif" 	3::"" 4::"Zefiros\VBMOD\Armors\Shadow Male Cape.dds" 			5::"" 6::"Shadow" 				7::20
+	ar_Append Data[0] ar_Map 0::"Zefiros\VBMOD\Shadow Male CapeEX.nif" 			1::"" 2::"Zefiros\VBMOD\Shadow_gnd.nif" 	3::"" 4::"Zefiros\VBMOD\Armors\Shadow Male Cape EX.dds" 		5::"" 6::"Shadow EX" 			7::20
+	ar_Append Data[0] ar_Map 0::"Zefiros\VBMOD\Shadow Male.nif" 				1::"" 2::"Zefiros\VBMOD\Shadow_gnd.nif" 	3::"" 4::"Zefiros\VBMOD\Armors\Shadow Male.dds" 				5::"" 6::"Shadow Torn" 			7::20
+	ar_Append Data[0] ar_Map 0::"Zefiros\VBMOD\Shadow MaleEX.nif" 				1::"" 2::"Zefiros\VBMOD\Shadow_gnd.nif" 	3::"" 4::"Zefiros\VBMOD\Armors\Shadow Male EX.dds" 				5::"" 6::"Shadow EX Torn" 		7::20
+	ar_Append Data[0] ar_Map 0::"Zefiros\VBMOD\Shadow Plate Cape.nif" 			1::"" 2::"Zefiros\VBMOD\Shadow_gnd.nif" 	3::"" 4::"Zefiros\VBMOD\Armors\Shadow Plate Cape.dds" 			5::"" 6::"Shadow Plate" 		7::20
+	ar_Append Data[0] ar_Map 0::"Zefiros\VBMOD\Shadow Plate CapeEX.nif" 		1::"" 2::"Zefiros\VBMOD\Shadow_gnd.nif" 	3::"" 4::"Zefiros\VBMOD\Armors\Shadow Plate Cape EX.dds" 		5::"" 6::"Shadow Plate EX" 		7::20
+	ar_Append Data[0] ar_Map 0::"Zefiros\VBMOD\Shadow Plate.nif" 				1::"" 2::"Zefiros\VBMOD\Shadow_gnd.nif" 	3::"" 4::"Zefiros\VBMOD\Armors\Shadow Plate.dds" 				5::"" 6::"Shadow Plate Torn" 	7::20
+	ar_Append Data[0] ar_Map 0::"Zefiros\VBMOD\Shadow PlateEX.nif" 				1::"" 2::"Zefiros\VBMOD\Shadow_gnd.nif"		3::"" 4::"Zefiros\VBMOD\Armors\Shadow Plate EX.dds" 			5::"" 6::"Shadow Plate EX Torn" 7::20
+	ar_Append Data[0] ar_Map 0::"Zefiros\VBMOD\ShadowMU.nif" 					1::"" 2::"Zefiros\VBMOD\Shadow_gnd.nif" 	3::"" 4::"Zefiros\VBMOD\Armors\Shadow Male.dds" 				5::"" 6::"Shadow Berserk" 		7::20
+	ar_Append Data[3] ar_Map 0::"Zefiros\VBMOD\Helm.nif" 						1::"" 2::"Zefiros\VBMOD\Shadow_gnd.nif" 	3::"" 4::"Zefiros\VBMOD\Armors\Helm.dds" 						5::"" 6::"Shadow Helm" 			7::3
+	ar_Append Data[3] ar_Map 0::"Zefiros\VBMOD\Helm[A].nif" 					1::"" 2::"Zefiros\VBMOD\Shadow_gnd.nif" 	3::"" 4::"Zefiros\VBMOD\Armors\Helm.dds" 						5::"" 6::"Shadow Helm Open" 	7::2
+	ar_Append Data[3] ar_Map 0::"Zefiros\VBMOD\Shadow Helm.nif" 				1::"" 2::"Zefiros\VBMOD\Shadow_gnd.nif" 	3::"" 4::"Zefiros\VBMOD\Armors\Shadow Helm.dds" 				5::"" 6::"Shadow Helm M" 		7::3
+	ar_Append Data[3] ar_Map 0::"Zefiros\VBMOD\Shadow Helm[A].nif" 				1::"" 2::"Zefiros\VBMOD\Shadow_gnd.nif" 	3::"" 4::"Zefiros\VBMOD\Armors\Shadow Helm.dds" 				5::"" 6::"Shadow Helm M Open" 	7::2
+	ar_Append Data[3] ar_Map 0::"Zefiros\VBMOD\Shadow Helm Female.nif" 			1::"" 2::"Zefiros\VBMOD\Shadow_gnd.nif" 	3::"" 4::"Zefiros\VBMOD\Armors\Shadow Helm.dds" 				5::"" 6::"Shadow Helm F" 		7::3
+	ar_Append Data[3] ar_Map 0::"Zefiros\VBMOD\Shadow Helm Female[A].nif" 		1::"" 2::"Zefiros\VBMOD\Shadow_gnd.nif" 	3::"" 4::"Zefiros\VBMOD\Armors\Shadow Helm.dds" 				5::"" 6::"Shadow Helm F Open" 	7::2
+	ar_Append Data[3] ar_Map 0::"Zefiros\VBMOD\Helm of the Shadow.nif" 			1::"" 2::"Zefiros\VBMOD\Shadow_gnd.nif" 	3::"" 4::"Zefiros\VBMOD\Armors\Helm of the Shadow.dds" 			5::"" 6::"Shadow Demon" 		7::3
+	ar_Append Data[3] ar_Map 0::"Zefiros\VBMOD\Helm of the Shadow[A].nif" 		1::"" 2::"Zefiros\VBMOD\Shadow_gnd.nif" 	3::"" 4::"Zefiros\VBMOD\Armors\Helm of the Shadow.dds" 			5::"" 6::"Shadow Demon Open" 	7::2
+	ar_Append Data[3] ar_Map 0::"Zefiros\VBMOD\Helm of the Berserk.nif" 		1::"" 2::"Zefiros\VBMOD\Shadow_gnd.nif" 	3::"" 4::"Zefiros\VBMOD\Armors\Helm of the Berserk.dds" 		5::"" 6::"Shadow Berserk" 		7::3
+	ar_Append Data[4] ar_Map 0::"Zefiros\VBMOD\Shadow Fauld.nif" 				1::"" 2::"Zefiros\VBMOD\Shadow_gnd.nif" 	3::"" 4::"Zefiros\VBMOD\Armors\Shadow Fauld.dds" 				5::"" 6::"Shadow Faulds" 		7::40
+	ar_Append Data[4] ar_Map 0::"Zefiros\VBMOD\Shadow Greaves.nif" 				1::"" 2::"Zefiros\VBMOD\Shadow_gnd.nif" 	3::"" 4::"Zefiros\VBMOD\Armors\Shadow Greaves.dds" 				5::"" 6::"Shadow Greaves" 		7::40
+	ar_Append Data[4] ar_Map 0::"Zefiros\VBMOD\ShadowML.nif" 					1::"" 2::"Zefiros\VBMOD\Shadow_gnd.nif" 	3::"" 4::"Zefiros\VBMOD\Armors\Shadow Greaves.dds" 				5::"" 6::"Shadow Berserk" 		7::40
+	ar_Append Data[5] ar_Map 0::"Zefiros\VBMOD\Shadow Shiled.nif" 				1::"" 2::"Zefiros\VBMOD\Shadow Shiled.nif" 	3::"" 4::"Zefiros\VBMOD\Armors\Shadow Shield.dds" 				5::"" 6::"Shadow" 				7::8192
+	
+	;-----------------------------------------------------------------------------
+	;Witcher Helms
+	;-----------------------------------------------------------------------------
+	ar_Append Data[3] ar_Map 0::"Zefiros\armor\tw2heavyplate\KlappvisorBascinetClosed.nif"	1::""	2::"Zefiros\armor\tw2heavyplate\KlappvisorBascinet_gnd.nif"	3::""	4::GetBipedIconPath 0 SteelHelmet	5::""	6::"Klappvisier"		7::2
+	ar_Append Data[3] ar_Map 0::"Zefiros\armor\tw2heavyplate\KlappvisorBascinetOpen.nif"	1::""	2::"Zefiros\armor\tw2heavyplate\KlappvisorBascinet_gnd.nif"	3::""	4::GetBipedIconPath 0 SteelHelmet	5::""	6::"Klappvisier Open"	7::2
+	ar_Append Data[3] ar_Map 0::"Zefiros\armor\tw2heavyplate\OpenSallet.nif"				1::""	2::"Zefiros\armor\tw2heavyplate\OpenSallet_gnd.nif"			3::""	4::GetBipedIconPath 0 SteelHelmet	5::""	6::"Kettle"				7::2
+	ar_Append Data[3] ar_Map 0::"Zefiros\armor\tw2heavyplate\OrderSteelHelmet.nif"			1::""	2::"Zefiros\armor\tw2heavyplate\OrderSteelHelmet_gnd.nif"	3::""	4::GetBipedIconPath 0 SteelHelmet	5::""	6::"Barbute"			7::2
+	ar_Append Data[3] ar_Map 0::"Zefiros\armor\tw2heavyplate\OrderhelmRB.nif"				1::""	2::"Zefiros\armor\tw2heavyplate\OrderhelmRB_gnd.nif"		3::""	4::GetBipedIconPath 0 SteelHelmet	5::""	6::"Black Barbute"		7::2
+	ar_Append Data[3] ar_Map 0::"Zefiros\armor\tw2heavyplate\Pothelm.nif"					1::""	2::"Zefiros\armor\tw2heavyplate\Pothelm_gnd.nif"			3::""	4::GetBipedIconPath 0 SteelHelmet	5::""	6::"Pot"				7::2
+	ar_Append Data[3] ar_Map 0::"Zefiros\armor\tw2heavyplate\Sallet.nif"					1::""	2::"Zefiros\armor\tw2heavyplate\Sallet_gnd.nif"				3::""	4::GetBipedIconPath 0 SteelHelmet	5::""	6::"Sallet"				7::2
+	ar_Append Data[3] ar_Map 0::"Zefiros\armor\tw2heavyplate\steelhelm.nif"					1::""	2::"Zefiros\armor\tw2heavyplate\steelhelm_gnd.nif"			3::""	4::GetBipedIconPath 0 SteelHelmet	5::""	6::"Bascinet"			7::2
+
+	;-----------------------------------------------------------------------------
+	;Heater
+	;-----------------------------------------------------------------------------
+	ar_Append Data[5] ar_Map 0::"Zefiros\armor\shields\LeatherPlainShield.nif"	1::""	2::"Zefiros\armor\shields\LeatherPlainShield.nif"	3::""	4::GetBipedIconPath 0 LeatherShield	5::""	6::"Heater"				7::8192
+	ar_Append Data[5] ar_Map 0::"Zefiros\armor\shields\LeatherPlainShieldA.nif"	1::""	2::"Zefiros\armor\shields\LeatherPlainShieldA.nif"	3::""	4::GetBipedIconPath 0 LeatherShield	5::""	6::"Aedirn Heater"		7::8192
+	ar_Append Data[5] ar_Map 0::"Zefiros\armor\shields\LeatherPlainShieldB.nif"	1::""	2::"Zefiros\armor\shields\LeatherPlainShieldB.nif"	3::""	4::GetBipedIconPath 0 LeatherShield	5::""	6::"Detmold Heater"		7::8192
+	ar_Append Data[5] ar_Map 0::"Zefiros\armor\shields\LeatherPlainShieldC.nif"	1::""	2::"Zefiros\armor\shields\LeatherPlainShieldC.nif"	3::""	4::GetBipedIconPath 0 LeatherShield	5::""	6::"Kaedwen Heater"		7::8192
+	ar_Append Data[5] ar_Map 0::"Zefiros\armor\shields\LeatherPlainShieldD.nif"	1::""	2::"Zefiros\armor\shields\LeatherPlainShieldD.nif"	3::""	4::GetBipedIconPath 0 LeatherShield	5::""	6::"Old Kaedwen Heater"	7::8192
+	ar_Append Data[5] ar_Map 0::"Zefiros\armor\shields\LeatherPlainShieldE.nif"	1::""	2::"Zefiros\armor\shields\LeatherPlainShieldE.nif"	3::""	4::GetBipedIconPath 0 LeatherShield	5::""	6::"Lavalette Heater"	7::8192
+	ar_Append Data[5] ar_Map 0::"Zefiros\armor\shields\LeatherPlainShieldF.nif"	1::""	2::"Zefiros\armor\shields\LeatherPlainShieldF.nif"	3::""	4::GetBipedIconPath 0 LeatherShield	5::""	6::"Pangratt Heater"	7::8192
+	ar_Append Data[5] ar_Map 0::"Zefiros\armor\shields\LeatherPlainShieldG.nif"	1::""	2::"Zefiros\armor\shields\LeatherPlainShieldG.nif"	3::""	4::GetBipedIconPath 0 LeatherShield	5::""	6::"Redania Heater"		7::8192
+	ar_Append Data[5] ar_Map 0::"Zefiros\armor\shields\LeatherPlainShieldH.nif"	1::""	2::"Zefiros\armor\shields\LeatherPlainShieldH.nif"	3::""	4::GetBipedIconPath 0 LeatherShield	5::""	6::"Temerin Heater"		7::8192
+	
+	
+	;-----------------------------------------------------------------------------
+	;Kite
+	;-----------------------------------------------------------------------------
+	ar_Append Data[5] ar_Map 0::"Zefiros\armor\shields\TowerHeaterShieldC.nif"	1::""	2::"Zefiros\armor\shields\TowerHeaterShieldC.nif"	3::""	4::GetBipedIconPath 0 LeatherShield	5::""	6::"Rose Kite"		7::8192
+	ar_Append Data[5] ar_Map 0::"Zefiros\armor\shields\TowerHeaterShieldB.nif"	1::""	2::"Zefiros\armor\shields\TowerHeaterShieldB.nif"	3::""	4::GetBipedIconPath 0 LeatherShield	5::""	6::"Lavalette Kite"	7::8192
+	ar_Append Data[5] ar_Map 0::"Zefiros\armor\shields\TowerHeaterShieldA.nif"	1::""	2::"Zefiros\armor\shields\TowerHeaterShieldA.nif"	3::""	4::GetBipedIconPath 0 LeatherShield	5::""	6::"Arjan Kite"		7::8192
+	ar_Append Data[5] ar_Map 0::"Zefiros\armor\shields\TowerHeaterShield.nif"	1::""	2::"Zefiros\armor\shields\TowerHeaterShield.nif"	3::""	4::GetBipedIconPath 0 LeatherShield	5::""	6::"Redania Kite"	7::8192
+	
+	;-----------------------------------------------------------------------------
+	;Pavise
+	;-----------------------------------------------------------------------------
+	ar_Append Data[5] ar_Map 0::"Zefiros\armor\shields\TowerShield.nif"				1::""	2::"Zefiros\armor\shields\TowerShield.nif"			3::""	4::GetBipedIconPath 0 SteelShield	5::""	6::"Pavise"				7::8192
+	ar_Append Data[5] ar_Map 0::"Zefiros\armor\shields\TowerShieldA.nif"			1::""	2::"Zefiros\armor\shields\TowerShieldA.nif"			3::""	4::GetBipedIconPath 0 SteelShield	5::""	6::"Dethmold Pavise"	7::8192
+	ar_Append Data[5] ar_Map 0::"Zefiros\armor\shields\TowerShieldB.nif"			1::""	2::"Zefiros\armor\shields\TowerShieldB.nif"			3::""	4::GetBipedIconPath 0 SteelShield	5::""	6::"Kaedwen Pavise"		7::8192
+	ar_Append Data[5] ar_Map 0::"Zefiros\armor\shields\TowerShieldC.nif"			1::""	2::"Zefiros\armor\shields\TowerShieldC.nif"			3::""	4::GetBipedIconPath 0 SteelShield	5::""	6::"Nilfgaard Pavise"	7::8192
+	ar_Append Data[5] ar_Map 0::"Zefiros\armor\shields\TowerShieldD.nif"			1::""	2::"Zefiros\armor\shields\TowerShieldD.nif"			3::""	4::GetBipedIconPath 0 SteelShield	5::""	6::"Renuald Pavise"		7::8192
+	
+	;-----------------------------------------------------------------------------
+	;Worn Targe
+	;-----------------------------------------------------------------------------
+	ar_Append Data[5] ar_Map 0::"Zefiros\armor\shields\WornWoodenShield.nif"	1::""	2::"Zefiros\armor\shields\WornWoodenShield.nif"		3::""	4::GetBipedIconPath 0 IronShield	5::""	6::"Worn Targe"	7::8192
+
+	;-----------------------------------------------------------------------------
+	;Spike
+	;-----------------------------------------------------------------------------
+	ar_Append Data[5] ar_Map 0::"Zefiros\armor\shields\SpikedShield.nif"		1::""	2::"Zefiros\armor\shields\SpikedShield.nif"			3::""	4::"Zefiros\Armor\SteelPlate\shield.dds"	5::""	6::"Spike"		7::8192
+
+	;-----------------------------------------------------------------------------
+	;Medieval Shields
+	;-----------------------------------------------------------------------------
+	ar_Append Data[5] ar_Map 0::"Zefiros\armor\MedievalShields\blackprinceshield.nif"	1::""	2::"Zefiros\armor\MedievalShields\blackprinceshield.nif"	3::""	4::"Zefiros\Armor\MedievalShields\iconblackprinceshield.dds"	5::""	6::"Black Prince"	7::8192
+	ar_Append Data[5] ar_Map 0::"Zefiros\armor\MedievalShields\gondorianshield.nif"		1::""	2::"Zefiros\armor\MedievalShields\gondorianshield.nif"		3::""	4::"Zefiros\Armor\MedievalShields\icongondorianshield.dds"		5::""	6::"Gondorian"		7::8192
+	ar_Append Data[5] ar_Map 0::"Zefiros\armor\MedievalShields\richardlionheart.nif"	1::""	2::"Zefiros\armor\MedievalShields\richardlionheart.nif"		3::""	4::"Zefiros\Armor\MedievalShields\iconrichardlionheart.dds"		5::""	6::"Lion Heart"		7::8192
+	ar_Append Data[5] ar_Map 0::"Zefiros\armor\MedievalShields\scottishtarge.nif"		1::""	2::"Zefiros\armor\MedievalShields\scottishtarge.nif"		3::""	4::"Zefiros\Armor\MedievalShields\iconscottishtarge.dds"		5::""	6::"Targe"			7::8192
+
+	;-----------------------------------------------------------------------------
+	;Underworld
+	;-----------------------------------------------------------------------------
+	ar_Append Data[0] ar_Map 0::"Zefiros\underworld\malearmor.nif" 	1::"Zefiros\underworld\sonja armor.nif" 2::"Zefiros\underworld\malearmor_gnd.nif" 	3::"" 4::GetBipedIconPath 0 DBLeatherCuirass 	5::"" 6::"Underworld" 7::60
+	ar_Append Data[3] ar_Map 0::"Zefiros\underworld\helmet.nif" 	1::"" 									2::"Zefiros\underworld\helmet_gnd.nif" 		3::"" 4::GetBipedIconPath 0 DBLeatherHelmet 	5::"" 6::"Underworld" 7::2
+
+	;-----------------------------------------------------------------------------
+	;Two Wenches, One Khajiit
+	;-----------------------------------------------------------------------------
+	ar_Append Data[5] ar_Map 0::"Zefiros\Shield2Womens&Cat\Shield2Womens&Cat.nif" 	1::"" 2::"Zefiros\Shield2Womens&Cat\Shield2Womens&Cat.nif" 	3::"" 4::"Zefiros\Shield2W&Cat\Shield2W&C.dds" 	5::"" 6::"Two Wenches, One Khajiit" 7::8192
+
+	
+	SetFunctionValue Data
+	Return
+;-----------------------------------------------------------------------------
+end ;Function { Data }
+;-----------------------------------------------------------------------------

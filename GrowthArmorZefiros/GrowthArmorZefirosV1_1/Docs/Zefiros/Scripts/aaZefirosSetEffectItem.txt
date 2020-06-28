@@ -1,0 +1,97 @@
+scn aaZefirosSetEffectItem
+
+;Main script
+;-----------------------------------------------------------------------------
+;aaZefirosManager
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;aaZefirosGetEffectIndex
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;aaZefirosSetEnchant
+;aaZefirosSetSeek
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;Finds an effect on an enchantment and sets its values to those provided.
+;If the effect does not exist on the enchantment, add it.
+;If the magnitude, area and duration passed are 0, delete the effect.
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+long Magn
+long Area
+long Dura
+short Rng
+long EffC
+long AuxC
+ref Ench
+
+short Idx
+;-----------------------------------------------------------------------------
+
+
+
+;-----------------------------------------------------------------------------
+begin Function { Magn, Area, Dura, Rng, EffC, AuxC, Ench }
+;-----------------------------------------------------------------------------
+
+	;GetEffectIndex
+	Let Idx := Call aaZefirosGetEffectIndex EffC AuxC Ench
+
+	;If effect not found...
+	if ( Idx == -1 )
+
+		;And not slated for deletion...
+		if ( Magn != 0 || Area != 0 || Dura != 0 )
+
+			DebugPrint "Adding full effect item."
+			Let Idx := AddFullEffectItemC EffC Magn Area Dura Rng Ench
+			SetNthEffectItemActorValueC AuxC Ench Idx
+			Return
+
+		endif
+
+	;If effect found...
+	else
+
+		;And slated for deletion...
+		if ( Magn == 0 && Area == 0 && Dura == 0 )
+
+			DebugPrint "Deleting effect."
+			RemoveNthEffectItem Ench Idx
+			Return
+
+		;And not slated for deletion...
+		else
+
+			DebugPrint "Setting effect stats."
+			SetNthEffectItemMagnitude Magn Ench Idx
+			SetNthEffectItemArea Area Ench Idx
+			SetNthEffectItemDuration Dura Ench Idx
+			SetNthEffectItemRange Rng Ench Idx
+			Return
+			
+		endif
+
+	endif
+	
+	
+	Return
+;-----------------------------------------------------------------------------
+end ;Function { Magn, Area, Dura, Rng, EffC, AuxC, Ench }
+;-----------------------------------------------------------------------------

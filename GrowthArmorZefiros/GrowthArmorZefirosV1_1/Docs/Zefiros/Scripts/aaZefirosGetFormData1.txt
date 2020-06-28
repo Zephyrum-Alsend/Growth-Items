@@ -1,0 +1,304 @@
+scn aaZefirosGetFormData1
+
+;Main script
+;-----------------------------------------------------------------------------
+;aaZefirosManager
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;aaZefirosGetFormsArray
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;Extends and returns the array started in GetFormsArray.
+;Contains vanilla armor and Local Guards Features' Legion armor.
+;
+;Created to bypass script size limitations.
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+array_var Data ;Return value
+;-----------------------------------------------------------------------------
+
+;-----------------------------------------------------------------------------
+begin Function { Data }
+;-----------------------------------------------------------------------------
+
+	;ar_Append is used so re-ordering this list is just a simple cut&paste
+
+	;-----------------------------------------------------------------------------
+	;Fur
+	;-----------------------------------------------------------------------------
+	ar_Append Data[0] ar_Map 0::GetBipedModelPath 0 FurCuirass 		1::GetBipedModelPath 1 FurCuirass	 	2::GetBipedModelPath 2 FurCuirass 		3::GetBipedModelPath 3 FurCuirass 		4::GetBipedIconPath 0 FurCuirass 	5::GetBipedIconPath 1 FurCuirass 	6::"Fur" 	7::GetBipedSlotMask FurCuirass
+	ar_Append Data[1] ar_Map 0::GetBipedModelPath 0 FurBoots 		1::GetBipedModelPath 1 FurBoots 		2::GetBipedModelPath 2 FurBoots 		3::GetBipedModelPath 3 FurBoots 		4::GetBipedIconPath 0 FurBoots 		5::GetBipedIconPath 1 FurBoots 		6::"Fur" 	7::GetBipedSlotMask FurBoots
+	ar_Append Data[2] ar_Map 0::GetBipedModelPath 0 FurGauntlets	1::GetBipedModelPath 1 FurGauntlets 	2::GetBipedModelPath 2 FurGauntlets 	3::GetBipedModelPath 3 FurGauntlets 	4::GetBipedIconPath 0 FurGauntlets 	5::GetBipedIconPath 1 FurGauntlets 	6::"Fur" 	7::GetBipedSlotMask FurGauntlets
+	ar_Append Data[3] ar_Map 0::GetBipedModelPath 0 FurHelmet 		1::GetBipedModelPath 1 FurHelmet 		2::GetBipedModelPath 2 FurHelmet 		3::GetBipedModelPath 3 FurHelmet 		4::GetBipedIconPath 0 FurHelmet 	5::GetBipedIconPath 1 FurHelmet 	6::"Fur" 	7::GetBipedSlotMask FurHelmet
+	ar_Append Data[4] ar_Map 0::GetBipedModelPath 0 FurGreaves 		1::GetBipedModelPath 1 FurGreaves	 	2::GetBipedModelPath 2 FurGreaves 		3::GetBipedModelPath 3 FurGreaves 		4::GetBipedIconPath 0 FurGreaves 	5::GetBipedIconPath 1 FurGreaves 	6::"Fur" 	7::GetBipedSlotMask FurGreaves
+	ar_Append Data[5] ar_Map 0::GetBipedModelPath 0 FurShield 		1::GetBipedModelPath 1 FurShield 		2::GetBipedModelPath 2 FurShield 		3::GetBipedModelPath 3 FurShield 		4::GetBipedIconPath 0 FurShield 	5::GetBipedIconPath 1 FurShield 	6::"Fur" 	7::GetBipedSlotMask FurShield
+	
+	;-----------------------------------------------------------------------------
+	;Iron
+	;-----------------------------------------------------------------------------
+	ar_Append Data[0] ar_Map 0::GetBipedModelPath 0 IronCuirass 	1::GetBipedModelPath 1 IronCuirass	 	2::GetBipedModelPath 2 IronCuirass 		3::GetBipedModelPath 3 IronCuirass 		4::GetBipedIconPath 0 IronCuirass 	5::GetBipedIconPath 1 IronCuirass 	6::"Iron" 	7::GetBipedSlotMask IronCuirass
+	ar_Append Data[1] ar_Map 0::GetBipedModelPath 0 IronBoots 		1::GetBipedModelPath 1 IronBoots 		2::GetBipedModelPath 2 IronBoots 		3::GetBipedModelPath 3 IronBoots 		4::GetBipedIconPath 0 IronBoots 	5::GetBipedIconPath 1 IronBoots 	6::"Iron" 	7::GetBipedSlotMask IronBoots
+	ar_Append Data[2] ar_Map 0::GetBipedModelPath 0 IronGauntlets	1::GetBipedModelPath 1 IronGauntlets 	2::GetBipedModelPath 2 IronGauntlets 	3::GetBipedModelPath 3 IronGauntlets 	4::GetBipedIconPath 0 IronGauntlets 5::GetBipedIconPath 1 IronGauntlets	6::"Iron" 	7::GetBipedSlotMask IronGauntlets
+	ar_Append Data[3] ar_Map 0::GetBipedModelPath 0 IronHelmet 		1::GetBipedModelPath 1 IronHelmet 		2::GetBipedModelPath 2 IronHelmet 		3::GetBipedModelPath 3 IronHelmet 		4::GetBipedIconPath 0 IronHelmet 	5::GetBipedIconPath 1 IronHelmet 	6::"Iron" 	7::GetBipedSlotMask IronHelmet
+	ar_Append Data[4] ar_Map 0::GetBipedModelPath 0 IronGreaves 	1::GetBipedModelPath 1 IronGreaves	 	2::GetBipedModelPath 2 IronGreaves 		3::GetBipedModelPath 3 IronGreaves 		4::GetBipedIconPath 0 IronGreaves 	5::GetBipedIconPath 1 IronGreaves 	6::"Iron" 	7::GetBipedSlotMask IronGreaves
+	ar_Append Data[5] ar_Map 0::GetBipedModelPath 0 IronShield 		1::GetBipedModelPath 1 IronShield 		2::GetBipedModelPath 2 IronShield 		3::GetBipedModelPath 3 IronShield 		4::GetBipedIconPath 0 IronShield 	5::GetBipedIconPath 1 IronShield 	6::"Iron" 	7::GetBipedSlotMask IronShield
+	
+	;-----------------------------------------------------------------------------
+	;Leather
+	;-----------------------------------------------------------------------------
+	ar_Append Data[0] ar_Map 0::GetBipedModelPath 0 LeatherCuirass 		1::GetBipedModelPath 1 LeatherCuirass	 	2::GetBipedModelPath 2 LeatherCuirass 		3::GetBipedModelPath 3 LeatherCuirass 		4::GetBipedIconPath 0 LeatherCuirass 	5::GetBipedIconPath 1 LeatherCuirass 	6::"Leather" 	7::GetBipedSlotMask LeatherCuirass
+	ar_Append Data[1] ar_Map 0::GetBipedModelPath 0 LeatherBoots 		1::GetBipedModelPath 1 LeatherBoots 		2::GetBipedModelPath 2 LeatherBoots 		3::GetBipedModelPath 3 LeatherBoots 		4::GetBipedIconPath 0 LeatherBoots 		5::GetBipedIconPath 1 LeatherBoots 		6::"Leather" 	7::GetBipedSlotMask LeatherBoots
+	ar_Append Data[2] ar_Map 0::GetBipedModelPath 0 LeatherGauntlets	1::GetBipedModelPath 1 LeatherGauntlets 	2::GetBipedModelPath 2 LeatherGauntlets 	3::GetBipedModelPath 3 LeatherGauntlets 	4::GetBipedIconPath 0 LeatherGauntlets 	5::GetBipedIconPath 1 LeatherGauntlets 	6::"Leather" 	7::GetBipedSlotMask LeatherGauntlets
+	ar_Append Data[3] ar_Map 0::GetBipedModelPath 0 LeatherHelmet 		1::GetBipedModelPath 1 LeatherHelmet 		2::GetBipedModelPath 2 LeatherHelmet 		3::GetBipedModelPath 3 LeatherHelmet 		4::GetBipedIconPath 0 LeatherHelmet 	5::GetBipedIconPath 1 LeatherHelmet 	6::"Leather" 	7::GetBipedSlotMask LeatherHelmet
+	ar_Append Data[4] ar_Map 0::GetBipedModelPath 0 LeatherGreaves 		1::GetBipedModelPath 1 LeatherGreaves	 	2::GetBipedModelPath 2 LeatherGreaves 		3::GetBipedModelPath 3 LeatherGreaves 		4::GetBipedIconPath 0 LeatherGreaves 	5::GetBipedIconPath 1 LeatherGreaves 	6::"Leather" 	7::GetBipedSlotMask LeatherGreaves
+	ar_Append Data[5] ar_Map 0::GetBipedModelPath 0 LeatherShield 		1::GetBipedModelPath 1 LeatherShield 		2::GetBipedModelPath 2 LeatherShield 		3::GetBipedModelPath 3 LeatherShield 		4::GetBipedIconPath 0 LeatherShield 	5::GetBipedIconPath 1 LeatherShield 	6::"Leather" 	7::GetBipedSlotMask LeatherShield
+	
+	;-----------------------------------------------------------------------------
+	;Steel
+	;-----------------------------------------------------------------------------
+	ar_Append Data[0] ar_Map 0::GetBipedModelPath 0 SteelCuirass 	1::GetBipedModelPath 1 SteelCuirass	 	2::GetBipedModelPath 2 SteelCuirass 	3::GetBipedModelPath 3 SteelCuirass 	4::GetBipedIconPath 0 SteelCuirass 		5::GetBipedIconPath 1 SteelCuirass 		6::"Steel" 	7::GetBipedSlotMask SteelCuirass
+	ar_Append Data[1] ar_Map 0::GetBipedModelPath 0 SteelBoots 		1::GetBipedModelPath 1 SteelBoots 		2::GetBipedModelPath 2 SteelBoots 		3::GetBipedModelPath 3 SteelBoots 		4::GetBipedIconPath 0 SteelBoots 		5::GetBipedIconPath 1 SteelBoots 		6::"Steel" 	7::GetBipedSlotMask SteelBoots
+	ar_Append Data[2] ar_Map 0::GetBipedModelPath 0 SteelGauntlets	1::GetBipedModelPath 1 SteelGauntlets 	2::GetBipedModelPath 2 SteelGauntlets 	3::GetBipedModelPath 3 SteelGauntlets 	4::GetBipedIconPath 0 SteelGauntlets 	5::GetBipedIconPath 1 SteelGauntlets 	6::"Steel" 	7::GetBipedSlotMask SteelGauntlets
+	ar_Append Data[3] ar_Map 0::GetBipedModelPath 0 SteelHelmet 	1::GetBipedModelPath 1 SteelHelmet 		2::GetBipedModelPath 2 SteelHelmet 		3::GetBipedModelPath 3 SteelHelmet 		4::GetBipedIconPath 0 SteelHelmet 		5::GetBipedIconPath 1 SteelHelmet 		6::"Steel" 	7::GetBipedSlotMask SteelHelmet
+	ar_Append Data[4] ar_Map 0::GetBipedModelPath 0 SteelGreaves 	1::GetBipedModelPath 1 SteelGreaves	 	2::GetBipedModelPath 2 SteelGreaves 	3::GetBipedModelPath 3 SteelGreaves 	4::GetBipedIconPath 0 SteelGreaves 		5::GetBipedIconPath 1 SteelGreaves 		6::"Steel" 	7::GetBipedSlotMask SteelGreaves
+	ar_Append Data[5] ar_Map 0::GetBipedModelPath 0 SteelShield 	1::GetBipedModelPath 1 SteelShield 		2::GetBipedModelPath 2 SteelShield 		3::GetBipedModelPath 3 SteelShield 		4::GetBipedIconPath 0 SteelShield 		5::GetBipedIconPath 1 SteelShield 		6::"Steel" 	7::GetBipedSlotMask SteelShield
+	
+	;-----------------------------------------------------------------------------
+	;Chainmail
+	;-----------------------------------------------------------------------------
+	ar_Append Data[0] ar_Map 0::GetBipedModelPath 0 ChainmailCuirass 	1::GetBipedModelPath 1 ChainmailCuirass	 	2::GetBipedModelPath 2 ChainmailCuirass 	3::GetBipedModelPath 3 ChainmailCuirass 	4::GetBipedIconPath 0 ChainmailCuirass 		5::GetBipedIconPath 1 ChainmailCuirass 		6::"Chainmail" 	7::GetBipedSlotMask ChainmailCuirass
+	ar_Append Data[1] ar_Map 0::GetBipedModelPath 0 ChainmailBoots 		1::GetBipedModelPath 1 ChainmailBoots 		2::GetBipedModelPath 2 ChainmailBoots 		3::GetBipedModelPath 3 ChainmailBoots 		4::GetBipedIconPath 0 ChainmailBoots 		5::GetBipedIconPath 1 ChainmailBoots 		6::"Chainmail" 	7::GetBipedSlotMask ChainmailBoots
+	ar_Append Data[2] ar_Map 0::GetBipedModelPath 0 ChainmailGauntlets	1::GetBipedModelPath 1 ChainmailGauntlets 	2::GetBipedModelPath 2 ChainmailGauntlets 	3::GetBipedModelPath 3 ChainmailGauntlets 	4::GetBipedIconPath 0 ChainmailGauntlets 	5::GetBipedIconPath 1 ChainmailGauntlets 	6::"Chainmail" 	7::GetBipedSlotMask ChainmailGauntlets
+	ar_Append Data[3] ar_Map 0::GetBipedModelPath 0 ChainmailHelmet 	1::GetBipedModelPath 1 ChainmailHelmet 		2::GetBipedModelPath 2 ChainmailHelmet 		3::GetBipedModelPath 3 ChainmailHelmet 		4::GetBipedIconPath 0 ChainmailHelmet 		5::GetBipedIconPath 1 ChainmailHelmet 		6::"Chainmail" 	7::GetBipedSlotMask ChainmailHelmet
+	ar_Append Data[4] ar_Map 0::GetBipedModelPath 0 ChainmailGreaves 	1::GetBipedModelPath 1 ChainmailGreaves	 	2::GetBipedModelPath 2 ChainmailGreaves 	3::GetBipedModelPath 3 ChainmailGreaves 	4::GetBipedIconPath 0 ChainmailGreaves 		5::GetBipedIconPath 1 ChainmailGreaves 		6::"Chainmail" 	7::GetBipedSlotMask ChainmailGreaves
+	ar_Append Data[5] ar_Map 0::GetBipedModelPath 0 ChainmailShield 	1::GetBipedModelPath 1 ChainmailShield 		2::GetBipedModelPath 2 ChainmailShield 		3::GetBipedModelPath 3 ChainmailShield 		4::GetBipedIconPath 0 ChainmailShield 		5::GetBipedIconPath 1 ChainmailShield 		6::"Chainmail" 	7::GetBipedSlotMask ChainmailShield
+	
+	;-----------------------------------------------------------------------------
+	;Dwarven
+	;-----------------------------------------------------------------------------
+	ar_Append Data[0] ar_Map 0::GetBipedModelPath 0 DwarvenCuirass 		1::GetBipedModelPath 1 DwarvenCuirass	 	2::GetBipedModelPath 2 DwarvenCuirass 		3::GetBipedModelPath 3 DwarvenCuirass 		4::GetBipedIconPath 0 DwarvenCuirass 	5::GetBipedIconPath 1 DwarvenCuirass 	6::"Dwarven" 	7::GetBipedSlotMask DwarvenCuirass
+	ar_Append Data[1] ar_Map 0::GetBipedModelPath 0 DwarvenBoots 		1::GetBipedModelPath 1 DwarvenBoots 		2::GetBipedModelPath 2 DwarvenBoots 		3::GetBipedModelPath 3 DwarvenBoots 		4::GetBipedIconPath 0 DwarvenBoots 		5::GetBipedIconPath 1 DwarvenBoots 		6::"Dwarven" 	7::GetBipedSlotMask DwarvenBoots
+	ar_Append Data[2] ar_Map 0::GetBipedModelPath 0 DwarvenGauntlets	1::GetBipedModelPath 1 DwarvenGauntlets 	2::GetBipedModelPath 2 DwarvenGauntlets 	3::GetBipedModelPath 3 DwarvenGauntlets 	4::GetBipedIconPath 0 DwarvenGauntlets 	5::GetBipedIconPath 1 DwarvenGauntlets 	6::"Dwarven" 	7::GetBipedSlotMask DwarvenGauntlets
+	ar_Append Data[3] ar_Map 0::GetBipedModelPath 0 DwarvenHelmet 		1::GetBipedModelPath 1 DwarvenHelmet 		2::GetBipedModelPath 2 DwarvenHelmet 		3::GetBipedModelPath 3 DwarvenHelmet 		4::GetBipedIconPath 0 DwarvenHelmet 	5::GetBipedIconPath 1 DwarvenHelmet 	6::"Dwarven" 	7::GetBipedSlotMask DwarvenHelmet
+	ar_Append Data[4] ar_Map 0::GetBipedModelPath 0 DwarvenGreaves 		1::GetBipedModelPath 1 DwarvenGreaves	 	2::GetBipedModelPath 2 DwarvenGreaves 		3::GetBipedModelPath 3 DwarvenGreaves 		4::GetBipedIconPath 0 DwarvenGreaves 	5::GetBipedIconPath 1 DwarvenGreaves 	6::"Dwarven" 	7::GetBipedSlotMask DwarvenGreaves
+	ar_Append Data[5] ar_Map 0::GetBipedModelPath 0 DwarvenShield 		1::GetBipedModelPath 1 DwarvenShield 		2::GetBipedModelPath 2 DwarvenShield 		3::GetBipedModelPath 3 DwarvenShield 		4::GetBipedIconPath 0 DwarvenShield 	5::GetBipedIconPath 1 DwarvenShield 	6::"Dwarven" 	7::GetBipedSlotMask DwarvenShield
+	
+	;-----------------------------------------------------------------------------
+	;Mithril
+	;-----------------------------------------------------------------------------
+	ar_Append Data[0] ar_Map 0::GetBipedModelPath 0 MithrilCuirass 		1::GetBipedModelPath 1 MithrilCuirass	 	2::GetBipedModelPath 2 MithrilCuirass 		3::GetBipedModelPath 3 MithrilCuirass 		4::GetBipedIconPath 0 MithrilCuirass 	5::GetBipedIconPath 1 MithrilCuirass 	6::"Mithril" 	7::GetBipedSlotMask MithrilCuirass
+	ar_Append Data[1] ar_Map 0::GetBipedModelPath 0 MithrilBoots 		1::GetBipedModelPath 1 MithrilBoots 		2::GetBipedModelPath 2 MithrilBoots 		3::GetBipedModelPath 3 MithrilBoots 		4::GetBipedIconPath 0 MithrilBoots 		5::GetBipedIconPath 1 MithrilBoots 		6::"Mithril" 	7::GetBipedSlotMask MithrilBoots
+	ar_Append Data[2] ar_Map 0::GetBipedModelPath 0 MithrilGauntlets	1::GetBipedModelPath 1 MithrilGauntlets 	2::GetBipedModelPath 2 MithrilGauntlets 	3::GetBipedModelPath 3 MithrilGauntlets 	4::GetBipedIconPath 0 MithrilGauntlets 	5::GetBipedIconPath 1 MithrilGauntlets 	6::"Mithril" 	7::GetBipedSlotMask MithrilGauntlets
+	ar_Append Data[3] ar_Map 0::GetBipedModelPath 0 MithrilHelmet 		1::GetBipedModelPath 1 MithrilHelmet 		2::GetBipedModelPath 2 MithrilHelmet 		3::GetBipedModelPath 3 MithrilHelmet 		4::GetBipedIconPath 0 MithrilHelmet 	5::GetBipedIconPath 1 MithrilHelmet 	6::"Mithril" 	7::GetBipedSlotMask MithrilHelmet
+	ar_Append Data[4] ar_Map 0::GetBipedModelPath 0 MithrilGreaves 		1::GetBipedModelPath 1 MithrilGreaves	 	2::GetBipedModelPath 2 MithrilGreaves 		3::GetBipedModelPath 3 MithrilGreaves 		4::GetBipedIconPath 0 MithrilGreaves 	5::GetBipedIconPath 1 MithrilGreaves 	6::"Mithril" 	7::GetBipedSlotMask MithrilGreaves
+	ar_Append Data[5] ar_Map 0::GetBipedModelPath 0 MithrilShield 		1::GetBipedModelPath 1 MithrilShield 		2::GetBipedModelPath 2 MithrilShield 		3::GetBipedModelPath 3 MithrilShield 		4::GetBipedIconPath 0 MithrilShield 	5::GetBipedIconPath 1 MithrilShield 	6::"Mithril" 	7::GetBipedSlotMask MithrilShield
+	
+	;-----------------------------------------------------------------------------
+	;Orcish
+	;-----------------------------------------------------------------------------
+	ar_Append Data[0] ar_Map 0::GetBipedModelPath 0 OrcishCuirass 		1::GetBipedModelPath 1 OrcishCuirass	 	2::GetBipedModelPath 2 OrcishCuirass 		3::GetBipedModelPath 3 OrcishCuirass 		4::GetBipedIconPath 0 OrcishCuirass 	5::GetBipedIconPath 1 OrcishCuirass 	6::"Orcish" 	7::GetBipedSlotMask OrcishCuirass
+	ar_Append Data[1] ar_Map 0::GetBipedModelPath 0 OrcishBoots 		1::GetBipedModelPath 1 OrcishBoots 			2::GetBipedModelPath 2 OrcishBoots 			3::GetBipedModelPath 3 OrcishBoots 			4::GetBipedIconPath 0 OrcishBoots 		5::GetBipedIconPath 1 OrcishBoots 		6::"Orcish" 	7::GetBipedSlotMask OrcishBoots
+	ar_Append Data[2] ar_Map 0::GetBipedModelPath 0 OrcishGauntlets		1::GetBipedModelPath 1 OrcishGauntlets 		2::GetBipedModelPath 2 OrcishGauntlets 		3::GetBipedModelPath 3 OrcishGauntlets 		4::GetBipedIconPath 0 OrcishGauntlets 	5::GetBipedIconPath 1 OrcishGauntlets 	6::"Orcish" 	7::GetBipedSlotMask OrcishGauntlets
+	ar_Append Data[3] ar_Map 0::GetBipedModelPath 0 OrcishHelmet 		1::GetBipedModelPath 1 OrcishHelmet 		2::GetBipedModelPath 2 OrcishHelmet 		3::GetBipedModelPath 3 OrcishHelmet 		4::GetBipedIconPath 0 OrcishHelmet 		5::GetBipedIconPath 1 OrcishHelmet 		6::"Orcish" 	7::GetBipedSlotMask OrcishHelmet
+	ar_Append Data[4] ar_Map 0::GetBipedModelPath 0 OrcishGreaves 		1::GetBipedModelPath 1 OrcishGreaves	 	2::GetBipedModelPath 2 OrcishGreaves 		3::GetBipedModelPath 3 OrcishGreaves 		4::GetBipedIconPath 0 OrcishGreaves 	5::GetBipedIconPath 1 OrcishGreaves 	6::"Orcish" 	7::GetBipedSlotMask OrcishGreaves
+	ar_Append Data[5] ar_Map 0::GetBipedModelPath 0 OrcishShield 		1::GetBipedModelPath 1 OrcishShield 		2::GetBipedModelPath 2 OrcishShield 		3::GetBipedModelPath 3 OrcishShield 		4::GetBipedIconPath 0 OrcishShield 		5::GetBipedIconPath 1 OrcishShield 		6::"Orcish" 	7::GetBipedSlotMask OrcishShield
+	
+	;-----------------------------------------------------------------------------
+	;Elven
+	;-----------------------------------------------------------------------------
+	ar_Append Data[0] ar_Map 0::GetBipedModelPath 0 ElvenCuirass 		1::GetBipedModelPath 1 ElvenCuirass	 	2::GetBipedModelPath 2 ElvenCuirass 	3::GetBipedModelPath 3 ElvenCuirass 	4::GetBipedIconPath 0 ElvenCuirass 		5::GetBipedIconPath 1 ElvenCuirass 		6::"Elven" 	7::GetBipedSlotMask ElvenCuirass
+	ar_Append Data[1] ar_Map 0::GetBipedModelPath 0 ElvenBoots 			1::GetBipedModelPath 1 ElvenBoots 		2::GetBipedModelPath 2 ElvenBoots 		3::GetBipedModelPath 3 ElvenBoots 		4::GetBipedIconPath 0 ElvenBoots 		5::GetBipedIconPath 1 ElvenBoots 		6::"Elven" 	7::GetBipedSlotMask ElvenBoots
+	ar_Append Data[2] ar_Map 0::GetBipedModelPath 0 ElvenGauntlets		1::GetBipedModelPath 1 ElvenGauntlets 	2::GetBipedModelPath 2 ElvenGauntlets 	3::GetBipedModelPath 3 ElvenGauntlets 	4::GetBipedIconPath 0 ElvenGauntlets 	5::GetBipedIconPath 1 ElvenGauntlets 	6::"Elven" 	7::GetBipedSlotMask ElvenGauntlets
+	ar_Append Data[3] ar_Map 0::GetBipedModelPath 0 ElvenHelmet 		1::GetBipedModelPath 1 ElvenHelmet 		2::GetBipedModelPath 2 ElvenHelmet 		3::GetBipedModelPath 3 ElvenHelmet 		4::GetBipedIconPath 0 ElvenHelmet 		5::GetBipedIconPath 1 ElvenHelmet 		6::"Elven" 	7::GetBipedSlotMask ElvenHelmet
+	ar_Append Data[4] ar_Map 0::GetBipedModelPath 0 ElvenGreaves 		1::GetBipedModelPath 1 ElvenGreaves	 	2::GetBipedModelPath 2 ElvenGreaves 	3::GetBipedModelPath 3 ElvenGreaves 	4::GetBipedIconPath 0 ElvenGreaves 		5::GetBipedIconPath 1 ElvenGreaves 		6::"Elven" 	7::GetBipedSlotMask ElvenGreaves
+	ar_Append Data[5] ar_Map 0::GetBipedModelPath 0 ElvenShield 		1::GetBipedModelPath 1 ElvenShield 		2::GetBipedModelPath 2 ElvenShield 		3::GetBipedModelPath 3 ElvenShield 		4::GetBipedIconPath 0 ElvenShield 		5::GetBipedIconPath 1 ElvenShield 		6::"Elven" 	7::GetBipedSlotMask ElvenShield
+	
+	;-----------------------------------------------------------------------------
+	;Ebony
+	;-----------------------------------------------------------------------------
+	ar_Append Data[0] ar_Map 0::GetBipedModelPath 0 EbonyCuirass 		1::GetBipedModelPath 1 EbonyCuirass	 	2::GetBipedModelPath 2 EbonyCuirass 	3::GetBipedModelPath 3 EbonyCuirass 	4::GetBipedIconPath 0 EbonyCuirass 		5::GetBipedIconPath 1 EbonyCuirass 		6::"Ebony" 	7::GetBipedSlotMask EbonyCuirass
+	ar_Append Data[1] ar_Map 0::GetBipedModelPath 0 EbonyBoots 			1::GetBipedModelPath 1 EbonyBoots 		2::GetBipedModelPath 2 EbonyBoots 		3::GetBipedModelPath 3 EbonyBoots 		4::GetBipedIconPath 0 EbonyBoots 		5::GetBipedIconPath 1 EbonyBoots 		6::"Ebony" 	7::GetBipedSlotMask EbonyBoots
+	ar_Append Data[2] ar_Map 0::GetBipedModelPath 0 EbonyGauntlets		1::GetBipedModelPath 1 EbonyGauntlets 	2::GetBipedModelPath 2 EbonyGauntlets 	3::GetBipedModelPath 3 EbonyGauntlets 	4::GetBipedIconPath 0 EbonyGauntlets 	5::GetBipedIconPath 1 EbonyGauntlets 	6::"Ebony" 	7::GetBipedSlotMask EbonyGauntlets
+	ar_Append Data[3] ar_Map 0::GetBipedModelPath 0 EbonyHelmet 		1::GetBipedModelPath 1 EbonyHelmet 		2::GetBipedModelPath 2 EbonyHelmet 		3::GetBipedModelPath 3 EbonyHelmet 		4::GetBipedIconPath 0 EbonyHelmet 		5::GetBipedIconPath 1 EbonyHelmet 		6::"Ebony" 	7::GetBipedSlotMask EbonyHelmet
+	ar_Append Data[4] ar_Map 0::GetBipedModelPath 0 EbonyGreaves 		1::GetBipedModelPath 1 EbonyGreaves	 	2::GetBipedModelPath 2 EbonyGreaves 	3::GetBipedModelPath 3 EbonyGreaves 	4::GetBipedIconPath 0 EbonyGreaves 		5::GetBipedIconPath 1 EbonyGreaves 		6::"Ebony" 	7::GetBipedSlotMask EbonyGreaves
+	ar_Append Data[5] ar_Map 0::GetBipedModelPath 0 EbonyShield 		1::GetBipedModelPath 1 EbonyShield 		2::GetBipedModelPath 2 EbonyShield 		3::GetBipedModelPath 3 EbonyShield 		4::GetBipedIconPath 0 EbonyShield 		5::GetBipedIconPath 1 EbonyShield 		6::"Ebony" 	7::GetBipedSlotMask EbonyShield
+	
+	;-----------------------------------------------------------------------------
+	;Glass
+	;-----------------------------------------------------------------------------
+	ar_Append Data[0] ar_Map 0::GetBipedModelPath 0 GlassCuirass 		1::GetBipedModelPath 1 GlassCuirass	 	2::GetBipedModelPath 2 GlassCuirass 	3::GetBipedModelPath 3 GlassCuirass 	4::GetBipedIconPath 0 GlassCuirass 		5::GetBipedIconPath 1 GlassCuirass 		6::"Glass" 	7::GetBipedSlotMask GlassCuirass
+	ar_Append Data[1] ar_Map 0::GetBipedModelPath 0 GlassBoots 			1::GetBipedModelPath 1 GlassBoots 		2::GetBipedModelPath 2 GlassBoots 		3::GetBipedModelPath 3 GlassBoots 		4::GetBipedIconPath 0 GlassBoots 		5::GetBipedIconPath 1 GlassBoots 		6::"Glass" 	7::GetBipedSlotMask GlassBoots
+	ar_Append Data[2] ar_Map 0::GetBipedModelPath 0 GlassGauntlets		1::GetBipedModelPath 1 GlassGauntlets 	2::GetBipedModelPath 2 GlassGauntlets 	3::GetBipedModelPath 3 GlassGauntlets 	4::GetBipedIconPath 0 GlassGauntlets 	5::GetBipedIconPath 1 GlassGauntlets 	6::"Glass" 	7::GetBipedSlotMask GlassGauntlets
+	ar_Append Data[3] ar_Map 0::GetBipedModelPath 0 GlassHelmet 		1::GetBipedModelPath 1 GlassHelmet 		2::GetBipedModelPath 2 GlassHelmet 		3::GetBipedModelPath 3 GlassHelmet 		4::GetBipedIconPath 0 GlassHelmet 		5::GetBipedIconPath 1 GlassHelmet 		6::"Glass" 	7::GetBipedSlotMask GlassHelmet
+	ar_Append Data[4] ar_Map 0::GetBipedModelPath 0 GlassGreaves 		1::GetBipedModelPath 1 GlassGreaves	 	2::GetBipedModelPath 2 GlassGreaves 	3::GetBipedModelPath 3 GlassGreaves 	4::GetBipedIconPath 0 GlassGreaves 		5::GetBipedIconPath 1 GlassGreaves 		6::"Glass" 	7::GetBipedSlotMask GlassGreaves
+	ar_Append Data[5] ar_Map 0::GetBipedModelPath 0 GlassShield 		1::GetBipedModelPath 1 GlassShield 		2::GetBipedModelPath 2 GlassShield 		3::GetBipedModelPath 3 GlassShield 		4::GetBipedIconPath 0 GlassShield 		5::GetBipedIconPath 1 GlassShield 		6::"Glass" 	7::GetBipedSlotMask GlassShield
+	
+	;-----------------------------------------------------------------------------
+	;Daedric
+	;-----------------------------------------------------------------------------
+	ar_Append Data[0] ar_Map 0::GetBipedModelPath 0 DaedricCuirass 		1::GetBipedModelPath 1 DaedricCuirass	 	2::GetBipedModelPath 2 DaedricCuirass 		3::GetBipedModelPath 3 DaedricCuirass 		4::GetBipedIconPath 0 DaedricCuirass 	5::GetBipedIconPath 1 DaedricCuirass 	6::"Daedric" 	7::GetBipedSlotMask DaedricCuirass
+	ar_Append Data[1] ar_Map 0::GetBipedModelPath 0 DaedricBoots 		1::GetBipedModelPath 1 DaedricBoots 		2::GetBipedModelPath 2 DaedricBoots 		3::GetBipedModelPath 3 DaedricBoots 		4::GetBipedIconPath 0 DaedricBoots 		5::GetBipedIconPath 1 DaedricBoots 		6::"Daedric" 	7::GetBipedSlotMask DaedricBoots
+	ar_Append Data[2] ar_Map 0::GetBipedModelPath 0 DaedricGauntlets	1::GetBipedModelPath 1 DaedricGauntlets 	2::GetBipedModelPath 2 DaedricGauntlets 	3::GetBipedModelPath 3 DaedricGauntlets 	4::GetBipedIconPath 0 DaedricGauntlets 	5::GetBipedIconPath 1 DaedricGauntlets 	6::"Daedric" 	7::GetBipedSlotMask DaedricGauntlets
+	ar_Append Data[3] ar_Map 0::GetBipedModelPath 0 DaedricHelmet 		1::GetBipedModelPath 1 DaedricHelmet 		2::GetBipedModelPath 2 DaedricHelmet 		3::GetBipedModelPath 3 DaedricHelmet 		4::GetBipedIconPath 0 DaedricHelmet 	5::GetBipedIconPath 1 DaedricHelmet 	6::"Daedric" 	7::GetBipedSlotMask DaedricHelmet
+	ar_Append Data[4] ar_Map 0::GetBipedModelPath 0 DaedricGreaves 		1::GetBipedModelPath 1 DaedricGreaves	 	2::GetBipedModelPath 2 DaedricGreaves 		3::GetBipedModelPath 3 DaedricGreaves 		4::GetBipedIconPath 0 DaedricGreaves 	5::GetBipedIconPath 1 DaedricGreaves 	6::"Daedric" 	7::GetBipedSlotMask DaedricGreaves
+	ar_Append Data[5] ar_Map 0::GetBipedModelPath 0 DaedricShield 		1::GetBipedModelPath 1 DaedricShield 		2::GetBipedModelPath 2 DaedricShield 		3::GetBipedModelPath 3 DaedricShield 		4::GetBipedIconPath 0 DaedricShield 	5::GetBipedIconPath 1 DaedricShield 	6::"Daedric" 	7::GetBipedSlotMask DaedricShield
+	
+	;-----------------------------------------------------------------------------
+	;Amber
+	;-----------------------------------------------------------------------------
+	ar_Append Data[0] ar_Map 0::GetBipedModelPath 0 SEAmberCuirass3 		1::GetBipedModelPath 1 SEAmberCuirass3	 	2::GetBipedModelPath 2 SEAmberCuirass3 		3::GetBipedModelPath 3 SEAmberCuirass3 		4::GetBipedIconPath 0 SEAmberCuirass3 		5::GetBipedIconPath 1 SEAmberCuirass3 		6::"Amber" 	7::GetBipedSlotMask SEAmberCuirass3
+	ar_Append Data[1] ar_Map 0::GetBipedModelPath 0 SEAmberBoots3 			1::GetBipedModelPath 1 SEAmberBoots3 		2::GetBipedModelPath 2 SEAmberBoots3 		3::GetBipedModelPath 3 SEAmberBoots3 		4::GetBipedIconPath 0 SEAmberBoots3 		5::GetBipedIconPath 1 SEAmberBoots3 		6::"Amber" 	7::GetBipedSlotMask SEAmberBoots3
+	ar_Append Data[2] ar_Map 0::GetBipedModelPath 0 SEAmberGauntlets3		1::GetBipedModelPath 1 SEAmberGauntlets3 	2::GetBipedModelPath 2 SEAmberGauntlets3 	3::GetBipedModelPath 3 SEAmberGauntlets3 	4::GetBipedIconPath 0 SEAmberGauntlets3 	5::GetBipedIconPath 1 SEAmberGauntlets3 	6::"Amber" 	7::GetBipedSlotMask SEAmberGauntlets3
+	ar_Append Data[3] ar_Map 0::GetBipedModelPath 0 SEAmberHelmet3 			1::GetBipedModelPath 1 SEAmberHelmet3 		2::GetBipedModelPath 2 SEAmberHelmet3 		3::GetBipedModelPath 3 SEAmberHelmet3 		4::GetBipedIconPath 0 SEAmberHelmet3 		5::GetBipedIconPath 1 SEAmberHelmet3 		6::"Amber" 	7::GetBipedSlotMask SEAmberHelmet3
+	ar_Append Data[4] ar_Map 0::GetBipedModelPath 0 SEAmberGreaves3 		1::GetBipedModelPath 1 SEAmberGreaves3	 	2::GetBipedModelPath 2 SEAmberGreaves3 		3::GetBipedModelPath 3 SEAmberGreaves3 		4::GetBipedIconPath 0 SEAmberGreaves3 		5::GetBipedIconPath 1 SEAmberGreaves3 		6::"Amber" 	7::GetBipedSlotMask SEAmberGreaves3
+	ar_Append Data[5] ar_Map 0::GetBipedModelPath 0 SEAmberShield3 			1::GetBipedModelPath 1 SEAmberShield3 		2::GetBipedModelPath 2 SEAmberShield3 		3::GetBipedModelPath 3 SEAmberShield3 		4::GetBipedIconPath 0 SEAmberShield3 		5::GetBipedIconPath 1 SEAmberShield3 		6::"Amber" 	7::GetBipedSlotMask SEAmberShield3
+	
+	;-----------------------------------------------------------------------------
+	;Madness
+	;-----------------------------------------------------------------------------
+	ar_Append Data[0] ar_Map 0::GetBipedModelPath 0 SEMadnessCuirass3 		1::GetBipedModelPath 1 SEMadnessCuirass3	 	2::GetBipedModelPath 2 SEMadnessCuirass3 		3::GetBipedModelPath 3 SEMadnessCuirass3 		4::GetBipedIconPath 0 SEMadnessCuirass3 	5::GetBipedIconPath 1 SEMadnessCuirass3 	6::"Madness" 	7::GetBipedSlotMask SEMadnessCuirass3
+	ar_Append Data[1] ar_Map 0::GetBipedModelPath 0 SEMadnessBoots3 		1::GetBipedModelPath 1 SEMadnessBoots3 			2::GetBipedModelPath 2 SEMadnessBoots3 			3::GetBipedModelPath 3 SEMadnessBoots3 			4::GetBipedIconPath 0 SEMadnessBoots3 		5::GetBipedIconPath 1 SEMadnessBoots3 		6::"Madness" 	7::GetBipedSlotMask SEMadnessBoots3
+	ar_Append Data[2] ar_Map 0::GetBipedModelPath 0 SEMadnessGauntlets3		1::GetBipedModelPath 1 SEMadnessGauntlets3 		2::GetBipedModelPath 2 SEMadnessGauntlets3 		3::GetBipedModelPath 3 SEMadnessGauntlets3 		4::GetBipedIconPath 0 SEMadnessGauntlets3 	5::GetBipedIconPath 1 SEMadnessGauntlets3 	6::"Madness" 	7::GetBipedSlotMask SEMadnessGauntlets3
+	ar_Append Data[3] ar_Map 0::GetBipedModelPath 0 SEMadnessHelmet3 		1::GetBipedModelPath 1 SEMadnessHelmet3 		2::GetBipedModelPath 2 SEMadnessHelmet3 		3::GetBipedModelPath 3 SEMadnessHelmet3 		4::GetBipedIconPath 0 SEMadnessHelmet3 		5::GetBipedIconPath 1 SEMadnessHelmet3 		6::"Madness" 	7::GetBipedSlotMask SEMadnessHelmet3
+	ar_Append Data[4] ar_Map 0::GetBipedModelPath 0 SEMadnessGreaves3 		1::GetBipedModelPath 1 SEMadnessGreaves3	 	2::GetBipedModelPath 2 SEMadnessGreaves3 		3::GetBipedModelPath 3 SEMadnessGreaves3 		4::GetBipedIconPath 0 SEMadnessGreaves3 	5::GetBipedIconPath 1 SEMadnessGreaves3 	6::"Madness" 	7::GetBipedSlotMask SEMadnessGreaves3
+	ar_Append Data[5] ar_Map 0::GetBipedModelPath 0 SEMadnessShield3 		1::GetBipedModelPath 1 SEMadnessShield3 		2::GetBipedModelPath 2 SEMadnessShield3 		3::GetBipedModelPath 3 SEMadnessShield3 		4::GetBipedIconPath 0 SEMadnessShield3 		5::GetBipedIconPath 1 SEMadnessShield3 		6::"Madness" 	7::GetBipedSlotMask SEMadnessShield3
+	
+	;-----------------------------------------------------------------------------
+	;Adamantium
+	;-----------------------------------------------------------------------------
+	ar_Append Data[0] ar_Map 0::GetBipedModelPath 0 FGC07AmelionCuirass 	1::GetBipedModelPath 1 FGC07AmelionCuirass	 	2::GetBipedModelPath 2 FGC07AmelionCuirass 		3::GetBipedModelPath 3 FGC07AmelionCuirass 		4::GetBipedIconPath 0 FGC07AmelionCuirass 		5::GetBipedIconPath 1 FGC07AmelionCuirass 		6::"Adamantium" 	7::GetBipedSlotMask FGC07AmelionCuirass
+	ar_Append Data[1] ar_Map 0::GetBipedModelPath 0 FGC07AmelionBoots 		1::GetBipedModelPath 1 FGC07AmelionBoots 		2::GetBipedModelPath 2 FGC07AmelionBoots 		3::GetBipedModelPath 3 FGC07AmelionBoots 		4::GetBipedIconPath 0 FGC07AmelionBoots 		5::GetBipedIconPath 1 FGC07AmelionBoots 		6::"Adamantium" 	7::GetBipedSlotMask FGC07AmelionBoots
+	ar_Append Data[2] ar_Map 0::GetBipedModelPath 0 FGC07AmelionGauntlets	1::GetBipedModelPath 1 FGC07AmelionGauntlets 	2::GetBipedModelPath 2 FGC07AmelionGauntlets 	3::GetBipedModelPath 3 FGC07AmelionGauntlets 	4::GetBipedIconPath 0 FGC07AmelionGauntlets 	5::GetBipedIconPath 1 FGC07AmelionGauntlets 	6::"Adamantium" 	7::GetBipedSlotMask FGC07AmelionGauntlets
+	ar_Append Data[3] ar_Map 0::GetBipedModelPath 0 FGC07AmelionHelmet 		1::GetBipedModelPath 1 FGC07AmelionHelmet 		2::GetBipedModelPath 2 FGC07AmelionHelmet 		3::GetBipedModelPath 3 FGC07AmelionHelmet 		4::GetBipedIconPath 0 FGC07AmelionHelmet 		5::GetBipedIconPath 1 FGC07AmelionHelmet 		6::"Adamantium" 	7::GetBipedSlotMask FGC07AmelionHelmet
+	ar_Append Data[4] ar_Map 0::GetBipedModelPath 0 FGC07AmelionGreaves 	1::GetBipedModelPath 1 FGC07AmelionGreaves	 	2::GetBipedModelPath 2 FGC07AmelionGreaves 		3::GetBipedModelPath 3 FGC07AmelionGreaves 		4::GetBipedIconPath 0 FGC07AmelionGreaves 		5::GetBipedIconPath 1 FGC07AmelionGreaves 		6::"Adamantium" 	7::GetBipedSlotMask FGC07AmelionGreaves
+	ar_Append Data[5] ar_Map 0::GetBipedModelPath 0 FGC07AmelionShield 		1::GetBipedModelPath 1 FGC07AmelionShield 		2::GetBipedModelPath 2 FGC07AmelionShield 		3::GetBipedModelPath 3 FGC07AmelionShield 		4::GetBipedIconPath 0 FGC07AmelionShield 		5::GetBipedIconPath 1 FGC07AmelionShield 		6::"Adamantium" 	7::GetBipedSlotMask FGC07AmelionShield
+	
+	;-----------------------------------------------------------------------------
+	;Blackwood
+	;-----------------------------------------------------------------------------
+	ar_Append Data[0] ar_Map 0::GetBipedModelPath 0 BlackwoodCuirass 	1::GetBipedModelPath 1 BlackwoodCuirass	 	2::GetBipedModelPath 2 BlackwoodCuirass 	3::GetBipedModelPath 3 BlackwoodCuirass 	4::GetBipedIconPath 0 BlackwoodCuirass 		5::GetBipedIconPath 1 BlackwoodCuirass 		6::"Blackwood" 	7::GetBipedSlotMask BlackwoodCuirass
+	ar_Append Data[1] ar_Map 0::GetBipedModelPath 0 BlackwoodBoots 		1::GetBipedModelPath 1 BlackwoodBoots 		2::GetBipedModelPath 2 BlackwoodBoots 		3::GetBipedModelPath 3 BlackwoodBoots 		4::GetBipedIconPath 0 BlackwoodBoots 		5::GetBipedIconPath 1 BlackwoodBoots 		6::"Blackwood" 	7::GetBipedSlotMask BlackwoodBoots
+	ar_Append Data[2] ar_Map 0::GetBipedModelPath 0 BlackwoodGauntlets	1::GetBipedModelPath 1 BlackwoodGauntlets 	2::GetBipedModelPath 2 BlackwoodGauntlets 	3::GetBipedModelPath 3 BlackwoodGauntlets 	4::GetBipedIconPath 0 BlackwoodGauntlets 	5::GetBipedIconPath 1 BlackwoodGauntlets 	6::"Blackwood" 	7::GetBipedSlotMask BlackwoodGauntlets
+	ar_Append Data[3] ar_Map 0::GetBipedModelPath 0 BlackwoodHelmet 	1::GetBipedModelPath 1 BlackwoodHelmet 		2::GetBipedModelPath 2 BlackwoodHelmet 		3::GetBipedModelPath 3 BlackwoodHelmet 		4::GetBipedIconPath 0 BlackwoodHelmet 		5::GetBipedIconPath 1 BlackwoodHelmet 		6::"Blackwood" 	7::GetBipedSlotMask BlackwoodHelmet
+	ar_Append Data[4] ar_Map 0::GetBipedModelPath 0 BlackwoodGreaves 	1::GetBipedModelPath 1 BlackwoodGreaves	 	2::GetBipedModelPath 2 BlackwoodGreaves 	3::GetBipedModelPath 3 BlackwoodGreaves 	4::GetBipedIconPath 0 BlackwoodGreaves 		5::GetBipedIconPath 1 BlackwoodGreaves 		6::"Blackwood" 	7::GetBipedSlotMask BlackwoodGreaves
+	ar_Append Data[5] ar_Map 0::GetBipedModelPath 0 BlackwoodShield 	1::GetBipedModelPath 1 BlackwoodShield 		2::GetBipedModelPath 2 BlackwoodShield 		3::GetBipedModelPath 3 BlackwoodShield 		4::GetBipedIconPath 0 BlackwoodShield 		5::GetBipedIconPath 1 BlackwoodShield 		6::"Blackwood" 	7::GetBipedSlotMask BlackwoodShield
+	
+	;-----------------------------------------------------------------------------
+	;Blades
+	;-----------------------------------------------------------------------------
+	ar_Append Data[0] ar_Map 0::GetBipedModelPath 0 BladesCuirass 		1::GetBipedModelPath 1 BladesCuirass	 	2::GetBipedModelPath 2 BladesCuirass 		3::GetBipedModelPath 3 BladesCuirass 		4::GetBipedIconPath 0 BladesCuirass 	5::GetBipedIconPath 1 BladesCuirass 	6::"Blades" 	7::GetBipedSlotMask BladesCuirass
+	ar_Append Data[1] ar_Map 0::GetBipedModelPath 0 BladesBoots 		1::GetBipedModelPath 1 BladesBoots 			2::GetBipedModelPath 2 BladesBoots 			3::GetBipedModelPath 3 BladesBoots 			4::GetBipedIconPath 0 BladesBoots 		5::GetBipedIconPath 1 BladesBoots 		6::"Blades" 	7::GetBipedSlotMask BladesBoots
+	ar_Append Data[2] ar_Map 0::GetBipedModelPath 0 BladesGauntlets		1::GetBipedModelPath 1 BladesGauntlets 		2::GetBipedModelPath 2 BladesGauntlets 		3::GetBipedModelPath 3 BladesGauntlets 		4::GetBipedIconPath 0 BladesGauntlets 	5::GetBipedIconPath 1 BladesGauntlets 	6::"Blades" 	7::GetBipedSlotMask BladesGauntlets
+	ar_Append Data[3] ar_Map 0::GetBipedModelPath 0 BladesHelmet 		1::GetBipedModelPath 1 BladesHelmet 		2::GetBipedModelPath 2 BladesHelmet 		3::GetBipedModelPath 3 BladesHelmet 		4::GetBipedIconPath 0 BladesHelmet 		5::GetBipedIconPath 1 BladesHelmet 		6::"Blades" 	7::GetBipedSlotMask BladesHelmet
+	ar_Append Data[4] ar_Map 0::GetBipedModelPath 0 BladesGreaves 		1::GetBipedModelPath 1 BladesGreaves	 	2::GetBipedModelPath 2 BladesGreaves 		3::GetBipedModelPath 3 BladesGreaves 		4::GetBipedIconPath 0 BladesGreaves 	5::GetBipedIconPath 1 BladesGreaves 	6::"Blades" 	7::GetBipedSlotMask BladesGreaves
+	ar_Append Data[5] ar_Map 0::GetBipedModelPath 0 BladesShield 		1::GetBipedModelPath 1 BladesShield 		2::GetBipedModelPath 2 BladesShield 		3::GetBipedModelPath 3 BladesShield 		4::GetBipedIconPath 0 BladesShield 		5::GetBipedIconPath 1 BladesShield 		6::"Blades" 	7::GetBipedSlotMask BladesShield
+	
+	;-----------------------------------------------------------------------------
+	;Ruined Akaviri
+	;-----------------------------------------------------------------------------
+	ar_Append Data[5] ar_Map 0::GetBipedModelPath 0 MS12RuinedAkaviriShield 	1::GetBipedModelPath 1 MS12RuinedAkaviriShield	 	2::GetBipedModelPath 2 MS12RuinedAkaviriShield 		3::GetBipedModelPath 3 MS12RuinedAkaviriShield 		4::GetBipedIconPath 0 MS12RuinedAkaviriShield 	5::GetBipedIconPath 1 MS12RuinedAkaviriShield 	6::"Ruined Akaviri" 	7::GetBipedSlotMask MS12RuinedAkaviriShield	
+
+	;-----------------------------------------------------------------------------
+	;Bracer
+	;-----------------------------------------------------------------------------
+	ar_Append Data[2] ar_Map 0::GetBipedModelPath 0 LeatherBracer		1::GetBipedModelPath 1 LeatherBracer 		2::GetBipedModelPath 2 LeatherBracer 		3::GetBipedModelPath 3 LeatherBracer 		4::GetBipedIconPath 0 LeatherBracer 	5::GetBipedIconPath 1 LeatherBracer 	6::"Bracer" 	7::GetBipedSlotMask LeatherBracer
+	
+	;-----------------------------------------------------------------------------
+	;Pit
+	;-----------------------------------------------------------------------------
+	ar_Append Data[0] ar_Map 0::GetBipedModelPath 0 PitCuirass 		1::GetBipedModelPath 1 PitCuirass	 	2::GetBipedModelPath 2 PitCuirass 		3::GetBipedModelPath 3 PitCuirass 		4::GetBipedIconPath 0 PitCuirass 	5::GetBipedIconPath 1 PitCuirass 	6::"Pit" 	7::GetBipedSlotMask PitCuirass
+	ar_Append Data[1] ar_Map 0::GetBipedModelPath 0 PitBoots 		1::GetBipedModelPath 1 PitBoots 		2::GetBipedModelPath 2 PitBoots 		3::GetBipedModelPath 3 PitBoots 		4::GetBipedIconPath 0 PitBoots 		5::GetBipedIconPath 1 PitBoots 		6::"Pit" 	7::GetBipedSlotMask PitBoots
+	ar_Append Data[2] ar_Map 0::GetBipedModelPath 0 PitGauntlets	1::GetBipedModelPath 1 PitGauntlets 	2::GetBipedModelPath 2 PitGauntlets 	3::GetBipedModelPath 3 PitGauntlets 	4::GetBipedIconPath 0 PitGauntlets 	5::GetBipedIconPath 1 PitGauntlets 	6::"Pit" 	7::GetBipedSlotMask PitGauntlets
+	ar_Append Data[3] ar_Map 0::GetBipedModelPath 0 PitHelmet 		1::GetBipedModelPath 1 PitHelmet 		2::GetBipedModelPath 2 PitHelmet 		3::GetBipedModelPath 3 PitHelmet 		4::GetBipedIconPath 0 PitHelmet 	5::GetBipedIconPath 1 PitHelmet 	6::"Pit" 	7::GetBipedSlotMask PitHelmet
+	ar_Append Data[4] ar_Map 0::GetBipedModelPath 0 PitGreaves 		1::GetBipedModelPath 1 PitGreaves	 	2::GetBipedModelPath 2 PitGreaves 		3::GetBipedModelPath 3 PitGreaves 		4::GetBipedIconPath 0 PitGreaves 	5::GetBipedIconPath 1 PitGreaves 	6::"Pit" 	7::GetBipedSlotMask PitGreaves
+	
+	;-----------------------------------------------------------------------------
+	;Shrouded
+	;-----------------------------------------------------------------------------
+	ar_Append Data[0] ar_Map 0::GetBipedModelPath 0 DBLeatherCuirass 		1::GetBipedModelPath 1 DBLeatherCuirass	 	2::GetBipedModelPath 2 DBLeatherCuirass 		3::GetBipedModelPath 3 DBLeatherCuirass 		4::GetBipedIconPath 0 DBLeatherCuirass 	5::GetBipedIconPath 1 DBLeatherCuirass 	6::"Shrouded" 	7::GetBipedSlotMask DBLeatherCuirass
+	ar_Append Data[3] ar_Map 0::GetBipedModelPath 0 DBLeatherHelmet 		1::GetBipedModelPath 1 DBLeatherHelmet	 	2::GetBipedModelPath 2 DBLeatherHelmet 			3::GetBipedModelPath 3 DBLeatherHelmet 			4::GetBipedIconPath 0 DBLeatherHelmet 	5::GetBipedIconPath 1 DBLeatherHelmet 	6::"Shrouded" 	7::GetBipedSlotMask DBLeatherHelmet
+		
+	;-----------------------------------------------------------------------------
+	;Arena Raiment
+	;-----------------------------------------------------------------------------
+	ar_Append Data[0] ar_Map 0::GetBipedModelPath 0 ArenaRaimentHeavy 			1::GetBipedModelPath 1 ArenaRaimentHeavy	 		2::GetBipedModelPath 2 ArenaRaimentHeavy 			3::GetBipedModelPath 3 ArenaRaimentHeavy 			4::GetBipedIconPath 0 ArenaRaimentHeavy 		5::GetBipedIconPath 1 ArenaRaimentHeavy 		6::"Arena Blue Heavy Raiment" 		7::GetBipedSlotMask ArenaRaimentHeavy
+	ar_Append Data[0] ar_Map 0::GetBipedModelPath 0 ArenaRaimentHeavyChampion 	1::GetBipedModelPath 1 ArenaRaimentHeavyChampion	2::GetBipedModelPath 2 ArenaRaimentHeavyChampion 	3::GetBipedModelPath 3 ArenaRaimentHeavyChampion 	4::GetBipedIconPath 0 ArenaRaimentHeavyChampion	5::GetBipedIconPath 1 ArenaRaimentHeavyChampion	6::"Arena Champion Heavy Raiment" 	7::GetBipedSlotMask ArenaRaimentHeavyChampion
+	ar_Append Data[0] ar_Map 0::GetBipedModelPath 0 ArenaRaimentHeavyYellow 	1::GetBipedModelPath 1 ArenaRaimentHeavyYellow	 	2::GetBipedModelPath 2 ArenaRaimentHeavyYellow 		3::GetBipedModelPath 3 ArenaRaimentHeavyYellow 		4::GetBipedIconPath 0 ArenaRaimentHeavyYellow 	5::GetBipedIconPath 1 ArenaRaimentHeavyYellow 	6::"Arena Yellow Heavy Raiment" 	7::GetBipedSlotMask ArenaRaimentHeavyYellow
+	ar_Append Data[0] ar_Map 0::GetBipedModelPath 0 ArenaRaimentLight 			1::GetBipedModelPath 1 ArenaRaimentLight	 		2::GetBipedModelPath 2 ArenaRaimentLight 			3::GetBipedModelPath 3 ArenaRaimentLight 			4::GetBipedIconPath 0 ArenaRaimentLight 		5::GetBipedIconPath 1 ArenaRaimentLight 		6::"Arena Blue Light Raiment" 		7::GetBipedSlotMask ArenaRaimentLight
+	ar_Append Data[0] ar_Map 0::GetBipedModelPath 0 ArenaRaimentLightChampion 	1::GetBipedModelPath 1 ArenaRaimentLightChampion	2::GetBipedModelPath 2 ArenaRaimentLightChampion 	3::GetBipedModelPath 3 ArenaRaimentLightChampion 	4::GetBipedIconPath 0 ArenaRaimentLightChampion 5::GetBipedIconPath 1 ArenaRaimentLightChampion	6::"Arena Champion Light Raiment"	7::GetBipedSlotMask ArenaRaimentLightChampion
+	ar_Append Data[0] ar_Map 0::GetBipedModelPath 0 ArenaRaimentLightYellow 	1::GetBipedModelPath 1 ArenaRaimentLightYellow	 	2::GetBipedModelPath 2 ArenaRaimentLightYellow 		3::GetBipedModelPath 3 ArenaRaimentLightYellow 		4::GetBipedIconPath 0 ArenaRaimentLightYellow 	5::GetBipedIconPath 1 ArenaRaimentLightYellow 	6::"Arena Yellow Light Raiment" 	7::GetBipedSlotMask ArenaRaimentLightYellow
+
+	;-----------------------------------------------------------------------------
+	;Dark Seducer
+	;-----------------------------------------------------------------------------
+	ar_Append Data[0] ar_Map 0::GetBipedModelPath 0 SEDarkSeducerArmor1Fur		1::GetBipedModelPath 1 SEDarkSeducerArmor1Fur 		2::GetBipedModelPath 2 SEDarkSeducerArmor1Fur 		3::GetBipedModelPath 3 SEDarkSeducerArmor1Fur 		4::GetBipedIconPath 0 SEDarkSeducerArmor1Fur 		5::GetBipedIconPath 1 SEDarkSeducerArmor1Fur 		6::"Dark Seducer" 			7::GetBipedSlotMask SEDarkSeducerArmor1Fur
+	ar_Append Data[3] ar_Map 0::GetBipedModelPath 0 SEDarkSeducerHelmet1Fur 	1::GetBipedModelPath 1 SEDarkSeducerHelmet1Fur 		2::GetBipedModelPath 2 SEDarkSeducerHelmet1Fur 		3::GetBipedModelPath 3 SEDarkSeducerHelmet1Fur 		4::GetBipedIconPath 0 SEDarkSeducerHelmet1Fur 		5::GetBipedIconPath 1 SEDarkSeducerHelmet1Fur 		6::"Dark Seducer" 			7::GetBipedSlotMask SEDarkSeducerHelmet1Fur
+	ar_Append Data[3] ar_Map 0::GetBipedModelPath 0 SEDarkSeducerOfficerHelmet	1::GetBipedModelPath 1 SEDarkSeducerOfficerHelmet 	2::GetBipedModelPath 2 SEDarkSeducerOfficerHelmet 	3::GetBipedModelPath 3 SEDarkSeducerOfficerHelmet 	4::GetBipedIconPath 0 SEDarkSeducerOfficerHelmet 	5::GetBipedIconPath 1 SEDarkSeducerOfficerHelmet 	6::"Dark Seducer Officer" 	7::GetBipedSlotMask SEDarkSeducerOfficerHelmet
+	ar_Append Data[5] ar_Map 0::GetBipedModelPath 0 SEDarkSeducerShield1Fur 	1::GetBipedModelPath 1 SEDarkSeducerShield1Fur 		2::GetBipedModelPath 2 SEDarkSeducerShield1Fur 		3::GetBipedModelPath 3 SEDarkSeducerShield1Fur 		4::GetBipedIconPath 0 SEDarkSeducerShield1Fur 		5::GetBipedIconPath 1 SEDarkSeducerShield1Fur 		6::"Dark Seducer" 			7::GetBipedSlotMask SEDarkSeducerShield1Fur
+	
+	;-----------------------------------------------------------------------------
+	;Golden Saint
+	;-----------------------------------------------------------------------------
+	ar_Append Data[0] ar_Map 0::GetBipedModelPath 0 SEGoldenSaintArmor1Iron		1::GetBipedModelPath 1 SEGoldenSaintArmor1Iron 		2::GetBipedModelPath 2 SEGoldenSaintArmor1Iron 		3::GetBipedModelPath 3 SEGoldenSaintArmor1Iron 		4::GetBipedIconPath 0 SEGoldenSaintArmor1Iron 		5::GetBipedIconPath 1 SEGoldenSaintArmor1Iron 		6::"Golden Saint" 			7::GetBipedSlotMask SEGoldenSaintArmor1Iron
+	ar_Append Data[3] ar_Map 0::GetBipedModelPath 0 SEGoldenSaintHelmet1Iron 	1::GetBipedModelPath 1 SEGoldenSaintHelmet1Iron 	2::GetBipedModelPath 2 SEGoldenSaintHelmet1Iron 	3::GetBipedModelPath 3 SEGoldenSaintHelmet1Iron 	4::GetBipedIconPath 0 SEGoldenSaintHelmet1Iron 		5::GetBipedIconPath 1 SEGoldenSaintHelmet1Iron 		6::"Golden Saint" 			7::GetBipedSlotMask SEGoldenSaintHelmet1Iron
+	ar_Append Data[3] ar_Map 0::GetBipedModelPath 0 SEGoldenSaintOfficerHelmet	1::GetBipedModelPath 1 SEGoldenSaintOfficerHelmet 	2::GetBipedModelPath 2 SEGoldenSaintOfficerHelmet 	3::GetBipedModelPath 3 SEGoldenSaintOfficerHelmet 	4::GetBipedIconPath 0 SEGoldenSaintOfficerHelmet 	5::GetBipedIconPath 1 SEGoldenSaintOfficerHelmet 	6::"Golden Saint Officer" 	7::GetBipedSlotMask SEGoldenSaintOfficerHelmet
+	ar_Append Data[5] ar_Map 0::GetBipedModelPath 0 SEGoldenSaintShield1Iron 	1::GetBipedModelPath 1 SEGoldenSaintShield1Iron 	2::GetBipedModelPath 2 SEGoldenSaintShield1Iron 	3::GetBipedModelPath 3 SEGoldenSaintShield1Iron 	4::GetBipedIconPath 0 SEGoldenSaintShield1Iron 		5::GetBipedIconPath 1 SEGoldenSaintShield1Iron 		6::"Golden Saint" 			7::GetBipedSlotMask SEGoldenSaintShield1Iron
+	
+	;-----------------------------------------------------------------------------
+	;Legion
+	;-----------------------------------------------------------------------------
+	ar_Append Data[0] ar_Map 0::GetBipedModelPath 0 LegionCuirass 					1::GetBipedModelPath 1 LegionCuirass				2::GetBipedModelPath 2 LegionCuirass 	3::GetBipedModelPath 3 LegionCuirass 	4::GetBipedIconPath 0 LegionCuirass 	5::GetBipedIconPath 1 LegionCuirass 	6::"Legion" 			7::GetBipedSlotMask LegionCuirass
+	ar_Append Data[0] ar_Map 0::"Zefiros\Armor\tbskGuard\ImperialMage01.nif"		1::"Zefiros\Armor\tbskGuard\ImperialMage01F.nif"	2::GetBipedModelPath 2 LegionCuirass	3::""									4::GetBipedIconPath 0 LegionCuirass		5::""									6::"Legion Mage A"		7::4
+	ar_Append Data[0] ar_Map 0::"Zefiros\Armor\tbskGuard\ImperialMage02.nif"		1::"Zefiros\Armor\tbskGuard\ImperialMage02F.nif"	2::GetBipedModelPath 2 LegionCuirass	3::""									4::GetBipedIconPath 0 LegionCuirass		5::""									6::"Legion Mage B"		7::4
+	ar_Append Data[0] ar_Map 0::"Zefiros\Armor\tbskGuard\ForesterImperial01.nif"	1::""												2::GetBipedModelPath 2 LegionCuirass	3::""									4::GetBipedIconPath 0 LegionCuirass		5::""									6::"Legion Forester"	7::4
+	ar_Append Data[1] ar_Map 0::GetBipedModelPath 0 LegionBoots 					1::GetBipedModelPath 1 LegionBoots 					2::GetBipedModelPath 2 LegionBoots 		3::GetBipedModelPath 3 LegionBoots 		4::GetBipedIconPath 0 LegionBoots 		5::GetBipedIconPath 1 LegionBoots 		6::"Legion" 			7::GetBipedSlotMask LegionBoots
+	ar_Append Data[2] ar_Map 0::GetBipedModelPath 0 LegionGauntlets					1::GetBipedModelPath 1 LegionGauntlets 				2::GetBipedModelPath 2 LegionGauntlets 	3::GetBipedModelPath 3 LegionGauntlets 	4::GetBipedIconPath 0 LegionGauntlets 	5::GetBipedIconPath 1 LegionGauntlets 	6::"Legion" 			7::GetBipedSlotMask LegionGauntlets
+	ar_Append Data[3] ar_Map 0::GetBipedModelPath 0 LegionHelmetOld 				1::GetBipedModelPath 1 LegionHelmetOld 				2::GetBipedModelPath 2 LegionHelmetOld 	3::GetBipedModelPath 3 LegionHelmetOld 	4::GetBipedIconPath 0 LegionHelmetOld 	5::GetBipedIconPath 1 LegionHelmetOld 	6::"Legion" 			7::GetBipedSlotMask LegionHelmetOld
+	ar_Append Data[3] ar_Map 0::GetBipedModelPath 0 LegionHelmet					1::GetBipedModelPath 1 LegionHelmet 				2::GetBipedModelPath 2 LegionHelmet 	3::GetBipedModelPath 3 LegionHelmet 	4::GetBipedIconPath 0 LegionHelmet 		5::GetBipedIconPath 1 LegionHelmet 		6::"Legion Horseman" 	7::GetBipedSlotMask LegionHelmet
+	ar_Append Data[3] ar_Map 0::"Zefiros\Armor\tbskGuard\ImperialMageHood.nif"		1::"Zefiros\Armor\tbskGuard\ImperialMageHoodF.nif"	2::GetBipedModelPath 2 LegionHelmetOld	3::""									4::GetBipedIconPath 0 LegionHelmetOld	5::""									6::"Legion Mage"		7::2
+	ar_Append Data[4] ar_Map 0::GetBipedModelPath 0 LegionGreaves 					1::GetBipedModelPath 1 LegionGreaves				2::GetBipedModelPath 2 LegionGreaves 	3::GetBipedModelPath 3 LegionGreaves 	4::GetBipedIconPath 0 LegionGreaves 	5::GetBipedIconPath 1 LegionGreaves 	6::"Legion" 			7::GetBipedSlotMask LegionGreaves
+	ar_Append Data[5] ar_Map 0::GetBipedModelPath 0 LegionShield 					1::GetBipedModelPath 1 LegionShield 				2::GetBipedModelPath 2 LegionShield 	3::GetBipedModelPath 3 LegionShield 	4::GetBipedIconPath 0 LegionShield 		5::GetBipedIconPath 1 LegionShield 		6::"Legion" 			7::GetBipedSlotMask LegionShield
+	
+	;-----------------------------------------------------------------------------
+	;Imperial Watch
+	;-----------------------------------------------------------------------------
+	ar_Append Data[0] ar_Map 0::GetBipedModelPath 0 ImperialPalaceCuirass 		1::GetBipedModelPath 1 ImperialPalaceCuirass	 	2::GetBipedModelPath 2 ImperialPalaceCuirass 		3::GetBipedModelPath 3 ImperialPalaceCuirass 		4::GetBipedIconPath 0 ImperialPalaceCuirass 	5::GetBipedIconPath 1 ImperialPalaceCuirass 	6::"Imperial Watch" 	7::GetBipedSlotMask ImperialPalaceCuirass
+	ar_Append Data[1] ar_Map 0::GetBipedModelPath 0 ImperialPalaceBoots 		1::GetBipedModelPath 1 ImperialPalaceBoots 			2::GetBipedModelPath 2 ImperialPalaceBoots 			3::GetBipedModelPath 3 ImperialPalaceBoots 			4::GetBipedIconPath 0 ImperialPalaceBoots 		5::GetBipedIconPath 1 ImperialPalaceBoots 		6::"Imperial Watch" 	7::GetBipedSlotMask ImperialPalaceBoots
+	ar_Append Data[2] ar_Map 0::GetBipedModelPath 0 ImperialPalaceGauntlets		1::GetBipedModelPath 1 ImperialPalaceGauntlets 		2::GetBipedModelPath 2 ImperialPalaceGauntlets 		3::GetBipedModelPath 3 ImperialPalaceGauntlets 		4::GetBipedIconPath 0 ImperialPalaceGauntlets 	5::GetBipedIconPath 1 ImperialPalaceGauntlets 	6::"Imperial Watch" 	7::GetBipedSlotMask ImperialPalaceGauntlets
+	ar_Append Data[3] ar_Map 0::GetBipedModelPath 0 ImperialPalaceHelmet 		1::GetBipedModelPath 1 ImperialPalaceHelmet 		2::GetBipedModelPath 2 ImperialPalaceHelmet 		3::GetBipedModelPath 3 ImperialPalaceHelmet 		4::GetBipedIconPath 0 ImperialPalaceHelmet 		5::GetBipedIconPath 1 ImperialPalaceHelmet 		6::"Imperial Watch" 	7::GetBipedSlotMask ImperialPalaceHelmet
+	ar_Append Data[4] ar_Map 0::GetBipedModelPath 0 ImperialPalaceGreaves 		1::GetBipedModelPath 1 ImperialPalaceGreaves	 	2::GetBipedModelPath 2 ImperialPalaceGreaves 		3::GetBipedModelPath 3 ImperialPalaceGreaves 		4::GetBipedIconPath 0 ImperialPalaceGreaves 	5::GetBipedIconPath 1 ImperialPalaceGreaves 	6::"Imperial Watch" 	7::GetBipedSlotMask ImperialPalaceGreaves
+	ar_Append Data[5] ar_Map 0::GetBipedModelPath 0 ImperialPalaceShield 		1::GetBipedModelPath 1 ImperialPalaceShield 		2::GetBipedModelPath 2 ImperialPalaceShield 		3::GetBipedModelPath 3 ImperialPalaceShield 		4::GetBipedIconPath 0 ImperialPalaceShield 		5::GetBipedIconPath 1 ImperialPalaceShield 		6::"Imperial Watch" 	7::GetBipedSlotMask ImperialPalaceShield
+	
+	;-----------------------------------------------------------------------------
+	;Imperial Dragon
+	;-----------------------------------------------------------------------------
+	ar_Append Data[0] ar_Map 0::GetBipedModelPath 0 ImperialDragonCuirassHeavy 		1::GetBipedModelPath 1 ImperialDragonCuirassHeavy	 	2::GetBipedModelPath 2 ImperialDragonCuirassHeavy 		3::GetBipedModelPath 3 ImperialDragonCuirassHeavy 		4::GetBipedIconPath 0 ImperialDragonCuirassHeavy 	5::GetBipedIconPath 1 ImperialDragonCuirassHeavy 	6::"Imperial Dragon" 	7::GetBipedSlotMask ImperialDragonCuirassHeavy
+	ar_Append Data[1] ar_Map 0::GetBipedModelPath 0 ImperialDragonBootsHeavy 		1::GetBipedModelPath 1 ImperialDragonBootsHeavy 		2::GetBipedModelPath 2 ImperialDragonBootsHeavy 		3::GetBipedModelPath 3 ImperialDragonBootsHeavy 		4::GetBipedIconPath 0 ImperialDragonBootsHeavy 		5::GetBipedIconPath 1 ImperialDragonBootsHeavy 		6::"Imperial Dragon" 	7::GetBipedSlotMask ImperialDragonBootsHeavy
+	ar_Append Data[2] ar_Map 0::GetBipedModelPath 0 ImperialDragonGauntletsHeavy	1::GetBipedModelPath 1 ImperialDragonGauntletsHeavy 	2::GetBipedModelPath 2 ImperialDragonGauntletsHeavy 	3::GetBipedModelPath 3 ImperialDragonGauntletsHeavy 	4::GetBipedIconPath 0 ImperialDragonGauntletsHeavy 	5::GetBipedIconPath 1 ImperialDragonGauntletsHeavy 	6::"Imperial Dragon" 	7::GetBipedSlotMask ImperialDragonGauntletsHeavy
+	ar_Append Data[3] ar_Map 0::GetBipedModelPath 0 ImperialDragonHelmetHeavy 		1::GetBipedModelPath 1 ImperialDragonHelmetHeavy 		2::GetBipedModelPath 2 ImperialDragonHelmetHeavy 		3::GetBipedModelPath 3 ImperialDragonHelmetHeavy 		4::GetBipedIconPath 0 ImperialDragonHelmetHeavy 	5::GetBipedIconPath 1 ImperialDragonHelmetHeavy 	6::"Imperial Dragon" 	7::GetBipedSlotMask ImperialDragonHelmetHeavy
+	ar_Append Data[4] ar_Map 0::GetBipedModelPath 0 ImperialDragonGreavesHeavy 		1::GetBipedModelPath 1 ImperialDragonGreavesHeavy	 	2::GetBipedModelPath 2 ImperialDragonGreavesHeavy 		3::GetBipedModelPath 3 ImperialDragonGreavesHeavy 		4::GetBipedIconPath 0 ImperialDragonGreavesHeavy 	5::GetBipedIconPath 1 ImperialDragonGreavesHeavy 	6::"Imperial Dragon" 	7::GetBipedSlotMask ImperialDragonGreavesHeavy
+	
+	
+	SetFunctionValue Data
+	Return
+;-----------------------------------------------------------------------------
+end ;Function { Data }
+;-----------------------------------------------------------------------------

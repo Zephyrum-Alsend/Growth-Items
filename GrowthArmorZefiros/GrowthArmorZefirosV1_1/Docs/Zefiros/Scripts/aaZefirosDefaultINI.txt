@@ -1,0 +1,493 @@
+scn aaZefirosDefaultINI
+
+;Main script
+;-----------------------------------------------------------------------------
+;aaZefirosManager
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;aaZefirosCleanUp
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
+;aaZefirosDebug
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;A carbon copy of Zefiros.ini with default settings.  Used to initialize
+;before reading Zefors.ini incase it fails for some reason.
+;
+;Tab values are different in NotePad vs CSE.
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;-----------------------------------------------------------------------------
+begin Function { }
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+;These settings are read everytime you load a save
+;-----------------------------------------------------------------------------
+
+;sShort = Up to 65535
+;lLong  = Up to 4294967295
+;fFloat = Short but can have up to 4 decimal places
+								;Default values
+;-----------------------------------------------------------------------------
+;Name
+;-----------------------------------------------------------------------------
+Set aaZefirosInit.str_Prefix to sv_Construct "Zefiros"
+Set aaZefirosInit.str_Postfix to sv_Construct "of Growth"
+Set aaZefirosInit.str_BodyName to sv_Construct "Cuirass"
+Set aaZefirosInit.str_FootName to sv_Construct "Boots"
+Set aaZefirosInit.str_HandName to sv_Construct "Gauntlets"
+Set aaZefirosInit.str_HeadName to sv_Construct "Helmet"
+Set aaZefirosInit.str_LegsName to sv_Construct "Greaves"
+Set aaZefirosInit.str_ShldName to sv_Construct "Shield"
+
+;Flags for omitting pre/postfixes
+;0 = Include prefix and postfix
+;1 = Omit prefix
+;2 = Omit postfix
+;3 = Omit prefix and postfix
+Set aaZefirosInit.sBodyFix to 2
+Set aaZefirosInit.sFootFix to 2
+Set aaZefirosInit.sHandFix to 2
+Set aaZefirosInit.sHeadFix to 2
+Set aaZefirosInit.sLegsFix to 2
+Set aaZefirosInit.sShldFix to 2
+
+
+;-----------------------------------------------------------------------------
+;Menu
+;-----------------------------------------------------------------------------
+;Form menu has a table of contents with page ranges of this size
+;0 >= disable ToC
+;20 < disable ToC
+Set aaZefirosInit.sPageGroupSize to 3				;3
+
+
+;-----------------------------------------------------------------------------
+;Level up variables
+;-----------------------------------------------------------------------------
+;XP gained is based on damage taken
+Set aaZefirosInit.fXPReqBase to 200				;200
+Set aaZefirosInit.fXPReqMult to 20				;20
+Set aaZefirosInit.sLevelCap to 201				;201
+
+;0 = sLevelCap
+;1 = PC Level
+;2 = PC Fame
+;3 = Light/Heavy Armor Sum
+;4 = Light/Heavy Armor Average
+Set aaZefirosInit.sCapType to 0					;0
+
+;0 = delevel to Lv1
+;0 > disable
+;0 < delevel by this amount
+Set aaZefirosInit.sBreakLevel to 10				;10
+
+;The number of items that need to be broken before delevel is triggered
+Set aaZefirosInit.sBreakThreshold to 3				;3
+
+;Conversion rate of durability for offerings
+;0 >= disable
+Set aaZefirosInit.fAbsorption to 0.02				;0.02
+
+;Bonus per effect on enchantments
+Set aaZefirosInit.fEnchantAbs to 20				;20
+
+;Toggles whether environmental and self inflicted damage count towards XP
+;0 = disable
+;1 = enable
+Set aaZefirosInit.sInvalidAttacker to 0				;0
+
+
+;-----------------------------------------------------------------------------
+;Base stats
+;-----------------------------------------------------------------------------
+;AR/100 is what the ingame UI uses
+Set aaZefirosInit.sBodyARBase to 700				;700
+Set aaZefirosInit.fBodyWeightBase to 15				;15
+Set aaZefirosInit.sBodyHealthBase to 200			;200
+Set aaZefirosInit.lBodyValueBase to 50				;50
+
+Set aaZefirosInit.sFootARBase to 300				;300
+Set aaZefirosInit.fFootWeightBase to 4.5			;4.5
+Set aaZefirosInit.sFootHealthBase to 100			;100
+Set aaZefirosInit.lFootValueBase to 15				;15
+
+Set aaZefirosInit.sHandARBase to 300				;300
+Set aaZefirosInit.fHandWeightBase to 3				;3
+Set aaZefirosInit.sHandHealthBase to 100			;100
+Set aaZefirosInit.lHandValueBase to 15				;15
+
+Set aaZefirosInit.sHeadARBase to 300				;300
+Set aaZefirosInit.fHeadWeightBase to 3				;3
+Set aaZefirosInit.sHeadHealthBase to 100			;100
+Set aaZefirosInit.lHeadValueBase to 15				;15
+
+Set aaZefirosInit.sLegsARBase to 400				;400
+Set aaZefirosInit.fLegsWeightBase to 9				;9
+Set aaZefirosInit.sLegsHealthBase to 150			;150
+Set aaZefirosInit.lLegsValueBase to 30				;30
+
+Set aaZefirosInit.sShldARBase to 800				;800
+Set aaZefirosInit.fShldWeightBase to 6				;6
+Set aaZefirosInit.sShldHealthBase to 150			;150
+Set aaZefirosInit.lShldValueBase to 30				;30
+
+
+;-----------------------------------------------------------------------------
+;Growth rates
+;-----------------------------------------------------------------------------
+Set aaZefirosInit.sBodyARMult to 022				;22
+Set aaZefirosInit.fBodyWeightMult to 0.6			;0.6
+Set aaZefirosInit.fBodyHealthMult to 72				;72
+Set aaZefirosInit.fBodyValueMult to 50				;50
+
+Set aaZefirosInit.sFootARMult to 008				;8
+Set aaZefirosInit.fFootWeightMult to 0.18			;0.18
+Set aaZefirosInit.fFootHealthMult to 36				;36
+Set aaZefirosInit.fFootValueMult to 15				;15
+
+Set aaZefirosInit.sHandARMult to 008				;8
+Set aaZefirosInit.fHandWeightMult to 0.12			;0.12
+Set aaZefirosInit.fHandHealthMult to 36				;36
+Set aaZefirosInit.fHandValueMult to 15				;15
+
+Set aaZefirosInit.sHeadARMult to 008				;8
+Set aaZefirosInit.fHeadWeightMult to 0.12			;0.12
+Set aaZefirosInit.fHeadHealthMult to 36				;36
+Set aaZefirosInit.fHeadValueMult to 15				;15
+
+Set aaZefirosInit.sLegsARMult to 014				;14
+Set aaZefirosInit.fLegsWeightMult to 0.36			;0.36
+Set aaZefirosInit.fLegsHealthMult to 54				;54
+Set aaZefirosInit.fLegsValueMult to 30				;30
+
+Set aaZefirosInit.sShldARMult to 028				;28
+Set aaZefirosInit.fShldWeightMult to 0.24			;0.24
+Set aaZefirosInit.fShldHealthMult to 54				;54
+Set aaZefirosInit.fShldValueMult to 30				;30
+
+
+;-----------------------------------------------------------------------------
+;Heavy armor multipliers
+;-----------------------------------------------------------------------------
+Set aaZefirosInit.fHeavyAR to 1.5				;1.5
+Set aaZefirosInit.fHeavyWeight to 2				;2
+
+
+;-----------------------------------------------------------------------------
+;Enchantment stats
+;-----------------------------------------------------------------------------
+;First level the items become enchanted
+Set aaZefirosInit.sEnchStart to 11				;11
+
+;Items reseek enchantment every this level(s)
+Set aaZefirosInit.sEnchSeek to 5				;5
+
+;Fortify Attribute
+Set aaZefirosInit.sFOATBase to 2				;2
+Set aaZefirosInit.fFOATMult to 1.2				;1.2
+
+;Fortify Skill
+Set aaZefirosInit.sFOSKBase	to 2				;2
+Set aaZefirosInit.fFOSKMult to 1.2				;1.2
+
+;Fortify Fatigue
+Set aaZefirosInit.sFOFABase	to 10				;10
+Set aaZefirosInit.fFOFAMult to 6				;6
+
+;Fortify Health
+Set aaZefirosInit.sFOHEBase to 5				;5
+Set aaZefirosInit.fFOHEMult to 3				;3
+
+;Fortify Magicka
+Set aaZefirosInit.sFOSPBase to 10				;10
+Set aaZefirosInit.fFOSPMult to 6				;6
+
+;Restore Fatige
+Set aaZefirosInit.sREFABase to 1				;1
+Set aaZefirosInit.fREFAMult to 0.5				;0.5
+
+;Restore Health
+Set aaZefirosInit.sREHEBase to 1				;1
+Set aaZefirosInit.fREHEMult to 0.125				;0.125
+
+;Restore Magicka
+Set aaZefirosInit.sRESPBase to 1				;1
+Set aaZefirosInit.fRESPMult to 0.25				;0.25
+
+;Shield
+Set aaZefirosInit.sSHLDBase to 4				;4
+Set aaZefirosInit.fSHLDMult to 1.1				;1.1
+
+;Feather
+Set aaZefirosInit.sFTHRBase to 10				;10
+Set aaZefirosInit.fFTHRMult to 6				;6
+
+;Reflect Damage
+Set aaZefirosInit.sREDGBase to 1				;1
+Set aaZefirosInit.fREDGMult to 0.6				;0.6
+
+;Reflect Spell
+Set aaZefirosInit.sRFLCBase to 1				;1
+Set aaZefirosInit.fRFLCMult to 0.6				;0.6
+
+;Spell Absorption
+Set aaZefirosInit.sSABSBase to 1				;1
+Set aaZefirosInit.fSABSMult to 0.6				;0.6
+
+
+;-----------------------------------------------------------------------------
+;Dynamic Resistances
+;-----------------------------------------------------------------------------
+;0 < RXP required per 1% resistance gained
+;0 >= disable
+Set aaZefirosInit.fXPResistFire to 100				;100
+Set aaZefirosInit.fXPResistFrost to 100				;100
+Set aaZefirosInit.fXPResistShock to 100				;100
+Set aaZefirosInit.fXPResistMagic to 120				;120
+Set aaZefirosInit.fXPResistNormalWeapon to 400			;400
+Set aaZefirosInit.fXPResistParalysis to 100			;100
+Set aaZefirosInit.fXPResistDisease to 100			;100
+
+;RXP per second paralyzed
+Set aaZefirosInit.fXPPara to 10					;10
+
+;RXP per illness contracted
+Set aaZefirosInit.fXPDisease to 50				;50
+
+;Magic RXP per non-damaging hostile effect
+Set aaZefirosInit.fXPNoDmg to 0.6				;0.6
+
+;Determines if resistances can appear before sEnchStart
+;RXP is gained regardless
+;0 = Wait till sEnchStart
+;1 = Enchant as soon as resistances are gained
+Set aaZefirosInit.sEnchResist to 0				;0
+
+
+;-----------------------------------------------------------------------------
+;Latency
+;-----------------------------------------------------------------------------
+;Controls how often the mod analyzes damage taken, in seconds
+Set aaZefirosInit.fDamageLag to 0.1				;0.1
+
+
+;-----------------------------------------------------------------------------
+;Keybinds
+;-----------------------------------------------------------------------------
+;Highlight item and press Key1 + ( Key2 or Key3 ) to activate
+
+;Form change menu
+Set aaZefirosInit.sFormKey1 to 257				;257	RMB
+Set aaZefirosInit.sFormKey2 to 257				;257	RMB
+Set aaZefirosInit.sFormKey3 to 257				;257	RMB
+
+Set aaZefirosInit.sFormBut1 to 42				;42	Disabled
+Set aaZefirosInit.sFormBut2 to 42				;42	Disabled
+
+;Show enchantment - has priority over Form
+Set aaZefirosInit.sEnchKey1 to 257				;257	RMB
+Set aaZefirosInit.sEnchKey2 to 29				;29	Left CTRL
+Set aaZefirosInit.sEnchKey3 to 157				;157	Right CTRL
+
+Set aaZefirosInit.sEnchBut1 to 42				;42	Disabled
+Set aaZefirosInit.sEnchBut2 to 42				;42	Disabled
+
+;Show form name - has priority over Ench
+Set aaZefirosInit.sNameKey1 to 257				;257	RMB
+Set aaZefirosInit.sNameKey2 to 42				;42	Left SHFT
+Set aaZefirosInit.sNameKey3 to 54				;54	Right SHFT
+
+Set aaZefirosInit.sNameBut1 to 42				;42	Disabled
+Set aaZefirosInit.sNameBut2 to 42				;42	Disabled
+
+;Offer armor
+Set aaZefirosInit.sOffrKey1 to 257				;257	RMB
+Set aaZefirosInit.sOffrKey2 to 257				;257	RMB
+Set aaZefirosInit.sOffrKey3 to 257				;257	RMB
+
+Set aaZefirosInit.sOffrBut1 to 42				;42	Disabled
+Set aaZefirosInit.sOffrBut2 to 42				;42	Disabled
+
+;Mimic armor - has priority over Offr
+Set aaZefirosInit.sCopyKey1 to 257				;257	RMB
+Set aaZefirosInit.sCopyKey2 to 42				;42	Left SHFT
+Set aaZefirosInit.sCopyKey3 to 54				;54	Right SHFT
+
+Set aaZefirosInit.sCopyBut1 to 42				;42	Disabled
+Set aaZefirosInit.sCopyBut2 to 42				;42	Disabled
+
+
+;-----------------------------------------------------------------------------
+;Control codes
+;-----------------------------------------------------------------------------
+;Forward 	0
+;Back 		1
+;Slide Left 	2
+;Slide Right 	3
+;Attack 	4
+;Activate 	5
+;Block 		6
+;Cast 		7
+;Ready Weapon 	8
+;Crouch/Sneak 	9
+;Run 		10
+;Always Run 	11
+;Auto Move 	12
+;Jump 		13
+;Toggle POV 	14
+;Menu Mode 	15
+;Rest 		16
+;Quick Menu 	17
+;Quick1 	18
+;Quick2 	19
+;Quick3 	20
+;Quick4 	21
+;Quick5 	22
+;Quick6 	23
+;Quick7 	24
+;Quick8 	25
+;QuickSave 	26
+;QuickLoad 	27
+;Grab 		28
+;-----------------------------------------------------------------------------
+;Keycodes
+;-----------------------------------------------------------------------------
+;1	Escape
+;2	1
+;3	2
+;4	3
+;5	4
+;6  	5
+;7  	6
+;8  	7
+;9  	8
+;10  	9
+;11  	0
+;12  	Minus
+;13  	Equals
+;14  	Backspace
+;15  	Tab
+;16  	Q
+;17  	W
+;18  	E
+;19  	R
+;20  	T
+;21  	Y
+;22  	U
+;23  	I
+;24  	O
+;25  	P
+;26  	Left Bracket
+;27  	Right Bracket
+;28  	Enter
+;29  	Left Control
+;30  	A
+;31  	S
+;32  	D
+;33  	F
+;34  	G
+;35  	H
+;36  	J
+;37  	K
+;38  	L
+;39  	Semicolon
+;40  	Apostrophe
+;41  	~ (Console)
+;42  	Left Shift
+;43  	Back Slash
+;44  	Z
+;45  	X
+;46  	C
+;47  	V
+;48  	B
+;49  	N
+;50  	M
+;51  	Comma
+;52  	Period
+;53  	Forward Slash  
+;54  	Right Shift
+;55  	NUM*
+;56  	Left Alt
+;57 	Spacebar
+;58  	Caps Lock
+;59  	F1
+;60  	F2
+;61  	F3
+;62  	F4
+;63  	F5
+;64  	F6
+;65  	F7
+;66  	F8
+;67  	F9
+;68  	F10
+;69  	Num Lock
+;70  	Scroll Lock
+;71  	NUM7
+;72  	NUM8
+;73  	NUM9
+;74  	NUM-
+;75  	NUM4
+;76  	NUM5
+;77  	NUM6
+;78  	NUM+
+;79  	NUM1
+;80  	NUM2
+;81  	NUM3
+;82  	NUM0
+;83  	NUM.
+;87  	F11
+;88  	F12
+;156  	NUM Enter
+;157  	Right Control
+;181  	NUM/
+;184  	Right Alt
+;199  	Home
+;200  	Up Arrow
+;201  	PgUp
+;203  	Left Arrow
+;205  	Right Arrow
+;207  	End
+;208  	Down Arrow
+;209  	PgDown
+;210  	Insert
+;211  	Delete
+;256  	Left Mouse Button
+;257  	Right Mouse Button
+;258  	Middle/Wheel Mouse Button
+;259  	Mouse Button 3
+;260  	Mouse Button 4
+;261  	Mouse Button 5
+;262  	Mouse Button 6
+;263  	Mouse Button 7
+;264  	Mouse Wheel Up
+;265  	Mouse Wheel Down
+
+
+;-----------------------------------------------------------------------------
+;Debug flag
+;-----------------------------------------------------------------------------
+;Toggles appearance of debug messages in console
+Set aaZefirosDebug to 0						;0
+
+;-----------------------------------------------------------------------------
+end ;Function { }
+;-----------------------------------------------------------------------------

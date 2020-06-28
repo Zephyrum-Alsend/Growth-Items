@@ -1,0 +1,98 @@
+scn aaZefirosGetEffectOrder
+
+;Main script
+;-----------------------------------------------------------------------------
+;aaZefirosManager
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;aaZefirosGetEffectCode
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;aaZefirosReoderEffects
+;aaZefirosSetMerge
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;Creates an array to be passed into ReorderEffects.
+;Effects listed here will appear in that order at the end of the enchantment.
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+array_var Stack ;Return value
+;-----------------------------------------------------------------------------
+
+;-----------------------------------------------------------------------------
+begin Function { }
+;-----------------------------------------------------------------------------
+
+	Let Stack := ar_Construct Array
+	
+	ar_Append Stack Call aaZefirosGetEffectCode 0
+	ar_Append Stack Call aaZefirosGetEffectCode 1
+	ar_Append Stack Call aaZefirosGetEffectCode 2
+	ar_Append Stack Call aaZefirosGetEffectCode 3
+	ar_Append Stack Call aaZefirosGetEffectCode 4
+	ar_Append Stack Call aaZefirosGetEffectCode 5
+	ar_Append Stack Call aaZefirosGetEffectCode 6
+	ar_Append Stack Call aaZefirosGetEffectCode 7
+	ar_Append Stack Call aaZefirosGetEffectCode 8
+	ar_Append Stack Call aaZefirosGetEffectCode 9
+	ar_Append Stack Call aaZefirosGetEffectCode 10
+	ar_Append Stack Call aaZefirosGetEffectCode 11
+	ar_Append Stack Call aaZefirosGetEffectCode 12
+	ar_Append Stack Call aaZefirosGetEffectCode 13
+	ar_Append Stack Call aaZefirosGetEffectCode 14
+	ar_Append Stack Call aaZefirosGetEffectCode 15
+	ar_Append Stack Call aaZefirosGetEffectCode 16
+	ar_Append Stack Call aaZefirosGetEffectCode 17
+	ar_Append Stack Call aaZefirosGetEffectCode 18
+	ar_Append Stack Call aaZefirosGetEffectCode 19
+	ar_Append Stack Call aaZefirosGetEffectCode 20
+	ar_Append Stack Call aaZefirosGetEffectCode 21
+	ar_Append Stack Call aaZefirosGetEffectCode 22
+	ar_Append Stack Call aaZefirosGetEffectCode 23
+	ar_Append Stack Call aaZefirosGetEffectCode 24
+	ar_Append Stack Call aaZefirosGetEffectCode 25
+	ar_Append Stack Call aaZefirosGetEffectCode 26
+	ar_Append Stack Call aaZefirosGetEffectCode 27
+	ar_Append Stack Call aaZefirosGetEffectCode 28
+	ar_Append Stack Call aaZefirosGetEffectCode 29
+	ar_Append Stack Call aaZefirosGetEffectCode 30
+	ar_Append Stack Call aaZefirosGetEffectCode 31
+	ar_Append Stack Call aaZefirosGetEffectCode 32
+	ar_Append Stack Call aaZefirosGetEffectCode 33
+	ar_Append Stack Call aaZefirosGetEffectCode 34
+	ar_Append Stack Call aaZefirosGetEffectCode 35
+	ar_Append Stack Call aaZefirosGetEffectCode 36
+	ar_Append Stack Call aaZefirosGetEffectCode 37
+	ar_Append Stack Call aaZefirosGetEffectCode 38
+	ar_Append Stack Call aaZefirosGetEffectCode 39
+	
+	ar_Append Stack ar_Map 0::( GetMagicEffectCode RSFI ) 1::256
+	ar_Append Stack ar_Map 0::( GetMagicEffectCode RSFR ) 1::256
+	ar_Append Stack ar_Map 0::( GetMagicEffectCode RSSH ) 1::256
+	ar_Append Stack ar_Map 0::( GetMagicEffectCode RSMA ) 1::256
+	ar_Append Stack ar_Map 0::( GetMagicEffectCode RSNW ) 1::256
+	ar_Append Stack ar_Map 0::( GetMagicEffectCode RSPA ) 1::256
+	ar_Append Stack ar_Map 0::( GetMagicEffectCode RSDI ) 1::256
+
+
+	SetFunctionValue Stack
+	Return
+;-----------------------------------------------------------------------------
+end ;Function { }
+;-----------------------------------------------------------------------------

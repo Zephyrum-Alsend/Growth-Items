@@ -1,0 +1,79 @@
+scn aaZefirosSetHandlers
+
+;Main script
+;-----------------------------------------------------------------------------
+;aaZefirosManager
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;aaZefirosOnDamage
+;aaZefirosOnMagicHit
+;aaZefirosOnWeaponHit
+;aaZefirosOnMagicApply
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;aaZefirosCleanUp
+;aaZefirosOnUnEquip
+;aaZefirosObjectBody
+;aaZefirosObjectFoot
+;aaZefirosObjectHand
+;aaZefirosObjectHead
+;aaZefirosObjectLegs
+;aaZefirosObjectShld
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;aaZefirosEquip
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;Un/Sets handlers based on Mode.
+;0 = Unset
+;1 = Set
+;
+;Must filter by PlayerRef instead of Player.  Even though they're supposed to
+;be interchangeable, Player doesn't filter at all while PlayerRef does.
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+short Mode
+;-----------------------------------------------------------------------------
+
+;-----------------------------------------------------------------------------
+begin Function { Mode }
+;-----------------------------------------------------------------------------
+
+	if ( Mode > 0 )
+
+		DebugPrint "Setting OnHealthDamage, OnMagicEffectHit, OnHitWith, OnMagicApply handlers."
+
+		SetEventHandler "OnHealthDamage" aaZefirosOnDamage "object"::PlayerRef
+		SetEventHandler "OnMagicEffectHit" aaZefirosOnMagicHit first::PlayerRef
+		SetEventHandler "OnHitWith" aaZefirosOnWeaponHit first::PlayerRef
+		SetEventHandler "OnMagicApply" aaZefirosOnMagicApply second::PlayerRef
+
+	else
+
+		DebugPrint "Purging OnHealthDamage, OnMagicEffectHit, OnHitWith, OnMagicApply handlers."
+
+		RemoveEventHandler "OnHealthDamage" aaZefirosOnDamage
+		RemoveEventHandler "OnMagicEffectHit" aaZefirosOnMagicHit
+		RemoveEventHandler "OnHitWith" aaZefirosOnWeaponHit
+		RemoveEventHandler "OnMagicApply" aaZefirosOnMagicApply
+
+	endif
+	
+
+;-----------------------------------------------------------------------------
+end ;Function { Mode }
+;-----------------------------------------------------------------------------

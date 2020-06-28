@@ -1,0 +1,172 @@
+scn aaZefirosUndoEnchant
+
+;Main script
+;-----------------------------------------------------------------------------
+;aaZefirosManager
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;aaZefirosModEnchLevel
+;aaZefirosRemoveAllEffectItems
+;aaZefirosGetEnchantLevels
+;aaZefirosSetEnchant
+;aaZefirosSetResistEffects
+;aaZefirosGetResistMatrix
+;aaZefirosGetMerg
+;aaZefirosSetMergeEnch
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
+;aaZefirosDebug
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;Undoes enchantments, one level at a time.
+;Passed the total Lvl to be reduced by, GetEnchantData array, biped slot mask, 
+;history of all level ups, and the enchants themselves.
+;Reinitializes the enchants after deleveling them.
+;Returns what the new active enchants are and the remaining history.
+;
+;Slots = GetBipedSlotMask
+;Dflt = Default biped slot mask
+;EnSt = Call aaZefirosGetEnchantData
+;Hist = string_var pseudo array, containing two digit shorts
+;Enchs = Enchantment reference
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+array_var Slots
+array_var Dflt
+short Lvl
+array_var EnSt
+array_var Hist
+array_var Enchs
+
+short Count
+short h
+short i
+short Actv
+array_var NewActv ;Return value
+array_var NewHist ;Return value
+array_var NewLvl
+string_var StrArr
+array_var Merg
+array_var Iter
+ref Ench
+;-----------------------------------------------------------------------------
+
+;-----------------------------------------------------------------------------
+begin Function { Slots, Dflt, Lvl, EnSt, Hist, Enchs }
+;-----------------------------------------------------------------------------
+
+	;Set Count to smallest array size
+	Let Count := ar_Size Hist
+	if eval( Count > ar_Size Enchs )
+		Let Count := ar_Size Enchs
+	endif
+	if eval( Count > ar_Size Slots )
+		Let Count := ar_Size Slots
+	endif
+
+
+	Let NewActv := ar_Construct Array
+	Let NewHist := ar_Construct Array
+	Let Merg := ar_Construct Array
+	
+	Let h := 0
+	while ( h < Count )
+
+		Let Ench := Enchs[h]
+		Let StrArr := Hist[h]
+		
+
+		;-----------------------------------------------------------------------------
+		;Enchantments don't have names so the most human readable we can do is array index
+		DebugPrint "Undoing levels for [%.0f] enchantment..." h
+		;-----------------------------------------------------------------------------
+		Let i := 0
+		while ( i < Lvl && 0 < sv_Length StrArr )
+
+			;Extract the first 2 digits from StrArr
+			Let Actv := #StrArr[0:1]
+			
+			;Decrement level
+			Call aaZefirosModEnchLevel h ( -1 ) Actv
+
+			;Erase the extracted number
+			sv_Erase StrArr 0 2
+	
+			Let i += 1
+		loop
+		
+		ar_Append NewActv Actv
+		ar_Append NewHist StrArr
+
+
+		;-----------------------------------------------------------------------------
+		DebugPrint "Reinitializing..."
+		;-----------------------------------------------------------------------------
+		SetDebugMode 0 ;Console clog begone!
+		
+		Call aaZefirosRemoveAllEffectItems Ench
+		Let NewLvl := Call aaZefirosGetEnchantLevels h
+		Call aaZefirosSetEnchant EnSt NewLvl Actv Ench
+		
+		if ( Ench != aaZefirosInit.EnchShld ) ;Shield shouldn't have resists, inelegant
+			
+			Call aaZefirosSetResistEffects ( &1 ) Dflt ( Call aaZefirosGetResistMatrix 0 ) ( &Ench )
+			
+		endif
+		
+		SetDebugMode aaZefirosDebug
+
+
+		;Also get merged items so we can remerge
+		Let Merg[h] := Call aaZefirosGetMerg Slots[h] Dflt
+
+		Let h += 1
+	loop
+
+
+	;-----------------------------------------------------------------------------
+	DebugPrint "Remerging..."
+	;-----------------------------------------------------------------------------
+	Let h := 0
+	while ( h < Count )
+
+		ForEach Iter <- Merg[h]
+
+			Let i := *Iter
+
+			if eval( Enchs[i] != Enchs[h] )
+				
+				Call aaZefirosSetMergeEnch Enchs[i] Enchs[h]
+
+			endif
+			
+		loop
+
+		Let h += 1
+	loop
+	
+
+	;-----------------------------------------------------------------------------
+	DebugPrint "New stats set."
+	;-----------------------------------------------------------------------------
+	SetFunctionValue ar_Map 0::NewActv 1::NewHist
+	Return
+;-----------------------------------------------------------------------------
+end ;Function { Slots, Dflt, Lvl, EnSt, Hist, Enchs }
+;-----------------------------------------------------------------------------

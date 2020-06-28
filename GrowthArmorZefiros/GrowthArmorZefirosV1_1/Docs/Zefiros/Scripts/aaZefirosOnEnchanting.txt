@@ -1,0 +1,110 @@
+scn aaZefirosOnEnchanting
+
+;Main script
+;-----------------------------------------------------------------------------
+;aaZefirosManager
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;aaZefirosOnEnchant
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;aaZefirosFlagEnchantOnce
+;aaZefirosUndoEnchanting
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;Checks if the item selected for enchanting is in Items, sets the Flag to
+;trigger UndoEnchanting and sets OnEnchant handler if so.  Continuously tracks
+;the selected soul gem and its soul level while Flag is set so UndoEnchanting
+;has the information it needs.
+;If the item is not in Items, unsets Flag and removes handler.
+;Returns information scraped from the menu alongside the Flag.
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+array_var Items
+ref SoulGem
+short SoulLevel
+ref BaseItem
+ref SoulItem
+short Flag ;Return value
+
+array_var Stack ;Return value
+long j
+ref Item
+;-----------------------------------------------------------------------------
+
+
+
+;-----------------------------------------------------------------------------
+begin Function { Items, SoulGem, SoulLevel, BaseItem, SoulItem, Flag }
+;-----------------------------------------------------------------------------
+
+	;Get item selected for enchanting
+	Let BaseItem := GetEnchMenuBaseItem
+
+	;If it's in Items
+	Let j := ar_Find BaseItem Items
+	if eval( ar_BadNumericIndex != j )
+
+		;Set flag and reset SoulItem
+		if ( Flag == 0 )
+
+			DebugPrint "Setting OnEnchant handler."
+			SetEventHandler "OnEnchant" aaZefirosOnEnchant
+			Let SoulItem := 0
+			Let Flag := 1
+
+		endif
+
+		;Continuously update selected soul gem
+		if ( SoulGem != GetEnchMenuSoulgem )
+
+			DebugPrint "Updated soul gem."
+			Let SoulGem := GetEnchMenuSoulgem
+
+			;If Azura's Star, also get soul level
+			if ( SoulGem == AzurasStar )
+
+				Let Stack := Player.GetInvRefsForItem SoulGem
+				Let Item := Stack[0]
+				Let SoulLevel := Item.GetCurrentSoulLevel
+
+			endif
+
+		endif
+
+	else ;BaseItem is not in Items
+
+		;Unset flag
+		if ( Flag != 0 )
+
+			DebugPrint "Removing OnEnchant handler."
+			RemoveEventHandler "OnEnchant" aaZefirosOnEnchant
+			Let Flag := 0
+
+		endif
+		
+	endif
+
+
+	Let Stack := ar_Map 0::SoulGem 1::SoulLevel 2::BaseItem 3::SoulItem
+	SetFunctionValue ar_Map 0::Stack 1::Flag
+	Return
+;-----------------------------------------------------------------------------
+end ;Function { Items, SoulGem, SoulLevel, BaseItem, SoulItem, Flag }
+;-----------------------------------------------------------------------------

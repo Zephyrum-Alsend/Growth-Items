@@ -1,0 +1,93 @@
+scn aaZefirosValidateBiped
+
+;Main script
+;-----------------------------------------------------------------------------
+;aaZefirosManager
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;aaZefirosValidateMimic
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;Validates the model and icon paths on a biped object.  Returns 1 if all paths
+;are valid, 0 if any are invalid.
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+ref Item
+;-----------------------------------------------------------------------------
+
+;-----------------------------------------------------------------------------
+begin Function { Item }
+;-----------------------------------------------------------------------------
+
+	if eval( 1 != ( IsBipedModelPathValid 0 Item ) )
+
+		DebugPrint "%n Male Mesh invalid." Item
+		SetFunctionValue 0
+		Return
+
+	endif
+
+	if eval( 1 != ( IsBipedModelPathValid 1 Item ) )
+
+		DebugPrint "%n Female Mesh invalid." Item
+		SetFunctionValue 0
+		Return
+
+	endif
+
+	if eval( 1 != ( IsBipedModelPathValid 2 Item ) )
+
+		DebugPrint "%n Male Ground invalid." Item
+		SetFunctionValue 0
+		Return
+
+	endif
+
+	if eval( 1 != ( IsBipedModelPathValid 3 Item ) )
+
+		DebugPrint "%n Female Ground invalid." Item
+		SetFunctionValue 0
+		Return
+
+	endif
+
+	if eval( 1 != ( IsBipedIconPathValid 0 Item ) )
+
+		DebugPrint "%n Male Icon invalid." Item
+		SetFunctionValue 0
+		Return
+
+	endif
+
+	if eval( 1 != ( IsBipedIconPathValid 1 Item ) )
+
+		DebugPrint "%n Female Icon invalid." Item
+		SetFunctionValue 0
+		Return
+
+	endif
+
+
+	SetFunctionValue 1
+	Return
+;-----------------------------------------------------------------------------
+end ;Function { Item }
+;-----------------------------------------------------------------------------

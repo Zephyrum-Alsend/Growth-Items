@@ -1,0 +1,101 @@
+scn aaZefirosSetFormGlobal
+
+;Main script
+;-----------------------------------------------------------------------------
+;aaZefirosManager
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;aaZefirosSetForm
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
+;aaZefirosFormBody
+;aaZefirosFormFoot
+;aaZefirosFormHand
+;aaZefirosFormHead
+;aaZefirosFormLegs
+;aaZefirosFormShld
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;Sets the Form global and paired string_var of the specified index.
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+short i
+short Idx
+string_var Name
+;-----------------------------------------------------------------------------
+
+;-----------------------------------------------------------------------------
+begin Function { i, Idx, Name }
+;-----------------------------------------------------------------------------
+
+	if eval( i == 0 )
+		
+		Let aaZefirosFormBody := Idx
+		Let aaZefirosInit.FormBody := Name
+		
+		DebugPrint "FormBody global updated."
+
+		
+	elseif eval( i == 1 )
+		
+		Let aaZefirosFormFoot := Idx
+		Let aaZefirosInit.FormFoot := Name
+		
+		DebugPrint "FormFoot global updated."
+
+		
+	elseif eval( i == 2 )
+		
+		Let aaZefirosFormHand := Idx
+		Let aaZefirosInit.FormHand := Name
+		
+		DebugPrint "FormHand global updated."
+
+		
+	elseif eval( i == 3 )
+		
+		Let aaZefirosFormHead := Idx
+		Let aaZefirosInit.FormHead := Name
+		
+		DebugPrint "FormHead global updated."
+
+		
+	elseif eval( i == 4 )
+		
+		Let aaZefirosFormLegs := Idx
+		Let aaZefirosInit.FormLegs := Name
+		
+		DebugPrint "FormLegs global updated."
+
+		
+	elseif eval( i == 5 )
+		
+		Let aaZefirosFormShld := Idx
+		Let aaZefirosInit.FormShld := Name
+		
+		DebugPrint "FormShld global updated."
+
+		
+	endif
+
+	
+	Return
+;-----------------------------------------------------------------------------
+end ;Function { i, Idx, Name }
+;-----------------------------------------------------------------------------

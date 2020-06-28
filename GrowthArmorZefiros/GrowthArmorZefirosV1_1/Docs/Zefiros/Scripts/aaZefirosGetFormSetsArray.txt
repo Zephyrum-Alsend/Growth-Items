@@ -1,0 +1,356 @@
+scn aaZefirosGetFormSetsArray
+
+;Main script
+;-----------------------------------------------------------------------------
+;aaZefirosManager
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;aaZefirosFindSet
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;Given the Forms array from Manager, creates an array of coordinate sets
+;pointing to sets of meshes (i.e. Iron, Fur, Daedric).
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+array_var Data
+
+array_var Sets
+array_var Stack
+;-----------------------------------------------------------------------------
+
+;-----------------------------------------------------------------------------
+begin Function { Data }
+;-----------------------------------------------------------------------------
+
+	;ar_Append is used so re-ordering this list is just a simple cut&paste
+
+	Let Sets := ar_Construct Array
+
+	;Name is under [6] so MeshMenu can use this as is
+	ar_Append Sets ar_Map 6::"Mimic" 0::(ar_Map 0::0 1::0 2::0 3::0 4::0 5::0)
+
+	Let Stack := ar_Map 0::"Fur" 1::"Fur" 2::"Fur" 3::"Fur" 4::"Fur" 5::"Fur"
+	ar_Append Sets ar_Map 6::"Fur" 0::Call aaZefirosFindSet Stack Data
+
+	Let Stack := ar_Map 0::"Iron" 1::"Iron" 2::"Iron" 3::"Iron" 4::"Iron" 5::"Iron"
+	ar_Append Sets ar_Map 6::"Iron" 0::Call aaZefirosFindSet Stack Data
+
+	Let Stack := ar_Map 0::"Leather" 1::"Leather" 2::"Leather" 3::"Leather" 4::"Leather" 5::"Leather"
+	ar_Append Sets ar_Map 6::"Leather" 0::Call aaZefirosFindSet Stack Data
+
+	Let Stack := ar_Map 0::"Steel" 1::"Steel" 2::"Steel" 3::"Steel" 4::"Steel" 5::"Steel"
+	ar_Append Sets ar_Map 6::"Steel" 0::Call aaZefirosFindSet Stack Data
+
+	Let Stack := ar_Map 0::"Chainmail" 1::"Chainmail" 2::"Chainmail" 3::"Chainmail" 4::"Chainmail" 5::"Chainmail"
+	ar_Append Sets ar_Map 6::"Chainmail" 0::Call aaZefirosFindSet Stack Data
+
+	Let Stack := ar_Map 0::"Dwarven" 1::"Dwarven" 2::"Dwarven" 3::"Dwarven" 4::"Dwarven" 5::"Dwarven"
+	ar_Append Sets ar_Map 6::"Dwarven" 0::Call aaZefirosFindSet Stack Data
+
+	Let Stack := ar_Map 0::"Mithril" 1::"Mithril" 2::"Mithril" 3::"Mithril" 4::"Mithril" 5::"Mithril"
+	ar_Append Sets ar_Map 6::"Mithril" 0::Call aaZefirosFindSet Stack Data
+
+	Let Stack := ar_Map 0::"Orcish" 1::"Orcish" 2::"Orcish" 3::"Orcish" 4::"Orcish" 5::"Orcish"
+	ar_Append Sets ar_Map 6::"Orcish" 0::Call aaZefirosFindSet Stack Data
+
+	Let Stack := ar_Map 0::"Elven" 1::"Elven" 2::"Elven" 3::"Elven" 4::"Elven" 5::"Elven"
+	ar_Append Sets ar_Map 6::"Elven" 0::Call aaZefirosFindSet Stack Data
+
+	Let Stack := ar_Map 0::"Ebony" 1::"Ebony" 2::"Ebony" 3::"Ebony" 4::"Ebony" 5::"Ebony"
+	ar_Append Sets ar_Map 6::"Ebony" 0::Call aaZefirosFindSet Stack Data
+
+	Let Stack := ar_Map 0::"Glass" 1::"Glass" 2::"Glass" 3::"Glass" 4::"Glass" 5::"Glass"
+	ar_Append Sets ar_Map 6::"Glass" 0::Call aaZefirosFindSet Stack Data
+
+	Let Stack := ar_Map 0::"Daedric" 1::"Daedric" 2::"Daedric" 3::"Daedric" 4::"Daedric" 5::"Daedric"
+	ar_Append Sets ar_Map 6::"Daedric" 0::Call aaZefirosFindSet Stack Data
+
+	Let Stack := ar_Map 0::"Amber" 1::"Amber" 2::"Amber" 3::"Amber" 4::"Amber" 5::"Amber"
+	ar_Append Sets ar_Map 6::"Amber" 0::Call aaZefirosFindSet Stack Data
+
+	Let Stack := ar_Map 0::"Madness" 1::"Madness" 2::"Madness" 3::"Madness" 4::"Madness" 5::"Madness"
+	ar_Append Sets ar_Map 6::"Madness" 0::Call aaZefirosFindSet Stack Data
+
+	Let Stack := ar_Map 0::"Adamantium" 1::"Adamantium" 2::"Adamantium" 3::"Adamantium" 4::"Adamantium" 5::"Adamantium"
+	ar_Append Sets ar_Map 6::"Adamantium" 0::Call aaZefirosFindSet Stack Data
+
+	Let Stack := ar_Map 0::"Blackwood" 1::"Blackwood" 2::"Blackwood" 3::"Blackwood" 4::"Blackwood" 5::"Blackwood"
+	ar_Append Sets ar_Map 6::"Blackwood" 0::Call aaZefirosFindSet Stack Data
+
+	Let Stack := ar_Map 0::"Blades" 1::"Blades" 2::"Blades" 3::"Blades" 4::"Blades" 5::"Blades"
+	ar_Append Sets ar_Map 6::"Blades" 0::Call aaZefirosFindSet Stack Data
+
+	Let Stack := ar_Map 0::"Legion" 1::"Legion" 2::"Legion" 3::"Legion" 4::"Legion" 5::"Legion"
+	ar_Append Sets ar_Map 6::"Legion" 0::Call aaZefirosFindSet Stack Data
+
+	Let Stack := ar_Map 0::"Legion Mage A" 1::"Legion" 2::"Legion" 3::"Legion Mage" 4::"Legion" 5::"Legion"
+	ar_Append Sets ar_Map 6::"Legion Battlemage" 0::Call aaZefirosFindSet Stack Data
+
+	Let Stack := ar_Map 0::"Imperial Watch" 1::"Imperial Watch" 2::"Imperial Watch" 3::"Imperial Watch" 4::"Imperial Watch" 5::"Imperial Watch"
+	ar_Append Sets ar_Map 6::"Imperial Watch" 0::Call aaZefirosFindSet Stack Data
+
+	Let Stack := ar_Map 0::"Imperial Dragon" 1::"Imperial Dragon" 2::"Imperial Dragon" 3::"Imperial Dragon" 4::"Imperial Dragon"
+	ar_Append Sets ar_Map 6::"Imperial Dragon" 0::Call aaZefirosFindSet Stack Data
+
+	Let Stack := ar_Map 0::"Imperial Champion" 1::"Imperial Champion" 2::"Imperial Champion" 3::"Imperial Champion" 4::"Imperial Champion"
+	ar_Append Sets ar_Map 6::"Imperial Champion" 0::Call aaZefirosFindSet Stack Data
+
+	Let Stack := ar_Map 0::"Anvil Standard" 1::"Chainmail" 2::"Chainmail" 3::"Guard Helmet" 4::"Chainmail" 5::"Anvil"
+	ar_Append Sets ar_Map 6::"Anvil Standard" 0::Call aaZefirosFindSet Stack Data
+
+	Let Stack := ar_Map 0::"Anvil Cuirass A" 1::"Leather" 2::"Leather" 3::"Anvil Helm" 4::"Anvil" 5::"Anvil"
+	ar_Append Sets ar_Map 6::"Anvil Local" 0::Call aaZefirosFindSet Stack Data
+
+	Let Stack := ar_Map 0::"Bravil Standard" 1::"Chainmail" 2::"Chainmail" 3::"Guard Helmet" 4::"Chainmail" 5::"Bravil"
+	ar_Append Sets ar_Map 6::"Bravil Standard" 0::Call aaZefirosFindSet Stack Data
+
+	Let Stack := ar_Map 0::"Bravil Cuirass A" 1::"Guard's Leather" 2::"Guard's Leather" 3::"Bravil Helm C" 4::"Guard's Leather" 5::"Bravil"
+	ar_Append Sets ar_Map 6::"Bravil Local" 0::Call aaZefirosFindSet Stack Data
+
+	Let Stack := ar_Map 0::"Bruma Standard" 1::"Chainmail" 2::"Chainmail" 3::"Guard Helmet" 4::"Chainmail" 5::"Bruma"
+	ar_Append Sets ar_Map 6::"Bruma Standard" 0::Call aaZefirosFindSet Stack Data
+
+	Let Stack := ar_Map 0::"Bruma Coat" 1::"Fur" 2::"Fur" 3::"Bruma Helm B" 4::"Fur" 5::"Bruma"
+	ar_Append Sets ar_Map 6::"Bruma Local" 0::Call aaZefirosFindSet Stack Data
+
+	Let Stack := ar_Map 0::"Cheydinhal Standard" 1::"Chainmail" 2::"Chainmail" 3::"Guard Helmet" 4::"Chainmail" 5::"Cheydinhal"
+	ar_Append Sets ar_Map 6::"Cheydinhal Standard" 0::Call aaZefirosFindSet Stack Data
+
+	Let Stack := ar_Map 0::"Cheydinhal Cuirass" 1::"Chainmail" 2::"Chainmail" 3::"Cheydinhal Cowl B" 4::"Chainmail" 5::"Cheydinhal"
+	ar_Append Sets ar_Map 6::"Cheydinhal Local" 0::Call aaZefirosFindSet Stack Data
+
+	Let Stack := ar_Map 0::"Knight of the Thorn" 1::"Guard's Fine Steel" 2::"Knight of the Thorn" 3::"Knight of the Thorn" 4::"Knight of the Thorn" 5::"Knight of the Thorn"
+	ar_Append Sets ar_Map 6::"Knight of the Thorn" 0::Call aaZefirosFindSet Stack Data
+
+	Let Stack := ar_Map 0::"Chorrol Standard" 1::"Chainmail" 2::"Chainmail" 3::"Guard Helmet" 4::"Chainmail" 5::"Chorrol"
+	ar_Append Sets ar_Map 6::"Chorrol Standard" 0::Call aaZefirosFindSet Stack Data
+
+	Let Stack := ar_Map 0::"Chorrol Tabard" 1::"Chainmail" 2::"Chainmail" 3::"Templar" 4::"Chainmail" 5::"Chorrol"
+	ar_Append Sets ar_Map 6::"Chorrol Local" 0::Call aaZefirosFindSet Stack Data
+
+	Let Stack := ar_Map 0::"Kvatch Standard" 1::"Chainmail" 2::"Chainmail" 3::"Guard Helmet" 4::"Chainmail" 5::"Kvatch"
+	ar_Append Sets ar_Map 6::"Kvatch Standard" 0::Call aaZefirosFindSet Stack Data
+
+	Let Stack := ar_Map 0::"Kvatch Tabard" 1::"Chainmail" 2::"Chainmail" 3::"Guard Helm D" 4::"Chainmail" 5::"Kvatch"
+	ar_Append Sets ar_Map 6::"Kvatch Local" 0::Call aaZefirosFindSet Stack Data
+
+	Let Stack := ar_Map 0::"Leyawiin Standard" 1::"Chainmail" 2::"Chainmail" 3::"Guard Helmet" 4::"Chainmail" 5::"Leyawiin"
+	ar_Append Sets ar_Map 6::"Leyawiin Standard" 0::Call aaZefirosFindSet Stack Data
+
+	Let Stack := ar_Map 0::"Leyawiin Cuirass A" 1::"Short Boots" 2::"Fingerless" 3::"Leyawiin Arming Cap" 4::"Green Felt" 5::"Leyawiin"
+	ar_Append Sets ar_Map 6::"Leyawiin Local" 0::Call aaZefirosFindSet Stack Data
+
+	Let Stack := ar_Map 0::"Skingrad Standard" 1::"Steel" 2::"Steel" 3::"Guard Helmet" 4::"Steel" 5::"Skingrad"
+	ar_Append Sets ar_Map 6::"Skingrad Standard" 0::Call aaZefirosFindSet Stack Data
+
+	Let Stack := ar_Map 0::"Skingrad Cuirass A" 1::"Guard's Steel" 2::"Steel" 3::"Skingrad Cowl" 4::"Guard's Steel" 5::"Skingrad"
+	ar_Append Sets ar_Map 6::"Skingrad Local" 0::Call aaZefirosFindSet Stack Data
+
+	Let Stack := ar_Map 0::"Templar" 1::"Chainmail" 2::"Chainmail" 3::"Gilded Templar" 4::"Chainmail"
+	ar_Append Sets ar_Map 6::"Templar" 0::Call aaZefirosFindSet Stack Data
+
+	Let Stack := ar_Map 0::"Forester Satchel" 1::"Leather" 2::"Bracer" 4::"Leather" 5::"Guard's Leather"
+	ar_Append Sets ar_Map 6::"Forester" 0::Call aaZefirosFindSet Stack Data
+
+	Let Stack := ar_Map 0::"Shrouded" 3::"Shrouded"
+	ar_Append Sets ar_Map 6::"Shrouded" 0::Call aaZefirosFindSet Stack Data
+
+	Let Stack := ar_Map 0::"Dark Seducer" 3::"Dark Seducer" 5::"Dark Seducer"
+	ar_Append Sets ar_Map 6::"Dark Seducer" 0::Call aaZefirosFindSet Stack Data
+
+	Let Stack := ar_Map 0::"Golden Saint" 3::"Golden Saint" 5::"Golden Saint"
+	ar_Append Sets ar_Map 6::"Golden Saint" 0::Call aaZefirosFindSet Stack Data
+
+	Let Stack := ar_Map 0::"Pit" 1::"Pit" 2::"Pit" 3::"Pit" 4::"Pit" 5::"Leather"
+	ar_Append Sets ar_Map 6::"Pit" 0::Call aaZefirosFindSet Stack Data
+
+	Let Stack := ar_Map 0::"Prisoner" 1::"Prisoner" 2::"Prisoner" 4::"Prisoner"
+	ar_Append Sets ar_Map 6::"Prisoner" 0::Call aaZefirosFindSet Stack Data
+
+	Let Stack := ar_Map 0::"Blacksmith" 1::"Rough Leather" 4::"Blacksmith"
+	ar_Append Sets ar_Map 6::"Blacksmith" 0::Call aaZefirosFindSet Stack Data
+
+	Let Stack := ar_Map 0::"Dark Green" 1::"Stitched Leather" 4::"Laced Leather"
+	ar_Append Sets ar_Map 6::"Dark Green & Leather" 0::Call aaZefirosFindSet Stack Data
+
+	Let Stack := ar_Map 0::"Huntsman" 1::"Huntsman" 4::"Huntsman"
+	ar_Append Sets ar_Map 6::"Huntsman" 0::Call aaZefirosFindSet Stack Data
+
+	Let Stack := ar_Map 0::"Coarse Linen" 1::"Oiled Linen" 4::"Coarse Linen"
+	ar_Append Sets ar_Map 6::"Coarse Linens" 0::Call aaZefirosFindSet Stack Data
+
+	Let Stack := ar_Map 0::"Belted Vest" 1::"Braided Sandals" 4::"Belted Braies"
+	ar_Append Sets ar_Map 6::"Belted Vest & Braies" 0::Call aaZefirosFindSet Stack Data
+
+	Let Stack := ar_Map 0::"Brown" 1::"Pigskin" 4::"Light Brown Linens"
+	ar_Append Sets ar_Map 6::"Brown" 0::Call aaZefirosFindSet Stack Data
+
+	Let Stack := ar_Map 0::"Quilted" 1::"Doeskin" 4::"Tan Linens"
+	ar_Append Sets ar_Map 6::"Quilted" 0::Call aaZefirosFindSet Stack Data
+
+	Let Stack := ar_Map 0::"Blue & Green" 1::"Quilted"
+	ar_Append Sets ar_Map 6::"Blue & Green" 0::Call aaZefirosFindSet Stack Data
+
+	Let Stack := ar_Map 0::"Burgundy Linen" 1::"Thick Cowhide" 4::"Burgundy Linens"
+	ar_Append Sets ar_Map 6::"Burgundy Linens" 0::Call aaZefirosFindSet Stack Data
+
+	Let Stack := ar_Map 0::"Russet Felt" 1::"Russet Felt"
+	ar_Append Sets ar_Map 6::"Russet Felt" 0::Call aaZefirosFindSet Stack Data
+
+	Let Stack := ar_Map 0::"Dark" 1::"Doeskin" 4::"Black Wide"
+	ar_Append Sets ar_Map 6::"Shady" 0::Call aaZefirosFindSet Stack Data
+
+	Let Stack := ar_Map 0::"Blue Collar" 1::"Thick Cowhide" 4::"Short Britches"
+	ar_Append Sets ar_Map 6::"Blue Collar" 0::Call aaZefirosFindSet Stack Data
+
+	Let Stack := ar_Map 0::"Suspenders" 1::"Leather" 4::"Rugged"
+	ar_Append Sets ar_Map 6::"Outdoors" 0::Call aaZefirosFindSet Stack Data
+
+	Let Stack := ar_Map 0::"Green Brocade" 1::"Green Velvet" 4::"Green Silk"
+	ar_Append Sets ar_Map 6::"Luxurious Green" 0::Call aaZefirosFindSet Stack Data
+
+	Let Stack := ar_Map 0::"Black & Burgundy" 1::"Gold Trimmed"
+	ar_Append Sets ar_Map 6::"Black & Burgundy" 0::Call aaZefirosFindSet Stack Data
+
+	Let Stack := ar_Map 0::"Blue Velvet" 1::"Blue Suede"
+	ar_Append Sets ar_Map 6::"Blue Velvet" 0::Call aaZefirosFindSet Stack Data
+
+	Let Stack := ar_Map 0::"Blue Silk" 1::"Blue Suede" 4::"Blue Silks"
+	ar_Append Sets ar_Map 6::"Blue Silks" 0::Call aaZefirosFindSet Stack Data
+
+	Let Stack := ar_Map 0::"Red Velvet" 1::"Gold Trimmed"
+	ar_Append Sets ar_Map 6::"Red Velvet" 0::Call aaZefirosFindSet Stack Data
+
+	Let Stack := ar_Map 0::"Red Velvet Blouse" 1::"Gold Trimmed" 4::"Red Velvet"
+	ar_Append Sets ar_Map 6::"Red Silks" 0::Call aaZefirosFindSet Stack Data
+
+	Let Stack := ar_Map 0::"Patchwork" 1::"Scruffy" 4::"Patchwork"
+	ar_Append Sets ar_Map 6::"Patchwork" 0::Call aaZefirosFindSet Stack Data
+
+	Let Stack := ar_Map 0::"Dark Patchwork" 1::"Dark Scruffy" 4::"Dark Patchwork"
+	ar_Append Sets ar_Map 6::"Dark Patchwork" 0::Call aaZefirosFindSet Stack Data
+
+	Let Stack := ar_Map 0::"Fancy Grey" 1::"Fancy Brown" 4::"Fancy Grey"
+	ar_Append Sets ar_Map 6::"Fancy Grey" 0::Call aaZefirosFindSet Stack Data
+
+	Let Stack := ar_Map 0::"Fancy Brown" 1::"Fancy Orange" 4::"Fancy Brown"
+	ar_Append Sets ar_Map 6::"Fancy Brown" 0::Call aaZefirosFindSet Stack Data
+
+	Let Stack := ar_Map 0::"Grey" 3::"Grey"
+	ar_Append Sets ar_Map 6::"Grey Robes" 0::Call aaZefirosFindSet Stack Data
+
+	Let Stack := ar_Map 0::"Tan" 3::"Tan"
+	ar_Append Sets ar_Map 6::"Tan Robes" 0::Call aaZefirosFindSet Stack Data
+
+	Let Stack := ar_Map 0::"Green" 3::"Green"
+	ar_Append Sets ar_Map 6::"Green Robes" 0::Call aaZefirosFindSet Stack Data
+
+	Let Stack := ar_Map 0::"Tattered" 3::"Tattered"
+	ar_Append Sets ar_Map 6::"Tattered Robes" 0::Call aaZefirosFindSet Stack Data
+
+	Let Stack := ar_Map 0::"Black" 3::"Black"
+	ar_Append Sets ar_Map 6::"Black Robes" 0::Call aaZefirosFindSet Stack Data
+
+	Let Stack := ar_Map 0::"Red Slik" 3::"Red Slik"
+	ar_Append Sets ar_Map 6::"Red Slik Robes" 0::Call aaZefirosFindSet Stack Data
+
+	Let Stack := ar_Map 0::"Aqua Silk" 3::"Aqua Silk"
+	ar_Append Sets ar_Map 6::"Aqua Silk Robes" 0::Call aaZefirosFindSet Stack Data
+
+	Let Stack := ar_Map 0::"Mage" 3::"Mage"
+	ar_Append Sets ar_Map 6::"Mage Robes" 0::Call aaZefirosFindSet Stack Data
+
+	Let Stack := ar_Map 0::"Arch Mage" 3::"Arch Mage"
+	ar_Append Sets ar_Map 6::"Arch Mage Robes" 0::Call aaZefirosFindSet Stack Data
+
+	Let Stack := ar_Map 0::"Necromancer" 3::"Necromancer"
+	ar_Append Sets ar_Map 6::"Necromancer Robes" 0::Call aaZefirosFindSet Stack Data
+
+	Let Stack := ar_Map 0::"Mythic Dawn" 3::"Mythic Dawn"
+	ar_Append Sets ar_Map 6::"Mythic Dawn Robes" 0::Call aaZefirosFindSet Stack Data
+
+	Let Stack := ar_Map 0::"Zealot" 3::"Zealot"
+	ar_Append Sets ar_Map 6::"Zealotry" 0::Call aaZefirosFindSet Stack Data
+
+	Let Stack := ar_Map 0::"White Mage" 1::"White Mage"
+	ar_Append Sets ar_Map 6::"White Mage" 0::Call aaZefirosFindSet Stack Data
+
+	Let Stack := ar_Map 0::"Emperor" 1::"Emperor"
+	ar_Append Sets ar_Map 6::"Empirial Ensemble" 0::Call aaZefirosFindSet Stack Data
+
+	Let Stack := ar_Map 0::"Daedrim" 1::"Daedrim" 2::"Daedrim" 3::"Daedrim" 4::"Daedrim"
+	ar_Append Sets ar_Map 6::"Daedrim" 0::Call aaZefirosFindSet Stack Data
+
+	Let Stack := ar_Map 0::"Daedric Lord" 1::"Daedric Lord" 2::"Daedric Lord" 3::"Daedric Lord" 4::"Daedric Lord"
+	ar_Append Sets ar_Map 6::"Daedric Lord" 0::Call aaZefirosFindSet Stack Data
+
+	Let Stack := ar_Map 0::"Plate" 1::"Plate" 2::"Plate" 3::"Plate" 4::"Plate" 5::"Spike"
+	ar_Append Sets ar_Map 6::"Plate" 0::Call aaZefirosFindSet Stack Data
+
+	Let Stack := ar_Map 0::"Black Plate" 1::"Black Plate" 2::"Black Plate" 3::"Black Plate" 4::"Black Plate" 5::"Rose Kite"
+	ar_Append Sets ar_Map 6::"Black Plate" 0::Call aaZefirosFindSet Stack Data
+
+	Let Stack := ar_Map 0::"Knight's Steel A" 1::"Knight's Steel" 2::"Knight's Steel" 3::"Armet" 4::"Knight's Steel" 5::"Knight's Kite"
+	ar_Append Sets ar_Map 6::"Knight" 0::Call aaZefirosFindSet Stack Data
+
+	Let Stack := ar_Map 0::"Lamellar" 1::"Leather" 2::"Leather" 3::"Sallet & Chain Coif" 4::"Chainmail" 5::"Heater"
+	ar_Append Sets ar_Map 6::"Footman" 0::Call aaZefirosFindSet Stack Data
+
+	Let Stack := ar_Map 0::"Dragon Tabard" 1::"Chainmail" 2::"Chainmail" 3::"Great Helm A" 4::"Knight's Chain" 5::"Dragon Kite"
+	ar_Append Sets ar_Map 6::"Dragon Templar" 0::Call aaZefirosFindSet Stack Data
+
+	Let Stack := ar_Map 0::"Gryphon Tabard" 1::"Chainmail" 2::"Chainmail" 3::"Great Helm C" 4::"Knight's Chain" 5::"Gryphon Kite"
+	ar_Append Sets ar_Map 6::"Gryphon Templar" 0::Call aaZefirosFindSet Stack Data
+
+	Let Stack := ar_Map 0::"Gothic" 3::"Gothic"
+	ar_Append Sets ar_Map 6::"Gothic" 0::Call aaZefirosFindSet Stack Data
+
+	Let Stack := ar_Map 0::"Dark Gothic" 3::"Dark Gothic"
+	ar_Append Sets ar_Map 6::"Dark Gothic" 0::Call aaZefirosFindSet Stack Data
+
+	Let Stack := ar_Map 0::"Milanese" 3::"Milanese"
+	ar_Append Sets ar_Map 6::"Milanese" 0::Call aaZefirosFindSet Stack Data
+
+	Let Stack := ar_Map 0::"Gold Milanese" 3::"Gold Milanese"
+	ar_Append Sets ar_Map 6::"Gold Milanese" 0::Call aaZefirosFindSet Stack Data
+
+	Let Stack := ar_Map 0::"Dragonknight" 3::"Dragonknight" 5::"Ebony Kite"
+	ar_Append Sets ar_Map 6::"Dragonknight" 0::Call aaZefirosFindSet Stack Data
+
+	Let Stack := ar_Map 0::"Shadow Dress" 3::"Shadow Helm F Open" 5::"Shadow"
+	ar_Append Sets ar_Map 6::"Shadow F" 0::Call aaZefirosFindSet Stack Data
+
+	Let Stack := ar_Map 0::"Shadow EX" 3::"Shadow Helm M Open" 4::"Shadow Greaves" 5::"Shadow"
+	ar_Append Sets ar_Map 6::"Shadow M" 0::Call aaZefirosFindSet Stack Data
+
+	Let Stack := ar_Map 0::"Shadow Berserk" 3::"Shadow Berserk" 4::"Shadow Berserk" 5::"Shadow"
+	ar_Append Sets ar_Map 6::"Shadow Berserk" 0::Call aaZefirosFindSet Stack Data
+
+	Let Stack := ar_Map 0::"Underworld" 3::"Underworld"
+	ar_Append Sets ar_Map 6::"Underworld" 0::Call aaZefirosFindSet Stack Data
+
+
+	
+	SetFunctionValue Sets
+	Return
+;-----------------------------------------------------------------------------
+end ;Function { Data }
+;-----------------------------------------------------------------------------

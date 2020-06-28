@@ -1,0 +1,64 @@
+scn aaZefirosOnWeaponHit
+
+;Main script
+;-----------------------------------------------------------------------------
+;aaZefirosManager
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;aaZefirosDamageAnalysis
+;aaZefirosSetHandlers
+;aaZefirosOnDamage
+;aaZefirosOnMagicApply
+;aaZefirosOnMagicHit
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
+;aaZefirosRLogPhysical
+;aaZefirosRLogNormal
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;Fires when the Player is hit by a weapon or arrow.
+;Checks if the weapon ignores Normal Weapon Resistance and sets the relevant
+;flag.
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+ref Target
+ref Weapon
+;-----------------------------------------------------------------------------
+
+;-----------------------------------------------------------------------------
+begin Function { Target, Weapon }
+;-----------------------------------------------------------------------------
+
+	;Normal Weapons ignore the resistance once enchanted, but still have the flag unset
+	if ( GetIgnoresResistance Weapon || 0 != GetEnchantment Weapon )
+
+		DebugPrint "Hit with %n, is Non-Normal Weapon." Weapon
+		Let aaZefirosRLogPhysical := 1
+
+	else
+
+		DebugPrint "Hit with %n, is Normal Weapon." Weapon
+		Let aaZefirosRLogNormal := 1
+
+	endif
+
+	
+;-----------------------------------------------------------------------------
+end ;Function { Target, Weapon }
+;-----------------------------------------------------------------------------

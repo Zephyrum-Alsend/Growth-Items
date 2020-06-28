@@ -1,0 +1,89 @@
+scn aaZefirosSetDurability
+
+;Main script
+;-----------------------------------------------------------------------------
+;aaZefirosManager
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;aaZefirosGetDurability
+;aaZefirosSetMerge
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;Given an array of Items and the container they belong to, set the 
+;durabilities of each item's stacks according to the percentages contained in 
+;Dura.  Dura can be populated via GetDurability.
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+ref Container
+array_var Dura
+array_var Items
+
+ref Val
+array_var Stack
+short C1
+short C2
+short i
+short j
+float MaxHP
+float CurHP
+;-----------------------------------------------------------------------------
+
+;-----------------------------------------------------------------------------
+begin Function { Container, Dura, Items }
+;-----------------------------------------------------------------------------
+
+	Let C1 := ar_Size Items
+	DebugPrint "Setting durabilities for %.0f items..." C1
+
+	Let i := 0
+	while ( i < C1 )
+
+		Let Val := Items[i]
+		;DebugPrint "Setting durabilities for %n..." Val
+
+		Let Stack := Container.GetInvRefsForItem Val
+		Let MaxHP := GetObjectHealth Val
+
+		Let C2 := ar_Size Stack
+		Let j := 0
+		while ( j < C2 )
+
+			;Convert percentage to absolute value
+			Let CurHP := MaxHP * Dura[i][j]
+			
+			Let Val := Stack[j]
+			Val.SetCurrentHealth CurHP
+
+			Let j += 1
+		loop
+
+		
+		;DebugPrint "Durabilities set."
+
+		Let i += 1
+	loop
+
+
+	DebugPrint "All durabilities set."
+	Return
+;-----------------------------------------------------------------------------
+end ;Function { Container, Dura, Items }
+;-----------------------------------------------------------------------------

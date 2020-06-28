@@ -1,0 +1,1056 @@
+2020.04.13
+-Begun work on mod
+-Setting up basic growth system
+-Created SetWeight
+-Created SetStat
+-Created SetXPReq
+
+2020.04.14
+-Created DefaultINI
+-Created Object
+-Had to stall work as I further mull how to implement growing damage type resistance
+	-OBSE handler to get damage taken	-handler to get magic effect hit by
+	-function to get if weapon ignores normal weapon resistance
+	-nothing to get how much fire/frost/shock/etc. damage taken, only total
+	-can get enchantment of what hit, pull magnitudes from there
+	-can get resistances of player, apply to magnitudes
+	-but also need difficulty setting, unknown multiplier to damage taken
+	-how do I sync multiple event handlers?	-probably need another quest
+
+2020.04.18
+-Made name setting more robust by adding str_Prefix and str_Postfix along with s%Fix flags to indicate which %fix to omit
+-Created SetName
+-Message icon path is magenta
+-GetIconPath returns ""
+-GetTexturePath returns ""
+-Armor has 2 icon paths, so can't resolve which
+-Found GetBipodIconPath, but need to indicate which sex
+-Created GetPCBIP (GetPCBipedIconPath) which returns the Male/Female path based on Player's sex
+-Message icon works
+-Will leave in printc's I use for testing as printd's, which won't show up without the debug flag set
+-Added Debug global so can toggle printd ingame, also added to ini for diagnosing initializer problems
+-Switched to DebugPrint from printd b/c printd doesn't read format strings
+-Went ingame to test OnHealthDamage handler, works as expected so far, except...
+	-damage over time triggers every frame, 100s of ticks from a single spell
+-AR of all pieces is 1
+-Turns out, despite the Object Window displaying AR as a float, it is in fact a long and 400AR = 4AR
+-Converted all AR vars from floats to shorts
+-Forgot to SetArmorType in SetWeight
+-Seems OnMagicEffectHit is always called before OnHealthDamage
+-OnMagicApply has inconsistent filtering, but with GetSelf inside, can get caster, target and spell
+-OnHitWith will not fire for spells
+-If I can't get the time for a DoT, can't reliably accredit elemXP to it
+-DoT can come from enchant or spell, OnMagicApply or OnHitWith, conflict ho
+-Maybe DoTs appear on Active Effects?
+-They do!
+-I can also indirectly get the magnitude, duration and caster of all Active Effects, maybe solve recalc damage formula problem?
+-Instant effects don't appear on Active Effects, there goes that
+-But can still do even distribution with ability to get duration on DoTs
+
+2020.04.19
+-Created LogXP and added globals for tracking combat XP, expanded OnDamage to add XP
+	-Using globals because QuestID.VarName is slow, as file read/write on Dusfergon showed
+-Added fDamageLag for latency control, starting DamageAnalysis quest script
+-DamageAnalysis is shorter than expected, uses HasMagicEffect instead of GetActiveEffects to test for DoT
+-Created OnWeaponHit to trigger physical damage type flags
+-Removed OnMagicApply, unreliably fires and data unecessary in current approach
+-Moved handler sets to Object
+-Equipping another shield does not run OnUnEquip block for the shield, but directly unequipping it does
+-Circumvented issue by using OnActorUnequip handler, may convert all On(Un)Equip blocks to this so don't have to maintain 2 Object scripts
+-Converted blocks to handlers, made SetEquipHandlers to set all
+-Expanded CleanUp to not only purge handlers, but re-evaluate Equip flag and reset handlers if necessary
+-Learned OBSE Let supports +=, I have code to shorten!
+-Created SetEquipHandlers to handle handler creation for On(Un)Equip
+-Double checked and corrected documentation of existing code
+
+2020.04.20
+-Created SetResists to add resist effects to enchantments
+-Started using array_vars as parameters more often, functions then support variable parameters
+-Created SetEnchants to avoid typing out 6 checks and sets for enchantments
+-Updated CleanUp to null array_vars when Mode is 1 and moved further up Init block
+-Created SetEffectMagnitude to update Resists, but also designed to be used for any effect
+-Properly adds new Resists
+-Properly updates existing Resists
+-Works with Fortify effects
+-But with multiple Fortify effects, updating freezes game - single Fortify effect is fine
+-GetNthEffectItemActorValue freezes the game
+
+2020.04.21
+-GetNthEffectItemActorValue wasn't the problem, I forgot to increment the iterator within the while loop
+-SetEffectMagnitude now works for all cases, finishing documentation
+-Realised I can repurpose function handle setting all stats instead of making one for each stat, so SetEffectMagnitude is now SetEffectItem
+-Added conditions for deleting effect items in SetEffectItem
+-List of allowable enchants, plan to be 1 by 1 instead of effect sets
+	-Fortify Attribute
+	-Fortify Skill
+	-Fortify Health/Fatigue/Magicka
+	-Shield
+	-Feather
+	-Restore Health/Fatigue/Magicka
+-Shield exclusive enchant effects
+	-Reflect Damage
+	-Reflect Spell
+	-Absorb Spell
+
+2020.04.22
+-Invetigated ways to detect application of diseases and poisons
+-The best method is either to scan Active Effects list and get the sources to check for spell type or use OnMagicApply and check GetSelf == Player then spell type
+
+2020.04.23
+-OnMagicApply can detect when diseases are applied, but it's unfortunate the filtering options are subpar
+-GetSelf when it fires, then do rest if Player
+-Diseases are cast on the Player by the Player
+-Finding an enemy who uses Poison has been harder, bandits most likely to carry and use it
+-Poisons are registered as SpellType 0 (Spell) instead of 5 (Poison), cumulative poison resist is out then
+-Added Drain Health to list of effects that count as non-elemental damage
+-Added section to purge enchantments on game load
+-Enchanted weapons do not have the ignorenormalresistance flag set, added check for enchantment in OnWeaponHit
+-Applied enchantments do not take effect until the item is re-equipped
+-Player.EquipItem triggers the OnEquip handler twice
+-Turns out there's 2 OnEquip handlers set, now to find out where
+-Somehow, SetEquipHandlers is setting 2 OnEquip handlers, despite explicitly setting only 1
+-I see no syntax error in the code, and moving it to Manager did not resolve the issue
+-For now, all I can do is put a check in OnEquip to prevent Equip from going over 6
+-OnEquip handler runs twice for every armor except the Shield
+-Tried different syntax for SetEventHandler, no difference
+-May have to revert to using the actual blocks instead of handlers
+-Commented out OnEquip handler, moved code to OnEquip block in Object
+
+2020.04.24
+-After more testing, discovered OnActorEquip handler fires twice for enchanted items
+-Added Resist Disease variables and globals, updated SetResists and Manager
+-Created OnMagicApply to handle detection of diseases
+-Changed how Paralysis and Disease resistances work so ini vars are more intuitive
+	-Both resists now use sXPResist to determine resist effect
+	-sXPPara now dictates how much RXP/sec paralyzed is awarded, instead of seconds paralyzed till resist effect up
+	-fXPDisease used to be number of diseases caught till resist effect up, now sXPDisease and how much RXP/illness
+-Created RefreshEquipped to handle re-equipping items after enchanting, can also use for form changing
+-Looking over Manager code, noticed did not keep header documentation up to date
+
+2020.04.27
+-Began designing SetEnchant, for setting all enchant effects on all items
+-Created SetEffectStat
+-Added Enchantment variables for effect magnitudes
+-Added Enchantment section to DefaultINI
+-Adjusted DefaultINI comments to better explain Dynamic Resistances
+
+2020.05.02
+-While I'd like to not use dot notation in creating enchantments, the idea of creating an array to house the data for hunndreds of effects and maintaining is too daunting
+-dot notation is easier to code
+-In order to facilitate making Dusfergon's active enchant indexing possible, created GetEffectCode to convert global short into EffectCode and ActorValueCode
+-Creating 246 new globals to track enchantment levels and active enchantment for each piece, 41 globals per item
+	-I considered overloading globals with multiple values, but that would reduce their individual level caps, which need to be ( sLevelCap - sEnchStart )
+		-The player can pheasibly pick only one effect every Seek, having its level match the item's
+-Created Body globals
+-Created Foot globals
+-Created Hand globals
+-Created Head globals
+-Created Legs globals
+-Created Shld globals
+-Went for an array approach afterall, to remove the need to copy&paste a giant block 6 times
+-Creating the multi-dimensional array to hold all the enchant data exceeds the max script size
+-Cannot make the complete array even in a separate function, MAX_SCRIPT_SIZE exceeded
+-Dropping level data from array, cut down array size to 1/6, will need second array to hold level data
+-Created GetEnchantLevels
+-Created framework for setting leveled enchantments on items, throwing runtime errors
+-Array creation was placed before CleanUp in my re-ordering then re-re-ordering of init block
+-Tested Fortify Strength, Fortify Blade, Shield ingame, all work as expected
+-Manager header is still not uptodate
+-Reviewing during documentation process, GetEffectCode may not be necessary... Will keep it around until leveling block(s) are done
+-Added XP > 0 check to DamageAnalysis to save cycles while not in combat
+
+2020.05.03
+-Updated Manager's Used Scripts and Used Globals sections
+-Beginning Enchant Seek code
+-SeekOnce will double as trigger flag for block and storage for button value
+-SeekOnce will not double as trigger flag and button value, because page number and button value are stored in Item
+-Created GetEnchChoice which houses all seek menu code
+-Tested ingame for Shield, Feather, all Restores, some Fortifies - all work as expected
+-Now to test if a while loop emulates the responsiveness of low script lag...
+	-Freezes game
+	-Infinite loop because while loop doesn't give GetButtonePressed enough time to return a value
+-Finished and tested Seek code. Menus work, effects are added, variables cleaned up
+	-Seek code really looks like it could be factored out into a function but... That may fuck up the menus
+-RefreshEquipped is unequipping but not equipping gear after the first initialization
+	-RefreshEquipped during the init phase works
+	-RefreshEquipped after seek phase only unequips
+-Trying adding suit of armor, unequipping armor by equipping newly added armor, then equipping old armor and removing new armor
+	-Still same bug, old armor not re-equipped
+-If I put a pause between the unequip and re-equip, it works
+-Now to find out how short I can make that pause...
+-Looks like as long as they're not done on the same frame the bug won't happen
+-Created RefreshEquip
+-Created RefreshUnEquip
+-Created RefreshOnce flag
+-Added block at bottom of Manager to refresh equipped items in a 2 frame time span, since model change will use it too
+
+2020.05.04
+-Added sEnchResist to flag if having resistances should enchant the items early
+-Began work on Level Up block
+-Created SetEnchLevel to increment enchant level globals
+-Doing stat set instead of mod b/c it's easier, no new functions needed
+-Level up armor stat block is identical to init armor stat block, should make it a function
+-Created SetArmor
+-Function doesn't work as long as its a function
+-Exact same code (Copy&Paste) in GameMode block works as expected, factored to a function and it doesn't
+	-Armor weight and stats mismatch, heavy w/ light stats or light w/ heavy stats
+-SetArmor deleted
+
+2020.05.05
+-Created ModStat to replace "lazy" level up method
+
+2020.05.08
+-Created SetFlavorText for displaying all flavor text
+-Found Dereference/Unbox operator ( *array ) which can replace Item["value"] in a lot of places
+-Replaced all instances of array["value"] with *array where it didn't throw errors
+-Created LogLevel
+-Added block for Half-way messages
+-Created SetFlavorBox and renamed SetFlavorText to SetFlavorMessage
+-Have 3 first boot messages, 4 level up messages, 5 form change messages
+-Have 6 level cap messages
+
+2020.05.09
+-Re-balanced effect growth rates
+	-REDG, RFLC, SABS Mult +0.2
+	-FOAT, FOSK Base +1 Mult +0.6
+	-REFA Mult +0.1
+	-REHE Base +1 Mult +0.025
+	-RESP Mult +0.05
+	-SHLD Base +3 Mult +0.7666
+-Discovered AR is not updated by game until gear re-equipped, set Refresh flag in level up
+-Divided level up block into 2
+	-Stats update
+	-Global and flag update
+		-Allows Set aaZefirosLevel to X to have an immediate effect
+-Included redundant flag checks into both blocks so flags are set properly regardless of level change by XP or console
+-Consolidated ModStat DebugPrints into 1 line to reduce console clog on level up
+-Cannot reduce DebugPrint lines further without reducing their usefulness as diagnostics
+	-If wearing half set, can still see command to change aaZefirosLevel in log after level up
+
+2020.05.11
+-begun prepping level change block to handle break changes
+	-stats need no new code
+	-added branches to enchant increment for disenchant
+	-adapting SetEnchLevel to handle resetting everything to 0
+		-Found it didn't keep globals from going negative, so fixing that too
+	-RemoveAllEffectItems is causing CTD
+		-Removed ForEach loop, tried just RemoveAllEffectItems EnchBody
+			-Works
+		-Individually called RemoveAllEffectItems on all enchants
+			-CTD
+		-Comment out 1 call, for Shld
+			-Works
+		-Uncomment Shld, comment out Legs, still 5/6 active
+			-Works
+		-Try all 6 to be sure
+			-Works...?
+		-Try ForEach loop again, b/c fuck it
+			-Works???
+-Changed SeekOnce check to handle its level getting skipped
+-Removed SeekOnce check from Level up block, as its purpose was to prevent Level change block from skipping Seek levels
+-Created Equip array so RefreshOnce can use that instead of Stack
+	-Nothing uses Stack while RefreshOnce > 0 right now, but can't guarantee that in the future
+-Added extra stage to RefreshOnce so you don't appear naked during message boxes
+-Having Level change block stop every Seek level is requiring a number of new, complex if statements
+-Level change block now properly handles leveling up past multiple Seek levels, or just one, including from below sEnchStart
+-Moved SetXPReq from Level Up to Level Change so XP behaves normally without an extra console command
+-Moved SetXPReq back because XP is kept at 0 without the Set XP to XPReq console command, making first genuine level up take forever
+-Level Change still has to handle enchant level down while staying above sEnchStart
+	-Round robin reduce each by sEnchSeek like Dusfergon?
+	-Could track each Seek choice with array_var, but array_var goes poof on QuitGame
+	-string_vars are saved with save file
+	-What if player changes Seek frequency? Will have to track the enchant increment for each level
+-Created ActvBody/Foot/Hand/Head/Legs/Shld string_vars for above purpose
+-Created SetSeekArray to append things to above string_vars
+-Added initializer to Level == 0 sub-block in GetGameLoaded block, all strings should be empty on first boot
+-Created RefreshResistOrder to keep Resist effects at the end of the enchantment
+
+2020.05.12
+-Created UndoEnchant to... undo enchant levels
+-Seems to be in working order
+-Purge enchants is crashing game again... such an inconsistent CTD
+	-I may just make my own RemoveAllEffectItems function to circumvent this
+-Created RemoveAllEffectItems
+-No CTDs while testing, will have to test periodically since the old CTD was erratic
+-When going down to Lv10 then up to Lv11, SeekOnce isn't set
+-When going below sEnchStart then back up to it, SeekOnce fails to get set
+-Added Level < sEnchStart to SeekOnce check
+-Also tested going to Lv16 > Lv15 > lv16 and SeekOnce was properly set both times
+-Added sBreakThreshold to ini
+-Created Broken global to track number of broken items
+-Wrote Break Check block, checks number of broken armor pieces and applies delevel if necessary
+-Global Broken not necessary, but saves cycles on initialization (have to call GetBroken on everything again)
+-There is an exploit where if Broken < sBreakThreshold, then you set sBreakThreshold < Broken, delevel will never occur
+	-This is because sBreakThreshold is loaded on GetGameLoaded and that same block sets BreakOnce so delevel doesn't happen twice if loading a save with broken gear
+	-Decided to leave this exploit in: not much merit to having broken armor and pain in the arse to fix
+-Added IsInCombat check to Seek code, forgot to add it
+-New check will throw off ScriptLag if, say, player opens menu during combat and SeekOnce is set
+	-ScriptLag won't be set back to 0.5 until SeekOnce is unchecked, which won't happen until combat is done
+-Created new flag to fix this, AltLag
+	-Instead of checking SeekOnce == 0 && RefreshOnce == 0, ScriptLag only checks AltLag == 0
+	-Seek code and Refresh block both set and unset AltLag
+-Added 8 Armor Eater, 6 Level Up, 4 Full Reset, 6 Delevel messages
+-Begun compressing Seek code
+-Code throws a litany of runtime errors, console clogged
+	-What I can make out, it seems an array is not getting initialized, which leads to 8 different things throwing errors too
+-Ctrl+Z until all new work is gone, tested
+	-Same litany of errors - something didn't compile right but Compile All throws no errors
+-With DebugPrint, MessageBox and ;, narrowed down error source to GetEnchChoice
+-Narrowing things down further, seems Item is getting Nulled by something external
+-While nothing does Item := ar_Null, Item is used in several ForEach loops that may still run during Seek
+-Created array_var Seek to replace Item inside Seek code, runtime errors with narrowed code are gone
+-Unnarrowed code throws no runtime errors
+-Re-implemented code compression
+	-Using Stack to store names and values, checked nothing overwrites it but my future code may
+-Compressed Seek code functions as expected
+-Replaced all instances of Stack within Seek block with new array_var Actv
+-Added all new array_vars to CleanUp code
+
+2020.05.13
+-Added 6 halfway messages
+-Created SetLevelCap for dynamic cap type
+-Added checks to unset CapOnce during Flavor Text sub-block
+-Tested Break block ingame, works as expected but forgot to adjust armor durability down
+-Created GetEnchantEffect to display effects
+-MessageBox gets overloaded around Lv101 if selecting a different effect every time
+-MessageBoxEX works, but may have missed a Seek at Lv91 - could have spaced and chose the same, but could also have an error in Seek check
+-Went up to Lv101 again, I spaced out earlier
+-Tweaked ordering of LevelLog and Flavor Text in console, Flavor Text outputs last now
+-Created CapDurability to keep durability at or below 100% (125% if Expert Armorer) when changing level
+-Replaced CapDurability with GetDurability and SetDurability, so now durability % remains consistent across levels
+
+2020.05.18
+-Created RefreshInv, copy&paste of Dusfergon's function
+-Created Offer, akin to Dusfergon's Eat function
+-Two possible ways to about absorbing durability:
+	-Goes to specific item that shares same slot
+	-Equally distribute among all 6 pieces
+-Latter would be easier to code, but leaning towards former
+-Factored stat altering half of Offer into new Sacrifice function
+-Decided on former for durability absorption
+-Created GetSlotShared to tell me which Self shares slot(s) with an item
+-Tested in game with regular armor and what multi-slot armor I have, works as intended
+-After testing on non-armor for tail and ring slots, encountered runtime error as Sacrifice tries to pull from a Null array_var
+-Fixed by adding a size check before the assign and aborting function if == 0
+-What if there's actual armor in the tail or, Nine forbid, ring slots?
+	-It would get aborted as is, but that would be jank from the end user's perspective
+	-Associated Legs with tail slot, Shield with all other slots, so Sacrifice shouldn't fail due to absurd slots
+-Added check to Sacrifice for if corresponding slot's item is in inventory, tells Player if not
+-Sacrifice removes item from inventory, awards XP, but fails to add durability
+	-Is not a UI bug
+	-Is not Ref Self acting as a pointer to Stack[0] which gets overwritten later
+	-Is engine shortcut causing bug
+		-If CurrentHealth == MaxHealth, engine keeps CHealth == MHealth, SetCurrentHealth cannot override
+-Set fAbsorption to 0.03 after testing 0.01-0.05
+-Decided on doing Mimic first over Form Change
+-Going to use multi-dimensional array to store Form data
+	-Mimic will be [0]
+-Created GetFormData to compile array
+-Mimic data requires 7 strings per item and 1 long global, far cry from just 3 for weapons...
+-Created ValidateMimic to validate Mimic data, also resets data if invalid
+-Created ValidateBiped to shorten length of if checks in ValidateMimic
+-Began true work on GetFormData
+-Added Fur and Iron sets, began testing ingame
+-Created SetForm
+-Missing meshes for all parts
+	-string_vars need to be stringified, CS function was reading var name as a char array
+	-unlike in engine, if female path is left blank it does not default to male path
+-Fixed missing meshes, both male and female
+-Tested if RefreshInv could update AR and Active Effects, does not
+-Created SetMimic to activate when menu hotkeys are pressed
+-Created SaveMimic to factor out code transfering array data to strings, will regretfully need to use .notation here
+
+2020.05.20
+-Spent a full 8 hours debugging a CTD when SetMimic is called on a Ring or Tail slot, only to find out it was all because I had called Message with a format string instead of MessageEX
+	-Incorrect Message call only occured if Mimic couldn't take place
+-Adapted SetForm to handle merging and unmerging items
+	-Will look into separating into a separate function in the future
+-When merging items, still need to account for
+	-Max durability
+	-Current durability
+	-Enchantments
+	-Enchantment level up
+	-Enchantment Seek
+	-Equip flag
+	-Weight
+	-AR
+	-Value
+-Also need to update documentation, haven't updated Git in weeks and some function headers were never completed
+-Adjusted when items are removed during merge in SetForm so if it fails, none are left unequipped
+-Copied RefreshOnce block to MenuMode to run after SetForm calls
+-Added Equip command right after adding back unmerged items
+-Tried UnEquip -> Equip in SetForm just incase it works
+-It actually works
+-Removed RefreshOnce block from MenuMode
+-While writing header for SetMimic, noticed I hadn't tested if it works for females (Paths for female can be blank)
+-Female paths that are blank result in no change to affected attribute
+-Added checks to SetMimic that match empty female paths to their male counterparts
+
+2020.05.21
+-Added merging of stats to SetForm, should separate it soon
+-Discovered if merge items then load save without merge, have extra armor parts
+	-Added check for GetItemCount == 0 when adding back merged items, resolved above issue
+-Split off merger code into SetMerge
+-ValidateBiped returning false positives
+	-Could be setup in ValidateMimic
+	-Didn't stringify Path in ValidateMimic
+-Merged stats not right after boot, added missing items on GetGameRestarted to address issue
+	-This will result in multiples of Zefiros if Player had stored/dropped instead of merged them
+
+2020.05.22
+-Created Slot% globals to mark when something is merged
+-Created PrepMerge to replace stopgap solution from yesterday
+-Added checks to Object for merged items using new Slot% globals
+-Added same checks to CleanUp and OnUnEquip
+-OnEquip block not properly incrementing Equip
+	-Both This and GetSelf are failing
+	-Worse comes to worst, I make an Object script for each part
+	-This and GetSelf return 0 when called on an inventory object
+-Created ObjectBody/Foot/Hand/Head/Legs/Shld, obsoleting Object
+-Right before deleting OnEquip script, thought "what if I check Item.IsArmor before running?"
+	-First, IsArmor returns false
+	-IsEquipped returns false
+	-IsPlayable (which can only return true for armor or clothing) returns true
+	-Still fires twice when enchanted with IsPlayable check
+	-Back to the brute force solution!
+-Created SetMergeEnch to merge enchantments when merging items
+-Added RefreshResistOrder call to SetMergeEnch, which needs a redesign to be more flexible
+	-Rewrote RefreshResistOrder
+	-Now takes an array of effect and actor value codes and an array of enchantments
+	-No longer uses SetEffectItem, instead doing all remove/add itself
+	-Renamed to ReorderEffects
+	-All calls to RefreshResistOrder have been corrected
+-RefreshEquip fails on load save after booting, of course
+-Adding extra stage to RefreshOnce to work around this
+-RefreshEquipped is now officially redundant
+-Finally copying code for GitHub, not gonna delete deleted scripts there for posterity
+
+2020.05.23
+-Created SetResistEffects to handle updating dynamic resistances and handle merged items
+-Updating SetResists to handle merge items, see SetResistEffects makes this function obsolete
+-Could also tweak SetResistEffects to be used on any effects on any item, may help with Seek rewrite
+-Given how often Slot data is called, created Slots array to hold it and GetSlots to populate it
+-Created GetResistMatrix to factor out code initializing Stack for SetResistEffects, shaved 1KB off Manager
+-Created GetArmorStats to be GetResistMatrix for ArmSt array in Manager
+
+2020.05.24
+-Tweaked ModStat to handle multi-slot items, barely any change in parameters
+-ReorderEffects is throwing runtime errors but still behaves as desired, investigating
+	-Let Spl := *Ench is throwing the error
+		-ar_Dump shows Ench is returning what a ForEach iterator should
+		-Ench["value"] throws the error too
+		-Renamed to Item, still error
+	-Despite all this, no actual error in execution
+	-May just throw it under Known (Non-)Issues
+	-Posted a thread on Nexus forums about the issue
+	-Emailed OBSE lead programmer on the issue too
+-Turning the ForEach into a While loop, should avoid (non)error
+-Still throws runtime error
+-Enchs in this instance is a ar_Map created at function call
+-That ar_Map is created using variables that don't exist, explains error
+-Started a Known Issues tab in ReadMe.txt, incase I forget any by the time I write the mod page
+-Changed base model to leather armor
+-Created IncrementEnchant to handle leveling up enchant effects while handling merged items
+-Modified GetSlotShared to take a slot mask instead of an item so it can make IncrementEnchant easier
+-Updated all calls to GetSlotShared
+-Simply casting a ref to a long throws a runtime error
+-Looks like my clever use of GetSlotShared cannot pass if I cannot caste a ref to a long
+-Using a ref and string_var, was able to convert ref to long : ref -> format_string -> long
+-Created RefToNum
+-When multiple different effects are involved, ActvEnchBody overwrites all the other ActvEnch
+	-Might be because of Array1[Array2[X]] notation
+-Looks like what failed was casting long as ref in GetSlotShared call
+-Replaced GetSlotShared call with sequence of if statements that get the desired result
+-Unique ActvEnch preserved
+-Commented out some DebugPrints in SetEffectItem to reduce console clog
+-To Do: Seek code, delevel code, unmerge code
+
+2020.05.25
+-ModStat handles delevels as is
+-Undid change to GetSlotShared, gives more debug information and inability to caste longs to refs makes change moot
+-Reverted all calls to GetSlotShared
+-Addressed a bug in SetMerge where if you went from Body+Hand to Body+Legs but missing Legs, would have spare Hand after abort
+-Also added GetEquipped check so returned items are only equipped if the merged item was
+-Reinitialized Item during unmerge section of SetMerge
+	-Because I keep updating merged items even though they aren't there, I only need to deal with the amalgamation
+-To Do: Seek code, delevel enchant code
+
+2020.05.26
+-Created SetSeek to handle adding new active effects with multi-slot items
+-Rewrote SetSeek multiple times as I discovered simpler approaches
+-Created GetEffectIndex because I keep needing to find these but don't have a function for it yet
+-Updated SetEffectItem to use GetEffectIndex
+-Updated SetMergeEnch to use GetEffectIndex
+-SetSeek works somewhat fine. Adding new effects is good, but cross modding new effects in is bad
+-I also need to check ench lvl up code
+	-18 Shield, 8 Fort Str, 8 Fort Int (Cuirass merged with Gauntlets)
+	-Chose Feather (Cuirass) and Shield (Gauntlets)
+	-18 Shield, 10 Fort Str, 8 Fort Int
+	-10 Shield, 10 Fort Str, 8 Fort Int, 16 Feather (After level up)
+	-Unmerging was fine, b/c reinitializes
+-Problem with SetSeek was I passed EnSt[k][X] when it should have been EnSt[Actv[k]][X]
+-The issue with IncrementEnchant is it doesn't take into account non-active existing effects, overwriting them
+-I can see a quick fix when merged effects are added, but I'd like to rewrite it after understanding the code again
+-Rewrote IncrementEnchant
+	-Combined while loops that weren't dependent on each other
+	-Replaced Sets with Mod
+-Tested ingame with choices that failed last time, succeeds now
+-Expanded debugging information IncrementEnchant provides to include effect name and Enchs index
+-Replaced ar_Append Data with Let Data[X] := in GetEnchantData, more human readable
+
+2020.05.27
+-Begun rewriting UndoEnchantment
+-Added check to SetMerge so Shld never gets resists, had to be dot notation
+-I am writing out if trees to get merged slots pretty often, should make this a function
+	-The function is pretty rigid, since it assumes I'm using Selfs or Enchs from Manager
+-Created GetMerg
+-Realised if
+	-Merge Body+Hand
+	-Merge Legs+Foot
+	-Merge Body+Legs
+	-Hands are returned, Foot are missing
+-Will need to have SetMerge recursively call itself on Missing items to fix this
+-Hardcoded for now but more elegant patch would be to pass default Slots in as extra parameter
+-Patched in more elegant solution, correcting all calls to SetMerge
+-Corrected all calls to SetMerge
+-In the example above, Legs retains its multi-slot look despite being single slot - not sure if gonna fix
+-Created GetDefaultSlot since I need to check merged items so often
+-Added parameter to GetMerg for GetDefaultSlot array, now not hardcoded
+-Added Dflt array_var to Manager b/c keep needing to pass GetDefaultSlot into functions
+-ModStat updated
+-UndoEnchant updated - and finally tested
+-IncrementEnchant updated
+-Object left hardcoded
+-SetResistEffects updated, now need to update functions that call it
+	-UndoEnchant updated
+	-SetMerge updated
+	-Manager updated
+-Added loop to remerge unmerged items in an aborted SetMerge call
+-Tweaked DebugPrint in SetMerge, SetForm, OnUnEquip, GetSlotShared to have eye-catching blue text at parts
+-SetMerge can muck up the Equip flag with all the OnUnEquip blocks firing, added call to CleanUp
+-OnEquip fires after CleanUp, mucking up CleanUp's correction(s)
+-Created CleanOnce flag, since we need to wait 1 frame for OnEquip to fire and FormChange + Mimic will need it
+-Rewrote if tree for menu keybinds, less checks
+-Added form name section/mode to SetFlavorMessage, really don't need to make a new function to GetFormName
+-Rewrote MenuMode block so keybind if tree only sets Menu flag, never calls functions
+-Added variety to Form Name mode of SetFlavorMessage
+-Added key trap to Form Name, don't want 30 seconds of message from one key "press"
+-Added call to CleanOnce at end of initializer block, since it calls SetMerge
+-Added stages to CleanOnce, so OnEquip can run first
+-Added comment explaining why CleanOnce is set at end of initializer block
+
+2020.05.28
+-Created UndoSigilStone to start anti-enchantment measures
+-Added SigilStone section to SetFlavorBox
+-UndoSigilStone has a flagging paradox because I cannot get whether the player hits Create or Exit
+	-Player enters MenuMode SigilStone, DisEnchOnce flag is set
+	-Player enchants Zefiros
+	-UndoSigilStone is called
+	-Enchantment is undone
+	-Player enters MenuMode SigilStone, DisEnchOnce flag is set
+	-Player exits MenuMode SigilStone
+	-UndoSigilStone is called
+	-LastEnchantedItem is still Zefiros
+-This creates a problem:
+	-the function could be called before the new item is added, resulting in dupes
+	-the function could be called after enchantment is undone, but Zefiros is still LastEnchantedItem
+	-new item is no longer present
+-Could have UndoSigilStone return False until new item is removed, but then the flag will be forever set in above scenario
+-Could have UndoSigilStone only run if new item is present, but runs risk of getting run before new item is added, unsetting flag early
+-Less problematic method is have faith new item is added at frame end, before UndoSigilStone is called
+-Created a workaround solution!
+	-Have UndoSigilStone return false (0) if waiting on new item to be added, true (1) otherwise
+	-Store LastCreatedItem
+	-Each time flag is set, check LastCreatedItem != StoredItem
+	-If true, set flag to call UndoSigilStone
+	-Add UndoSigilStone's return value to flag (true will unset it)
+	-If calling flag is unset, unset DisEnchOnce flag
+-Replaced DisEnchOnce with SigilOnce, so waiting on SigilStone return will not stop Enchanting
+-GetActiveMenuMode returns the menu code for what the mouse is hovering over, not the actual active menu
+-Results in console clog of "Unsetting SigilOnce" when opening SigilStone and when mouse goes off the UI
+-Can resolve by moving block to Inventory, but if can call SigilStone from other menus, may delay undo
+-Fuck it, they won't get to see the new item since as soon as they hit GameMode or Inventory it'll fire
+-OnUnEquip is also properly called when Zefiros is enchanted, so no worries about Equip flag fuckery
+-Created OnEnchant
+-Created UndoEnchanting
+-Added Enchanting section to SetFlavorBox
+-Decided to handle undo outside of handler after experiencing it fire before new item was added, creating a dupe
+-Added comments indicating blocks of Manager code that repeat in Menu/GameMode and their general location
+-I'm considering factoring these blocks out into functions, but they're very short as is
+-Leaving them as is
+-Factored out SigilOnce code into SetSigilOnce
+-Factored out CleanOnce code into SetCleanOnce
+-Renamed to Flag%, easier to find in function list
+-Factored out EnchantOnce code into FlagEnchantOnce
+-Rewrote RefreshOnce code to use elseif, idk why I didn't before
+-Factored out MenuMode Enchanting code into OnEnchanting
+-I should give SetFlavorBox another pass, some of these messages are just dull
+-Renamed SetFlavorBox and SetFlavorMessage to FlavorBox and FlavorMessage
+-Updated UndoEnchanting, UndoSigilStone, Manager calls to FlavorBox
+-Updated Sacrifice, Manager calls to FlavorMessage
+
+2020.05.29
+-Rewrote Full Reset section of FlavorBox, added some messages to Level Cap
+-Considering adding a tier 2 break point, for auto reset to Lv1 regardless of sBreakLevel
+-Would have to redo BreakOnce logic to allow for the tier 2 break check, not gonna do that
+-Begun double checking documentation in scripts
+	-Really just postponing working on form change menu code
+-Audited:
+	CleanUp		DamageAnalysis		DefaultINI	FlagCleanOnce		FlagEnchantOnce
+	FlagSigilOnce	FlavorBox		FlavorMessage	GetArmorStats		GetBroken
+	GetDefaultSlot	GetDurability		GetEffectCode	GetEffectIndex		GetEnchantData
+	EnchantBox	GetEnchantLevels	GetEnchChoice	GetFormData		GetMerg
+	GetPCBIP	GetResistMatrix		GetSlots	GetSlotShared		IncrementEnchant
+	LogLevel	LogXP			Manager		ModStat			ObjectBody
+	ObjectFoot	ObjectHand		ObjectHead	ObjectLegs		ObjectShld
+	Offer		OnDamage		OnEnchant	OnEnchanting		OnMagicApply
+	OnMagicHit	OnUnEquip		OnWeaponHit	PrepMerge		RefreshEquip
+	RefreshInv	RefreshUnEquip		RefToNum	RemoveAllEffectItems	ReorderEffects
+	Sacrifice	SaveMimic		SetDurability	SetEffectItem		SetEffectStat
+	SetEnchant	ModEnchLevel
+-Need to add controller support to menu keybinds
+-Added controller support
+-Renamed GetEnchantEffects to EnchantBox
+-Tried getting Charge and Cost out of armor enchantments, values were very inconsistent
+-Renamed SetEnchLevel to ModEnchLevel
+
+2020.05.30
+-Audited:
+	SetEnchOnItem	SetEquipHandlers	SetForm		SetLevelCap		SetMerge
+	SerMergeEnch	SetMimic		SetName		SetResistEffects	SetSeek
+	SetSeekArray	SetStat			SetWeight	GetXPReq		UndoEnchant
+	UndoEnchanting	UndoSigilStone		ValidateBiped	ValidateMimic
+-Renamed SetXPReq to GetXPReq, returns an array instead of directly altering XPReq
+-Altered XPReqHalf formula to be based on XP instead of XPReq of Lvl - 1.
+-With audit finished, time to update GitHub
+
+2020.05.31
+-Created FormMenu
+-Created WeightMenu
+-I can probably factor out all the menu if trees into a function when I'm done
+-Weight change code is done, both single item and full set
+-Created MeshMenu
+-First test of dynamic menu
+	-Buttons work alright
+	-Paging fails
+-Was because of separation of Button and Page if trees, so Page tree would overwrite Button before GetButtonPressed returned
+-After integrating Page tree into Button tree, paging works
+-Added dummy entries to GetFormData for MeshMenu testing, all contain Iron paths, but have different names
+-MeshMenu works for multiple pages, but may need to investigate methods to shorten navigation time depending on number of armor sets
+-Added Leather, Steel, Chainmail, Dwarven, Mithril paths
+
+2020.06.01
+-Made the tough decision of scrapping my current hardcoded GetFormData for a programatically written one
+-Replacing all paths with GetBipedModePath calls, then verifying and correcting female paths at the end
+-ar_Append would make indexes sort themselves out, but I'll manually do them b/c more human readable
+-Much faster adding paths with help of VisualCode to replace things
+-Paths ingame work, no missing meshes, but Dwarven and Glass helmets change weight along with form?
+	-Stats show SetWeight was called, not just an armor type change
+	-But it's only these two helmets, no other parts get this erroneous call
+-I do not believe I update the weight globals at all
+-That has resolved my issue
+-All full armor sets are in place, considering switching to ar_Append so reordering is not a hassle
+-Pathed Fur, Iron, Leather, Steel, Chainmail, Dwarven, Mithril, Orcish, Elven, Ebony, Glass, Daedric, Amber, Madness, Amelion, Blackwood, Blades, Legion, Imperial Watch
+-I think I will switch to ar_Append, and have the array of sets compile itself based on Names instead of hardcoded indexes
+-GetFormData now uses ar_Append
+-If armors are of varying weights when merged, end up with a mixed type in terms of stats
+-ModStat does not account for this
+-Will call SetWeight on all merged items, so mixed type doesn't occur
+-Created SetWeightGlobals to handle updating those, hardcoded it
+-Updated Manager to use SetWeightGlobals
+-Mixed type problem addressed
+-Armor no longer hides rings or amulet
+-Added Arena Heavy, Arena Champion Heavy, Arena Yellow Heavy, Arena Light, Arena Champion Light, Arena Yellow Light, Ruined Akaviri, Shrouded, Imperial Dragon, Bracer, Imperial Horseman, Emperor, Pit, Dark Seducer, Golden Saint
+-Added all town guard, re-ordered list
+-Created GetFormData2, guess why
+-Modified Sacrifice to handle enchanted gear
+	-Decided to multiply number of effects by fEnchantAbs
+	-fEnchantAbs default 10 XP
+-After looking closely at vanilla weights, reduced armor weight by 25%, increased fHeavyWeight to 2.0
+
+2020.06.02
+-Reorganized ini file sections, added line breaks after looking at it in monochrome
+-Added all lower class clothing
+-Added all robes, save some special ones like Black Hand and Worm King
+-Added all middle class clothing
+-Added all upper class clothing
+-Added FlavorMessage call to SetForm
+
+2020.06.03
+-Removed FlavorMessage call in SetForm b/c message spam at game load, instead called in SetMimic and Menu block
+-Added Shivering Isles clothing
+-To do: Form ALL, Random, Random ALL, Custom Set?, KotN armor, improved menu code
+-KotN armor added
+-Changed fXPResist to 100 from 500
+-Started copying armor mod files into local repository
+-Removed KotN armor because they were crashing the array!
+-Expanded ReadMe.txt
+	-Known Issues
+	-FAQ
+	-Requirements
+	-Recommended Mods
+	-Conflicts
+	-Credits
+	-Features
+	-Default Controls
+-Most of this is temporary, prep for nexus mod page
+
+2020.06.04
+-Continued adding armor mods
+-Created GetFormData3
+-Created GetFormsArray
+-Since Concealing Hoods is just a bunch of texture swaps on 3 meshes, I made my own colors
+	-Red Silk
+	-Aqua Silk
+	-Mage(Blue)
+	-Tattered
+
+2020.06.05
+-Decided to add ability to save/load custom sets
+-Modified FormMenu to include Save Set, Load Set, Random and Random ALL
+-Moved around the buttons A LOT to find what feels/looks best
+-Rearranged backend code so buttons do what they say
+-Changed Cancel, Back, Prev, Next to [Cancel], [<Back], [<Prev], [Next>]
+-Finished adding current modded armors to FormData
+	-Will add armors from Local Guard Features at a later date
+-Had to look at Mordhau and google search to properly name the Witcher 2 resources
+-Created SetRandomForm
+	-For now will just call SetMerge until a value sticks, will cause false error messages
+-Created SetFormGlobal
+-Turns out every time I'd want to call SetFormGlobal is when SetForm is called, so SetFormGlobal is only called inside SetForm now
+-Rather than pre-determine if SetMerge will succeed before calling it in SetRandomForm to avoid non-user caused error messages, I just added a Debug flag to SetMerge to determine the showing of those messages
+-Expanded SetMerge's Debug flag to influence DebugPrint, with 0 for Debug or aaZefirosDebug taking priority
+-To Do:
+	-Local Guard Feature armor
+	-Form ALL
+	-Save/Load Set
+-I'll give Stavroguin a week to respond about Imperial Dragon Armor Reforged
+	-Scratch that, he hasn't been on the Nexus for 2 years - I'll give him this weekend
+-Created GetFormSetsArray
+-Created FindSet to do the dirty work of finding indexes in Forms with only strings to go on
+-Form ALL works, now to actually populate the array
+-Made sets for data in GetFormData, GetFormData2
+-Shifting to factoring out menu code from Manager
+	-What's there is 5KB
+
+2020.06.06
+-Reluctant to factor out Menu section into its own function because of all the variables that'll be passed
+-Can't quite think of an elegant, isolated way to factor out the Menu code while leaving all the function calls behind
+-For now leaving Menu code in Manager
+-Created CustomMenu
+-Created SaveCustom
+-Created LoadCustom
+-Experimented with TextInput functions, didn't get them to work as desired
+-Created Cstm0X globals for 8 save slots
+-To Do:
+	-Local Guards Features armor
+	-Better menu code
+	-Order modded armors
+-Ordered modded armors
+-Should make Save/LoadCustom index agnostic, using functions for FormSets
+-Created Cstm0X string_vars
+-Modified SaveCustom to get names from Forms and store them in Cstm0X strings
+	-dot notation to reduce code in Manager
+-Created ValidateCustom
+-Tested basic functionality
+-Have not tested what would happen if stuff got renamed/deleted, but code should handle it
+-Tested, and works as expected
+-Created ValidateForm, to make Form index agnostic too
+-NO MORE "form may be incorrect after updating" PATCH NOTES FUCK YES
+
+2020.06.07
+-Can move button/menu/page changing code into their respective menus, return values back as arrays
+	-Created MenNm as a persistent array for these
+		-Stack is probably safe, but won't take any bets
+	-Shifted Menu to array_var b/c obsolete with MenNm, MenNm deleted/renamed
+-Modified Offer, FormMenu, MeshMenu, CustomMenu, WeightMenu to handle new Menu array
+-Moved all page and button handling to %Menu functions, freeing up Manager space
+-Manager still handles calling appropriate functions at the end of Menu calls
+-Modded armor sorted and sets made
+-All that's left:
+	-Local Guards Features
+	-Better menu code
+	-GitHub update
+-Since Stavroguin hasn't responded within the time limit, I'm adding his work to the pile
+
+2020.06.08
+-Implemented better menu code
+	-MeshMenu now has a Table of Contents with user specified page ranges
+	-ToC will skip if only 1 button on it or page range size < 1
+	-ToC will adjust page range size if user specified will result in more than 8 buttons
+-Renamed Offer to OfferMenu
+-Added checks to CleanUp that bound variables exposed to the .ini which aren't handled by their functions
+-Created Zefiros.ini
+-Began work on mod page
+-Mod description is done, doing ReadMe.txt extended description
+-To fix the known issue of multi-slot mesh on single-slot item I have to integrate SetForm into SetMerge
+	-It puts so much shit into one function I didn't want to do it, but can't avoid it now
+-Actually, avoided completely merging the two
+-SetMerge now calls SetForm, but conditionally
+	-SetMerge now, at the end, compares Added's Forms slots to their current slots and remerges as needed
+	-If remerge fails, changes mesh to Iron, which is single slot
+	-Checks if item is in inventory before calling, since Added entry may also be in Missing
+-Added SFX to Save/Load Set
+
+2020.06.09
+-Tweaked some stuff on the mod page, cropped gifs, removed some info, hid other info, rephrased things
+-Updated Known Issues to remove fixed bug
+-Began thoroughly auditing code, properly reading and understanding each script instead of skimming
+-Turns out the missing Foot (mimic) name wasn't a bug caused by me working with code in progress
+	-The name legitimately is not being saved to the save file
+	-I DON'T KNOW WHY
+	-It's a string_var, the calls are correct, Forms gets the name updated...
+	-Can be SaveMimic, ValidateMimic or some weird engine quirk
+	-ValidateMimic looks right, call to it in Manager looks right
+	-SaveMimic looks right too, as does ar_Map creation preceding it
+	-Tried renaming MimicFootName to MimicFeetName
+	-Tried removing the formatting tabs for that specific line in SaveMimic
+	-ar_Map might be the cause so... replacing Stack pass with entire Forms array
+	-Had to move SaveMimic call down to after Forms was created
+	-It works and I don't know what fixed it
+	-I traced back my steps till it was just the reindexing that happened as a byproduct of renaming
+	-It worked
+	-I thought it was the reindexing, until it didn't work anymore
+	-I've redone everything but the renaming and unformatting, it works
+	-I still don't know why, but it was probably the ar_Map call at this point
+-I've added string correction to ValidateMimic so at least this bug won't leave empty strings if it happens again
+	-empty strings royally fuck up menus
+-I retested for the bug and it's gone. Hopefully for good.
+
+2020.06.10
+-Added more variety to save/load messages
+-Created GetMimicData, even if it'll only be called once
+-Updated Back, Prev, Next buttons in GetEnchChoice to new style
+-Made GetXPReq take XP as a parameter instead of reading it directly
+
+2020.06.11
+-Made LogXP take XP and XPReq as parameters instead of reading them directly
+-Made LogXP able to output negative XPGain
+-List of functions to edit if I make default FormID soft coded:
+	-Manager	-SetMerge	-ValidateCustom	-ValidateForm	-ValidateMimic?
+-Created DfIdx array to hold default form indexes
+-Updated Manager, SetMerge, ValidateCustom, ValidateForm
+-I could rewrite ValidateMimic to be less hardcoded now, but don't wanna delay release further
+	-If release gets delayed a day anyway by something else, I'll rewrite it
+
+2020.06.12
+-Removing and replacing Broken global with local
+-Created GetEffectOrder to create array to pass into ReorderEffects
+-Expanded GetEffectOrder to encompass all effects
+-Rewrote ReorderEffects so it uses the order of Effects
+-Now effect order will be consistent across sessions
+-Manager Used/Related header finally up-to-date
+-Manager header is done
+-To Do:
+	-ReadMe.txt EXTENDED DESCRIPTION
+	-Local Guards Features
+	-Test if there's a way to make trap damage count w/o also counting self harm
+-ID is 0000000 for both self inflicted and environmental damage
+-What if I set an OnHealthDamage handler with Player as the attacker?
+-And Player also as the attacked...?
+-Editing Object% to use this test handler has resulted in:
+-Created SetHandlers to un/set handlers
+-Attacker::Player Attacked::Player
+	-Triggers for self harm (yay)
+	-Triggers for traps (fuck)
+-So its either I count self harm and traps or I count neither
+-Neither it shall stay
+-Added sInvalidAttacker to .ini for toggling above question, default is off
+-For some reason when blasting goblins with AoE spells it fires the OnDamage handler with Attacker as me
+	-Not taking any damage
+	-Self inflicted and trap damage still undefined Attacker
+-Added Attacker != PlayerRef check, fixed the issue
+-Tested with InvalidAttacker on and no issues
+-Also triggers OnMagicEffectHit but no way to stop that
+-There's a lot more armor in Local Guards Features than the screenshots suggest
+
+(multi-day, started 2020.06.09)
+-Audited:
+	CleanUp	CustomMenu	LoadCustom	SaveCustom DamageAnalysis	DefaultINI
+	EnchantBox	FindSet	FlagCleanOnce	FlagEnchantOnce	FlagSigilOnce	FlavorBox
+	FlavorMessage
+
+	FormMenu	GetArmorStats	GetMimicData	GetBroken	GetDefaultSlot
+	GetDurability	SetDurability	GetEffectCode	GetEffectIndex	GetEnchantData
+	GetEnchantLevels	GetEnchChoice	GetFormData	GetFormData2
+	GetFormData3	GetFormsArray	GetFormSetsArray	GetMerg	GetPCBIP
+	GetResistMatrix	GetSlots	GetSlotShared	GetXPReq
+	
+	IncrementEnchant	LogLevel	LogXP	MeshMenu	ModEnchLevel	ModStat
+	ObjectBody	ObjectFoot	ObjectHand	ObjectHead	ObjectLegs	ObjectShld
+	OfferMenu	OfferMenu	OnDamage	OnEnchant	OnEnchanting	OnMagicApply
+	OnMagicHit	OnUnEquip	OnWeaponHit	PrepMerge	RefreshEquip	RefreshInv
+	RefreshUnEquip	RefToNum	RemoveAllEffectItems	ReorderEffects	Sacrifice
+	SaveMimic	SetEffectItem	SetEffectStat	SetEnchant	SetEnchOnItem	SetEquipHandlers
+	SetForm	SetFormGlobals	SetLevelCap	SetMerge	SetMergeEnch	SetMimic	SetName
+	SetRandomForm	SetResistEffects	SetSeek	SetSeekArray	SetStat	SetWeight
+	SetWeightGlobals	UndoEnchant	UndoEnchanting	UndoSigilStone	ValidateBiped
+	ValidateCustom	ValidateForm	ValidateMimic	WeightMenu
+
+	GetEffectOrder	Manager	SetHandlers
+
+2020.06.13
+-Looking at Local Guards .esp, very few of these have unique names, I'll be calling them A/B/C... then
+-GetFormData3 is almost full, will have to segregate mod to Data4, probably move vanilla guard armor in with it
+-Created GetFormData4
+-Moved vanilla guard meshes to Data4
+-Problem is there's multiple Legion tiers that don't all have mod counterparts
+	-It's an ordering problem, since I'd like related stuff to stay together in descending tiers
+-Shifted Legion, Blades, Blackwood to back of Data1, so when Data4 follows all the guard stuff is there
+-Also have space in Data1 for modded Legion gear
+-Finished adding Local Guards Features, now to properly name everything
+-Everything is named and ordered
+-Mod comes with a very nice hood/cowl mesh and one of them uses a vanilla hood texture
+-I can do what I did for Concealing Hoods and make retextures for every vanilla color
+-To Do:
+	-LGF Addons
+	-LGF hood retextures
+	-ReadMe.txt EXTENDED DESCRIPTION
+	-Doc/Git update
+	-Release
+
+2020.06.14
+-LGF Kvatch + Thorn Addons added, Sutch and Stirk require additional dependencies so no
+-LGF sets made and sorted
+-Retextured Cowls made and implemented
+-Sorted to Cowls into Data2 to be with other hoods
+-Will make Arch Mage versions too, see it so left out
+-Made Arch Mage and Necromancer retextures
+-Writing the extended description
+-A little if statement optimization made it so Offer branch was never reached, reversed
+-Tinkering with fAbsorption again, 0.02 is fine for 1 set, but you tend to get like 6 per dungeon
+-After greatly deliberating with myself
+	-durability lost per fight
+	-XP gained per fight
+	-armor found per fight
+	-durability gained per armor
+-I have decided to leave it at 0.02
+-Extended description complete
+-Copying scripts into .txts...
+	-96 scripts
+	-fuck
+	-this is why I stopped updating Git daily
+-Scripts copied
+-GitHub updated
+
+2020.06.19
+-Loaded up Oblivion to double-check a comment about female armor "not working", needed to be sure it was the "don't like it" meaning and not "missing mesh"
+	-Meshes work
+-Tried out Daedrim F b/c was curious, turns out I botched the file paths, all point to M
+-Looks like we got 1.1 in the works
+-Moved Barbute in front of Black Barbute, like Plate/Black Plate
+
+2020.06.23
+-Added explanation of MsgName to ReadMe.txt
+
+2020.06.24
+-Factored first boot code into FirstBoot function
+	-read on CSwiki that Oblivion reads all code in if statements even if not run, should speed up initialization
+-Factored reset history code into ResetEnchHistory
+-Updated GitHub
+
+2020.06.25
+-Tried implementing hidden helmet - invisible but stats still apply
+-Googled for a mod that hides helmets and found one, DLed and read code
+	-It swaps current helm for one with no slots
+	-No slots does not jive with my implementation of Zefiros
+-What if I change the helmet mesh to PC's hair and have it use the hair slot?
+-Found GetHair and CopyHair in CS documentation
+-Threw together a "Hidden" entry for Head Forms, no errors but doesn't mean getting hair path will work
+-Menus aren't working ingame, at all
+-Added DebugPrints so I know where in MenuMode it's failing
+-None output, added one that outputs every frame MenuMode runs
+-Also not output - Now that's new!
+-Put one for GameMode
+-Not output
+-But still initializes?
+-So, it only runs once and then dies? wtf
+-Must be ESP corruption, had this happen once with Dusfergon, but to much different effect
+	-CS rarely corrupts ESPs but can't detect the corruption, remains through recompiles
+	-Effects are random but always "shit doesn't work even though there's no errors anywhere"
+	-Only known cure is restore to backup
+-Restored to release version of Zefiros
+-Left newer functions and changes implemented, save the "Hidden" Form
+-Half works
+	-Helmet is changed to PC's hairstyle, but is black and wrong length
+-Tried CopyHair
+	-CTD
+-Looked through documentation again, can get hair color, but not set it anywhere
+-SetHair only touches style and has to be on an NPC
+-CopyHair has to be from NPC to NPC, even though can fool compiler into doing it on inventory items
+-So, basically no way to fully copy PC's hair onto helmet
+
+2020.06.26
+-Comment came in about having 80% normal weapon resist by Lv11, dat's a lot
+-But makes sense given all the normal weapons about
+-Still, 8000 damage?
+-Forgot to consider normal weapons early game (rarely appear late game) when setting fXPResist
+-One-size-fits-all approach is probably not gonna fly long term
+-Going to implement per type fXPResists, so each can be turned off
+-I have a suspicion that Windows 10's new update is the cause of the corruption
+-Menus aren't working again
+-Rolled back 1 Win10 update
+-Recompiled ESP
+-Still don't work
+-Undid addition of FirstBoot function
+-Fixed it?
+-Why were there no errors and what the fuck was wrong in the first place?
+	-Reminds me of the FootName string_var not saving
+-Another bug report: I forgot to update Sacrifice to handle merged items, D'oh!
+-Sacrifice fixed
+-While testing ingame, got attacked by Dark Agents, noticed XP gain was stupidly high
+-Redid encounter with debug on, seem to be counting damage taken from EVERY actor
+-Changed handler calls to use PlayerRef instead of Player
+-Added GetSelf call to OnDamage so can tell who gets hit in DebugPrint
+-Problem appears solved
+-That was probably why I was taking damage from myself earlier with the AoE spells
+-AoE spells on the same goblins I first encountered the bug with do NOT trigger XP :)
+-Tweaked around with FirstBoot, maybe it's a certain line that's breaking everything
+-Renamed to InitGlobals, just incase name is the cause
+-It's Player.AddItemNS
+-First, why? Second, as long as I add item in Manager it's fine
+-Leaving name as InitGlobals
+-Re-implemented ResetEnchHistory, doesn't kill the quest
+-Began dividing fXPResist into per type values
+-Divided into fXPResistFire/Frost/Shock/etc.
+-DefaultINI updated
+-ChangeLog updated
+-ReadMe doesn't need updating beyond version number
+-Renamed pieces to vanilla standards, since historically accurate gets a bit confusing at times with vanilla Greaves -> historical Cuisse and vanilla Boots -> historical Greaves
+-Turns out the reports of INIs not working is because Let := doesn't work b/c INI is run as if from console, which only recognizes Set To.
+-Now to implement the new .NIF files
+
+2020.06.28
+-Finished adjusting file paths in .NIF files
+-Files that crashed NifSkope still crash it, but relocated all other textures
+-Testing meshes ingame to double-check for wrong texture paths:
+	-Foot done
+	-Hand done
+	-Legs done
+	-Shld done
+	-Head done
+-Durability was weirdly 537% for cuirass, reloaded save to check if reproducable
+-Happens when armor is fused then unfused
+-Could be b/c durability is at exactly 100% for some of the fused parts, dura works differently at that value
+-Repaired to 125%, still reproduced bug
+-Investigating SetMerge (expect to have forgotten to handle durability)
+-Re-init phase doesn't touch current durability
+-Added GetDurability and SetDurability calls to when items are added, testing
+-Doesn't work b/c added items are new and therefore at 100% - SetCurrentHealth fails then
+-If convert the items into temporary references, maybe I can SetCurrentHealth then?
+	-OBSE example does this
+-Altered SetDurability to RemoveMeIR items and add them back w/ temp refs at dura %
+-CTDs on init, probably one of those cases where stuff behaves differently during boot
+-RemoveMeIR is causing the CTD
+-RemoveMe doesn't CTD but also doesn't work as desired
+-Might be b/c items being RemoveMeIRed are equipped?
+-Unequipping prevents CTD but runs into GameMode re-equip issue on init
+-Commented out SetDurability and unequip lines, then tested merging
+-Works for added items
+-Changes to SetDurability cause naked level ups, going to need custom solution for SetMerge
+-Replaced Player.AddItemNS w/ temp ref that has durability set before copying to player
+-Rolled back SetDurability
+-Works! Level ups not naked, no CTD, durability percentage maintained across fusions
+-Updated documentation, both headers and local files
+	-Body done
+-Begin packing for release

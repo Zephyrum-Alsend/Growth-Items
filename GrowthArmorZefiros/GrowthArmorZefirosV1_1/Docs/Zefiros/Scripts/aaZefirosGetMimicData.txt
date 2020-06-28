@@ -1,0 +1,54 @@
+scn aaZefirosGetMimicData
+
+;Main script
+;-----------------------------------------------------------------------------
+;aaZefirosManager
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;Returns an array containing all stored mimicry data.
+;Created to cut down on code in Manager.  Dot notation necessary.
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+array_var Stack ;Return value
+;-----------------------------------------------------------------------------
+
+
+
+;-----------------------------------------------------------------------------
+begin Function { }
+;-----------------------------------------------------------------------------
+
+	Let Stack := ar_Construct Array
+	Let Stack[0] := ar_Map 0::aaZefirosInit.MimicBodyMaleModel 1::aaZefirosInit.MimicBodyFemaleModel 2::aaZefirosInit.MimicBodyMaleGround 3::aaZefirosInit.MimicBodyFemaleGround 4::aaZefirosInit.MimicBodyMaleIcon 5::aaZefirosInit.MimicBodyFemaleIcon 6::aaZefirosInit.MimicBodyName 7::aaZefirosMimicBodySlot
+	Let Stack[1] := ar_Map 0::aaZefirosInit.MimicFootMaleModel 1::aaZefirosInit.MimicFootFemaleModel 2::aaZefirosInit.MimicFootMaleGround 3::aaZefirosInit.MimicFootFemaleGround 4::aaZefirosInit.MimicFootMaleIcon 5::aaZefirosInit.MimicFootFemaleIcon 6::aaZefirosInit.MimicFootName 7::aaZefirosMimicFootSlot
+	Let Stack[2] := ar_Map 0::aaZefirosInit.MimicHandMaleModel 1::aaZefirosInit.MimicHandFemaleModel 2::aaZefirosInit.MimicHandMaleGround 3::aaZefirosInit.MimicHandFemaleGround 4::aaZefirosInit.MimicHandMaleIcon 5::aaZefirosInit.MimicHandFemaleIcon 6::aaZefirosInit.MimicHandName 7::aaZefirosMimicHandSlot
+	Let Stack[3] := ar_Map 0::aaZefirosInit.MimicHeadMaleModel 1::aaZefirosInit.MimicHeadFemaleModel 2::aaZefirosInit.MimicHeadMaleGround 3::aaZefirosInit.MimicHeadFemaleGround 4::aaZefirosInit.MimicHeadMaleIcon 5::aaZefirosInit.MimicHeadFemaleIcon 6::aaZefirosInit.MimicHeadName 7::aaZefirosMimicHeadSlot
+	Let Stack[4] := ar_Map 0::aaZefirosInit.MimicLegsMaleModel 1::aaZefirosInit.MimicLegsFemaleModel 2::aaZefirosInit.MimicLegsMaleGround 3::aaZefirosInit.MimicLegsFemaleGround 4::aaZefirosInit.MimicLegsMaleIcon 5::aaZefirosInit.MimicLegsFemaleIcon 6::aaZefirosInit.MimicLegsName 7::aaZefirosMimicLegsSlot
+	Let Stack[5] := ar_Map 0::aaZefirosInit.MimicShldMaleModel 1::aaZefirosInit.MimicShldFemaleModel 2::aaZefirosInit.MimicShldMaleGround 3::aaZefirosInit.MimicShldFemaleGround 4::aaZefirosInit.MimicShldMaleIcon 5::aaZefirosInit.MimicShldFemaleIcon 6::aaZefirosInit.MimicShldName 7::aaZefirosMimicShldSlot
+
+
+	SetFunctionValue Stack
+	Return
+;-----------------------------------------------------------------------------
+end ;Function { }
+;-----------------------------------------------------------------------------

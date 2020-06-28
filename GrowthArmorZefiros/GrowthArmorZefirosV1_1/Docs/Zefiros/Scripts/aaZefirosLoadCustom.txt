@@ -1,0 +1,172 @@
+scn aaZefirosLoadCustom
+
+;Main script
+;-----------------------------------------------------------------------------
+;aaZefirosManager
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;aaZefirosCustomMenu
+;aaZefirosSaveCustom
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
+;aaZefirosFormBody
+;aaZefirosFormFoot
+;aaZefirosFormHand
+;aaZefirosFormHead
+;aaZefirosFormLegs
+;aaZefirosFormShld
+;aaZefirosCstm01Body
+;aaZefirosCstm01Foot
+;aaZefirosCstm01Hand
+;aaZefirosCstm01Head
+;aaZefirosCstm01Legs
+;aaZefirosCstm01Shld
+;aaZefirosCstm02Body
+;aaZefirosCstm02Foot
+;aaZefirosCstm02Hand
+;aaZefirosCstm02Head
+;aaZefirosCstm02Legs
+;aaZefirosCstm02Shld
+;aaZefirosCstm03Body
+;aaZefirosCstm03Foot
+;aaZefirosCstm03Hand
+;aaZefirosCstm03Head
+;aaZefirosCstm03Legs
+;aaZefirosCstm03Shld
+;aaZefirosCstm04Body
+;aaZefirosCstm04Foot
+;aaZefirosCstm04Hand
+;aaZefirosCstm04Head
+;aaZefirosCstm04Legs
+;aaZefirosCstm04Shld
+;aaZefirosCstm05Body
+;aaZefirosCstm05Foot
+;aaZefirosCstm05Hand
+;aaZefirosCstm05Head
+;aaZefirosCstm05Legs
+;aaZefirosCstm05Shld
+;aaZefirosCstm06Body
+;aaZefirosCstm06Foot
+;aaZefirosCstm06Hand
+;aaZefirosCstm06Head
+;aaZefirosCstm06Legs
+;aaZefirosCstm06Shld
+;aaZefirosCstm07Body
+;aaZefirosCstm07Foot
+;aaZefirosCstm07Hand
+;aaZefirosCstm07Head
+;aaZefirosCstm07Legs
+;aaZefirosCstm07Shld
+;aaZefirosCstm08Body
+;aaZefirosCstm08Foot
+;aaZefirosCstm08Hand
+;aaZefirosCstm08Head
+;aaZefirosCstm08Legs
+;aaZefirosCstm08Shld
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;Sets the Form globals to the specified set of Cstm globals.
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+short i
+;-----------------------------------------------------------------------------
+
+;-----------------------------------------------------------------------------
+begin Function { i }
+;-----------------------------------------------------------------------------
+
+	if ( i == 1 )
+
+		Let aaZefirosFormBody := aaZefirosCstm01Body
+		Let aaZefirosFormFoot := aaZefirosCstm01Foot
+		Let aaZefirosFormHand := aaZefirosCstm01Hand
+		Let aaZefirosFormHead := aaZefirosCstm01Head
+		Let aaZefirosFormLegs := aaZefirosCstm01Legs
+		Let aaZefirosFormShld := aaZefirosCstm01Shld
+
+	elseif ( i == 2 )
+
+		Let aaZefirosFormBody := aaZefirosCstm02Body
+		Let aaZefirosFormFoot := aaZefirosCstm02Foot
+		Let aaZefirosFormHand := aaZefirosCstm02Hand
+		Let aaZefirosFormHead := aaZefirosCstm02Head
+		Let aaZefirosFormLegs := aaZefirosCstm02Legs
+		Let aaZefirosFormShld := aaZefirosCstm02Shld
+		
+	elseif ( i == 3 )
+
+		Let aaZefirosFormBody := aaZefirosCstm03Body
+		Let aaZefirosFormFoot := aaZefirosCstm03Foot
+		Let aaZefirosFormHand := aaZefirosCstm03Hand
+		Let aaZefirosFormHead := aaZefirosCstm03Head
+		Let aaZefirosFormLegs := aaZefirosCstm03Legs
+		Let aaZefirosFormShld := aaZefirosCstm03Shld
+		
+	elseif ( i == 4 )
+
+		Let aaZefirosFormBody := aaZefirosCstm04Body
+		Let aaZefirosFormFoot := aaZefirosCstm04Foot
+		Let aaZefirosFormHand := aaZefirosCstm04Hand
+		Let aaZefirosFormHead := aaZefirosCstm04Head
+		Let aaZefirosFormLegs := aaZefirosCstm04Legs
+		Let aaZefirosFormShld := aaZefirosCstm04Shld
+		
+	elseif ( i == 5 )
+
+		Let aaZefirosFormBody := aaZefirosCstm05Body
+		Let aaZefirosFormFoot := aaZefirosCstm05Foot
+		Let aaZefirosFormHand := aaZefirosCstm05Hand
+		Let aaZefirosFormHead := aaZefirosCstm05Head
+		Let aaZefirosFormLegs := aaZefirosCstm05Legs
+		Let aaZefirosFormShld := aaZefirosCstm05Shld
+		
+	elseif ( i == 6 )
+
+		Let aaZefirosFormBody := aaZefirosCstm06Body
+		Let aaZefirosFormFoot := aaZefirosCstm06Foot
+		Let aaZefirosFormHand := aaZefirosCstm06Hand
+		Let aaZefirosFormHead := aaZefirosCstm06Head
+		Let aaZefirosFormLegs := aaZefirosCstm06Legs
+		Let aaZefirosFormShld := aaZefirosCstm06Shld
+		
+	elseif ( i == 7 )
+
+		Let aaZefirosFormBody := aaZefirosCstm07Body
+		Let aaZefirosFormFoot := aaZefirosCstm07Foot
+		Let aaZefirosFormHand := aaZefirosCstm07Hand
+		Let aaZefirosFormHead := aaZefirosCstm07Head
+		Let aaZefirosFormLegs := aaZefirosCstm07Legs
+		Let aaZefirosFormShld := aaZefirosCstm07Shld
+		
+	elseif ( i == 8 )
+
+		Let aaZefirosFormBody := aaZefirosCstm08Body
+		Let aaZefirosFormFoot := aaZefirosCstm08Foot
+		Let aaZefirosFormHand := aaZefirosCstm08Hand
+		Let aaZefirosFormHead := aaZefirosCstm08Head
+		Let aaZefirosFormLegs := aaZefirosCstm08Legs
+		Let aaZefirosFormShld := aaZefirosCstm08Shld
+		
+	endif
+
+
+	Return
+;-----------------------------------------------------------------------------
+end ;Function { i }
+;-----------------------------------------------------------------------------

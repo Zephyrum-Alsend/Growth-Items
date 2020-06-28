@@ -1,0 +1,247 @@
+scn aaZefirosFlavorBox
+
+;Main script
+;-----------------------------------------------------------------------------
+;aaZefirosManager
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;aaZefirosUndoSigilStone
+;aaZefirosUndoEnchanting
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;Based on the Mode given, display a random flavor message box.
+;Also prints message to console.
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+string_var Name
+short Mode
+
+float Ran
+string_var Msg
+;-----------------------------------------------------------------------------
+
+;-----------------------------------------------------------------------------
+begin Function { Name, Mode }
+;-----------------------------------------------------------------------------
+
+	Let Ran := rand 0 100
+
+
+	;-----------------------------------------------------------------------------
+	;Level Cap
+	;-----------------------------------------------------------------------------
+	if ( Mode == 0 )
+
+		if ( Ran <= 12.5 ) ;12.5%
+
+			Let Msg := Name + " has become an impenetrable second skin."
+
+		elseif ( Ran <= 25 ) ;12.5%
+
+			Let Msg := Name + " reaches the apex of its power."
+
+		elseif ( Ran <= 37.5) ;12.5%
+
+			Let Msg := Name + " is complete."
+
+		elseif ( Ran <= 50 ) ;12.5%
+
+			Let Msg := "Snug to your frame, " + Name + " is like a second home."
+
+		elseif ( Ran <= 62.5 ) ;12.5%
+
+			Let Msg := Name + " has made you a mobile fortress."
+
+		elseif ( Ran <= 75 ) ;12.5%
+
+			Let Msg := "Whatever mechanism has caused " + Name + " to grow thus far has stopped."
+
+		elseif ( Ran <= 87.5 ) ;12.5%
+
+			Let Msg := "Faintly, sparks crackle underneath the surface of " + Name + ".  It is replete with power."
+
+		else ;12.5%
+
+			Let Msg := "Magic or missile, claw or club, " + Name + " protects you from all."
+
+		endif
+
+	;-----------------------------------------------------------------------------
+	;Full Reset
+	;-----------------------------------------------------------------------------
+	elseif ( Mode == 1 )
+
+		if ( Ran <= 12.5 ) ;12.5%
+
+			Let Msg := Name + " fizzles, depleted of its power."
+		
+		elseif ( Ran <= 25 ) ;12.5%
+
+			Let Msg := "Bent, rent and sent to scrap heap's door, " + Name + " preserves mundanity."
+		
+		elseif ( Ran <= 37.5) ;12.5%
+
+			Let Msg := "Tattered and neglected, " + Name + " crumbles to near dust."
+		
+		elseif ( Ran <= 50 ) ;12.5%
+
+			Let Msg := "Groaning at your movements, " + Name + "'s joints pop."
+		
+		elseif ( Ran <= 62.5 ) ;12.5%
+
+			Let Msg := "Mundane. That is all " + Name + " is now."
+		
+		elseif ( Ran <= 75 ) ;12.5%
+
+			Let Msg := "From within " + Name + "'s wounds, a crackle and a sizzle can be heard.  Its magic is no more."
+		
+		elseif ( Ran <= 87.5 ) ;12.5%
+
+			Let Msg := Name + " crumbles bit by bit, then you feel something incorporeal slough off too. Something important."
+		
+		else ;12.5%
+
+			Let Msg := "Utter disrepair. Not a shred of magicka remains in " + Name + "."
+
+		endif
+		
+	;-----------------------------------------------------------------------------
+	;Delevel
+	;-----------------------------------------------------------------------------
+	elseif ( Mode == 2 )
+
+		if ( Ran <= 20 ) ;20%
+
+			Let Msg := Name + " grinds against you as it languishes in disrepair."
+
+		elseif ( Ran <= 40 ) ;20%
+
+			Let Msg := "Rough hewn leather accosts your joints as " + Name + " claws for power it no longer holds."
+
+		elseif ( Ran <= 60 ) ;20%
+
+			Let Msg := "A glimmer, a sparkle and then dull, jagged edges as " + Name + " struggles to retain its form."
+
+		elseif ( Ran <= 80 ) ;20%
+
+			Let Msg := "Dancing sparks flicker about the edge of your vision, before realising this is " + Name + "'s magicka, leaking in dilapidation."
+
+		else ;20%
+			
+			Let Msg := "Decay riddles " + Name + " as blow after blow has pocked the armor.  It's a wonder it still protects at all."
+
+		endif
+
+	;-----------------------------------------------------------------------------
+	;Undo Sigil Stone
+	;-----------------------------------------------------------------------------
+	elseif ( Mode == 3 )
+
+		if ( Ran <= 20 ) ;25%
+
+			Let Msg := "Chaotic creatia clashes against latent arcane energy, " + Name + " repelling the sigil stone."
+
+		elseif ( Ran <= 40 ) ;25%
+
+			Let Msg := Name + " reject(s) the sigil stone."
+
+		elseif ( Ran <= 60 ) ;25%
+
+			Let Msg := "Sparks fly as " + Name + " spit(s) out the sigil stone, retaining its former self."
+
+		elseif ( Ran <= 80 ) ;25%
+
+			Let Msg := Name + " assert(s) existence."
+
+		elseif ( Ran <= 99.9 ) ;24.9%
+
+			Let Msg := Name + " refuse(s) the influence of another Ada."
+
+		else ;0.1%
+
+			Let Msg := "Error 1048: Sigil Stone denied."
+
+		endif
+
+	;-----------------------------------------------------------------------------
+	;Undo Enchanting
+	;-----------------------------------------------------------------------------
+	elseif ( Mode == 4 )
+
+		if ( Ran <= 12.5 ) ;12.5%
+
+			Let Msg := Name + " reject(s) enchantment."
+		
+		elseif ( Ran <= 25 ) ;12.5%
+
+			Let Msg := "As whispy tendrils slither from crystal to armor, the anima bends around " + Name + " before doubling back into its soul gem."
+		
+		elseif ( Ran <= 37.5 ) ;12.5%
+
+			Let Msg := "Try as you might, no amount of prodding, probing or pushing will enforce your enchantment onto " + Name + "."
+		
+		elseif ( Ran <= 50 ) ;12.5%
+
+			Let Msg := "Released from its gem, the soul is promptly retrapped and resealed inside the very same gem by " + Name + "."
+		
+		elseif ( Ran <= 62.5 ) ;12.5%
+
+			Let Msg := "The soul gem remains inert, seemingly refusing to go anywhere near " + Name + "."
+		
+		elseif ( Ran <= 75 ) ;12.5%
+
+			Let Msg := Name + " reject(s) the soul, as if already filled."
+		
+		elseif ( Ran <= 87.5 ) ;12.5%
+
+			Let Msg := Name + " refuse(s) both your will and the anima accompanying it."
+		
+		elseif ( ran <= 99.9 ) ;12.4%
+
+			Let Msg := "You swear you hear a distant, muffled voice mock you as the enchantment rebounds off of " + Name + "..."
+		
+		else ;0.1%
+			
+			Let Msg := "Error 1042: Enchanting denied."
+
+		endif
+
+		
+	;-----------------------------------------------------------------------------
+	;Error message
+	;-----------------------------------------------------------------------------
+	else
+
+		Let Msg := "Message Mode out of range."
+
+	endif
+
+
+	DebugPrint "%BName:%b %z %BMode:%b %.0f %BRan:%b %.2f" Name Mode Ran
+	MessageBox $Msg
+	printc "%z" Msg
+
+
+	sv_Destruct Msg
+	Return
+;-----------------------------------------------------------------------------
+end ;Function { Name, Mode }
+;-----------------------------------------------------------------------------

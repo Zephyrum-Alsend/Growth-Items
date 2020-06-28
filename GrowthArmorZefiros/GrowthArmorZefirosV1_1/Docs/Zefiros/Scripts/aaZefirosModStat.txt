@@ -1,0 +1,131 @@
+scn aaZefirosModStat
+
+;Main script
+;-----------------------------------------------------------------------------
+;aaZefirosManager
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;aaZefirosLevel
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;Mods the stats of the passed armor according to the other values passed.
+;Takes an array of default slot masks, array of growth rates, heavy armor AR
+;and weight multipliers, armor type, start level, end level and the armor to 
+;be modified.
+;Start and end level are required instead of level difference to account for
+;truncation as Ints can be modded by Floats.
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+array_var Dflt
+array_var Stat
+float HvyAR
+float HvyWgt
+short HvyFlg
+short SLvl
+short ELvl
+ref Armr
+
+short ARB
+float WgtB
+short HltB
+long ValB
+short ARM
+float WgtM
+float HltM
+float ValM
+
+short Armor
+float Weight
+long Health
+long Value
+
+long Slot
+array_var Merg
+array_var Iter
+short i
+;-----------------------------------------------------------------------------
+
+
+
+;-----------------------------------------------------------------------------
+begin Function { Dflt, Stat, HvyAR, HvyWgt, HvyFlg, SLvl, ELvl, Armr }
+;-----------------------------------------------------------------------------
+
+	;At Lv1, stat == Base
+	Let SLvl -= 1
+	Let ELvl -= 1
+
+	;Account for multi-slot items by compounding stats for each slot
+	Let Slot := GetBipedSlotMask Armr
+	
+	Let ARB := WgtB := HltB := ValB := ARM := WgtM := HltM := ValM := 0
+
+	Let Merg := Call aaZefirosGetMerg Slot Dflt
+
+	ForEach Iter <- Merg
+
+		Let i := *Iter
+		
+		Let ARB  += Stat[i][0]
+		Let WgtB += Stat[i][1]
+		Let HltB += Stat[i][2]
+		Let ValB += Stat[i][3]
+		Let ARM  += Stat[i][4]
+		Let WgtM += Stat[i][5]
+		Let HltM += Stat[i][6]
+		Let ValM += Stat[i][7]
+
+	loop
+
+
+	;Store intermediary result to truncate
+	Let Armor := ( ARM * SLvl )
+	Let Weight := ( WgtM * SLvl )
+	Let Health := ( HltM * SLvl )
+
+	Let Armor := ( ARM * ELvl ) - Armor
+	Let Weight := ( WgtM * ELvl ) - Weight
+	Let Health := ( HltM * ELvl ) - Health
+
+	;Multiply result by Heavy Armor modifier if necessary
+	if ( HvyFlg != 0 )
+
+		Let Armor *= HvyAr
+		Let Weight *= HvyWgt
+
+	endif
+
+	;Without ModGoldValue_T, we have to recalculate it instead
+	Let Value := ValB + ( ValM * ELvl )
+
+
+	DebugPrint "Modding %n 	AR by %.0f, 	Weight by %.2f, 	Health by %.0f, 	Value to %.0f." Armr Armor Weight Health Value
+	ModArmorAR Armor Armr
+	ModWeight Weight Armr
+	ModObjectHealth Health Armr
+	SetGoldValue_T Value Armr
+	;_T makes Value not be stored in the save, like all other stats
+
+
+	Return
+;-----------------------------------------------------------------------------
+end ;Function { Dflt, Stat, HvyAR, HvyWgt, HvyFlg, SLvl, ELvl, Armr }
+;-----------------------------------------------------------------------------

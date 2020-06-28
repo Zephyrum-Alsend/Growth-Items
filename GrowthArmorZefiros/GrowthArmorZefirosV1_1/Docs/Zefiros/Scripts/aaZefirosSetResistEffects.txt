@@ -1,0 +1,128 @@
+scn aaZefirosSetResistEffects
+
+;Main script
+;-----------------------------------------------------------------------------
+;aaZefirosManager
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;aaZefirosGetResistMatrix
+;aaZefirosSetMerge
+;aaZefirosUndoEnchant
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;Updates magic effect items and accounts for merged items.
+;Is used for updating dynamic resistances, but can be used with most effects.
+;Slots is an array paired with Enchs, where Slots[i] is the slot(s) the item
+;Enchs[i] is attached to.
+;OldNewRS contains the effect codes to be updated, along with their new and old
+;magnitudes.  The function will skip the effect if their values are the same.
+;
+;Currently does not acknowledge Actor Value codes or any stat besides
+;magnitude, so cannot be used for weapons or Fortify/Drain effects.
+;
+;OldNewRS:
+;[0]FireRS
+;[1]FrostRS
+;[2]ShockRS
+;[3]MagicRS
+;[4]NormalWeaponRS
+;[5]ParalysisRS
+;[6]DiseaseRS
+;
+;[0]Code
+;[1]Old
+;[2]New
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+array_var Slots
+array_var Dflt
+array_var OldNewRS ;Return value
+array_var Enchs
+
+short C1
+short C2
+short i
+short j
+short X
+long Num
+array_var Stack
+string_var Name
+;-----------------------------------------------------------------------------
+
+
+
+;-----------------------------------------------------------------------------
+begin Function { Slots, Dflt, OldNewRS, Enchs }
+;-----------------------------------------------------------------------------
+
+	;Set C2 to the smaller array size
+	Let C1 := ar_Size Slots
+	Let C2 := ar_Size Enchs
+	if ( C1 < C2 )
+		Let C2 := C1
+	endif
+
+	Let C1 := ar_Size OldNewRS
+
+	
+	;For each effect
+	Let i := 0
+	while ( i < C1 )
+
+		if eval( OldNewRS[i][1] != OldNewRS[i][2] )
+
+			Let Num := OldNewRS[i][0]
+			Let Name := GetMagicEffectNameC Num
+			DebugPrint "Updating %z..." Name
+
+			;Let Old := New
+			Let OldNewRS[i][1] := OldNewRS[i][2]
+
+			;For each enchantment
+			Let j := 0
+			while ( j < C2 )
+
+				;Multiply by merged items
+				Let Stack := Call aaZefirosGetMerg Slots[j] Dflt
+				Let X := ar_Size Stack
+				
+				Let X *= OldNewRS[i][1]
+
+				;Set effect
+				Call aaZefirosSetEffectItem X 0 0 0 ( OldNewRS[i][0] ) 256 ( Enchs[j] )
+
+				Let j += 1
+			loop
+
+			DebugPrint "%z updated." Name
+			
+		endif
+
+		Let i += 1
+	loop
+	
+
+	sv_Destruct Name
+	SetFunctionValue OldNewRS
+	Return
+;-----------------------------------------------------------------------------
+end ;Function { Slots, Dflt, OldNewRS, Enchs }
+;-----------------------------------------------------------------------------

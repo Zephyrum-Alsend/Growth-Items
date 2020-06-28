@@ -1,0 +1,218 @@
+scn aaZefirosSetMimic
+
+;Main script
+;-----------------------------------------------------------------------------
+;aaZefirosManager
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;aaZefirosGetSlotShared
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
+;aaZefirosFormBody
+;aaZefirosFormFoot
+;aaZefirosFormHand
+;aaZefirosFormHead
+;aaZefirosFormLegs
+;aaZefirosFormShld
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;Has an object in Armr mimic the appearance of Item, updating the path
+;information in Data.
+;First checks which slot(s) Item uses and if any objects in Armr share them.
+;If no objects share a slot with Item, or if the object that does is not
+;present in the Player's inventory, aborts function and reports why.
+;Once a match is found, gets the path data for Item and stores the old path
+;data for the Armr object, then calls SetForm.  If SetForm returns successful,
+;updates the correct Used Global; if unsuccessful, reverts Data to its 
+;original state.
+;
+;
+;Data's structure:
+;
+;Array0:
+;[0]Body
+;[1]Foot
+;[2]Hand
+;[3]Head
+;[4]Legs
+;[5]Shld
+;
+;Array1:
+;[0]PathDataArray
+;[1]PathDataArray
+;[2]...
+;
+;Array2:
+;[0]MaleModelPath
+;[1]FemaleModelPath
+;[2]MaleGroundPath
+;[3]FemaleGroundPath
+;[4]MaleIconPath
+;[5]FemaleIconPath
+;[6]Name
+;[7]Slot
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+ref Item
+array_var Hvy
+array_var Stat
+array_var EnSt
+array_var Dflt
+array_var Armr
+array_var Data ;Return value
+
+array_var Stack
+array_var Temp
+ref Self
+short i
+
+string_var MaleMesh
+string_var FemaleMesh
+string_var MaleGround
+string_var FemaleGround
+string_var MaleIcon
+string_var FemaleIcon
+string_var Name
+long Slot
+;-----------------------------------------------------------------------------
+
+;-----------------------------------------------------------------------------
+begin Function { Item, Hvy, Stat, EnSt, Dflt, Armr, Data }
+;-----------------------------------------------------------------------------
+	SetFunctionValue Data ;Set value early incase of abortion
+
+	
+	;Get what slot Item belongs to
+	Let Stack := ar_Map 0::Armr[3] 1::Armr[0] 2::Armr[4] 3::Armr[2] 4::Armr[1] 8::Armr[5]
+	Let Stack := Call aaZefirosGetSlotShared Item Stack
+
+	if eval( 0 == ar_Size Stack )
+
+		DebugPrint "%n does not match a slot in Armr, aborting SetMimic." Item
+		MessageEX "%n cannot be mimicked." Item
+		Return
+
+	endif
+
+	Let Self := Stack[0]
+	
+	if ( Player.GetItemCount Self == 0 )
+
+		DebugPrint "%n not present, aborting SetMimic." Self
+		MessageEX "%n required to mimic %n." Self Item
+		Return
+		;SetMerge will check if the other required items are present
+
+	endif
+
+	;Find which sub-array Item's data belongs to
+	Let i := ar_Find Self Armr
+
+
+	;Store old data
+	Let Temp := ar_Construct Array
+	Let Temp[0] := Data[i][0][0]
+	Let Temp[1] := Data[i][0][1]
+	Let Temp[2] := Data[i][0][2]
+	Let Temp[3] := Data[i][0][3]
+	Let Temp[4] := Data[i][0][4]
+	Let Temp[5] := Data[i][0][5]
+	Let Temp[6] := Data[i][0][6]
+	Let Temp[7] := Data[i][0][7]
+
+	;Get new data
+	Let MaleMesh := GetBipedModelPath 0 Item
+	Let FemaleMesh := GetBipedModelPath 1 Item
+	Let MaleGround := GetBipedModelPath 2 Item
+	Let FemaleGround := GetBipedModelPath 3 Item
+	Let MaleIcon := GetBipedIconPath 0 Item
+	Let FemaleIcon := GetBipedIconPath 1 Item
+	Let Name := GetName Item
+	Let Slot := GetBipedSlotMask Item
+
+	;If female paths are empty, set to male counterparts
+	if eval( 0 == sv_Length FemaleMesh )
+		Let FemaleMesh := MaleMesh
+	endif
+
+	if eval( 0 == sv_Length FemaleGround )
+		Let FemaleGround := MaleGround
+	endif
+
+	if eval( 0 == sv_Length FemaleIcon )
+		Let FemaleIcon := MaleIcon
+	endif
+
+	;If male paths are empty, set to female counterparts
+	if eval( 0 == sv_Length MaleMesh )
+		Let MaleMesh := FemaleMesh
+	endif
+
+	if eval( 0 == sv_Length MaleGround )
+		Let MaleGround := FemaleGround
+	endif
+
+	if eval( 0 == sv_Length MaleIcon )
+		Let MaleIcon := FemaleIcon
+	endif
+
+	;Set new data
+	Let Data[i][0][0] := MaleMesh
+	Let Data[i][0][1] := FemaleMesh
+	Let Data[i][0][2] := MaleGround
+	Let Data[i][0][3] := FemaleGround
+	Let Data[i][0][4] := MaleIcon
+	Let Data[i][0][5] := FemaleIcon
+	Let Data[i][0][6] := Name + " (Mimic)"
+	Let Data[i][0][7] := Slot
+
+
+	;If SetMerge succeeds, SetForm
+	if eval( Call aaZefirosSetMerge Slot Dflt Data Hvy Stat EnSt i Armr 1 )
+
+		Call aaZefirosSetForm i 0 Data Self
+		Call aaZefirosFlavorMessage ( "Icons\" + Call aaZefirosGetPCBIP Self ) "" $Self "" 4 0
+
+	;If SetMerge fails, revert changes to Data
+	else
+		
+		Let Data[i][0][0] := Temp[0]
+		Let Data[i][0][1] := Temp[1]
+		Let Data[i][0][2] := Temp[2]
+		Let Data[i][0][3] := Temp[3]
+		Let Data[i][0][4] := Temp[4]
+		Let Data[i][0][5] := Temp[5]
+		Let Data[i][0][6] := Temp[6]
+		Let Data[i][0][7] := Temp[7]
+
+	endif
+
+
+	sv_Destruct MaleMesh
+	sv_Destruct FemaleMesh
+	sv_Destruct MaleGround
+	sv_Destruct FemaleGround
+	sv_Destruct MaleIcon
+	sv_Destruct FemaleIcon
+	sv_Destruct Name
+	SetFunctionValue Data
+	Return
+;-----------------------------------------------------------------------------
+end ;Function { Item, Hvy, Stat, EnSt, Dflt, Armr, Data }
+;-----------------------------------------------------------------------------

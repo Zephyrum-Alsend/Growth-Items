@@ -1,0 +1,103 @@
+scn aaZefirosObjectHand
+
+;Main script
+;-----------------------------------------------------------------------------
+;aaZefirosManager
+;-----------------------------------------------------------------------------
+
+;Used scripts
+;-----------------------------------------------------------------------------
+;aaZefirosSetHandlers
+;aaZefirosCleanUp
+;-----------------------------------------------------------------------------
+
+;Related scripts
+;-----------------------------------------------------------------------------
+;aaZefirosOnUnEquip
+;aaZefirosObjectBody
+;aaZefirosObjectFoot
+;aaZefirosObjectHead
+;aaZefirosObjectLegs
+;aaZefirosObjectShld
+;-----------------------------------------------------------------------------
+
+;Used globals
+;-----------------------------------------------------------------------------
+;aaZefirosEquip
+;aaZefirosSlotHand
+;-----------------------------------------------------------------------------
+
+;Related globals
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;Description
+;-----------------------------------------------------------------------------
+;Increments Equip flag when equipped by the Player, sets handlers if needed.
+;Runs CleanUp when dropped by the Player.
+;
+;Slots are hardcoded instead of dot notation to increase speed, since this
+;script can be run quite often.
+;
+;There are scripts for each body part because OnActorEquip handler fires twice 
+;for enchanted items and GetSelf very rarely returns the wrong ID.
+;-----------------------------------------------------------------------------
+
+;Parameters
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+;-----------------------------------------------------------------------------
+begin OnEquip Player
+;-----------------------------------------------------------------------------
+
+	DebugPrint "%BRunning %bHand%B OnEquip block."
+
+	if ( aaZefirosEquip <= 0 )
+
+		;-----------------------------------------------------------------------------
+		DebugPrint "aaZefirosEquip is %.0f, setting to 1." aaZefirosEquip
+		;-----------------------------------------------------------------------------
+
+		Let aaZefirosEquip := 0
+		Call aaZefirosSetHandlers 1
+
+	endif
+
+	if ( aaZefirosEquip < 6 )
+
+		Let aaZefirosEquip += 1
+
+		;Compensate for merged parts
+		if eval( aaZefirosSlotHand & 4 )
+			Let aaZefirosEquip += 1
+		endif
+		if eval( aaZefirosSlotHand & 32 )
+			Let aaZefirosEquip += 1
+		endif
+		if eval( aaZefirosSlotHand & 3 )
+			Let aaZefirosEquip += 1
+		endif
+		if eval( aaZefirosSlotHand & 8 )
+			Let aaZefirosEquip += 1
+		endif
+		if eval( aaZefirosSlotHand & 8192 )
+			Let aaZefirosEquip += 1
+		endif
+		
+	endif
+
+;-----------------------------------------------------------------------------
+end
+;-----------------------------------------------------------------------------
+
+;-----------------------------------------------------------------------------
+begin OnDrop Player
+;-----------------------------------------------------------------------------
+
+	DebugPrint "Running OnDrop block."
+	Call aaZefirosCleanUp 0
+
+;-----------------------------------------------------------------------------
+end ;OnDrop Player
+;-----------------------------------------------------------------------------
