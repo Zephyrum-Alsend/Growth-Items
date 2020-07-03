@@ -87,6 +87,7 @@ scn aaZefirosSetMerge
 
 ;Parameters
 ;-----------------------------------------------------------------------------
+long Slot
 array_var Dflt
 array_var Hvy
 array_var Stat
@@ -99,7 +100,6 @@ short Debug ;Toggles if MessageEX and DebugPrint are called
 short j
 short Brk
 short Eqp
-long Slot
 long OldSlot
 array_var FormIdx
 array_var Slots
@@ -159,6 +159,7 @@ begin Function { Slot, Dflt, Data, Hvy, Stat, EnSt, i, Armr, Debug }
 		;-----------------------------------------------------------------------------
 		DebugPrint "Slot changed..."
 
+		;Determine which items of Armr Item will share slots with
 		Let Slots := ar_Map 0::Armr[3] 1::Armr[0] 2::Armr[4] 3::Armr[2] 4::Armr[1] 8::Armr[5]
 
 		Let Stack := Call aaZefirosGetSlotShared Item Slots
@@ -204,7 +205,8 @@ begin Function { Slot, Dflt, Data, Hvy, Stat, EnSt, i, Armr, Debug }
 		Let Missing := ar_Construct Array ;Track removed items incase of abort
 		Let ReMerg := ar_Construct Array ;Track recursive calls incase of abort
 		
-		Let Brk := 1 ;Abort flag
+		Let Brk := 0 ;Abort flag
+		Let Object := 0 ;Clear Ref for debug reporting
 		ForEach Iter <- Stack
 
 			Let Object := *Iter
@@ -231,12 +233,22 @@ begin Function { Slot, Dflt, Data, Hvy, Stat, EnSt, i, Armr, Debug }
 
 					;Flag abort
 					Let Brk := 0
-					Break
 
 				endif
 
+			else ;Object == Item
+
+				;Cannot access Form menu w/o Item in inventory
+				Let Brk := 1
+				
 			endif
-			
+
+			if ( Brk == 0 )
+					
+				Break
+					
+			endif
+
 		loop
 
 
@@ -360,15 +372,20 @@ begin Function { Slot, Dflt, Data, Hvy, Stat, EnSt, i, Armr, Debug }
 				Let CHP := InvR.GetCurrentHealth
 
 				Let Stack := Player.GetInvRefsForItem Item
-				Let InvR := Stack[0]
-				Let CHP += InvR.GetCurrentHealth
+
+				if eval( (ar_Size Stack) > 0 )
+
+					Let InvR := Stack[0]
+					Let CHP += InvR.GetCurrentHealth
+					InvR.SetCurrentHealth CHP
+
+				endif
 
 				SetArmorAR AR Item
 				SetWeight Wgt Item
 				SetObjectHealth MHP Item
 				SetGoldValue_T Val Item
-				InvR.SetCurrentHealth CHP
-
+		
 
 				;-----------------------------------------------------------------------------
 				;Merge enchantments

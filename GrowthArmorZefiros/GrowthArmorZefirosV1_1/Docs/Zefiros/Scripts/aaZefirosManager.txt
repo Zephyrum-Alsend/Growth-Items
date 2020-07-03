@@ -1297,14 +1297,11 @@ begin GameMode
 		;-----------------------------------------------------------------------------
 		;Merge and SetForm
 		;-----------------------------------------------------------------------------
-		;Item slots are reset by reboot and some may still be merged, causing SetMerge to fail
-		if ( GetGameRestarted )
-
-			;Add back all missing items so SetMerge won't fail
-			Call aaZefirosPrepMerge Slots Selfs
+		;Ensure SetMerge works properly by adding necessary items and resetting slots
+		Call aaZefirosPrepMerge Slots Dflt Selfs
 
 		;Refreshing equipped armor fails in GameMode unless right after a reboot
-		else
+		if eval( !GetGameRestarted )
 
 			;Call a special stage of RefreshOnce for just this occasion
 			Let Equip := Call aaZefirosRefreshUnEquip Player Selfs

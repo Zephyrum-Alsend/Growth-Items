@@ -25,3 +25,6 @@ v1.1
  - - Added fXPResistDisease
  - - Increased fXPResistMagic to 120 from 100
  - - Increased fXPResistNormalWeapon to 400 from 100
+
+v1.1.1
+ - Fixed items failing to unmerge after loading a save w/ multi-slot forms

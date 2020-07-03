@@ -7,6 +7,7 @@ scn aaZefirosPrepMerge
 
 ;Used scripts
 ;-----------------------------------------------------------------------------
+;aaZefirosGetMerg
 ;-----------------------------------------------------------------------------
 
 ;Related scripts
@@ -30,94 +31,141 @@ scn aaZefirosPrepMerge
 ;Description
 ;-----------------------------------------------------------------------------
 ;Checks if any items are merged according to the slot masks and returns them
-;to the Player in preparation for calling SetMerge after game boot.
-;
-;Array:
-;[0]Body
-;[1]Foot
-;[2]Hand
-;[3]Head
-;[4]Legs
-;[5]Shld
+;to the Player in preparation for calling SetMerge after game load.
 ;-----------------------------------------------------------------------------
 
 ;Parameters
 ;-----------------------------------------------------------------------------
 array_var Armr
+array_var Dflt
 array_var Mask
 
 ref Item
+ref Temp
+array_var Merg
+array_var Iter
+array_var Stack
+short Count
+short i
+short j
+long Slot
+float MHP
+float CHP
+float HP
 ;-----------------------------------------------------------------------------
 
 ;-----------------------------------------------------------------------------
-begin Function { Mask, Armr }
+begin Function { Mask, Dflt, Armr }
 ;-----------------------------------------------------------------------------
 
+	;Set Count to smallest array size
+	if eval( (ar_Size Dflt) < (ar_Size Armr) )
+		Let Count := ar_Size Dflt
+	else
+		Let Count := ar_Size Armr
+	endif
+	if eval( Count > (ar_Size Mask) )
+		Let Count := ar_Size Mask
+	endif
+
+
+	;-----------------------------------------------------------------------------
 	DebugPrint "Checking for missing items needed for merging..."
+	;-----------------------------------------------------------------------------
+	Let i := 0
+	while ( i < Count )
+	;-----------------------------------------------------------------------------
 
-	
-	;Add Body
-	if eval( Mask[1] & 4 || Mask[2] & 4 || Mask[3] & 4 || Mask[4] & 4 || Mask[5] & 4 )
+		;Get indexes for merged items
+		Let Merg := Call aaZefirosGetMerg Mask[i] Dflt
 
-		Let Item := Armr[0]
-		Player.AddItemNS Item 1
-		DebugPrint "Returned %n." Item
+		;-----------------------------------------------------------------------------
+		;Correct and preserve durability percentage
+		;-----------------------------------------------------------------------------
+		Let Item := Armr[i]
+		Let Stack := Player.GetInvRefsForItem Item
+		
+		if eval( (ar_Size Stack) > 0 )
 
-	endif
+			;Get current durability value
+			Let Item := Stack[0]
+			Let CHP := Item.GetCurrentHealth
 
-	
-	;Add Foot
-	if eval( Mask[0] & 32 || Mask[2] & 32 || Mask[3] & 32 || Mask[4] & 32 || Mask[5] & 32 )
+			;Calculate max durability value while merged
+			Let MHP := 0
+			ForEach Iter <- Merg
 
-		Let Item := Armr[1]
-		Player.AddItemNS Item 1
-		DebugPrint "Returned %n." Item
+				Let j := *Iter
+				Let Temp := Armr[j]
+				Let MHP += GetObjectHealth Temp
 
-	endif
+			loop
 
-	
-	;Add Hand
-	if eval( Mask[1] & 16 || Mask[0] & 16 || Mask[3] & 16 || Mask[4] & 16 || Mask[5] & 16 )
+			;Get durability percentage while merged
+			Let HP := CHP / MHP
 
-		Let Item := Armr[2]
-		Player.AddItemNS Item 1
-		DebugPrint "Returned %n." Item
+			;Set Item's durability percentage
+			Let MHP := GetObjectHealth Item
+			Let CHP := HP * MHP
+			Item.SetCurrentHealth CHP
+		
+		else ;Item is not in Player's inventory
 
-	endif
+			;No idea where Item can be, assume 100% durability
+			Let HP := 1.00
+			
+		endif
 
-	
-	;Add Head
-	if eval( Mask[1] & 3 || Mask[2] & 3 || Mask[0] & 3 || Mask[4] & 3 || Mask[5] & 3 )
+		
+		;-----------------------------------------------------------------------------
+		;Add merged items to player
+		;-----------------------------------------------------------------------------
+		ForEach Iter <- Merg
 
-		Let Item := Armr[3]
-		Player.AddItemNS Item 1
-		DebugPrint "Returned %n." Item
+			Let j := *Iter
+			Let Item := Armr[j]
 
-	endif
+			;Only add if not already present, accounts for nested merges
+			if ( i != j && 0 == Player.GetItemCount Item )
 
-	
-	;Add Legs
-	if eval( Mask[1] & 8 || Mask[2] & 8 || Mask[3] & 8 || Mask[0] & 8 || Mask[5] & 8 )
+				;Use a TempRef to set durability percentage
+				Let Temp := CreateTempRef Item
+				Let MHP := GetObjectHealth Item
+				Let CHP := HP * MHP
+				Temp.SetRefCount 1
+				Temp.SetCurrentHealth CHP
+				Temp.CopyIR Player
+				
+				DebugPrint "Returned %n." Item
 
-		Let Item := Armr[4]
-		Player.AddItemNS Item 1
-		DebugPrint "Returned %n." Item
+			endif
 
-	endif
+		loop
 
-	
-	;Add Shld
-	if eval( Mask[1] & 8192 || Mask[2] & 8192 || Mask[3] & 8192 || Mask[4] & 8192 || Mask[0] & 8192 )
-
-		Let Item := Armr[5]
-		Player.AddItemNS Item 1
-		DebugPrint "Returned %n." Item
-
-	endif
-
-
+	;-----------------------------------------------------------------------------
+		Let i += 1
+	loop
+	;-----------------------------------------------------------------------------
 	DebugPrint "Missing items returned."
+	;-----------------------------------------------------------------------------
+
+	
+	;-----------------------------------------------------------------------------
+	DebugPrint "Resetting slot masks."
+	;-----------------------------------------------------------------------------
+	Let i := 0
+	while ( i < Count )
+
+		Let Slot := Dflt[i]
+		Let Item := Armr[i]
+
+		SetBipedSlotMask Slot Item
+
+		Let i += 1
+	loop
+
+	
 	Return
 ;-----------------------------------------------------------------------------
-end ;Function { Mask, Armr }
+end ;Function { Mask, Dflt, Armr }
 ;-----------------------------------------------------------------------------

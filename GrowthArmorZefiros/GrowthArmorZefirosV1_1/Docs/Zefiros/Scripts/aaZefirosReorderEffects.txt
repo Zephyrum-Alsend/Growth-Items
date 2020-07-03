@@ -77,8 +77,6 @@ begin Function { Effects, Enchs }
 		;-----------------------------------------------------------------------------
 		;Find and remove each effect
 		;-----------------------------------------------------------------------------
-		Let Count := GetMagicItemEffectCount Spl
-
 		ForEach Efct <- Effects
 
 			Let i := Call aaZefirosGetEffectIndex Efct["value"][0] Efct["value"][1] Spl

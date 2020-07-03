@@ -12,6 +12,7 @@ scn aaZefirosGetMerg
 ;Related scripts
 ;-----------------------------------------------------------------------------
 ;aaZefirosIncrementEnchant
+;aaZefirosPrepMerge
 ;aaZefirosSacrifice
 ;aaZefirosSetSeek
 ;aaZefirosUndoEnchant
@@ -27,8 +28,8 @@ scn aaZefirosGetMerg
 
 ;Description
 ;-----------------------------------------------------------------------------
-;Given an array of slots and one to compare them against, returns an array of
-;indexes that conflicted.
+;Compares an array of slot masks with a single slot mask.
+;Returns an array of indexes in Dflt that share slot(s) with Slot.
 ;-----------------------------------------------------------------------------
 
 ;Parameters

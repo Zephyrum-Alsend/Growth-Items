@@ -62,7 +62,8 @@ begin Function { Enchs, Items }
 		;Set enchantment if it actually has any effects
 		if ( GetMagicItemEffectCount Ench > 0 )
 
-			;Enchantments don't have names so we can't get human readable debug info out of them
+			;Enchantments don't have names so we can't get
+			;human readable debug info out of them
 			DebugPrint "Assigning enchantment to %n." Item
 			SetEnchantment Ench Item
 

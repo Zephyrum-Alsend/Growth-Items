@@ -1054,3 +1054,28 @@
 -Updated documentation, both headers and local files
 	-Body done
 -Begin packing for release
+
+2020.07.03
+-Received a report about un/merge not going right after save/load multiple times
+-Also complained about stat changes, but those are intentional
+-He luckily provided enough information for me to reproduce the un/merge failure
+	-On loading save w/ multi-slot forms
+	-Stats are single-slot
+	-b/c single-slot also not returned merged items on unmerge
+-Am attempting to resolve this by altering PrepMerge and dropping the GetGameRestarted condition
+-Will also have to touch on current durability, b/c that will totally get fucked
+-Tweaked unmerge segment of SetMerge after noticing Abort flag doesn't always break loop when set to 0
+-Clarified description for GetMerg, that confused me too and I wrote it!
+-PrepMerge is rewritten
+	-Resets slot masks so SetMerge combines stats
+	-Re-add missing items rewritten into a loop instead of hard coded
+-Now to have PrepMerge correct durabilities
+-Added code to reverse engineer merged durability % then set all related items to that %
+-Works for added items, but merged item still has excessive durability
+-Forgot to set MHP to single item's HP, was left at sum HP
+-Tested and working
+	-Tested nested merge as well: legs+foot -> body+hand+legs+foot
+	-Durabilities are consistent
+	-Tested leaving merged item in another container
+-Updating docs
+-Packing for release

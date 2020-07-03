@@ -1,4 +1,4 @@
-Growth Armor Zefiros V1.1
+Growth Armor Zefiros V1.1.1
 
 
 DEFAULT CONTROLS
@@ -43,9 +43,8 @@ Robert Male Body
 
 
 CONFLICTS
-Some of the meshes crash NifSkope, so I cannot relocate this mod's texture files into their own folder like Dusfergon.
-When installing other mods that include armor, they may overwrite some of Zefiros's textures.
-No textures were edited from their original mods so overwriting should have no impact.
+If you receive a popup asking to overwrite files, it's textures and it's safe to do so.
+Some .nif files crash NifSkope so their textures couldn't be relocated into /Textures/Zefiros/.
 
 
 PERMISSIONS
@@ -55,7 +54,7 @@ Regardless, notify me so I can check out the final product!
 
 
 CREDITS
-Pike9 - Witcher 2 Plate Armor
+Park9 - Witcher 2 Plate Armor
 IKirostI - Daedricious Armor Replacer﻿
 Movomo - Movomo's Armor Replacer - The Very Daedric Armor﻿
 McMuffin - Daedric Lord Armor﻿
