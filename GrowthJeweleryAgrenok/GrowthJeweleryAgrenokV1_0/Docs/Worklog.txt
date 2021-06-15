@@ -1,0 +1,119 @@
+2021.04.01
+-Skimmed Zefiros's code
+-Named new mod Agrenok
+-Grows with magicka spent, base spell cost square rooted (or something)
+-Created .esp
+-Jogged memory on coding Zefiros
+-Will have to do pre-coding, a lot to remember to implement
+	-do NOT want a repeat of merging code
+
+PRE-CODE (multi-day)
+-Name, prefix/suffix
+-Weight, value (clothing)
+-Multi-slot/merging and appearance change
+-Growing enchantments
+-Magicka usage based XP gain (base spell cost, modified (base spell cost exponentially increases))
+-Offerings, separate XP gain from durability gain...? Armor with 0 AR?
+-XP reporting, debugging messages
+-Mimicry
+
+2021.04.08
+-Created PsuedoCode.txt, editing in Visual Studio Code
+-Mitigates need to rewrite code if I forget something important (like multi-slot items)
+
+2021.04.22
+-Added description for Related Scripts/Globals
+-Scrapped idea of Restore Attribute dynamic resistance
+-Since Agrenok will be merged with Zefiros+Dusfergon, using Scalar as collective variable name
+-Outlined GameMode block for Main
+-Outlined MenuMode block for Main
+-Not sure if should implement paging for Save/Load custom sets, posed question to Nexus community
+	via mod page
+-Outlined Enchanting and SigilStone MenuMode blocks
+
+2021.05.22
+-Paired Water Walking with Resist Water Damage after investigating what it does (resist lava damage)
+
+2021.05.29
+-Forgot what I planned to have as a base enchantment (since no AR as clothing)
+	-Shield?
+	-Multiply gold found?
+	-Chance to duplicate looted items?
+	-Multiply XP gain?
+	-Multiply birthsign/racial bonus?
+	-Multiply Active Effects?
+	-Reduce durability damage?
+	-Multiply enchantment effects?
+	-Multiply active spell effects?
+	-Reduce spell cost?
+	-Allow X wishes per in-game month or 1 wish every X days or scale magnitude of effect?
+	-Reduce Greater Power cooldown?
+	-Increase number of Greater Power casts per cooldown period?
+-Decided on Allow 1 wish per X days, magnitude of effect scales with Agrenok level
+-Could be random blessings, could be a list PC chooses from
+	-Random blessings are easy, no PC agency
+		-Less wacky effects, since PC has little idea what effects may happen
+	-PC Wishes are more work, more PC agency
+		-Random list of wishes (text parser is NO)
+		-More wacky effects, PC chooses them
+		-Joke wishes "I wish for another wish!"
+-Let PC make wishes, instead of random blessings
+	-MessageBox prompt
+	-Need hotkey defined (INI configurable)
+	-9 buttons (1 reserved for [Cancel])
+	-15+ wishes, random 9 to choose from
+	-9 options cycle every 1 day (INI configurable)
+	-Wish has 10 day cooldown (INI configurable)
+-Possible Wish effects:
+	-Gold
+	-XP to random number of highest skills
+	-XP to random number of lowest skills
+	-XP to random skills
+	-XP to random Combat/Stealth/Magic skills
+	-XP to random Major skills
+	-XP to random Minor skills
+	-Bonus XP for X hours
+	-Creatures stop being hostile for X hours
+	-Cycle wishlist "I wish for another wish!"
+	-Attribute/skill buffs
+	-X bonus to all attributes for Y hours
+	-X bonus to all skills for Y hours
+	-X bonus to all attributes and skills for Y hours
+	-X bonus to all major skills for Y hours
+	-X bonus to all minor skills for Y hours
+
+2021.06.05
+-Renamed Related Scripts/Globals to Calling Scripts/Globals, Main has Other Scripts/Globals
+-Started adding variables for each enchantment effect
+-Replaced %Mult with %Incr, as Increment is more intuitive thant Multiplier considering use
+-Added enchantment effect variables
+-Replaced Water Breathing partner effect Fortify Athletics with Restore Fatigue and Restore Magicka
+	-Effects will be triggered while underwater
+	-OnWaterDive and OnWaterSurface handlers exist, huzzah
+-Got the code for Resist Water Damage (RSWD)
+-Changed commenting format to Construction Set standard for finished sections
+-Started level up variables
+	-noticed an unused variable in Zefiros, will refrain from completing until level up
+	code is pseudocoded
+
+2021.06.12
+-Changed flag variable leading character to b from s
+	-Even though there's no boolean type, that's how they're used and now easier to spot flags
+-Debating whether to add _ to all variable leads (s_%, f_%, l_% instead of s%, f%, l%, etc.)
+	-Will keep as is for now
+-Keybinds section made, not populated
+	-Unsure how many binds will need at this point
+-Mimicry section made
+	-Need to open Construction Set to see if jewelery has different paths from armor/weapons
+	-Same paths
+-Latency section made
+-Started filling out globals
+	-Decided to reorder global naming: aaScalar[Item][VarName]
+-Filled out globals, put them all in Other, will move to Used as they're used
+-Replaced all LRing/RRing with LRng/RRng
+	-LRng/RRng in engine
+	-LRing/RRing because my hands kept typing that out and I gave up correcting myself
+	-but consistency is important
+-Added " | %.0f" to enchantment var comments, to easily tell which effect is which ench level ID
+-Reordered variable names to match global naming schema
+-Started initialization block

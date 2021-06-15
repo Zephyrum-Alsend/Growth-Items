@@ -1,0 +1,530 @@
+//Header
+//Explain fQuestDelay
+float fQuestDelay
+
+//Script name
+
+;Other scripts/globals are all scripts/globals not used by Main
+;Calling scripts are all scripts that call this script
+;Calling globals are all globals used as arguments when calling this script
+
+;Used scripts
+;--------------------------------------------------------------------------------------------
+;--------------------------------------------------------------------------------------------
+
+;Other scripts
+;--------------------------------------------------------------------------------------------
+;--------------------------------------------------------------------------------------------
+
+;Used globals
+;--------------------------------------------------------------------------------------------
+;aaScalarDebug
+;--------------------------------------------------------------------------------------------
+
+;Other globals
+;--------------------------------------------------------------------------------------------
+;aaScalarAmulActvEnch
+;aaScalarAmulForm
+;aaScalarAmulSlot
+;aaScalarAmulCstm01
+;aaScalarAmulCstm02
+;aaScalarAmulCstm03
+;aaScalarAmulCstm04
+;aaScalarAmulCstm05
+;aaScalarAmulCstm06
+;aaScalarAmulCstm07
+;aaScalarAmulCstm08
+;aaScalarAmulMimicSlot
+;aaScalarAmulEnch00
+;aaScalarAmulEnch01
+;aaScalarAmulEnch02
+;aaScalarAmulEnch03
+;aaScalarAmulEnch04
+;aaScalarAmulEnch05
+;aaScalarAmulEnch06
+;aaScalarAmulEnch07
+;aaScalarAmulEnch08
+;aaScalarAmulEnch09
+;aaScalarAmulEnch10
+;aaScalarAmulEnch11
+;aaScalarAmulEnch12
+;aaScalarAmulEnch13
+;aaScalarAmulEnch14
+;aaScalarAmulEnch15
+;aaScalarAmulEnch16
+;aaScalarAmulEnch17
+;aaScalarAmulEnch18
+;aaScalarAmulEnch19
+;aaScalarAmulEnch20
+;aaScalarAmulEnch21
+;aaScalarAmulEnch22
+;aaScalarAmulEnch23
+;aaScalarAmulEnch24
+;aaScalarAmulEnch25
+;aaScalarAmulEnch26
+;aaScalarAmulEnch27
+;aaScalarAmulEnch28
+;aaScalarAmulEnch29
+;aaScalarAmulEnch30
+;aaScalarAmulEnch31
+;aaScalarAmulEnch32
+;aaScalarAmulEnch33
+;aaScalarAmulEnch34
+;aaScalarAmulEnch35
+;aaScalarAmulEnch36
+;aaScalarAmulEnch37
+;aaScalarAmulEnch38
+;aaScalarAmulEnch39
+;aaScalarAmulEnch40
+;aaScalarAmulEnch41
+;aaScalarAmulEnch42
+;aaScalarAmulEnch43
+;aaScalarAmulEnch44
+;aaScalarAmulEnch45
+;aaScalarAmulEnch46
+;aaScalarAmulEnch47
+;aaScalarAmulEnch48
+;aaScalarLRngActvEnch
+;aaScalarLRngForm
+;aaScalarLRngSlot
+;aaScalarLRngCstm01
+;aaScalarLRngCstm02
+;aaScalarLRngCstm03
+;aaScalarLRngCstm04
+;aaScalarLRngCstm05
+;aaScalarLRngCstm06
+;aaScalarLRngCstm07
+;aaScalarLRngCstm08
+;aaScalarLRngMimicSlot
+;aaScalarLRngEnch00
+;aaScalarLRngEnch01
+;aaScalarLRngEnch02
+;aaScalarLRngEnch03
+;aaScalarLRngEnch04
+;aaScalarLRngEnch05
+;aaScalarLRngEnch06
+;aaScalarLRngEnch07
+;aaScalarLRngEnch08
+;aaScalarLRngEnch09
+;aaScalarLRngEnch10
+;aaScalarLRngEnch11
+;aaScalarLRngEnch12
+;aaScalarLRngEnch13
+;aaScalarLRngEnch14
+;aaScalarLRngEnch15
+;aaScalarLRngEnch16
+;aaScalarLRngEnch17
+;aaScalarLRngEnch18
+;aaScalarLRngEnch19
+;aaScalarLRngEnch20
+;aaScalarLRngEnch21
+;aaScalarLRngEnch22
+;aaScalarLRngEnch23
+;aaScalarLRngEnch24
+;aaScalarLRngEnch25
+;aaScalarLRngEnch26
+;aaScalarLRngEnch27
+;aaScalarLRngEnch28
+;aaScalarLRngEnch29
+;aaScalarLRngEnch30
+;aaScalarLRngEnch31
+;aaScalarLRngEnch32
+;aaScalarLRngEnch33
+;aaScalarLRngEnch34
+;aaScalarLRngEnch35
+;aaScalarLRngEnch36
+;aaScalarLRngEnch37
+;aaScalarLRngEnch38
+;aaScalarLRngEnch39
+;aaScalarLRngEnch40
+;aaScalarLRngEnch41
+;aaScalarLRngEnch42
+;aaScalarLRngEnch43
+;aaScalarLRngEnch44
+;aaScalarLRngEnch45
+;aaScalarLRngEnch46
+;aaScalarLRngEnch47
+;aaScalarLRngEnch48
+;aaScalarRRngActvEnch
+;aaScalarRRngForm
+;aaScalarRRngSlot
+;aaScalarRRngCstm01
+;aaScalarRRngCstm02
+;aaScalarRRngCstm03
+;aaScalarRRngCstm04
+;aaScalarRRngCstm05
+;aaScalarRRngCstm06
+;aaScalarRRngCstm07
+;aaScalarRRngCstm08
+;aaScalarRRngMimicSlot
+;aaScalarRRngEnch00
+;aaScalarRRngEnch01
+;aaScalarRRngEnch02
+;aaScalarRRngEnch03
+;aaScalarRRngEnch04
+;aaScalarRRngEnch05
+;aaScalarRRngEnch06
+;aaScalarRRngEnch07
+;aaScalarRRngEnch08
+;aaScalarRRngEnch09
+;aaScalarRRngEnch10
+;aaScalarRRngEnch11
+;aaScalarRRngEnch12
+;aaScalarRRngEnch13
+;aaScalarRRngEnch14
+;aaScalarRRngEnch15
+;aaScalarRRngEnch16
+;aaScalarRRngEnch17
+;aaScalarRRngEnch18
+;aaScalarRRngEnch19
+;aaScalarRRngEnch20
+;aaScalarRRngEnch21
+;aaScalarRRngEnch22
+;aaScalarRRngEnch23
+;aaScalarRRngEnch24
+;aaScalarRRngEnch25
+;aaScalarRRngEnch26
+;aaScalarRRngEnch27
+;aaScalarRRngEnch28
+;aaScalarRRngEnch29
+;aaScalarRRngEnch30
+;aaScalarRRngEnch31
+;aaScalarRRngEnch32
+;aaScalarRRngEnch33
+;aaScalarRRngEnch34
+;aaScalarRRngEnch35
+;aaScalarRRngEnch36
+;aaScalarRRngEnch37
+;aaScalarRRngEnch38
+;aaScalarRRngEnch39
+;aaScalarRRngEnch40
+;aaScalarRRngEnch41
+;aaScalarRRngEnch42
+;aaScalarRRngEnch43
+;aaScalarRRngEnch44
+;aaScalarRRngEnch45
+;aaScalarRRngEnch46
+;aaScalarRRngEnch47
+;aaScalarRRngEnch48
+;aaScalarAgreLevel
+;aaScalarAgreEquip
+;--------------------------------------------------------------------------------------------
+
+;Description
+;--------------------------------------------------------------------------------------------
+//summary of script's functions
+;--------------------------------------------------------------------------------------------
+
+;Engine Objects
+;--------------------------------------------------------------------------------------------
+;Items >   Clothing >      aaScalarAmul
+;                          aaScalarLRng
+;                          aaScalarRRng
+;Magic >   Enchantment >   aaScalarAmulEnch
+;                          aaScalarLRngEnch
+;                          aaScalarRRngEnch
+;--------------------------------------------------------------------------------------------
+
+//Declaration of variables
+
+;References for ClothingID and EnchantmentID
+;--------------------------------------------------------------------------------------------
+ref rAmulSelf
+ref rLRngSelf
+ref rRRngSelf
+
+ref rAmulEnch
+ref rLRngEnch
+ref rRRngEnch
+;--------------------------------------------------------------------------------------------
+
+;Level up variables
+;--------------------------------------------------------------------------------------------
+float fXPReqBase //300
+float fXPReqIncr //30
+short sLevelCap //201
+short sCapType
+float fXPAbs
+float fXPEnchAbs
+
+short bLevelUp
+short bLevelCap
+;--------------------------------------------------------------------------------------------
+
+;Stats
+;--------------------------------------------------------------------------------------------
+float fAmulWeightBase
+float fLRngWeightBase
+float fRRngWeightBase
+
+long lAmulValueBase
+long lLRngValueBase
+long lRRngValueBase
+
+float fAmulWeightIncr
+float fLRngWeightIncr
+float fRRngWeightIncr
+
+float fAmulValueIncr
+float fLRngValueIncr
+float fRRngValueIncr
+;--------------------------------------------------------------------------------------------
+
+;Enchantment stats
+;--------------------------------------------------------------------------------------------
+short sEnchStartLvl
+short sEnchSeekLvl
+
+;Chameleon | 00
+short sCHMLBase
+float fCHMLIncr
+
+;Detect Life | 01
+short sDTCTBase
+float fDTCTIncr
+
+;Fire Shield | 02
+short sFISHBase
+float fFISHIncr
+
+;Frost Shield | 03
+short sFRSHBase
+float fFRSHIncr
+
+;Shock Shield | 04
+short sLISHBase
+float fLISHIncr
+
+;Fortify Attribute | 05 - 12
+short sFOATBase
+float fFOATIncr
+
+;Fortify Fatigue | 13
+short sFOFABase
+float fFOFAIncr
+
+;Fortify Health | 14
+short sFOHEBase
+float fFOHEIncr
+
+;Fortify Magicka | 15
+short sFOSPBase
+float fFOSPIncr
+
+;Fortify Skill | 16 - 36
+short sFOSKBase
+float fFOSKIncr
+
+;Feather | 37
+short sFTHRBase
+float fFTHRIncr
+
+;Light | 38
+short sLGHTBase
+float fLGHTIncr
+
+;Night Eye NEYE //+ Critical Chance | 39
+;Critical Chance
+short sCRCHBase
+float fCRCHIncr
+
+;Critical Multiplier
+float fCRMLBase
+float fCRMLIncr
+
+;Restore Fatigue | 40
+short sREFABase
+float fREFAIncr
+
+;Restore Health | 41
+short sREHEBase
+float fREHEIncr
+
+;Restore Magicka | 42
+short sRESPBase
+float fRESPIncr
+
+;Reflect Damage | 43
+short sREDGBase
+float fREDGIncr
+
+;Reflect Spell | 44
+short sRFLCBase
+float fRFLCIncr
+
+;Spell Absorption | 45
+short sSABSBase
+float fSABSIncr
+
+;Shield | 46
+short sSHLDBase
+float fSHLDIncr
+
+;Water Breathing WABR //+ Restore if Underwater | 47
+;Restore Health while breathing water
+short sWAHEBase
+float fWAHEIncr
+
+;Restore Fatigue while breathing water
+short sWAFABase
+float fWAFAIncr
+
+;Restore Magicka while breathing water
+short sWASPBase
+float fWASPIncr
+
+;Water Walking WAWA //+ Resist Water Damage | 48
+short sRSWDBase
+float fRSWDIncr
+;--------------------------------------------------------------------------------------------
+
+;Key binds
+;--------------------------------------------------------------------------------------------
+
+;--------------------------------------------------------------------------------------------
+
+;Mimicry
+;--------------------------------------------------------------------------------------------
+string_var str_AmulMimicMaleModel
+string_var str_AmulMimicFemaleModel
+string_var str_AmulMimicMaleGround
+string_var str_AmulMimicFemaleGround
+string_var str_AmulMimicMaleIcon
+string_var str_AmulMimicFemaleIcon
+string_var str_AmulMimicName
+
+string_var str_LRngMimicMaleModel
+string_var str_LRngMimicFemaleModel
+string_var str_LRngMimicMaleGround
+string_var str_LRngMimicFemaleGround
+string_var str_LRngMimicMaleIcon
+string_var str_LRngMimicFemaleIcon
+string_var str_LRngMimicName
+
+string_var str_RRngMimicMaleModel
+string_var str_RRngMimicFemaleModel
+string_var str_RRngMimicMaleGround
+string_var str_RRngMimicFemaleGround
+string_var str_RRngMimicMaleIcon
+string_var str_RRngMimicFemaleIcon
+string_var str_RRngMimicName
+;--------------------------------------------------------------------------------------------
+
+;Strings
+;--------------------------------------------------------------------------------------------
+string_var str_MsgName ;Name that appears in messages
+;--------------------------------------------------------------------------------------------
+
+;Latency
+;--------------------------------------------------------------------------------------------
+float fGameLag
+float fMenuLag
+float fOneFrame
+short bAltLag
+;--------------------------------------------------------------------------------------------
+
+
+;--------------------------------------------------------------------------------------------
+begin GameMode
+;--------------------------------------------------------------------------------------------
+
+    if(GetGameLoaded)
+
+        //init everything
+        Let rAmulSelf := aaScalarAmul
+        Let rLRngSelf := aaScalarLRng
+        Let rRRngSelf := aaScalarRRng
+
+        Let rAmulEnch := aaScalarAmulEnch
+        Let rLRngEnch := aaScalarLRngEnch
+        Let rRRngEnch := aaScalarRRngEnch
+
+        Call aaScalarAgreDefaultINI
+
+        RunBatchScript "Data\ini\Agrenok.ini"
+
+        SetDebugMode aaScalarDebug
+
+        Let fGameLag := 0.5
+        Let fMenuLag := 0.01
+        Let fOneFrame := 0.00000000001
+
+        //assign stats
+
+        //assign fashion
+
+        printc "%z%B initialized!%b" MsgName
+
+    endif ;(GetGameLoaded)
+
+    SetDebugMode aaScalarDebug
+
+    //Set script lag
+
+    //CleanOnce flag
+
+    //XP Log
+
+    //Level cap flag
+
+    //Level up
+
+    //Level down?
+
+    //Enchant choice every X levels
+
+    //Apply level changes
+
+    //Halfway to next level message
+
+    //Refresh equip
+
+    //Menu code force reset, incase of Menu force exit
+
+    //Undo enchantments
+
+;--------------------------------------------------------------------------------------------
+end ;GameMode
+;--------------------------------------------------------------------------------------------
+
+begin MenuMode
+
+    //Set Menu script delay
+
+    //Undo enchantments
+
+    //Set debug mode
+
+    //CleanOnce flag
+
+end ;MenuMode
+
+begin MenuMode 1002 ;Inventory
+
+    //Menu conditionals
+        //Form
+        //Form GROUP
+        //Random
+        //Random GROUP
+        //Save Set
+        //Load Set
+    //Enchantment
+    //Name of Form
+        //key trap
+    //Offer/Sacrifice menu
+    //Mimic
+        //key trap
+
+end ;MenuMode Inventory
+
+begin MenuMode 1042 ;Enchanting
+
+    //Pull enchanting data (what was used)
+
+end ;MenuMode Enchanting
+
+begin MenuMode 1048 ;SigilStone
+
+    Let SigilOnce := 1
+
+end ;MenuMode SigilStone
